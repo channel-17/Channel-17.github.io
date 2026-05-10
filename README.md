@@ -1,2 +1,2 @@
-# Channel-17.github.io
+# channel-17.github.io
 Broadcast signal - channel 17
