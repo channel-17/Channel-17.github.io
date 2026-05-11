@@ -3,9 +3,9 @@
   <head>
     <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device
-  <title>CHANNEL-17</title
-  <style>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CHANNEL-17</title>
+<style>
 
 body {
 
@@ -27,43 +27,7 @@ body {
 
     height: 100vh;
 
-    color: #d8d2c8;
-
-    background-image:
-
-    radial-gradient(circle at center,
-
-    rgba(255,255,255,0.02) 0%,
-
-    transparent 70%);
-
-}
-
-/* FILM GRAIN */
-
-body::before {
-
-    content: "";
-
-    position: fixed;
-
-    inset: 0;
-
-    pointer-events: none;
-
-    opacity: 0.18;
-
-    background-image:
-
-    repeating-radial-gradient(circle at center,
-
-    rgba(255,255,255,0.015) 0px,
-
-    rgba(255,255,255,0.015) 1px,
-
-    transparent 1px,
-
-    transparent 4px);
+    color: rgba(255,255,255,0.75);
 
 }
 
@@ -71,59 +35,45 @@ body::before {
 
     text-align: center;
 
-    opacity: 0;
+    display: flex;
 
-    animation: fadeIn 3s ease forwards;
+    flex-direction: column;
+
+    align-items: center;
+
+    animation: fadeIn 3s ease;
 
 }
 
-/* SYMBOL */
+/* LOGO */
 
-.symbol {
+.logo {
 
-    width: 150px;
+    width: 120px;
 
-    max-width: 45vw;
+    max-width: 40vw;
 
     opacity: 0;
 
-    animation:
-
-    signalAppear 4s ease forwards,
-
-    pulse 7s ease-in-out infinite;
+    animation: signalFade 4s ease forwards;
 
     filter:
 
-    drop-shadow(0 0 10px rgba(255,245,220,0.08));
+    drop-shadow(0 0 12px rgba(255,255,255,0.08));
 
 }
 
-/* .17 */
+/* TEXT */
 
-.dot17 {
+.subtext {
 
-    margin-top: 10px;
+    margin-top: 42px;
 
-    font-size: 18px;
+    font-size: 1rem;
 
-    letter-spacing: 2px;
+    letter-spacing: 3px;
 
-    color: rgba(216,210,200,0.45);
-
-}
-
-/* INTERRUPTED */
-
-.interrupted {
-
-    margin-top: 85px;
-
-    font-size: 18px;
-
-    letter-spacing: 6px;
-
-    color: rgba(216,210,200,0.55);
+    color: rgba(255,255,255,0.45);
 
 }
 
@@ -131,15 +81,7 @@ body::before {
 
 .dots span {
 
-    opacity: 0.15;
-
-    animation: blink 1.8s infinite;
-
-}
-
-.dots span:nth-child(1) {
-
-    animation-delay: 0s;
+    animation: blink 1.6s infinite;
 
 }
 
@@ -159,49 +101,31 @@ body::before {
 
 .reconnect {
 
-    display: inline-block;
-
-    margin-top: 55px;
-
-    color: rgba(216,210,200,0.72);
+    margin-top: 38px;
 
     text-decoration: none;
 
-    font-size: 21px;
+    font-size: 0.75rem;
 
-    letter-spacing: 7px;
+    letter-spacing: 6px;
 
-    border-bottom: 1px solid rgba(216,210,200,0.35);
+    color: rgba(255,255,255,0.22);
 
-    padding-bottom: 6px;
-
-    transition: all 0.4s ease;
+    transition: 0.3s ease;
 
 }
 
 .reconnect:hover {
 
-    color: rgba(255,255,255,0.95);
+    color: rgba(255,255,255,0.75);
 
-    border-bottom-color: rgba(255,255,255,0.95);
-
-    transform: scale(1.03);
+    letter-spacing: 8px;
 
 }
 
 /* ANIMATIONS */
 
-@keyframes fadeIn {
-
-    to {
-
-        opacity: 1;
-
-    }
-
-}
-
-@keyframes signalAppear {
+@keyframes signalFade {
 
     0% {
 
@@ -213,15 +137,9 @@ body::before {
 
     }
 
-    40% {
-
-        opacity: 0.25;
-
-    }
-
     100% {
 
-        opacity: 0.96;
+        opacity: 1;
 
         transform: scale(1);
 
@@ -231,11 +149,11 @@ body::before {
 
 }
 
-@keyframes pulse {
+@keyframes blink {
 
-    0% {
+    0%, 20% {
 
-        opacity: 0.92;
+        opacity: 0.2;
 
     }
 
@@ -247,7 +165,168 @@ body::before {
 
     100% {
 
-        opacity: 0.92;
+        opacity: 0.2;
+
+    }
+
+}
+
+@keyframes fadeIn {
+
+    from {
+
+        opacity: 0;
+
+    }
+
+    to {
+
+        opacity: 1;
+
+    }
+
+}
+
+</style>
+<style>
+
+body {
+
+    margin: 0;
+
+    padding: 0;
+
+    background: #050505;
+
+    overflow: hidden;
+
+    font-family: Arial, Helvetica, sans-serif;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    height: 100vh;
+
+    color: rgba(255,255,255,0.75);
+
+}
+
+.container {
+
+    text-align: center;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    animation: fadeIn 3s ease;
+
+}
+
+/* LOGO */
+
+.logo {
+
+    width: 120px;
+
+    max-width: 40vw;
+
+    opacity: 0;
+
+    animation: signalFade 4s ease forwards;
+
+    filter:
+
+    drop-shadow(0 0 12px rgba(255,255,255,0.08));
+
+}
+
+/* TEXT */
+
+.subtext {
+
+    margin-top: 42px;
+
+    font-size: 1rem;
+
+    letter-spacing: 3px;
+
+    color: rgba(255,255,255,0.45);
+
+}
+
+/* BLINKING DOTS */
+
+.dots span {
+
+    animation: blink 1.6s infinite;
+
+}
+
+.dots span:nth-child(2) {
+
+    animation-delay: 0.3s;
+
+}
+
+.dots span:nth-child(3) {
+
+    animation-delay: 0.6s;
+
+}
+
+/* RECONNECT */
+
+.reconnect {
+
+    margin-top: 38px;
+
+    text-decoration: none;
+
+    font-size: 0.75rem;
+
+    letter-spacing: 6px;
+
+    color: rgba(255,255,255,0.22);
+
+    transition: 0.3s ease;
+
+}
+
+.reconnect:hover {
+
+    color: rgba(255,255,255,0.75);
+
+    letter-spacing: 8px;
+
+}
+
+/* ANIMATIONS */
+
+@keyframes signalFade {
+
+    0% {
+
+        opacity: 0;
+
+        transform: scale(0.94);
+
+        filter: blur(6px);
+
+    }
+
+    100% {
+
+        opacity: 1;
+
+        transform: scale(1);
+
+        filter: blur(0px);
 
     }
 
@@ -255,13 +334,13 @@ body::before {
 
 @keyframes blink {
 
-    0% {
+    0%, 20% {
 
-        opacity: 0.15;
+        opacity: 0.2;
 
     }
 
-    20% {
+    50% {
 
         opacity: 1;
 
@@ -269,65 +348,37 @@ body::before {
 
     100% {
 
-        opacity: 0.15;
+        opacity: 0.2;
 
     }
 
 }
 
-/* HIDE AUDIO PLAYER */
+@keyframes fadeIn {
 
-audio {
+    from {
 
-    display: none;
+        opacity: 0;
+
+    }
+
+    to {
+
+        opacity: 1;
+
+    }
 
 }
 
 </style>
-    </head>
-    <body>
-      <div class="container">
-        <!-- SYMBOL IMAGE -->
-
-<img src="IMG_8683.png" class="symbol">
-
-<!-- .17 -->
-
-<div class="dot17">
-
-    .17
-
-</div>
-
-<!-- BROADCAST INTERRUPTED -->
-
-<div class="interrupted">
-
-    broadcast interrupted
-
-    <span class="dots">
-
-        <span>.</span>
-
-        <span>.</span>
-
-        <span>.</span>
-
-    </span>
-
-</div>
-
-<!-- RECONNECT BUTTON -->
-
-<a class="reconnect" href="#">
-
-    reconnect
-
-</a>
-</div>
-<!-- OPTIONAL AUDIO -->
-      <audio autoplay>
-        <source src="frequency.mp3" type="audio/m
-          </audio>
-          </body>
-          </html>
+<body>
+  <div class="container">
+    <img src="mark.png" class="logo">
+    <div class="subtext">
+      </div>
+    <a class="reconnect" href="#">
+      </a>
+    </div>
+  </body>
+    </html>
+      
