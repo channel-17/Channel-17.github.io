@@ -65,23 +65,29 @@ body {
 
 .subtext {
 
-    margin-top: 28px;
+    margin-top: 22px;
 
-font-size: 0.9rem;
+font-size: 0.82rem;
 
 letter-spacing: 4px;
 
-color: #ffffff;
+color: rgba(255,255,255,0.72);
 
 text-transform: uppercase;
 
-opacity: 0;
+white-space: nowrap;
+
+overflow: hidden;
+
+width: 0;
 
 animation:
 
+    typing 3.5s steps(26,end) forwards,
+
     fadeText 1s ease forwards;
 
-animation-delay: 4s;
+animation-delay: 3s;
 }
 
 /* BLINKING DOTS */
