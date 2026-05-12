@@ -13,11 +13,9 @@ body {
 
     padding: 0;
 
-    background: #050505;
+    background: #000;
 
     overflow: hidden;
-
-    font-family: Arial, Helvetica, sans-serif;
 
     display: flex;
 
@@ -27,7 +25,9 @@ body {
 
     height: 100vh;
 
-    color: rgba(255,255,255,0.75);
+    font-family: Arial, Helvetica, sans-serif;
+
+    color: white;
 
 }
 
@@ -41,8 +41,6 @@ body {
 
     align-items: center;
 
-    animation: fadeIn 3s ease;
-
 }
 
 /* LOGO */
@@ -51,49 +49,53 @@ body {
 
     width: 170px;
 
-    max-width: 40vw;
+    max-width: 60vw;
 
     opacity: 0;
 
-    animation: signalFade 4s ease forwards;
+    animation: fadeLogo 4s ease forwards;
 
     filter:
 
-    drop-shadow(0 0 12px rgba(255,255,255,0.08));
+    drop-shadow(0 0 10px rgba(255,255,255,0.08));
 
 }
 
-/* TEXT */
+/* TYPEWRITER */
 
 .subtext {
 
-    margin-top: 42px;
+    margin-top: 35px;
 
     font-size: 1rem;
 
     letter-spacing: 3px;
 
-    color: rgba(255,255,255,0.45);
+    color: rgba(255,255,255,0.78);
+
+    overflow: hidden;
+
+    white-space: nowrap;
+
+    width: 0;
+
+    border-right: 2px solid rgba(255,255,255,0.5);
+
+    animation:
+
+        typing 4s steps(24,end) forwards,
+
+        blinkCursor 0.8s infinite;
+
+    animation-delay: 3.5s;
 
 }
 
 /* BLINKING DOTS */
 
-.dots span {
+.dots {
 
-    animation: blink 1.6s infinite;
-
-}
-
-.dots span:nth-child(2) {
-
-    animation-delay: 0.3s;
-
-}
-
-.dots span:nth-child(3) {
-
-    animation-delay: 0.6s;
+    animation: dotsBlink 1.4s infinite;
 
 }
 
@@ -101,7 +103,7 @@ body {
 
 .reconnect {
 
-    margin-top: 38px;
+    margin-top: 45px;
 
     text-decoration: none;
 
@@ -109,7 +111,13 @@ body {
 
     letter-spacing: 6px;
 
-    color: rgba(255,255,255,0.22);
+    color: rgba(255,255,255,0.25);
+
+    opacity: 0;
+
+    animation: fadeReconnect 2s ease forwards;
+
+    animation-delay: 10s;
 
     transition: 0.3s ease;
 
@@ -117,7 +125,7 @@ body {
 
 .reconnect:hover {
 
-    color: rgba(255,255,255,0.75);
+    color: rgba(255,255,255,0.8);
 
     letter-spacing: 8px;
 
@@ -125,31 +133,57 @@ body {
 
 /* ANIMATIONS */
 
-@keyframes signalFade {
+@keyframes fadeLogo {
 
-    0% {
+    from {
 
         opacity: 0;
 
-        transform: scale(0.94);
+        transform: scale(0.92);
 
-        filter: blur(6px);
+        filter: blur(8px);
 
     }
 
-    100% {
+    to {
 
         opacity: 1;
 
         transform: scale(1);
 
-        filter: blur(0px);
+        filter: blur(0);
 
     }
 
 }
 
-@keyframes blink {
+@keyframes typing {
+
+    from {
+
+        width: 0;
+
+    }
+
+    to {
+
+        width: 24ch;
+
+    }
+
+}
+
+@keyframes blinkCursor {
+
+    50% {
+
+        border-color: transparent;
+
+    }
+
+}
+
+@keyframes dotsBlink {
 
     0%, 20% {
 
@@ -171,7 +205,7 @@ body {
 
 }
 
-@keyframes fadeIn {
+@keyframes fadeReconnect {
 
     from {
 
@@ -188,197 +222,14 @@ body {
 }
 
 </style>
-<style>
-
-body {
-
-    margin: 0;
-
-    padding: 0;
-
-    background: #050505;
-
-    overflow: hidden;
-
-    font-family: Arial, Helvetica, sans-serif;
-
-    display: flex;
-
-    justify-content: center;
-
-    align-items: center;
-
-    height: 100vh;
-
-    color: rgba(255,255,255,0.75);
-
-}
-
-.container {
-
-    text-align: center;
-
-    display: flex;
-
-    flex-direction: column;
-
-    align-items: center;
-
-    animation: fadeIn 3s ease;
-
-}
-
-/* LOGO */
-
-.logo {
-
-    width: 170px;
-
-    max-width: 40vw;
-
-    opacity: 0;
-
-    animation: signalFade 4s ease forwards;
-
-    filter:
-
-    drop-shadow(0 0 12px rgba(255,255,255,0.08));
-
-}
-
-/* TEXT */
-
-.subtext {
-
-    margin-top: 42px;
-
-    font-size: 1rem;
-
-    letter-spacing: 3px;
-
-    color: rgba(255,255,255,0.85);
-
-}
-
-/* BLINKING DOTS */
-
-.dots span {
-
-    animation: blink 1.6s infinite;
-
-}
-
-.dots span:nth-child(2) {
-
-    animation-delay: 0.3s;
-
-}
-
-.dots span:nth-child(3) {
-
-    animation-delay: 0.6s;
-
-}
-
-/* RECONNECT */
-
-.reconnect {
-
-    margin-top: 38px;
-
-    text-decoration: none;
-
-    font-size: 0.75rem;
-
-    letter-spacing: 6px;
-
-    color: rgba(255,255,255,0.22);
-
-    transition: 0.3s ease;
-
-}
-
-.reconnect:hover {
-
-    color: rgba(255,255,255,0.75);
-
-    letter-spacing: 8px;
-
-}
-
-/* ANIMATIONS */
-
-@keyframes signalFade {
-
-    0% {
-
-        opacity: 0;
-
-        transform: scale(0.94);
-
-        filter: blur(6px);
-
-    }
-
-    100% {
-
-        opacity: 1;
-
-        transform: scale(1);
-
-        filter: blur(0px);
-
-    }
-
-}
-
-@keyframes blink {
-
-    0%, 20% {
-
-        opacity: 0.2;
-
-    }
-
-    50% {
-
-        opacity: 1;
-
-    }
-
-    100% {
-
-        opacity: 0.2;
-
-    }
-
-}
-
-@keyframes fadeIn {
-
-    from {
-
-        opacity: 0;
-
-    }
-
-    to {
-
-        opacity: 1;
-
-    }
-
-}
-
-</style>
+</head>
 <body>
-  <div class="container">
-    <img src="mark.png" class="logo">
-    <div class="subtext">
-      </div>
-    <a class="reconnect" href="#">
-      </a>
-    </div>
+<div class="container">
+<img src="mark17.png" class="logo">
+<div class="subtext">
+</div>
+<a class="reconnect" href="#">
+</a>
+</div>
   </body>
-    </html>
-      
+  </html>
