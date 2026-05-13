@@ -68,17 +68,17 @@ body {
 
 }
 
-/* SIGNAL TEXT */
+/* SIGNAL */
 
 .signal-wrap {
 
-    width: 260px;
+    width: 520px;
 
     margin-top: 42px;
 
-    text-align: left;
+    min-height: 40px;
 
-    min-height: 32px;
+    text-align: center;
 
 }
 
@@ -86,11 +86,13 @@ body {
 
     color: rgba(255,255,255,0.72);
 
-    font-size: 1.7rem;
+    font-size: 1.65rem;
 
-    letter-spacing: 9px;
+    letter-spacing: 10px;
 
     text-transform: uppercase;
+
+    white-space: nowrap;
 
 }
 
@@ -100,7 +102,7 @@ body {
 
     color: rgba(255,255,255,0.72);
 
-    font-size: 1.7rem;
+    font-size: 1.65rem;
 
     letter-spacing: 4px;
 
@@ -140,7 +142,7 @@ body {
 
     text-decoration: none;
 
-    color: rgba(255,255,255,0.28);
+    color: rgba(255,255,255,0.18);
 
     letter-spacing: 10px;
 
@@ -148,9 +150,25 @@ body {
 
     opacity: 0;
 
-    animation: reconnectFade 2s ease forwards;
+    transition: all 2s ease;
 
-    animation-delay: 10s;
+}
+
+/* ACTIVE RECONNECT */
+
+.reconnect.active {
+
+    opacity: 1;
+
+    color: #b8b09a;
+
+    text-shadow:
+
+    0 0 8px rgba(184,176,154,0.4),
+
+    0 0 18px rgba(184,176,154,0.2);
+
+    animation: reconnectPulse 3s ease-in-out infinite;
 
 }
 
@@ -171,26 +189,6 @@ body {
         opacity: 1;
 
         transform: scale(1);
-
-    }
-
-}
-
-@keyframes reconnectFade {
-
-    from {
-
-        opacity: 0;
-
-        transform: translateY(8px);
-
-    }
-
-    to {
-
-        opacity: 1;
-
-        transform: translateY(0);
 
     }
 
@@ -218,6 +216,50 @@ body {
 
 }
 
+@keyframes reconnectPulse {
+
+    0% {
+
+        opacity: 0.45;
+
+    }
+
+    50% {
+
+        opacity: 1;
+
+    }
+
+    100% {
+
+        opacity: 0.45;
+
+    }
+
+}
+
+.fade-out {
+
+    animation: fadeOut 2s ease forwards;
+
+}
+
+@keyframes fadeOut {
+
+    from {
+
+        opacity: 1;
+
+    }
+
+    to {
+
+        opacity: 0;
+
+    }
+
+}
+
 </style>
 
 </head>
@@ -226,9 +268,9 @@ body {
 
 <div class="container">
 
-    <img src="./mark17.png?v=3" class="logo">
+    <img src="./mark17.png?v=4" class="logo">
 
-    <div class="signal-wrap">
+    <div class="signal-wrap" id="signal-wrap">
 
         <span id="signal-text"></span>
 
@@ -244,7 +286,7 @@ body {
 
     </div>
 
-    <a class="reconnect" href="#">
+    <a class="reconnect" id="reconnect" href="#">
 
         reconnect
 
@@ -259,6 +301,10 @@ const text = "SIGNAL LOST";
 const target = document.getElementById("signal-text");
 
 const dots = document.getElementById("dots");
+
+const reconnect = document.getElementById("reconnect");
+
+const signalWrap = document.getElementById("signal-wrap");
 
 let i = 0;
 
@@ -283,6 +329,20 @@ setTimeout(() => {
     dots.style.opacity = "1";
 
 }, 8600);
+
+/* AFTER 17 SECONDS */
+
+setTimeout(() => {
+
+    signalWrap.classList.add("fade-out");
+
+}, 17000);
+
+setTimeout(() => {
+
+    reconnect.classList.add("active");
+
+}, 18800);
 
 </script>
 
