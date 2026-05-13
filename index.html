@@ -1,27 +1,56 @@
 <!DOCTYPE html>
+
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
+
+<head>
+
+<meta charset="UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>CHANNEL 17</title>
-        <style>
 
-html, body {
+<style>
 
-    margin: 0;
+* {
 
-    padding: 0;
+  margin: 0;
 
-    width: 100%;
+  padding: 0;
 
-    height: 100%;
+  box-sizing: border-box;
 
-    background: #000;
+}
 
-    overflow: hidden;
+body {
 
-    font-family: Arial, sans-serif;
+  background: black;
+
+  height: 100vh;
+
+  overflow: hidden;
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  font-family: Arial, sans-serif;
+
+  color: rgba(255,255,255,0.72);
+
+}
+
+.container {
+
+  position: relative;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
 
 }
 
@@ -29,49 +58,81 @@ html, body {
 
 .logo {
 
-    position: absolute;
+  width: 170px;
 
-    top: 44%;
+  max-width: 52vw;
 
-    left: 50%;
+  opacity: 0;
 
-    transform: translate(-50%, -50%);
-
-    width: 170px;
-
-    max-width: 58vw;
-
-    opacity: 0;
-
-    filter:
-
-    blur(8px)
-
-    animation: signalFade 5s ease forwards;
-
-    animation-delay: 1.5s;
+  animation: logoFade 2.8s ease forwards;
 
 }
 
 /* SIGNAL TEXT */
 
-.signal {
+.signal-wrap {
 
-    position: absolute;
+  margin-top: 26px;
 
-    top: 58%;
+  width: 170px;
 
-    left: 32%;
+  text-align: left;
 
-    color: rgba(255,255,255,0.42);
+  letter-spacing: 8px;
 
-    font-size: 0.82rem;
+  font-size: 1rem;
 
-    letter-spacing: 6px;
+  color: rgba(255,255,255,0.62);
 
-    text-transform: uppercase;
+  white-space: nowrap;
 
-    white-space: nowrap;
+  overflow: hidden;
+
+  opacity: 0;
+
+  animation: textAppear 0.2s linear forwards;
+
+  animation-delay: 3.2s;
+
+}
+
+#signal-text::after {
+
+  content: "|";
+
+  animation: cursorBlink 0.8s infinite;
+
+}
+
+.dots {
+
+  margin-left: 2px;
+
+}
+
+.dots span {
+
+  opacity: 0;
+
+  animation: dotPulse 1.8s infinite;
+
+}
+
+.dots span:nth-child(1) {
+
+  animation-delay: 0s;
+
+}
+
+.dots span:nth-child(2) {
+
+  animation-delay: 0.3s;
+
+}
+
+.dots span:nth-child(3) {
+
+  animation-delay: 0.6s;
 
 }
 
@@ -79,124 +140,170 @@ html, body {
 
 .reconnect {
 
-    position: absolute;
+  margin-top: 36px;
 
-    top: 66%;
+  font-size: 0.9rem;
 
-    left: 50%;
+  letter-spacing: 10px;
 
-    transform: translateX(-50%);
+  color: rgba(255,255,255,0.28);
 
-    color: rgba(255,255,255,0.24);
+  text-decoration: none;
 
-    text-decoration: none;
+  opacity: 0;
 
-    font-size: 0.75rem;
+  animation: reconnectFade 2s ease forwards;
 
-    letter-spacing: 10px;
+  animation-delay: 8s;
+
+  transition: 0.3s ease;
+
+}
+
+.reconnect:hover {
+
+  color: rgba(255,255,255,0.75);
+
+}
+
+/* ANIMATIONS */
+
+@keyframes logoFade {
+
+  from {
 
     opacity: 0;
 
-    animation: reconnectFade 2s ease forwards;
+    transform: scale(0.96);
 
-    animation-delay: 9s;
+  }
 
-}
+  to {
 
-/* LOGO FADE */
+    opacity: 1;
 
-@keyframes signalFade {
+    transform: scale(1);
 
-    from {
-
-        opacity: 0;
-
-        filter:
-
-        blur(12px)
-
-        drop-shadow(0 0 2px rgba(255,255,255,0.01));
-
-        transform:
-
-        translate(-50%, -50%)
-
-        scale(0.92);
-
-    }
-
-    to {
-
-        opacity: 1;
-
-        filter:
-
-        blur(0)
-
-        drop-shadow(0 0 18px rgba(255,255,255,0.08));
-
-        transform:
-
-        translate(-50%, -50%)
-
-        scale(1);
-
-    }
+  }
 
 }
 
-/* RECONNECT */
+@keyframes textAppear {
+
+  from {
+
+    opacity: 0;
+
+  }
+
+  to {
+
+    opacity: 1;
+
+  }
+
+}
 
 @keyframes reconnectFade {
 
-    from {
+  from {
 
-        opacity: 0;
+    opacity: 0;
 
-    }
+    transform: translateY(8px);
 
-    to {
+  }
 
-        opacity: 1;
+  to {
 
-    }
+    opacity: 1;
+
+    transform: translateY(0);
+
+  }
+
+}
+
+@keyframes dotPulse {
+
+  0% { opacity: 0; }
+
+  20% { opacity: 1; }
+
+  100% { opacity: 0; }
+
+}
+
+@keyframes cursorBlink {
+
+  0% { opacity: 1; }
+
+  50% { opacity: 0; }
+
+  100% { opacity: 1; }
 
 }
 
 </style>
-        </head>
-    <body>
-        <img src="mark17.png" class="logo">
-        <div class="signal" id="signal"></div>
-        <a href="#" class="reconnect">
 
-reconnect
+</head>
 
-</a>
-        <script>
+<body>
 
-const message = "SIGNAL LOST...";
+<div class="container">
 
-const signal = document.getElementById("signal");
+  <img src="mark17.png" class="logo">
 
-let index = 0;
+  <div class="signal-wrap">
 
-function typeSignal() {
+    <span id="signal-text"></span>
 
-    if (index < message.length) {
+    <span class="dots">
 
-        signal.textContent += message.charAt(index);
+      <span>.</span>
 
-        index++;
+      <span>.</span>
 
-        setTimeout(typeSignal, 120);
+      <span>.</span>
 
-    }
+    </span>
+
+  </div>
+
+  <a class="reconnect" href="#">
+
+    reconnect
+
+  </a>
+
+</div>
+
+<script>
+
+const text = "SIGNAL LOST";
+
+const target = document.getElementById("signal-text");
+
+let i = 0;
+
+function typeText() {
+
+  if (i < text.length) {
+
+    target.innerHTML += text.charAt(i);
+
+    i++;
+
+    setTimeout(typeText, 180);
+
+  }
 
 }
 
-setTimeout(typeSignal, 5500);
+setTimeout(typeText, 3400);
 
 </script>
-        </body>
-    </html>
+
+</body>
+
+</html>
