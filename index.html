@@ -1,12 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-
-<meta charset="UTF-8">
+    <head><meta charset="UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>CHANNEL 17</title>
 <style>
 
@@ -20,7 +16,7 @@ html, body {
 
     height: 100%;
 
-    background: #000;
+    background: black;
 
     overflow: hidden;
 
@@ -30,67 +26,57 @@ html, body {
 
 body {
 
-    display: flex;
-
-    justify-content: center;
-
-    align-items: center;
+    position: relative;
 
 }
 
-.container {
-
-    display: flex;
-
-    flex-direction: column;
-
-    align-items: center;
-
-}
-
-/* LOGO */
+/* SYMBOL */
 
 .logo {
 
-    width: 160px;
+    position: absolute;
 
-    max-width: 55vw;
+    top: 42%;
+
+    left: 50%;
+
+    transform: translate(-50%, -50%);
+
+    width: 170px;
+
+    max-width: 58vw;
 
     opacity: 0;
 
-    animation: fadeLogo 3s ease forwards;
+    filter:
 
-    filter: drop-shadow(0 0 18px rgba(255,255,255,0.08));
+    blur(5px)
+
+    drop-shadow(0 0 12px rgba(255,255,255,0.06));
+
+    animation: signalFade 5s ease forwards;
+
+    animation-delay: 1.8s;
 
 }
 
-/* TYPEWRITER */
+/* SIGNAL TEXT */
 
-.subtext {
+.signal {
 
-    margin-top: 42px;
+    position: absolute;
 
-    color: rgba(255,255,255,0.78);
+    bottom: 22%;
 
-    font-size: 1rem;
+    left: 7%;
 
-    letter-spacing: 8px;
+    color: rgba(255,255,255,0.42);
+
+    font-size: 0.82rem;
+
+    letter-spacing: 6px;
 
     text-transform: uppercase;
-
-    overflow: hidden;
-
-    white-space: nowrap;
-
-    width: 0;
-
-    border-right: 1px solid rgba(255,255,255,0.65);
-
-    animation:
-
-    typing 3.5s steps(26,end) forwards;
-
-    animation-delay: 3s;
 
 }
 
@@ -98,33 +84,49 @@ body {
 
 .reconnect {
 
-    margin-top: 48px;
+    position: absolute;
 
-    color: rgba(255,255,255,0.35);
+    bottom: 12%;
+
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    color: rgba(255,255,255,0.22);
 
     text-decoration: none;
 
-    font-size: 0.9rem;
-
     letter-spacing: 10px;
+
+    font-size: 0.78rem;
 
     opacity: 0;
 
-    animation: fadeReconnect 2s ease forwards;
+    animation: reconnectFade 3s ease forwards;
 
-    animation-delay: 8s;
+    animation-delay: 10s;
 
 }
 
-/* ANIMATIONS */
+/* FADE */
 
-@keyframes fadeLogo {
+@keyframes signalFade {
 
     from {
 
         opacity: 0;
 
-        transform: scale(0.92);
+        filter:
+
+        blur(10px)
+
+        drop-shadow(0 0 2px rgba(255,255,255,0.02));
+
+        transform:
+
+        translate(-50%, -50%)
+
+        scale(0.94);
 
     }
 
@@ -132,29 +134,25 @@ body {
 
         opacity: 1;
 
-        transform: scale(1);
+        filter:
+
+        blur(0)
+
+        drop-shadow(0 0 18px rgba(255,255,255,0.08));
+
+        transform:
+
+        translate(-50%, -50%)
+
+        scale(1);
 
     }
 
 }
 
-@keyframes typing {
+/* RECONNECT FADE */
 
-    from {
-
-        width: 0;
-
-    }
-
-    to {
-
-        width: 26ch;
-
-    }
-
-}
-
-@keyframes fadeReconnect {
+@keyframes reconnectFade {
 
     from {
 
@@ -172,28 +170,39 @@ body {
 
 </style>
 </head>
-  <body>
-<div class="container">
-  <img src="mark17.png" class="logo">
-  <div class="subtext">
-
-TRANSMISSION INTERRUPTED...
-
-</div>
-  <a class="reconnect" href="#">
+<body>
+    <img src="mark17.png" class="logo">
+    <div class="signal" id="signal"></div>
+    <a href="#" class="reconnect">
 
 reconnect
 
 </a>
-  </div>
+    <script>
+
+const text = "SIGNAL LOST...";
+
+const speed = 120;
+
+let i = 0;
+
+function typeWriter() {
+
+    if (i < text.length) {
+
+        document.getElementById("signal").innerHTML += text.charAt(i);
+
+        i++;
+
+        setTimeout(typeWriter, speed);
+
+    }
+
+}
+
+setTimeout(typeWriter, 5500);
+
+</script>
     </body>
-
-</html>
-  
-  
-
-
+    </html>
     
-
-
-  
