@@ -46,7 +46,7 @@ body{
 
 }
 
-/* MAIN AREA */
+/* MAIN */
 
 .container{
 
@@ -58,7 +58,7 @@ body{
 
     justify-content:center;
 
-    transform:translateY(-28px);
+    transform:translateY(-22px);
 
 }
 
@@ -74,11 +74,11 @@ body{
 
         drop-shadow(0 0 4px rgba(255,245,220,.08))
 
-        drop-shadow(0 0 12px rgba(255,245,220,.05));
+        drop-shadow(0 0 14px rgba(255,245,220,.05));
 
 }
 
-/* BIG GLITCH */
+/* GLITCH */
 
 .glitch{
 
@@ -100,7 +100,7 @@ body{
 
         transform:translateX(-8px);
 
-        filter:brightness(2.4);
+        filter:brightness(2.5);
 
     }
 
@@ -108,7 +108,7 @@ body{
 
         transform:translateX(7px);
 
-        filter:brightness(.4);
+        filter:brightness(.45);
 
     }
 
@@ -140,7 +140,7 @@ body{
 
     margin-top:34px;
 
-    min-height:34px;
+    min-height:38px;
 
     position:relative;
 
@@ -152,11 +152,11 @@ body{
 
 }
 
-/* signal lost */
+/* SIGNAL LOST */
 
 #line{
 
-    font-size:1.45rem;
+    font-size:1.52rem;
 
     letter-spacing:.48rem;
 
@@ -170,17 +170,17 @@ body{
 
 }
 
-/* reconnect */
+/* RECONNECT */
 
 #reconnect{
 
     position:absolute;
 
-    font-size:1.45rem;
+    font-size:1.52rem;
 
     letter-spacing:.48rem;
 
-    color:#8c8478;
+    color:#948a7d;
 
     opacity:0;
 
@@ -192,13 +192,15 @@ body{
 
     user-select:none;
 
+    transform-origin:center;
+
 }
 
-/* pulse */
+/* ACTIVE PULSE */
 
 #reconnect.active{
 
-    animation:pulse 2.6s ease-in-out infinite;
+    animation:pulse 2.8s ease-in-out infinite;
 
 }
 
@@ -206,25 +208,63 @@ body{
 
     0%{
 
-        opacity:.18;
+        opacity:.22;
 
-        text-shadow:0 0 0px rgba(255,255,255,0);
+        transform:scale(1);
+
+        letter-spacing:.48rem;
+
+        filter:
+
+            blur(.4px)
+
+            brightness(.82);
+
+        text-shadow:
+
+            0 0 0px rgba(255,255,255,0);
 
     }
 
     50%{
 
-        opacity:.78;
+        opacity:.92;
 
-        text-shadow:0 0 12px rgba(255,255,255,.14);
+        transform:scale(1.018);
+
+        letter-spacing:.52rem;
+
+        filter:
+
+            blur(0px)
+
+            brightness(1.18);
+
+        text-shadow:
+
+            0 0 6px rgba(255,255,255,.08),
+
+            0 0 18px rgba(255,255,255,.06);
 
     }
 
     100%{
 
-        opacity:.18;
+        opacity:.22;
 
-        text-shadow:0 0 0px rgba(255,255,255,0);
+        transform:scale(1);
+
+        letter-spacing:.48rem;
+
+        filter:
+
+            blur(.4px)
+
+            brightness(.82);
+
+        text-shadow:
+
+            0 0 0px rgba(255,255,255,0);
 
     }
 
@@ -244,7 +284,11 @@ body{
 
         <div id="line"></div>
 
-        <div id="reconnect">reconnect</div>
+        <div id="reconnect">
+
+            reconnect
+
+        </div>
 
     </div>
 
@@ -262,25 +306,25 @@ const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
 async function runSequence(){
 
-    /* BLACK SCREEN PAUSE */
+    /* BLACK SCREEN */
 
     await sleep(3200);
 
     /* SYMBOL BLEEDS IN */
 
-    symbol.style.transition = "opacity 2.8s ease";
+    symbol.style.transition = "opacity 2.7s ease";
 
     symbol.style.opacity = ".93";
 
-    await sleep(2800);
+    await sleep(2700);
 
-    /* BIG GLITCH */
+    /* BIG GLITCH HIT */
 
     symbol.classList.add("glitch");
 
     await sleep(500);
 
-    /* START TYPING */
+    /* START TYPEWRITER */
 
     line.style.opacity = "1";
 
@@ -310,7 +354,7 @@ async function runSequence(){
 
     ];
 
-    for(let i=0;i<words.length;i++){
+    for(let i = 0; i < words.length; i++){
 
         line.innerHTML = words[i];
 
@@ -322,7 +366,7 @@ async function runSequence(){
 
     await sleep(700);
 
-    /* DOT SEARCH */
+    /* SEARCHING DOTS */
 
     for(let cycle = 0; cycle < 3; cycle++){
 
@@ -340,27 +384,27 @@ async function runSequence(){
 
         line.innerHTML = "signal lost";
 
-        await sleep(250);
+        await sleep(260);
 
     }
 
-    /* HOLD FINAL */
+    /* FINAL HOLD */
 
     await sleep(500);
 
-    /* FADE OUT */
+    /* FADE SIGNAL LOST AWAY */
 
     line.style.opacity = "0";
 
     await sleep(1300);
 
-    /* RECONNECT GHOST */
+    /* GHOST RECONNECT */
 
     reconnect.style.opacity = ".14";
 
     await sleep(1200);
 
-    /* WAKE UP */
+    /* ACTIVATE */
 
     reconnect.classList.add("active");
 
