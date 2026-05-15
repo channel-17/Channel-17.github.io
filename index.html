@@ -74,7 +74,7 @@ body{
 
 }
 
-/* BOTH SYMBOLS */
+/* SYMBOLS */
 
 .outer-symbol,
 
@@ -228,7 +228,7 @@ body{
 
 }
 
-/* NEW PULSE */
+/* RECONNECT PULSE */
 
 @keyframes awaken{
 
@@ -438,7 +438,7 @@ async function runSequence(){
 
     await sleep(1800);
 
-    /* BLEED IN */
+    /* SLOW BLEED IN */
 
     outer.style.transition =
 
@@ -506,7 +506,7 @@ async function runSequence(){
 
     await sleep(700);
 
-    /* DOT SEARCH */
+    /* SEARCH LOOP */
 
     for(let cycle = 0; cycle < 3; cycle++){
 
@@ -532,7 +532,7 @@ async function runSequence(){
 
     await sleep(650);
 
-    /* FADE AWAY */
+    /* FADE TEXT */
 
     line.style.opacity = "0";
 
@@ -551,6 +551,76 @@ async function runSequence(){
 }
 
 runSequence();
+
+/* =========================
+
+   RECONNECT CLICK
+
+========================= */
+
+reconnect.addEventListener("click", async () => {
+
+    /* stop pulse */
+
+    reconnect.classList.remove("active");
+
+    /* fade reconnect */
+
+    reconnect.style.transition =
+
+    "opacity 1.4s ease";
+
+    reconnect.style.opacity = "0";
+
+    /* dissolve outer walls */
+
+    outer.style.transition = `
+
+        opacity 3.2s ease,
+
+        filter 3.2s ease,
+
+        transform 3.2s ease
+
+    `;
+
+    outer.style.opacity = "0";
+
+    outer.style.filter =
+
+    "blur(12px) brightness(.4)";
+
+    outer.style.transform =
+
+    "scale(1.08)";
+
+    /* inner survives */
+
+    inner.style.transition =
+
+    "filter 4s ease";
+
+    inner.style.filter =
+
+    `
+
+    drop-shadow(0 0 8px rgba(255,245,220,.10))
+
+    drop-shadow(0 0 22px rgba(255,245,220,.08))
+
+    `;
+
+    /* subtle atmosphere shift */
+
+    document.body.style.transition =
+
+    "background 4s ease";
+
+    document.body.style.background =
+
+    "#020202";
+
+});
 
 </script>
 
