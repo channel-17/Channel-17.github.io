@@ -4,187 +4,183 @@
 
 <head>
 
-<meta charset="UTF-8" />
+<meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>CHANNEL 17</title>
 
 <style>
 
-body{
+body {
 
-    margin:0;
+    margin: 0;
 
-    background:#000;
+    background: black;
 
-    overflow:hidden;
+    overflow: hidden;
 
-    font-family:Arial,sans-serif;
+    display: flex;
 
-    display:flex;
+    justify-content: center;
 
-    justify-content:center;
+    align-items: center;
 
-    align-items:center;
+    height: 100vh;
 
-    height:100vh;
+    font-family: Arial, sans-serif;
 
-    color:#d8d2bf;
-
-}
-
-.container{
-
-    text-align:center;
-
-    position:relative;
-
-    transition:opacity 2.5s ease;
+    color: #d8d1bf;
 
 }
 
-.symbol-wrap{
+.container {
 
-    position:relative;
-
-    width:220px;
-
-    margin:auto;
+    text-align: center;
 
 }
 
-/* YOUR ORIGINAL SYMBOL IMAGE */
+/* SYMBOL */
 
-#symbol{
+.symbol-wrap {
 
-    width:220px;
+    position: relative;
 
-    opacity:0;
+    width: 260px;
 
-    animation:symbolFade 5s ease forwards;
+    margin: auto;
 
-    transition:2.8s ease;
-
-    filter:
-
-        drop-shadow(0 0 12px rgba(216,210,191,.08))
-
-        brightness(.95);
+    animation: symbolFade 2.8s ease forwards;
 
 }
 
-/* WALL OVERLAYS */
+.symbol-base {
 
-.wall{
+    width: 100%;
 
-    position:absolute;
-
-    background:#000;
-
-    opacity:0;
-
-    transition:2.6s ease;
-
-    pointer-events:none;
+    display: block;
 
 }
 
-/* LEFT */
+/* WALL OVERLAY */
 
-.left-wall{
+.wall {
 
-    width:80px;
+    position: absolute;
 
-    height:240px;
+    background: rgba(0,0,0,0.85);
 
-    left:-12px;
+    transition: all 2.4s ease;
 
-    top:-18px;
-
-    transform:rotate(28deg);
+    pointer-events: none;
 
 }
 
-/* RIGHT */
+/* LEFT WALL */
 
-.right-wall{
+.wall-left {
 
-    width:80px;
+    width: 16px;
 
-    height:240px;
+    height: 230px;
 
-    right:-12px;
+    left: 52px;
 
-    top:-18px;
+    top: 6px;
 
-    transform:rotate(-28deg);
+    transform: rotate(26deg);
 
-}
-
-/* BOTTOM */
-
-.bottom-wall{
-
-    width:180px;
-
-    height:50px;
-
-    bottom:-6px;
-
-    left:20px;
+    transform-origin: bottom center;
 
 }
 
-/* WALL DISSOLVE */
+/* RIGHT WALL */
 
-.open .left-wall{
+.wall-right {
+
+    width: 16px;
+
+    height: 230px;
+
+    right: 52px;
+
+    top: 6px;
+
+    transform: rotate(-26deg);
+
+    transform-origin: bottom center;
+
+}
+
+/* BOTTOM WALL */
+
+.wall-bottom {
+
+    width: 190px;
+
+    height: 16px;
+
+    left: 35px;
+
+    bottom: 18px;
+
+}
+
+/* DISSOLVE */
+
+.connected .wall-left {
+
+    opacity: 0;
 
     transform:
 
-        rotate(28deg)
+        rotate(26deg)
 
-        translate(-90px,-40px);
-
-    opacity:1;
+        translate(-140px,-90px);
 
 }
 
-.open .right-wall{
+.connected .wall-right {
+
+    opacity: 0;
 
     transform:
 
-        rotate(-28deg)
+        rotate(-26deg)
 
-        translate(90px,-40px);
-
-    opacity:1;
+        translate(140px,-90px);
 
 }
 
-.open .bottom-wall{
+.connected .wall-bottom {
 
-    transform:translateY(70px);
+    opacity: 0;
 
-    opacity:1;
+    transform: translateY(100px);
 
 }
 
-@keyframes symbolFade{
+/* SYMBOL FADE IN */
 
-    from{
+@keyframes symbolFade {
 
-        opacity:0;
+    0% {
 
-        transform:scale(.985);
+        opacity: 0;
+
+        transform: scale(0.96);
+
+        filter: blur(8px);
 
     }
 
-    to{
+    100% {
 
-        opacity:1;
+        opacity: 1;
 
-        transform:scale(1);
+        transform: scale(1);
+
+        filter: blur(0px);
 
     }
 
@@ -192,133 +188,97 @@ body{
 
 /* SIGNAL LOST */
 
-.signal{
+#signalText {
 
-    margin-top:34px;
+    margin-top: 42px;
 
-    width:340px;
+    letter-spacing: 12px;
 
-    margin-left:auto;
+    font-size: 20px;
 
-    margin-right:auto;
+    opacity: 0;
 
-    text-align:left;
+    animation: textAppear 1s forwards 2.2s;
 
-    font-size:18px;
+}
 
-    letter-spacing:10px;
+@keyframes textAppear {
 
-    min-height:26px;
+    to {
 
-    opacity:.9;
+        opacity: 0.8;
+
+    }
 
 }
 
 /* RECONNECT */
 
-.reconnect{
+#reconnectBtn {
 
-    margin-top:32px;
+    margin-top: 50px;
 
-    opacity:0;
+    background: transparent;
+
+    border: none;
+
+    color: #d8d1bf;
+
+    font-size: 18px;
+
+    letter-spacing: 10px;
+
+    opacity: 0;
+
+    cursor: pointer;
 
     animation:
 
-        pulse 2.8s ease-in-out infinite;
+        reconnectAppear 1s forwards 3.3s,
 
-    transition:opacity 1.5s ease;
-
-}
-
-.reconnect button{
-
-    background:none;
-
-    border:1px solid rgba(216,210,191,.18);
-
-    color:#d8d2bf;
-
-    padding:12px 30px;
-
-    letter-spacing:5px;
-
-    font-size:11px;
-
-    cursor:pointer;
-
-    transition:.4s ease;
+        reconnectPulse 2.4s infinite 4.3s;
 
 }
 
-.reconnect button:hover{
+@keyframes reconnectAppear {
 
-    border-color:rgba(216,210,191,.55);
+    to {
 
-    background:rgba(216,210,191,.04);
-
-}
-
-@keyframes pulse{
-
-    0%{
-
-        opacity:.25;
-
-    }
-
-    50%{
-
-        opacity:.7;
-
-    }
-
-    100%{
-
-        opacity:.25;
+        opacity: 0.4;
 
     }
 
 }
 
-/* SUBTLE GLITCH */
+@keyframes reconnectPulse {
 
-.glitch{
+    0% {
 
-    animation:glitch .14s linear;
+        opacity: 0.35;
 
-}
-
-@keyframes glitch{
-
-    0%{
-
-        transform:translate(0px,0px);
+        text-shadow: 0 0 0px rgba(216,209,191,0);
 
     }
 
-    25%{
+    50% {
 
-        transform:translate(-1px,1px);
+        opacity: 1;
 
-    }
+        text-shadow:
 
-    50%{
+            0 0 8px rgba(216,209,191,0.45),
 
-        transform:translate(1px,-1px);
-
-    }
-
-    100%{
-
-        transform:translate(0px,0px);
+            0 0 18px rgba(216,209,191,0.25);
 
     }
 
-}
+    100% {
 
-.fade-out{
+        opacity: 0.35;
 
-    opacity:0;
+        text-shadow: 0 0 0px rgba(216,209,191,0);
+
+    }
 
 }
 
@@ -328,131 +288,59 @@ body{
 
 <body>
 
-<div class="container" id="container">
+<div class="container">
 
     <div class="symbol-wrap" id="symbolWrap">
 
-        <!-- YOUR REAL SYMBOL -->
+        <!-- YOUR SYMBOL -->
 
-        <img src="mark17.png" id="symbol">
+        <img src="symbol.png" class="symbol-base">
 
-        <!-- DISSOLVE MASKS -->
+        <!-- DISSOLVING WALLS -->
 
-        <div class="wall left-wall"></div>
+        <div class="wall wall-left"></div>
 
-        <div class="wall right-wall"></div>
+        <div class="wall wall-right"></div>
 
-        <div class="wall bottom-wall"></div>
+        <div class="wall wall-bottom"></div>
+
+    </div>
+
+    <div id="signalText">
+
+        SIGNAL LOST...
 
     </div>
 
-    <div class="signal" id="signal"></div>
+    <button id="reconnectBtn">
 
-    <div class="reconnect" id="reconnectBox">
+        RECONNECT
 
-        <button onclick="reconnect()">
-
-            RECONNECT
-
-        </button>
-
-    </div>
+    </button>
 
 </div>
 
 <script>
 
-const text = "SIGNAL LOST...";
+const reconnectBtn = document.getElementById("reconnectBtn");
 
-const signal = document.getElementById("signal");
+const symbolWrap = document.getElementById("symbolWrap");
 
-let i = 0;
+reconnectBtn.addEventListener("click", () => {
 
-/* TYPEWRITER */
+    symbolWrap.classList.add("connected");
 
-function typeSignal(){
+    reconnectBtn.style.opacity = "0";
 
-    if(i < text.length){
+    setTimeout(() => {
 
-        signal.innerHTML += text.charAt(i);
+        document.body.style.transition = "opacity 2s ease";
 
-        /* RANDOM GLITCH */
+        document.body.style.opacity = "0";
 
-        if(Math.random() > .76){
+    }, 2600);
 
-            signal.classList.add("glitch");
-
-            setTimeout(()=>{
-
-                signal.classList.remove("glitch");
-
-            },100);
-
-        }
-
-        i++;
-
-        setTimeout(typeSignal,145);
-
-    } else {
-
-        /* DELAY BEFORE RECONNECT */
-
-        setTimeout(()=>{
-
-            document.getElementById("reconnectBox")
-
-            .style.opacity = 1;
-
-        },1200);
-
-    }
-
-}
-
-/* START AFTER SYMBOL */
-
-setTimeout(typeSignal,5200);
-
-/* RECONNECT */
-
-function reconnect(){
-
-    document.getElementById("symbolWrap")
-
-    .classList.add("open");
-
-    document.getElementById("reconnectBox")
-
-    .style.opacity = 0;
-
-    /* SMALL PAUSE */
-
-    setTimeout(()=>{
-
-        /* WHOLE PAGE FADES */
-
-        document.getElementById("container")
-
-        .classList.add("fade-out");
-
-    },3200);
-
-    /* THIS IS WHERE YOUR VOICE STARTS */
-
-    setTimeout(()=>{
-
-        console.log("START AUDIO");
-
-        /*
-
-        PLACE YOUR AUDIO HERE LATER
-
-        */
-
-    },5200);
-
-}
+});
 
 </script>
 
