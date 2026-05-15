@@ -1,30 +1,312 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>channel 17</title>
+
+<link rel="icon" type="image/png" href="mark17.png">
+
+<style>
+
+*{
+
+    margin:0;
+
+    padding:0;
+
+    box-sizing:border-box;
+
+}
+
+body{
+
+    background:black;
+
+    overflow:hidden;
+
+    height:100vh;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    font-family:Arial, Helvetica, sans-serif;
+
+}
+
+.container{
+
+    position:relative;
+
+    text-align:center;
+
+}
+
+/* SYMBOL */
+
+.symbol-wrap{
+
+    width:220px;
+
+    margin:auto;
+
+    opacity:0;
+
+    animation:
+
+    symbolReveal 3s ease forwards;
+
+    animation-delay:3s;
+
+}
+
+.symbol-base{
+
+    width:100%;
+
+    display:block;
+
+    transition:
+
+    filter 2.8s ease,
+
+    opacity 2.8s ease;
+
+}
+
+/* SYMBOL APPEAR */
+
+@keyframes symbolReveal{
+
+    0%{
+
+        opacity:0;
+
+        transform:scale(.97);
+
+        filter:blur(10px);
+
+    }
+
+    100%{
+
+        opacity:1;
+
+        transform:scale(1);
+
+        filter:blur(0px);
+
+    }
+
+}
+
+/* TEXT LINE */
+
+.text-line{
+
+    position:relative;
+
+    margin-top:26px;
+
+    height:24px;
+
+    font-size:12px;
+
+    letter-spacing:7px;
+
+    color:#9d968b;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+}
+
+/* SIGNAL LOST */
+
+#signalText{
+
+    opacity:0;
+
+    white-space:nowrap;
+
+    overflow:hidden;
+
+}
+
+/* RECONNECT */
+
+#reconnect{
+
+    position:absolute;
+
+    opacity:0;
+
+    color:#7c756b;
+
+    cursor:pointer;
+
+    transition:opacity 1.6s ease;
+
+    animation:
+
+    reconnectPulse 4.6s ease-in-out infinite;
+
+}
+
+/* HEARTBEAT */
+
+@keyframes reconnectPulse{
+
+    0%{
+
+        opacity:.28;
+
+        text-shadow:0 0 0px rgba(255,255,255,0);
+
+    }
+
+    35%{
+
+        opacity:.95;
+
+        text-shadow:
+
+        0 0 7px rgba(255,255,255,.18),
+
+        0 0 18px rgba(255,255,255,.08);
+
+    }
+
+    55%{
+
+        opacity:.4;
+
+    }
+
+    72%{
+
+        opacity:.82;
+
+        text-shadow:
+
+        0 0 8px rgba(255,255,255,.15);
+
+    }
+
+    100%{
+
+        opacity:.28;
+
+        text-shadow:0 0 0px rgba(255,255,255,0);
+
+    }
+
+}
+
+/* CONNECTED */
+
+.connected .symbol-base{
+
+    mask-image:
+
+    radial-gradient(circle at center,
+
+    rgba(0,0,0,1) 0%,
+
+    rgba(0,0,0,1) 36%,
+
+    rgba(0,0,0,.45) 54%,
+
+    rgba(0,0,0,.08) 68%,
+
+    rgba(0,0,0,0) 78%);
+
+    -webkit-mask-image:
+
+    radial-gradient(circle at center,
+
+    rgba(0,0,0,1) 0%,
+
+    rgba(0,0,0,1) 36%,
+
+    rgba(0,0,0,.45) 54%,
+
+    rgba(0,0,0,.08) 68%,
+
+    rgba(0,0,0,0) 78%);
+
+    filter:brightness(1.04);
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container" id="container">
+
+    <div class="symbol-wrap">
+
+        <img src="mark17.png" class="symbol-base">
+
+    </div>
+
+    <div class="text-line">
+
+        <div id="signalText"></div>
+
+        <div id="reconnect">
+
+            reconnect
+
+        </div>
+
+    </div>
+
+</div>
+
 <script>
 
-const signalText = document.getElementById("signalText");
+const signalText =
 
-const reconnect = document.getElementById("reconnect");
+document.getElementById("signalText");
 
-const container = document.getElementById("container");
+const reconnect =
 
-/* START EMPTY */
+document.getElementById("reconnect");
 
-signalText.innerHTML = "";
+const container =
 
-reconnect.style.opacity = "0";
+document.getElementById("container");
 
-/* TIMING */
+/* START */
 
-const introDelay = 4200;
+setTimeout(startSignal, 5800);
 
-/* TYPE "signal lost" */
+/* TYPE SIGNAL LOST */
 
-setTimeout(() => {
+function startSignal(){
+
+    signalText.style.opacity = ".72";
 
     let text = "signal lost";
 
     let i = 0;
 
-    const typeInterval = setInterval(() => {
+    const typing = setInterval(() => {
 
         signalText.innerHTML += text.charAt(i);
 
@@ -32,47 +314,43 @@ setTimeout(() => {
 
         if(i >= text.length){
 
-            clearInterval(typeInterval);
+            clearInterval(typing);
 
-            /* SMALL PAUSE BEFORE DOTS */
-
-            setTimeout(startDots, 650);
+            setTimeout(startDots, 700);
 
         }
 
     }, 110);
 
-}, introDelay);
+}
 
-/* DOT PULSE */
+/* DOT LOOP */
 
 function startDots(){
 
-    let dotCount = 0;
+    let dots = 0;
 
-    const dotInterval = setInterval(() => {
+    const loop = setInterval(() => {
 
-        dotCount++;
+        dots++;
 
         signalText.innerHTML =
 
-        "signal lost" + ".".repeat(dotCount);
+        "signal lost" + ".".repeat(dots);
 
-        if(dotCount >= 3){
+        if(dots >= 3){
 
-            dotCount = 0;
+            dots = 0;
 
         }
 
     }, 650);
 
-    /* AFTER 4 PULSES */
+    /* AFTER SEVERAL LOOPS */
 
     setTimeout(() => {
 
-        clearInterval(dotInterval);
-
-        /* TEXT FADES OUT */
+        clearInterval(loop);
 
         signalText.style.transition =
 
@@ -80,39 +358,19 @@ function startDots(){
 
         signalText.style.opacity = "0";
 
-        /* RECONNECT TAKES OVER SAME SPACE */
-
         setTimeout(() => {
 
-            signalText.innerHTML = "";
-
-            reconnect.style.position = "absolute";
-
-            reconnect.style.left = "50%";
-
-            reconnect.style.transform =
-
-            "translateX(-50%)";
-
-            reconnect.style.top =
-
-            signalText.offsetTop + "px";
-
-            reconnect.style.opacity = ".72";
+            reconnect.style.opacity = ".75";
 
         }, 1800);
 
-    }, 8500);
+    }, 7600);
 
 }
 
-/* CLICK RECONNECT */
+/* CLICK */
 
 reconnect.addEventListener("click", () => {
-
-    reconnect.style.transition =
-
-    "opacity 1.2s ease";
 
     reconnect.style.opacity = "0";
 
@@ -122,7 +380,7 @@ reconnect.addEventListener("click", () => {
 
         document.body.style.transition =
 
-        "opacity 2.5s ease";
+        "opacity 2.2s ease";
 
         document.body.style.opacity = "0";
 
@@ -131,3 +389,7 @@ reconnect.addEventListener("click", () => {
 });
 
 </script>
+
+</body>
+
+</html>
