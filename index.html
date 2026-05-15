@@ -1,384 +1,118 @@
-<!DOCTYPE html>
-
-<html lang="en">
-
-<head>
-
-<meta charset="UTF-8">
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>channel 17</title>
-
-<link rel="icon" type="image/png" href="mark17.png">
-
-<style>
-
-*{
-
-    margin:0;
-
-    padding:0;
-
-    box-sizing:border-box;
-
-}
-
-body{
-
-    background:black;
-
-    overflow:hidden;
-
-    height:100vh;
-
-    display:flex;
-
-    justify-content:center;
-
-    align-items:center;
-
-    font-family:Arial, Helvetica, sans-serif;
-
-    color:#b7aea1;
-
-}
-
-.container{
-
-    text-align:center;
-
-    position:relative;
-
-}
-
-.symbol-wrap{
-
-    position:relative;
-
-    width:240px;
-
-    margin:auto;
-
-    opacity:0;
-
-    animation:
-
-    symbolReveal 4s ease forwards;
-
-    animation-delay:6.5s;
-
-}
-
-.symbol-base{
-
-    width:100%;
-
-    display:block;
-
-}
-
-/* triangle dissolves */
-
-.triangle-fade{
-
-    position:absolute;
-
-    inset:0;
-
-    pointer-events:none;
-
-}
-
-.triangle-fade::before,
-
-.triangle-fade::after{
-
-    content:"";
-
-    position:absolute;
-
-    background:black;
-
-    opacity:0;
-
-    transition:opacity 2.8s ease;
-
-}
-
-.triangle-fade::before{
-
-    width:14px;
-
-    height:240px;
-
-    left:28px;
-
-    top:-5px;
-
-    transform:rotate(28deg);
-
-}
-
-.triangle-fade::after{
-
-    width:14px;
-
-    height:240px;
-
-    right:28px;
-
-    top:-5px;
-
-    transform:rotate(-28deg);
-
-}
-
-.bottom-fade{
-
-    position:absolute;
-
-    width:170px;
-
-    height:12px;
-
-    background:black;
-
-    left:35px;
-
-    bottom:12px;
-
-    opacity:0;
-
-    transition:opacity 2.8s ease;
-
-}
-
-.container.connected .triangle-fade::before,
-
-.container.connected .triangle-fade::after,
-
-.container.connected .bottom-fade{
-
-    opacity:1;
-
-}
-
-/* signal lost typing */
-
-.signal-text{
-
-    margin-top:38px;
-
-    font-size:18px;
-
-    letter-spacing:12px;
-
-    color:#b7aea1;
-
-    white-space:nowrap;
-
-    overflow:hidden;
-
-    width:0;
-
-    opacity:0;
-
-    margin-left:auto;
-
-    margin-right:auto;
-
-    animation:
-
-    showText 0s forwards,
-
-    typing 3s steps(14,end) forwards;
-
-    animation-delay:
-
-    9.8s,
-
-    9.8s;
-
-}
-
-@keyframes typing{
-
-    from{ width:0 }
-
-    to{ width:100% }
-
-}
-
-@keyframes showText{
-
-    to{ opacity:1 }
-
-}
-
-/* reconnect */
-
-.reconnect{
-
-    margin-top:34px;
-
-    font-size:18px;
-
-    letter-spacing:10px;
-
-    color:#6e675d;
-
-    opacity:0;
-
-    cursor:pointer;
-
-    transition:opacity 1s ease;
-
-    animation:
-
-    reconnectAppear 1s ease forwards,
-
-    reconnectPulse 3.5s ease-in-out infinite;
-
-    animation-delay:
-
-    15s,
-
-    16s;
-
-}
-
-@keyframes reconnectAppear{
-
-    from{
-
-        opacity:0;
-
-    }
-
-    to{
-
-        opacity:.75;
-
-    }
-
-}
-
-@keyframes reconnectPulse{
-
-    0%{
-
-        opacity:.45;
-
-        text-shadow:0 0 0px rgba(255,255,255,0);
-
-    }
-
-    50%{
-
-        opacity:.85;
-
-        text-shadow:0 0 8px rgba(255,255,255,.18);
-
-    }
-
-    100%{
-
-        opacity:.45;
-
-        text-shadow:0 0 0px rgba(255,255,255,0);
-
-    }
-
-}
-
-/* fade out signal text */
-
-.fade-away{
-
-    animation:fadeAway 1.5s ease forwards;
-
-}
-
-@keyframes fadeAway{
-
-    to{
-
-        opacity:0;
-
-    }
-
-}
-
-/* symbol intro */
-
-@keyframes symbolReveal{
-
-    0%{
-
-        opacity:0;
-
-        transform:scale(.96);
-
-        filter:blur(10px);
-
-    }
-
-    100%{
-
-        opacity:1;
-
-        transform:scale(1);
-
-        filter:blur(0px);
-
-    }
-
-}
-
-</style>
-
-</head>
-
-<body>
-
-<div class="container" id="container">
-
-    <div class="symbol-wrap">
-
-        <img src="mark17.png" class="symbol-base">
-
-        <div class="triangle-fade"></div>
-
-        <div class="bottom-fade"></div>
-
-    </div>
-
-    <div class="signal-text" id="signalText">
-
-        signal lost...
-
-    </div>
-
-    <div class="reconnect" id="reconnect">
-
-        reconnect
-
-    </div>
-
-</div>
-
 <script>
-
-const reconnect = document.getElementById("reconnect");
 
 const signalText = document.getElementById("signalText");
 
+const reconnect = document.getElementById("reconnect");
+
 const container = document.getElementById("container");
+
+/* START EMPTY */
+
+signalText.innerHTML = "";
+
+reconnect.style.opacity = "0";
+
+/* TIMING */
+
+const introDelay = 4200;
+
+/* TYPE "signal lost" */
+
+setTimeout(() => {
+
+    let text = "signal lost";
+
+    let i = 0;
+
+    const typeInterval = setInterval(() => {
+
+        signalText.innerHTML += text.charAt(i);
+
+        i++;
+
+        if(i >= text.length){
+
+            clearInterval(typeInterval);
+
+            /* SMALL PAUSE BEFORE DOTS */
+
+            setTimeout(startDots, 650);
+
+        }
+
+    }, 110);
+
+}, introDelay);
+
+/* DOT PULSE */
+
+function startDots(){
+
+    let dotCount = 0;
+
+    const dotInterval = setInterval(() => {
+
+        dotCount++;
+
+        signalText.innerHTML =
+
+        "signal lost" + ".".repeat(dotCount);
+
+        if(dotCount >= 3){
+
+            dotCount = 0;
+
+        }
+
+    }, 650);
+
+    /* AFTER 4 PULSES */
+
+    setTimeout(() => {
+
+        clearInterval(dotInterval);
+
+        /* TEXT FADES OUT */
+
+        signalText.style.transition =
+
+        "opacity 1.8s ease";
+
+        signalText.style.opacity = "0";
+
+        /* RECONNECT TAKES OVER SAME SPACE */
+
+        setTimeout(() => {
+
+            signalText.innerHTML = "";
+
+            reconnect.style.position = "absolute";
+
+            reconnect.style.left = "50%";
+
+            reconnect.style.transform =
+
+            "translateX(-50%)";
+
+            reconnect.style.top =
+
+            signalText.offsetTop + "px";
+
+            reconnect.style.opacity = ".72";
+
+        }, 1800);
+
+    }, 8500);
+
+}
+
+/* CLICK RECONNECT */
 
 reconnect.addEventListener("click", () => {
 
-    signalText.classList.add("fade-away");
+    reconnect.style.transition =
+
+    "opacity 1.2s ease";
 
     reconnect.style.opacity = "0";
 
@@ -386,16 +120,14 @@ reconnect.addEventListener("click", () => {
 
     setTimeout(() => {
 
-        document.body.style.transition = "opacity 2s ease";
+        document.body.style.transition =
+
+        "opacity 2.5s ease";
 
         document.body.style.opacity = "0";
 
-    }, 3200);
+    }, 4200);
 
 });
 
 </script>
-
-</body>
-
-</html>
