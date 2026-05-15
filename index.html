@@ -4,259 +4,233 @@
 
 <head>
 
-<meta charset="UTF-8">
+<meta charset="UTF-8" />
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
 <title>CHANNEL 17</title>
 
 <style>
 
-* {
+body{
 
-    margin: 0;
+    margin:0;
 
-    padding: 0;
+    background:black;
 
-    box-sizing: border-box;
+    overflow:hidden;
 
-}
+    font-family:Arial, sans-serif;
 
-body {
+    display:flex;
 
-    background: black;
+    justify-content:center;
 
-    overflow: hidden;
+    align-items:center;
 
-    width: 100vw;
+    height:100vh;
 
-    height: 100vh;
-
-    display: flex;
-
-    justify-content: center;
-
-    align-items: center;
-
-    font-family: Arial, Helvetica, sans-serif;
+    color:#d8d2bf;
 
 }
 
-.container {
+.container{
 
-    display: flex;
+    text-align:center;
 
-    flex-direction: column;
-
-    align-items: center;
+    position:relative;
 
 }
 
-/* SYMBOL */
+.symbol{
 
-.logo {
+    width:180px;
 
-    width: 220px;
+    opacity:0;
 
-    opacity: 0;
+    animation:fadeIn 4s ease forwards;
 
-    animation: logoFade 4s ease forwards;
-
-    animation-delay: 2s;
-
-    filter: drop-shadow(0 0 12px rgba(255,255,255,0.08));
+    filter:drop-shadow(0 0 8px rgba(255,255,255,.08));
 
 }
 
-/* SIGNAL */
+@keyframes fadeIn{
 
-.signal-wrap {
+    from{
 
-    width: 520px;
+        opacity:0;
 
-    margin-top: 42px;
-
-    min-height: 40px;
-
-    text-align: center;
-
-}
-
-#signal-text {
-
-    color: rgba(255,255,255,0.72);
-
-    font-size: 1.65rem;
-
-    letter-spacing: 10px;
-
-    text-transform: uppercase;
-
-    white-space: nowrap;
-
-}
-
-.dots {
-
-    opacity: 0;
-
-    color: rgba(255,255,255,0.72);
-
-    font-size: 1.65rem;
-
-    letter-spacing: 4px;
-
-}
-
-.dots span {
-
-    opacity: 0;
-
-    animation: blinkDots 1.8s infinite;
-
-}
-
-.dots span:nth-child(1) {
-
-    animation-delay: 0s;
-
-}
-
-.dots span:nth-child(2) {
-
-    animation-delay: 0.3s;
-
-}
-
-.dots span:nth-child(3) {
-
-    animation-delay: 0.6s;
-
-}
-
-/* RECONNECT */
-
-.reconnect {
-
-    margin-top: 55px;
-
-    text-decoration: none;
-
-    color: rgba(255,255,255,0.18);
-
-    letter-spacing: 10px;
-
-    font-size: 1.1rem;
-
-    opacity: 0;
-
-    transition: all 2s ease;
-
-}
-
-/* ACTIVE RECONNECT */
-
-.reconnect.active {
-
-    opacity: 1;
-
-    color: #b8b09a;
-
-    text-shadow:
-
-    0 0 8px rgba(184,176,154,0.4),
-
-    0 0 18px rgba(184,176,154,0.2);
-
-    animation: reconnectPulse 3s ease-in-out infinite;
-
-}
-
-/* ANIMATIONS */
-
-@keyframes logoFade {
-
-    from {
-
-        opacity: 0;
-
-        transform: scale(0.92);
+        transform:scale(.98);
 
     }
 
-    to {
+    to{
 
-        opacity: 1;
+        opacity:1;
 
-        transform: scale(1);
+        transform:scale(1);
 
     }
 
 }
 
-@keyframes blinkDots {
+.signal-text{
 
-    0% {
+    margin-top:28px;
 
-        opacity: 0;
+    font-size:18px;
+
+    letter-spacing:8px;
+
+    min-height:24px;
+
+    text-align:left;
+
+    width:320px;
+
+    margin-left:auto;
+
+    margin-right:auto;
+
+    opacity:.92;
+
+}
+
+.reconnect{
+
+    margin-top:30px;
+
+    opacity:0;
+
+    transition:opacity 2s ease;
+
+}
+
+.reconnect button{
+
+    background:none;
+
+    border:1px solid rgba(216,210,191,.35);
+
+    color:#d8d2bf;
+
+    padding:10px 22px;
+
+    letter-spacing:4px;
+
+    font-size:12px;
+
+    cursor:pointer;
+
+    transition:.4s ease;
+
+}
+
+.reconnect button:hover{
+
+    background:rgba(216,210,191,.08);
+
+    border-color:#d8d2bf;
+
+}
+
+.glitch{
+
+    animation:glitch .18s linear;
+
+}
+
+@keyframes glitch{
+
+    0%{
+
+        transform:translate(0px,0px);
+
+        opacity:1;
 
     }
 
-    25% {
+    20%{
 
-        opacity: 1;
+        transform:translate(-1px,1px);
 
     }
 
-    100% {
+    40%{
 
-        opacity: 0;
+        transform:translate(1px,-1px);
+
+    }
+
+    60%{
+
+        transform:translate(-1px,0px);
+
+        opacity:.85;
+
+    }
+
+    100%{
+
+        transform:translate(0px,0px);
+
+        opacity:1;
 
     }
 
 }
 
-@keyframes reconnectPulse {
+/* WALL ANIMATION */
 
-    0% {
+.wall{
 
-        opacity: 0.45;
+    transition:2.8s ease;
 
-    }
-
-    50% {
-
-        opacity: 1;
-
-    }
-
-    100% {
-
-        opacity: 0.45;
-
-    }
+    transform-origin:center;
 
 }
 
-.fade-out {
+.symbol.open .left-wall{
 
-    animation: fadeOut 2s ease forwards;
+    transform:translate(-55px,-10px);
+
+    opacity:0;
 
 }
 
-@keyframes fadeOut {
+.symbol.open .right-wall{
 
-    from {
+    transform:translate(55px,-10px);
 
-        opacity: 1;
+    opacity:0;
 
-    }
+}
 
-    to {
+.symbol.open .bottom-wall{
 
-        opacity: 0;
+    transform:translateY(45px);
 
-    }
+    opacity:0;
+
+}
+
+.center-bars{
+
+    transition:1.8s ease;
+
+}
+
+.symbol.open .center-bars{
+
+    opacity:1;
+
+    filter:brightness(1.15);
+
+}
+
+.hidden{
+
+    display:none;
 
 }
 
@@ -268,81 +242,147 @@ body {
 
 <div class="container">
 
-    <img src="./mark17.png?v=4" class="logo">
+<svg class="symbol" id="symbol" viewBox="0 0 300 300">
 
-    <div class="signal-wrap" id="signal-wrap">
+    <!-- LEFT WALL -->
 
-        <span id="signal-text"></span>
+    <line class="wall left-wall"
 
-        <span class="dots" id="dots">
+          x1="60" y1="240"
 
-            <span>.</span>
+          x2="150" y2="60"
 
-            <span>.</span>
+          stroke="#d8d2bf"
 
-            <span>.</span>
+          stroke-width="6"/>
 
-        </span>
+    <!-- RIGHT WALL -->
 
-    </div>
+    <line class="wall right-wall"
 
-    <a class="reconnect" id="reconnect" href="#">
+          x1="150" y1="60"
 
-        reconnect
+          x2="240" y2="240"
 
-    </a>
+          stroke="#d8d2bf"
+
+          stroke-width="6"/>
+
+    <!-- BOTTOM WALL -->
+
+    <line class="wall bottom-wall"
+
+          x1="60" y1="240"
+
+          x2="240" y2="240"
+
+          stroke="#d8d2bf"
+
+          stroke-width="6"/>
+
+    <!-- CENTER -->
+
+    <g class="center-bars">
+
+        <rect x="118" y="95" width="12" height="110"
+
+              rx="6" fill="#d8d2bf"/>
+
+        <rect x="142" y="110" width="12" height="95"
+
+              rx="6" fill="#d8d2bf"
+
+              opacity=".85"/>
+
+        <rect x="166" y="125" width="12" height="80"
+
+              rx="6" fill="#d8d2bf"
+
+              opacity=".65"/>
+
+        <circle cx="92" cy="165" r="5"
+
+                fill="#d8d2bf"/>
+
+        <circle cx="92" cy="190" r="5"
+
+                fill="#d8d2bf"
+
+                opacity=".8"/>
+
+    </g>
+
+</svg>
+
+<div class="signal-text" id="signal"></div>
+
+<div class="reconnect" id="reconnectBox">
+
+    <button onclick="reconnect()">RECONNECT</button>
+
+</div>
 
 </div>
 
 <script>
 
-const text = "SIGNAL LOST";
+const text = "SIGNAL LOST...";
 
-const target = document.getElementById("signal-text");
-
-const dots = document.getElementById("dots");
-
-const reconnect = document.getElementById("reconnect");
-
-const signalWrap = document.getElementById("signal-wrap");
+const signal = document.getElementById("signal");
 
 let i = 0;
 
-function typeText() {
+function typeSignal(){
 
-    if (i < text.length) {
+    if(i < text.length){
 
-        target.innerHTML += text.charAt(i);
+        signal.innerHTML += text.charAt(i);
+
+        if(Math.random() > .72){
+
+            signal.classList.add("glitch");
+
+            setTimeout(()=>{
+
+                signal.classList.remove("glitch");
+
+            },120);
+
+        }
 
         i++;
 
-        setTimeout(typeText, 180);
+        setTimeout(typeSignal, 140);
+
+    } else {
+
+        setTimeout(()=>{
+
+            document.getElementById("reconnectBox").style.opacity = 1;
+
+        },900);
 
     }
 
 }
 
-setTimeout(typeText, 6200);
+setTimeout(typeSignal, 4200);
 
-setTimeout(() => {
+function reconnect(){
 
-    dots.style.opacity = "1";
+    const symbol = document.getElementById("symbol");
 
-}, 8600);
+    symbol.classList.add("open");
 
-/* AFTER 17 SECONDS */
+    document.getElementById("reconnectBox").style.opacity = 0;
 
-setTimeout(() => {
+    setTimeout(()=>{
 
-    signalWrap.classList.add("fade-out");
+        signal.innerHTML = "RECONNECTED";
 
-}, 17000);
+    },1800);
 
-setTimeout(() => {
-
-    reconnect.classList.add("active");
-
-}, 18800);
+}
 
 </script>
 
