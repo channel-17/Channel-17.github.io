@@ -6,11 +6,11 @@
 
   <meta charset="UTF-8" />
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
   <title>channel 17</title>
 
-  <link rel="icon" type="image/png" href="mark17.png" />
+  <link rel="icon" type="image/png" href="mark17.png"/>
 
   <style>
 
@@ -34,7 +34,13 @@
 
       width:100vw;
 
-      font-family: "Courier New", monospace;
+      display:flex;
+
+      justify-content:center;
+
+      align-items:center;
+
+      font-family:"Courier New", monospace;
 
       color:#d8d2c8;
 
@@ -58,6 +64,8 @@
 
       background:#000;
 
+      transition:background 4s ease;
+
     }
 
     /* SYMBOL */
@@ -74,9 +82,9 @@
 
       animation:
 
-        symbolAppear 4.8s ease-out forwards;
+      symbolAppear 4.8s ease-out forwards;
 
-      animation-delay:2.8s;
+      animation-delay:2.2s;
 
     }
 
@@ -104,15 +112,21 @@
 
       transition:
 
-        opacity 3.2s ease,
+      opacity 5.8s ease,
 
-        filter 3.2s ease;
+      filter 5.8s ease,
+
+      transform 5.8s ease;
 
     }
 
     .inner-symbol{
 
       z-index:1;
+
+      transition:
+
+      filter 4s ease;
 
     }
 
@@ -130,13 +144,13 @@
 
       35%{
 
-        opacity:.12;
+        opacity:.08;
 
       }
 
       65%{
 
-        opacity:.45;
+        opacity:.42;
 
       }
 
@@ -152,7 +166,7 @@
 
     }
 
-    /* BIG GLITCH */
+    /* GLITCH */
 
     .glitch{
 
@@ -234,7 +248,7 @@
 
     }
 
-    /* TEXT AREA */
+    /* TEXT */
 
     .text-zone{
 
@@ -290,17 +304,19 @@
 
       cursor:pointer;
 
-      transition:opacity .6s ease;
-
       user-select:none;
+
+      transition:opacity .8s ease;
 
     }
 
-    /* reconnect “activation” */
+    /* RECONNECT PULSE */
 
     .reconnect.live{
 
-      animation:reconnectPulse 3.2s ease-in-out infinite;
+      animation:
+
+      reconnectPulse 2.55s ease-in-out infinite;
 
     }
 
@@ -308,63 +324,71 @@
 
       0%{
 
-        opacity:.18;
+        opacity:.14;
 
         text-shadow:
 
-          0 0 0px rgba(255,255,255,0);
+        0 0 0px rgba(255,255,255,0);
 
       }
 
-      30%{
+      22%{
 
-        opacity:.42;
+        opacity:.36;
 
         text-shadow:
 
-          0 0 4px rgba(255,255,255,.10);
+        0 0 5px rgba(255,255,255,.08);
 
       }
 
-      55%{
+      48%{
 
-        opacity:.72;
+        opacity:.82;
 
         text-shadow:
 
-          0 0 8px rgba(255,255,255,.16);
+        0 0 10px rgba(255,255,255,.18),
+
+        0 0 20px rgba(255,255,255,.08);
 
       }
 
-      75%{
+      72%{
 
-        opacity:.45;
+        opacity:.44;
 
         text-shadow:
 
-          0 0 5px rgba(255,255,255,.08);
+        0 0 6px rgba(255,255,255,.08);
 
       }
 
       100%{
 
-        opacity:.22;
+        opacity:.18;
 
         text-shadow:
 
-          0 0 0px rgba(255,255,255,0);
+        0 0 0px rgba(255,255,255,0);
 
       }
 
     }
 
-    /* dissolve climax */
+    /* DISSOLVE */
 
     .outer-symbol.dissolve{
 
       opacity:0;
 
-      filter:blur(10px);
+      filter:
+
+      blur(18px)
+
+      brightness(.35);
+
+      transform:scale(1.12);
 
     }
 
@@ -374,23 +398,37 @@
 
 <body>
 
-<div class="screen">
+<div class="screen" id="screen">
 
   <div class="symbol-wrap">
 
-    <img src="Inner17-final.png" class="inner-symbol" />
+    <img src="Inner17-final.png"
 
-    <img src="Outer17-final.png" class="outer-symbol" id="outerSymbol" />
+         class="inner-symbol"
 
-    <div class="glitch" id="glitch"></div>
+         id="innerSymbol" />
+
+    <img src="Outer17-final.png"
+
+         class="outer-symbol"
+
+         id="outerSymbol" />
+
+    <div class="glitch"
+
+         id="glitch"></div>
 
   </div>
 
   <div class="text-zone">
 
-    <div class="signal-line" id="signalLine"></div>
+    <div class="signal-line"
 
-    <div class="reconnect" id="reconnect">
+         id="signalLine"></div>
+
+    <div class="reconnect"
+
+         id="reconnect">
 
       reconnect
 
@@ -402,27 +440,43 @@
 
 <script>
 
-  const signalLine = document.getElementById("signalLine");
+  const signalLine =
 
-  const reconnect = document.getElementById("reconnect");
+  document.getElementById("signalLine");
 
-  const outerSymbol = document.getElementById("outerSymbol");
+  const reconnect =
 
-  const glitch = document.getElementById("glitch");
+  document.getElementById("reconnect");
+
+  const outerSymbol =
+
+  document.getElementById("outerSymbol");
+
+  const innerSymbol =
+
+  document.getElementById("innerSymbol");
+
+  const glitch =
+
+  document.getElementById("glitch");
+
+  const screen =
+
+  document.getElementById("screen");
 
   const phrase = "signal lost";
 
   let index = 0;
 
-  /* timing flow */
+  /* GLITCH */
 
   setTimeout(() => {
 
     glitch.classList.add("active");
 
-  }, 7300);
+  }, 6900);
 
-  /* pause after glitch before typing */
+  /* TYPE */
 
   setTimeout(() => {
 
@@ -430,19 +484,21 @@
 
     typePhrase();
 
-  }, 8600);
+  }, 8300);
 
   function typePhrase(){
 
     if(index < phrase.length){
 
-      signalLine.innerHTML += phrase.charAt(index);
+      signalLine.innerHTML +=
+
+      phrase.charAt(index);
 
       index++;
 
-      /* slower human typewriter feel */
+      /* slower human pacing */
 
-      setTimeout(typePhrase, 165);
+      setTimeout(typePhrase, 195);
 
     } else {
 
@@ -452,7 +508,7 @@
 
   }
 
-  /* searching dots */
+  /* SEARCHING */
 
   function beginDots(){
 
@@ -476,7 +532,7 @@
 
           signalLine.innerHTML =
 
-            "signal lost" + ".".repeat(dot);
+          "signal lost" + ".".repeat(dot);
 
           dot++;
 
@@ -484,11 +540,13 @@
 
         } else {
 
-          signalLine.innerHTML = "signal lost";
+          signalLine.innerHTML =
+
+          "signal lost";
 
           cycle++;
 
-          setTimeout(runCycle, 500);
+          setTimeout(runCycle, 550);
 
         }
 
@@ -498,17 +556,17 @@
 
     }
 
-    setTimeout(runCycle, 600);
+    setTimeout(runCycle, 700);
 
   }
 
-  /* fade signal out */
+  /* FADE SIGNAL */
 
   function fadeSignalOut(){
 
     signalLine.style.transition =
 
-      "opacity 1.8s ease";
+    "opacity 2.2s ease";
 
     signalLine.style.opacity = 0;
 
@@ -516,43 +574,63 @@
 
       activateReconnect();
 
-    }, 1200);
+    }, 1500);
 
   }
 
-  /* reconnect emerges */
+  /* ACTIVATE */
 
   function activateReconnect(){
 
-    reconnect.style.opacity = .15;
+    reconnect.style.opacity = .12;
 
     setTimeout(() => {
 
       reconnect.classList.add("live");
 
-    }, 700);
+    }, 800);
 
   }
 
-  /* click climax */
+  /* CLICK */
 
   reconnect.addEventListener("click", () => {
 
     reconnect.style.pointerEvents = "none";
 
+    /* kill pulse immediately */
+
+    reconnect.classList.remove("live");
+
+    reconnect.style.animation = "none";
+
     reconnect.style.transition =
 
-      "opacity 1.2s ease";
+    "opacity 2.2s ease";
 
     reconnect.style.opacity = 0;
 
-    /* slow emotional dissolve */
+    /* emotional pause */
 
     setTimeout(() => {
 
       outerSymbol.classList.add("dissolve");
 
-    }, 900);
+      screen.style.background =
+
+      "#020202";
+
+      innerSymbol.style.filter =
+
+      `
+
+      drop-shadow(0 0 10px rgba(255,245,220,.10))
+
+      drop-shadow(0 0 28px rgba(255,245,220,.08))
+
+      `;
+
+    }, 1400);
 
   });
 
