@@ -40,7 +40,7 @@ body{
 
     align-items:center;
 
-    font-family:Arial, Helvetica, sans-serif;
+    font-family:"Courier New", monospace;
 
     color:#d7cdbd;
 
@@ -58,7 +58,7 @@ body{
 
     justify-content:center;
 
-    transform:translateY(-22px);
+    transform:translateY(-32px);
 
 }
 
@@ -100,7 +100,7 @@ body{
 
         transform:translateX(-8px);
 
-        filter:brightness(2.5);
+        filter:brightness(2.8);
 
     }
 
@@ -108,7 +108,7 @@ body{
 
         transform:translateX(7px);
 
-        filter:brightness(.45);
+        filter:brightness(.35);
 
     }
 
@@ -138,7 +138,7 @@ body{
 
 .text-area{
 
-    margin-top:34px;
+    margin-top:24px;
 
     min-height:38px;
 
@@ -156,15 +156,15 @@ body{
 
 #line{
 
-    font-size:1.52rem;
+    font-size:1.42rem;
 
-    letter-spacing:.48rem;
+    letter-spacing:.34rem;
 
-    color:#d3cab9;
+    color:#d8cfbf;
 
     opacity:0;
 
-    transition:opacity 1.2s ease;
+    transition:opacity 1.3s ease;
 
     white-space:nowrap;
 
@@ -176,11 +176,11 @@ body{
 
     position:absolute;
 
-    font-size:1.52rem;
+    font-size:1.42rem;
 
-    letter-spacing:.48rem;
+    letter-spacing:.34rem;
 
-    color:#948a7d;
+    color:#8f8578;
 
     opacity:0;
 
@@ -196,29 +196,31 @@ body{
 
 }
 
-/* ACTIVE PULSE */
+/* ACTIVATION */
 
 #reconnect.active{
 
-    animation:pulse 2.8s ease-in-out infinite;
+    animation:
+
+    awaken 5.5s ease-in-out infinite;
 
 }
 
-@keyframes pulse{
+/* HUNTING PULSE */
+
+@keyframes awaken{
 
     0%{
 
-        opacity:.22;
+        opacity:.10;
 
         transform:scale(1);
 
-        letter-spacing:.48rem;
-
         filter:
 
-            blur(.4px)
+            blur(.6px)
 
-            brightness(.82);
+            brightness(.72);
 
         text-shadow:
 
@@ -226,41 +228,103 @@ body{
 
     }
 
-    50%{
+    18%{
 
-        opacity:.92;
+        opacity:.22;
 
-        transform:scale(1.018);
+        transform:scale(1.004);
 
-        letter-spacing:.52rem;
+        filter:
+
+            blur(.3px)
+
+            brightness(.88);
+
+    }
+
+    34%{
+
+        opacity:.94;
+
+        transform:scale(1.026);
 
         filter:
 
             blur(0px)
 
-            brightness(1.18);
+            brightness(1.42);
 
         text-shadow:
 
-            0 0 6px rgba(255,255,255,.08),
+            0 0 8px rgba(255,255,255,.10),
 
-            0 0 18px rgba(255,255,255,.06);
+            0 0 22px rgba(255,255,255,.08),
+
+            0 0 42px rgba(255,255,255,.03);
+
+    }
+
+    42%{
+
+        opacity:.26;
+
+        transform:scale(1.003);
+
+        filter:
+
+            blur(.25px)
+
+            brightness(.84);
+
+    }
+
+    58%{
+
+        opacity:.16;
+
+        transform:scale(1);
+
+        filter:
+
+            blur(.5px)
+
+            brightness(.76);
+
+    }
+
+    74%{
+
+        opacity:.98;
+
+        transform:scale(1.03);
+
+        filter:
+
+            blur(0px)
+
+            brightness(1.55);
+
+        text-shadow:
+
+            0 0 10px rgba(255,255,255,.12),
+
+            0 0 28px rgba(255,255,255,.09),
+
+            0 0 52px rgba(255,255,255,.04);
 
     }
 
     100%{
 
-        opacity:.22;
+        opacity:.10;
 
         transform:scale(1);
 
-        letter-spacing:.48rem;
-
         filter:
 
-            blur(.4px)
+            blur(.6px)
 
-            brightness(.82);
+            brightness(.72);
 
         text-shadow:
 
@@ -302,7 +366,9 @@ const line = document.getElementById("line");
 
 const reconnect = document.getElementById("reconnect");
 
-const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+const sleep = (ms) =>
+
+new Promise(resolve => setTimeout(resolve, ms));
 
 async function runSequence(){
 
@@ -310,21 +376,25 @@ async function runSequence(){
 
     await sleep(3200);
 
-    /* SYMBOL BLEEDS IN */
+    /* SYMBOL EMERGES */
 
-    symbol.style.transition = "opacity 2.7s ease";
+    symbol.style.transition =
+
+    "opacity 2.7s ease";
 
     symbol.style.opacity = ".93";
 
     await sleep(2700);
 
-    /* BIG GLITCH HIT */
+    /* GLITCH */
 
     symbol.classList.add("glitch");
 
-    await sleep(500);
+    /* PAUSE AFTER GLITCH */
 
-    /* START TYPEWRITER */
+    await sleep(900);
+
+    /* TYPEWRITER */
 
     line.style.opacity = "1";
 
@@ -366,7 +436,7 @@ async function runSequence(){
 
     await sleep(700);
 
-    /* SEARCHING DOTS */
+    /* SEARCH LOOP */
 
     for(let cycle = 0; cycle < 3; cycle++){
 
@@ -392,15 +462,15 @@ async function runSequence(){
 
     await sleep(500);
 
-    /* FADE SIGNAL LOST AWAY */
+    /* FADE SIGNAL */
 
     line.style.opacity = "0";
 
-    await sleep(1300);
+    await sleep(1400);
 
-    /* GHOST RECONNECT */
+    /* GHOST APPEAR */
 
-    reconnect.style.opacity = ".14";
+    reconnect.style.opacity = ".08";
 
     await sleep(1200);
 
