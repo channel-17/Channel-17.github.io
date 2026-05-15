@@ -10,8 +10,6 @@
 
 <title>channel 17</title>
 
-<!-- favicon -->
-
 <link rel="icon" type="image/png" href="mark17.png"/>
 
 <style>
@@ -28,13 +26,13 @@
 
 body{
 
-    background:#000;
-
-    overflow:hidden;
-
     width:100vw;
 
     height:100vh;
+
+    overflow:hidden;
+
+    background:#000;
 
     display:flex;
 
@@ -44,11 +42,11 @@ body{
 
     font-family:Arial, Helvetica, sans-serif;
 
-    color:#d8d1c2;
+    color:#d7cdbd;
 
 }
 
-/* MAIN WRAP */
+/* MAIN AREA */
 
 .container{
 
@@ -60,13 +58,7 @@ body{
 
     justify-content:center;
 
-    gap:28px;
-
-    opacity:0;
-
-    animation:symbolFade 2.5s ease forwards;
-
-    animation-delay:3.5s;
+    transform:translateY(-28px);
 
 }
 
@@ -76,63 +68,103 @@ body{
 
     width:220px;
 
-    opacity:.92;
+    opacity:0;
 
     filter:
 
         drop-shadow(0 0 4px rgba(255,245,220,.08))
 
-        drop-shadow(0 0 10px rgba(255,245,220,.05));
+        drop-shadow(0 0 12px rgba(255,245,220,.05));
 
 }
 
-/* GLITCH FLASH */
+/* BIG GLITCH */
 
-.glitchFlash{
+.glitch{
 
-    animation:flash .16s linear 2;
+    animation:glitch .22s linear 2;
 
 }
 
-@keyframes flash{
+@keyframes glitch{
 
-    0%{ transform:translateX(0px); filter:brightness(1);}
+    0%{
 
-    20%{ transform:translateX(-4px); filter:brightness(2);}
+        transform:translateX(0px);
 
-    40%{ transform:translateX(5px); filter:brightness(.3);}
+        filter:brightness(1);
 
-    60%{ transform:translateX(-2px);}
+    }
 
-    100%{ transform:translateX(0px);}
+    20%{
+
+        transform:translateX(-8px);
+
+        filter:brightness(2.4);
+
+    }
+
+    40%{
+
+        transform:translateX(7px);
+
+        filter:brightness(.4);
+
+    }
+
+    60%{
+
+        transform:translateX(-5px);
+
+    }
+
+    80%{
+
+        transform:translateX(4px);
+
+    }
+
+    100%{
+
+        transform:translateX(0px);
+
+        filter:brightness(1);
+
+    }
 
 }
 
 /* TEXT AREA */
 
-.textWrap{
+.text-area{
 
-    height:40px;
+    margin-top:34px;
 
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
+    min-height:34px;
 
     position:relative;
 
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
 }
 
-#lineText{
+/* signal lost */
 
-    font-size:1.25rem;
+#line{
 
-    letter-spacing:.55rem;
+    font-size:1.45rem;
 
-    color:#cfc5b3;
+    letter-spacing:.48rem;
+
+    color:#d3cab9;
 
     opacity:0;
+
+    transition:opacity 1.2s ease;
 
     white-space:nowrap;
 
@@ -144,25 +176,29 @@ body{
 
     position:absolute;
 
-    font-size:1.15rem;
+    font-size:1.45rem;
 
-    letter-spacing:.55rem;
+    letter-spacing:.48rem;
 
-    color:#8f8778;
+    color:#8c8478;
 
     opacity:0;
 
-    cursor:pointer;
+    transition:opacity 2s ease;
 
-    transition:opacity .8s ease;
+    white-space:nowrap;
+
+    cursor:pointer;
 
     user-select:none;
 
 }
 
-#reconnect.live{
+/* pulse */
 
-    animation:pulse 2.2s ease-in-out infinite;
+#reconnect.active{
+
+    animation:pulse 2.6s ease-in-out infinite;
 
 }
 
@@ -170,7 +206,7 @@ body{
 
     0%{
 
-        opacity:.28;
+        opacity:.18;
 
         text-shadow:0 0 0px rgba(255,255,255,0);
 
@@ -178,91 +214,17 @@ body{
 
     50%{
 
-        opacity:.9;
+        opacity:.78;
 
-        text-shadow:0 0 10px rgba(255,255,255,.18);
+        text-shadow:0 0 12px rgba(255,255,255,.14);
 
     }
 
     100%{
 
-        opacity:.28;
+        opacity:.18;
 
         text-shadow:0 0 0px rgba(255,255,255,0);
-
-    }
-
-}
-
-/* dissolve ONLY border lines */
-
-.symbol.dissolve{
-
-    animation:borderFade 3.5s ease forwards;
-
-}
-
-@keyframes borderFade{
-
-    0%{
-
-        mask-image:linear-gradient(to right, white 100%, transparent 100%);
-
-        -webkit-mask-image:linear-gradient(to right, white 100%, transparent 100%);
-
-    }
-
-    100%{
-
-        mask-image:linear-gradient(to right,
-
-        transparent 0%,
-
-        transparent 24%,
-
-        white 38%,
-
-        white 63%,
-
-        transparent 76%,
-
-        transparent 100%);
-
-        
-
-        -webkit-mask-image:linear-gradient(to right,
-
-        transparent 0%,
-
-        transparent 24%,
-
-        white 38%,
-
-        white 63%,
-
-        transparent 76%,
-
-        transparent 100%);
-
-    }
-
-}
-
-@keyframes symbolFade{
-
-    from{
-
-        opacity:0;
-
-        transform:translateY(8px);
-
-    }
-
-    to{
-
-        opacity:1;
-
-        transform:translateY(0px);
 
     }
 
@@ -274,13 +236,13 @@ body{
 
 <body>
 
-<div class="container" id="container">
+<div class="container">
 
     <img src="mark17.png" class="symbol" id="symbol">
 
-    <div class="textWrap">
+    <div class="text-area">
 
-        <div id="lineText"></div>
+        <div id="line"></div>
 
         <div id="reconnect">reconnect</div>
 
@@ -290,105 +252,121 @@ body{
 
 <script>
 
-const lineText = document.getElementById("lineText");
+const symbol = document.getElementById("symbol");
+
+const line = document.getElementById("line");
 
 const reconnect = document.getElementById("reconnect");
 
-const symbol = document.getElementById("symbol");
+const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
-const phrase = "signal lost";
+async function runSequence(){
 
-const sleep = (ms)=>new Promise(r=>setTimeout(r,ms));
+    /* BLACK SCREEN PAUSE */
 
-async function typeSignal(){
+    await sleep(3200);
 
-    /* symbol glitch */
+    /* SYMBOL BLEEDS IN */
 
-    await sleep(900);
+    symbol.style.transition = "opacity 2.8s ease";
 
-    symbol.classList.add("glitchFlash");
+    symbol.style.opacity = ".93";
 
-    await sleep(300);
+    await sleep(2800);
 
-    /* type phrase */
+    /* BIG GLITCH */
 
-    lineText.style.opacity = 1;
+    symbol.classList.add("glitch");
 
-    let current = "";
+    await sleep(500);
 
-    for(let i=0;i<phrase.length;i++){
+    /* START TYPING */
 
-        current += phrase[i];
+    line.style.opacity = "1";
 
-        lineText.innerHTML = current;
+    const words = [
+
+        "s",
+
+        "si",
+
+        "sig",
+
+        "sign",
+
+        "signa",
+
+        "signal",
+
+        "signal ",
+
+        "signal l",
+
+        "signal lo",
+
+        "signal los",
+
+        "signal lost"
+
+    ];
+
+    for(let i=0;i<words.length;i++){
+
+        line.innerHTML = words[i];
 
         await sleep(120);
 
     }
 
-    await sleep(500);
+    /* HOLD */
 
-    /* dots cycle */
+    await sleep(700);
 
-    for(let cycle=0; cycle<3; cycle++){
+    /* DOT SEARCH */
 
-        lineText.innerHTML = phrase;
+    for(let cycle = 0; cycle < 3; cycle++){
 
-        await sleep(250);
+        line.innerHTML = "signal lost.";
 
-        lineText.innerHTML = phrase + ".";
+        await sleep(340);
 
-        await sleep(320);
+        line.innerHTML = "signal lost..";
 
-        lineText.innerHTML = phrase + "..";
+        await sleep(340);
 
-        await sleep(320);
-
-        lineText.innerHTML = phrase + "...";
+        line.innerHTML = "signal lost...";
 
         await sleep(520);
 
+        line.innerHTML = "signal lost";
+
+        await sleep(250);
+
     }
 
-    /* fade out dots first */
+    /* HOLD FINAL */
 
-    lineText.innerHTML = phrase;
+    await sleep(500);
 
-    await sleep(300);
+    /* FADE OUT */
 
-    /* fade whole line */
+    line.style.opacity = "0";
 
-    lineText.style.transition = "opacity .9s ease";
+    await sleep(1300);
 
-    lineText.style.opacity = 0;
+    /* RECONNECT GHOST */
+
+    reconnect.style.opacity = ".14";
 
     await sleep(1200);
 
-    /* reconnect fades in slowly */
+    /* WAKE UP */
 
-    reconnect.style.opacity = ".45";
-
-    await sleep(800);
-
-    reconnect.classList.add("live");
+    reconnect.classList.add("active");
 
 }
 
-/* reconnect click */
-
-reconnect.addEventListener("click", async()=>{
-
-    reconnect.classList.remove("live");
-
-    reconnect.style.opacity = "1";
-
-    symbol.classList.add("dissolve");
-
-});
-
-/* start */
-
-typeSignal();
+runSequence();
 
 </script>
 
