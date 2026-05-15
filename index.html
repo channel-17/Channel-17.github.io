@@ -4,623 +4,557 @@
 
 <head>
 
-<meta charset="UTF-8" />
+  <meta charset="UTF-8" />
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<title>channel 17</title>
+  <title>channel 17</title>
 
-<link rel="icon" type="image/png" href="Inner17-final.png"/>
+  <link rel="icon" type="image/png" href="mark17.png" />
 
-<style>
+  <style>
 
-*{
+    *{
 
-    margin:0;
+      margin:0;
 
-    padding:0;
+      padding:0;
 
-    box-sizing:border-box;
-
-}
-
-body{
-
-    width:100vw;
-
-    height:100vh;
-
-    overflow:hidden;
-
-    background:#000;
-
-    display:flex;
-
-    justify-content:center;
-
-    align-items:center;
-
-    font-family:"Courier New", monospace;
-
-    color:#d7cdbd;
-
-}
-
-/* MAIN */
-
-.container{
-
-    display:flex;
-
-    flex-direction:column;
-
-    align-items:center;
-
-    justify-content:center;
-
-    transform:translateY(-42px);
-
-}
-
-/* SYMBOL WRAP */
-
-.symbol-wrap{
-
-    position:relative;
-
-    width:220px;
-
-    height:220px;
-
-}
-
-/* SYMBOLS */
-
-.outer-symbol,
-
-.inner-symbol{
-
-    position:absolute;
-
-    inset:0;
-
-    width:100%;
-
-    opacity:0;
-
-    filter:
-
-        drop-shadow(0 0 4px rgba(255,245,220,.06))
-
-        drop-shadow(0 0 18px rgba(255,245,220,.04));
-
-}
-
-/* GLITCH */
-
-.glitch{
-
-    animation:glitch .22s linear 2;
-
-}
-
-@keyframes glitch{
-
-    0%{
-
-        transform:translateX(0px);
-
-        filter:brightness(1);
+      box-sizing:border-box;
 
     }
 
-    20%{
+    body{
 
-        transform:translateX(-10px);
+      background:#000;
 
-        filter:brightness(3);
+      overflow:hidden;
 
-    }
+      height:100vh;
 
-    40%{
+      width:100vw;
 
-        transform:translateX(8px);
+      font-family: "Courier New", monospace;
 
-        filter:brightness(.25);
-
-    }
-
-    60%{
-
-        transform:translateX(-6px);
+      color:#d8d2c8;
 
     }
 
-    80%{
+    .screen{
 
-        transform:translateX(5px);
+      position:relative;
 
-    }
+      width:100%;
 
-    100%{
+      height:100vh;
 
-        transform:translateX(0px);
+      display:flex;
 
-        filter:brightness(1);
+      flex-direction:column;
 
-    }
+      justify-content:center;
 
-}
+      align-items:center;
 
-/* TEXT AREA */
-
-.text-area{
-
-    margin-top:2px;
-
-    min-height:42px;
-
-    position:relative;
-
-    display:flex;
-
-    justify-content:center;
-
-    align-items:center;
-
-}
-
-/* SIGNAL LOST */
-
-#line{
-
-    font-size:1.52rem;
-
-    letter-spacing:.34rem;
-
-    color:#d8cfbf;
-
-    opacity:0;
-
-    transition:opacity 1.4s ease;
-
-    white-space:nowrap;
-
-}
-
-/* RECONNECT */
-
-#reconnect{
-
-    position:absolute;
-
-    font-size:1.52rem;
-
-    letter-spacing:.34rem;
-
-    color:#93897d;
-
-    opacity:0;
-
-    white-space:nowrap;
-
-    cursor:pointer;
-
-    user-select:none;
-
-    transform-origin:center;
-
-    filter:
-
-        blur(.3px)
-
-        brightness(.75);
-
-}
-
-/* ACTIVATION */
-
-#reconnect.active{
-
-    animation:
-
-    awaken 6.2s ease-in-out infinite;
-
-}
-
-/* RECONNECT PULSE */
-
-@keyframes awaken{
-
-    0%{
-
-        opacity:.05;
-
-        transform:scale(1);
-
-        filter:
-
-            blur(.8px)
-
-            brightness(.55);
-
-        text-shadow:none;
+      background:#000;
 
     }
 
-    10%{
+    /* SYMBOL */
+
+    .symbol-wrap{
+
+      position:relative;
+
+      width:250px;
+
+      height:250px;
+
+      opacity:0;
+
+      animation:
+
+        symbolAppear 4.8s ease-out forwards;
+
+      animation-delay:2.8s;
+
+    }
+
+    .outer-symbol,
+
+    .inner-symbol{
+
+      position:absolute;
+
+      inset:0;
+
+      width:100%;
+
+      height:100%;
+
+      object-fit:contain;
+
+      pointer-events:none;
+
+    }
+
+    .outer-symbol{
+
+      z-index:2;
+
+      transition:
+
+        opacity 3.2s ease,
+
+        filter 3.2s ease;
+
+    }
+
+    .inner-symbol{
+
+      z-index:1;
+
+    }
+
+    @keyframes symbolAppear{
+
+      0%{
+
+        opacity:0;
+
+        filter:blur(18px);
+
+        transform:scale(.96);
+
+      }
+
+      35%{
 
         opacity:.12;
 
-        transform:scale(1.002);
+      }
 
-        filter:
+      65%{
 
-            blur(.4px)
+        opacity:.45;
 
-            brightness(.82);
+      }
 
-    }
-
-    16%{
-
-        opacity:.04;
-
-    }
-
-    24%{
-
-        opacity:.18;
-
-        transform:scale(1.005);
-
-        filter:
-
-            blur(.2px)
-
-            brightness(.96);
-
-    }
-
-    38%{
+      100%{
 
         opacity:1;
 
-        transform:scale(1.032);
-
-        filter:
-
-            blur(0px)
-
-            brightness(1.72);
-
-        text-shadow:
-
-            0 0 8px rgba(255,255,255,.12),
-
-            0 0 20px rgba(255,255,255,.08),
-
-            0 0 44px rgba(255,255,255,.04);
-
-    }
-
-    44%{
-
-        opacity:.28;
-
-        transform:scale(1.004);
-
-        filter:
-
-            blur(.25px)
-
-            brightness(.84);
-
-    }
-
-    58%{
-
-        opacity:.10;
+        filter:blur(0px);
 
         transform:scale(1);
 
-        filter:
-
-            blur(.7px)
-
-            brightness(.62);
+      }
 
     }
 
-    74%{
+    /* BIG GLITCH */
 
-        opacity:.92;
+    .glitch{
 
-        transform:scale(1.028);
+      position:absolute;
 
-        filter:
+      inset:0;
 
-            blur(0px)
+      pointer-events:none;
 
-            brightness(1.62);
+      opacity:0;
+
+      mix-blend-mode:screen;
+
+    }
+
+    .glitch.active{
+
+      animation:glitchFlash .55s ease-out forwards;
+
+    }
+
+    @keyframes glitchFlash{
+
+      0%{
+
+        opacity:0;
+
+      }
+
+      8%{
+
+        opacity:.95;
+
+        transform:translateX(-14px);
+
+      }
+
+      16%{
+
+        opacity:0;
+
+        transform:translateX(11px);
+
+      }
+
+      24%{
+
+        opacity:.8;
+
+        transform:translateX(-7px);
+
+      }
+
+      32%{
+
+        opacity:0;
+
+      }
+
+      48%{
+
+        opacity:.65;
+
+        transform:translateY(6px);
+
+      }
+
+      64%{
+
+        opacity:0;
+
+      }
+
+      100%{
+
+        opacity:0;
+
+      }
+
+    }
+
+    /* TEXT AREA */
+
+    .text-zone{
+
+      position:relative;
+
+      margin-top:14px;
+
+      height:70px;
+
+      display:flex;
+
+      align-items:center;
+
+      justify-content:center;
+
+    }
+
+    .signal-line,
+
+    .reconnect{
+
+      position:absolute;
+
+      left:50%;
+
+      top:50%;
+
+      transform:translate(-50%,-50%);
+
+      white-space:nowrap;
+
+      letter-spacing:9px;
+
+    }
+
+    .signal-line{
+
+      font-size:1.35rem;
+
+      color:#bfb7a8;
+
+      opacity:0;
+
+    }
+
+    .reconnect{
+
+      font-size:1.25rem;
+
+      color:#d8d2c8;
+
+      opacity:0;
+
+      cursor:pointer;
+
+      transition:opacity .6s ease;
+
+      user-select:none;
+
+    }
+
+    /* reconnect “activation” */
+
+    .reconnect.live{
+
+      animation:reconnectPulse 3.2s ease-in-out infinite;
+
+    }
+
+    @keyframes reconnectPulse{
+
+      0%{
+
+        opacity:.18;
 
         text-shadow:
 
-            0 0 10px rgba(255,255,255,.12),
+          0 0 0px rgba(255,255,255,0);
 
-            0 0 26px rgba(255,255,255,.08),
+      }
 
-            0 0 52px rgba(255,255,255,.04);
+      30%{
+
+        opacity:.42;
+
+        text-shadow:
+
+          0 0 4px rgba(255,255,255,.10);
+
+      }
+
+      55%{
+
+        opacity:.72;
+
+        text-shadow:
+
+          0 0 8px rgba(255,255,255,.16);
+
+      }
+
+      75%{
+
+        opacity:.45;
+
+        text-shadow:
+
+          0 0 5px rgba(255,255,255,.08);
+
+      }
+
+      100%{
+
+        opacity:.22;
+
+        text-shadow:
+
+          0 0 0px rgba(255,255,255,0);
+
+      }
 
     }
 
-    100%{
+    /* dissolve climax */
 
-        opacity:.05;
+    .outer-symbol.dissolve{
 
-        transform:scale(1);
+      opacity:0;
 
-        filter:
-
-            blur(.8px)
-
-            brightness(.55);
-
-        text-shadow:none;
+      filter:blur(10px);
 
     }
 
-}
-
-</style>
+  </style>
 
 </head>
 
 <body>
 
-<div class="container">
+<div class="screen">
 
-    <div class="symbol-wrap">
+  <div class="symbol-wrap">
 
-        <img src="Outer17-final.png"
+    <img src="Inner17-final.png" class="inner-symbol" />
 
-             class="outer-symbol"
+    <img src="Outer17-final.png" class="outer-symbol" id="outerSymbol" />
 
-             id="outerSymbol">
+    <div class="glitch" id="glitch"></div>
 
-        <img src="Inner17-final.png"
+  </div>
 
-             class="inner-symbol"
+  <div class="text-zone">
 
-             id="innerSymbol">
+    <div class="signal-line" id="signalLine"></div>
 
-    </div>
+    <div class="reconnect" id="reconnect">
 
-    <div class="text-area">
-
-        <div id="line"></div>
-
-        <div id="reconnect">
-
-            reconnect
-
-        </div>
+      reconnect
 
     </div>
+
+  </div>
 
 </div>
 
 <script>
 
-const outer =
+  const signalLine = document.getElementById("signalLine");
 
-document.getElementById("outerSymbol");
+  const reconnect = document.getElementById("reconnect");
 
-const inner =
+  const outerSymbol = document.getElementById("outerSymbol");
 
-document.getElementById("innerSymbol");
+  const glitch = document.getElementById("glitch");
 
-const line =
+  const phrase = "signal lost";
 
-document.getElementById("line");
+  let index = 0;
 
-const reconnect =
+  /* timing flow */
 
-document.getElementById("reconnect");
+  setTimeout(() => {
 
-const sleep = (ms) =>
+    glitch.classList.add("active");
 
-new Promise(resolve => setTimeout(resolve, ms));
+  }, 7300);
 
-async function runSequence(){
+  /* pause after glitch before typing */
 
-    /* BLACK SCREEN */
+  setTimeout(() => {
 
-    await sleep(1800);
+    signalLine.style.opacity = 1;
 
-    /* SLOW BLEED IN */
+    typePhrase();
 
-    outer.style.transition =
+  }, 8600);
 
-    "opacity 5.8s ease";
+  function typePhrase(){
 
-    inner.style.transition =
+    if(index < phrase.length){
 
-    "opacity 5.8s ease";
+      signalLine.innerHTML += phrase.charAt(index);
 
-    outer.style.opacity = ".92";
+      index++;
 
-    inner.style.opacity = ".92";
+      /* slower human typewriter feel */
 
-    await sleep(5200);
+      setTimeout(typePhrase, 165);
 
-    /* GLITCH */
+    } else {
 
-    outer.classList.add("glitch");
-
-    inner.classList.add("glitch");
-
-    /* PAUSE */
-
-    await sleep(1000);
-
-    /* TYPEWRITER */
-
-    line.style.opacity = "1";
-
-    const words = [
-
-        "s",
-
-        "si",
-
-        "sig",
-
-        "sign",
-
-        "signa",
-
-        "signal",
-
-        "signal ",
-
-        "signal l",
-
-        "signal lo",
-
-        "signal los",
-
-        "signal lost"
-
-    ];
-
-    for(let i = 0; i < words.length; i++){
-
-        line.innerHTML = words[i];
-
-        await sleep(120);
+      beginDots();
 
     }
 
-    /* HOLD */
+  }
 
-    await sleep(700);
+  /* searching dots */
 
-    /* SEARCH LOOP */
+  function beginDots(){
 
-    for(let cycle = 0; cycle < 3; cycle++){
+    let cycle = 0;
 
-        line.innerHTML = "signal lost.";
+    function runCycle(){
 
-        await sleep(340);
+      if(cycle >= 3){
 
-        line.innerHTML = "signal lost..";
+        fadeSignalOut();
 
-        await sleep(340);
+        return;
 
-        line.innerHTML = "signal lost...";
+      }
 
-        await sleep(520);
+      let dot = 0;
 
-        line.innerHTML = "signal lost";
+      function animateDots(){
 
-        await sleep(260);
+        if(dot <= 3){
+
+          signalLine.innerHTML =
+
+            "signal lost" + ".".repeat(dot);
+
+          dot++;
+
+          setTimeout(animateDots, 420);
+
+        } else {
+
+          signalLine.innerHTML = "signal lost";
+
+          cycle++;
+
+          setTimeout(runCycle, 500);
+
+        }
+
+      }
+
+      animateDots();
 
     }
 
-    /* HOLD */
+    setTimeout(runCycle, 600);
 
-    await sleep(650);
+  }
 
-    /* FADE TEXT */
+  /* fade signal out */
 
-    line.style.opacity = "0";
+  function fadeSignalOut(){
 
-    await sleep(1500);
+    signalLine.style.transition =
 
-    /* GHOST */
+      "opacity 1.8s ease";
 
-    reconnect.style.opacity = ".05";
+    signalLine.style.opacity = 0;
 
-    await sleep(1200);
+    setTimeout(() => {
 
-    /* ACTIVATE */
+      activateReconnect();
 
-    reconnect.classList.add("active");
+    }, 1200);
 
-}
+  }
 
-runSequence();
+  /* reconnect emerges */
 
-/* =========================
+  function activateReconnect(){
 
-   RECONNECT CLICK
+    reconnect.style.opacity = .15;
 
-========================= */
+    setTimeout(() => {
 
-reconnect.addEventListener("click", async () => {
+      reconnect.classList.add("live");
 
-    /* stop pulse */
+    }, 700);
 
-    reconnect.classList.remove("active");
+  }
 
-    /* fade reconnect */
+  /* click climax */
+
+  reconnect.addEventListener("click", () => {
+
+    reconnect.style.pointerEvents = "none";
 
     reconnect.style.transition =
 
-    "opacity 1.4s ease";
+      "opacity 1.2s ease";
 
-    reconnect.style.opacity = "0";
+    reconnect.style.opacity = 0;
 
-    /* dissolve outer walls */
+    /* slow emotional dissolve */
 
-    outer.style.transition = `
+    setTimeout(() => {
 
-        opacity 3.2s ease,
+      outerSymbol.classList.add("dissolve");
 
-        filter 3.2s ease,
+    }, 900);
 
-        transform 3.2s ease
-
-    `;
-
-    outer.style.opacity = "0";
-
-    outer.style.filter =
-
-    "blur(12px) brightness(.4)";
-
-    outer.style.transform =
-
-    "scale(1.08)";
-
-    /* inner survives */
-
-    inner.style.transition =
-
-    "filter 4s ease";
-
-    inner.style.filter =
-
-    `
-
-    drop-shadow(0 0 8px rgba(255,245,220,.10))
-
-    drop-shadow(0 0 22px rgba(255,245,220,.08))
-
-    `;
-
-    /* subtle atmosphere shift */
-
-    document.body.style.transition =
-
-    "background 4s ease";
-
-    document.body.style.background =
-
-    "#020202";
-
-});
+  });
 
 </script>
 
