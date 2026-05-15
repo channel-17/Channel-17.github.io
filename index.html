@@ -4,13 +4,15 @@
 
 <head>
 
-<meta charset="UTF-8">
+<meta charset="UTF-8" />
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
 <title>channel 17</title>
 
-<link rel="icon" type="image/png" href="mark17.png">
+<!-- favicon -->
+
+<link rel="icon" type="image/png" href="mark17.png"/>
 
 <style>
 
@@ -26,9 +28,11 @@
 
 body{
 
-    background:black;
+    background:#000;
 
     overflow:hidden;
+
+    width:100vw;
 
     height:100vh;
 
@@ -40,133 +44,129 @@ body{
 
     font-family:Arial, Helvetica, sans-serif;
 
+    color:#d8d1c2;
+
 }
+
+/* MAIN WRAP */
 
 .container{
 
-    position:relative;
+    display:flex;
 
-    text-align:center;
+    flex-direction:column;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:28px;
+
+    opacity:0;
+
+    animation:symbolFade 2.5s ease forwards;
+
+    animation-delay:3.5s;
 
 }
 
 /* SYMBOL */
 
-.symbol-wrap{
+.symbol{
 
     width:220px;
 
-    margin:auto;
+    opacity:.92;
 
-    opacity:0;
+    filter:
 
-    animation:
+        drop-shadow(0 0 4px rgba(255,245,220,.08))
 
-    symbolReveal 3s ease forwards;
-
-    animation-delay:3s;
+        drop-shadow(0 0 10px rgba(255,245,220,.05));
 
 }
 
-.symbol-base{
+/* GLITCH FLASH */
 
-    width:100%;
+.glitchFlash{
 
-    display:block;
-
-    transition:
-
-    filter 2.8s ease,
-
-    opacity 2.8s ease;
+    animation:flash .16s linear 2;
 
 }
 
-/* SYMBOL APPEAR */
+@keyframes flash{
 
-@keyframes symbolReveal{
+    0%{ transform:translateX(0px); filter:brightness(1);}
 
-    0%{
+    20%{ transform:translateX(-4px); filter:brightness(2);}
 
-        opacity:0;
+    40%{ transform:translateX(5px); filter:brightness(.3);}
 
-        transform:scale(.97);
+    60%{ transform:translateX(-2px);}
 
-        filter:blur(10px);
-
-    }
-
-    100%{
-
-        opacity:1;
-
-        transform:scale(1);
-
-        filter:blur(0px);
-
-    }
+    100%{ transform:translateX(0px);}
 
 }
 
-/* TEXT LINE */
+/* TEXT AREA */
 
-.text-line{
+.textWrap{
 
-    position:relative;
-
-    margin-top:26px;
-
-    height:24px;
-
-    font-size:12px;
-
-    letter-spacing:7px;
-
-    color:#9d968b;
+    height:40px;
 
     display:flex;
 
+    align-items:center;
+
     justify-content:center;
 
-    align-items:center;
+    position:relative;
 
 }
 
-/* SIGNAL LOST */
+#lineText{
 
-#signalText{
+    font-size:1.25rem;
+
+    letter-spacing:.55rem;
+
+    color:#cfc5b3;
 
     opacity:0;
 
     white-space:nowrap;
 
-    overflow:hidden;
-
 }
 
-/* RECONNECT */
+/* reconnect */
 
 #reconnect{
 
     position:absolute;
 
-    opacity:0;
+    font-size:1.15rem;
 
-    color:#7c756b;
+    letter-spacing:.55rem;
+
+    color:#8f8778;
+
+    opacity:0;
 
     cursor:pointer;
 
-    transition:opacity 1.6s ease;
+    transition:opacity .8s ease;
 
-    animation:
-
-    reconnectPulse 4.6s ease-in-out infinite;
+    user-select:none;
 
 }
 
-/* HEARTBEAT */
+#reconnect.live{
 
-@keyframes reconnectPulse{
+    animation:pulse 2.2s ease-in-out infinite;
+
+}
+
+@keyframes pulse{
 
     0%{
 
@@ -176,31 +176,11 @@ body{
 
     }
 
-    35%{
+    50%{
 
-        opacity:.95;
+        opacity:.9;
 
-        text-shadow:
-
-        0 0 7px rgba(255,255,255,.18),
-
-        0 0 18px rgba(255,255,255,.08);
-
-    }
-
-    55%{
-
-        opacity:.4;
-
-    }
-
-    72%{
-
-        opacity:.82;
-
-        text-shadow:
-
-        0 0 8px rgba(255,255,255,.15);
+        text-shadow:0 0 10px rgba(255,255,255,.18);
 
     }
 
@@ -214,39 +194,77 @@ body{
 
 }
 
-/* CONNECTED */
+/* dissolve ONLY border lines */
 
-.connected .symbol-base{
+.symbol.dissolve{
 
-    mask-image:
+    animation:borderFade 3.5s ease forwards;
 
-    radial-gradient(circle at center,
+}
 
-    rgba(0,0,0,1) 0%,
+@keyframes borderFade{
 
-    rgba(0,0,0,1) 36%,
+    0%{
 
-    rgba(0,0,0,.45) 54%,
+        mask-image:linear-gradient(to right, white 100%, transparent 100%);
 
-    rgba(0,0,0,.08) 68%,
+        -webkit-mask-image:linear-gradient(to right, white 100%, transparent 100%);
 
-    rgba(0,0,0,0) 78%);
+    }
 
-    -webkit-mask-image:
+    100%{
 
-    radial-gradient(circle at center,
+        mask-image:linear-gradient(to right,
 
-    rgba(0,0,0,1) 0%,
+        transparent 0%,
 
-    rgba(0,0,0,1) 36%,
+        transparent 24%,
 
-    rgba(0,0,0,.45) 54%,
+        white 38%,
 
-    rgba(0,0,0,.08) 68%,
+        white 63%,
 
-    rgba(0,0,0,0) 78%);
+        transparent 76%,
 
-    filter:brightness(1.04);
+        transparent 100%);
+
+        
+
+        -webkit-mask-image:linear-gradient(to right,
+
+        transparent 0%,
+
+        transparent 24%,
+
+        white 38%,
+
+        white 63%,
+
+        transparent 76%,
+
+        transparent 100%);
+
+    }
+
+}
+
+@keyframes symbolFade{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(8px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0px);
+
+    }
 
 }
 
@@ -258,21 +276,13 @@ body{
 
 <div class="container" id="container">
 
-    <div class="symbol-wrap">
+    <img src="mark17.png" class="symbol" id="symbol">
 
-        <img src="mark17.png" class="symbol-base">
+    <div class="textWrap">
 
-    </div>
+        <div id="lineText"></div>
 
-    <div class="text-line">
-
-        <div id="signalText"></div>
-
-        <div id="reconnect">
-
-            reconnect
-
-        </div>
+        <div id="reconnect">reconnect</div>
 
     </div>
 
@@ -280,113 +290,105 @@ body{
 
 <script>
 
-const signalText =
+const lineText = document.getElementById("lineText");
 
-document.getElementById("signalText");
+const reconnect = document.getElementById("reconnect");
 
-const reconnect =
+const symbol = document.getElementById("symbol");
 
-document.getElementById("reconnect");
+const phrase = "signal lost";
 
-const container =
+const sleep = (ms)=>new Promise(r=>setTimeout(r,ms));
 
-document.getElementById("container");
+async function typeSignal(){
 
-/* START */
+    /* symbol glitch */
 
-setTimeout(startSignal, 5800);
+    await sleep(900);
 
-/* TYPE SIGNAL LOST */
+    symbol.classList.add("glitchFlash");
 
-function startSignal(){
+    await sleep(300);
 
-    signalText.style.opacity = ".72";
+    /* type phrase */
 
-    let text = "signal lost";
+    lineText.style.opacity = 1;
 
-    let i = 0;
+    let current = "";
 
-    const typing = setInterval(() => {
+    for(let i=0;i<phrase.length;i++){
 
-        signalText.innerHTML += text.charAt(i);
+        current += phrase[i];
 
-        i++;
+        lineText.innerHTML = current;
 
-        if(i >= text.length){
+        await sleep(120);
 
-            clearInterval(typing);
+    }
 
-            setTimeout(startDots, 700);
+    await sleep(500);
 
-        }
+    /* dots cycle */
 
-    }, 110);
+    for(let cycle=0; cycle<3; cycle++){
 
-}
+        lineText.innerHTML = phrase;
 
-/* DOT LOOP */
+        await sleep(250);
 
-function startDots(){
+        lineText.innerHTML = phrase + ".";
 
-    let dots = 0;
+        await sleep(320);
 
-    const loop = setInterval(() => {
+        lineText.innerHTML = phrase + "..";
 
-        dots++;
+        await sleep(320);
 
-        signalText.innerHTML =
+        lineText.innerHTML = phrase + "...";
 
-        "signal lost" + ".".repeat(dots);
+        await sleep(520);
 
-        if(dots >= 3){
+    }
 
-            dots = 0;
+    /* fade out dots first */
 
-        }
+    lineText.innerHTML = phrase;
 
-    }, 650);
+    await sleep(300);
 
-    /* AFTER SEVERAL LOOPS */
+    /* fade whole line */
 
-    setTimeout(() => {
+    lineText.style.transition = "opacity .9s ease";
 
-        clearInterval(loop);
+    lineText.style.opacity = 0;
 
-        signalText.style.transition =
+    await sleep(1200);
 
-        "opacity 1.8s ease";
+    /* reconnect fades in slowly */
 
-        signalText.style.opacity = "0";
+    reconnect.style.opacity = ".45";
 
-        setTimeout(() => {
+    await sleep(800);
 
-            reconnect.style.opacity = ".75";
-
-        }, 1800);
-
-    }, 7600);
+    reconnect.classList.add("live");
 
 }
 
-/* CLICK */
+/* reconnect click */
 
-reconnect.addEventListener("click", () => {
+reconnect.addEventListener("click", async()=>{
 
-    reconnect.style.opacity = "0";
+    reconnect.classList.remove("live");
 
-    container.classList.add("connected");
+    reconnect.style.opacity = "1";
 
-    setTimeout(() => {
-
-        document.body.style.transition =
-
-        "opacity 2.2s ease";
-
-        document.body.style.opacity = "0";
-
-    }, 4200);
+    symbol.classList.add("dissolve");
 
 });
+
+/* start */
+
+typeSignal();
 
 </script>
 
