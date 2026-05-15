@@ -10,7 +10,7 @@
 
 <title>channel 17</title>
 
-<link rel="icon" type="image/png" href="mark17.png"/>
+<link rel="icon" type="image/png" href="Inner17-final.png"/>
 
 <style>
 
@@ -58,23 +58,41 @@ body{
 
     justify-content:center;
 
-    transform:translateY(-32px);
+    transform:translateY(-42px);
 
 }
 
-/* SYMBOL */
+/* SYMBOL WRAP */
 
-.symbol{
+.symbol-wrap{
+
+    position:relative;
 
     width:220px;
+
+    height:220px;
+
+}
+
+/* BOTH SYMBOLS */
+
+.outer-symbol,
+
+.inner-symbol{
+
+    position:absolute;
+
+    inset:0;
+
+    width:100%;
 
     opacity:0;
 
     filter:
 
-        drop-shadow(0 0 4px rgba(255,245,220,.08))
+        drop-shadow(0 0 4px rgba(255,245,220,.06))
 
-        drop-shadow(0 0 14px rgba(255,245,220,.05));
+        drop-shadow(0 0 18px rgba(255,245,220,.04));
 
 }
 
@@ -98,29 +116,29 @@ body{
 
     20%{
 
-        transform:translateX(-8px);
+        transform:translateX(-10px);
 
-        filter:brightness(2.8);
+        filter:brightness(3);
 
     }
 
     40%{
 
-        transform:translateX(7px);
+        transform:translateX(8px);
 
-        filter:brightness(.35);
+        filter:brightness(.25);
 
     }
 
     60%{
 
-        transform:translateX(-5px);
+        transform:translateX(-6px);
 
     }
 
     80%{
 
-        transform:translateX(4px);
+        transform:translateX(5px);
 
     }
 
@@ -138,9 +156,9 @@ body{
 
 .text-area{
 
-    margin-top:24px;
+    margin-top:2px;
 
-    min-height:38px;
+    min-height:42px;
 
     position:relative;
 
@@ -156,7 +174,7 @@ body{
 
 #line{
 
-    font-size:1.42rem;
+    font-size:1.52rem;
 
     letter-spacing:.34rem;
 
@@ -164,7 +182,7 @@ body{
 
     opacity:0;
 
-    transition:opacity 1.3s ease;
+    transition:opacity 1.4s ease;
 
     white-space:nowrap;
 
@@ -176,15 +194,13 @@ body{
 
     position:absolute;
 
-    font-size:1.42rem;
+    font-size:1.52rem;
 
     letter-spacing:.34rem;
 
-    color:#8f8578;
+    color:#93897d;
 
     opacity:0;
-
-    transition:opacity 2s ease;
 
     white-space:nowrap;
 
@@ -194,6 +210,12 @@ body{
 
     transform-origin:center;
 
+    filter:
+
+        blur(.3px)
+
+        brightness(.75);
+
 }
 
 /* ACTIVATION */
@@ -202,73 +224,91 @@ body{
 
     animation:
 
-    awaken 5.5s ease-in-out infinite;
+    awaken 6.2s ease-in-out infinite;
 
 }
 
-/* HUNTING PULSE */
+/* NEW PULSE */
 
 @keyframes awaken{
 
     0%{
 
-        opacity:.10;
+        opacity:.05;
 
         transform:scale(1);
 
         filter:
 
-            blur(.6px)
+            blur(.8px)
 
-            brightness(.72);
+            brightness(.55);
 
-        text-shadow:
-
-            0 0 0px rgba(255,255,255,0);
+        text-shadow:none;
 
     }
 
-    18%{
+    10%{
 
-        opacity:.22;
+        opacity:.12;
 
-        transform:scale(1.004);
+        transform:scale(1.002);
 
         filter:
 
-            blur(.3px)
+            blur(.4px)
 
-            brightness(.88);
+            brightness(.82);
 
     }
 
-    34%{
+    16%{
 
-        opacity:.94;
+        opacity:.04;
 
-        transform:scale(1.026);
+    }
+
+    24%{
+
+        opacity:.18;
+
+        transform:scale(1.005);
+
+        filter:
+
+            blur(.2px)
+
+            brightness(.96);
+
+    }
+
+    38%{
+
+        opacity:1;
+
+        transform:scale(1.032);
 
         filter:
 
             blur(0px)
 
-            brightness(1.42);
+            brightness(1.72);
 
         text-shadow:
 
-            0 0 8px rgba(255,255,255,.10),
+            0 0 8px rgba(255,255,255,.12),
 
-            0 0 22px rgba(255,255,255,.08),
+            0 0 20px rgba(255,255,255,.08),
 
-            0 0 42px rgba(255,255,255,.03);
+            0 0 44px rgba(255,255,255,.04);
 
     }
 
-    42%{
+    44%{
 
-        opacity:.26;
+        opacity:.28;
 
-        transform:scale(1.003);
+        transform:scale(1.004);
 
         filter:
 
@@ -280,35 +320,35 @@ body{
 
     58%{
 
-        opacity:.16;
+        opacity:.10;
 
         transform:scale(1);
 
         filter:
 
-            blur(.5px)
+            blur(.7px)
 
-            brightness(.76);
+            brightness(.62);
 
     }
 
     74%{
 
-        opacity:.98;
+        opacity:.92;
 
-        transform:scale(1.03);
+        transform:scale(1.028);
 
         filter:
 
             blur(0px)
 
-            brightness(1.55);
+            brightness(1.62);
 
         text-shadow:
 
             0 0 10px rgba(255,255,255,.12),
 
-            0 0 28px rgba(255,255,255,.09),
+            0 0 26px rgba(255,255,255,.08),
 
             0 0 52px rgba(255,255,255,.04);
 
@@ -316,19 +356,17 @@ body{
 
     100%{
 
-        opacity:.10;
+        opacity:.05;
 
         transform:scale(1);
 
         filter:
 
-            blur(.6px)
+            blur(.8px)
 
-            brightness(.72);
+            brightness(.55);
 
-        text-shadow:
-
-            0 0 0px rgba(255,255,255,0);
+        text-shadow:none;
 
     }
 
@@ -342,7 +380,21 @@ body{
 
 <div class="container">
 
-    <img src="mark17.png" class="symbol" id="symbol">
+    <div class="symbol-wrap">
+
+        <img src="Outer17-final.png"
+
+             class="outer-symbol"
+
+             id="outerSymbol">
+
+        <img src="Inner17-final.png"
+
+             class="inner-symbol"
+
+             id="innerSymbol">
+
+    </div>
 
     <div class="text-area">
 
@@ -360,11 +412,21 @@ body{
 
 <script>
 
-const symbol = document.getElementById("symbol");
+const outer =
 
-const line = document.getElementById("line");
+document.getElementById("outerSymbol");
 
-const reconnect = document.getElementById("reconnect");
+const inner =
+
+document.getElementById("innerSymbol");
+
+const line =
+
+document.getElementById("line");
+
+const reconnect =
+
+document.getElementById("reconnect");
 
 const sleep = (ms) =>
 
@@ -374,25 +436,33 @@ async function runSequence(){
 
     /* BLACK SCREEN */
 
-    await sleep(3200);
+    await sleep(1800);
 
-    /* SYMBOL EMERGES */
+    /* BLEED IN */
 
-    symbol.style.transition =
+    outer.style.transition =
 
-    "opacity 2.7s ease";
+    "opacity 5.8s ease";
 
-    symbol.style.opacity = ".93";
+    inner.style.transition =
 
-    await sleep(2700);
+    "opacity 5.8s ease";
+
+    outer.style.opacity = ".92";
+
+    inner.style.opacity = ".92";
+
+    await sleep(5200);
 
     /* GLITCH */
 
-    symbol.classList.add("glitch");
+    outer.classList.add("glitch");
 
-    /* PAUSE AFTER GLITCH */
+    inner.classList.add("glitch");
 
-    await sleep(900);
+    /* PAUSE */
+
+    await sleep(1000);
 
     /* TYPEWRITER */
 
@@ -436,7 +506,7 @@ async function runSequence(){
 
     await sleep(700);
 
-    /* SEARCH LOOP */
+    /* DOT SEARCH */
 
     for(let cycle = 0; cycle < 3; cycle++){
 
@@ -458,19 +528,19 @@ async function runSequence(){
 
     }
 
-    /* FINAL HOLD */
+    /* HOLD */
 
-    await sleep(500);
+    await sleep(650);
 
-    /* FADE SIGNAL */
+    /* FADE AWAY */
 
     line.style.opacity = "0";
 
-    await sleep(1400);
+    await sleep(1500);
 
-    /* GHOST APPEAR */
+    /* GHOST */
 
-    reconnect.style.opacity = ".08";
+    reconnect.style.opacity = ".05";
 
     await sleep(1200);
 
