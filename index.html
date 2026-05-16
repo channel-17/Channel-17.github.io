@@ -4,399 +4,409 @@
 
 <head>
 
-  <meta charset="UTF-8" />
+<meta charset="UTF-8" />
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-  <title>channel 17</title>
+<title>channel 17</title>
 
-  <!-- FAVICON -->
+<!-- FAVICON -->
 
-  <link rel="icon" type="image/png" href="Favicon17.png">
+<link rel="icon" type="image/png" href="favicon.png">
 
-  <link rel="apple-touch-icon" href="Favicon17.png">
+<link rel="apple-touch-icon" href="favicon.png">
 
-  <style>
+<style>
 
-    *{
+*{
 
-      margin:0;
+  margin:0;
 
-      padding:0;
+  padding:0;
 
-      box-sizing:border-box;
+  box-sizing:border-box;
 
-    }
+}
 
-    body{
+body{
 
-      background:#000;
+  background:#000;
 
-      overflow:hidden;
+  overflow:hidden;
 
-      height:100vh;
+  height:100vh;
 
-      width:100vw;
+  width:100vw;
 
-      display:flex;
+  display:flex;
 
-      justify-content:center;
+  justify-content:center;
 
-      align-items:center;
+  align-items:center;
 
-      font-family:"Courier New", monospace;
+  font-family:"Courier New", monospace;
 
-      color:#d8d2c8;
+  color:#d8d2c8;
 
-    }
+}
 
-    .screen{
+.screen{
 
-      position:relative;
+  position:relative;
 
-      width:100%;
+  width:100%;
 
-      height:100vh;
+  height:100vh;
 
-      display:flex;
+  display:flex;
 
-      flex-direction:column;
+  flex-direction:column;
 
-      justify-content:center;
+  justify-content:center;
 
-      align-items:center;
+  align-items:center;
 
-      background:#000;
+  background:#000;
 
-      transition:background 4s ease;
+  transition:background 4s ease;
 
-    }
+}
 
-    /* SYMBOL */
+/* SYMBOL */
 
-    .symbol-wrap{
+.symbol-wrap{
 
-      position:relative;
+  position:relative;
 
-      width:250px;
+  width:250px;
 
-      height:250px;
+  height:250px;
 
-      opacity:0;
+  opacity:0;
 
-      animation:
+  animation:
 
-      symbolAppear 4.8s ease-out forwards;
+  symbolAppear 6.2s ease-out forwards;
 
-      animation-delay:2.2s;
+  animation-delay:1.1s;
 
-    }
+}
 
-    .outer-symbol,
+.outer-symbol,
 
-    .inner-symbol{
+.inner-symbol{
 
-      position:absolute;
+  position:absolute;
 
-      inset:0;
+  inset:0;
 
-      width:100%;
+  width:100%;
 
-      height:100%;
+  height:100%;
 
-      object-fit:contain;
+  object-fit:contain;
 
-      pointer-events:none;
+  pointer-events:none;
 
-    }
+}
 
-    .outer-symbol{
+.outer-symbol{
 
-      z-index:2;
+  z-index:2;
 
-      transition:
+  transition:
 
-      opacity 5.8s ease,
+  opacity 8.5s ease,
 
-      filter 5.8s ease,
+  filter 8.5s ease,
 
-      transform 5.8s ease;
+  transform 8.5s ease;
 
-    }
+}
 
-    .inner-symbol{
+.inner-symbol{
 
-      z-index:1;
+  z-index:1;
 
-      transition:
+  transition:
 
-      filter 4s ease;
+  filter 5s ease;
 
-    }
+}
 
-    @keyframes symbolAppear{
+@keyframes symbolAppear{
 
-      0%{
+  0%{
 
-        opacity:0;
+    opacity:0;
 
-        filter:blur(18px);
+    filter:blur(26px);
 
-        transform:scale(.96);
+    transform:scale(.95);
 
-      }
+  }
 
-      35%{
+  20%{
 
-        opacity:.08;
+    opacity:.03;
 
-      }
+  }
 
-      65%{
+  40%{
 
-        opacity:.42;
+    opacity:.10;
 
-      }
+  }
 
-      100%{
+  65%{
 
-        opacity:1;
+    opacity:.38;
 
-        filter:blur(0px);
+  }
 
-        transform:scale(1);
+  100%{
 
-      }
+    opacity:1;
 
-    }
+    filter:blur(0px);
 
-    /* GLITCH */
+    transform:scale(1);
 
-    .glitch{
+  }
 
-      position:absolute;
+}
 
-      inset:0;
+/* GLITCH */
 
-      pointer-events:none;
+.glitch{
 
-      opacity:0;
+  position:absolute;
 
-      mix-blend-mode:screen;
+  inset:0;
 
-    }
+  pointer-events:none;
 
-    .glitch.active{
+  opacity:0;
 
-      animation:glitchFlash .55s ease-out forwards;
+  mix-blend-mode:screen;
 
-    }
+}
 
-    @keyframes glitchFlash{
+.glitch.active{
 
-      0%{
+  animation:glitchFlash .65s ease-out forwards;
 
-        opacity:0;
+}
 
-      }
+@keyframes glitchFlash{
 
-      8%{
+  0%{
 
-        opacity:.95;
+    opacity:0;
 
-        transform:translateX(-14px);
+  }
 
-      }
+  8%{
 
-      16%{
+    opacity:1;
 
-        opacity:0;
+    transform:translateX(-18px);
 
-        transform:translateX(11px);
+  }
 
-      }
+  16%{
 
-      24%{
+    opacity:0;
 
-        opacity:.8;
+    transform:translateX(15px);
 
-        transform:translateX(-7px);
+  }
 
-      }
+  24%{
 
-      32%{
+    opacity:.95;
 
-        opacity:0;
+    transform:translateX(-10px);
 
-      }
+  }
 
-      48%{
+  36%{
 
-        opacity:.65;
+    opacity:0;
 
-        transform:translateY(6px);
+  }
 
-      }
+  52%{
 
-      64%{
+    opacity:.75;
 
-        opacity:0;
+    transform:translateY(7px);
 
-      }
+  }
 
-      100%{
+  68%{
 
-        opacity:0;
+    opacity:0;
 
-      }
+  }
 
-    }
+  100%{
 
-    /* TEXT */
+    opacity:0;
 
-    .text-zone{
+  }
 
-      position:relative;
+}
 
-      margin-top:14px;
+/* TEXT */
 
-      height:70px;
+.text-zone{
 
-      display:flex;
+  position:relative;
 
-      align-items:center;
+  margin-top:-2px;
 
-      justify-content:center;
+  height:70px;
 
-    }
+  display:flex;
 
-    .signal-line,
+  align-items:center;
 
-    .reconnect{
+  justify-content:center;
 
-      position:absolute;
+}
 
-      left:50%;
+.signal-line,
 
-      top:50%;
+.reconnect{
 
-      transform:translate(-50%,-50%);
+  position:absolute;
 
-      white-space:nowrap;
+  left:50%;
 
-      letter-spacing:9px;
+  top:50%;
 
-    }
+  transform:translate(-50%,-50%);
 
-    .signal-line{
+  white-space:nowrap;
 
-      font-size:1.35rem;
+  letter-spacing:8px;
 
-      color:#bfb7a8;
+}
 
-      opacity:0;
+.signal-line{
 
-    }
+  font-size:1.5rem;
 
-    .reconnect{
+  color:#bfb7a8;
 
-      font-size:1.25rem;
+  opacity:0;
 
-      color:#d8d2c8;
+}
 
-      opacity:0;
+.reconnect{
 
-      cursor:pointer;
+  font-size:1.45rem;
 
-      user-select:none;
+  color:#d8d2c8;
 
-      transition:opacity .8s ease;
+  opacity:0;
 
-    }
+  cursor:pointer;
 
-    /* RECONNECT PULSE */
+  user-select:none;
 
-    .reconnect.live{
+  transition:opacity .8s ease;
 
-      animation:
+}
 
-      reconnectPulse 2.55s ease-in-out infinite;
+/* RECONNECT */
 
-    }
+.reconnect.live{
 
-    @keyframes reconnectPulse{
+  animation:
 
-      0%{
+  reconnectPulse 1.9s ease-in-out infinite;
 
-        opacity:.14;
+}
 
-        text-shadow:
+@keyframes reconnectPulse{
 
-        0 0 0px rgba(255,255,255,0);
+  0%{
 
-      }
+    opacity:.10;
 
-      22%{
+    text-shadow:
 
-        opacity:.36;
+    0 0 0px rgba(255,255,255,0);
 
-        text-shadow:
+  }
 
-        0 0 5px rgba(255,255,255,.08);
+  20%{
 
-      }
+    opacity:.26;
 
-      48%{
+    text-shadow:
 
-        opacity:.82;
+    0 0 5px rgba(255,255,255,.05);
 
-        text-shadow:
+  }
 
-        0 0 10px rgba(255,255,255,.18),
+  50%{
 
-        0 0 20px rgba(255,255,255,.08);
+    opacity:1;
 
-      }
+    text-shadow:
 
-      72%{
+    0 0 10px rgba(255,255,255,.24),
 
-        opacity:.44;
+    0 0 24px rgba(255,255,255,.10),
 
-        text-shadow:
+    0 0 42px rgba(255,255,255,.05);
 
-        0 0 6px rgba(255,255,255,.08);
+  }
 
-      }
+  78%{
 
-      100%{
+    opacity:.38;
 
-        opacity:.18;
+    text-shadow:
 
-        text-shadow:
+    0 0 7px rgba(255,255,255,.08);
 
-        0 0 0px rgba(255,255,255,0);
+  }
 
-      }
+  100%{
 
-    }
+    opacity:.12;
 
-    /* DISSOLVE */
+    text-shadow:
 
-    .outer-symbol.dissolve{
+    0 0 0px rgba(255,255,255,0);
 
-      opacity:0;
+  }
 
-      filter:
+}
 
-      blur(18px)
+/* DISSOLVE */
 
-      brightness(.35);
+.outer-symbol.dissolve{
 
-      transform:scale(1.12);
+  opacity:0;
 
-    }
+  filter:
 
-  </style>
+  blur(26px)
+
+  brightness(.25);
+
+  transform:
+
+  scale(1.18);
+
+}
+
+</style>
 
 </head>
 
@@ -444,199 +454,193 @@
 
 <script>
 
-  const signalLine =
+const signalLine =
 
-  document.getElementById("signalLine");
+document.getElementById("signalLine");
 
-  const reconnect =
+const reconnect =
 
-  document.getElementById("reconnect");
+document.getElementById("reconnect");
 
-  const outerSymbol =
+const outerSymbol =
 
-  document.getElementById("outerSymbol");
+document.getElementById("outerSymbol");
 
-  const innerSymbol =
+const innerSymbol =
 
-  document.getElementById("innerSymbol");
+document.getElementById("innerSymbol");
 
-  const glitch =
+const glitch =
 
-  document.getElementById("glitch");
+document.getElementById("glitch");
 
-  const screen =
+const screen =
 
-  document.getElementById("screen");
+document.getElementById("screen");
 
-  const phrase = "signal lost";
+const phrase = "signal lost";
 
-  let index = 0;
+let index = 0;
 
-  /* GLITCH */
+/* GLITCH */
 
-  setTimeout(() => {
+setTimeout(() => {
 
-    glitch.classList.add("active");
+  glitch.classList.add("active");
 
-  }, 6900);
+}, 7000);
 
-  /* TYPE */
+/* TYPE */
 
-  setTimeout(() => {
+setTimeout(() => {
 
-    signalLine.style.opacity = 1;
+  signalLine.style.opacity = 1;
 
-    typePhrase();
+  typePhrase();
 
-  }, 8300);
+}, 8350);
 
-  function typePhrase(){
+function typePhrase(){
 
-    if(index < phrase.length){
+  if(index < phrase.length){
 
-      signalLine.innerHTML +=
+    signalLine.innerHTML +=
 
-      phrase.charAt(index);
+    phrase.charAt(index);
 
-      index++;
+    index++;
 
-      /* slower human typing */
+    setTimeout(typePhrase, 250);
 
-      setTimeout(typePhrase, 195);
+  } else {
 
-    } else {
+    beginDots();
 
-      beginDots();
+  }
+
+}
+
+/* SEARCH */
+
+function beginDots(){
+
+  let cycle = 0;
+
+  function runCycle(){
+
+    if(cycle >= 3){
+
+      fadeSignalOut();
+
+      return;
 
     }
 
-  }
+    let dot = 0;
 
-  /* SEARCHING */
+    function animateDots(){
 
-  function beginDots(){
+      if(dot <= 3){
 
-    let cycle = 0;
+        signalLine.innerHTML =
 
-    function runCycle(){
+        "signal lost" + ".".repeat(dot);
 
-      if(cycle >= 3){
+        dot++;
 
-        fadeSignalOut();
+        setTimeout(animateDots, 470);
 
-        return;
+      } else {
 
-      }
+        signalLine.innerHTML =
 
-      let dot = 0;
+        "signal lost";
 
-      function animateDots(){
+        cycle++;
 
-        if(dot <= 3){
-
-          signalLine.innerHTML =
-
-          "signal lost" + ".".repeat(dot);
-
-          dot++;
-
-          setTimeout(animateDots, 420);
-
-        } else {
-
-          signalLine.innerHTML =
-
-          "signal lost";
-
-          cycle++;
-
-          setTimeout(runCycle, 550);
-
-        }
+        setTimeout(runCycle, 700);
 
       }
-
-      animateDots();
 
     }
 
-    setTimeout(runCycle, 700);
+    animateDots();
 
   }
 
-  /* FADE SIGNAL */
+  setTimeout(runCycle, 900);
 
-  function fadeSignalOut(){
+}
 
-    signalLine.style.transition =
+/* FADE SIGNAL */
 
-    "opacity 2.2s ease";
+function fadeSignalOut(){
 
-    signalLine.style.opacity = 0;
+  signalLine.style.transition =
 
-    setTimeout(() => {
+  "opacity 2.5s ease";
 
-      activateReconnect();
+  signalLine.style.opacity = 0;
 
-    }, 1500);
+  setTimeout(() => {
 
-  }
+    activateReconnect();
 
-  /* ACTIVATE */
+  }, 1800);
 
-  function activateReconnect(){
+}
 
-    reconnect.style.opacity = .12;
+/* RECONNECT */
 
-    setTimeout(() => {
+function activateReconnect(){
 
-      reconnect.classList.add("live");
+  reconnect.style.opacity = .08;
 
-    }, 800);
+  setTimeout(() => {
 
-  }
+    reconnect.classList.add("live");
 
-  /* CLICK */
+  }, 950);
 
-  reconnect.addEventListener("click", () => {
+}
 
-    reconnect.style.pointerEvents = "none";
+/* CLICK */
 
-    /* kill pulse immediately */
+reconnect.addEventListener("click", () => {
 
-    reconnect.classList.remove("live");
+  reconnect.style.pointerEvents = "none";
 
-    reconnect.style.animation = "none";
+  reconnect.classList.remove("live");
 
-    reconnect.style.transition =
+  reconnect.style.animation = "none";
 
-    "opacity 2.2s ease";
+  reconnect.style.transition =
 
-    reconnect.style.opacity = 0;
+  "opacity 1.8s ease";
 
-    /* emotional pause */
+  reconnect.style.opacity = 0;
 
-    setTimeout(() => {
+  setTimeout(() => {
 
-      outerSymbol.classList.add("dissolve");
+    outerSymbol.classList.add("dissolve");
 
-      screen.style.background =
+    screen.style.background =
 
-      "#020202";
+    "#020202";
 
-      innerSymbol.style.filter =
+    innerSymbol.style.filter =
 
-      `
+    `
 
-      drop-shadow(0 0 10px rgba(255,245,220,.10))
+    drop-shadow(0 0 12px rgba(255,245,220,.12))
 
-      drop-shadow(0 0 28px rgba(255,245,220,.08))
+    drop-shadow(0 0 30px rgba(255,245,220,.08))
 
-      `;
+    `;
 
-    }, 1400);
+  }, 1700);
 
-  });
+});
 
 </script>
 
