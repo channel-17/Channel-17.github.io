@@ -12,11 +12,11 @@
 
 <!-- FAVICON -->
 
-<link rel="icon" type="image/png" sizes="512x512" href="favicon.png?v=17">
+<link rel="icon" type="image/png" sizes="32x32" href="Favicon17wh.png">
 
-<link rel="shortcut icon" type="image/png" href="Favicon17wh.png?v=17">
+<link rel="shortcut icon" href="Favicon17wh.png">
 
-<link rel="apple-touch-icon" sizes="512x512" href="favicon.png?v=17">
+<link rel="apple-touch-icon" sizes="512x512" href="favicon.png">
 
 <style>
 
@@ -496,4 +496,156 @@ setTimeout(() => {
 
 setTimeout(() => {
 
-  signalLine.style.opacity
+  signalLine.style.opacity = 1;
+
+  typePhrase();
+
+}, 8350);
+
+function typePhrase(){
+
+  if(index < phrase.length){
+
+    signalLine.innerHTML +=
+
+    phrase.charAt(index);
+
+    index++;
+
+    setTimeout(typePhrase, 250);
+
+  } else {
+
+    beginDots();
+
+  }
+
+}
+
+/* SEARCH */
+
+function beginDots(){
+
+  let cycle = 0;
+
+  function runCycle(){
+
+    if(cycle >= 3){
+
+      fadeSignalOut();
+
+      return;
+
+    }
+
+    let dot = 0;
+
+    function animateDots(){
+
+      if(dot <= 3){
+
+        signalLine.innerHTML =
+
+        "signal lost" + ".".repeat(dot);
+
+        dot++;
+
+        setTimeout(animateDots, 470);
+
+      } else {
+
+        signalLine.innerHTML =
+
+        "signal lost";
+
+        cycle++;
+
+        setTimeout(runCycle, 700);
+
+      }
+
+    }
+
+    animateDots();
+
+  }
+
+  setTimeout(runCycle, 900);
+
+}
+
+/* FADE SIGNAL */
+
+function fadeSignalOut(){
+
+  signalLine.style.transition =
+
+  "opacity 2.5s ease";
+
+  signalLine.style.opacity = 0;
+
+  setTimeout(() => {
+
+    activateReconnect();
+
+  }, 1800);
+
+}
+
+/* RECONNECT */
+
+function activateReconnect(){
+
+  reconnect.style.opacity = .08;
+
+  setTimeout(() => {
+
+    reconnect.classList.add("live");
+
+  }, 950);
+
+}
+
+/* CLICK */
+
+reconnect.addEventListener("click", () => {
+
+  reconnect.style.pointerEvents = "none";
+
+  reconnect.classList.remove("live");
+
+  reconnect.style.animation = "none";
+
+  reconnect.style.transition =
+
+  "opacity 1.8s ease";
+
+  reconnect.style.opacity = 0;
+
+  setTimeout(() => {
+
+    outerSymbol.classList.add("dissolve");
+
+    screen.style.background =
+
+    "#020202";
+
+    innerSymbol.style.filter =
+
+    `
+
+    drop-shadow(0 0 12px rgba(255,245,220,.12))
+
+    drop-shadow(0 0 30px rgba(255,245,220,.08))
+
+    `;
+
+  }, 1700);
+
+});
+
+</script>
+
+</body>
+
+</html>
