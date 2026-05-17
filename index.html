@@ -404,7 +404,7 @@ body{
 
 .outer-symbol.dissolve{
 
-  animation:signalErode 2.4s ease-out forwards;
+  animation:signalErode 1.9s linear forwards;
 
 }
 
@@ -420,37 +420,11 @@ body{
 
     brightness(1);
 
-    transform:
-
-    scale(1)
-
-    translate(0px,0px);
-
     clip-path:inset(0 0 0 0);
 
   }
 
-  18%{
-
-    opacity:1;
-
-    filter:
-
-    blur(.5px)
-
-    brightness(1.1);
-
-    transform:
-
-    scale(1.01)
-
-    translate(-2px,1px);
-
-  }
-
-  35%{
-
-    opacity:.92;
+  12%{
 
     clip-path:polygon(
 
@@ -458,19 +432,51 @@ body{
 
       100% 0%,
 
-      94% 28%,
+      100% 100%,
 
-      100% 52%,
+      0% 100%
 
-      88% 100%,
+    );
+
+  }
+
+  28%{
+
+    opacity:1;
+
+    filter:
+
+    blur(.5px)
+
+    brightness(1.05);
+
+    clip-path:polygon(
+
+      0% 0%,
+
+      96% 0%,
+
+      92% 18%,
+
+      100% 36%,
+
+      94% 58%,
+
+      100% 100%,
 
       0% 100%,
 
-      7% 65%,
+      4% 70%,
 
-      0% 32%
+      0% 42%
 
     );
+
+  }
+
+  45%{
+
+    opacity:.9;
 
     filter:
 
@@ -478,17 +484,31 @@ body{
 
     brightness(.95);
 
+    clip-path:polygon(
+
+      6% 0%,
+
+      100% 0%,
+
+      88% 22%,
+
+      100% 52%,
+
+      82% 100%,
+
+      0% 100%,
+
+      10% 62%,
+
+      0% 26%
+
+    );
+
   }
 
-  52%{
+  68%{
 
-    opacity:.65;
-
-    transform:
-
-    scale(1.04)
-
-    translate(-8px,4px);
+    opacity:.55;
 
     filter:
 
@@ -496,43 +516,25 @@ body{
 
     brightness(.7);
 
-  }
-
-  74%{
-
-    opacity:.28;
-
     clip-path:polygon(
 
-      8% 0%,
+      16% 0%,
 
-      100% 12%,
+      100% 10%,
 
-      92% 42%,
+      76% 36%,
 
-      100% 80%,
+      100% 74%,
 
-      74% 100%,
+      58% 100%,
 
-      0% 92%,
+      0% 88%,
 
-      10% 48%,
+      20% 48%,
 
-      0% 10%
+      0% 12%
 
     );
-
-    transform:
-
-    scale(1.08)
-
-    translate(-14px,7px);
-
-    filter:
-
-    blur(8px)
-
-    brightness(.45);
 
   }
 
@@ -540,40 +542,33 @@ body{
 
     opacity:0;
 
-    transform:
-
-    scale(1.14)
-
-    translate(-24px,12px);
-
     filter:
 
-    blur(18px)
+    blur(10px)
 
-    brightness(.18);
+    brightness(.25);
 
     clip-path:polygon(
 
-      24% 0%,
+      42% 0%,
 
-      100% 18%,
+      100% 28%,
 
-      82% 58%,
+      62% 58%,
 
       100% 100%,
 
-      48% 100%,
+      28% 100%,
 
-      0% 78%,
+      0% 64%,
 
-      18% 42%,
+      36% 40%,
 
       0% 0%
 
     );
 
   }
-
 
 
 }
