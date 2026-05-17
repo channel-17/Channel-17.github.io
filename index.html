@@ -641,99 +641,31 @@ const screen =
 
 document.getElementById("screen");
 
-const phrase = "signal lost";
+}
 
-let index = 0;
-
-/* GLITCH */
+/* SIGNAL LOST FLASH */
 
 setTimeout(() => {
 
-  glitch.classList.add("active");
-
-}, 1200);
-
-/* TYPE */
-
-setTimeout(() => {
+  signalLine.innerHTML = "signal lost";
 
   signalLine.style.opacity = 1;
 
-  typePhrase();
+  signalLine.classList.add("signal-flicker");
 
-}, 8350);
+}, 4200);
 
-function typePhrase(){
+setTimeout(() => {
 
-  if(index < phrase.length){
+  signalLine.style.opacity = 0;
 
-    signalLine.innerHTML +=
+}, 6200);
 
-    phrase.charAt(index);
+setTimeout(() => {
 
-    index++;
+  activateReconnect();
 
-    setTimeout(typePhrase, 250);
-
-  } else {
-
-    beginDots();
-
-  }
-
-}
-
-/* SEARCH */
-
-function beginDots(){
-
-  let cycle = 0;
-
-  function runCycle(){
-
-    if(cycle >= 3){
-
-      fadeSignalOut();
-
-      return;
-
-    }
-
-    let dot = 0;
-
-    function animateDots(){
-
-      if(dot <= 3){
-
-        signalLine.innerHTML =
-
-        "signal lost" + ".".repeat(dot);
-
-        dot++;
-
-        setTimeout(animateDots, 470);
-
-      } else {
-
-        signalLine.innerHTML =
-
-        "signal lost";
-
-        cycle++;
-
-        setTimeout(runCycle, 700);
-
-      }
-
-    }
-
-    animateDots();
-
-  }
-
-  setTimeout(runCycle, 900);
-
-}
+}, 6900);
 
 /* FADE SIGNAL */
 
