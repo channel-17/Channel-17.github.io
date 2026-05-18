@@ -828,11 +828,41 @@ setTimeout(() => {
 
 setTimeout(() => {
 
+  screen.classList.add("interference");
+
+  band1.style.top = "34%";
+
+  band2.style.top = "52%";
+
+  band3.style.top = "71%";
+
+  band1.style.opacity = ".28";
+
+  band2.style.opacity = ".18";
+
+  band3.style.opacity = ".24";
+
+}, 4800);
+
+setTimeout(() => {
+
+  screen.classList.remove("interference");
+
+  band1.style.opacity = "0";
+
+  band2.style.opacity = "0";
+
+  band3.style.opacity = "0";
+
+}, 5150);
+
+setTimeout(() => {
+
   signalLine.style.opacity = 1;
 
   signalLine.classList.add("flicker");
 
-}, 5200);
+}, 5300);
 
 /* REMOVE SIGNAL */
 
