@@ -390,7 +390,115 @@ body{
 
 }
 
-.signal-line,
+.signal-line{
+
+  opacity:0;
+
+  font-size:1.2rem;
+
+  color:#c2bcaf;
+
+}
+
+  .signal-line.flicker{
+
+  animation:
+
+  signalResolve 2.8s ease-out forwards;
+
+}
+
+@keyframes signalResolve{
+
+  0%{
+
+    opacity:0;
+
+    filter:
+
+    blur(6px);
+
+    letter-spacing:14px;
+
+    transform:
+
+    translate(-50%,-50%)
+
+    translateX(-6px);
+
+  }
+
+  18%{
+
+    opacity:.18;
+
+    filter:
+
+    blur(3px);
+
+  }
+
+  32%{
+
+    opacity:.42;
+
+    transform:
+
+    translate(-50%,-50%)
+
+    translateX(2px);
+
+  }
+
+  48%{
+
+    opacity:.24;
+
+    letter-spacing:11px;
+
+    filter:
+
+    blur(1.8px);
+
+  }
+
+  67%{
+
+    opacity:.72;
+
+    letter-spacing:8px;
+
+    transform:
+
+    translate(-50%,-50%);
+
+  }
+
+  82%{
+
+    opacity:.58;
+
+    filter:
+
+    blur(.4px);
+
+  }
+
+  100%{
+
+    opacity:.88;
+
+    filter:none;
+
+    letter-spacing:8px;
+
+    transform:
+
+    translate(-50%,-50%);
+
+  }
+
+}
 
 .reconnect{
 
@@ -604,8 +712,6 @@ skewX(4deg);
 
 }
 
-  }
-
 .screen.unstable{
 
   transform:
@@ -631,8 +737,6 @@ skewX(4deg);
   opacity:.18;
 
 }
-
-</style>
 
 </style>
 
