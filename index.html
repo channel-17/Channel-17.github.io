@@ -864,6 +864,52 @@ band3.style.opacity = "0";
 
 });
 
+  const screen =
+
+document.getElementById("screen");
+
+function randomInstability(){
+
+  if(!reconnect.classList.contains("live"))
+
+  return;
+
+  screen.classList.add("unstable");
+
+  const randomBand =
+
+  [band1, band2, band3]
+
+  [Math.floor(Math.random()*3)];
+
+  randomBand.style.opacity = ".22";
+
+  setTimeout(() => {
+
+    screen.classList.remove("unstable");
+
+    band1.style.opacity = "0";
+
+    band2.style.opacity = "0";
+
+    band3.style.opacity = "0";
+
+  }, 120);
+
+}
+
+setInterval(() => {
+
+  const chance = Math.random();
+
+  if(chance > .72){
+
+    randomInstability();
+
+  }
+
+}, 2200);
+
 </script>
 
 </body>
