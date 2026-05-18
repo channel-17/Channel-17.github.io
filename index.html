@@ -368,23 +368,83 @@ body{
 
 .signal-line.flicker{
 
-  animation:signalFlicker .45s steps(2) infinite;
+  animation:signalFlicker .11s linear infinite;
 
 }
 
 @keyframes signalFlicker{
 
-  0%{opacity:0;}
+  0%{
 
-  20%{opacity:.9;}
+    opacity:0;
 
-  40%{opacity:.1;}
+    transform:translate(-50%,-50%);
 
-  60%{opacity:1;}
+  }
 
-  80%{opacity:.2;}
+  7%{
 
-  100%{opacity:.92;}
+    opacity:1;
+
+    transform:
+
+    translate(calc(-50% - 2px), -50%);
+
+  }
+
+  14%{
+
+    opacity:.08;
+
+  }
+
+  19%{
+
+    opacity:1;
+
+  }
+
+  28%{
+
+    opacity:.18;
+
+  }
+
+  36%{
+
+    opacity:1;
+
+    transform:
+
+    translate(calc(-50% + 1px), -50%);
+
+  }
+
+  47%{
+
+    opacity:.04;
+
+  }
+
+  61%{
+
+    opacity:1;
+
+  }
+
+  74%{
+
+    opacity:.12;
+
+  }
+
+  100%{
+
+    opacity:.9;
+
+    transform:translate(-50%,-50%);
+
+  }
 
 }
 
