@@ -70,61 +70,55 @@ body{
 
   position:fixed;
 
-  inset:0;
+  inset:-5%;
 
   pointer-events:none;
 
   opacity:0;
 
-  z-index:999;
+  z-index:9999;
 
   background:
 
-linear-gradient(
+  repeating-linear-gradient(
 
-  rgba(255,255,255,.08),
+    0deg,
 
-  rgba(255,255,255,.02)
+    rgba(255,255,255,.22) 0px,
 
-),
+    rgba(255,255,255,.22) 2px,
 
-repeating-linear-gradient(
+    transparent 3px,
 
-  0deg,
+    transparent 6px
 
-  rgba(255,255,255,.12) 0px,
+  ),
 
-  rgba(255,255,255,.12) 1px,
+  repeating-linear-gradient(
 
-  transparent 2px,
+    90deg,
 
-  transparent 5px
+    rgba(255,255,255,.08) 0px,
 
-),
+    rgba(255,255,255,.08) 1px,
 
-repeating-linear-gradient(
+    transparent 2px,
 
-  90deg,
+    transparent 5px
 
-  rgba(255,255,255,.03) 0px,
-
-  rgba(255,255,255,.03) 1px,
-
-  transparent 2px,
-
-  transparent 4px
-
-)
+  );
 
   mix-blend-mode:screen;
 
   filter:
 
-  blur(.4px)
+  blur(1.4px)
 
-  contrast(1.4)
+  contrast(2.4)
 
-  brightness(1.8);
+  brightness(3.4);
+
+  transform-origin:center;
 
 }
 
