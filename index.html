@@ -383,7 +383,36 @@ body{
   pointer-events:none;
 
 }
+  
+/* TEXT */
+
+.text-zone{
+
+  position:absolute;
+
+  left:50%;
+
+  top:68%;
+
+  transform:translateX(-50%);
+
+  width:320px;
+
+  height:80px;
+
+  pointer-events:none;
+
+}
+
 .signal-line{
+
+  position:absolute;
+
+  left:50%;
+
+  top:50%;
+
+  transform:translate(-50%,-50%);
 
   opacity:0;
 
@@ -391,19 +420,15 @@ body{
 
   color:#c2bcaf;
 
+  white-space:nowrap;
+
 }
 
-  .signal-line.flicker{
+.signal-line.flicker{
 
-  animation:
+  animation:signalResolve 1.9s ease-out forwards;
 
-  signalResolve 1.9s ease-out forwards;
-
-  left:50%;
-
-  transform:translate(-50%,-50%);
-
-  }
+}
 
 @keyframes signalResolve{
 
@@ -411,9 +436,7 @@ body{
 
     opacity:0;
 
-    filter:
-
-    blur(6px);
+    filter:blur(6px);
 
     letter-spacing:14px;
 
@@ -429,9 +452,7 @@ body{
 
     opacity:.18;
 
-    filter:
-
-    blur(3px);
+    filter:blur(3px);
 
   }
 
@@ -446,6 +467,48 @@ body{
     translateX(2px);
 
   }
+
+  48%{
+
+    opacity:.24;
+
+    letter-spacing:11px;
+
+    filter:blur(1.8px);
+
+  }
+
+  67%{
+
+    opacity:.72;
+
+    letter-spacing:8px;
+
+    transform:translate(-50%,-50%);
+
+  }
+
+  82%{
+
+    opacity:.58;
+
+    filter:blur(.4px);
+
+  }
+
+  100%{
+
+    opacity:.88;
+
+    filter:none;
+
+    letter-spacing:8px;
+
+    transform:translate(-50%,-50%);
+
+  }
+
+}
 
   48%{
 
