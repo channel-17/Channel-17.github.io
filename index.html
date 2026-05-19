@@ -66,13 +66,13 @@ body{
 
 }
 
-/* ---------------- GLITCH HIT ---------------- */
+/* FULLSCREEN GLITCH */
 
 .glitch{
 
   position:fixed;
 
-  inset:-5%;
+  inset:-8%;
 
   pointer-events:none;
 
@@ -86,9 +86,9 @@ body{
 
     0deg,
 
-    rgba(255,255,255,.22) 0px,
+    rgba(255,255,255,.28) 0px,
 
-    rgba(255,255,255,.22) 2px,
+    rgba(255,255,255,.28) 2px,
 
     transparent 3px,
 
@@ -100,9 +100,9 @@ body{
 
     90deg,
 
-    rgba(255,255,255,.08) 0px,
+    rgba(255,255,255,.10) 0px,
 
-    rgba(255,255,255,.08) 1px,
+    rgba(255,255,255,.10) 1px,
 
     transparent 2px,
 
@@ -114,57 +114,117 @@ body{
 
   filter:
 
-  blur(1.4px)
+  blur(1.8px)
 
-  contrast(2.4)
+  contrast(2.8)
 
-  brightness(3.2);
+  brightness(3.8);
+
+  transform-origin:center;
 
 }
 
 .glitch.active{
 
-  animation:glitchHit 1s steps(2) forwards;
+  opacity:1;
+
+  animation:glitchFlash .9s steps(2) forwards;
 
 }
 
-@keyframes glitchHit{
+@keyframes glitchFlash{
 
   0%{
 
     opacity:0;
 
-    transform:none;
+    transform:
+
+    scale(1);
+
+    filter:
+
+    blur(.4px)
+
+    brightness(1);
 
   }
 
-  8%{
+  6%{
 
     opacity:1;
 
     transform:
 
-    translateX(-24px)
+    translateX(-80px)
 
-    skewX(18deg);
+    skewX(28deg)
+
+    scaleX(1.08);
+
+    filter:
+
+    blur(3px)
+
+    brightness(5)
+
+    contrast(4);
 
   }
 
-  18%{
+  10%{
+
+    opacity:.2;
+
+    transform:
+
+    translateX(55px)
+
+    skewX(-22deg);
+
+  }
+
+  16%{
+
+    opacity:1;
+
+    transform:
+
+    translateY(-18px)
+
+    scale(1.04)
+
+    skewY(5deg);
+
+    filter:
+
+    blur(2px)
+
+    brightness(4);
+
+  }
+
+  22%{
 
     opacity:0;
 
   }
 
-  28%{
+  30%{
 
-    opacity:.9;
+    opacity:.95;
 
     transform:
 
-    translateX(18px)
+    translateX(-35px)
 
-    skewX(-14deg);
+    skewX(14deg);
+
+    filter:
+
+    blur(1.5px)
+
+    contrast(3);
 
   }
 
@@ -174,15 +234,35 @@ body{
 
   }
 
-  55%{
+  48%{
 
-    opacity:.7;
+    opacity:.85;
 
     transform:
 
-    scale(1.02)
+    translateX(24px)
 
-    translateY(-4px);
+    translateY(6px)
+
+    skewY(-4deg);
+
+  }
+
+  58%{
+
+    opacity:0;
+
+  }
+
+  68%{
+
+    opacity:.65;
+
+    transform:
+
+    scale(1.015)
+
+    translateX(-12px);
 
   }
 
@@ -192,10 +272,11 @@ body{
 
     transform:none;
 
+    filter:none;
+
   }
 
 }
-
 /* ---------------- SYMBOL ---------------- */
 
 .symbol-wrap{
