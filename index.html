@@ -277,7 +277,7 @@ body{
   }
 
 }
-/* ---------------- SYMBOL ---------------- */
+/* SYMBOL */
 
 .symbol-wrap{
 
@@ -291,9 +291,9 @@ body{
 
   animation:
 
-  symbolRise 4.6s ease-out forwards;
+  symbolReveal 2.8s ease-out forwards;
 
-  animation-delay:1s;
+  animation-delay:.9s;
 
 }
 
@@ -311,6 +311,8 @@ body{
 
   object-fit:contain;
 
+  pointer-events:none;
+
 }
 
 .outer-symbol{
@@ -325,21 +327,97 @@ body{
 
 }
 
-@keyframes symbolRise{
+@keyframes symbolReveal{
 
   0%{
 
     opacity:0;
 
-    transform:scale(.94);
+    transform:
 
-    filter:blur(24px);
+    scale(.72)
+
+    translateY(18px);
+
+    filter:
+
+    blur(28px)
+
+    brightness(.2);
 
   }
 
-  50%{
+  18%{
 
-    opacity:.35;
+    opacity:.12;
+
+    transform:
+
+    scale(.82)
+
+    translateY(10px);
+
+  }
+
+  34%{
+
+    opacity:.38;
+
+    transform:
+
+    scale(.92)
+
+    translateY(4px);
+
+    filter:
+
+    blur(10px)
+
+    brightness(.7);
+
+  }
+
+  48%{
+
+    opacity:.82;
+
+    transform:
+
+    scale(1.02);
+
+    filter:
+
+    blur(2px)
+
+    brightness(1.2);
+
+  }
+
+  58%{
+
+    opacity:.58;
+
+    transform:
+
+    scale(.99)
+
+    translateX(-2px);
+
+  }
+
+  72%{
+
+    opacity:1;
+
+    transform:
+
+    scale(1.005);
+
+    filter:
+
+    blur(.5px)
+
+    brightness(1);
 
   }
 
@@ -349,7 +427,7 @@ body{
 
     transform:scale(1);
 
-    filter:blur(0px);
+    filter:none;
 
   }
 
