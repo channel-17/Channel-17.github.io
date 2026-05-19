@@ -52,6 +52,8 @@ body{
 
   height:100vh;
 
+  overflow:hidden;
+
   display:flex;
 
   justify-content:center;
@@ -60,13 +62,11 @@ body{
 
   flex-direction:column;
 
-  overflow:hidden;
-
   background:#000;
 
 }
 
-/* OPENING GLITCH */
+/* ---------------- GLITCH HIT ---------------- */
 
 .glitch{
 
@@ -118,25 +118,23 @@ body{
 
   contrast(2.4)
 
-  brightness(3.4);
+  brightness(3.2);
 
 }
 
 .glitch.active{
 
-  opacity:1;
-
-  animation:glitchFlash 1.1s steps(2) forwards;
+  animation:glitchHit 1s steps(2) forwards;
 
 }
 
-@keyframes glitchFlash{
+@keyframes glitchHit{
 
   0%{
 
     opacity:0;
 
-    transform:scale(1);
+    transform:none;
 
   }
 
@@ -146,33 +144,27 @@ body{
 
     transform:
 
-    translateX(-25px)
+    translateX(-24px)
 
     skewX(18deg);
 
   }
 
-  16%{
+  18%{
 
     opacity:0;
+
+  }
+
+  28%{
+
+    opacity:.9;
 
     transform:
 
     translateX(18px)
 
-    skewX(-12deg);
-
-  }
-
-  26%{
-
-    opacity:.95;
-
-    transform:
-
-    translateY(-8px)
-
-    scale(1.02);
+    skewX(-14deg);
 
   }
 
@@ -182,21 +174,15 @@ body{
 
   }
 
-  52%{
+  55%{
 
-    opacity:.75;
+    opacity:.7;
 
     transform:
 
-    translateX(12px)
+    scale(1.02)
 
-    skewY(6deg);
-
-  }
-
-  70%{
-
-    opacity:0;
+    translateY(-4px);
 
   }
 
@@ -210,7 +196,7 @@ body{
 
 }
 
-/* SYMBOL */
+/* ---------------- SYMBOL ---------------- */
 
 .symbol-wrap{
 
@@ -224,9 +210,9 @@ body{
 
   animation:
 
-  symbolReveal 5.5s ease-out forwards;
+  symbolRise 4.6s ease-out forwards;
 
-  animation-delay:1.1s;
+  animation-delay:1s;
 
 }
 
@@ -258,27 +244,21 @@ body{
 
 }
 
-@keyframes symbolReveal{
+@keyframes symbolRise{
 
   0%{
 
     opacity:0;
 
+    transform:scale(.94);
+
     filter:blur(24px);
 
-    transform:scale(.96);
-
   }
 
-  40%{
+  50%{
 
-    opacity:.12;
-
-  }
-
-  75%{
-
-    opacity:.55;
+    opacity:.35;
 
   }
 
@@ -286,65 +266,109 @@ body{
 
     opacity:1;
 
-    filter:none;
-
     transform:scale(1);
+
+    filter:blur(0px);
 
   }
 
 }
 
-/* INTERFERENCE */
+/* ---------------- SIGNAL INTERRUPTION ---------------- */
 
-.corruption-band{
+.symbol-wrap.interrupted{
+
+  animation:
+
+  signalInterruption .18s linear 1;
+
+}
+
+@keyframes signalInterruption{
+
+  0%{
+
+    transform:translateX(0px);
+
+  }
+
+  20%{
+
+    transform:
+
+    translateX(-8px)
+
+    skewX(8deg);
+
+  }
+
+  40%{
+
+    transform:
+
+    translateX(6px)
+
+    skewX(-6deg);
+
+  }
+
+  100%{
+
+    transform:none;
+
+  }
+
+}
+
+.interrupt-bar{
 
   position:absolute;
 
-  left:0;
-
   width:100%;
 
-  height:18px;
+  height:16px;
 
-  background:rgba(0,0,0,.92);
+  background:#000;
 
-  z-index:30;
+  left:0;
+
+  top:48%;
 
   opacity:0;
 
-}
-
-.screen.interference{
-
-  transform:
-
-  translateX(3px)
-
-  skewX(-2deg);
-
-  filter:
-
-  contrast(1.18)
-
-  brightness(1.06);
+  z-index:50;
 
 }
 
-.screen.interference .symbol-wrap{
+.interrupt-bar.flash{
 
-  transform:
-
-  translateX(-4px);
+  animation:barFlash .12s linear;
 
 }
 
-.screen.interference .corruption-band{
+@keyframes barFlash{
 
-  opacity:.32;
+  0%{
+
+    opacity:0;
+
+  }
+
+  50%{
+
+    opacity:1;
+
+  }
+
+  100%{
+
+    opacity:0;
+
+  }
 
 }
 
-/* TEXT AREA */
+/* ---------------- TEXT ---------------- */
 
 .text-zone{
 
@@ -356,29 +380,17 @@ body{
 
   transform:translateX(-50%);
 
-  width:320px;
+  width:100%;
 
-  height:80px;
+  text-align:center;
 
 }
 
-/* SIGNAL LOST */
-
 .signal-line{
-
-  position:absolute;
-
-  left:50%;
-
-  top:50%;
-
-  transform:translate(-50%,-50%);
 
   opacity:0;
 
-  white-space:nowrap;
-
-  font-size:1.2rem;
+  font-size:1.15rem;
 
   letter-spacing:8px;
 
@@ -386,11 +398,9 @@ body{
 
 }
 
-.signal-line.flicker{
+.signal-line.active{
 
-  animation:
-
-  signalResolve 2s ease-out forwards;
+  animation:signalResolve 2.2s ease-out forwards;
 
 }
 
@@ -400,79 +410,47 @@ body{
 
     opacity:0;
 
-    filter:blur(6px);
+    filter:blur(8px);
 
     letter-spacing:16px;
 
-    transform:
-
-    translate(-50%,-50%)
-
-    translateX(-10px);
-
   }
 
-  22%{
+  40%{
 
-    opacity:.18;
-
-  }
-
-  46%{
-
-    opacity:.42;
-
-    transform:
-
-    translate(-50%,-50%)
-
-    translateX(2px);
+    opacity:.35;
 
   }
 
   70%{
 
-    opacity:.82;
-
-    letter-spacing:8px;
+    opacity:.7;
 
   }
 
   100%{
 
-    opacity:.92;
+    opacity:.9;
 
     filter:none;
 
     letter-spacing:8px;
 
-    transform:
-
-    translate(-50%,-50%);
-
   }
 
 }
 
-/* RECONNECT */
+/* ---------------- RECONNECT ---------------- */
 
 .reconnect{
 
-  position:absolute;
-
-  left:50%;
-
-  top:50%;
-
-  transform:translate(-50%,-50%);
+  margin-top:26px;
 
   opacity:0;
 
-  white-space:nowrap;
+  font-size:1.1rem;
 
   letter-spacing:8px;
-
-  font-size:1.15rem;
 
   cursor:pointer;
 
@@ -482,9 +460,7 @@ body{
 
 .reconnect.live{
 
-  animation:
-
-  reconnectPulse 2.6s ease-in-out infinite;
+  animation:reconnectPulse 2.6s ease-in-out infinite;
 
 }
 
@@ -494,8 +470,6 @@ body{
 
     opacity:.08;
 
-    text-shadow:none;
-
   }
 
   50%{
@@ -504,9 +478,9 @@ body{
 
     text-shadow:
 
-    0 0 10px rgba(255,255,255,.22),
+    0 0 10px rgba(255,255,255,.2),
 
-    0 0 28px rgba(255,255,255,.08);
+    0 0 24px rgba(255,255,255,.08);
 
   }
 
@@ -514,99 +488,79 @@ body{
 
     opacity:.12;
 
-    text-shadow:none;
-
   }
 
 }
 
-/* SYMBOL DISSOLVE */
+/* ---------------- DISSOLVE ---------------- */
 
 .outer-symbol.dissolve{
 
   animation:
 
-  signalErode 3.4s linear forwards;
+  dissolveSignal 3.2s ease forwards;
 
 }
 
-@keyframes signalErode{
+@keyframes dissolveSignal{
 
   0%{
 
     opacity:1;
 
+    filter:none;
+
+    transform:none;
+
   }
 
-  68%{
+  40%{
 
-    opacity:.88;
+    opacity:.8;
 
     transform:
 
     translateX(-2px)
 
-    translateY(1px)
-
     skewX(1deg);
 
     filter:
 
-    blur(.4px)
+    blur(.5px);
 
-    brightness(.82)
+  }
 
-    contrast(1.35);
+  70%{
+
+    opacity:.45;
+
+    transform:
+
+    translateX(8px)
+
+    translateY(-2px);
+
+    filter:
+
+    blur(4px);
 
   }
 
   100%{
 
-    opacity:.32;
+    opacity:0;
 
     transform:
 
-    translateX(-6px)
+    translateX(24px)
 
-    translateY(3px)
-
-    skewX(4deg);
+    translateY(-8px);
 
     filter:
 
-    blur(14px)
-
-    brightness(.2);
+    blur(14px);
 
   }
-
-}
-
-/* RANDOM INSTABILITY */
-
-.screen.unstable{
-
-  transform:
-
-  translateX(1px)
-
-  translateY(-1px);
-
-}
-
-.screen.unstable .reconnect{
-
-  transform:
-
-  translate(calc(-50% + 2px),
-
-  calc(-50% - 1px));
-
-}
-
-.screen.unstable .corruption-band{
-
-  opacity:.18;
 
 }
 
@@ -620,13 +574,9 @@ body{
 
   <div class="glitch" id="glitch"></div>
 
-  <div class="corruption-band" id="band1"></div>
+  <div class="interrupt-bar" id="interruptBar"></div>
 
-<div class="corruption-band" id="band2"></div>
-
-<div class="corruption-band" id="band3"></div>
-
-  <div class="symbol-wrap">
+  <div class="symbol-wrap" id="symbolWrap">
 
     <img
 
@@ -654,7 +604,7 @@ body{
 
     <div class="signal-line" id="signalLine">
 
-      signal lost
+      SIGNAL LOST
 
     </div>
 
@@ -670,9 +620,19 @@ body{
 
 <script>
 
+/* ---------------- ELEMENTS ---------------- */
+
 const glitch =
 
 document.getElementById("glitch");
+
+const symbolWrap =
+
+document.getElementById("symbolWrap");
+
+const interruptBar =
+
+document.getElementById("interruptBar");
 
 const signalLine =
 
@@ -686,176 +646,59 @@ const outerSymbol =
 
 document.getElementById("outerSymbol");
 
-const innerSymbol =
-
-document.getElementById("innerSymbol");
-  
-const band1 =
-
-document.getElementById("band1");
-
-const band2 =
-
-document.getElementById("band2");
-
-const band3 =
-
-document.getElementById("band3");
-/* OPENING GLITCH */
+/* ---------------- OPENING HIT ---------------- */
 
 setTimeout(() => {
 
   glitch.classList.add("active");
 
-}, 500);
+}, 400);
 
-/* SIGNAL LOST */
-
-setTimeout(() => {
-
-  screen.classList.add("interference");
-
-  band1.style.top = "34%";
-
-  band2.style.top = "52%";
-
-  band3.style.top = "71%";
-
-  band1.style.opacity = ".28";
-
-  band2.style.opacity = ".18";
-
-  band3.style.opacity = ".24";
-
-}, 4800);
+/* ---------------- SIGNAL FIGHTING THROUGH ---------------- */
 
 setTimeout(() => {
 
-  screen.classList.remove("interference");
+  symbolWrap.classList.add("interrupted");
 
-  band1.style.opacity = "0";
+  interruptBar.classList.add("flash");
 
-  band2.style.opacity = "0";
+}, 2600);
 
-  band3.style.opacity = "0";
-
-}, 5150);
+/* ---------------- SIGNAL LOST ---------------- */
 
 setTimeout(() => {
 
-  signalLine.style.opacity = 1;
+  signalLine.classList.add("active");
 
-  signalLine.classList.add("flicker");
+}, 4300);
 
-}, 5300);
-
-/* REMOVE SIGNAL */
-
-setTimeout(() => {
-
-  signalLine.classList.remove("flicker");
-
-  signalLine.style.opacity = 0;
-
-}, 8600);
-
-/* RECONNECT */
+/* ---------------- RECONNECT ---------------- */
 
 setTimeout(() => {
 
   reconnect.classList.add("live");
 
-}, 10100);
+}, 7000);
 
-/* CLICK */
+/* ---------------- CLICK ---------------- */
 
 reconnect.addEventListener("click", () => {
 
   reconnect.style.pointerEvents = "none";
 
-  reconnect.classList.remove("live");
-
   reconnect.style.transition =
 
-  "opacity 1.2s ease";
+  "opacity 1s ease";
 
-  reconnect.style.opacity = 0;
+  reconnect.style.opacity = "0";
 
   setTimeout(() => {
 
     outerSymbol.classList.add("dissolve");
 
-    band1.style.top = "32%";
-
-band2.style.top = "51%";
-
-band3.style.top = "69%";
-
-band1.style.opacity = "0";
-
-band2.style.opacity = "0";
-
-band3.style.opacity = "0";
-
-    innerSymbol.style.filter =
-
-    `
-
-    drop-shadow(0 0 10px rgba(255,245,220,.08))
-
-    drop-shadow(0 0 24px rgba(255,245,220,.05))
-
-    `;
-
-  }, 600);
+  }, 400);
 
 });
-
-  const screen =
-
-document.getElementById("screen");
-
-function randomInstability(){
-
-  if(!reconnect.classList.contains("live"))
-
-  return;
-
-  screen.classList.add("unstable");
-
-  const randomBand =
-
-  [band1, band2, band3]
-
-  [Math.floor(Math.random()*3)];
-
-  randomBand.style.opacity = ".22";
-
-  setTimeout(() => {
-
-    screen.classList.remove("unstable");
-
-    band1.style.opacity = "0";
-
-    band2.style.opacity = "0";
-
-    band3.style.opacity = "0";
-
-  }, 120);
-
-}
-
-setInterval(() => {
-
-  const chance = Math.random();
-
-  if(chance > .72){
-
-    randomInstability();
-
-  }
-
-}, 2200);
 
 </script>
 
