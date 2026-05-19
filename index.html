@@ -66,7 +66,7 @@ body{
 
 }
 
-/* FULLSCREEN GLITCH */
+/* OPENING GLITCH */
 
 .glitch{
 
@@ -120,8 +120,6 @@ body{
 
   brightness(3.4);
 
-  transform-origin:center;
-
 }
 
 .glitch.active{
@@ -140,8 +138,6 @@ body{
 
     transform:scale(1);
 
-    filter:blur(.5px);
-
   }
 
   8%{
@@ -153,12 +149,6 @@ body{
     translateX(-25px)
 
     skewX(18deg);
-
-    filter:
-
-    blur(2px)
-
-    brightness(2.4);
 
   }
 
@@ -184,12 +174,6 @@ body{
 
     scale(1.02);
 
-    filter:
-
-    blur(1px)
-
-    contrast(2);
-
   }
 
   38%{
@@ -208,10 +192,6 @@ body{
 
     skewY(6deg);
 
-    filter:
-
-    brightness(2.8);
-
   }
 
   70%{
@@ -226,11 +206,95 @@ body{
 
     transform:none;
 
+  }
+
+}
+
+/* SYMBOL */
+
+.symbol-wrap{
+
+  position:relative;
+
+  width:250px;
+
+  height:250px;
+
+  opacity:0;
+
+  animation:
+
+  symbolReveal 5.5s ease-out forwards;
+
+  animation-delay:1.1s;
+
+}
+
+.outer-symbol,
+
+.inner-symbol{
+
+  position:absolute;
+
+  inset:0;
+
+  width:100%;
+
+  height:100%;
+
+  object-fit:contain;
+
+}
+
+.outer-symbol{
+
+  z-index:2;
+
+}
+
+.inner-symbol{
+
+  z-index:1;
+
+}
+
+@keyframes symbolReveal{
+
+  0%{
+
+    opacity:0;
+
+    filter:blur(24px);
+
+    transform:scale(.96);
+
+  }
+
+  40%{
+
+    opacity:.12;
+
+  }
+
+  75%{
+
+    opacity:.55;
+
+  }
+
+  100%{
+
+    opacity:1;
+
     filter:none;
+
+    transform:scale(1);
 
   }
 
 }
+
+/* INTERFERENCE */
 
 .corruption-band{
 
@@ -248,37 +312,47 @@ body{
 
   opacity:0;
 
-  mix-blend-mode:normal;
-
 }
 
 .screen.interference{
 
+  transform:
+
+  translateX(3px)
+
+  skewX(-2deg);
+
   filter:
 
-  contrast(1.22)
+  contrast(1.18)
 
-  brightness(1.08);
+  brightness(1.06);
+
+}
+
+.screen.interference .symbol-wrap{
+
+  transform:
+
+  translateX(-4px);
 
 }
 
 .screen.interference .corruption-band{
 
-  opacity:.38;
-
-  height:26px;
+  opacity:.32;
 
 }
 
-/* TEXT */
+/* TEXT AREA */
 
 .text-zone{
 
   position:absolute;
 
-  left:50%;
-
   top:68%;
+
+  left:50%;
 
   transform:translateX(-50%);
 
@@ -286,9 +360,9 @@ body{
 
   height:80px;
 
-  pointer-events:auto;
-
 }
+
+/* SIGNAL LOST */
 
 .signal-line{
 
@@ -302,17 +376,21 @@ body{
 
   opacity:0;
 
+  white-space:nowrap;
+
   font-size:1.2rem;
 
-  color:#c2bcaf;
+  letter-spacing:8px;
 
-  white-space:nowrap;
+  color:#c2bcaf;
 
 }
 
 .signal-line.flicker{
 
-  animation:signalResolve 1.9s ease-out forwards;
+  animation:
+
+  signalResolve 2s ease-out forwards;
 
 }
 
@@ -324,25 +402,23 @@ body{
 
     filter:blur(6px);
 
-    letter-spacing:14px;
+    letter-spacing:16px;
 
     transform:
 
     translate(-50%,-50%)
 
-    translateX(-6px);
+    translateX(-10px);
 
   }
 
-  18%{
+  22%{
 
     opacity:.18;
 
-    filter:blur(3px);
-
   }
 
-  32%{
+  46%{
 
     opacity:.42;
 
@@ -354,89 +430,17 @@ body{
 
   }
 
-  48%{
+  70%{
 
-    opacity:.24;
-
-    letter-spacing:11px;
-
-    filter:blur(1.8px);
-
-  }
-
-  67%{
-
-    opacity:.72;
+    opacity:.82;
 
     letter-spacing:8px;
-
-    transform:translate(-50%,-50%);
-
-  }
-
-  82%{
-
-    opacity:.58;
-
-    filter:blur(.4px);
 
   }
 
   100%{
 
-    opacity:.88;
-
-    filter:none;
-
-    letter-spacing:8px;
-
-    transform:translate(-50%,-50%);
-
-  }
-
-}
-
-  /* TEXT */
-
-.text-zone{
-
-  48%{
-
-    opacity:.24;
-
-    letter-spacing:11px;
-
-    filter:
-
-    blur(1.8px);
-
-  }
-
-  67%{
-
-    opacity:.72;
-
-    letter-spacing:8px;
-
-    transform:
-
-    translate(-50%,-50%);
-
-  }
-
-  82%{
-
-    opacity:.58;
-
-    filter:
-
-    blur(.4px);
-
-  }
-
-  100%{
-
-    opacity:.88;
+    opacity:.92;
 
     filter:none;
 
@@ -449,6 +453,8 @@ body{
   }
 
 }
+
+/* RECONNECT */
 
 .reconnect{
 
@@ -460,29 +466,11 @@ body{
 
   transform:translate(-50%,-50%);
 
+  opacity:0;
+
   white-space:nowrap;
 
   letter-spacing:8px;
-
-}
-
-/* SIGNAL LOST */
-
-.signal-line{
-
-  opacity:0;
-
-  font-size:1.2rem;
-
-  color:#c2bcaf;
-
-}
-
-/* RECONNECT */
-
-.reconnect{
-
-  opacity:0;
 
   font-size:1.15rem;
 
@@ -494,7 +482,9 @@ body{
 
 .reconnect.live{
 
-  animation:reconnectPulse 2.6s ease-in-out infinite;
+  animation:
+
+  reconnectPulse 2.6s ease-in-out infinite;
 
 }
 
@@ -530,11 +520,13 @@ body{
 
 }
 
-/* DISSOLVE */
+/* SYMBOL DISSOLVE */
 
 .outer-symbol.dissolve{
 
-  animation:signalErode 3.4s linear forwards;
+  animation:
+
+  signalErode 3.4s linear forwards;
 
 }
 
@@ -544,77 +536,31 @@ body{
 
     opacity:1;
 
-    clip-path:inset(0 0 0 0);
-
   }
 
   68%{
 
-  opacity:.88;
+    opacity:.88;
 
     transform:
 
-translateX(-2px)
+    translateX(-2px)
 
-translateY(1px)
+    translateY(1px)
 
-skewX(1deg);
+    skewX(1deg);
 
-  filter:
+    filter:
 
-  blur(.4px)
+    blur(.4px)
 
-  brightness(.82)
+    brightness(.82)
 
     contrast(1.35);
 
-  clip-path:polygon(
+  }
 
-    4% 0%,
-
-    18% 6%,
-
-    36% 2%,
-
-    52% 10%,
-
-    71% 4%,
-
-    88% 12%,
-
-    100% 22%,
-
-    96% 38%,
-
-    100% 54%,
-
-    92% 73%,
-
-    100% 88%,
-
-    78% 100%,
-
-    61% 94%,
-
-    42% 100%,
-
-    24% 92%,
-
-    7% 100%,
-
-    0% 76%,
-
-    8% 52%,
-
-    0% 33%,
-
-    10% 14%
-
-  );
-
-}
-
-100%{
+  100%{
 
     opacity:.32;
 
@@ -626,32 +572,6 @@ skewX(1deg);
 
     skewX(4deg);
 
-    clip-path:polygon(
-
-      78% 0%,
-
-      100% 12%,
-
-      84% 34%,
-
-      100% 58%,
-
-      72% 100%,
-
-      48% 76%,
-
-      34% 100%,
-
-      0% 82%,
-
-      18% 48%,
-
-      0% 26%,
-
-      12% 0%
-
-    );
-
     filter:
 
     blur(14px)
@@ -659,6 +579,10 @@ skewX(1deg);
     brightness(.2);
 
   }
+
+}
+
+/* RANDOM INSTABILITY */
 
 .screen.unstable{
 
