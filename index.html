@@ -18,6 +18,12 @@
 
 <style>
 
+/* ===================================================== */
+
+/* RESET */
+
+/* ===================================================== */
+
 *{
 
   margin:0;
@@ -44,6 +50,12 @@ body{
 
 }
 
+/* ===================================================== */
+
+/* MAIN SCREEN */
+
+/* ===================================================== */
+
 .screen{
 
   position:relative;
@@ -60,23 +72,53 @@ body{
 
   align-items:center;
 
-  flex-direction:column;
-
   background:#000;
 
 }
 
-/* FULLSCREEN GLITCH */
+/* ===================================================== */
+
+/* TIMING CONTROLS */
+
+/* ===================================================== */
+
+/*
+
+CHANGE THESE LATER
+
+WITHOUT TOUCHING ANYTHING ELSE
+
+*/
+
+:root{
+
+  --glitch-start: .3s;
+
+  --symbol-start: 1.2s;
+
+  --signal-start: 5.3s;
+
+  --signal-end: 8.5s;
+
+  --reconnect-start: 9.8s;
+
+}
+
+/* ===================================================== */
+
+/* OPENING GLITCH */
+
+/* ===================================================== */
 
 .glitch{
 
   position:fixed;
 
-  inset:-8%;
-
-  pointer-events:none;
+  inset:-5%;
 
   opacity:0;
+
+  pointer-events:none;
 
   z-index:9999;
 
@@ -86,27 +128,13 @@ body{
 
     0deg,
 
-    rgba(255,255,255,.28) 0px,
+    rgba(255,255,255,.16) 0px,
 
-    rgba(255,255,255,.28) 2px,
+    rgba(255,255,255,.16) 2px,
 
     transparent 3px,
 
-    transparent 6px
-
-  ),
-
-  repeating-linear-gradient(
-
-    90deg,
-
-    rgba(255,255,255,.10) 0px,
-
-    rgba(255,255,255,.10) 1px,
-
-    transparent 2px,
-
-    transparent 5px
+    transparent 7px
 
   );
 
@@ -118,151 +146,93 @@ body{
 
   contrast(2.8)
 
-  brightness(3.8);
-
-  transform-origin:center;
+  brightness(2.6);
 
 }
 
 .glitch.active{
 
-  opacity:1;
-
-  animation:glitchFlash .9s steps(2) forwards;
+  animation:violentGlitch 1.1s steps(2) forwards;
 
 }
 
-@keyframes glitchFlash{
+@keyframes violentGlitch{
 
   0%{
 
     opacity:0;
 
-    transform:
-
-    scale(1);
-
-    filter:
-
-    blur(.4px)
-
-    brightness(1);
+    transform:scale(1);
 
   }
 
-  6%{
+  8%{
 
     opacity:1;
 
     transform:
 
-    translateX(-80px)
+    translateX(-38px)
 
-    skewX(28deg)
+    skewX(18deg)
 
-    scaleX(1.08);
-
-    filter:
-
-    blur(3px)
-
-    brightness(5)
-
-    contrast(4);
+    scale(1.02);
 
   }
 
-  10%{
+  15%{
 
     opacity:.2;
-
-    transform:
-
-    translateX(55px)
-
-    skewX(-22deg);
-
-  }
-
-  16%{
-
-    opacity:1;
-
-    transform:
-
-    translateY(-18px)
-
-    scale(1.04)
-
-    skewY(5deg);
-
-    filter:
-
-    blur(2px)
-
-    brightness(4);
 
   }
 
   22%{
 
-    opacity:0;
-
-  }
-
-  30%{
-
-    opacity:.95;
-
-    transform:
-
-    translateX(-35px)
-
-    skewX(14deg);
-
-    filter:
-
-    blur(1.5px)
-
-    contrast(3);
-
-  }
-
-  38%{
-
-    opacity:0;
-
-  }
-
-  48%{
-
-    opacity:.85;
+    opacity:1;
 
     transform:
 
     translateX(24px)
 
-    translateY(6px)
+    skewX(-14deg)
 
-    skewY(-4deg);
+    scale(1.01);
 
   }
 
-  58%{
+  35%{
 
     opacity:0;
 
   }
 
-  68%{
+  44%{
 
-    opacity:.65;
+    opacity:.9;
 
     transform:
 
-    scale(1.015)
+    translateY(-12px)
 
-    translateX(-12px);
+    skewY(5deg);
+
+  }
+
+  60%{
+
+    opacity:.2;
+
+  }
+
+  72%{
+
+    opacity:.8;
+
+    transform:
+
+    translateX(12px)
+
+    scale(1.01);
 
   }
 
@@ -272,28 +242,23 @@ body{
 
     transform:none;
 
-    filter:none;
-
   }
 
 }
+
+/* ===================================================== */
+
 /* SYMBOL */
+
+/* ===================================================== */
 
 .symbol-wrap{
 
   position:relative;
 
-  width:250px;
+  width:260px;
 
-  height:250px;
-
-  opacity:0;
-
-  animation:
-
-  symbolReveal 2.8s ease-out forwards;
-
-  animation-delay:.9s;
+  height:260px;
 
 }
 
@@ -311,13 +276,7 @@ body{
 
   object-fit:contain;
 
-  pointer-events:none;
-
-}
-
-.outer-symbol{
-
-  z-index:2;
+  opacity:0;
 
 }
 
@@ -325,99 +284,57 @@ body{
 
   z-index:1;
 
+  animation:
+
+  symbolRise 4.8s ease-out forwards;
+
+  animation-delay:var(--symbol-start);
+
 }
 
-@keyframes symbolReveal{
+.outer-symbol{
+
+  z-index:2;
+
+  animation:
+
+  symbolRise 4.8s ease-out forwards;
+
+  animation-delay:var(--symbol-start);
+
+}
+
+@keyframes symbolRise{
 
   0%{
 
     opacity:0;
 
-    transform:
-
-    scale(.72)
-
-    translateY(18px);
+    transform:scale(.92);
 
     filter:
 
-    blur(28px)
+    blur(18px)
 
     brightness(.2);
 
   }
 
-  18%{
+  40%{
 
-    opacity:.12;
-
-    transform:
-
-    scale(.82)
-
-    translateY(10px);
+    opacity:.16;
 
   }
 
-  34%{
+  65%{
 
-    opacity:.38;
-
-    transform:
-
-    scale(.92)
-
-    translateY(4px);
+    opacity:.42;
 
     filter:
 
-    blur(10px)
+    blur(3px)
 
     brightness(.7);
-
-  }
-
-  48%{
-
-    opacity:.82;
-
-    transform:
-
-    scale(1.02);
-
-    filter:
-
-    blur(2px)
-
-    brightness(1.2);
-
-  }
-
-  58%{
-
-    opacity:.58;
-
-    transform:
-
-    scale(.99)
-
-    translateX(-2px);
-
-  }
-
-  72%{
-
-    opacity:1;
-
-    transform:
-
-    scale(1.005);
-
-    filter:
-
-    blur(.5px)
-
-    brightness(1);
 
   }
 
@@ -433,87 +350,51 @@ body{
 
 }
 
-/* ---------------- SIGNAL INTERRUPTION ---------------- */
+/* ===================================================== */
 
-.symbol-wrap.interrupted{
+/* QUICK SIGNAL TEAR */
 
-  animation:
+/* ===================================================== */
 
-  signalInterruption .18s linear 1;
-
-}
-
-@keyframes signalInterruption{
-
-  0%{
-
-    transform:translateX(0px);
-
-  }
-
-  20%{
-
-    transform:
-
-    translateX(-8px)
-
-    skewX(8deg);
-
-  }
-
-  40%{
-
-    transform:
-
-    translateX(6px)
-
-    skewX(-6deg);
-
-  }
-
-  100%{
-
-    transform:none;
-
-  }
-
-}
-
-.interrupt-bar{
+.signal-tear{
 
   position:absolute;
-
-  width:100%;
-
-  height:16px;
-
-  background:#000;
 
   left:0;
 
   top:48%;
 
+  width:100%;
+
+  height:12px;
+
+  background:#000;
+
   opacity:0;
 
-  z-index:50;
+  z-index:100;
 
 }
 
-.interrupt-bar.flash{
+.signal-tear.active{
 
-  animation:barFlash .12s linear;
+  animation:
+
+  tearFlash .14s linear forwards;
 
 }
 
-@keyframes barFlash{
+@keyframes tearFlash{
 
   0%{
 
     opacity:0;
 
+    transform:translateX(-100%);
+
   }
 
-  50%{
+  35%{
 
     opacity:1;
 
@@ -523,43 +404,69 @@ body{
 
     opacity:0;
 
+    transform:translateX(100%);
+
   }
 
 }
 
-/* ---------------- TEXT ---------------- */
+/* ===================================================== */
+
+/* TEXT ZONE */
+
+/* ===================================================== */
 
 .text-zone{
 
   position:absolute;
 
-  top:68%;
-
   left:50%;
+
+  top:69%;
 
   transform:translateX(-50%);
 
-  width:100%;
+  width:320px;
+
+  height:80px;
 
   text-align:center;
 
 }
 
+/* ===================================================== */
+
+/* SIGNAL LOST */
+
+/* ===================================================== */
+
 .signal-line{
+
+  position:absolute;
+
+  left:50%;
+
+  top:50%;
+
+  transform:translate(-50%,-50%);
+
+  white-space:nowrap;
 
   opacity:0;
 
   font-size:1.15rem;
 
-  letter-spacing:8px;
+  letter-spacing:10px;
 
   color:#c2bcaf;
 
 }
 
-.signal-line.active{
+.signal-line.live{
 
-  animation:signalResolve 2.2s ease-out forwards;
+  animation:
+
+  signalResolve 2.2s ease-out forwards;
 
 }
 
@@ -569,21 +476,53 @@ body{
 
     opacity:0;
 
-    filter:blur(8px);
+    filter:
 
-    letter-spacing:16px;
+    blur(8px);
+
+    letter-spacing:18px;
+
+    transform:
+
+    translate(-50%,-50%)
+
+    translateX(-10px);
 
   }
 
-  40%{
+  22%{
 
-    opacity:.35;
+    opacity:.18;
 
   }
 
-  70%{
+  38%{
+
+    opacity:.42;
+
+    transform:
+
+    translate(-50%,-50%)
+
+    translateX(3px);
+
+  }
+
+  56%{
+
+    opacity:.25;
+
+    filter:
+
+    blur(2px);
+
+  }
+
+  72%{
 
     opacity:.7;
+
+    letter-spacing:10px;
 
   }
 
@@ -595,31 +534,51 @@ body{
 
     letter-spacing:8px;
 
+    transform:
+
+    translate(-50%,-50%);
+
   }
 
 }
 
-/* ---------------- RECONNECT ---------------- */
+/* ===================================================== */
+
+/* RECONNECT */
+
+/* ===================================================== */
 
 .reconnect{
 
-  margin-top:26px;
+  position:absolute;
+
+  left:50%;
+
+  top:50%;
+
+  transform:translate(-50%,-50%);
 
   opacity:0;
-
-  font-size:1.1rem;
-
-  letter-spacing:8px;
 
   cursor:pointer;
 
   user-select:none;
 
+  white-space:nowrap;
+
+  font-size:1.1rem;
+
+  letter-spacing:8px;
+
+  color:#d8d2c8;
+
 }
 
 .reconnect.live{
 
-  animation:reconnectPulse 2.6s ease-in-out infinite;
+  animation:
+
+  reconnectPulse 2.6s ease-in-out infinite;
 
 }
 
@@ -629,6 +588,8 @@ body{
 
     opacity:.08;
 
+    text-shadow:none;
+
   }
 
   50%{
@@ -637,7 +598,7 @@ body{
 
     text-shadow:
 
-    0 0 10px rgba(255,255,255,.2),
+    0 0 12px rgba(255,255,255,.22),
 
     0 0 24px rgba(255,255,255,.08);
 
@@ -647,21 +608,27 @@ body{
 
     opacity:.12;
 
+    text-shadow:none;
+
   }
 
 }
 
-/* ---------------- DISSOLVE ---------------- */
+/* ===================================================== */
+
+/* OUTER WALL DISSOLVE */
+
+/* ===================================================== */
 
 .outer-symbol.dissolve{
 
   animation:
 
-  dissolveSignal 3.2s ease forwards;
+  dissolveWalls 3.2s ease forwards;
 
 }
 
-@keyframes dissolveSignal{
+@keyframes dissolveWalls{
 
   0%{
 
@@ -669,39 +636,23 @@ body{
 
     filter:none;
 
-    transform:none;
-
   }
 
-  40%{
+  50%{
 
-    opacity:.8;
+    opacity:.7;
 
     transform:
 
-    translateX(-2px)
+    scale(1.01)
 
-    skewX(1deg);
-
-    filter:
-
-    blur(.5px);
-
-  }
-
-  70%{
-
-    opacity:.45;
-
-    transform:
-
-    translateX(8px)
-
-    translateY(-2px);
+    translateY(1px);
 
     filter:
 
-    blur(4px);
+    blur(1px)
+
+    brightness(.7);
 
   }
 
@@ -711,13 +662,49 @@ body{
 
     transform:
 
-    translateX(24px)
+    scale(1.03)
 
-    translateY(-8px);
+    translateY(4px);
 
     filter:
 
-    blur(14px);
+    blur(14px)
+
+    brightness(.2);
+
+  }
+
+}
+
+/* ===================================================== */
+
+/* INNER CORE GLOW */
+
+/* ===================================================== */
+
+.inner-symbol.connected{
+
+  animation:
+
+  innerAlive 3s ease forwards;
+
+}
+
+@keyframes innerAlive{
+
+  0%{
+
+    filter:none;
+
+  }
+
+  100%{
+
+    filter:
+
+    drop-shadow(0 0 12px rgba(255,255,255,.08))
+
+    drop-shadow(0 0 26px rgba(255,255,255,.04));
 
   }
 
@@ -729,13 +716,17 @@ body{
 
 <body>
 
-<div class="screen" id="screen">
+<div class="screen">
+
+  <!-- GLITCH -->
 
   <div class="glitch" id="glitch"></div>
 
-  <div class="interrupt-bar" id="interruptBar"></div>
+  <!-- SYMBOL -->
 
-  <div class="symbol-wrap" id="symbolWrap">
+  <div class="symbol-wrap">
+
+    <div class="signal-tear" id="tear"></div>
 
     <img
 
@@ -759,11 +750,13 @@ body{
 
   </div>
 
+  <!-- TEXT -->
+
   <div class="text-zone">
 
     <div class="signal-line" id="signalLine">
 
-      SIGNAL LOST
+      signal lost
 
     </div>
 
@@ -779,19 +772,19 @@ body{
 
 <script>
 
-/* ---------------- ELEMENTS ---------------- */
+/* ===================================================== */
+
+/* ELEMENTS */
+
+/* ===================================================== */
 
 const glitch =
 
 document.getElementById("glitch");
 
-const symbolWrap =
+const tear =
 
-document.getElementById("symbolWrap");
-
-const interruptBar =
-
-document.getElementById("interruptBar");
+document.getElementById("tear");
 
 const signalLine =
 
@@ -805,57 +798,95 @@ const outerSymbol =
 
 document.getElementById("outerSymbol");
 
-/* ---------------- OPENING HIT ---------------- */
+const innerSymbol =
+
+document.getElementById("innerSymbol");
+
+/* ===================================================== */
+
+/* OPENING GLITCH */
+
+/* ===================================================== */
 
 setTimeout(() => {
 
   glitch.classList.add("active");
 
-}, 400);
+}, 300);
 
-/* ---------------- SIGNAL FIGHTING THROUGH ---------------- */
+/* ===================================================== */
 
-setTimeout(() => {
+/* QUICK SYMBOL TEAR */
 
-  symbolWrap.classList.add("interrupted");
-
-  interruptBar.classList.add("flash");
-
-}, 2600);
-
-/* ---------------- SIGNAL LOST ---------------- */
+/* ===================================================== */
 
 setTimeout(() => {
 
-  signalLine.classList.add("active");
+  tear.classList.add("active");
 
-}, 4300);
+}, 3200);
 
-/* ---------------- RECONNECT ---------------- */
+/* ===================================================== */
+
+/* SIGNAL LOST */
+
+/* ===================================================== */
 
 setTimeout(() => {
+
+  signalLine.style.opacity = 1;
+
+  signalLine.classList.add("live");
+
+}, 5300);
+
+/* ===================================================== */
+
+/* REMOVE SIGNAL */
+
+/* ===================================================== */
+
+setTimeout(() => {
+
+  signalLine.style.opacity = 0;
+
+}, 8500);
+
+/* ===================================================== */
+
+/* RECONNECT */
+
+/* ===================================================== */
+
+setTimeout(() => {
+
+  reconnect.style.opacity = 1;
 
   reconnect.classList.add("live");
 
-}, 7000);
+}, 9800);
 
-/* ---------------- CLICK ---------------- */
+/* ===================================================== */
+
+/* CLICK RECONNECT */
+
+/* ===================================================== */
 
 reconnect.addEventListener("click", () => {
 
   reconnect.style.pointerEvents = "none";
 
+  reconnect.classList.remove("live");
+
   reconnect.style.transition =
 
-  "opacity 1s ease";
+  "opacity 1.2s ease";
 
-  reconnect.style.opacity = "0";
+  reconnect.style.opacity = 0;
 
-  setTimeout(() => {
+  outerSymbol.classList.add("dissolve");
 
-    outerSymbol.classList.add("dissolve");
-
-  }, 400);
+  innerSymbol.classList.add("connected");
 
 });
 
