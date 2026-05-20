@@ -9,28 +9,28 @@
 
 <style>
 
-html,body{
+html, body {
 margin:0;
 padding:0;
 width:100%;
 height:100%;
 overflow:hidden;
 background:black;
-font-family:Courier New;
+font-family:Courier New, monospace;
 color:white;
 }
 
 .screen{
 position:relative;
 width:100%;
-height:100%;
+height:100vh;
 background:black;
 overflow:hidden;
 }
 
 
 
-/* GLITCH /
+/* VIOLENT SIGNAL TAKEOVER /
 
 .glitch{
 position:absolute;
@@ -39,35 +39,51 @@ left:0;
 width:100%;
 height:100%;
 
-opacity:.05;
-
 background:
 repeating-linear-gradient(
 0deg,
-rgba(255,255,255,.08) 0px,
+rgba(255,255,255,.10) 0px,
 rgba(255,255,255,.02) 1px,
 transparent 2px,
 transparent 4px
 );
 
+opacity:.05;
+
 animation:glitch 2s ease;
+
+pointer-events:none;
+
+z-index:20;
 }
 
-@keyframes glitch{
+@keyframes glitch {
 
 0%{
 opacity:1;
-left:-30px;
+transform:
+translateX(-30px)
+skewX(12deg);
 }
 
-50%{
+20%{
 opacity:.2;
-left:20px;
+}
+
+40%{
+opacity:1;
+transform:
+translateX(20px)
+skewX(-10deg);
+}
+
+70%{
+opacity:.1;
 }
 
 100%{
 opacity:.05;
-left:0px;
+transform:none;
 }
 
 }
@@ -77,57 +93,78 @@ left:0px;
 / TRIANGLE /
 
 .triangle{
+
 position:absolute;
 
 top:50%;
 left:50%;
-
-margin-left:-100px;
-margin-top:-140px;
 
 width:0;
 height:0;
 
+margin-left:-100px;
+margin-top:-150px;
+
 border-left:100px solid transparent;
 border-right:100px solid transparent;
-border-bottom:180px solid rgba(255,255,255,.06);
+border-bottom:180px solid rgba(255,255,255,.05);
+
+opacity:.25;
+
+transition:4s ease;
+
+z-index:2;
 }
 
 
 
-/ SYMBOL /
+/ INNER SIGNAL /
 
 .symbol{
+
 position:absolute;
 
-top:50%;
-left:50%;
+top:38%;
+left:0;
 
-margin-left:-70px;
-margin-top:-40px;
+width:100%;
+
+text-align:center;
 
 font-size:80px;
 
-opacity:.04;
+letter-spacing:10px;
+
+opacity:.03;
+
+transition:4s ease;
+
+z-index:3;
 }
 
 
 
-/ SIGNAL /
+/ SIGNAL LOST /
 
 .signal{
+
 position:absolute;
 
-width:100%;
-text-align:center;
+top:63%;
 
-bottom:28%;
+left:0;
+
+width:100%;
+
+text-align:center;
 
 font-size:12px;
 
 letter-spacing:6px;
 
 opacity:.6;
+
+z-index:5;
 }
 
 
@@ -135,20 +172,26 @@ opacity:.6;
 / RECONNECT /
 
 .reconnect{
+
 position:absolute;
 
-width:100%;
-text-align:center;
+top:70%;
 
-bottom:21%;
+left:0;
+
+width:100%;
+
+text-align:center;
 
 font-size:15px;
 
 letter-spacing:8px;
 
-opacity:.85;
+opacity:.9;
 
 cursor:pointer;
+
+z-index:6;
 }
 
 
@@ -156,6 +199,7 @@ cursor:pointer;
 / EMBER /
 
 .ember{
+
 position:absolute;
 
 width:8px;
@@ -165,29 +209,38 @@ border-radius:50%;
 
 opacity:0;
 
+pointer-events:none;
+
 background:
 radial-gradient(
 circle,
 rgba(255,220,160,1) 0%,
-rgba(255,140,70,.7) 40%,
+rgba(255,140,70,.6) 45%,
 transparent 100%
 );
 
 box-shadow:
-0 0 8px rgba(255,120,50,.4);
+0 0 8px rgba(255,120,50,.35);
+
+z-index:15;
 }
 
 
 
-/ FREQUENCY */
+/ FREQUENCY ARCS /
 
 .frequency{
+
 position:absolute;
 
 left:25px;
 bottom:30px;
 
 opacity:0;
+
+transition:3s ease;
+
+z-index:10;
 }
 
 .frequency div{
@@ -201,8 +254,20 @@ letter-spacing:4px;
 opacity:.7;
 }
 
+
+
+/ AWAKEN */
+
 .show{
 opacity:1;
+}
+
+.awaken{
+opacity:.15;
+}
+
+.fade{
+opacity:.03;
 }
 
 </style>
@@ -215,7 +280,7 @@ opacity:1;
 
 <div class="glitch"></div>
 
-<div class="triangle"></div>
+<div class="triangle" id="triangle"></div>
 
 <div class="symbol" id="symbol">
 .17
@@ -260,6 +325,9 @@ document.getElementById("frequency");
 var symbol =
 document.getElementById("symbol");
 
+var triangle =
+document.getElementById("triangle");
+
 
 
 reconnect.onclick=function(e){
@@ -274,6 +342,8 @@ ember.style.top=e.clientY+"px";
 
 ember.style.opacity="1";
 
+
+
 ember.animate([
 
 {
@@ -283,7 +353,7 @@ opacity:1
 
 {
 transform:"scale(6)",
-opacity:.03
+opacity:.02
 }
 
 ],{
@@ -293,15 +363,21 @@ fill:"forwards"
 
 });
 
+
+
 setTimeout(function(){
 
-symbol.style.opacity=".15";
+symbol.classList.add("awaken");
+
+triangle.classList.add("fade");
 
 },700);
 
+
+
 setTimeout(function(){
 
-frequency.className="frequency show";
+frequency.classList.add("show");
 
 },2200);
 
