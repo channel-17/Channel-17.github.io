@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 
-<title>channel 17</title>
+<title>CHANNEL 17</title>
 
 <style>
 
@@ -27,88 +27,160 @@ BACKGROUND
 ========================= */
 
 body{
-background:
-radial-gradient(circle at center,
-rgba(35,18,5,.16) 0%,
-rgba(0,0,0,0) 45%),
-#000;
+background:#000;
+overflow:hidden;
 }
 
 /* =========================
-GLITCH LAYER
+NOISE
 ========================= */
 
-#glitch{
+#noise{
 position:fixed;
 inset:0;
 pointer-events:none;
-opacity:0;
-z-index:50;
-mix-blend-mode:screen;
+opacity:.08;
+z-index:1;
+
+background-image:
+repeating-linear-gradient(
+0deg,
+rgba(255,255,255,.04) 0px,
+rgba(255,255,255,.04) 1px,
+transparent 1px,
+transparent 3px
+);
+
+animation:noiseMove .16s linear infinite;
 }
 
-.glitch-bar{
-position:absolute;
-left:-10%;
-width:120%;
-height:2px;
-background:
-linear-gradient(90deg,
-transparent,
-rgba(255,120,40,.9),
-transparent);
-animation:glitchMove .18s linear infinite;
-}
-
-.glitch-bar:nth-child(1){top:12%;}
-.glitch-bar:nth-child(2){top:28%;}
-.glitch-bar:nth-child(3){top:47%;}
-.glitch-bar:nth-child(4){top:66%;}
-.glitch-bar:nth-child(5){top:84%;}
-
-@keyframes glitchMove{
+@keyframes noiseMove{
 0%{
-transform:translateX(-8%);
-opacity:.1;
-}
-50%{
-transform:translateX(5%);
-opacity:.8;
+transform:translateY(0px);
 }
 100%{
-transform:translateX(-6%);
-opacity:.05;
+transform:translateY(3px);
 }
 }
 
 /* =========================
-CENTER SYMBOL
+GLITCH TAKEOVER
+========================= */
+
+#takeover{
+position:fixed;
+inset:0;
+pointer-events:none;
+z-index:40;
+opacity:0;
+mix-blend-mode:screen;
+}
+
+.glitchLine{
+position:absolute;
+width:140%;
+left:-20%;
+height:2px;
+background:
+linear-gradient(
+90deg,
+transparent,
+rgba(70,255,120,.95),
+rgba(255,255,255,.45),
+transparent
+);
+
+animation:lineMove .12s linear infinite;
+}
+
+.glitchLine:nth-child(1){top:12%;}
+.glitchLine:nth-child(2){top:26%;}
+.glitchLine:nth-child(3){top:39%;}
+.glitchLine:nth-child(4){top:53%;}
+.glitchLine:nth-child(5){top:66%;}
+.glitchLine:nth-child(6){top:81%;}
+
+@keyframes lineMove{
+
+0%{
+transform:translateX(-6%);
+opacity:.12;
+}
+
+50%{
+transform:translateX(5%);
+opacity:.9;
+}
+
+100%{
+transform:translateX(-3%);
+opacity:.05;
+}
+
+}
+
+/* =========================
+MAIN WRAP
+========================= */
+
+#main{
+position:relative;
+width:100%;
+height:100%;
+display:flex;
+justify-content:center;
+align-items:center;
+overflow:hidden;
+}
+
+/* =========================
+SYMBOL
 ========================= */
 
 #symbolWrap{
 position:absolute;
-top:42%;
+top:37%;
 left:50%;
 transform:translate(-50%,-50%);
-width:min(72vw,420px);
+width:min(78vw,460px);
 aspect-ratio:1/1;
+
 display:flex;
-align-items:center;
 justify-content:center;
-z-index:5;
+align-items:center;
+
+opacity:0;
+transition:2s ease;
+z-index:10;
 }
 
-/* OUTER TRIANGLE */
+#symbolWrap.visible{
+opacity:1;
+}
 
 #outer{
 position:absolute;
 width:100%;
-opacity:.42;
-filter:blur(.3px);
-animation:outerPulse 8s ease-in-out infinite;
+opacity:.38;
+
+filter:
+drop-shadow(0 0 12px rgba(80,255,120,.08));
+
+animation:outerBreath 8s ease-in-out infinite;
 }
 
-@keyframes outerPulse{
+#inner{
+position:absolute;
+width:100%;
+opacity:.38;
+
+filter:
+drop-shadow(0 0 12px rgba(80,255,120,.08));
+
+animation:innerBreath 8s ease-in-out infinite;
+}
+
+@keyframes outerBreath{
 0%,100%{
 opacity:.22;
 transform:scale(1);
@@ -119,24 +191,14 @@ transform:scale(1.01);
 }
 }
 
-/* INNER TRUST */
-
-#inner{
-position:absolute;
-width:46%;
-opacity:.82;
-filter:
-drop-shadow(0 0 8px rgba(255,170,90,.18))
-drop-shadow(0 0 22px rgba(255,110,20,.08));
-animation:innerBreath 6s ease-in-out infinite;
-}
-
 @keyframes innerBreath{
 0%,100%{
-opacity:.65;
+opacity:.22;
+transform:scale(1);
 }
 50%{
-opacity:.95;
+opacity:.42;
+transform:scale(1.01);
 }
 }
 
@@ -146,24 +208,38 @@ SIGNAL LOST
 
 #signal{
 position:absolute;
-top:61%;
+top:60%;
 left:50%;
 transform:translateX(-50%);
-font-size:clamp(12px,2vw,20px);
+
+font-size:clamp(14px,2vw,22px);
+
 letter-spacing:.45em;
-color:rgba(220,220,220,.22);
+
+color:rgba(210,255,210,.38);
+
 opacity:0;
-animation:signalFlash .9s infinite;
-z-index:10;
+
+transition:1.4s ease;
+
+z-index:15;
+}
+
+#signal.visible{
+opacity:1;
+animation:signalFlash .8s infinite;
 }
 
 @keyframes signalFlash{
+
 0%,100%{
 opacity:.12;
 }
+
 50%{
-opacity:.42;
+opacity:.55;
 }
+
 }
 
 /* =========================
@@ -172,37 +248,51 @@ RECONNECT
 
 #reconnect{
 position:absolute;
-top:71%;
+top:69%;
 left:50%;
 transform:translateX(-50%);
-font-size:clamp(34px,6vw,58px);
-letter-spacing:.28em;
-color:#f6e6d2;
-opacity:0;
-cursor:pointer;
-transition:.4s;
-z-index:20;
+
+font-size:clamp(22px,4vw,42px);
+
+letter-spacing:.32em;
+
+color:rgba(255,220,180,.9);
+
 text-shadow:
-0 0 12px rgba(255,160,90,.12),
-0 0 30px rgba(255,120,40,.08);
+0 0 12px rgba(255,120,20,.14),
+0 0 30px rgba(255,100,20,.08);
+
+opacity:0;
+
+cursor:pointer;
+
+transition:
+opacity 2s ease,
+transform .4s ease,
+text-shadow 1.5s ease;
+
+z-index:20;
 }
 
 #reconnect.active{
 opacity:1;
-animation:rePulse 4s ease-in-out infinite;
+animation:reconnectPulse 5s ease-in-out infinite;
 }
 
-@keyframes rePulse{
+@keyframes reconnectPulse{
+
 0%,100%{
-opacity:.82;
+opacity:.72;
 }
+
 50%{
 opacity:1;
 }
+
 }
 
 #reconnect:hover{
-transform:translateX(-50%) scale(1.04);
+transform:translateX(-50%) scale(1.03);
 }
 
 /* =========================
@@ -213,37 +303,50 @@ ETCHINGS
 position:absolute;
 inset:0;
 opacity:0;
-transition:2s ease;
 pointer-events:none;
-z-index:15;
+transition:2.4s ease;
+z-index:30;
+}
+
+#etchings.visible{
+opacity:1;
+pointer-events:auto;
 }
 
 .etch{
 position:absolute;
-max-width:72vw;
-opacity:.92;
+display:block;
 filter:
-drop-shadow(0 0 10px rgba(255,130,50,.18));
+drop-shadow(0 0 14px rgba(255,120,20,.16))
+drop-shadow(0 0 28px rgba(255,120,20,.06));
+
+transition:.4s ease;
+}
+
+.etch:hover{
+transform:translateX(6px);
+filter:
+drop-shadow(0 0 16px rgba(255,160,60,.3));
 }
 
 #etch1{
-width:min(54vw,320px);
+width:min(54vw,340px);
 left:8%;
-top:22%;
-transform:rotate(-3deg);
+top:28%;
+transform:rotate(-2deg);
 }
 
 #etch2{
-width:min(60vw,340px);
-left:11%;
-top:46%;
+width:min(60vw,380px);
+left:12%;
+top:50%;
 transform:rotate(2deg);
 }
 
 #etch3{
-width:min(56vw,300px);
-left:14%;
-bottom:15%;
+width:min(56vw,330px);
+left:15%;
+bottom:12%;
 transform:rotate(-4deg);
 }
 
@@ -256,79 +359,98 @@ position:fixed;
 inset:0;
 overflow:hidden;
 pointer-events:none;
-z-index:3;
+z-index:2;
 }
 
-.smoke{
+.cloud{
 position:absolute;
-width:50vw;
-height:50vw;
+
+width:55vw;
+height:55vw;
+
+border-radius:50%;
+
 background:
 radial-gradient(circle,
 rgba(255,255,255,.045) 0%,
 rgba(255,255,255,.02) 18%,
 transparent 70%);
-filter:blur(40px);
+
+filter:blur(45px);
+
 opacity:0;
-animation:smokeFloat 28s linear infinite;
+
+animation:smokeFloat linear infinite;
 }
 
-.smoke:nth-child(1){
+.cloud:nth-child(1){
 left:-10%;
 bottom:-10%;
-animation-delay:0s;
+animation-duration:28s;
 }
 
-.smoke:nth-child(2){
+.cloud:nth-child(2){
 right:-20%;
 top:10%;
-animation-delay:8s;
+animation-duration:34s;
+animation-delay:7s;
 }
 
-.smoke:nth-child(3){
-left:20%;
+.cloud:nth-child(3){
+left:30%;
 bottom:-20%;
-animation-delay:16s;
+animation-duration:30s;
+animation-delay:15s;
 }
 
 @keyframes smokeFloat{
+
 0%{
-transform:translateX(0) translateY(0) scale(1);
+transform:translate(0,0) scale(1);
 opacity:0;
 }
+
 10%{
 opacity:.12;
 }
+
 50%{
-opacity:.06;
+opacity:.05;
 }
+
 100%{
-transform:translateX(140px) translateY(-220px) scale(1.3);
+transform:translate(160px,-220px) scale(1.35);
 opacity:0;
 }
+
 }
 
 /* =========================
-AFTER CONNECT
+CONNECTED STATE
 ========================= */
 
 .connected #outer{
-opacity:.08;
+opacity:.02;
 filter:blur(2px);
 transition:3s ease;
 }
 
+.connected #inner{
+opacity:.92;
+transition:3s ease;
+
+filter:
+drop-shadow(0 0 14px rgba(255,170,90,.22))
+drop-shadow(0 0 42px rgba(255,110,20,.12));
+}
+
 .connected #signal{
-display:none;
+opacity:0;
 }
 
 .connected #reconnect{
-display:none;
-}
-
-.connected #etchings{
-opacity:1;
-pointer-events:auto;
+opacity:0;
+pointer-events:none;
 }
 
 </style>
@@ -336,27 +458,37 @@ pointer-events:auto;
 
 <body>
 
+<!-- NOISE -->
+<div id="noise"></div>
+
 <!-- GLITCH -->
-<div id="glitch">
-<div class="glitch-bar"></div>
-<div class="glitch-bar"></div>
-<div class="glitch-bar"></div>
-<div class="glitch-bar"></div>
-<div class="glitch-bar"></div>
+<div id="takeover">
+
+<div class="glitchLine"></div>
+<div class="glitchLine"></div>
+<div class="glitchLine"></div>
+<div class="glitchLine"></div>
+<div class="glitchLine"></div>
+<div class="glitchLine"></div>
+
 </div>
 
 <!-- SMOKE -->
 <div id="smoke">
-<div class="smoke"></div>
-<div class="smoke"></div>
-<div class="smoke"></div>
+
+<div class="cloud"></div>
+<div class="cloud"></div>
+<div class="cloud"></div>
+
 </div>
+
+<!-- MAIN -->
+<div id="main">
 
 <!-- SYMBOL -->
 <div id="symbolWrap">
 
 <img id="outer" src="Outer17-final.png">
-
 <img id="inner" src="Inner17-final.png">
 
 </div>
@@ -374,73 +506,102 @@ RECONNECT
 <!-- ETCHINGS -->
 <div id="etchings">
 
-<a href="#">
-<img class="etch" id="etch1" src="lastsesh17.png">
+<a class="etch" id="etch1" href="#">
+<img src="lastsesh17.png" width="100%">
 </a>
 
-<a href="#">
-<img class="etch" id="etch2" src="RoachTray17.png">
+<a class="etch" id="etch2" href="#">
+<img src="RoachTray17.png" width="100%">
 </a>
 
-<a href="#">
-<img class="etch" id="etch3" src="PassItBack17.png">
+<a class="etch" id="etch3" href="#">
+<img src="PassItBack17.png" width="100%">
 </a>
+
+</div>
 
 </div>
 
 <script>
 
 /* =========================
-OPENING GLITCH
+OPENING TAKEOVER
 ========================= */
 
-const glitch = document.getElementById("glitch");
+const takeover = document.getElementById("takeover");
 
 setTimeout(()=>{
-glitch.style.opacity = 1;
-},100);
+takeover.style.opacity = 1;
+},80);
 
 setTimeout(()=>{
-glitch.style.opacity = 0;
-},1500);
+takeover.style.opacity = 0;
+},1800);
 
 /* =========================
-SIGNAL + RECONNECT TIMING
+SYMBOL EMERGENCE
+========================= */
+
+const symbol = document.getElementById("symbolWrap");
+
+setTimeout(()=>{
+symbol.classList.add("visible");
+},1900);
+
+/* =========================
+SIGNAL LOST
 ========================= */
 
 const signal = document.getElementById("signal");
+
+setTimeout(()=>{
+signal.classList.add("visible");
+},3200);
+
+/* =========================
+RECONNECT
+========================= */
+
 const reconnect = document.getElementById("reconnect");
 
 setTimeout(()=>{
-signal.style.opacity = 1;
-},2200);
-
-setTimeout(()=>{
-signal.style.opacity = 0;
-},5200);
+signal.classList.remove("visible");
+},6200);
 
 setTimeout(()=>{
 reconnect.classList.add("active");
-},5700);
+},7000);
 
 /* =========================
-RECONNECT CLICK
+CLICK
 ========================= */
+
+const etchings = document.getElementById("etchings");
 
 reconnect.addEventListener("click",()=>{
 
 document.body.classList.add("connected");
 
-/* subtle flash */
+/* amber pulse */
 
 document.body.animate([
-{filter:"brightness(1)"},
-{filter:"brightness(1.16)"},
-{filter:"brightness(1)"}
+{
+filter:"brightness(1)"
+},
+{
+filter:"brightness(1.12)"
+},
+{
+filter:"brightness(1)"
+}
 ],{
-duration:900,
+duration:1200,
 easing:"ease"
 });
+
+setTimeout(()=>{
+etchings.classList.add("visible");
+},1200);
 
 });
 
