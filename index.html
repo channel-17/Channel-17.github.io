@@ -1,155 +1,88 @@
 <!DOCTYPE html>
-
 <html lang="en">
-
 <head>
-
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>CHANNEL 17</title>
 
 <style>
 
 *{
-
 margin:0;
-
 padding:0;
-
 box-sizing:border-box;
-
 }
 
 html,body{
-
 width:100%;
-
 height:100%;
-
 overflow:hidden;
-
 background:#000;
-
 font-family:Courier New, monospace;
-
 }
 
 /* =========================================
-
-BASE
-
-========================================= */
-
-body{
-
-background:#000;
-
-overflow:hidden;
-
-}
-
-/* =========================================
-
-MATRIX
-
+CANVAS
 ========================================= */
 
 canvas{
-
 position:fixed;
-
 inset:0;
-
 width:100%;
-
 height:100%;
-
 display:block;
-
 z-index:1;
-
 background:#000;
-
 }
 
 /* =========================================
-
 STATIC
-
 ========================================= */
 
 #noise{
-
 position:fixed;
-
 inset:0;
-
 pointer-events:none;
-
-opacity:.035;
-
+opacity:.03;
 z-index:2;
 
 background-image:
-
 repeating-linear-gradient(
-
 0deg,
-
-rgba(255,255,255,.03) 0px,
-
-rgba(255,255,255,.03) 1px,
-
+rgba(255,255,255,.025) 0px,
+rgba(255,255,255,.025) 1px,
 transparent 1px,
-
 transparent 4px
-
 );
 
 animation:noise .12s linear infinite;
-
 }
 
 @keyframes noise{
 
 0%{
-
 transform:translateY(0px);
-
 }
 
 100%{
-
 transform:translateY(4px);
-
 }
 
 }
 
 /* =========================================
-
 OVERLAY
-
 ========================================= */
 
 #overlay{
-
 position:fixed;
-
 inset:0;
-
 z-index:10;
-
 pointer-events:none;
-
 }
 
 /* =========================================
-
-SYSTEM FAILURE
-
+SIGNAL LOST
 ========================================= */
 
 #signalLost{
@@ -157,12 +90,11 @@ SYSTEM FAILURE
 position:absolute;
 
 top:53%;
-
 left:50%;
 
 transform:translateX(-50%);
 
-font-size:clamp(26px,4vw,48px);
+font-size:clamp(28px,4vw,52px);
 
 letter-spacing:.18em;
 
@@ -176,44 +108,35 @@ white-space:nowrap;
 
 #signalLost.active{
 
-animation:warningPulse .42s ease infinite;
+animation:warningPulse .45s ease infinite;
 
 }
 
 @keyframes warningPulse{
 
 0%{
-
 opacity:.04;
-
 }
 
 35%{
-
 opacity:1;
-
 }
 
 100%{
-
 opacity:.04;
-
 }
 
 }
 
 /* =========================================
-
 SYMBOL
-
 ========================================= */
 
 #symbolWrap{
 
 position:absolute;
 
-top:40%;
-
+top:39%;
 left:50%;
 
 transform:translate(-50%,-50%);
@@ -223,9 +146,7 @@ width:min(78vw,470px);
 aspect-ratio:1/1;
 
 display:flex;
-
 justify-content:center;
-
 align-items:center;
 
 opacity:0;
@@ -235,9 +156,7 @@ transition:2.8s ease;
 }
 
 #symbolWrap.visible{
-
 opacity:1;
-
 }
 
 #outer{
@@ -265,24 +184,21 @@ transition:6s ease;
 }
 
 /* =========================================
-
 RECONNECT
-
 ========================================= */
 
 #reconnect{
 
 position:absolute;
 
-top:58%;
-
+top:59%;
 left:50%;
 
 transform:translateX(-50%);
 
-font-size:clamp(20px,4vw,34px);
+font-size:clamp(18px,3vw,30px);
 
-letter-spacing:.22em;
+letter-spacing:.24em;
 
 color:#efc18a;
 
@@ -295,10 +211,8 @@ cursor:pointer;
 transition:2s ease;
 
 text-shadow:
-
-0 0 8px rgba(255,140,40,.04),
-
-0 0 24px rgba(255,120,20,.02);
+0 0 6px rgba(255,140,40,.03),
+0 0 18px rgba(255,120,20,.02);
 
 }
 
@@ -315,9 +229,7 @@ animation:reconnectPulse 4s ease-in-out infinite;
 @keyframes reconnectPulse{
 
 0%,100%{
-
-opacity:.34;
-
+opacity:.26;
 }
 
 50%{
@@ -325,25 +237,20 @@ opacity:.34;
 opacity:1;
 
 text-shadow:
-
-0 0 16px rgba(255,180,90,.28),
-
-0 0 48px rgba(255,120,20,.18);
+0 0 12px rgba(255,180,90,.22),
+0 0 34px rgba(255,120,20,.14);
 
 }
 
 }
 
 /* =========================================
-
-WARMTH / FLASHLIGHT
-
+VIRUS SPREAD
 ========================================= */
 
 #warmth{
 
 position:fixed;
-
 inset:0;
 
 z-index:3;
@@ -353,33 +260,25 @@ pointer-events:none;
 opacity:0;
 
 background:
-
 radial-gradient(circle at center,
-
-rgba(255,150,50,.18) 0%,
-
-rgba(255,130,30,.08) 10%,
-
-rgba(255,120,20,.03) 18%,
-
-transparent 40%);
+rgba(255,140,40,.20) 0%,
+rgba(255,120,20,.09) 10%,
+rgba(255,110,20,.04) 18%,
+transparent 38%);
 
 mix-blend-mode:screen;
 
-transition:7s ease;
+transition:8s ease;
 
 }
 
 /* =========================================
-
 SMOKE
-
 ========================================= */
 
 #smoke{
 
 position:fixed;
-
 inset:0;
 
 overflow:hidden;
@@ -399,19 +298,14 @@ transition:5s ease;
 position:absolute;
 
 width:55vw;
-
 height:55vw;
 
 border-radius:50%;
 
 background:
-
 radial-gradient(circle,
-
 rgba(255,255,255,.05) 0%,
-
 rgba(255,255,255,.02) 18%,
-
 transparent 70%);
 
 filter:blur(45px);
@@ -423,7 +317,6 @@ animation:smoke linear infinite;
 .cloud:nth-child(1){
 
 left:-10%;
-
 bottom:-10%;
 
 animation-duration:28s;
@@ -433,11 +326,9 @@ animation-duration:28s;
 .cloud:nth-child(2){
 
 right:-20%;
-
 top:10%;
 
 animation-duration:34s;
-
 animation-delay:7s;
 
 }
@@ -445,11 +336,9 @@ animation-delay:7s;
 .cloud:nth-child(3){
 
 left:30%;
-
 bottom:-20%;
 
 animation-duration:30s;
-
 animation-delay:15s;
 
 }
@@ -457,59 +346,45 @@ animation-delay:15s;
 @keyframes smoke{
 
 0%{
-
 transform:translate(0,0) scale(1);
-
 opacity:0;
-
 }
 
 10%{
-
 opacity:.12;
-
 }
 
 50%{
-
 opacity:.05;
-
 }
 
 100%{
-
 transform:translate(160px,-220px) scale(1.35);
-
 opacity:0;
-
 }
 
 }
 
 /* =========================================
-
 ETCHINGS
-
 ========================================= */
 
 #etchings{
 
 position:absolute;
-
 inset:0;
 
 opacity:0;
 
 pointer-events:none;
 
-transition:3s ease;
+transition:4s ease;
 
 }
 
 #etchings.visible{
 
 opacity:1;
-
 pointer-events:auto;
 
 }
@@ -520,29 +395,25 @@ position:absolute;
 
 display:block;
 
-opacity:.15;
+opacity:.08;
 
 filter:
-
 drop-shadow(0 0 12px rgba(255,120,20,.08));
 
-transition:3s ease;
+transition:4s ease;
 
 }
 
 .connected .etch{
-
 opacity:1;
-
 }
 
 #etch1{
 
-width:min(56vw,350px);
+width:min(52vw,320px);
 
-left:8%;
-
-top:18%;
+left:18%;
+top:36%;
 
 transform:rotate(-2deg);
 
@@ -553,8 +424,7 @@ transform:rotate(-2deg);
 width:min(62vw,390px);
 
 left:12%;
-
-top:44%;
+top:46%;
 
 transform:rotate(2deg);
 
@@ -564,30 +434,23 @@ transform:rotate(2deg);
 
 width:min(58vw,340px);
 
-left:15%;
-
-bottom:10%;
+left:23%;
+bottom:7%;
 
 transform:rotate(-4deg);
 
 }
 
 /* =========================================
-
 CONNECTED
-
 ========================================= */
 
 .connected #warmth{
-
 opacity:1;
-
 }
 
 .connected #smoke{
-
 opacity:1;
-
 }
 
 .connected #outer{
@@ -595,7 +458,6 @@ opacity:1;
 opacity:.02;
 
 filter:
-
 blur(2px);
 
 }
@@ -605,15 +467,12 @@ blur(2px);
 opacity:1;
 
 filter:
-
 drop-shadow(0 0 18px rgba(255,180,90,.24))
-
 drop-shadow(0 0 56px rgba(255,120,20,.16));
 
 }
 
 </style>
-
 </head>
 
 <body>
@@ -627,9 +486,7 @@ drop-shadow(0 0 56px rgba(255,120,20,.16));
 <div id="smoke">
 
 <div class="cloud"></div>
-
 <div class="cloud"></div>
-
 <div class="cloud"></div>
 
 </div>
@@ -637,43 +494,32 @@ drop-shadow(0 0 56px rgba(255,120,20,.16));
 <div id="overlay">
 
 <div id="signalLost">
-
 SIGNAL LOST
-
 </div>
 
 <div id="symbolWrap">
 
 <img id="outer" src="Outer17-final.png">
-
 <img id="inner" src="Inner17-final.png">
 
 </div>
 
 <div id="reconnect">
-
 RECONNECT
-
 </div>
 
 <div id="etchings">
 
 <a class="etch" id="etch1" href="#">
-
 <img src="lastsesh17.png" width="100%">
-
 </a>
 
 <a class="etch" id="etch2" href="#">
-
 <img src="RoachTray17.png" width="100%">
-
 </a>
 
 <a class="etch" id="etch3" href="#">
-
 <img src="PassItBack17.png" width="100%">
-
 </a>
 
 </div>
@@ -683,41 +529,31 @@ RECONNECT
 <script>
 
 /* =========================================
-
 CANVAS
-
 ========================================= */
 
 const canvas =
-
 document.getElementById("matrix");
 
 const ctx =
-
 canvas.getContext("2d");
 
 canvas.width =
-
 window.innerWidth;
 
 canvas.height =
-
 window.innerHeight;
 
 /* =========================================
-
 SETTINGS
-
 ========================================= */
 
 const chars =
-
 "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789$#@%&*";
 
 const fontSize = 16;
 
 const rows =
-
 Math.floor(canvas.height / fontSize);
 
 const streams = [];
@@ -725,23 +561,18 @@ const streams = [];
 const hidden17 = {
 
 x:
-
-canvas.width * .60,
+canvas.width * .58,
 
 y:
+canvas.height * .58,
 
-canvas.height * .64,
-
-w:130,
-
-h:70
+w:240,
+h:120
 
 };
 
 /* =========================================
-
 BUILD STREAMS
-
 ========================================= */
 
 for(let i=0;i<rows;i++){
@@ -751,61 +582,49 @@ streams.push({
 y: i * fontSize,
 
 x:
-
 Math.random() * -2200,
 
 speed:
-
-16 + Math.random() * 28,
+22 + Math.random() * 38,
 
 length:
-
-18 + Math.random() * 60,
+20 + Math.random() * 70,
 
 laps:
-
 0,
 
 finished:false,
 
 vertical:
-
-Math.random() > .82,
+Math.random() > .76,
 
 dead:
-
-Math.random() > .92,
+Math.random() > .90,
 
 flash:
+Math.random() > .95,
 
-Math.random() > .96
+glitch:
+Math.random() > .93
 
 });
 
 }
 
 /* =========================================
-
 DRAW MATRIX
-
 ========================================= */
 
 function drawMatrix(){
 
 ctx.fillStyle =
-
-"rgba(0,0,0,0.10)";
+"rgba(0,0,0,0.14)";
 
 ctx.fillRect(
-
 0,
-
 0,
-
 canvas.width,
-
 canvas.height
-
 );
 
 streams.forEach(stream=>{
@@ -815,17 +634,13 @@ if(stream.finished) return;
 for(let i=0;i<stream.length;i++){
 
 const charX =
-
 stream.x - (i * fontSize);
 
 const inside17 =
 
 charX > hidden17.x &&
-
 charX < hidden17.x + hidden17.w &&
-
 stream.y > hidden17.y &&
-
 stream.y < hidden17.y + hidden17.h;
 
 /* hidden .17 */
@@ -833,31 +648,22 @@ stream.y < hidden17.y + hidden17.h;
 if(!inside17){
 
 ctx.fillStyle =
-
 `rgba(100,255,100,${
-
 1 - (i / stream.length)
-
 })`;
 
 ctx.font =
-
 fontSize + "px monospace";
 
 ctx.fillText(
 
 chars[
-
 Math.floor(
-
 Math.random() * chars.length
-
 )
-
 ],
 
 charX,
-
 stream.y
 
 );
@@ -867,113 +673,102 @@ stream.y
 /* vertical corruption */
 
 if(
-
 stream.vertical &&
-
-Math.random() > .986
-
+Math.random() > .984
 ){
 
 ctx.fillStyle =
-
 "rgba(100,255,100,.55)";
 
 ctx.fillText(
 
 chars[
-
 Math.floor(
-
 Math.random() * chars.length
-
 )
-
 ],
 
 charX,
-
 stream.y + (Math.random()*180)
 
 );
 
 }
 
-/* white corruption flash */
+/* white flash corruption */
 
 if(
-
 stream.flash &&
-
-Math.random() > .994
-
+Math.random() > .992
 ){
 
 ctx.fillStyle =
-
-"rgba(255,255,255,.8)";
+"rgba(255,255,255,.9)";
 
 ctx.fillText(
 
 chars[
-
 Math.floor(
-
 Math.random() * chars.length
-
 )
-
 ],
 
 charX,
-
 stream.y
 
 );
 
 }
 
-/* dead missing chunks */
+/* glitch bursts */
 
 if(
+stream.glitch &&
+Math.random() > .994
+){
 
+ctx.fillStyle =
+"rgba(100,255,100,.25)";
+
+ctx.fillRect(
+
+charX,
+stream.y,
+
+Math.random() * 80,
+2
+
+);
+
+}
+
+/* dead chunks */
+
+if(
 stream.dead &&
-
-Math.random() > .989
-
+Math.random() > .988
 ){
 
 ctx.clearRect(
-
 charX,
-
 stream.y,
-
 fontSize,
-
 fontSize
-
 );
 
 }
 
 }
 
-/* movement */
-
 stream.x += stream.speed;
 
 /* laps */
 
 if(
-
 stream.x -
-
 (stream.length * fontSize)
-
 >
-
 canvas.width + 300
-
 ){
 
 stream.laps++;
@@ -985,7 +780,6 @@ stream.finished = true;
 }else{
 
 stream.x =
-
 Math.random() * -1800;
 
 }
@@ -997,47 +791,38 @@ Math.random() * -1800;
 /* all complete */
 
 const unfinished =
-
 streams.some(s => !s.finished);
 
 if(!unfinished){
 
 clearInterval(matrixLoop);
 
-/* lingering decay */
+/* lingering destabilization */
 
 setTimeout(()=>{
 
 systemFailure();
 
-},1800);
+},900);
 
 }
 
 }
 
 /* =========================================
-
 SYSTEM FAILURE
-
 ========================================= */
 
 function systemFailure(){
 
 ctx.fillStyle =
-
-"rgba(0,0,0,.35)";
+"rgba(0,0,0,.45)";
 
 ctx.fillRect(
-
 0,
-
 0,
-
 canvas.width,
-
 canvas.height
-
 );
 
 /* white interference */
@@ -1045,21 +830,16 @@ canvas.height
 for(let i=0;i<40;i++){
 
 ctx.fillStyle =
-
 `rgba(255,255,255,${
-
 Math.random() * .18
-
 })`;
 
 ctx.fillRect(
 
 Math.random() * canvas.width,
-
 Math.random() * canvas.height,
 
 Math.random() * 220,
-
 1 + Math.random() * 2
 
 );
@@ -1067,7 +847,6 @@ Math.random() * 220,
 }
 
 const signalLost =
-
 document.getElementById("signalLost");
 
 signalLost.style.opacity = 1;
@@ -1080,19 +859,17 @@ setTimeout(()=>{
 
 signalLost.style.opacity = 0;
 
-},1800);
+},1400);
 
 /* darkness pause */
 
 setTimeout(()=>{
 
 document
-
 .getElementById("symbolWrap")
-
 .classList.add("visible");
 
-},3200);
+},2600);
 
 /* reconnect invitation */
 
@@ -1101,33 +878,25 @@ setTimeout(()=>{
 signalLost.classList.remove("active");
 
 document
-
 .getElementById("reconnect")
-
 .classList.add("active");
 
-},5000);
+},4200);
 
 }
 
 /* =========================================
-
 START
-
 ========================================= */
 
 const matrixLoop =
-
-setInterval(drawMatrix,28);
+setInterval(drawMatrix,22);
 
 /* =========================================
-
 RECONNECT
-
 ========================================= */
 
 const reconnect =
-
 document.getElementById("reconnect");
 
 reconnect.addEventListener("click",()=>{
@@ -1138,32 +907,24 @@ reconnect.style.opacity = 0;
 
 document.body.classList.add("connected");
 
-/* warmth from touch */
+/* virus spread */
 
 document
-
 .getElementById("warmth")
-
 .animate([
 
 {
-
 clipPath:"circle(0% at center)"
-
 },
 
 {
-
-clipPath:"circle(70% at center)"
-
+clipPath:"circle(62% at center)"
 }
 
 ],{
 
-duration:7000,
-
+duration:8000,
 fill:"forwards",
-
 easing:"ease"
 
 });
@@ -1173,29 +934,24 @@ easing:"ease"
 setTimeout(()=>{
 
 document
-
 .getElementById("smoke")
-
 .style.opacity = 1;
 
 },2200);
 
-/* etchings emerge through darkness */
+/* etchings emerge */
 
 setTimeout(()=>{
 
 document
-
 .getElementById("etchings")
-
 .classList.add("visible");
 
-},6200);
+},6400);
 
 });
 
 </script>
 
 </body>
-
 </html>
