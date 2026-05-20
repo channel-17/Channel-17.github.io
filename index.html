@@ -1,300 +1,52 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>CHANNEL 17</title>
-
-<style>
-
-body{
-margin:0;
-background:black;
-overflow:hidden;
-font-family:Courier New, monospace;
-color:white;
-}
-
-
-
-/* MAIN SCREEN /
-
-.screen{
-position:relative;
-width:100vw;
-height:100vh;
-background:black;
-overflow:hidden;
-}
-
-
-
-/ CENTER SYMBOL /
-
-.symbol{
-
-position:absolute;
-
-top:32%;
-
-width:100%;
-
-text-align:center;
-
-font-size:72px;
-
-letter-spacing:8px;
-
-opacity:.03;
-}
-
-
-
-/ SIGNAL LOST /
-
-.signal{
-
-position:absolute;
-
-top:57%;
-
-width:100%;
-
-text-align:center;
-
-font-size:12px;
-
-letter-spacing:6px;
-
-opacity:.45;
-}
-
-
-
-/ RECONNECT /
-
-.reconnect{
-
-position:absolute;
-
-top:65%;
-
-width:100%;
-
-text-align:center;
-
-font-size:15px;
-
-letter-spacing:10px;
-
-opacity:.85;
-
-cursor:pointer;
-}
-
-
-
-/ TRIANGLE /
-
-.triangle{
-
-position:absolute;
-
-top:50%;
-left:50%;
-
-margin-left:-90px;
-margin-top:-145px;
-
-width:0;
-height:0;
-
-border-left:90px solid transparent;
-border-right:90px solid transparent;
-border-bottom:170px solid rgba(255,255,255,.03);
-
-opacity:.2;
-
-transition:4s ease;
-}
-
-
-
-/ EMBER /
-
-.ember{
-
-position:absolute;
-
-width:8px;
-height:8px;
-
-border-radius:50%;
-
-opacity:0;
-
-background:rgba(255,170,90,.9);
-
-box-shadow:
-0 0 8px rgba(255,120,50,.3);
-
-pointer-events:none;
-}
-
-
-
-/ FREQUENCY /
-
-.frequency{
-
-position:absolute;
-
-left:24px;
-bottom:28px;
-
-opacity:0;
-
-transition:4s ease;
-}
-
-.frequency div{
-
-margin-top:12px;
-
-font-size:12px;
-
-font-family:cursive;
-
-letter-spacing:2px;
-
-opacity:.75;
-}
-
-
-
-/ REVEAL STATES */
-
-.show{
-opacity:1;
-}
-
-.fade{
-opacity:.02;
-}
-
-.awaken{
-opacity:.12;
-}
-
-</style>
-
 </head>
 
-<body>
+<body style="margin:0;background:black;overflow:hidden;font-family:Courier New;color:white;">
 
-<div class="screen">
-
-<div class="triangle" id="triangle"></div>
-
-<div class="symbol" id="symbol">
+<div style="position:absolute;top:32%;width:100%;text-align:center;font-size:72px;opacity:.05;">
 .17
 </div>
 
-<div class="signal" id="signal">
+<div id="signal"
+style="position:absolute;top:57%;width:100%;text-align:center;font-size:12px;letter-spacing:6px;opacity:.45;">
 signal lost
 </div>
 
-<div class="reconnect" id="reconnect">
+<div id="reconnect"
+style="position:absolute;top:65%;width:100%;text-align:center;font-size:15px;letter-spacing:10px;opacity:.85;cursor:pointer;">
 reconnect
 </div>
 
-<div class="frequency" id="frequency">
+<div id="frequency"
+style="position:absolute;left:24px;bottom:28px;opacity:0;font-family:cursive;">
 
-<div>Latest Sesh</div>
+<div style="margin-top:12px;">Latest Sesh</div>
 
-<div>Roach Tray</div>
+<div style="margin-top:12px;">Roach Tray</div>
 
-<div>Pass it Back</div>
-
-</div>
-
-<div class="ember" id="ember"></div>
+<div style="margin-top:12px;">Pass it Back</div>
 
 </div>
 
 <script>
 
-var reconnect =
-document.getElementById("reconnect");
+document.getElementById("reconnect").onclick=function(){
 
-var signal =
-document.getElementById("signal");
+document.getElementById("signal").style.display="none";
 
-var ember =
-document.getElementById("ember");
+document.getElementById("reconnect").style.display="none";
 
-var frequency =
-document.getElementById("frequency");
-
-var symbol =
-document.getElementById("symbol");
-
-var triangle =
-document.getElementById("triangle");
-
-
-
-reconnect.onclick=function(e){
-
-signal.style.opacity="0";
-
-reconnect.style.opacity="0";
-
-
-
-ember.style.left=e.clientX+"px";
-
-ember.style.top=e.clientY+"px";
-
-ember.style.opacity="1";
-
-
-
-setTimeout(function(){
-
-ember.style.transition="4s ease";
-
-ember.style.transform="scale(6)";
-
-ember.style.opacity=".02";
-
-},50);
-
-
-
-setTimeout(function(){
-
-symbol.classList.add("awaken");
-
-triangle.classList.add("fade");
-
-},900);
-
-
-
-setTimeout(function(){
-
-frequency.classList.add("show");
-
-},2200);
+document.getElementById("frequency").style.opacity="1";
 
 };
 
 </script>
 
 </body>
-
 </html>
