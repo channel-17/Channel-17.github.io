@@ -1,100 +1,131 @@
 <!DOCTYPE html>
+
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>CHANNEL 17</title>
 
 <style>
 
-{
+*{
+
 margin:0;
+
 padding:0;
+
 box-sizing:border-box;
+
 }
 
 html,body{
+
 width:100%;
+
 height:100%;
+
 overflow:hidden;
+
 background:#000;
+
 font-family:Courier New, monospace;
-}
 
-body{
-background:#000;
-overflow:hidden;
 }
-
-/ =========================================
-CANVAS
-========================================= /
 
 canvas{
+
 position:fixed;
+
 inset:0;
+
 width:100%;
+
 height:100%;
+
 display:block;
+
 z-index:1;
+
 background:#000;
+
 }
 
-/ =========================================
-STATIC NOISE
-========================================= /
-
 #noise{
+
 position:fixed;
+
 inset:0;
+
 pointer-events:none;
+
 opacity:.04;
+
 z-index:2;
 
 background-image:
+
 repeating-linear-gradient(
+
 0deg,
+
 rgba(255,255,255,.03) 0px,
+
 rgba(255,255,255,.03) 1px,
+
 transparent 1px,
+
 transparent 4px
+
 );
 
 animation:noise .12s linear infinite;
+
 }
 
 @keyframes noise{
 
 0%{
+
 transform:translateY(0px);
+
 }
 
 100%{
+
 transform:translateY(4px);
-}
 
 }
 
-/ =========================================
-OVERLAY
-========================================= /
+}
 
 #overlay{
+
 position:fixed;
+
 inset:0;
+
 z-index:10;
+
 pointer-events:none;
+
 }
 
-/ =========================================
+/* =========================================
+
 SIGNAL LOST
-========================================= /
+
+========================================= */
 
 #signalLost{
 
 position:absolute;
 
 top:54%;
+
 left:50%;
 
 transform:translateX(-50%);
@@ -120,28 +151,37 @@ animation:heartbeat .42s ease infinite;
 @keyframes heartbeat{
 
 0%{
+
 opacity:.05;
+
 }
 
 35%{
+
 opacity:1;
+
 }
 
 100%{
+
 opacity:.05;
-}
 
 }
 
-/ =========================================
+}
+
+/* =========================================
+
 SYMBOL
-========================================= /
+
+========================================= */
 
 #symbolWrap{
 
 position:absolute;
 
 top:40%;
+
 left:50%;
 
 transform:translate(-50%,-50%);
@@ -151,17 +191,21 @@ width:min(78vw,470px);
 aspect-ratio:1/1;
 
 display:flex;
+
 justify-content:center;
+
 align-items:center;
 
 opacity:0;
 
-transition:2.4s ease;
+transition:2.6s ease;
 
 }
 
 #symbolWrap.visible{
+
 opacity:1;
+
 }
 
 #outer{
@@ -172,7 +216,7 @@ width:100%;
 
 opacity:.34;
 
-transition:5s ease;
+transition:5.5s ease;
 
 }
 
@@ -184,19 +228,22 @@ width:100%;
 
 opacity:.34;
 
-transition:5s ease;
+transition:5.5s ease;
 
 }
 
-/ =========================================
+/* =========================================
+
 RECONNECT
-========================================= /
+
+========================================= */
 
 #reconnect{
 
 position:absolute;
 
 top:58%;
+
 left:50%;
 
 transform:translateX(-50%);
@@ -216,7 +263,9 @@ cursor:pointer;
 transition:2s ease;
 
 text-shadow:
+
 0 0 8px rgba(255,140,40,.04),
+
 0 0 24px rgba(255,120,20,.02);
 
 }
@@ -237,10 +286,6 @@ animation:reconnectPulse 4s ease-in-out infinite;
 
 opacity:.35;
 
-text-shadow:
-0 0 8px rgba(255,140,40,.04),
-0 0 20px rgba(255,120,20,.02);
-
 }
 
 50%{
@@ -248,20 +293,25 @@ text-shadow:
 opacity:1;
 
 text-shadow:
+
 0 0 16px rgba(255,180,90,.24),
+
 0 0 48px rgba(255,120,20,.14);
 
 }
 
 }
 
-/ =========================================
+/* =========================================
+
 WARMTH
-========================================= /
+
+========================================= */
 
 #warmth{
 
 position:fixed;
+
 inset:0;
 
 z-index:3;
@@ -271,25 +321,33 @@ pointer-events:none;
 opacity:0;
 
 background:
+
 radial-gradient(circle at center,
+
 rgba(255,140,40,.12) 0%,
+
 rgba(255,120,20,.05) 14%,
+
 rgba(255,120,20,.02) 26%,
+
 transparent 60%);
 
 mix-blend-mode:screen;
 
-transition:5s ease;
+transition:6s ease;
 
 }
 
-/ =========================================
+/* =========================================
+
 SMOKE
-========================================= /
+
+========================================= */
 
 #smoke{
 
 position:fixed;
+
 inset:0;
 
 overflow:hidden;
@@ -300,7 +358,7 @@ z-index:4;
 
 opacity:0;
 
-transition:4s ease;
+transition:5s ease;
 
 }
 
@@ -309,14 +367,19 @@ transition:4s ease;
 position:absolute;
 
 width:55vw;
+
 height:55vw;
 
 border-radius:50%;
 
 background:
+
 radial-gradient(circle,
+
 rgba(255,255,255,.05) 0%,
+
 rgba(255,255,255,.02) 18%,
+
 transparent 70%);
 
 filter:blur(45px);
@@ -328,6 +391,7 @@ animation:smoke linear infinite;
 .cloud:nth-child(1){
 
 left:-10%;
+
 bottom:-10%;
 
 animation-duration:28s;
@@ -337,9 +401,11 @@ animation-duration:28s;
 .cloud:nth-child(2){
 
 right:-20%;
+
 top:10%;
 
 animation-duration:34s;
+
 animation-delay:7s;
 
 }
@@ -347,9 +413,11 @@ animation-delay:7s;
 .cloud:nth-child(3){
 
 left:30%;
+
 bottom:-20%;
 
 animation-duration:30s;
+
 animation-delay:15s;
 
 }
@@ -357,32 +425,45 @@ animation-delay:15s;
 @keyframes smoke{
 
 0%{
+
 transform:translate(0,0) scale(1);
+
 opacity:0;
+
 }
 
 10%{
+
 opacity:.12;
+
 }
 
 50%{
+
 opacity:.05;
+
 }
 
 100%{
+
 transform:translate(160px,-220px) scale(1.35);
+
 opacity:0;
-}
 
 }
 
-/ =========================================
+}
+
+/* =========================================
+
 ETCHINGS
-========================================= /
+
+========================================= */
 
 #etchings{
 
 position:absolute;
+
 inset:0;
 
 opacity:0;
@@ -396,6 +477,7 @@ transition:2.4s ease;
 #etchings.visible{
 
 opacity:1;
+
 pointer-events:auto;
 
 }
@@ -407,7 +489,9 @@ position:absolute;
 display:block;
 
 filter:
+
 drop-shadow(0 0 14px rgba(255,120,20,.16))
+
 drop-shadow(0 0 28px rgba(255,120,20,.06));
 
 transition:.4s ease;
@@ -419,6 +503,7 @@ transition:.4s ease;
 width:min(56vw,350px);
 
 left:8%;
+
 top:20%;
 
 transform:rotate(-2deg);
@@ -430,6 +515,7 @@ transform:rotate(-2deg);
 width:min(62vw,390px);
 
 left:12%;
+
 top:46%;
 
 transform:rotate(2deg);
@@ -441,22 +527,23 @@ transform:rotate(2deg);
 width:min(58vw,340px);
 
 left:15%;
+
 bottom:10%;
 
 transform:rotate(-4deg);
 
 }
 
-/ =========================================
-CONNECTED
-========================================= /
-
 .connected #warmth{
+
 opacity:1;
+
 }
 
 .connected #smoke{
+
 opacity:1;
+
 }
 
 .connected #outer{
@@ -464,6 +551,7 @@ opacity:1;
 opacity:.02;
 
 filter:
+
 blur(2px);
 
 }
@@ -473,12 +561,15 @@ blur(2px);
 opacity:1;
 
 filter:
+
 drop-shadow(0 0 18px rgba(255,180,90,.24))
+
 drop-shadow(0 0 56px rgba(255,120,20,.16));
 
 }
 
 </style>
+
 </head>
 
 <body>
@@ -492,7 +583,9 @@ drop-shadow(0 0 56px rgba(255,120,20,.16));
 <div id="smoke">
 
 <div class="cloud"></div>
+
 <div class="cloud"></div>
+
 <div class="cloud"></div>
 
 </div>
@@ -500,32 +593,43 @@ drop-shadow(0 0 56px rgba(255,120,20,.16));
 <div id="overlay">
 
 <div id="signalLost">
+
 SIGNAL LOST
+
 </div>
 
 <div id="symbolWrap">
 
 <img id="outer" src="Outer17-final.png">
+
 <img id="inner" src="Inner17-final.png">
 
 </div>
 
 <div id="reconnect">
+
 RECONNECT
+
 </div>
 
 <div id="etchings">
 
 <a class="etch" id="etch1" href="#">
+
 <img src="lastsesh17.png" width="100%">
+
 </a>
 
 <a class="etch" id="etch2" href="#">
+
 <img src="RoachTray17.png" width="100%">
+
 </a>
 
 <a class="etch" id="etch3" href="#">
+
 <img src="PassItBack17.png" width="100%">
+
 </a>
 
 </div>
@@ -534,32 +638,30 @@ RECONNECT
 
 <script>
 
-/ =========================================
-CANVAS
-========================================= /
-
 const canvas =
+
 document.getElementById("matrix");
 
 const ctx =
+
 canvas.getContext("2d");
 
 canvas.width =
+
 window.innerWidth;
 
 canvas.height =
+
 window.innerHeight;
 
-/ =========================================
-SETTINGS
-========================================= /
-
 const chars =
-"ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789$#@%&";
+
+"ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789$#@%&*";
 
 const fontSize = 16;
 
 const rows =
+
 Math.floor(canvas.height / fontSize);
 
 const streams = [];
@@ -567,19 +669,18 @@ const streams = [];
 const hidden17 = {
 
 x:
+
 canvas.width * .60,
 
 y:
+
 canvas.height * .64,
 
 w:180,
+
 h:90
 
 };
-
-/* =========================================
-BUILD STREAMS
-========================================= /
 
 for(let i=0;i<rows;i++){
 
@@ -588,43 +689,51 @@ streams.push({
 y: i * fontSize,
 
 x:
+
 Math.random() * -2200,
 
 speed:
+
 16 + Math.random() * 28,
 
 length:
+
 18 + Math.random() * 60,
 
 laps:
+
 0,
 
 finished:false,
 
 vertical:
+
 Math.random() > .90,
 
 dead:
+
 Math.random() > .95
 
 });
 
 }
 
-/ =========================================
-DRAW
-========================================= /
-
 function drawMatrix(){
 
 ctx.fillStyle =
+
 "rgba(0,0,0,0.10)";
 
 ctx.fillRect(
+
 0,
+
 0,
+
 canvas.width,
+
 canvas.height
+
 );
 
 streams.forEach(stream=>{
@@ -634,94 +743,121 @@ if(stream.finished) return;
 for(let i=0;i<stream.length;i++){
 
 const charX =
+
 stream.x - (i * fontSize);
 
 const inside17 =
 
 charX > hidden17.x &&
-charX < hidden17.x + hidden17.w &&
-stream.y > hidden17.y &&
-stream.y < hidden17.y + hidden17.h;
 
-/ hidden .17 /
+charX < hidden17.x + hidden17.w &&
+
+stream.y > hidden17.y &&
+
+stream.y < hidden17.y + hidden17.h;
 
 if(!inside17){
 
 ctx.fillStyle =
-rgba(100,255,100,${ 1 - (i / stream.length) });
+
+`rgba(100,255,100,${
+
+1 - (i / stream.length)
+
+})`;
 
 ctx.font =
+
 fontSize + "px monospace";
 
 ctx.fillText(
 
 chars[
+
 Math.floor(
+
 Math.random() * chars.length
+
 )
+
 ],
 
 charX,
+
 stream.y
 
 );
 
 }
 
-/ vertical corruption */
-
 if(
+
 stream.vertical &&
+
 Math.random() > .982
+
 ){
 
 ctx.fillStyle =
+
 "rgba(100,255,100,.45)";
 
 ctx.fillText(
 
 chars[
+
 Math.floor(
+
 Math.random() * chars.length
+
 )
+
 ],
 
 charX,
-stream.y + (Math.random()160)
+
+stream.y + (Math.random()*160)
 
 );
 
 }
 
-/ dead missing chunks /
-
 if(
+
 stream.dead &&
+
 Math.random() > .988
+
 ){
 
 ctx.clearRect(
+
 charX,
+
 stream.y,
+
 fontSize,
+
 fontSize
+
 );
 
 }
 
 }
 
-/ movement /
-
 stream.x += stream.speed;
 
-/ laps /
-
 if(
+
 stream.x -
+
 (stream.length * fontSize)
+
 >
+
 canvas.width + 300
+
 ){
 
 stream.laps++;
@@ -733,6 +869,7 @@ stream.finished = true;
 }else{
 
 stream.x =
+
 Math.random() * -1800;
 
 }
@@ -741,16 +878,13 @@ Math.random() * -1800;
 
 });
 
-/ check all finished /
-
 const unfinished =
+
 streams.some(s => !s.finished);
 
 if(!unfinished){
 
 clearInterval(matrixLoop);
-
-/ allow final trails to disappear /
 
 setTimeout(()=>{
 
@@ -762,29 +896,29 @@ systemFailure();
 
 }
 
-/ =========================================
-SYSTEM FAILURE
-========================================= /
-
 function systemFailure(){
 
 ctx.fillStyle = "black";
 
 ctx.fillRect(
+
 0,
+
 0,
+
 canvas.width,
+
 canvas.height
+
 );
 
 const signalLost =
+
 document.getElementById("signalLost");
 
 signalLost.style.opacity = 1;
 
 signalLost.classList.add("active");
-
-/ flashes /
 
 setTimeout(()=>{
 
@@ -792,42 +926,36 @@ signalLost.style.opacity = 0;
 
 },1600);
 
-/ darkness pause /
-
 setTimeout(()=>{
 
 document
+
 .getElementById("symbolWrap")
+
 .classList.add("visible");
 
 },2600);
-
-/ reconnect appears /
 
 setTimeout(()=>{
 
 signalLost.classList.remove("active");
 
 document
+
 .getElementById("reconnect")
+
 .classList.add("active");
 
 },4300);
 
 }
 
-/ =========================================
-START
-========================================= /
-
 const matrixLoop =
+
 setInterval(drawMatrix,28);
 
-/ =========================================
-RECONNECT
-========================================= /
-
 const reconnect =
+
 document.getElementById("reconnect");
 
 reconnect.addEventListener("click",()=>{
@@ -838,51 +966,58 @@ reconnect.style.opacity = 0;
 
 document.body.classList.add("connected");
 
-/ warmth /
-
 document
+
 .getElementById("warmth")
+
 .animate([
 
 {
+
 clipPath:"circle(0% at center)"
+
 },
 
 {
+
 clipPath:"circle(60% at center)"
+
 }
 
 ],{
 
 duration:6200,
+
 fill:"forwards",
+
 easing:"ease"
 
 });
 
-/ smoke /
-
 setTimeout(()=>{
 
 document
+
 .getElementById("smoke")
+
 .style.opacity = 1;
 
 },1800);
 
-/ reveal etchings */
-
 setTimeout(()=>{
 
 document
+
 .getElementById("etchings")
+
 .classList.add("visible");
 
-},3000);
+},5200);
 
 });
 
 </script>
 
 </body>
+
 </html>
