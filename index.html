@@ -16,21 +16,21 @@ width:100%;
 height:100%;
 overflow:hidden;
 background:black;
-font-family:Courier New, monospace;
+font-family:Courier New;
 color:white;
 }
 
 .screen{
 position:relative;
-width:100vw;
-height:100vh;
-overflow:hidden;
+width:100%;
+height:100%;
 background:black;
+overflow:hidden;
 }
 
 
 
-/* VIOLENT SIGNAL TAKEOVER /
+/* GLITCH /
 
 .glitch{
 position:absolute;
@@ -39,118 +39,58 @@ left:0;
 width:100%;
 height:100%;
 
+opacity:.05;
+
 background:
 repeating-linear-gradient(
 0deg,
-rgba(255,255,255,.14) 0px,
+rgba(255,255,255,.08) 0px,
 rgba(255,255,255,.02) 1px,
 transparent 2px,
 transparent 4px
 );
 
-mix-blend-mode:screen;
-
-pointer-events:none;
-
-opacity:0;
-
-z-index:50;
-
-animation:takeover 2.5s ease forwards;
+animation:glitch 2s ease;
 }
 
-@keyframes takeover{
+@keyframes glitch{
 
 0%{
-opacity:0;
-transform:translateX(0px);
-}
-
-6%{
 opacity:1;
-transform:
-translateX(-40px)
-skewX(16deg);
-}
-
-12%{
-opacity:.1;
-}
-
-22%{
-opacity:1;
-transform:
-translateX(28px)
-skewX(-10deg);
-}
-
-34%{
-opacity:.15;
-}
-
-48%{
-opacity:1;
-transform:
-translateY(-4px)
-scale(1.02);
-}
-
-62%{
-opacity:.08;
-}
-
-100%{
-opacity:.04;
-transform:none;
-}
-
-}
-
-
-
-/ INTERFERENCE /
-
-.interference{
-position:absolute;
-top:0;
-left:0;
-width:100%;
-height:100%;
-
-background:
-linear-gradient(
-90deg,
-rgba(255,255,255,.04),
-transparent 20%,
-transparent 80%,
-rgba(255,255,255,.03)
-);
-
-opacity:.08;
-
-mix-blend-mode:screen;
-
-pointer-events:none;
-
-z-index:20;
-
-animation:pulse 5s ease-in-out infinite;
-}
-
-@keyframes pulse{
-
-0%{
-opacity:.04;
+left:-30px;
 }
 
 50%{
-opacity:.12;
+opacity:.2;
+left:20px;
 }
 
 100%{
-opacity:.04;
+opacity:.05;
+left:0px;
 }
 
+}
+
+
+
+/ TRIANGLE /
+
+.triangle{
+position:absolute;
+
+top:50%;
+left:50%;
+
+margin-left:-100px;
+margin-top:-140px;
+
+width:0;
+height:0;
+
+border-left:100px solid transparent;
+border-right:100px solid transparent;
+border-bottom:180px solid rgba(255,255,255,.06);
 }
 
 
@@ -163,48 +103,12 @@ position:absolute;
 top:50%;
 left:50%;
 
-transform:translate(-50%,-50%);
+margin-left:-70px;
+margin-top:-40px;
 
-font-size:5rem;
+font-size:80px;
 
-letter-spacing:10px;
-
-opacity:.015;
-
-filter:blur(.4px);
-
-transition:4s ease;
-
-z-index:6;
-}
-
-
-
-/ TRIANGLE INFLUENCE /
-
-.triangle{
-position:absolute;
-
-top:50%;
-left:50%;
-
-transform:
-translate(-50%,-50%);
-
-width:0;
-height:0;
-
-border-left:110px solid transparent;
-border-right:110px solid transparent;
-border-bottom:190px solid rgba(255,255,255,.05);
-
-opacity:.22;
-
-filter:blur(1px);
-
-transition:4s ease;
-
-z-index:5;
+opacity:.04;
 }
 
 
@@ -214,18 +118,16 @@ z-index:5;
 .signal{
 position:absolute;
 
-left:50%;
-bottom:29%;
+width:100%;
+text-align:center;
 
-transform:translateX(-50%);
+bottom:28%;
 
-font-size:.72rem;
+font-size:12px;
 
-letter-spacing:7px;
+letter-spacing:6px;
 
-opacity:.55;
-
-z-index:12;
+opacity:.6;
 }
 
 
@@ -235,20 +137,18 @@ z-index:12;
 .reconnect{
 position:absolute;
 
-left:50%;
-bottom:22%;
+width:100%;
+text-align:center;
 
-transform:translateX(-50%);
+bottom:21%;
 
-font-size:.85rem;
+font-size:15px;
 
 letter-spacing:8px;
 
-opacity:.86;
+opacity:.85;
 
 cursor:pointer;
-
-z-index:13;
 }
 
 
@@ -265,71 +165,44 @@ border-radius:50%;
 
 opacity:0;
 
-pointer-events:none;
-
 background:
 radial-gradient(
 circle,
-rgba(255,210,160,1) 0%,
-rgba(255,120,60,.75) 40%,
-rgba(255,70,20,.18) 70%,
+rgba(255,220,160,1) 0%,
+rgba(255,140,70,.7) 40%,
 transparent 100%
 );
 
 box-shadow:
-0 0 8px rgba(255,120,50,.55),
-0 0 18px rgba(255,70,20,.22);
-
-z-index:30;
+0 0 8px rgba(255,120,50,.4);
 }
 
 
 
-/ FREQUENCY ARCS /
+/ FREQUENCY */
 
 .frequency{
 position:absolute;
 
-left:7vw;
-bottom:7vh;
-
-display:flex;
-flex-direction:column;
-
-gap:10px;
+left:25px;
+bottom:30px;
 
 opacity:0;
-
-transition:3s ease;
-
-z-index:15;
 }
 
 .frequency div{
 
-font-size:.58rem;
+margin-top:10px;
+
+font-size:10px;
 
 letter-spacing:4px;
 
 opacity:.7;
 }
 
-.frequency.show{
+.show{
 opacity:1;
-}
-
-
-
-/ REVEAL */
-
-.symbol.awaken{
-opacity:.15;
-filter:none;
-}
-
-.triangle.fade{
-opacity:.03;
-filter:blur(7px);
 }
 
 </style>
@@ -342,9 +215,7 @@ filter:blur(7px);
 
 <div class="glitch"></div>
 
-<div class="interference"></div>
-
-<div class="triangle" id="triangle"></div>
+<div class="triangle"></div>
 
 <div class="symbol" id="symbol">
 .17
@@ -374,83 +245,67 @@ reconnect
 
 <script>
 
-const reconnect =
+var reconnect =
 document.getElementById("reconnect");
 
-const signal =
+var signal =
 document.getElementById("signal");
 
-const ember =
+var ember =
 document.getElementById("ember");
 
-const frequency =
+var frequency =
 document.getElementById("frequency");
 
-const symbol =
+var symbol =
 document.getElementById("symbol");
 
-const triangle =
-document.getElementById("triangle");
 
 
-
-reconnect.addEventListener("click",(e)=>{
+reconnect.onclick=function(e){
 
 signal.style.opacity="0";
 
 reconnect.style.opacity="0";
 
+ember.style.left=e.clientX+"px";
 
-
-ember.style.left =
-e.clientX + "px";
-
-ember.style.top =
-e.clientY + "px";
+ember.style.top=e.clientY+"px";
 
 ember.style.opacity="1";
-
-
 
 ember.animate([
 
 {
-transform:"translate(-50%,-50%) scale(.3)",
+transform:"scale(.5)",
 opacity:1
 },
 
 {
-transform:"translate(-50%,-50%) scale(8)",
-opacity:.04
+transform:"scale(6)",
+opacity:.03
 }
 
 ],{
 
-duration:4200,
-fill:"forwards",
-easing:"ease-out"
+duration:4000,
+fill:"forwards"
 
 });
 
+setTimeout(function(){
 
-
-setTimeout(()=>{
-
-symbol.classList.add("awaken");
-
-triangle.classList.add("fade");
+symbol.style.opacity=".15";
 
 },700);
 
+setTimeout(function(){
 
+frequency.className="frequency show";
 
-setTimeout(()=>{
+},2200);
 
-frequency.classList.add("show");
-
-},2400);
-
-});
+};
 
 </script>
 
