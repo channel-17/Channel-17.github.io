@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-
-<title>channel 17</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>CHANNEL 17</title>
 
 <style>
 
@@ -22,334 +21,306 @@ background:#000;
 font-family:Courier New, monospace;
 }
 
-/* MAIN */
+/* ---------------- BACKGROUND ---------------- */
 
 body{
-display:flex;
-justify-content:center;
-align-items:center;
-background:#000;
-color:#ddd;
+background:
+radial-gradient(circle at center, rgba(255,120,20,.03) 0%, transparent 35%),
+#000;
 }
 
-/* STATIC */
-
-body::before{
-content:"";
-position:fixed;
-inset:0;
-pointer-events:none;
-opacity:.045;
-background-image:
-repeating-linear-gradient(
-0deg,
-rgba(255,255,255,.08) 0px,
-rgba(255,255,255,.08) 1px,
-transparent 1px,
-transparent 3px
-);
-mix-blend-mode:screen;
-animation:staticDrift .2s linear infinite;
-}
-
-@keyframes staticDrift{
-0%{transform:translateY(0px);}
-100%{transform:translateY(3px);}
-}
-
-/* GLITCH OVERLAY */
+/* ---------------- GLITCH LAYER ---------------- */
 
 #glitch{
 position:fixed;
 inset:0;
-background:#000;
-z-index:999;
 pointer-events:none;
-animation:takeover 2.4s forwards;
-}
-
-@keyframes takeover{
-
-0%{
-background:#000;
+z-index:50;
+mix-blend-mode:screen;
 opacity:1;
-filter:contrast(400%);
+animation:glitchFade 4.8s forwards;
 }
 
-8%{
-background:#120500;
+.scan{
+position:absolute;
+width:100%;
+height:2px;
+background:
+linear-gradient(
+90deg,
+transparent,
+rgba(255,120,40,.35),
+rgba(255,255,255,.2),
+transparent
+);
+animation:scanMove linear infinite;
 }
 
-12%{
-background:#000;
-transform:translateX(-12px);
+.scan:nth-child(1){
+top:12%;
+animation-duration:.08s;
 }
 
-18%{
-background:#1d0800;
-transform:translateX(8px);
+.scan:nth-child(2){
+top:30%;
+animation-duration:.12s;
 }
 
-25%{
-background:#000;
-transform:translateY(-6px);
+.scan:nth-child(3){
+top:48%;
+animation-duration:.06s;
 }
 
-31%{
-background:#220900;
+.scan:nth-child(4){
+top:66%;
+animation-duration:.15s;
 }
 
-38%{
-background:#000;
-transform:translateX(4px);
+.scan:nth-child(5){
+top:82%;
+animation-duration:.09s;
 }
 
-48%{
-background:#130500;
+@keyframes scanMove{
+0%{
+transform:translateX(-100%);
+opacity:0;
+}
+50%{
+opacity:1;
+}
+100%{
+transform:translateX(100%);
+opacity:0;
+}
 }
 
-58%{
-background:#000;
+@keyframes glitchFade{
+0%{
+opacity:1;
 }
-
-70%{
-opacity:.95;
+65%{
+opacity:1;
 }
-
 100%{
 opacity:0;
-visibility:hidden;
 }
 }
 
-/* SYMBOL */
+/* ---------------- STATIC ---------------- */
+
+#noise{
+position:fixed;
+inset:0;
+background-image:
+repeating-linear-gradient(
+0deg,
+rgba(255,255,255,.02) 0px,
+rgba(255,255,255,.02) 1px,
+transparent 1px,
+transparent 3px
+);
+opacity:.14;
+pointer-events:none;
+z-index:5;
+}
+
+/* ---------------- MAIN ---------------- */
+
+#main{
+position:relative;
+width:100%;
+height:100%;
+display:flex;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+overflow:hidden;
+}
+
+/* ---------------- SYMBOL ---------------- */
 
 #symbolWrap{
+position:relative;
+width:min(72vw,340px);
+height:min(72vw,340px);
+display:flex;
+justify-content:center;
+align-items:center;
+animation:symbolFlicker 4s infinite;
+}
+
+#outer{
 position:absolute;
-top:38%;
-left:50%;
-transform:translate(-50%,-50%);
-width:min(70vw,340px);
-opacity:0;
-animation:appear 2s forwards;
-animation-delay:1.1s;
-}
-
-@keyframes appear{
-to{
-opacity:.35;
-}
-}
-
-#symbol{
 width:100%;
-filter:
-drop-shadow(0 0 8px rgba(255,140,40,.08))
-drop-shadow(0 0 20px rgba(255,120,0,.04));
+opacity:.22;
+filter:blur(.5px);
+animation:outerDecay 7s infinite alternate;
 }
 
-/* SIGNAL LOST */
+#inner{
+position:absolute;
+width:54%;
+opacity:.75;
+filter:
+drop-shadow(0 0 8px rgba(255,150,60,.18))
+drop-shadow(0 0 24px rgba(255,120,20,.08));
+animation:innerPulse 6s ease-in-out infinite;
+}
+
+@keyframes symbolFlicker{
+0%,100%{
+opacity:1;
+}
+48%{
+opacity:.85;
+}
+49%{
+opacity:.3;
+}
+50%{
+opacity:1;
+}
+}
+
+@keyframes outerDecay{
+0%{
+opacity:.22;
+filter:blur(.5px);
+}
+100%{
+opacity:.05;
+filter:blur(2px);
+}
+}
+
+@keyframes innerPulse{
+0%,100%{
+opacity:.72;
+transform:scale(1);
+}
+50%{
+opacity:.92;
+transform:scale(1.02);
+}
+}
+
+/* ---------------- SIGNAL LOST ---------------- */
 
 #warning{
-position:absolute;
-top:57%;
-left:50%;
-transform:translateX(-50%);
-font-size:clamp(18px,2vw,24px);
-letter-spacing:.55em;
-color:#666;
-opacity:0;
-animation:warningFlash 2.7s forwards;
-animation-delay:1.5s;
-white-space:nowrap;
+margin-top:28px;
+font-size:clamp(18px,3vw,26px);
+letter-spacing:.45em;
+color:rgba(255,255,255,.38);
+text-transform:lowercase;
+animation:warningFlash .8s infinite;
 }
 
 @keyframes warningFlash{
-
-0%{
-opacity:0;
-transform:translateX(-50%) scale(1);
-filter:blur(2px);
+0%,100%{
+opacity:.2;
 }
-
-10%{
-opacity:.9;
-}
-
-15%{
-opacity:.15;
-}
-
-22%{
-opacity:.8;
-}
-
-30%{
-opacity:.05;
-}
-
-42%{
-opacity:.7;
-}
-
-60%{
-opacity:.4;
-}
-
-80%{
-opacity:.08;
-}
-
-100%{
-opacity:0;
-filter:blur(6px);
+50%{
+opacity:.85;
 }
 }
 
-/* RECONNECT */
+/* ---------------- RECONNECT ---------------- */
 
 #reconnect{
-position:absolute;
-top:66%;
-left:50%;
-transform:translateX(-50%);
-font-size:clamp(34px,5vw,58px);
-letter-spacing:.35em;
-color:#cfcfcf;
-opacity:0;
+margin-top:42px;
+font-size:clamp(28px,5vw,56px);
+letter-spacing:.38em;
+color:rgba(255,255,255,.08);
+text-transform:uppercase;
 cursor:pointer;
+pointer-events:none;
 transition:
-opacity 2s ease,
-color 1.2s ease,
-text-shadow 2s ease,
-transform .4s ease;
-white-space:nowrap;
-animation:revealReconnect 2.5s forwards;
-animation-delay:3.2s;
+color 2.5s ease,
+text-shadow 2.5s ease,
+transform .3s ease;
+animation:reconnectWarm 6s forwards;
+animation-delay:4.4s;
 }
 
-@keyframes revealReconnect{
-from{
-opacity:0;
-filter:blur(6px);
-}
-to{
-opacity:1;
-filter:blur(0px);
-}
+#reconnect.active{
+pointer-events:auto;
 }
 
 #reconnect:hover{
-color:#ffd2a3;
-text-shadow:
-0 0 8px rgba(255,140,60,.4),
-0 0 18px rgba(255,100,20,.25);
+transform:scale(1.03);
 }
 
-/* EMBER */
+@keyframes reconnectWarm{
 
-#ember{
-position:fixed;
-width:10px;
-height:10px;
-border-radius:50%;
-background:rgba(255,140,40,.8);
-pointer-events:none;
+0%{
 opacity:0;
-z-index:50;
-filter:blur(1px);
+color:rgba(255,255,255,0);
+text-shadow:none;
 }
 
-/* LINKS */
-
-#links{
-position:absolute;
-bottom:11%;
-left:50%;
-transform:translateX(-50%);
-display:flex;
-flex-direction:column;
-gap:38px;
-opacity:0;
-transition:opacity 2s ease;
-align-items:flex-start;
-width:min(85vw,550px);
-}
-
-.link{
-display:block;
-max-width:100%;
-}
-
-.link img{
-width:100%;
-max-width:420px;
-height:auto;
-display:block;
-filter:
-drop-shadow(0 0 8px rgba(255,120,20,.22))
-drop-shadow(0 0 20px rgba(255,80,0,.08));
-transition:
-transform .5s ease,
-filter .6s ease,
-opacity .6s ease;
-opacity:.92;
-}
-
-.link img:hover{
-transform:translateX(8px) scale(1.03);
-filter:
-drop-shadow(0 0 12px rgba(255,160,60,.45))
-drop-shadow(0 0 28px rgba(255,90,0,.18));
+100%{
 opacity:1;
+color:rgba(255,225,185,.88);
+text-shadow:
+0 0 8px rgba(255,120,20,.35),
+0 0 28px rgba(255,120,20,.14);
 }
 
-/* SMOKE */
+}
+
+/* ---------------- SMOKE ---------------- */
+
+#smokeWrap{
+position:fixed;
+inset:0;
+pointer-events:none;
+overflow:hidden;
+z-index:2;
+}
 
 .smoke{
-position:fixed;
+position:absolute;
 width:55vw;
 height:55vw;
 border-radius:50%;
 background:
-radial-gradient(circle,
-rgba(255,255,255,.045) 0%,
-rgba(255,255,255,.02) 25%,
-transparent 70%);
-pointer-events:none;
-mix-blend-mode:screen;
+radial-gradient(
+circle,
+rgba(255,255,255,.035),
+transparent 70%
+);
 filter:blur(55px);
-opacity:0;
-animation:smokeFloat 18s linear infinite;
+animation:smokeFloat linear infinite;
 }
 
 .smoke:nth-child(1){
+left:-10%;
 top:60%;
-left:-20%;
-animation-delay:0s;
+animation-duration:24s;
 }
 
 .smoke:nth-child(2){
-top:15%;
-left:70%;
-animation-delay:6s;
+right:-15%;
+top:20%;
+animation-duration:32s;
 }
 
 .smoke:nth-child(3){
-top:80%;
-left:40%;
-animation-delay:12s;
+left:20%;
+top:85%;
+animation-duration:28s;
 }
 
 @keyframes smokeFloat{
 
 0%{
-transform:translateX(0px) translateY(0px) scale(1);
+transform:translate(0,0) scale(1);
 opacity:0;
 }
 
 15%{
-opacity:.12;
+opacity:.18;
 }
 
 50%{
@@ -357,35 +328,72 @@ opacity:.08;
 }
 
 100%{
-transform:translateX(120px) translateY(-90px) scale(1.4);
+transform:translate(160px,-120px) scale(1.4);
 opacity:0;
 }
+
 }
 
-/* HIDE AFTER CONNECT */
+/* ---------------- LINKS ---------------- */
 
-.connected #warning,
-.connected #reconnect,
-.connected #symbolWrap{
-transition:all 2s ease;
+#links{
+position:absolute;
+left:50%;
+bottom:14%;
+transform:translateX(-50%);
+width:min(78vw,520px);
+
+display:flex;
+flex-direction:column;
+gap:42px;
+
 opacity:0;
-filter:blur(12px);
+pointer-events:none;
+
+transition:opacity 2s ease;
 }
 
-/* SHOW LINKS */
-
-.connected #links{
+#links.show{
 opacity:1;
+pointer-events:auto;
 }
 
-/* AMBER WARMTH */
+.link{
+display:block;
+text-decoration:none;
+transition:
+transform .3s ease,
+filter .3s ease;
+}
 
-.connected{
-background:
-radial-gradient(circle at center,
-rgba(255,110,20,.08) 0%,
-rgba(0,0,0,1) 55%);
-transition:background 3s ease;
+.link:hover{
+transform:translateX(10px);
+filter:brightness(1.2);
+}
+
+.link img{
+width:100%;
+display:block;
+filter:
+drop-shadow(0 0 12px rgba(255,120,20,.18))
+drop-shadow(0 0 30px rgba(255,120,20,.08));
+}
+
+/* ---------------- MOBILE ---------------- */
+
+@media(max-width:700px){
+
+#links{
+width:82vw;
+bottom:10%;
+gap:34px;
+}
+
+#symbolWrap{
+width:62vw;
+height:62vw;
+}
+
 }
 
 </style>
@@ -393,19 +401,34 @@ transition:background 3s ease;
 
 <body>
 
-<div id="glitch"></div>
+<div id="noise"></div>
 
-<div class="smoke"></div>
-<div class="smoke"></div>
-<div class="smoke"></div>
-
-<div id="symbolWrap">
-<img id="symbol" src="Trust17.png">
+<div id="glitch">
+<div class="scan"></div>
+<div class="scan"></div>
+<div class="scan"></div>
+<div class="scan"></div>
+<div class="scan"></div>
 </div>
 
-<div id="warning">SIGNAL LOST</div>
+<div id="smokeWrap">
+<div class="smoke"></div>
+<div class="smoke"></div>
+<div class="smoke"></div>
+</div>
 
-<div id="reconnect">RECONNECT</div>
+<div id="main">
+
+<div id="symbolWrap">
+
+<img id="outer" src="Outer17-final.png">
+<img id="inner" src="Inner17-final.png">
+
+</div>
+
+<div id="warning">signal lost</div>
+
+<div id="reconnect">reconnect</div>
 
 <div id="links">
 
@@ -423,38 +446,35 @@ transition:background 3s ease;
 
 </div>
 
-<div id="ember"></div>
+</div>
 
 <script>
 
 const reconnect = document.getElementById("reconnect");
-const ember = document.getElementById("ember");
+const warning = document.getElementById("warning");
+const links = document.getElementById("links");
 
-reconnect.addEventListener("click", e=>{
+setTimeout(()=>{
+reconnect.classList.add("active");
+},4400);
 
-document.body.classList.add("connected");
+reconnect.addEventListener("click",()=>{
 
-const x = e.clientX;
-const y = e.clientY;
+warning.style.transition="1s";
+warning.style.opacity="0";
 
-ember.style.left = x + "px";
-ember.style.top = y + "px";
-ember.style.opacity = 1;
+reconnect.style.transition="1.2s";
+reconnect.style.opacity="0";
 
-ember.animate([
-{
-transform:"scale(1)",
-opacity:1
-},
-{
-transform:"scale(140)",
-opacity:0
-}
-],{
-duration:2200,
-easing:"ease-out",
-fill:"forwards"
-});
+document.getElementById("outer").style.transition="2.8s";
+document.getElementById("outer").style.opacity=".01";
+
+document.getElementById("inner").style.transition="2.8s";
+document.getElementById("inner").style.opacity=".92";
+
+setTimeout(()=>{
+links.classList.add("show");
+},1200);
 
 });
 
