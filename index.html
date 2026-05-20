@@ -41,7 +41,7 @@ background:black;
 
 
 
-/ VIOLENT OPENING GLITCH /
+/ GLITCH /
 
 .glitch{
 position:absolute;
@@ -55,14 +55,6 @@ rgba(255,255,255,.14) 0px,
 rgba(255,255,255,.03) 1px,
 transparent 2px,
 transparent 5px
-),
-
-repeating-linear-gradient(
-90deg,
-rgba(255,255,255,.06) 0px,
-rgba(255,255,255,.02) 1px,
-transparent 2px,
-transparent 6px
 );
 
 mix-blend-mode:screen;
@@ -75,7 +67,7 @@ z-index:50;
 }
 
 .glitch.active{
-animation:violentGlitch 2.2s steps(2) forwards;
+animation:violentGlitch 2s steps(2) forwards;
 }
 
 @keyframes violentGlitch{
@@ -91,34 +83,23 @@ translateX(-40px)
 skewX(18deg);
 }
 
-18%{
-opacity:.1;
+24%{
+opacity:.12;
 }
 
-28%{
+42%{
 opacity:1;
 transform:
-translateX(32px)
-skewX(-12deg);
+translateX(24px)
+skewX(-10deg);
 }
 
-44%{
-opacity:0;
-}
-
-58%{
-opacity:.9;
-transform:
-translateY(-5px)
-scale(1.02);
-}
-
-74%{
-opacity:.16;
+60%{
+opacity:.08;
 }
 
 100%{
-opacity:.05;
+opacity:.04;
 transform:none;
 }
 
@@ -126,9 +107,9 @@ transform:none;
 
 
 
-/ SYMBOL /
+/ TRIANGLE /
 
-.symbol-wrap{
+.triangle{
 position:absolute;
 
 top:50%;
@@ -137,101 +118,50 @@ left:50%;
 transform:
 translate(-50%,-50%);
 
-width:230px;
-height:230px;
+width:0;
+height:0;
+
+border-left:110px solid transparent;
+border-right:110px solid transparent;
+border-bottom:190px solid rgba(255,255,255,.08);
+
+filter:
+blur(1px);
+
+opacity:.24;
+
+transition:4s ease;
 
 z-index:5;
 }
 
 
 
-/ TRIANGLE /
+/ INNER MARK /
 
-.outer{
+.mark{
 position:absolute;
 
-width:100%;
-height:100%;
+top:50%;
+left:50%;
 
-object-fit:contain;
+transform:
+translate(-50%,-50%);
 
-opacity:.28;
+font-size:4rem;
 
-filter:
-blur(1px)
-brightness(.45);
+letter-spacing:12px;
+
+color:rgba(255,255,255,.04);
 
 transition:4s ease;
+
+z-index:6;
 }
 
 
 
-/ INNER SIGNAL /
-
-.inner{
-position:absolute;
-
-width:100%;
-height:100%;
-
-object-fit:contain;
-
-opacity:.03;
-
-filter:
-blur(.5px);
-
-transition:4s ease;
-}
-
-
-
-/ INTERFERENCE /
-
-.interference{
-position:absolute;
-inset:0;
-
-pointer-events:none;
-
-z-index:20;
-
-opacity:.1;
-
-background:
-linear-gradient(
-90deg,
-rgba(255,255,255,.06),
-transparent 18%,
-transparent 82%,
-rgba(255,255,255,.04)
-);
-
-mix-blend-mode:screen;
-
-animation:
-edgePulse 5s ease-in-out infinite;
-}
-
-@keyframes edgePulse{
-
-0%{
-opacity:.05;
-}
-
-50%{
-opacity:.14;
-}
-
-100%{
-opacity:.05;
-}
-
-}
-
-
-
-/ SIGNAL LOST /
+/ SIGNAL /
 
 .signal{
 position:absolute;
@@ -351,7 +281,7 @@ box-shadow:
 
 
 
-/ FREQUENCY ARCS /
+/ FREQUENCY /
 
 .frequency{
 position:absolute;
@@ -388,14 +318,13 @@ opacity:1;
 
 
 
-/ SIGNAL REVEAL /
+/ AWAKEN */
 
-.inner.awaken{
-opacity:.18;
-filter:none;
+.mark.awaken{
+color:rgba(255,255,255,.18);
 }
 
-.outer.fade{
+.triangle.fade{
 opacity:.04;
 filter:blur(8px);
 }
@@ -410,22 +339,10 @@ filter:blur(8px);
 
 <div class="glitch" id="glitch"></div>
 
-<div class="interference"></div>
+<div class="triangle" id="triangle"></div>
 
-<div class="symbol-wrap">
-
-<img
-src="Trust17.png"
-class="outer"
-id="outer"
->
-
-<img
-src="Trust17.png"
-class="inner"
-id="inner"
->
-
+<div class="mark" id="mark">
+.17
 </div>
 
 <div
@@ -448,9 +365,7 @@ id="frequency"
 >
 
 <div>Latest Sesh</div>
-
 <div>Roach Tray</div>
-
 <div>Pass One Back</div>
 
 </div>
@@ -473,11 +388,11 @@ document.getElementById("reconnect");
 const signal =
 document.getElementById("signal");
 
-const outer =
-document.getElementById("outer");
+const triangle =
+document.getElementById("triangle");
 
-const inner =
-document.getElementById("inner");
+const mark =
+document.getElementById("mark");
 
 const ember =
 document.getElementById("ember");
@@ -487,8 +402,6 @@ document.getElementById("frequency");
 
 
 
-/ GLITCH /
-
 setTimeout(()=>{
 
 glitch.classList.add("active");
@@ -496,8 +409,6 @@ glitch.classList.add("active");
 },200);
 
 
-
-/ TOUCH */
 
 reconnect.addEventListener("click",(e)=>{
 
@@ -541,9 +452,9 @@ fill:"forwards"
 
 setTimeout(()=>{
 
-inner.classList.add("awaken");
+mark.classList.add("awaken");
 
-outer.classList.add("fade");
+triangle.classList.add("fade");
 
 },500);
 
