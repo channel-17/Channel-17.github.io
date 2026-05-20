@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 
 <meta charset="UTF-8">
@@ -22,20 +22,18 @@ color:white;
 
 .screen{
 position:relative;
-width:100%;
+width:100vw;
 height:100vh;
-overflow:hidden;
 background:black;
+overflow:hidden;
 }
-
-
-
-/* GLITCH /
 
 .glitch{
 position:absolute;
-inset:0;
-
+top:0;
+left:0;
+width:100%;
+height:100%;
 background:
 repeating-linear-gradient(
 0deg,
@@ -44,159 +42,84 @@ rgba(255,255,255,.02) 1px,
 transparent 2px,
 transparent 4px
 );
-
-opacity:0;
-
+opacity:.05;
+animation:glitch 2s ease;
 pointer-events:none;
-
-z-index:30;
-
-animation:
-glitchFlash 2s ease forwards;
+z-index:20;
 }
 
-@keyframes glitchFlash{
-
+@keyframes glitch{
 0%{
-opacity:0;
-}
-
-10%{
 opacity:1;
 transform:translateX(-20px);
 }
-
-20%{
-opacity:.2;
-}
-
-35%{
-opacity:1;
+50%{
+opacity:.3;
 transform:translateX(15px);
 }
-
-50%{
-opacity:0;
-}
-
 100%{
-opacity:.04;
-}
-
-}
-
-
-
-/ SYMBOL /
-
-.symbol{
-position:absolute;
-
-top:50%;
-left:50%;
-
-transform:translate(-50%,-50%);
-
-font-size:7rem;
-
-letter-spacing:12px;
-
 opacity:.05;
-
-z-index:5;
-
-transition:4s ease;
+transform:none;
 }
-
-
-
-/ TRIANGLE /
+}
 
 .triangle{
 position:absolute;
-
 top:50%;
 left:50%;
-
-transform:
-translate(-50%,-50%);
-
+transform:translate(-50%,-50%);
 width:0;
 height:0;
-
 border-left:120px solid transparent;
 border-right:120px solid transparent;
 border-bottom:210px solid rgba(255,255,255,.08);
-
-opacity:.28;
-
-z-index:4;
-
+opacity:.3;
 transition:4s ease;
+z-index:3;
 }
 
-
-
-/ SIGNAL /
+.symbol{
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+font-size:7rem;
+letter-spacing:12px;
+opacity:.05;
+transition:4s ease;
+z-index:4;
+}
 
 .signal{
 position:absolute;
-
-bottom:29%;
-
 left:50%;
-
+bottom:28%;
 transform:translateX(-50%);
-
-font-size:.72rem;
-
+font-size:.7rem;
 letter-spacing:7px;
-
-opacity:.62;
-
+opacity:.65;
 z-index:10;
 }
 
-
-
-/ RECONNECT /
-
 .reconnect{
 position:absolute;
-
-bottom:22%;
-
 left:50%;
-
+bottom:22%;
 transform:translateX(-50%);
-
-font-size:.88rem;
-
+font-size:.9rem;
 letter-spacing:8px;
-
-opacity:.9;
-
 cursor:pointer;
-
-z-index:12;
+opacity:.9;
+z-index:11;
 }
-
-
-
-/ EMBER /
 
 .ember{
 position:absolute;
-
 width:12px;
 height:12px;
-
 border-radius:50%;
-
 opacity:0;
-
 pointer-events:none;
-
 background:
 radial-gradient(
 circle,
@@ -205,58 +128,37 @@ rgba(255,140,70,.95) 30%,
 rgba(255,70,20,.45) 60%,
 transparent 100%
 );
-
 box-shadow:
 0 0 18px rgba(255,120,50,.9),
 0 0 42px rgba(255,70,20,.5);
-
-z-index:25;
-}
-
-
-
-/ FREQUENCY /
-
-.frequency{
-position:absolute;
-
-left:7vw;
-bottom:7vh;
-
-display:flex;
-flex-direction:column;
-
-gap:10px;
-
-opacity:0;
-
-transition:3s ease;
-
 z-index:15;
 }
 
+.frequency{
+position:absolute;
+left:7vw;
+bottom:7vh;
+opacity:0;
+z-index:12;
+transition:3s ease;
+}
+
 .frequency div{
-
+margin-top:10px;
 font-size:.62rem;
-
 letter-spacing:4px;
-
 opacity:.7;
 }
 
-.frequency.show{
+.show{
 opacity:1;
 }
 
-
-
-/ REVEAL */
-
-.symbol.awaken{
+.awaken{
 opacity:.18;
 }
 
-.triangle.fade{
+.fade{
 opacity:.04;
 filter:blur(6px);
 }
@@ -288,9 +190,7 @@ reconnect
 <div class="frequency" id="frequency">
 
 <div>Latest Sesh</div>
-
 <div>Roach Tray</div>
-
 <div>Pass it Back</div>
 
 </div>
@@ -301,43 +201,21 @@ reconnect
 
 <script>
 
-const reconnect =
-document.getElementById("reconnect");
-
-const signal =
-document.getElementById("signal");
-
-const ember =
-document.getElementById("ember");
-
-const frequency =
-document.getElementById("frequency");
-
-const symbol =
-document.getElementById("symbol");
-
-const triangle =
-document.getElementById("triangle");
-
-
+const reconnect=document.getElementById("reconnect");
+const signal=document.getElementById("signal");
+const ember=document.getElementById("ember");
+const frequency=document.getElementById("frequency");
+const symbol=document.getElementById("symbol");
+const triangle=document.getElementById("triangle");
 
 reconnect.addEventListener("click",(e)=>{
 
 signal.style.opacity="0";
-
 reconnect.style.opacity="0";
 
-
-
-ember.style.left =
-e.clientX + "px";
-
-ember.style.top =
-e.clientY + "px";
-
+ember.style.left=e.clientX+"px";
+ember.style.top=e.clientY+"px";
 ember.style.opacity="1";
-
-
 
 ember.animate([
 
@@ -359,17 +237,12 @@ easing:"ease-out"
 
 });
 
-
-
 setTimeout(()=>{
 
 symbol.classList.add("awaken");
-
 triangle.classList.add("fade");
 
 },500);
-
-
 
 setTimeout(()=>{
 
