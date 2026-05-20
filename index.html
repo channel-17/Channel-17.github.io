@@ -54,7 +54,7 @@ color:#ddd;
 
 /* =========================
 
-NOISE
+STATIC NOISE
 
 ========================= */
 
@@ -68,7 +68,7 @@ pointer-events:none;
 
 opacity:.08;
 
-z-index:1;
+z-index:2;
 
 background-image:
 
@@ -76,9 +76,9 @@ repeating-linear-gradient(
 
 0deg,
 
-rgba(255,255,255,.04) 0px,
+rgba(255,255,255,.03) 0px,
 
-rgba(255,255,255,.04) 1px,
+rgba(255,255,255,.03) 1px,
 
 transparent 1px,
 
@@ -86,7 +86,7 @@ transparent 3px
 
 );
 
-animation:noiseMove .15s linear infinite;
+animation:noiseMove .14s linear infinite;
 
 }
 
@@ -100,7 +100,7 @@ animation:noiseMove .15s linear infinite;
 
 /* =========================
 
-TAKEOVER CHAOS
+TAKEOVER
 
 ========================= */
 
@@ -114,75 +114,229 @@ overflow:hidden;
 
 pointer-events:none;
 
-z-index:60;
+background:#000;
 
 opacity:0;
 
-mix-blend-mode:screen;
+z-index:100;
+
+animation:twitch .12s infinite;
 
 }
 
-.takeText{
+@keyframes twitch{
+
+0%{transform:translateX(0px);}
+
+20%{transform:translateX(1px);}
+
+40%{transform:translateX(-2px);}
+
+60%{transform:translateX(2px);}
+
+80%{transform:translateX(-1px);}
+
+100%{transform:translateX(0px);}
+
+}
+
+/* =========================
+
+MATRIX RAIN
+
+========================= */
+
+.rain{
 
 position:absolute;
 
-font-size:clamp(10px,1vw,14px);
+top:-120%;
+
+color:#6aff6a;
+
+font-size:clamp(13px,1vw,18px);
 
 font-weight:bold;
 
-letter-spacing:.18em;
-
-color:#71ff71;
-
-opacity:0;
-
 white-space:nowrap;
 
-animation:panic .12s linear infinite;
+writing-mode:vertical-rl;
 
-}
-
-@keyframes panic{
-
-0%{
-
-transform:translateX(-4px);
-
-opacity:.05;
-
-}
-
-25%{
-
-transform:translateX(3px);
+text-orientation:upright;
 
 opacity:.95;
 
-}
-
-50%{
-
-transform:translateX(-2px);
-
-opacity:.25;
+animation:rainDrop linear infinite;
 
 }
 
-75%{
+@keyframes rainDrop{
 
-transform:translateX(5px);
+0%{
 
-opacity:.7;
+transform:translateY(-10%);
+
+opacity:0;
+
+}
+
+10%{
+
+opacity:1;
 
 }
 
 100%{
 
-transform:translateX(-3px);
+transform:translateY(180%);
 
-opacity:.02;
+opacity:0;
 
 }
+
+}
+
+/* =========================
+
+BURSTS
+
+========================= */
+
+.burst{
+
+position:absolute;
+
+font-size:clamp(12px,1vw,18px);
+
+font-weight:bold;
+
+color:#7eff7e;
+
+opacity:0;
+
+white-space:nowrap;
+
+animation:burstFlash .14s linear infinite;
+
+}
+
+@keyframes burstFlash{
+
+0%{
+
+opacity:0;
+
+transform:translateX(-3px);
+
+}
+
+50%{
+
+opacity:1;
+
+transform:translateX(4px);
+
+}
+
+100%{
+
+opacity:0;
+
+transform:translateX(-2px);
+
+}
+
+}
+
+/* =========================
+
+SCANNER
+
+========================= */
+
+#scanner{
+
+position:absolute;
+
+top:-35%;
+
+left:0;
+
+width:100%;
+
+height:35%;
+
+background:
+
+linear-gradient(
+
+180deg,
+
+transparent,
+
+rgba(110,255,140,.12),
+
+rgba(180,255,180,.22),
+
+rgba(110,255,140,.12),
+
+transparent
+
+);
+
+filter:blur(8px);
+
+opacity:.95;
+
+animation:scannerSweep 2.6s linear infinite;
+
+}
+
+@keyframes scannerSweep{
+
+0%{
+
+top:-35%;
+
+}
+
+100%{
+
+top:130%;
+
+}
+
+}
+
+/* =========================
+
+HIDDEN .17
+
+========================= */
+
+#ghost17{
+
+position:absolute;
+
+top:72%;
+
+left:50%;
+
+transform:translate(-50%,-50%);
+
+font-size:clamp(90px,18vw,220px);
+
+font-weight:bold;
+
+letter-spacing:.12em;
+
+color:rgba(90,255,120,.18);
+
+opacity:0;
+
+mix-blend-mode:screen;
+
+z-index:1;
 
 }
 
@@ -220,7 +374,7 @@ SYMBOL
 
 position:absolute;
 
-top:36%;
+top:38%;
 
 left:50%;
 
@@ -238,9 +392,9 @@ align-items:center;
 
 opacity:0;
 
-transition:2s ease;
+transition:2.8s ease;
 
-z-index:10;
+z-index:20;
 
 }
 
@@ -256,13 +410,13 @@ position:absolute;
 
 width:100%;
 
-opacity:.34;
+opacity:.36;
 
 filter:
 
-drop-shadow(0 0 12px rgba(80,255,120,.08));
+drop-shadow(0 0 10px rgba(80,255,120,.08));
 
-animation:outerPulse 8s ease-in-out infinite;
+transition:3s ease;
 
 }
 
@@ -272,51 +426,19 @@ position:absolute;
 
 width:100%;
 
-opacity:.34;
+opacity:.36;
 
 filter:
 
-drop-shadow(0 0 12px rgba(80,255,120,.08));
+drop-shadow(0 0 10px rgba(80,255,120,.08));
 
-animation:innerPulse 8s ease-in-out infinite;
-
-}
-
-@keyframes outerPulse{
-
-0%,100%{
-
-opacity:.22;
-
-}
-
-50%{
-
-opacity:.42;
-
-}
-
-}
-
-@keyframes innerPulse{
-
-0%,100%{
-
-opacity:.22;
-
-}
-
-50%{
-
-opacity:.42;
-
-}
+transition:3s ease;
 
 }
 
 /* =========================
 
-WARNING
+SIGNAL LOST
 
 ========================= */
 
@@ -330,83 +452,47 @@ left:50%;
 
 transform:translateX(-50%);
 
-font-size:clamp(22px,4vw,42px);
+font-size:clamp(24px,4vw,42px);
 
-letter-spacing:.28em;
+letter-spacing:.22em;
 
 color:#8fff8f;
 
 opacity:0;
 
-z-index:15;
+z-index:25;
 
 }
 
 #warning.active{
 
-animation:warningChaos .15s infinite;
+animation:warningFlash .11s infinite;
 
 }
 
-@keyframes warningChaos{
+@keyframes warningFlash{
 
 0%{
 
-opacity:.15;
+opacity:.12;
 
-transform:
-
-translateX(-50%)
-
-translateY(0px);
-
-}
-
-25%{
-
-opacity:1;
-
-transform:
-
-translateX(calc(-50% + 2px))
-
-translateY(-1px);
+transform:translateX(calc(-50% - 2px));
 
 }
 
 50%{
 
-opacity:.35;
+opacity:1;
 
-transform:
-
-translateX(calc(-50% - 3px))
-
-translateY(1px);
-
-}
-
-75%{
-
-opacity:.82;
-
-transform:
-
-translateX(calc(-50% + 1px))
-
-translateY(0px);
+transform:translateX(calc(-50% + 2px));
 
 }
 
 100%{
 
-opacity:.12;
+opacity:.08;
 
-transform:
-
-translateX(calc(-50% - 2px))
-
-translateY(-1px);
+transform:translateX(calc(-50% - 1px));
 
 }
 
@@ -428,23 +514,23 @@ left:50%;
 
 transform:translateX(-50%);
 
-font-size:clamp(22px,4vw,42px);
+font-size:clamp(22px,4vw,40px);
 
-letter-spacing:.28em;
+letter-spacing:.24em;
 
-color:#f5d8b4;
+color:#f3d6b2;
 
 opacity:0;
 
 cursor:pointer;
 
-z-index:20;
+z-index:30;
 
 text-shadow:
 
-0 0 8px rgba(255,140,40,.12),
+0 0 10px rgba(255,150,60,.06),
 
-0 0 26px rgba(255,120,20,.08);
+0 0 22px rgba(255,120,20,.03);
 
 transition:
 
@@ -452,7 +538,7 @@ opacity 2s ease,
 
 transform .4s ease,
 
-text-shadow 1.6s ease;
+text-shadow 2s ease;
 
 }
 
@@ -460,21 +546,21 @@ text-shadow 1.6s ease;
 
 opacity:1;
 
-animation:reconnectCall 4s ease-in-out infinite;
+animation:reconnectPulse 4s ease-in-out infinite;
 
 }
 
-@keyframes reconnectCall{
+@keyframes reconnectPulse{
 
 0%,100%{
 
-opacity:.58;
+opacity:.45;
 
 text-shadow:
 
-0 0 8px rgba(255,140,40,.08),
+0 0 8px rgba(255,140,40,.04),
 
-0 0 20px rgba(255,120,20,.04);
+0 0 16px rgba(255,120,20,.02);
 
 }
 
@@ -484,9 +570,9 @@ opacity:1;
 
 text-shadow:
 
-0 0 14px rgba(255,170,90,.22),
+0 0 14px rgba(255,180,90,.22),
 
-0 0 42px rgba(255,120,20,.12);
+0 0 42px rgba(255,120,20,.14);
 
 }
 
@@ -495,94 +581,6 @@ text-shadow:
 #reconnect:hover{
 
 transform:translateX(-50%) scale(1.03);
-
-}
-
-/* =========================
-
-ETCHINGS
-
-========================= */
-
-#etchings{
-
-position:absolute;
-
-inset:0;
-
-opacity:0;
-
-pointer-events:none;
-
-transition:2.5s ease;
-
-z-index:30;
-
-}
-
-#etchings.visible{
-
-opacity:1;
-
-pointer-events:auto;
-
-}
-
-.etch{
-
-position:absolute;
-
-display:block;
-
-filter:
-
-drop-shadow(0 0 14px rgba(255,120,20,.16))
-
-drop-shadow(0 0 28px rgba(255,120,20,.06));
-
-transition:.4s ease;
-
-}
-
-.etch:hover{
-
-transform:translateX(6px);
-
-}
-
-#etch1{
-
-width:min(54vw,340px);
-
-left:8%;
-
-top:26%;
-
-transform:rotate(-2deg);
-
-}
-
-#etch2{
-
-width:min(60vw,380px);
-
-left:12%;
-
-top:50%;
-
-transform:rotate(2deg);
-
-}
-
-#etch3{
-
-width:min(56vw,330px);
-
-left:15%;
-
-bottom:12%;
-
-transform:rotate(-4deg);
 
 }
 
@@ -602,7 +600,7 @@ overflow:hidden;
 
 pointer-events:none;
 
-z-index:2;
+z-index:3;
 
 }
 
@@ -702,6 +700,94 @@ opacity:0;
 
 /* =========================
 
+ETCHINGS
+
+========================= */
+
+#etchings{
+
+position:absolute;
+
+inset:0;
+
+opacity:0;
+
+pointer-events:none;
+
+transition:2.5s ease;
+
+z-index:40;
+
+}
+
+#etchings.visible{
+
+opacity:1;
+
+pointer-events:auto;
+
+}
+
+.etch{
+
+position:absolute;
+
+display:block;
+
+filter:
+
+drop-shadow(0 0 14px rgba(255,120,20,.16))
+
+drop-shadow(0 0 28px rgba(255,120,20,.06));
+
+transition:.4s ease;
+
+}
+
+.etch:hover{
+
+transform:translateX(6px);
+
+}
+
+#etch1{
+
+width:min(54vw,340px);
+
+left:8%;
+
+top:26%;
+
+transform:rotate(-2deg);
+
+}
+
+#etch2{
+
+width:min(60vw,380px);
+
+left:12%;
+
+top:50%;
+
+transform:rotate(2deg);
+
+}
+
+#etch3{
+
+width:min(56vw,330px);
+
+left:15%;
+
+bottom:12%;
+
+transform:rotate(-4deg);
+
+}
+
+/* =========================
+
 CONNECTED
 
 ========================= */
@@ -712,27 +798,17 @@ opacity:.02;
 
 filter:blur(2px);
 
-transition:3s ease;
-
 }
 
 .connected #inner{
 
 opacity:1;
 
-transition:3s ease;
-
 filter:
 
-drop-shadow(0 0 14px rgba(255,170,90,.24))
+drop-shadow(0 0 18px rgba(255,180,90,.24))
 
-drop-shadow(0 0 52px rgba(255,120,20,.16));
-
-}
-
-.connected #warning{
-
-opacity:0;
+drop-shadow(0 0 56px rgba(255,120,20,.16));
 
 }
 
@@ -744,15 +820,19 @@ pointer-events:none;
 
 }
 
+.connected #warning{
+
+opacity:0;
+
+}
+
 .connected #symbolWrap{
 
 transform:
 
 translate(-50%,-50%)
 
-scale(1.06);
-
-transition:3s ease;
+scale(1.05);
 
 }
 
@@ -766,32 +846,6 @@ transition:3s ease;
 
 <div id="noise"></div>
 
-<!-- TAKEOVER -->
-
-<div id="takeover">
-
-<div class="takeText" style="top:8%;left:6%;">CH_17 DETECTED</div>
-
-<div class="takeText" style="top:14%;left:58%;">SIGNAL_OVERRIDE</div>
-
-<div class="takeText" style="top:20%;left:14%;">UNAUTHORIZED FREQUENCY</div>
-
-<div class="takeText" style="top:28%;left:72%;">RECOVERING SIGNAL</div>
-
-<div class="takeText" style="top:36%;left:18%;">S1GNAL_L0ST</div>
-
-<div class="takeText" style="top:44%;left:62%;">CHANNEL FOUND</div>
-
-<div class="takeText" style="top:52%;left:10%;">TRANSMISSION ACTIVE</div>
-
-<div class="takeText" style="top:60%;left:68%;">TRUST DETECTED</div>
-
-<div class="takeText" style="top:70%;left:22%;">RECONNECT AVAILABLE</div>
-
-<div class="takeText" style="top:82%;left:56%;">CH17//WAKE&BAKE</div>
-
-</div>
-
 <!-- SMOKE -->
 
 <div id="smoke">
@@ -801,6 +855,72 @@ transition:3s ease;
 <div class="cloud"></div>
 
 <div class="cloud"></div>
+
+</div>
+
+<!-- TAKEOVER -->
+
+<div id="takeover">
+
+<!-- hidden beacon -->
+
+<div id="ghost17">.17</div>
+
+<!-- scanner -->
+
+<div id="scanner"></div>
+
+<!-- matrix rain -->
+
+<div class="rain" style="left:2%;animation-duration:2.8s;">010110101</div>
+
+<div class="rain" style="left:8%;animation-duration:3.4s;">CH17</div>
+
+<div class="rain" style="left:14%;animation-duration:2.2s;">TRUST_FOUND</div>
+
+<div class="rain" style="left:20%;animation-duration:4s;">110101110</div>
+
+<div class="rain" style="left:26%;animation-duration:2.6s;">WAKE&BAKE</div>
+
+<div class="rain" style="left:32%;animation-duration:3.2s;">SIGNAL_ERR</div>
+
+<div class="rain" style="left:38%;animation-duration:2.4s;">CH17CH17</div>
+
+<div class="rain" style="left:44%;animation-duration:3.8s;">UNAUTHORIZED</div>
+
+<div class="rain" style="left:50%;animation-duration:2.1s;">010101101</div>
+
+<div class="rain" style="left:56%;animation-duration:4.2s;">REC_SIGNAL</div>
+
+<div class="rain" style="left:62%;animation-duration:2.9s;">.17</div>
+
+<div class="rain" style="left:68%;animation-duration:3.5s;">TRANSMISSION</div>
+
+<div class="rain" style="left:74%;animation-duration:2.3s;">111010101</div>
+
+<div class="rain" style="left:80%;animation-duration:3.7s;">CHANNEL17</div>
+
+<div class="rain" style="left:86%;animation-duration:2.5s;">FREQUENCY</div>
+
+<div class="rain" style="left:92%;animation-duration:3s;">TRUST</div>
+
+<!-- bursts -->
+
+<div class="burst" style="top:6%;left:8%;">SIGNAL_OVERRIDE</div>
+
+<div class="burst" style="top:16%;left:56%;">CH17 DETECTED</div>
+
+<div class="burst" style="top:24%;left:12%;">UNAUTHORIZED FREQUENCY</div>
+
+<div class="burst" style="top:34%;left:70%;">RECOVERING SIGNAL</div>
+
+<div class="burst" style="top:44%;left:16%;">010110101110</div>
+
+<div class="burst" style="top:56%;left:62%;">TRUST FOUND</div>
+
+<div class="burst" style="top:68%;left:18%;">WAKE&BAKE</div>
+
+<div class="burst" style="top:80%;left:54%;">CHANNEL17</div>
 
 </div>
 
@@ -818,7 +938,7 @@ transition:3s ease;
 
 </div>
 
-<!-- WARNING -->
+<!-- SIGNAL LOST -->
 
 <div id="warning">
 
@@ -864,41 +984,49 @@ RECONNECT
 
 /* =========================
 
-TAKEOVER
+TAKEOVER START
 
 ========================= */
 
 const takeover = document.getElementById("takeover");
 
+const ghost17 = document.getElementById("ghost17");
+
 setTimeout(()=>{
 
 takeover.style.opacity = 1;
 
-},60);
+},40);
+
+/* hidden .17 flashes */
+
+setInterval(()=>{
+
+ghost17.style.opacity = ".22";
+
+setTimeout(()=>{
+
+ghost17.style.opacity = "0";
+
+},100);
+
+},850);
+
+/* =========================
+
+CUT TO BLACK
+
+========================= */
 
 setTimeout(()=>{
 
 takeover.style.opacity = 0;
 
-},2300);
+},4200);
 
 /* =========================
 
-SYMBOL
-
-========================= */
-
-const symbol = document.getElementById("symbolWrap");
-
-setTimeout(()=>{
-
-symbol.classList.add("visible");
-
-},2400);
-
-/* =========================
-
-WARNING
+SIGNAL LOST
 
 ========================= */
 
@@ -910,7 +1038,21 @@ warning.classList.add("active");
 
 warning.style.opacity = 1;
 
-},3400);
+},4700);
+
+/* =========================
+
+SYMBOL EMERGES
+
+========================= */
+
+const symbol = document.getElementById("symbolWrap");
+
+setTimeout(()=>{
+
+symbol.classList.add("visible");
+
+},5600);
 
 /* =========================
 
@@ -924,7 +1066,7 @@ setTimeout(()=>{
 
 warning.style.opacity = 0;
 
-},6700);
+},7600);
 
 setTimeout(()=>{
 
@@ -932,7 +1074,7 @@ warning.classList.remove("active");
 
 reconnect.classList.add("active");
 
-},7600);
+},8600);
 
 /* =========================
 
@@ -946,7 +1088,7 @@ reconnect.addEventListener("click",()=>{
 
 document.body.classList.add("connected");
 
-/* amber warmth */
+/* warmth pulse */
 
 document.body.animate([
 
@@ -958,7 +1100,7 @@ filter:"brightness(1)"
 
 {
 
-filter:"brightness(1.14)"
+filter:"brightness(1.16)"
 
 },
 
@@ -970,7 +1112,7 @@ filter:"brightness(1)"
 
 ],{
 
-duration:1600,
+duration:1800,
 
 easing:"ease"
 
