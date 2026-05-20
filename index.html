@@ -12,11 +12,17 @@
 
 <style>
 
-html,body{
+*{
 
 margin:0;
 
 padding:0;
+
+box-sizing:border-box;
+
+}
+
+html,body{
 
 width:100%;
 
@@ -24,11 +30,31 @@ height:100%;
 
 overflow:hidden;
 
-background:black;
+background:#000;
 
 font-family:Courier New, monospace;
 
 }
+
+/* =========================================
+
+BASE
+
+========================================= */
+
+body{
+
+background:black;
+
+overflow:hidden;
+
+}
+
+/* =========================================
+
+CANVAS
+
+========================================= */
 
 canvas{
 
@@ -40,11 +66,73 @@ width:100%;
 
 height:100%;
 
-background:black;
-
 display:block;
 
+background:black;
+
+z-index:1;
+
 }
+
+/* =========================================
+
+STATIC NOISE
+
+========================================= */
+
+#noise{
+
+position:fixed;
+
+inset:0;
+
+pointer-events:none;
+
+opacity:.05;
+
+z-index:2;
+
+background-image:
+
+repeating-linear-gradient(
+
+0deg,
+
+rgba(255,255,255,.03) 0px,
+
+rgba(255,255,255,.03) 1px,
+
+transparent 1px,
+
+transparent 3px
+
+);
+
+animation:noiseMove .14s linear infinite;
+
+}
+
+@keyframes noiseMove{
+
+0%{
+
+transform:translateY(0px);
+
+}
+
+100%{
+
+transform:translateY(3px);
+
+}
+
+}
+
+/* =========================================
+
+OVERLAY
+
+========================================= */
 
 #overlay{
 
@@ -52,21 +140,23 @@ position:fixed;
 
 inset:0;
 
-display:flex;
-
-justify-content:center;
-
-align-items:center;
+z-index:10;
 
 pointer-events:none;
 
 }
 
-#symbol{
+/* =========================================
+
+SYMBOL
+
+========================================= */
+
+#symbolWrap{
 
 position:absolute;
 
-top:38%;
+top:39%;
 
 left:50%;
 
@@ -74,19 +164,65 @@ transform:translate(-50%,-50%);
 
 width:min(78vw,470px);
 
+aspect-ratio:1/1;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
 opacity:0;
 
-transition:2s ease;
+transition:2.8s ease;
 
 }
 
-#symbol.visible{
+#symbolWrap.visible{
+
+opacity:1;
+
+}
+
+#outer{
+
+position:absolute;
+
+width:100%;
 
 opacity:.34;
 
+transition:3s ease;
+
+filter:
+
+drop-shadow(0 0 8px rgba(255,120,20,.04));
+
 }
 
-#signal{
+#inner{
+
+position:absolute;
+
+width:100%;
+
+opacity:.34;
+
+transition:3s ease;
+
+filter:
+
+drop-shadow(0 0 8px rgba(255,120,20,.04));
+
+}
+
+/* =========================================
+
+SIGNAL LOST
+
+========================================= */
+
+#signalLost{
 
 position:absolute;
 
@@ -96,27 +232,29 @@ left:50%;
 
 transform:translateX(-50%);
 
-font-size:clamp(28px,5vw,52px);
+font-size:clamp(26px,4vw,44px);
 
-letter-spacing:.22em;
+letter-spacing:.24em;
 
-color:#7dff7d;
+color:#78ff78;
 
 opacity:0;
 
-}
-
-#signal.active{
-
-animation:flicker .12s infinite;
+white-space:nowrap;
 
 }
 
-@keyframes flicker{
+#signalLost.active{
+
+animation:signalFlicker .12s infinite;
+
+}
+
+@keyframes signalFlicker{
 
 0%{
 
-opacity:.1;
+opacity:.08;
 
 transform:
 
@@ -136,7 +274,7 @@ translateX(calc(-50% + 2px));
 
 100%{
 
-opacity:.08;
+opacity:.1;
 
 transform:
 
@@ -145,6 +283,12 @@ translateX(calc(-50% - 1px));
 }
 
 }
+
+/* =========================================
+
+RECONNECT
+
+========================================= */
 
 #reconnect{
 
@@ -156,11 +300,11 @@ left:50%;
 
 transform:translateX(-50%);
 
-font-size:clamp(24px,4vw,42px);
+font-size:clamp(22px,4vw,40px);
 
 letter-spacing:.24em;
 
-color:#f4c48c;
+color:#f3d0a4;
 
 opacity:0;
 
@@ -168,7 +312,19 @@ pointer-events:none;
 
 cursor:pointer;
 
-transition:2s ease;
+transition:
+
+opacity 2s ease,
+
+text-shadow 2s ease,
+
+transform .3s ease;
+
+text-shadow:
+
+0 0 8px rgba(255,140,40,.04),
+
+0 0 24px rgba(255,120,20,.02);
 
 }
 
@@ -178,15 +334,21 @@ opacity:1;
 
 pointer-events:auto;
 
-animation:pulse 4s ease-in-out infinite;
+animation:reconnectPulse 4s ease-in-out infinite;
 
 }
 
-@keyframes pulse{
+@keyframes reconnectPulse{
 
 0%,100%{
 
 opacity:.4;
+
+text-shadow:
+
+0 0 8px rgba(255,140,40,.04),
+
+0 0 20px rgba(255,120,20,.02);
 
 }
 
@@ -194,7 +356,263 @@ opacity:.4;
 
 opacity:1;
 
+text-shadow:
+
+0 0 14px rgba(255,180,90,.24),
+
+0 0 42px rgba(255,120,20,.14);
+
 }
+
+}
+
+#reconnect:hover{
+
+transform:translateX(-50%) scale(1.03);
+
+}
+
+/* =========================================
+
+SMOKE
+
+========================================= */
+
+#smoke{
+
+position:fixed;
+
+inset:0;
+
+overflow:hidden;
+
+pointer-events:none;
+
+z-index:3;
+
+}
+
+.cloud{
+
+position:absolute;
+
+width:55vw;
+
+height:55vw;
+
+border-radius:50%;
+
+background:
+
+radial-gradient(circle,
+
+rgba(255,255,255,.05) 0%,
+
+rgba(255,255,255,.02) 18%,
+
+transparent 70%);
+
+filter:blur(45px);
+
+opacity:0;
+
+animation:smokeFloat linear infinite;
+
+}
+
+.cloud:nth-child(1){
+
+left:-10%;
+
+bottom:-10%;
+
+animation-duration:28s;
+
+}
+
+.cloud:nth-child(2){
+
+right:-20%;
+
+top:10%;
+
+animation-duration:34s;
+
+animation-delay:7s;
+
+}
+
+.cloud:nth-child(3){
+
+left:30%;
+
+bottom:-20%;
+
+animation-duration:30s;
+
+animation-delay:15s;
+
+}
+
+@keyframes smokeFloat{
+
+0%{
+
+transform:translate(0,0) scale(1);
+
+opacity:0;
+
+}
+
+10%{
+
+opacity:.12;
+
+}
+
+50%{
+
+opacity:.05;
+
+}
+
+100%{
+
+transform:translate(160px,-220px) scale(1.35);
+
+opacity:0;
+
+}
+
+}
+
+/* =========================================
+
+ETCHINGS
+
+========================================= */
+
+#etchings{
+
+position:absolute;
+
+inset:0;
+
+opacity:0;
+
+pointer-events:none;
+
+transition:2.4s ease;
+
+}
+
+#etchings.visible{
+
+opacity:1;
+
+pointer-events:auto;
+
+}
+
+.etch{
+
+position:absolute;
+
+display:block;
+
+filter:
+
+drop-shadow(0 0 14px rgba(255,120,20,.16))
+
+drop-shadow(0 0 28px rgba(255,120,20,.06));
+
+transition:.4s ease;
+
+}
+
+.etch:hover{
+
+transform:translateX(6px);
+
+}
+
+#etch1{
+
+width:min(56vw,350px);
+
+left:8%;
+
+top:24%;
+
+transform:rotate(-2deg);
+
+}
+
+#etch2{
+
+width:min(62vw,390px);
+
+left:12%;
+
+top:48%;
+
+transform:rotate(2deg);
+
+}
+
+#etch3{
+
+width:min(58vw,340px);
+
+left:15%;
+
+bottom:12%;
+
+transform:rotate(-4deg);
+
+}
+
+/* =========================================
+
+CONNECTED
+
+========================================= */
+
+.connected #outer{
+
+opacity:.02;
+
+filter:blur(2px);
+
+}
+
+.connected #inner{
+
+opacity:1;
+
+filter:
+
+drop-shadow(0 0 18px rgba(255,180,90,.24))
+
+drop-shadow(0 0 56px rgba(255,120,20,.16));
+
+}
+
+.connected #reconnect{
+
+opacity:0;
+
+pointer-events:none;
+
+}
+
+.connected #symbolWrap{
+
+transform:
+
+translate(-50%,-50%)
+
+scale(1.05);
 
 }
 
@@ -206,11 +624,29 @@ opacity:1;
 
 <canvas id="matrix"></canvas>
 
+<div id="noise"></div>
+
+<div id="smoke">
+
+<div class="cloud"></div>
+
+<div class="cloud"></div>
+
+<div class="cloud"></div>
+
+</div>
+
 <div id="overlay">
 
-<img id="symbol" src="Inner17-final.png">
+<div id="symbolWrap">
 
-<div id="signal">
+<img id="outer" src="Outer17-final.png">
+
+<img id="inner" src="Inner17-final.png">
+
+</div>
+
+<div id="signalLost">
 
 SIGNAL LOST
 
@@ -222,9 +658,37 @@ RECONNECT
 
 </div>
 
+<div id="etchings">
+
+<a class="etch" id="etch1" href="#">
+
+<img src="lastsesh17.png" width="100%">
+
+</a>
+
+<a class="etch" id="etch2" href="#">
+
+<img src="RoachTray17.png" width="100%">
+
+</a>
+
+<a class="etch" id="etch3" href="#">
+
+<img src="PassItBack17.png" width="100%">
+
+</a>
+
+</div>
+
 </div>
 
 <script>
+
+/* =========================================
+
+CANVAS
+
+========================================= */
 
 const canvas =
 
@@ -242,25 +706,81 @@ canvas.height =
 
 window.innerHeight;
 
+/* =========================================
+
+SETTINGS
+
+========================================= */
+
 const chars =
 
-"ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789$#@%&*.17";
+"ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789$#@%&*";
 
 const fontSize = 16;
 
 const columns =
 
-canvas.width / fontSize;
+Math.floor(canvas.width / fontSize);
 
-const drops = [];
+const streams = [];
+
+/* =========================================
+
+BUILD STREAMS
+
+========================================= */
 
 for(let i=0;i<columns;i++){
 
-drops[i] = 1;
+streams.push({
+
+x: i * fontSize,
+
+y:
+
+Math.random() * -2000,
+
+speed:
+
+8 + Math.random() * 12,
+
+length:
+
+8 + Math.random() * 30
+
+});
 
 }
 
-function draw(){
+/* =========================================
+
+HIDDEN .17
+
+========================================= */
+
+const hidden17 = {
+
+x:
+
+Math.floor(columns * .45),
+
+y:
+
+Math.floor(canvas.height / fontSize * .63),
+
+width:8,
+
+height:5
+
+};
+
+/* =========================================
+
+DRAW MATRIX
+
+========================================= */
+
+function drawMatrix(){
 
 ctx.fillStyle =
 
@@ -278,15 +798,75 @@ canvas.height
 
 );
 
-ctx.fillStyle = "#66ff66";
+streams.forEach(stream=>{
+
+for(let i=0;i<stream.length;i++){
+
+const charY =
+
+stream.y - (i * fontSize);
+
+const row =
+
+Math.floor(charY / fontSize);
+
+const col =
+
+Math.floor(stream.x / fontSize);
+
+/* hidden .17 */
+
+const inside17 =
+
+col >= hidden17.x &&
+
+col <= hidden17.x + hidden17.width &&
+
+row >= hidden17.y &&
+
+row <= hidden17.y + hidden17.height;
+
+/* frozen .17 */
+
+if(inside17){
+
+ctx.fillStyle =
+
+"rgba(180,255,180,.22)";
+
+ctx.font =
+
+"bold 18px monospace";
+
+ctx.fillText(
+
+".17",
+
+stream.x,
+
+charY
+
+);
+
+}
+
+/* chaos */
+
+else{
+
+ctx.fillStyle =
+
+`rgba(100,255,100,${
+
+1 - (i / stream.length)
+
+})`;
 
 ctx.font =
 
 fontSize + "px monospace";
 
-for(let i=0;i<drops.length;i++){
-
-const text =
+ctx.fillText(
 
 chars[
 
@@ -296,111 +876,153 @@ Math.random()*chars.length
 
 )
 
-];
+],
 
-ctx.fillText(
+stream.x,
 
-text,
-
-i * fontSize,
-
-drops[i] * fontSize
+charY
 
 );
+
+}
+
+}
+
+/* reset */
 
 if(
 
-drops[i] * fontSize >
+stream.y -
 
-canvas.height &&
+(stream.length * fontSize)
 
-Math.random() > 0.975
+>
+
+canvas.height
 
 ){
 
-drops[i] = 0;
+stream.y =
+
+Math.random() * -400;
+
+stream.speed =
+
+8 + Math.random() * 12;
+
+stream.length =
+
+8 + Math.random() * 30;
 
 }
 
-drops[i]++;
+stream.y += stream.speed;
+
+});
 
 }
 
-}
+/* =========================================
 
-setInterval(draw,35);
+START MATRIX
 
-/* hidden .17 */
+========================================= */
 
-setInterval(()=>{
+const matrixLoop =
 
-ctx.fillStyle =
+setInterval(drawMatrix,35);
 
-"rgba(180,255,180,.18)";
+/* =========================================
 
-ctx.font =
+SEQUENCE
 
-"bold 120px monospace";
+========================================= */
 
-ctx.fillText(
+const signalLost =
 
-".17",
-
-canvas.width/2 - 120,
-
-canvas.height*.72
-
-);
-
-},850);
-
-/* sequence */
-
-const signal =
-
-document.getElementById("signal");
+document.getElementById("signalLost");
 
 const reconnect =
 
 document.getElementById("reconnect");
 
-const symbol =
+const symbolWrap =
 
-document.getElementById("symbol");
+document.getElementById("symbolWrap");
 
-setTimeout(()=>{
+const etchings =
 
-signal.style.opacity = 1;
+document.getElementById("etchings");
 
-signal.classList.add("active");
-
-},3400);
+/* signal lost */
 
 setTimeout(()=>{
 
-signal.style.opacity = 0;
+signalLost.style.opacity = 1;
 
-},5400);
+signalLost.classList.add("active");
 
-setTimeout(()=>{
+},3600);
 
-symbol.classList.add("visible");
-
-},5800);
+/* collapse matrix */
 
 setTimeout(()=>{
 
-signal.classList.remove("active");
+clearInterval(matrixLoop);
+
+ctx.fillStyle = "black";
+
+ctx.fillRect(
+
+0,
+
+0,
+
+canvas.width,
+
+canvas.height
+
+);
+
+},5200);
+
+/* remove signal */
+
+setTimeout(()=>{
+
+signalLost.style.opacity = 0;
+
+},6200);
+
+/* symbol */
+
+setTimeout(()=>{
+
+symbolWrap.classList.add("visible");
+
+},6600);
+
+/* reconnect */
+
+setTimeout(()=>{
+
+signalLost.classList.remove("active");
 
 reconnect.classList.add("active");
 
-},7600);
+},8200);
+
+/* reconnect click */
 
 reconnect.addEventListener("click",()=>{
 
 reconnect.classList.remove("active");
 
 reconnect.style.opacity = 0;
+
+document.body.classList.add("connected");
+
+/* warmth */
 
 document.body.animate([
 
@@ -424,9 +1046,19 @@ filter:"brightness(1)"
 
 ],{
 
-duration:1800
+duration:1800,
+
+easing:"ease"
 
 });
+
+/* reveal */
+
+setTimeout(()=>{
+
+etchings.classList.add("visible");
+
+},1100);
 
 });
 
