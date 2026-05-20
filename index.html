@@ -1,6 +1,6 @@
 <!-- ========================================= -->
 
-<!-- CHANNEL 17 / FOUNDATION BUILD -->
+<!-- CHANNEL 17 / INFECTION BUILD -->
 
 <!-- ========================================= -->
 
@@ -94,7 +94,7 @@ inset:0;
 
 pointer-events:none;
 
-opacity:.04;
+opacity:.05;
 
 z-index:2;
 
@@ -114,7 +114,7 @@ transparent 4px
 
 );
 
-animation:noise .08s linear infinite;
+animation:noise .05s linear infinite;
 
 }
 
@@ -136,19 +136,133 @@ transform:translateY(4px);
 
 /* =========================================
 
-OVERLAY
+GLITCH FLASHES
 
 ========================================= */
 
-#overlay{
+#glitchLayer{
 
 position:fixed;
 
 inset:0;
 
-z-index:10;
+pointer-events:none;
+
+z-index:6;
+
+mix-blend-mode:screen;
+
+}
+
+.glitchFlash{
+
+position:absolute;
+
+background:
+
+rgba(255,255,255,.12);
+
+opacity:0;
+
+animation:
+
+glitchFlash .12s linear;
+
+}
+
+@keyframes glitchFlash{
+
+0%{
+
+opacity:0;
+
+}
+
+50%{
+
+opacity:1;
+
+}
+
+100%{
+
+opacity:0;
+
+}
+
+}
+
+/* =========================================
+
+WHITE SIGNAL CHAOS
+
+========================================= */
+
+#signalNoise{
+
+position:fixed;
+
+inset:0;
 
 pointer-events:none;
+
+z-index:5;
+
+opacity:0;
+
+mix-blend-mode:screen;
+
+}
+
+.signalLine{
+
+position:absolute;
+
+height:1px;
+
+background:
+
+linear-gradient(
+
+90deg,
+
+transparent,
+
+rgba(255,255,255,.95),
+
+transparent
+
+);
+
+animation:
+
+signalMove linear infinite;
+
+}
+
+@keyframes signalMove{
+
+0%{
+
+transform:translateX(-80px);
+
+opacity:.02;
+
+}
+
+50%{
+
+opacity:.3;
+
+}
+
+100%{
+
+transform:translateX(80px);
+
+opacity:.04;
+
+}
 
 }
 
@@ -168,9 +282,9 @@ left:50%;
 
 transform:translateX(-50%);
 
-font-size:clamp(28px,4vw,52px);
+font-size:clamp(28px,4vw,54px);
 
-letter-spacing:.20em;
+letter-spacing:.24em;
 
 color:white;
 
@@ -180,11 +294,15 @@ white-space:nowrap;
 
 mix-blend-mode:screen;
 
+filter:blur(.3px);
+
 }
 
 #signalLost.active{
 
-animation:warningPulse .32s infinite;
+animation:
+
+warningPulse .22s infinite;
 
 }
 
@@ -194,7 +312,11 @@ animation:warningPulse .32s infinite;
 
 opacity:.04;
 
-filter:blur(0px);
+transform:
+
+translateX(-50%)
+
+translateY(0px);
 
 }
 
@@ -202,11 +324,15 @@ filter:blur(0px);
 
 opacity:1;
 
-filter:blur(.5px);
+transform:
+
+translateX(-50%)
+
+translateY(-2px);
 
 }
 
-50%{
+45%{
 
 opacity:.18;
 
@@ -214,87 +340,19 @@ opacity:.18;
 
 70%{
 
-opacity:.85;
+opacity:.92;
+
+transform:
+
+translateX(-50%)
+
+translateY(2px);
 
 }
 
 100%{
 
 opacity:.04;
-
-filter:blur(1px);
-
-}
-
-}
-
-/* =========================================
-
-UNSTABLE WHITE SIGNAL
-
-========================================= */
-
-#whiteNoise{
-
-position:fixed;
-
-inset:0;
-
-pointer-events:none;
-
-z-index:5;
-
-opacity:0;
-
-mix-blend-mode:screen;
-
-}
-
-.whiteBar{
-
-position:absolute;
-
-height:1px;
-
-background:
-
-linear-gradient(
-
-90deg,
-
-transparent,
-
-rgba(255,255,255,.8),
-
-transparent
-
-);
-
-animation:signalDrift linear infinite;
-
-}
-
-@keyframes signalDrift{
-
-0%{
-
-transform:translateX(-20px);
-
-opacity:.04;
-
-}
-
-50%{
-
-opacity:.25;
-
-}
-
-100%{
-
-transform:translateX(20px);
-
-opacity:.02;
 
 }
 
@@ -328,7 +386,7 @@ align-items:center;
 
 opacity:0;
 
-transition:2.5s ease;
+transition:2s ease;
 
 }
 
@@ -346,7 +404,7 @@ width:100%;
 
 opacity:.34;
 
-transition:7s ease;
+transition:8s ease;
 
 }
 
@@ -358,7 +416,7 @@ width:100%;
 
 opacity:.34;
 
-transition:7s ease;
+transition:8s ease;
 
 }
 
@@ -394,7 +452,7 @@ transition:3s ease;
 
 text-shadow:
 
-0 0 4px rgba(255,120,20,.03);
+0 0 6px rgba(255,120,20,.04);
 
 }
 
@@ -404,7 +462,9 @@ opacity:1;
 
 pointer-events:auto;
 
-animation:reconnectPulse 4s ease infinite;
+animation:
+
+reconnectPulse 4s ease infinite;
 
 }
 
@@ -422,9 +482,9 @@ opacity:1;
 
 text-shadow:
 
-0 0 12px rgba(255,180,90,.18),
+0 0 16px rgba(255,180,90,.22),
 
-0 0 34px rgba(255,120,20,.10);
+0 0 42px rgba(255,120,20,.12);
 
 }
 
@@ -432,11 +492,11 @@ text-shadow:
 
 /* =========================================
 
-VIRUS SPREAD
+VIRUS STAIN
 
 ========================================= */
 
-#warmth{
+#stain{
 
 position:fixed;
 
@@ -452,17 +512,49 @@ background:
 
 radial-gradient(circle at center,
 
-rgba(255,140,40,.22) 0%,
+rgba(255,90,30,.28) 0%,
 
-rgba(255,120,20,.10) 8%,
+rgba(255,120,20,.12) 6%,
 
-rgba(255,110,20,.04) 14%,
+rgba(255,120,20,.05) 12%,
 
-transparent 38%);
+transparent 20%);
 
 mix-blend-mode:screen;
 
-transition:9s ease;
+transition:10s ease;
+
+}
+
+/* =========================================
+
+BACKGROUND LIGHTEN
+
+========================================= */
+
+#warmBackground{
+
+position:fixed;
+
+inset:0;
+
+background:
+
+radial-gradient(circle at center,
+
+rgba(255,140,40,.05) 0%,
+
+rgba(255,110,20,.02) 25%,
+
+transparent 60%);
+
+opacity:0;
+
+z-index:2;
+
+pointer-events:none;
+
+transition:10s ease;
 
 }
 
@@ -486,7 +578,7 @@ z-index:4;
 
 opacity:0;
 
-transition:5s ease;
+transition:6s ease;
 
 }
 
@@ -512,7 +604,9 @@ transparent 70%);
 
 filter:blur(45px);
 
-animation:smoke linear infinite;
+animation:
+
+smoke linear infinite;
 
 }
 
@@ -554,7 +648,11 @@ animation-delay:15s;
 
 0%{
 
-transform:translate(0,0) scale(1);
+transform:
+
+translate(0,0)
+
+scale(1);
 
 opacity:0;
 
@@ -574,7 +672,11 @@ opacity:.05;
 
 100%{
 
-transform:translate(160px,-220px) scale(1.35);
+transform:
+
+translate(160px,-220px)
+
+scale(1.35);
 
 opacity:0;
 
@@ -598,7 +700,7 @@ opacity:0;
 
 pointer-events:none;
 
-transition:4s ease;
+transition:6s ease;
 
 }
 
@@ -616,13 +718,19 @@ position:absolute;
 
 display:block;
 
-opacity:.08;
+opacity:.04;
 
 filter:
 
-drop-shadow(0 0 12px rgba(255,120,20,.08));
+drop-shadow(
 
-transition:4s ease;
+0 0 12px
+
+rgba(255,120,20,.06)
+
+);
+
+transition:6s ease;
 
 }
 
@@ -634,13 +742,13 @@ opacity:1;
 
 #etch1{
 
-width:min(50vw,300px);
+width:min(48vw,280px);
 
-left:10%;
+left:7%;
 
-top:40%;
+top:43%;
 
-transform:rotate(-3deg);
+transform:rotate(-4deg);
 
 }
 
@@ -650,7 +758,7 @@ width:min(62vw,390px);
 
 left:12%;
 
-top:49%;
+top:50%;
 
 transform:rotate(2deg);
 
@@ -662,7 +770,7 @@ width:min(56vw,330px);
 
 left:24%;
 
-bottom:5%;
+bottom:2%;
 
 transform:rotate(-4deg);
 
@@ -674,7 +782,7 @@ CONNECTED
 
 ========================================= */
 
-.connected #warmth{
+.connected #warmBackground{
 
 opacity:1;
 
@@ -702,9 +810,21 @@ opacity:1;
 
 filter:
 
-drop-shadow(0 0 18px rgba(255,180,90,.22))
+drop-shadow(
 
-drop-shadow(0 0 56px rgba(255,120,20,.12));
+0 0 18px
+
+rgba(255,180,90,.22)
+
+)
+
+drop-shadow(
+
+0 0 56px
+
+rgba(255,120,20,.12)
+
+);
 
 }
 
@@ -718,9 +838,13 @@ drop-shadow(0 0 56px rgba(255,120,20,.12));
 
 <div id="noise"></div>
 
-<div id="warmth"></div>
+<div id="warmBackground"></div>
 
-<div id="whiteNoise"></div>
+<div id="stain"></div>
+
+<div id="signalNoise"></div>
+
+<div id="glitchLayer"></div>
 
 <div id="smoke">
 
@@ -824,15 +948,15 @@ const hidden17 = {
 
 x:
 
-canvas.width * .56,
+canvas.width * .53,
 
 y:
 
-canvas.height * .55,
+canvas.height * .52,
 
-w:320,
+w:360,
 
-h:170
+h:200
 
 };
 
@@ -850,15 +974,15 @@ y: i * fontSize,
 
 x:
 
-Math.random() * -2200,
+Math.random() * -2600,
 
 speed:
 
-28 + Math.random() * 44,
+34 + Math.random() * 60,
 
 length:
 
-20 + Math.random() * 80,
+20 + Math.random() * 90,
 
 laps:
 
@@ -868,21 +992,75 @@ finished:false,
 
 vertical:
 
-Math.random() > .72,
+Math.random() > .68,
 
 dead:
 
-Math.random() > .88,
+Math.random() > .84,
 
 flash:
 
-Math.random() > .94,
+Math.random() > .90,
 
 glitch:
 
-Math.random() > .90
+Math.random() > .86
 
 });
+
+}
+
+/* =========================================
+
+GLITCH FLASHES
+
+========================================= */
+
+function glitchBurst(){
+
+const layer =
+
+document.getElementById("glitchLayer");
+
+for(let i=0;i<12;i++){
+
+const flash =
+
+document.createElement("div");
+
+flash.className =
+
+"glitchFlash";
+
+flash.style.left =
+
+Math.random()*100 + "%";
+
+flash.style.top =
+
+Math.random()*100 + "%";
+
+flash.style.width =
+
+Math.random()*400 + "px";
+
+flash.style.height =
+
+(1 + Math.random()*4) + "px";
+
+flash.style.transform =
+
+`rotate(${Math.random()*8-4}deg)`;
+
+layer.appendChild(flash);
+
+setTimeout(()=>{
+
+flash.remove();
+
+},120);
+
+}
 
 }
 
@@ -896,7 +1074,7 @@ function drawMatrix(){
 
 ctx.fillStyle =
 
-"rgba(0,0,0,0.16)";
+"rgba(0,0,0,0.20)";
 
 ctx.fillRect(
 
@@ -972,7 +1150,7 @@ if(
 
 stream.vertical &&
 
-Math.random() > .982
+Math.random() > .978
 
 ){
 
@@ -994,25 +1172,25 @@ Math.random() * chars.length
 
 charX,
 
-stream.y + (Math.random()*240)
+stream.y + (Math.random()*300)
 
 );
 
 }
 
-/* white flash corruption */
+/* white flashes */
 
 if(
 
 stream.flash &&
 
-Math.random() > .992
+Math.random() > .988
 
 ){
 
 ctx.fillStyle =
 
-"rgba(255,255,255,.85)";
+"rgba(255,255,255,.9)";
 
 ctx.fillText(
 
@@ -1040,13 +1218,13 @@ if(
 
 stream.glitch &&
 
-Math.random() > .993
+Math.random() > .990
 
 ){
 
 ctx.fillStyle =
 
-"rgba(100,255,100,.28)";
+"rgba(100,255,100,.35)";
 
 ctx.fillRect(
 
@@ -1054,7 +1232,7 @@ charX,
 
 stream.y,
 
-Math.random() * 120,
+Math.random() * 180,
 
 2
 
@@ -1068,7 +1246,7 @@ if(
 
 stream.dead &&
 
-Math.random() > .988
+Math.random() > .984
 
 ){
 
@@ -1114,13 +1292,21 @@ stream.finished = true;
 
 stream.x =
 
-Math.random() * -2200;
+Math.random() * -2400;
 
 }
 
 }
 
 });
+
+/* random glitch bursts */
+
+if(Math.random() > .90){
+
+glitchBurst();
+
+}
 
 /* all complete */
 
@@ -1136,7 +1322,7 @@ setTimeout(()=>{
 
 systemFailure();
 
-},600);
+},500);
 
 }
 
@@ -1154,13 +1340,13 @@ const signalLost =
 
 document.getElementById("signalLost");
 
-const whiteNoise =
+const signalNoise =
 
-document.getElementById("whiteNoise");
+document.getElementById("signalNoise");
 
-/* build moving white signal */
+/* moving unstable signal */
 
-for(let i=0;i<18;i++){
+for(let i=0;i<24;i++){
 
 const bar =
 
@@ -1168,11 +1354,11 @@ document.createElement("div");
 
 bar.className =
 
-"whiteBar";
+"signalLine";
 
 bar.style.width =
 
-(40 + Math.random()*40) + "%";
+(30 + Math.random()*60) + "%";
 
 bar.style.left =
 
@@ -1184,13 +1370,13 @@ Math.random()*100 + "%";
 
 bar.style.animationDuration =
 
-(.3 + Math.random()*1.4) + "s";
+(.2 + Math.random()*1.1) + "s";
 
-whiteNoise.appendChild(bar);
+signalNoise.appendChild(bar);
 
 }
 
-whiteNoise.style.opacity = .5;
+signalNoise.style.opacity = .8;
 
 signalLost.style.opacity = 1;
 
@@ -1202,9 +1388,9 @@ setTimeout(()=>{
 
 signalLost.style.opacity = 0;
 
-whiteNoise.style.opacity = 0;
+signalNoise.style.opacity = 0;
 
-},1500);
+},1700);
 
 /* symbol */
 
@@ -1216,7 +1402,7 @@ document
 
 .classList.add("visible");
 
-},2800);
+},3000);
 
 /* reconnect */
 
@@ -1230,7 +1416,7 @@ document
 
 .classList.add("active");
 
-},4300);
+},4700);
 
 }
 
@@ -1242,7 +1428,7 @@ START
 
 const matrixLoop =
 
-setInterval(drawMatrix,18);
+setInterval(drawMatrix,14);
 
 /* =========================================
 
@@ -1262,35 +1448,25 @@ reconnect.style.opacity = 0;
 
 document.body.classList.add("connected");
 
-/* virus spread */
+/* thumbprint lava stain */
+
+const stain =
+
+document.getElementById("stain");
+
+stain.style.opacity = 1;
+
+/* background warmth */
+
+setTimeout(()=>{
 
 document
 
-.getElementById("warmth")
+.getElementById("warmBackground")
 
-.animate([
+.style.opacity = 1;
 
-{
-
-clipPath:"circle(0% at center)"
-
-},
-
-{
-
-clipPath:"circle(58% at center)"
-
-}
-
-],{
-
-duration:9000,
-
-fill:"forwards",
-
-easing:"ease"
-
-});
+},1800);
 
 /* smoke */
 
@@ -1302,9 +1478,9 @@ document
 
 .style.opacity = 1;
 
-},2400);
+},3200);
 
-/* etchings */
+/* etchings uncovered */
 
 setTimeout(()=>{
 
@@ -1314,7 +1490,7 @@ document
 
 .classList.add("visible");
 
-},6600);
+},6200);
 
 });
 
