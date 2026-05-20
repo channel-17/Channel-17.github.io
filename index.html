@@ -1,11 +1,3 @@
-<!-- =========================================
-
-CHANNEL 17 — SACRED HQ BASE BUILD
-
-CLEAN FOUNDATION VERSION
-
-========================================= -->
-
 <!DOCTYPE html>
 
 <html lang="en">
@@ -20,17 +12,11 @@ CLEAN FOUNDATION VERSION
 
 <style>
 
-*{
+html,body{
 
 margin:0;
 
 padding:0;
-
-box-sizing:border-box;
-
-}
-
-html,body{
 
 width:100%;
 
@@ -38,247 +24,95 @@ height:100%;
 
 overflow:hidden;
 
-background:#000;
+background:black;
 
 font-family:Courier New, monospace;
 
 }
 
-/* =========================================
-
-BASE
-
-========================================= */
-
-body{
-
-background:#000;
-
-overflow:hidden;
-
-color:#fff;
-
-}
-
-/* =========================================
-
-STATIC NOISE
-
-========================================= */
-
-#noise{
+canvas{
 
 position:fixed;
 
 inset:0;
-
-pointer-events:none;
-
-opacity:.08;
-
-z-index:2;
-
-background-image:
-
-repeating-linear-gradient(
-
-0deg,
-
-rgba(255,255,255,.03) 0px,
-
-rgba(255,255,255,.03) 1px,
-
-transparent 1px,
-
-transparent 3px
-
-);
-
-animation:noiseMove .14s linear infinite;
-
-}
-
-@keyframes noiseMove{
-
-0%{
-
-transform:translateY(0px);
-
-}
-
-100%{
-
-transform:translateY(3px);
-
-}
-
-}
-
-/* =========================================
-
-FULL MATRIX TAKEOVER
-
-========================================= */
-
-#matrix{
-
-position:fixed;
-
-inset:0;
-
-overflow:hidden;
-
-background:#000;
-
-z-index:100;
-
-opacity:0;
-
-pointer-events:none;
-
-}
-
-/* =========================================
-
-MATRIX GRID
-
-========================================= */
-
-#matrixGrid{
-
-position:absolute;
-
-inset:0;
-
-display:grid;
-
-grid-template-columns:repeat(28,1fr);
-
-grid-template-rows:repeat(52,1fr);
-
-font-size:clamp(9px,1vw,14px);
-
-font-weight:bold;
-
-color:#66ff66;
-
-opacity:.95;
-
-}
-
-.cell{
-
-display:flex;
-
-align-items:center;
-
-justify-content:center;
-
-transition:.04s linear;
-
-user-select:none;
-
-}
-
-/* =========================================
-
-SCANNER
-
-========================================= */
-
-#scanner{
-
-position:absolute;
-
-left:0;
-
-top:-30%;
 
 width:100%;
 
-height:32%;
+height:100%;
 
-background:
+background:black;
 
-linear-gradient(
-
-180deg,
-
-transparent,
-
-rgba(100,255,120,.08),
-
-rgba(180,255,180,.22),
-
-rgba(100,255,120,.08),
-
-transparent
-
-);
-
-filter:blur(8px);
-
-mix-blend-mode:screen;
-
-animation:scannerSweep 2.2s linear infinite;
+display:block;
 
 }
 
-@keyframes scannerSweep{
+#overlay{
 
-0%{
+position:fixed;
 
-top:-30%;
+inset:0;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+pointer-events:none;
 
 }
 
-100%{
-
-top:130%;
-
-}
-
-}
-
-/* =========================================
-
-SIGNAL LOST
-
-========================================= */
-
-#signalLost{
+#symbol{
 
 position:absolute;
 
-top:50%;
+top:38%;
 
 left:50%;
 
 transform:translate(-50%,-50%);
 
-font-size:clamp(28px,5vw,52px);
-
-letter-spacing:.28em;
-
-text-align:center;
-
-line-height:1.2;
-
-color:#8fff8f;
+width:min(78vw,470px);
 
 opacity:0;
 
-z-index:120;
+transition:2s ease;
 
 }
 
-#signalLost.active{
+#symbol.visible{
 
-animation:signalFlicker .12s infinite;
+opacity:.34;
 
 }
 
-@keyframes signalFlicker{
+#signal{
+
+position:absolute;
+
+top:58%;
+
+left:50%;
+
+transform:translateX(-50%);
+
+font-size:clamp(28px,5vw,52px);
+
+letter-spacing:.22em;
+
+color:#7dff7d;
+
+opacity:0;
+
+}
+
+#signal.active{
+
+animation:flicker .12s infinite;
+
+}
+
+@keyframes flicker{
 
 0%{
 
@@ -286,9 +120,7 @@ opacity:.1;
 
 transform:
 
-translate(-50%,-50%)
-
-translateX(-2px);
+translateX(calc(-50% - 2px));
 
 }
 
@@ -298,9 +130,7 @@ opacity:1;
 
 transform:
 
-translate(-50%,-50%)
-
-translateX(2px);
+translateX(calc(-50% + 2px));
 
 }
 
@@ -310,153 +140,35 @@ opacity:.08;
 
 transform:
 
-translate(-50%,-50%)
-
-translateX(-1px);
+translateX(calc(-50% - 1px));
 
 }
 
 }
-
-/* =========================================
-
-MAIN AREA
-
-========================================= */
-
-#main{
-
-position:relative;
-
-width:100%;
-
-height:100%;
-
-display:flex;
-
-justify-content:center;
-
-align-items:center;
-
-overflow:hidden;
-
-}
-
-/* =========================================
-
-SYMBOL
-
-========================================= */
-
-#symbolWrap{
-
-position:absolute;
-
-top:40%;
-
-left:50%;
-
-transform:translate(-50%,-50%);
-
-width:min(78vw,470px);
-
-aspect-ratio:1/1;
-
-display:flex;
-
-justify-content:center;
-
-align-items:center;
-
-opacity:0;
-
-transition:2.8s ease;
-
-z-index:20;
-
-}
-
-#symbolWrap.visible{
-
-opacity:1;
-
-}
-
-#outer{
-
-position:absolute;
-
-width:100%;
-
-opacity:.36;
-
-transition:3s ease;
-
-filter:
-
-drop-shadow(0 0 10px rgba(255,140,40,.04));
-
-}
-
-#inner{
-
-position:absolute;
-
-width:100%;
-
-opacity:.36;
-
-transition:3s ease;
-
-filter:
-
-drop-shadow(0 0 10px rgba(255,140,40,.04));
-
-}
-
-/* =========================================
-
-RECONNECT
-
-========================================= */
 
 #reconnect{
 
 position:absolute;
 
-top:63%;
+top:58%;
 
 left:50%;
 
 transform:translateX(-50%);
 
-font-size:clamp(22px,4vw,42px);
+font-size:clamp(24px,4vw,42px);
 
-letter-spacing:.28em;
+letter-spacing:.24em;
 
-color:#f4d4af;
+color:#f4c48c;
 
 opacity:0;
 
-cursor:pointer;
-
 pointer-events:none;
 
-z-index:40;
+cursor:pointer;
 
-transition:
-
-opacity 2s ease,
-
-text-shadow 2s ease,
-
-transform .3s ease;
-
-text-shadow:
-
-0 0 8px rgba(255,140,40,.04),
-
-0 0 24px rgba(255,120,20,.02);
+transition:2s ease;
 
 }
 
@@ -466,21 +178,15 @@ opacity:1;
 
 pointer-events:auto;
 
-animation:reconnectPulse 4s ease-in-out infinite;
+animation:pulse 4s ease-in-out infinite;
 
 }
 
-@keyframes reconnectPulse{
+@keyframes pulse{
 
 0%,100%{
 
-opacity:.45;
-
-text-shadow:
-
-0 0 8px rgba(255,140,40,.04),
-
-0 0 20px rgba(255,120,20,.02);
+opacity:.4;
 
 }
 
@@ -488,265 +194,7 @@ text-shadow:
 
 opacity:1;
 
-text-shadow:
-
-0 0 14px rgba(255,180,90,.24),
-
-0 0 42px rgba(255,120,20,.14);
-
 }
-
-}
-
-#reconnect:hover{
-
-transform:translateX(-50%) scale(1.03);
-
-}
-
-/* =========================================
-
-SMOKE
-
-========================================= */
-
-#smoke{
-
-position:fixed;
-
-inset:0;
-
-overflow:hidden;
-
-pointer-events:none;
-
-z-index:3;
-
-}
-
-.cloud{
-
-position:absolute;
-
-width:55vw;
-
-height:55vw;
-
-border-radius:50%;
-
-background:
-
-radial-gradient(circle,
-
-rgba(255,255,255,.05) 0%,
-
-rgba(255,255,255,.02) 18%,
-
-transparent 70%);
-
-filter:blur(45px);
-
-opacity:0;
-
-animation:smokeFloat linear infinite;
-
-}
-
-.cloud:nth-child(1){
-
-left:-10%;
-
-bottom:-10%;
-
-animation-duration:28s;
-
-}
-
-.cloud:nth-child(2){
-
-right:-20%;
-
-top:10%;
-
-animation-duration:34s;
-
-animation-delay:7s;
-
-}
-
-.cloud:nth-child(3){
-
-left:30%;
-
-bottom:-20%;
-
-animation-duration:30s;
-
-animation-delay:15s;
-
-}
-
-@keyframes smokeFloat{
-
-0%{
-
-transform:translate(0,0) scale(1);
-
-opacity:0;
-
-}
-
-10%{
-
-opacity:.12;
-
-}
-
-50%{
-
-opacity:.05;
-
-}
-
-100%{
-
-transform:translate(160px,-220px) scale(1.35);
-
-opacity:0;
-
-}
-
-}
-
-/* =========================================
-
-ETCHINGS
-
-========================================= */
-
-#etchings{
-
-position:absolute;
-
-inset:0;
-
-opacity:0;
-
-pointer-events:none;
-
-transition:2.4s ease;
-
-z-index:60;
-
-}
-
-#etchings.visible{
-
-opacity:1;
-
-pointer-events:auto;
-
-}
-
-.etch{
-
-position:absolute;
-
-display:block;
-
-filter:
-
-drop-shadow(0 0 14px rgba(255,120,20,.16))
-
-drop-shadow(0 0 28px rgba(255,120,20,.06));
-
-transition:.4s ease;
-
-}
-
-.etch:hover{
-
-transform:translateX(6px);
-
-}
-
-#etch1{
-
-width:min(56vw,350px);
-
-left:8%;
-
-top:24%;
-
-transform:rotate(-2deg);
-
-}
-
-#etch2{
-
-width:min(62vw,390px);
-
-left:12%;
-
-top:48%;
-
-transform:rotate(2deg);
-
-}
-
-#etch3{
-
-width:min(58vw,340px);
-
-left:15%;
-
-bottom:12%;
-
-transform:rotate(-4deg);
-
-}
-
-/* =========================================
-
-CONNECTED
-
-========================================= */
-
-.connected #outer{
-
-opacity:.02;
-
-filter:blur(2px);
-
-}
-
-.connected #inner{
-
-opacity:1;
-
-filter:
-
-drop-shadow(0 0 18px rgba(255,180,90,.24))
-
-drop-shadow(0 0 56px rgba(255,120,20,.16));
-
-}
-
-.connected #reconnect{
-
-opacity:0;
-
-pointer-events:none;
-
-}
-
-.connected #symbolWrap{
-
-transform:
-
-translate(-50%,-50%)
-
-scale(1.05);
 
 }
 
@@ -756,53 +204,17 @@ scale(1.05);
 
 <body>
 
-<!-- STATIC -->
+<canvas id="matrix"></canvas>
 
-<div id="noise"></div>
+<div id="overlay">
 
-<!-- SMOKE -->
+<img id="symbol" src="Inner17-final.png">
 
-<div id="smoke">
+<div id="signal">
 
-<div class="cloud"></div>
-
-<div class="cloud"></div>
-
-<div class="cloud"></div>
+SIGNAL LOST
 
 </div>
-
-<!-- MATRIX -->
-
-<div id="matrix">
-
-<div id="matrixGrid"></div>
-
-<div id="scanner"></div>
-
-<div id="signalLost">
-
-SIGNAL<br>LOST
-
-</div>
-
-</div>
-
-<!-- MAIN -->
-
-<div id="main">
-
-<!-- SYMBOL -->
-
-<div id="symbolWrap">
-
-<img id="outer" src="Outer17-final.png">
-
-<img id="inner" src="Inner17-final.png">
-
-</div>
-
-<!-- RECONNECT -->
 
 <div id="reconnect">
 
@@ -810,231 +222,185 @@ RECONNECT
 
 </div>
 
-<!-- ETCHINGS -->
-
-<div id="etchings">
-
-<a class="etch" id="etch1" href="#">
-
-<img src="lastsesh17.png" width="100%">
-
-</a>
-
-<a class="etch" id="etch2" href="#">
-
-<img src="RoachTray17.png" width="100%">
-
-</a>
-
-<a class="etch" id="etch3" href="#">
-
-<img src="PassItBack17.png" width="100%">
-
-</a>
-
-</div>
-
 </div>
 
 <script>
 
-/* =========================================
+const canvas =
 
-MATRIX GRID BUILD
+document.getElementById("matrix");
 
-========================================= */
+const ctx =
 
-const matrixGrid = document.getElementById("matrixGrid");
+canvas.getContext("2d");
+
+canvas.width =
+
+window.innerWidth;
+
+canvas.height =
+
+window.innerHeight;
 
 const chars =
 
 "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789$#@%&*.17";
 
-const totalCells = 1456;
+const fontSize = 16;
 
-for(let i=0;i<totalCells;i++){
+const columns =
 
-const cell = document.createElement("div");
+canvas.width / fontSize;
 
-cell.classList.add("cell");
+const drops = [];
 
-cell.innerText =
+for(let i=0;i<columns;i++){
 
-chars[Math.floor(Math.random()*chars.length)];
-
-matrixGrid.appendChild(cell);
+drops[i] = 1;
 
 }
 
-/* =========================================
+function draw(){
 
-LIVE CHAOS
+ctx.fillStyle =
 
-========================================= */
+"rgba(0,0,0,0.08)";
 
-const cells = document.querySelectorAll(".cell");
+ctx.fillRect(
+
+0,
+
+0,
+
+canvas.width,
+
+canvas.height
+
+);
+
+ctx.fillStyle = "#66ff66";
+
+ctx.font =
+
+fontSize + "px monospace";
+
+for(let i=0;i<drops.length;i++){
+
+const text =
+
+chars[
+
+Math.floor(
+
+Math.random()*chars.length
+
+)
+
+];
+
+ctx.fillText(
+
+text,
+
+i * fontSize,
+
+drops[i] * fontSize
+
+);
+
+if(
+
+drops[i] * fontSize >
+
+canvas.height &&
+
+Math.random() > 0.975
+
+){
+
+drops[i] = 0;
+
+}
+
+drops[i]++;
+
+}
+
+}
+
+setInterval(draw,35);
+
+/* hidden .17 */
 
 setInterval(()=>{
 
-cells.forEach(cell=>{
+ctx.fillStyle =
 
-if(Math.random() > .18){
+"rgba(180,255,180,.18)";
 
-cell.innerText =
+ctx.font =
 
-chars[Math.floor(Math.random()*chars.length)];
+"bold 120px monospace";
 
-}
+ctx.fillText(
 
-});
+".17",
 
-},40);
+canvas.width/2 - 120,
 
-/* =========================================
+canvas.height*.72
 
-HIDDEN .17
-
-========================================= */
-
-const beaconCells = [690,691,692,720,748,776];
-
-setInterval(()=>{
-
-beaconCells.forEach(i=>{
-
-if(cells[i]){
-
-cells[i].innerText = ".17";
-
-cells[i].style.color = "#b7ffb7";
-
-}
-
-});
-
-setTimeout(()=>{
-
-beaconCells.forEach(i=>{
-
-if(cells[i]){
-
-cells[i].style.color = "#66ff66";
-
-}
-
-});
-
-},120);
+);
 
 },850);
 
-/* =========================================
+/* sequence */
 
-START TAKEOVER
+const signal =
 
-========================================= */
-
-const matrix = document.getElementById("matrix");
-
-setTimeout(()=>{
-
-matrix.style.opacity = 1;
-
-},40);
-
-/* =========================================
-
-SIGNAL LOST
-
-========================================= */
-
-const signalLost =
-
-document.getElementById("signalLost");
-
-setTimeout(()=>{
-
-signalLost.style.opacity = 1;
-
-signalLost.classList.add("active");
-
-},3400);
-
-/* =========================================
-
-CUT CHAOS
-
-========================================= */
-
-setTimeout(()=>{
-
-matrix.style.opacity = 0;
-
-},5200);
-
-/* =========================================
-
-SYMBOL EMERGES
-
-========================================= */
-
-const symbolWrap =
-
-document.getElementById("symbolWrap");
-
-setTimeout(()=>{
-
-symbolWrap.classList.add("visible");
-
-},5600);
-
-/* =========================================
-
-RECONNECT
-
-========================================= */
+document.getElementById("signal");
 
 const reconnect =
 
 document.getElementById("reconnect");
 
-setTimeout(()=>{
+const symbol =
 
-signalLost.style.opacity = 0;
-
-},7200);
+document.getElementById("symbol");
 
 setTimeout(()=>{
 
-signalLost.classList.remove("active");
+signal.style.opacity = 1;
+
+signal.classList.add("active");
+
+},3400);
+
+setTimeout(()=>{
+
+signal.style.opacity = 0;
+
+},5400);
+
+setTimeout(()=>{
+
+symbol.classList.add("visible");
+
+},5800);
+
+setTimeout(()=>{
+
+signal.classList.remove("active");
 
 reconnect.classList.add("active");
 
-},8200);
-
-/* =========================================
-
-CONNECT
-
-========================================= */
-
-const etchings =
-
-document.getElementById("etchings");
+},7600);
 
 reconnect.addEventListener("click",()=>{
-
-/* kill reconnect immediately */
 
 reconnect.classList.remove("active");
 
 reconnect.style.opacity = 0;
-
-reconnect.style.pointerEvents = "none";
-
-document.body.classList.add("connected");
-
-/* amber warmth */
 
 document.body.animate([
 
@@ -1058,19 +424,9 @@ filter:"brightness(1)"
 
 ],{
 
-duration:1800,
-
-easing:"ease"
+duration:1800
 
 });
-
-/* reveal */
-
-setTimeout(()=>{
-
-etchings.classList.add("visible");
-
-},1100);
 
 });
 
