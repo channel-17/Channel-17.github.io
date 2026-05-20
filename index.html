@@ -1,52 +1,723 @@
 <!DOCTYPE html>
-<html>
+
+<html lang="en">
 
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta charset="UTF-8" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
 <title>CHANNEL 17</title>
+
+<style>
+
+html,body{
+
+margin:0;
+
+padding:0;
+
+width:100%;
+
+height:100%;
+
+overflow:hidden;
+
+background:#000;
+
+font-family:Courier New, monospace;
+
+cursor:crosshair;
+
+}
+
+/* MAIN WORLD */
+
+#world{
+
+position:relative;
+
+width:100%;
+
+height:100%;
+
+background:#000;
+
+overflow:hidden;
+
+}
+
+/* STATIC */
+
+#static{
+
+position:absolute;
+
+inset:0;
+
+opacity:.045;
+
+mix-blend-mode:screen;
+
+pointer-events:none;
+
+background-image:
+
+repeating-radial-gradient(circle at center,
+
+rgba(255,255,255,.03) 0px,
+
+rgba(255,255,255,0) 3px);
+
+animation:staticMove .25s infinite linear;
+
+}
+
+@keyframes staticMove{
+
+0%{transform:translate(0,0);}
+
+50%{transform:translate(-1px,1px);}
+
+100%{transform:translate(1px,-1px);}
+
+}
+
+/* VIOLENT SIGNAL GLITCH */
+
+#glitch{
+
+position:absolute;
+
+inset:0;
+
+background:#000;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+z-index:20;
+
+pointer-events:none;
+
+animation:glitchOut 3.8s forwards;
+
+}
+
+.glitchText{
+
+position:absolute;
+
+color:#bbb;
+
+font-size:11vw;
+
+opacity:.12;
+
+letter-spacing:.2em;
+
+mix-blend-mode:screen;
+
+animation:glitchShake .08s infinite;
+
+}
+
+@keyframes glitchShake{
+
+0%{transform:translate(0px,0px);}
+
+25%{transform:translate(-6px,2px);}
+
+50%{transform:translate(4px,-2px);}
+
+75%{transform:translate(-3px,3px);}
+
+100%{transform:translate(2px,-1px);}
+
+}
+
+.scan{
+
+position:absolute;
+
+width:100%;
+
+height:4px;
+
+background:rgba(255,255,255,.06);
+
+animation:scanMove .18s infinite linear;
+
+}
+
+@keyframes scanMove{
+
+0%{top:-10%;}
+
+100%{top:110%;}
+
+}
+
+@keyframes glitchOut{
+
+0%{opacity:1;}
+
+80%{opacity:1;}
+
+100%{
+
+opacity:0;
+
+visibility:hidden;
+
+}
+
+}
+
+/* CENTER SIGNAL */
+
+#center{
+
+position:absolute;
+
+top:50%;
+
+left:50%;
+
+transform:translate(-50%,-50%);
+
+display:flex;
+
+flex-direction:column;
+
+align-items:center;
+
+justify-content:center;
+
+z-index:5;
+
+}
+
+/* SYMBOL */
+
+#symbolWrap{
+
+position:relative;
+
+width:280px;
+
+height:280px;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+}
+
+/* OUTER */
+
+#outer{
+
+position:absolute;
+
+width:100%;
+
+opacity:.18;
+
+filter:blur(.4px);
+
+animation:outerFloat 9s ease-in-out infinite;
+
+}
+
+/* INNER */
+
+#inner{
+
+position:absolute;
+
+width:66%;
+
+opacity:.18;
+
+mix-blend-mode:screen;
+
+animation:innerPulse 7s ease-in-out infinite;
+
+}
+
+/* BEACON */
+
+#beacon{
+
+position:absolute;
+
+width:52%;
+
+opacity:.22;
+
+mix-blend-mode:screen;
+
+transition:all 4s ease;
+
+filter:drop-shadow(0 0 0px rgba(255,120,40,0));
+
+}
+
+@keyframes outerFloat{
+
+0%{transform:translateY(0px);}
+
+50%{transform:translateY(-4px);}
+
+100%{transform:translateY(0px);}
+
+}
+
+@keyframes innerPulse{
+
+0%{opacity:.14;}
+
+50%{opacity:.23;}
+
+100%{opacity:.14;}
+
+}
+
+/* SIGNAL TEXT */
+
+#signalLost{
+
+margin-top:35px;
+
+font-size:13px;
+
+letter-spacing:.55em;
+
+color:rgba(255,255,255,.23);
+
+text-transform:lowercase;
+
+}
+
+#reconnect{
+
+margin-top:48px;
+
+font-size:18px;
+
+letter-spacing:.7em;
+
+color:rgba(255,255,255,.72);
+
+cursor:pointer;
+
+transition:all 1.2s ease;
+
+user-select:none;
+
+}
+
+#reconnect:hover{
+
+color:#fff;
+
+}
+
+/* EMBER */
+
+#ember{
+
+position:absolute;
+
+width:700px;
+
+height:700px;
+
+border-radius:50%;
+
+background:
+
+radial-gradient(circle,
+
+rgba(255,110,35,.12) 0%,
+
+rgba(255,90,20,.05) 18%,
+
+rgba(255,80,10,.02) 35%,
+
+transparent 70%);
+
+opacity:0;
+
+pointer-events:none;
+
+mix-blend-mode:screen;
+
+filter:blur(60px);
+
+transition:
+
+opacity 4s ease,
+
+transform 6s ease;
+
+z-index:2;
+
+}
+
+/* SMOKE */
+
+#smoke{
+
+position:absolute;
+
+inset:-20%;
+
+pointer-events:none;
+
+opacity:0;
+
+transition:opacity 6s ease;
+
+z-index:3;
+
+}
+
+.smokeLayer{
+
+position:absolute;
+
+width:140%;
+
+height:140%;
+
+background:
+
+radial-gradient(circle at center,
+
+rgba(255,255,255,.035),
+
+transparent 60%);
+
+filter:blur(90px);
+
+animation:smokeDrift linear infinite;
+
+mix-blend-mode:screen;
+
+}
+
+.smokeLayer:nth-child(1){
+
+animation-duration:35s;
+
+top:-10%;
+
+left:-20%;
+
+}
+
+.smokeLayer:nth-child(2){
+
+animation-duration:42s;
+
+top:10%;
+
+left:-15%;
+
+}
+
+.smokeLayer:nth-child(3){
+
+animation-duration:51s;
+
+top:-5%;
+
+left:-25%;
+
+}
+
+@keyframes smokeDrift{
+
+0%{
+
+transform:translateX(0px) translateY(0px);
+
+}
+
+50%{
+
+transform:translateX(60px) translateY(-20px);
+
+}
+
+100%{
+
+transform:translateX(0px) translateY(0px);
+
+}
+
+}
+
+/* NOTES */
+
+#notes{
+
+position:absolute;
+
+left:48px;
+
+bottom:90px;
+
+display:flex;
+
+flex-direction:column;
+
+gap:44px;
+
+opacity:0;
+
+transition:opacity 5s ease;
+
+z-index:8;
+
+}
+
+.note{
+
+width:230px;
+
+opacity:.92;
+
+filter:
+
+drop-shadow(0 0 12px rgba(255,110,35,.12));
+
+transition:all 1.5s ease;
+
+}
+
+.note:hover{
+
+transform:translateX(6px);
+
+filter:
+
+drop-shadow(0 0 20px rgba(255,130,40,.24));
+
+}
+
+/* MOBILE */
+
+@media(max-width:700px){
+
+#symbolWrap{
+
+width:220px;
+
+height:220px;
+
+}
+
+#reconnect{
+
+font-size:15px;
+
+}
+
+.note{
+
+width:180px;
+
+}
+
+#notes{
+
+left:28px;
+
+bottom:72px;
+
+}
+
+}
+
+</style>
+
 </head>
 
-<body style="margin:0;background:black;overflow:hidden;font-family:Courier New;color:white;">
+<body>
 
-<div style="position:absolute;top:32%;width:100%;text-align:center;font-size:72px;opacity:.05;">
-.17
+<div id="world">
+
+<div id="static"></div>
+
+<div id="ember"></div>
+
+<div id="smoke">
+
+<div class="smokeLayer"></div>
+
+<div class="smokeLayer"></div>
+
+<div class="smokeLayer"></div>
+
 </div>
 
-<div id="signal"
-style="position:absolute;top:57%;width:100%;text-align:center;font-size:12px;letter-spacing:6px;opacity:.45;">
-signal lost
+<!-- GLITCH -->
+
+<div id="glitch">
+
+<div class="glitchText">CHANNEL 17</div>
+
+<div class="scan"></div>
+
 </div>
 
-<div id="reconnect"
-style="position:absolute;top:65%;width:100%;text-align:center;font-size:15px;letter-spacing:10px;opacity:.85;cursor:pointer;">
-reconnect
+<!-- CENTER -->
+
+<div id="center">
+
+<div id="symbolWrap">
+
+<img id="outer" src="Outer17-final.png">
+
+<img id="inner" src="Inner17-final.png">
+
+<img id="beacon" src="Beacon17.png">
+
 </div>
 
-<div id="frequency"
-style="position:absolute;left:24px;bottom:28px;opacity:0;font-family:cursive;">
+<div id="signalLost">signal lost</div>
 
-<div style="margin-top:12px;">Latest Sesh</div>
+<div id="reconnect">reconnect</div>
 
-<div style="margin-top:12px;">Roach Tray</div>
+</div>
 
-<div style="margin-top:12px;">Pass it Back</div>
+<!-- NOTES -->
+
+<div id="notes">
+
+<img class="note" src="lastsesh17.png">
+
+<img class="note" src="RoachTray17.png">
+
+<img class="note" src="PassItBack17.png">
+
+</div>
 
 </div>
 
 <script>
 
-document.getElementById("reconnect").onclick=function(){
+const reconnect = document.getElementById("reconnect");
 
-document.getElementById("signal").style.display="none";
+const notes = document.getElementById("notes");
 
-document.getElementById("reconnect").style.display="none";
+const ember = document.getElementById("ember");
 
-document.getElementById("frequency").style.opacity="1";
+const smoke = document.getElementById("smoke");
 
-};
+const beacon = document.getElementById("beacon");
+
+let connected = false;
+
+/* RECONNECT */
+
+reconnect.addEventListener("click", ()=>{
+
+if(connected) return;
+
+connected = true;
+
+/* SIGNAL LOCK */
+
+document.getElementById("signalLost").style.opacity = "0";
+
+reconnect.style.opacity = "0";
+
+/* NOTES APPEAR */
+
+setTimeout(()=>{
+
+notes.style.opacity = "1";
+
+},900);
+
+/* SMOKE */
+
+setTimeout(()=>{
+
+smoke.style.opacity = ".42";
+
+},1200);
+
+/* BEACON WAKE */
+
+setTimeout(()=>{
+
+beacon.style.opacity = ".65";
+
+beacon.style.filter =
+
+"drop-shadow(0 0 14px rgba(255,120,40,.22))";
+
+},1600);
+
+});
+
+/* SACRED EMBER TOUCH */
+
+document.addEventListener("touchstart", emberTouch);
+
+document.addEventListener("mousemove", emberMove);
+
+function emberTouch(e){
+
+if(!connected) return;
+
+const touch = e.touches[0];
+
+ember.style.opacity = ".42";
+
+ember.style.left = (touch.clientX - 350) + "px";
+
+ember.style.top = (touch.clientY - 350) + "px";
+
+beacon.style.filter =
+
+"drop-shadow(0 0 24px rgba(255,130,40,.35))";
+
+setTimeout(()=>{
+
+ember.style.opacity = ".08";
+
+beacon.style.filter =
+
+"drop-shadow(0 0 14px rgba(255,120,40,.18))";
+
+},4500);
+
+}
+
+function emberMove(e){
+
+if(!connected) return;
+
+ember.style.left = (e.clientX - 350) + "px";
+
+ember.style.top = (e.clientY - 350) + "px";
+
+}
 
 </script>
 
 </body>
+
 </html>
