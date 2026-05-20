@@ -1,85 +1,391 @@
 <!DOCTYPE html>
 <html>
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Channel 17</title>
+<title>CHANNEL 17</title>
 
 <style>
 
-body{
+html,body{
 margin:0;
-background:black;
-color:white;
-font-family:monospace;
-overflow:hidden;
-}
-
-.center{
-position:absolute;
+padding:0;
 width:100%;
-text-align:center;
+height:100%;
+overflow:hidden;
+background:black;
+font-family:Courier New, monospace;
+color:white;
 }
 
-#symbol{
-top:30%;
-font-size:80px;
-opacity:.1;
+
+
+/* MAIN SCREEN /
+
+.screen{
+position:relative;
+width:100%;
+height:100vh;
+overflow:hidden;
+background:black;
 }
 
-#signal{
-top:55%;
-font-size:14px;
-letter-spacing:6px;
-}
 
-#reconnect{
-top:65%;
-font-size:18px;
-letter-spacing:8px;
-cursor:pointer;
-}
 
-#frequency{
+/ VIOLENT SIGNAL TAKEOVER /
+
+.glitch{
 position:absolute;
-left:20px;
-bottom:20px;
+top:0;
+left:0;
+width:100%;
+height:100%;
+
+background:
+
+repeating-linear-gradient(
+0deg,
+rgba(255,255,255,.12) 0px,
+rgba(255,255,255,.02) 1px,
+transparent 2px,
+transparent 4px
+);
+
+mix-blend-mode:screen;
+
+opacity:0;
+
+pointer-events:none;
+
+z-index:50;
+
+animation:takeover 2.8s ease forwards;
+}
+
+@keyframes takeover{
+
+0%{
 opacity:0;
 }
 
-#frequency div{
-margin-top:10px;
-font-size:10px;
-letter-spacing:4px;
+6%{
+opacity:1;
+transform:
+translateX(-40px)
+skewX(14deg);
+}
+
+14%{
+opacity:.15;
+}
+
+26%{
+opacity:1;
+transform:
+translateX(30px)
+skewX(-12deg);
+}
+
+38%{
+opacity:.08;
+}
+
+52%{
+opacity:1;
+transform:
+translateY(-5px)
+scale(1.02);
+}
+
+68%{
+opacity:.1;
+}
+
+100%{
+opacity:.04;
+transform:none;
+}
+
+}
+
+
+
+/ EDGE INTERFERENCE /
+
+.interference{
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:100%;
+
+background:
+linear-gradient(
+90deg,
+rgba(255,255,255,.04),
+transparent 20%,
+transparent 80%,
+rgba(255,255,255,.03)
+);
+
+opacity:.05;
+
+pointer-events:none;
+
+mix-blend-mode:screen;
+
+z-index:20;
+
+animation:pulse 5s ease-in-out infinite;
+}
+
+@keyframes pulse{
+
+0%{
+opacity:.03;
+}
+
+50%{
+opacity:.1;
+}
+
+100%{
+opacity:.03;
+}
+
+}
+
+
+
+/ TRIANGLE INFLUENCE /
+
+.triangle{
+
+position:absolute;
+
+top:50%;
+left:50%;
+
+width:0;
+height:0;
+
+margin-left:-95px;
+margin-top:-140px;
+
+border-left:95px solid transparent;
+border-right:95px solid transparent;
+border-bottom:175px solid rgba(255,255,255,.04);
+
+opacity:.2;
+
+transition:4s ease;
+
+z-index:3;
+}
+
+
+
+/ INNER SIGNAL /
+
+.symbol{
+
+position:absolute;
+
+top:36%;
+left:0;
+
+width:100%;
+
+text-align:center;
+
+font-size:70px;
+
+letter-spacing:8px;
+
+opacity:.018;
+
+transition:4s ease;
+
+z-index:4;
+}
+
+
+
+/ SIGNAL LOST /
+
+.signal{
+
+position:absolute;
+
+top:60%;
+
+left:0;
+
+width:100%;
+
+text-align:center;
+
+font-size:12px;
+
+letter-spacing:6px;
+
+opacity:.45;
+
+z-index:10;
+}
+
+
+
+/ RECONNECT /
+
+.reconnect{
+
+position:absolute;
+
+top:68%;
+
+left:0;
+
+width:100%;
+
+text-align:center;
+
+font-size:15px;
+
+letter-spacing:10px;
+
+opacity:.82;
+
+cursor:pointer;
+
+z-index:11;
+
+transition:1s ease;
+}
+
+.reconnect:hover{
+opacity:1;
+letter-spacing:13px;
+}
+
+
+
+/ EMBER /
+
+.ember{
+
+position:absolute;
+
+width:7px;
+height:7px;
+
+border-radius:50%;
+
+opacity:0;
+
+pointer-events:none;
+
+background:
+radial-gradient(
+circle,
+rgba(255,220,170,1) 0%,
+rgba(255,140,70,.45) 45%,
+transparent 100%
+);
+
+box-shadow:
+0 0 6px rgba(255,120,50,.35),
+0 0 14px rgba(255,70,20,.15);
+
+z-index:30;
+}
+
+
+
+/ FREQUENCY ARCS /
+
+.frequency{
+
+position:absolute;
+
+left:24px;
+bottom:28px;
+
+opacity:0;
+
+transition:4s ease;
+
+z-index:15;
+}
+
+.frequency div{
+
+margin-top:12px;
+
+font-size:12px;
+
+letter-spacing:2px;
+
+font-family:cursive;
+
+opacity:.72;
 }
 
 .show{
-opacity:1 !important;
+opacity:1;
+}
+
+
+
+/ REVEAL */
+
+.awaken{
+opacity:.12 !important;
+}
+
+.fade{
+opacity:.025 !important;
 }
 
 </style>
+
 </head>
 
 <body>
 
-<div id="symbol" class="center">
+<div class="screen">
+
+<div class="glitch"></div>
+
+<div class="interference"></div>
+
+<div class="triangle" id="triangle"></div>
+
+<div class="symbol" id="symbol">
 .17
 </div>
 
-<div id="signal" class="center">
+<div class="signal" id="signal">
 signal lost
 </div>
 
-<div id="reconnect" class="center">
+<div class="reconnect" id="reconnect">
 reconnect
 </div>
 
-<div id="frequency">
+<div class="frequency" id="frequency">
 
 <div>Latest Sesh</div>
+
 <div>Roach Tray</div>
+
 <div>Pass it Back</div>
+
+</div>
+
+<div class="ember" id="ember"></div>
 
 </div>
 
@@ -88,16 +394,76 @@ reconnect
 var reconnect =
 document.getElementById("reconnect");
 
+var signal =
+document.getElementById("signal");
+
+var ember =
+document.getElementById("ember");
+
 var frequency =
 document.getElementById("frequency");
 
-reconnect.onclick=function(){
+var symbol =
+document.getElementById("symbol");
 
-reconnect.style.display="none";
+var triangle =
+document.getElementById("triangle");
 
-document.getElementById("signal").style.display="none";
+
+
+reconnect.onclick=function(e){
+
+signal.style.opacity="0";
+
+reconnect.style.opacity="0";
+
+
+
+ember.style.left=e.clientX+"px";
+
+ember.style.top=e.clientY+"px";
+
+ember.style.opacity="1";
+
+
+
+ember.animate([
+
+{
+transform:"scale(.5)",
+opacity:1
+},
+
+{
+transform:"scale(5)",
+opacity:.02
+}
+
+],{
+
+duration:4500,
+fill:"forwards",
+easing:"ease-out"
+
+});
+
+
+
+setTimeout(function(){
+
+symbol.classList.add("awaken");
+
+triangle.classList.add("fade");
+
+},900);
+
+
+
+setTimeout(function(){
 
 frequency.classList.add("show");
+
+},2600);
 
 };
 
