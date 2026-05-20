@@ -76,7 +76,7 @@ background:black;
 
 /* =========================================
 
-NOISE
+STATIC
 
 ========================================= */
 
@@ -108,7 +108,7 @@ transparent 4px
 
 );
 
-animation:noise .14s linear infinite;
+animation:noise .12s linear infinite;
 
 }
 
@@ -162,7 +162,7 @@ left:50%;
 
 transform:translateX(-50%);
 
-font-size:clamp(26px,4vw,44px);
+font-size:clamp(28px,4vw,46px);
 
 letter-spacing:.24em;
 
@@ -176,7 +176,7 @@ white-space:nowrap;
 
 #signalLost.active{
 
-animation:heartbeat .5s ease infinite;
+animation:heartbeat .45s ease infinite;
 
 }
 
@@ -230,7 +230,7 @@ align-items:center;
 
 opacity:0;
 
-transition:2.5s ease;
+transition:2.4s ease;
 
 }
 
@@ -248,7 +248,7 @@ width:100%;
 
 opacity:.34;
 
-transition:3s ease;
+transition:4s ease;
 
 }
 
@@ -260,7 +260,7 @@ width:100%;
 
 opacity:.34;
 
-transition:3s ease;
+transition:4s ease;
 
 }
 
@@ -284,7 +284,7 @@ font-size:clamp(22px,4vw,40px);
 
 letter-spacing:.24em;
 
-color:#f2c690;
+color:#efc18a;
 
 opacity:0;
 
@@ -332,9 +332,9 @@ opacity:1;
 
 text-shadow:
 
-0 0 16px rgba(255,190,120,.26),
+0 0 16px rgba(255,180,90,.24),
 
-0 0 48px rgba(255,120,20,.16);
+0 0 48px rgba(255,120,20,.14);
 
 }
 
@@ -362,17 +362,17 @@ background:
 
 radial-gradient(circle at center,
 
-rgba(255,140,40,.22) 0%,
+rgba(255,140,40,.14) 0%,
 
-rgba(255,120,20,.08) 20%,
+rgba(255,120,20,.06) 12%,
 
-rgba(255,120,20,.03) 40%,
+rgba(255,120,20,.03) 24%,
 
-transparent 70%);
-
-transition:3s ease;
+transparent 60%);
 
 mix-blend-mode:screen;
+
+transition:4s ease;
 
 }
 
@@ -536,12 +536,6 @@ transition:.4s ease;
 
 }
 
-.etch:hover{
-
-transform:translateX(6px);
-
-}
-
 #etch1{
 
 width:min(56vw,350px);
@@ -584,6 +578,18 @@ CONNECTED
 
 ========================================= */
 
+.connected #warmth{
+
+opacity:1;
+
+}
+
+.connected #smoke{
+
+opacity:1;
+
+}
+
 .connected #outer{
 
 opacity:.02;
@@ -603,18 +609,6 @@ filter:
 drop-shadow(0 0 18px rgba(255,180,90,.24))
 
 drop-shadow(0 0 56px rgba(255,120,20,.16));
-
-}
-
-.connected #warmth{
-
-opacity:1;
-
-}
-
-.connected #smoke{
-
-opacity:1;
 
 }
 
@@ -712,7 +706,7 @@ window.innerHeight;
 
 /* =========================================
 
-DATA
+SETTINGS
 
 ========================================= */
 
@@ -730,7 +724,7 @@ const streams = [];
 
 /* =========================================
 
-BUILD STREAMS
+STREAMS
 
 ========================================= */
 
@@ -742,19 +736,23 @@ y: i * fontSize,
 
 x:
 
-Math.random() * -800,
+Math.random() * -1400,
 
 speed:
 
-14 + Math.random() * 22,
+18 + Math.random() * 24,
 
 length:
 
-14 + Math.random() * 50,
+18 + Math.random() * 50,
 
-glitch:
+vertical:
 
-Math.random() > .8
+Math.random() > .88,
+
+dead:
+
+Math.random() > .94
 
 });
 
@@ -770,15 +768,15 @@ const hidden17 = {
 
 x:
 
-canvas.width * .58,
+canvas.width * .60,
 
 y:
 
-canvas.height * .68,
+canvas.height * .64,
 
-w:120,
+w:160,
 
-h:50
+h:70
 
 };
 
@@ -792,7 +790,7 @@ function drawMatrix(){
 
 ctx.fillStyle =
 
-"rgba(0,0,0,0.12)";
+"rgba(0,0,0,0.10)";
 
 ctx.fillRect(
 
@@ -860,13 +858,13 @@ stream.y
 
 }
 
-/* random vertical corruption */
+/* occasional vertical corruption */
 
-if(stream.glitch && Math.random() > .97){
+if(stream.vertical && Math.random() > .975){
 
 ctx.fillStyle =
 
-"rgba(100,255,100,.6)";
+"rgba(100,255,100,.45)";
 
 ctx.fillText(
 
@@ -882,13 +880,35 @@ Math.random() * chars.length
 
 charX,
 
-stream.y + (Math.random()*90)
+stream.y + (Math.random()*140)
+
+);
+
+}
+
+/* dead missing chunks */
+
+if(stream.dead && Math.random() > .98){
+
+ctx.clearRect(
+
+charX,
+
+stream.y,
+
+fontSize,
+
+fontSize
 
 );
 
 }
 
 }
+
+/* movement */
+
+stream.x += stream.speed;
 
 /* reset */
 
@@ -900,25 +920,23 @@ stream.x -
 
 >
 
-canvas.width + 200
+canvas.width + 300
 
 ){
 
 stream.x =
 
-Math.random() * -1200;
+Math.random() * -1600;
 
 stream.speed =
 
-14 + Math.random() * 22;
+18 + Math.random() * 24;
 
 stream.length =
 
-14 + Math.random() * 50;
+18 + Math.random() * 50;
 
 }
-
-stream.x += stream.speed;
 
 });
 
@@ -932,7 +950,7 @@ START
 
 const matrixLoop =
 
-setInterval(drawMatrix,35);
+setInterval(drawMatrix,28);
 
 /* =========================================
 
@@ -956,13 +974,35 @@ const etchings =
 
 document.getElementById("etchings");
 
-/* chaos ends */
+/* destabilize */
+
+setTimeout(()=>{
+
+streams.forEach(stream=>{
+
+stream.speed *= .5;
+
+});
+
+},3600);
+
+/* collapse */
 
 setTimeout(()=>{
 
 clearInterval(matrixLoop);
 
-ctx.fillStyle = "black";
+let fade = 0;
+
+const collapse =
+
+setInterval(()=>{
+
+fade += .04;
+
+ctx.fillStyle =
+
+`rgba(0,0,0,${fade})`;
 
 ctx.fillRect(
 
@@ -976,7 +1016,15 @@ canvas.height
 
 );
 
-},3600);
+if(fade >= 1){
+
+clearInterval(collapse);
+
+}
+
+},40);
+
+},4600);
 
 /* signal lost */
 
@@ -986,23 +1034,23 @@ signalLost.style.opacity = 1;
 
 signalLost.classList.add("active");
 
-},4200);
+},6200);
 
-/* remove signal */
+/* remove */
 
 setTimeout(()=>{
 
 signalLost.style.opacity = 0;
 
-},6200);
+},7600);
 
-/* symbol emerges */
+/* symbol */
 
 setTimeout(()=>{
 
 symbolWrap.classList.add("visible");
 
-},7000);
+},8200);
 
 /* reconnect */
 
@@ -1012,7 +1060,7 @@ signalLost.classList.remove("active");
 
 reconnect.classList.add("active");
 
-},8600);
+},9800);
 
 /* reconnect click */
 
@@ -1024,13 +1072,41 @@ reconnect.style.opacity = 0;
 
 document.body.classList.add("connected");
 
+/* warmth */
+
+document.getElementById("warmth")
+
+.animate([
+
+{
+
+clipPath:"circle(0% at center)"
+
+},
+
+{
+
+clipPath:"circle(60% at center)"
+
+}
+
+],{
+
+duration:4200,
+
+fill:"forwards",
+
+easing:"ease"
+
+});
+
 /* reveal */
 
 setTimeout(()=>{
 
 etchings.classList.add("visible");
 
-},1500);
+},2200);
 
 });
 
