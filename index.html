@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -25,22 +24,76 @@ font-family:Courier New, monospace;
 
 body{
 position:relative;
+background:black;
 }
 
 
 
-/ BACKGROUND /
+/ DARK VIGNETTE /
 
-.bg{
+body::after{
+content:"";
 position:absolute;
 inset:0;
 
 background:
 radial-gradient(
 circle at center,
-rgba(10,10,10,.95) 0%,
-black 82%
+transparent 0%,
+rgba(0,0,0,.45) 55%,
+rgba(0,0,0,.92) 100%
 );
+
+pointer-events:none;
+z-index:20;
+}
+
+
+
+/ GLITCH STATIC /
+
+.static{
+position:absolute;
+inset:0;
+
+opacity:.06;
+
+background-image:
+repeating-linear-gradient(
+0deg,
+rgba(255,255,255,.06) 0px,
+rgba(255,255,255,.02) 1px,
+transparent 2px,
+transparent 4px
+);
+
+mix-blend-mode:screen;
+
+animation:
+staticShift .18s infinite;
+}
+
+@keyframes staticShift{
+
+0%{
+transform:translateX(0px);
+}
+
+25%{
+transform:translateX(-1px);
+}
+
+50%{
+transform:translateX(1px);
+}
+
+75%{
+transform:translateX(-1px);
+}
+
+100%{
+transform:translateX(0px);
+}
 
 }
 
@@ -59,9 +112,20 @@ translate(-50%,-50%);
 
 width:210px;
 
-opacity:.045;
+opacity:.015;
 
-transition:4s ease;
+filter:blur(.4px);
+
+transition:
+opacity 4s ease,
+filter 4s ease;
+
+z-index:2;
+}
+
+.symbol.awaken{
+opacity:.14;
+filter:none;
 }
 
 
@@ -71,38 +135,40 @@ transition:4s ease;
 .signal{
 position:absolute;
 
-top:67%;
+top:62%;
 left:50%;
 
 transform:
 translateX(-50%);
 
-color:#bfb7aa;
+color:#b8b0a4;
 
-font-size:.85rem;
+font-size:.7rem;
 
-letter-spacing:8px;
+letter-spacing:6px;
 
 opacity:0;
 
-animation:
-signalAppear 3s ease forwards;
+z-index:5;
 
-animation-delay:5s;
+animation:
+signalIn 2s ease forwards;
+
+animation-delay:4s;
 }
 
-@keyframes signalAppear{
+@keyframes signalIn{
 
 0%{
 opacity:0;
-letter-spacing:18px;
-filter:blur(8px);
+filter:blur(12px);
+letter-spacing:16px;
 }
 
 100%{
-opacity:.65;
-letter-spacing:8px;
+opacity:.55;
 filter:none;
+letter-spacing:6px;
 }
 
 }
@@ -120,30 +186,32 @@ left:50%;
 transform:
 translateX(-50%);
 
-color:#d7d0c5;
+color:#d8d0c4;
 
-font-size:.85rem;
+font-size:.78rem;
 
-letter-spacing:8px;
+letter-spacing:7px;
 
 opacity:0;
 
 cursor:pointer;
 
-animation:
-reconnectAppear 2s ease forwards;
+z-index:6;
 
-animation-delay:9s;
+animation:
+reconnectIn 2s ease forwards;
+
+animation-delay:7s;
 }
 
-@keyframes reconnectAppear{
+@keyframes reconnectIn{
 
 0%{
 opacity:0;
 }
 
 100%{
-opacity:.8;
+opacity:.82;
 }
 
 }
@@ -167,69 +235,110 @@ opacity:0;
 background:
 radial-gradient(
 circle,
-rgba(255,190,120,1) 0%,
-rgba(255,120,50,.95) 25%,
-rgba(255,70,20,.35) 60%,
+rgba(255,220,160,1) 0%,
+rgba(255,140,70,.95) 30%,
+rgba(255,70,20,.55) 55%,
 transparent 100%
 );
 
 box-shadow:
-0 0 18px rgba(255,120,50,.6);
+0 0 14px rgba(255,120,50,.9),
+0 0 32px rgba(255,80,20,.45);
+
+z-index:10;
 }
 
 
 
-/ FREQUENCY /
+/ FREQUENCY ARCS /
 
 .frequency{
 position:absolute;
 
 left:7vw;
-bottom:7vh;
+bottom:8vh;
 
 display:flex;
 flex-direction:column;
 
-gap:14px;
+gap:11px;
 
 opacity:0;
 
 transition:3s ease;
+
+z-index:7;
 }
 
 .frequency div{
 
-font-size:.6rem;
+font-size:.58rem;
 
-letter-spacing:3px;
+letter-spacing:4px;
 
-color:#cfc7bb;
+color:#c9c1b5;
 
-opacity:.6;
-}
-
-
-
-/ ACTIVE STATES /
-
-.symbol.awaken{
-opacity:.16;
+opacity:.72;
 }
 
 .frequency.awaken{
 opacity:1;
 }
 
-</style>
 
+
+/ EDGE INTERFERENCE */
+
+.edges{
+position:absolute;
+inset:0;
+
+pointer-events:none;
+
+opacity:.12;
+
+background:
+linear-gradient(
+90deg,
+rgba(255,255,255,.05),
+transparent 18%,
+transparent 82%,
+rgba(255,255,255,.04)
+);
+
+mix-blend-mode:screen;
+
+animation:
+edgePulse 4s ease-in-out infinite;
+}
+
+@keyframes edgePulse{
+
+0%{
+opacity:.06;
+}
+
+50%{
+opacity:.14;
+}
+
+100%{
+opacity:.06;
+}
+
+}
+
+</style>
 </head>
 
 <body>
 
-<div class="bg"></div>
+<div class="static"></div>
+
+<div class="edges"></div>
 
 <img
-src="Inner17-final.png"
+src="Trust17.png"
 class="symbol"
 id="symbol"
 >
@@ -285,15 +394,11 @@ document.getElementById("frequency");
 
 reconnect.addEventListener("click",(e)=>{
 
-/ HIDE TEXT /
+signal.style.opacity="0";
 
 reconnect.style.opacity="0";
 
-signal.style.opacity="0";
 
-
-
-/ EMBER POSITION /
 
 ember.style.left =
 e.clientX + "px";
@@ -301,15 +406,9 @@ e.clientX + "px";
 ember.style.top =
 e.clientY + "px";
 
-
-
-/ SHOW EMBER /
-
 ember.style.opacity="1";
 
 
-
-/ EMBER ANIMATION /
 
 ember.animate([
 
@@ -319,8 +418,8 @@ opacity:1
 },
 
 {
-transform:"translate(-50%,-50%) scale(18)",
-opacity:.05
+transform:"translate(-50%,-50%) scale(20)",
+opacity:.02
 }
 
 ],{
@@ -333,23 +432,19 @@ fill:"forwards"
 
 
 
-/ SYMBOL AWAKENS /
-
 setTimeout(()=>{
 
 symbol.classList.add("awaken");
 
-},400);
+},500);
 
 
-
-/ FREQUENCY REVEAL */
 
 setTimeout(()=>{
 
 frequency.classList.add("awaken");
 
-},2200);
+},2400);
 
 });
 
