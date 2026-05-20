@@ -1,379 +1,629 @@
 <!DOCTYPE html>
+
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>CHANNEL 17</title>
 
 <style>
 
 *{
+
 margin:0;
+
 padding:0;
+
 box-sizing:border-box;
+
 }
 
 html,body{
+
 width:100%;
+
 height:100%;
+
 overflow:hidden;
+
 background:#000;
+
 font-family:Courier New, monospace;
+
 }
 
 /* =========================
-BACKGROUND
+
+BASE
+
 ========================= */
 
 body{
+
 background:#000;
+
 overflow:hidden;
+
+color:#ddd;
+
 }
 
 /* =========================
+
 NOISE
+
 ========================= */
 
 #noise{
+
 position:fixed;
+
 inset:0;
+
 pointer-events:none;
+
 opacity:.08;
+
 z-index:1;
 
 background-image:
+
 repeating-linear-gradient(
+
 0deg,
+
 rgba(255,255,255,.04) 0px,
+
 rgba(255,255,255,.04) 1px,
+
 transparent 1px,
+
 transparent 3px
+
 );
 
-animation:noiseMove .16s linear infinite;
+animation:noiseMove .15s linear infinite;
+
 }
 
 @keyframes noiseMove{
-0%{
-transform:translateY(0px);
-}
-100%{
-transform:translateY(3px);
-}
+
+0%{transform:translateY(0px);}
+
+100%{transform:translateY(3px);}
+
 }
 
 /* =========================
-GLITCH TAKEOVER
+
+TAKEOVER CHAOS
+
 ========================= */
 
 #takeover{
+
 position:fixed;
+
 inset:0;
+
+overflow:hidden;
+
 pointer-events:none;
-z-index:40;
+
+z-index:60;
+
 opacity:0;
+
 mix-blend-mode:screen;
+
 }
 
-.glitchLine{
+.takeText{
+
 position:absolute;
-width:140%;
-left:-20%;
-height:2px;
-background:
-linear-gradient(
-90deg,
-transparent,
-rgba(70,255,120,.95),
-rgba(255,255,255,.45),
-transparent
-);
 
-animation:lineMove .12s linear infinite;
+font-size:clamp(10px,1vw,14px);
+
+font-weight:bold;
+
+letter-spacing:.18em;
+
+color:#71ff71;
+
+opacity:0;
+
+white-space:nowrap;
+
+animation:panic .12s linear infinite;
+
 }
 
-.glitchLine:nth-child(1){top:12%;}
-.glitchLine:nth-child(2){top:26%;}
-.glitchLine:nth-child(3){top:39%;}
-.glitchLine:nth-child(4){top:53%;}
-.glitchLine:nth-child(5){top:66%;}
-.glitchLine:nth-child(6){top:81%;}
-
-@keyframes lineMove{
+@keyframes panic{
 
 0%{
-transform:translateX(-6%);
-opacity:.12;
+
+transform:translateX(-4px);
+
+opacity:.05;
+
+}
+
+25%{
+
+transform:translateX(3px);
+
+opacity:.95;
+
 }
 
 50%{
-transform:translateX(5%);
-opacity:.9;
+
+transform:translateX(-2px);
+
+opacity:.25;
+
+}
+
+75%{
+
+transform:translateX(5px);
+
+opacity:.7;
+
 }
 
 100%{
-transform:translateX(-3%);
-opacity:.05;
+
+transform:translateX(-3px);
+
+opacity:.02;
+
 }
 
 }
 
 /* =========================
-MAIN WRAP
+
+MAIN
+
 ========================= */
 
 #main{
+
 position:relative;
+
 width:100%;
+
 height:100%;
+
 display:flex;
+
 justify-content:center;
+
 align-items:center;
+
 overflow:hidden;
+
 }
 
 /* =========================
+
 SYMBOL
+
 ========================= */
 
 #symbolWrap{
+
 position:absolute;
-top:37%;
+
+top:36%;
+
 left:50%;
+
 transform:translate(-50%,-50%);
+
 width:min(78vw,460px);
+
 aspect-ratio:1/1;
 
 display:flex;
+
 justify-content:center;
+
 align-items:center;
 
 opacity:0;
+
 transition:2s ease;
+
 z-index:10;
+
 }
 
 #symbolWrap.visible{
+
 opacity:1;
+
 }
 
 #outer{
+
 position:absolute;
+
 width:100%;
-opacity:.38;
+
+opacity:.34;
 
 filter:
+
 drop-shadow(0 0 12px rgba(80,255,120,.08));
 
-animation:outerBreath 8s ease-in-out infinite;
+animation:outerPulse 8s ease-in-out infinite;
+
 }
 
 #inner{
+
 position:absolute;
+
 width:100%;
-opacity:.38;
+
+opacity:.34;
 
 filter:
+
 drop-shadow(0 0 12px rgba(80,255,120,.08));
 
-animation:innerBreath 8s ease-in-out infinite;
+animation:innerPulse 8s ease-in-out infinite;
+
 }
 
-@keyframes outerBreath{
+@keyframes outerPulse{
+
 0%,100%{
+
 opacity:.22;
-transform:scale(1);
-}
-50%{
-opacity:.42;
-transform:scale(1.01);
-}
+
 }
 
-@keyframes innerBreath{
-0%,100%{
-opacity:.22;
-transform:scale(1);
-}
 50%{
+
 opacity:.42;
-transform:scale(1.01);
+
 }
+
+}
+
+@keyframes innerPulse{
+
+0%,100%{
+
+opacity:.22;
+
+}
+
+50%{
+
+opacity:.42;
+
+}
+
 }
 
 /* =========================
-SIGNAL LOST
+
+WARNING
+
 ========================= */
 
-#signal{
+#warning{
+
 position:absolute;
+
 top:60%;
+
 left:50%;
-transform:translateX(-50%);
 
-font-size:clamp(14px,2vw,22px);
-
-letter-spacing:.45em;
-
-color:rgba(210,255,210,.38);
-
-opacity:0;
-
-transition:1.4s ease;
-
-z-index:15;
-}
-
-#signal.visible{
-opacity:1;
-animation:signalFlash .8s infinite;
-}
-
-@keyframes signalFlash{
-
-0%,100%{
-opacity:.12;
-}
-
-50%{
-opacity:.55;
-}
-
-}
-
-/* =========================
-RECONNECT
-========================= */
-
-#reconnect{
-position:absolute;
-top:69%;
-left:50%;
 transform:translateX(-50%);
 
 font-size:clamp(22px,4vw,42px);
 
-letter-spacing:.32em;
+letter-spacing:.28em;
 
-color:rgba(255,220,180,.9);
+color:#8fff8f;
 
-text-shadow:
-0 0 12px rgba(255,120,20,.14),
-0 0 30px rgba(255,100,20,.08);
+opacity:0;
+
+z-index:15;
+
+}
+
+#warning.active{
+
+animation:warningChaos .15s infinite;
+
+}
+
+@keyframes warningChaos{
+
+0%{
+
+opacity:.15;
+
+transform:
+
+translateX(-50%)
+
+translateY(0px);
+
+}
+
+25%{
+
+opacity:1;
+
+transform:
+
+translateX(calc(-50% + 2px))
+
+translateY(-1px);
+
+}
+
+50%{
+
+opacity:.35;
+
+transform:
+
+translateX(calc(-50% - 3px))
+
+translateY(1px);
+
+}
+
+75%{
+
+opacity:.82;
+
+transform:
+
+translateX(calc(-50% + 1px))
+
+translateY(0px);
+
+}
+
+100%{
+
+opacity:.12;
+
+transform:
+
+translateX(calc(-50% - 2px))
+
+translateY(-1px);
+
+}
+
+}
+
+/* =========================
+
+RECONNECT
+
+========================= */
+
+#reconnect{
+
+position:absolute;
+
+top:60%;
+
+left:50%;
+
+transform:translateX(-50%);
+
+font-size:clamp(22px,4vw,42px);
+
+letter-spacing:.28em;
+
+color:#f5d8b4;
 
 opacity:0;
 
 cursor:pointer;
 
-transition:
-opacity 2s ease,
-transform .4s ease,
-text-shadow 1.5s ease;
-
 z-index:20;
+
+text-shadow:
+
+0 0 8px rgba(255,140,40,.12),
+
+0 0 26px rgba(255,120,20,.08);
+
+transition:
+
+opacity 2s ease,
+
+transform .4s ease,
+
+text-shadow 1.6s ease;
+
 }
 
 #reconnect.active{
+
 opacity:1;
-animation:reconnectPulse 5s ease-in-out infinite;
+
+animation:reconnectCall 4s ease-in-out infinite;
+
 }
 
-@keyframes reconnectPulse{
+@keyframes reconnectCall{
 
 0%,100%{
-opacity:.72;
+
+opacity:.58;
+
+text-shadow:
+
+0 0 8px rgba(255,140,40,.08),
+
+0 0 20px rgba(255,120,20,.04);
+
 }
 
 50%{
+
 opacity:1;
+
+text-shadow:
+
+0 0 14px rgba(255,170,90,.22),
+
+0 0 42px rgba(255,120,20,.12);
+
 }
 
 }
 
 #reconnect:hover{
+
 transform:translateX(-50%) scale(1.03);
+
 }
 
 /* =========================
+
 ETCHINGS
+
 ========================= */
 
 #etchings{
+
 position:absolute;
+
 inset:0;
+
 opacity:0;
+
 pointer-events:none;
-transition:2.4s ease;
+
+transition:2.5s ease;
+
 z-index:30;
+
 }
 
 #etchings.visible{
+
 opacity:1;
+
 pointer-events:auto;
+
 }
 
 .etch{
+
 position:absolute;
+
 display:block;
+
 filter:
+
 drop-shadow(0 0 14px rgba(255,120,20,.16))
+
 drop-shadow(0 0 28px rgba(255,120,20,.06));
 
 transition:.4s ease;
+
 }
 
 .etch:hover{
+
 transform:translateX(6px);
-filter:
-drop-shadow(0 0 16px rgba(255,160,60,.3));
+
 }
 
 #etch1{
+
 width:min(54vw,340px);
+
 left:8%;
-top:28%;
+
+top:26%;
+
 transform:rotate(-2deg);
+
 }
 
 #etch2{
+
 width:min(60vw,380px);
+
 left:12%;
+
 top:50%;
+
 transform:rotate(2deg);
+
 }
 
 #etch3{
+
 width:min(56vw,330px);
+
 left:15%;
+
 bottom:12%;
+
 transform:rotate(-4deg);
+
 }
 
 /* =========================
+
 SMOKE
+
 ========================= */
 
 #smoke{
+
 position:fixed;
+
 inset:0;
+
 overflow:hidden;
+
 pointer-events:none;
+
 z-index:2;
+
 }
 
 .cloud{
+
 position:absolute;
 
 width:55vw;
+
 height:55vw;
 
 border-radius:50%;
 
 background:
+
 radial-gradient(circle,
-rgba(255,255,255,.045) 0%,
+
+rgba(255,255,255,.05) 0%,
+
 rgba(255,255,255,.02) 18%,
+
 transparent 70%);
 
 filter:blur(45px);
@@ -381,141 +631,229 @@ filter:blur(45px);
 opacity:0;
 
 animation:smokeFloat linear infinite;
+
 }
 
 .cloud:nth-child(1){
+
 left:-10%;
+
 bottom:-10%;
+
 animation-duration:28s;
+
 }
 
 .cloud:nth-child(2){
+
 right:-20%;
+
 top:10%;
+
 animation-duration:34s;
+
 animation-delay:7s;
+
 }
 
 .cloud:nth-child(3){
+
 left:30%;
+
 bottom:-20%;
+
 animation-duration:30s;
+
 animation-delay:15s;
+
 }
 
 @keyframes smokeFloat{
 
 0%{
+
 transform:translate(0,0) scale(1);
+
 opacity:0;
+
 }
 
 10%{
+
 opacity:.12;
+
 }
 
 50%{
+
 opacity:.05;
+
 }
 
 100%{
+
 transform:translate(160px,-220px) scale(1.35);
+
 opacity:0;
+
 }
 
 }
 
 /* =========================
-CONNECTED STATE
+
+CONNECTED
+
 ========================= */
 
 .connected #outer{
+
 opacity:.02;
+
 filter:blur(2px);
+
 transition:3s ease;
+
 }
 
 .connected #inner{
-opacity:.92;
+
+opacity:1;
+
 transition:3s ease;
 
 filter:
-drop-shadow(0 0 14px rgba(255,170,90,.22))
-drop-shadow(0 0 42px rgba(255,110,20,.12));
+
+drop-shadow(0 0 14px rgba(255,170,90,.24))
+
+drop-shadow(0 0 52px rgba(255,120,20,.16));
+
 }
 
-.connected #signal{
+.connected #warning{
+
 opacity:0;
+
 }
 
 .connected #reconnect{
+
 opacity:0;
+
 pointer-events:none;
+
+}
+
+.connected #symbolWrap{
+
+transform:
+
+translate(-50%,-50%)
+
+scale(1.06);
+
+transition:3s ease;
+
 }
 
 </style>
+
 </head>
 
 <body>
 
 <!-- NOISE -->
+
 <div id="noise"></div>
 
-<!-- GLITCH -->
+<!-- TAKEOVER -->
+
 <div id="takeover">
 
-<div class="glitchLine"></div>
-<div class="glitchLine"></div>
-<div class="glitchLine"></div>
-<div class="glitchLine"></div>
-<div class="glitchLine"></div>
-<div class="glitchLine"></div>
+<div class="takeText" style="top:8%;left:6%;">CH_17 DETECTED</div>
+
+<div class="takeText" style="top:14%;left:58%;">SIGNAL_OVERRIDE</div>
+
+<div class="takeText" style="top:20%;left:14%;">UNAUTHORIZED FREQUENCY</div>
+
+<div class="takeText" style="top:28%;left:72%;">RECOVERING SIGNAL</div>
+
+<div class="takeText" style="top:36%;left:18%;">S1GNAL_L0ST</div>
+
+<div class="takeText" style="top:44%;left:62%;">CHANNEL FOUND</div>
+
+<div class="takeText" style="top:52%;left:10%;">TRANSMISSION ACTIVE</div>
+
+<div class="takeText" style="top:60%;left:68%;">TRUST DETECTED</div>
+
+<div class="takeText" style="top:70%;left:22%;">RECONNECT AVAILABLE</div>
+
+<div class="takeText" style="top:82%;left:56%;">CH17//WAKE&BAKE</div>
 
 </div>
 
 <!-- SMOKE -->
+
 <div id="smoke">
 
 <div class="cloud"></div>
+
 <div class="cloud"></div>
+
 <div class="cloud"></div>
 
 </div>
 
 <!-- MAIN -->
+
 <div id="main">
 
 <!-- SYMBOL -->
+
 <div id="symbolWrap">
 
 <img id="outer" src="Outer17-final.png">
+
 <img id="inner" src="Inner17-final.png">
 
 </div>
 
-<!-- SIGNAL -->
-<div id="signal">
-signal lost
+<!-- WARNING -->
+
+<div id="warning">
+
+SIGNAL LOST
+
 </div>
 
 <!-- RECONNECT -->
+
 <div id="reconnect">
+
 RECONNECT
+
 </div>
 
 <!-- ETCHINGS -->
+
 <div id="etchings">
 
 <a class="etch" id="etch1" href="#">
+
 <img src="lastsesh17.png" width="100%">
+
 </a>
 
 <a class="etch" id="etch2" href="#">
+
 <img src="RoachTray17.png" width="100%">
+
 </a>
 
 <a class="etch" id="etch3" href="#">
+
 <img src="PassItBack17.png" width="100%">
+
 </a>
 
 </div>
@@ -525,55 +863,81 @@ RECONNECT
 <script>
 
 /* =========================
-OPENING TAKEOVER
+
+TAKEOVER
+
 ========================= */
 
 const takeover = document.getElementById("takeover");
 
 setTimeout(()=>{
+
 takeover.style.opacity = 1;
-},80);
+
+},60);
 
 setTimeout(()=>{
+
 takeover.style.opacity = 0;
-},1800);
+
+},2300);
 
 /* =========================
-SYMBOL EMERGENCE
+
+SYMBOL
+
 ========================= */
 
 const symbol = document.getElementById("symbolWrap");
 
 setTimeout(()=>{
+
 symbol.classList.add("visible");
-},1900);
+
+},2400);
 
 /* =========================
-SIGNAL LOST
+
+WARNING
+
 ========================= */
 
-const signal = document.getElementById("signal");
+const warning = document.getElementById("warning");
 
 setTimeout(()=>{
-signal.classList.add("visible");
-},3200);
+
+warning.classList.add("active");
+
+warning.style.opacity = 1;
+
+},3400);
 
 /* =========================
+
 RECONNECT
+
 ========================= */
 
 const reconnect = document.getElementById("reconnect");
 
 setTimeout(()=>{
-signal.classList.remove("visible");
-},6200);
+
+warning.style.opacity = 0;
+
+},6700);
 
 setTimeout(()=>{
+
+warning.classList.remove("active");
+
 reconnect.classList.add("active");
-},7000);
+
+},7600);
 
 /* =========================
+
 CLICK
+
 ========================= */
 
 const etchings = document.getElementById("etchings");
@@ -582,25 +946,40 @@ reconnect.addEventListener("click",()=>{
 
 document.body.classList.add("connected");
 
-/* amber pulse */
+/* amber warmth */
 
 document.body.animate([
+
 {
+
 filter:"brightness(1)"
+
 },
+
 {
-filter:"brightness(1.12)"
+
+filter:"brightness(1.14)"
+
 },
+
 {
+
 filter:"brightness(1)"
+
 }
+
 ],{
-duration:1200,
+
+duration:1600,
+
 easing:"ease"
+
 });
 
 setTimeout(()=>{
+
 etchings.classList.add("visible");
+
 },1200);
 
 });
@@ -608,4 +987,5 @@ etchings.classList.add("visible");
 </script>
 
 </body>
+
 </html>
