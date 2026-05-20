@@ -36,6 +36,26 @@ font-family:Courier New, monospace;
 
 }
 
+/* =========================================
+
+BASE
+
+========================================= */
+
+body{
+
+background:#000;
+
+overflow:hidden;
+
+}
+
+/* =========================================
+
+MATRIX
+
+========================================= */
+
 canvas{
 
 position:fixed;
@@ -54,6 +74,12 @@ background:#000;
 
 }
 
+/* =========================================
+
+STATIC
+
+========================================= */
+
 #noise{
 
 position:fixed;
@@ -62,7 +88,7 @@ inset:0;
 
 pointer-events:none;
 
-opacity:.04;
+opacity:.035;
 
 z-index:2;
 
@@ -102,6 +128,12 @@ transform:translateY(4px);
 
 }
 
+/* =========================================
+
+OVERLAY
+
+========================================= */
+
 #overlay{
 
 position:fixed;
@@ -116,7 +148,7 @@ pointer-events:none;
 
 /* =========================================
 
-SIGNAL LOST
+SYSTEM FAILURE
 
 ========================================= */
 
@@ -124,13 +156,13 @@ SIGNAL LOST
 
 position:absolute;
 
-top:54%;
+top:53%;
 
 left:50%;
 
 transform:translateX(-50%);
 
-font-size:clamp(28px,4vw,48px);
+font-size:clamp(26px,4vw,48px);
 
 letter-spacing:.18em;
 
@@ -144,15 +176,15 @@ white-space:nowrap;
 
 #signalLost.active{
 
-animation:heartbeat .42s ease infinite;
+animation:warningPulse .42s ease infinite;
 
 }
 
-@keyframes heartbeat{
+@keyframes warningPulse{
 
 0%{
 
-opacity:.05;
+opacity:.04;
 
 }
 
@@ -164,7 +196,7 @@ opacity:1;
 
 100%{
 
-opacity:.05;
+opacity:.04;
 
 }
 
@@ -198,7 +230,7 @@ align-items:center;
 
 opacity:0;
 
-transition:2.6s ease;
+transition:2.8s ease;
 
 }
 
@@ -216,7 +248,7 @@ width:100%;
 
 opacity:.34;
 
-transition:5.5s ease;
+transition:6s ease;
 
 }
 
@@ -228,7 +260,7 @@ width:100%;
 
 opacity:.34;
 
-transition:5.5s ease;
+transition:6s ease;
 
 }
 
@@ -248,9 +280,9 @@ left:50%;
 
 transform:translateX(-50%);
 
-font-size:clamp(20px,4vw,36px);
+font-size:clamp(20px,4vw,34px);
 
-letter-spacing:.24em;
+letter-spacing:.22em;
 
 color:#efc18a;
 
@@ -284,7 +316,7 @@ animation:reconnectPulse 4s ease-in-out infinite;
 
 0%,100%{
 
-opacity:.35;
+opacity:.34;
 
 }
 
@@ -294,9 +326,9 @@ opacity:1;
 
 text-shadow:
 
-0 0 16px rgba(255,180,90,.24),
+0 0 16px rgba(255,180,90,.28),
 
-0 0 48px rgba(255,120,20,.14);
+0 0 48px rgba(255,120,20,.18);
 
 }
 
@@ -304,7 +336,7 @@ text-shadow:
 
 /* =========================================
 
-WARMTH
+WARMTH / FLASHLIGHT
 
 ========================================= */
 
@@ -324,17 +356,17 @@ background:
 
 radial-gradient(circle at center,
 
-rgba(255,140,40,.12) 0%,
+rgba(255,150,50,.18) 0%,
 
-rgba(255,120,20,.05) 14%,
+rgba(255,130,30,.08) 10%,
 
-rgba(255,120,20,.02) 26%,
+rgba(255,120,20,.03) 18%,
 
-transparent 60%);
+transparent 40%);
 
 mix-blend-mode:screen;
 
-transition:6s ease;
+transition:7s ease;
 
 }
 
@@ -470,7 +502,7 @@ opacity:0;
 
 pointer-events:none;
 
-transition:2.4s ease;
+transition:3s ease;
 
 }
 
@@ -488,13 +520,19 @@ position:absolute;
 
 display:block;
 
+opacity:.15;
+
 filter:
 
-drop-shadow(0 0 14px rgba(255,120,20,.16))
+drop-shadow(0 0 12px rgba(255,120,20,.08));
 
-drop-shadow(0 0 28px rgba(255,120,20,.06));
+transition:3s ease;
 
-transition:.4s ease;
+}
+
+.connected .etch{
+
+opacity:1;
 
 }
 
@@ -504,7 +542,7 @@ width:min(56vw,350px);
 
 left:8%;
 
-top:20%;
+top:18%;
 
 transform:rotate(-2deg);
 
@@ -516,7 +554,7 @@ width:min(62vw,390px);
 
 left:12%;
 
-top:46%;
+top:44%;
 
 transform:rotate(2deg);
 
@@ -533,6 +571,12 @@ bottom:10%;
 transform:rotate(-4deg);
 
 }
+
+/* =========================================
+
+CONNECTED
+
+========================================= */
 
 .connected #warmth{
 
@@ -638,6 +682,12 @@ RECONNECT
 
 <script>
 
+/* =========================================
+
+CANVAS
+
+========================================= */
+
 const canvas =
 
 document.getElementById("matrix");
@@ -653,6 +703,12 @@ window.innerWidth;
 canvas.height =
 
 window.innerHeight;
+
+/* =========================================
+
+SETTINGS
+
+========================================= */
 
 const chars =
 
@@ -676,11 +732,17 @@ y:
 
 canvas.height * .64,
 
-w:180,
+w:130,
 
-h:90
+h:70
 
 };
+
+/* =========================================
+
+BUILD STREAMS
+
+========================================= */
 
 for(let i=0;i<rows;i++){
 
@@ -708,15 +770,25 @@ finished:false,
 
 vertical:
 
-Math.random() > .90,
+Math.random() > .82,
 
 dead:
 
-Math.random() > .95
+Math.random() > .92,
+
+flash:
+
+Math.random() > .96
 
 });
 
 }
+
+/* =========================================
+
+DRAW MATRIX
+
+========================================= */
 
 function drawMatrix(){
 
@@ -756,6 +828,8 @@ stream.y > hidden17.y &&
 
 stream.y < hidden17.y + hidden17.h;
 
+/* hidden .17 */
+
 if(!inside17){
 
 ctx.fillStyle =
@@ -790,17 +864,19 @@ stream.y
 
 }
 
+/* vertical corruption */
+
 if(
 
 stream.vertical &&
 
-Math.random() > .982
+Math.random() > .986
 
 ){
 
 ctx.fillStyle =
 
-"rgba(100,255,100,.45)";
+"rgba(100,255,100,.55)";
 
 ctx.fillText(
 
@@ -816,17 +892,53 @@ Math.random() * chars.length
 
 charX,
 
-stream.y + (Math.random()*160)
+stream.y + (Math.random()*180)
 
 );
 
 }
 
+/* white corruption flash */
+
+if(
+
+stream.flash &&
+
+Math.random() > .994
+
+){
+
+ctx.fillStyle =
+
+"rgba(255,255,255,.8)";
+
+ctx.fillText(
+
+chars[
+
+Math.floor(
+
+Math.random() * chars.length
+
+)
+
+],
+
+charX,
+
+stream.y
+
+);
+
+}
+
+/* dead missing chunks */
+
 if(
 
 stream.dead &&
 
-Math.random() > .988
+Math.random() > .989
 
 ){
 
@@ -846,7 +958,11 @@ fontSize
 
 }
 
+/* movement */
+
 stream.x += stream.speed;
+
+/* laps */
 
 if(
 
@@ -878,6 +994,8 @@ Math.random() * -1800;
 
 });
 
+/* all complete */
+
 const unfinished =
 
 streams.some(s => !s.finished);
@@ -886,19 +1004,29 @@ if(!unfinished){
 
 clearInterval(matrixLoop);
 
+/* lingering decay */
+
 setTimeout(()=>{
 
 systemFailure();
 
-},1200);
+},1800);
 
 }
 
 }
+
+/* =========================================
+
+SYSTEM FAILURE
+
+========================================= */
 
 function systemFailure(){
 
-ctx.fillStyle = "black";
+ctx.fillStyle =
+
+"rgba(0,0,0,.35)";
 
 ctx.fillRect(
 
@@ -912,6 +1040,32 @@ canvas.height
 
 );
 
+/* white interference */
+
+for(let i=0;i<40;i++){
+
+ctx.fillStyle =
+
+`rgba(255,255,255,${
+
+Math.random() * .18
+
+})`;
+
+ctx.fillRect(
+
+Math.random() * canvas.width,
+
+Math.random() * canvas.height,
+
+Math.random() * 220,
+
+1 + Math.random() * 2
+
+);
+
+}
+
 const signalLost =
 
 document.getElementById("signalLost");
@@ -920,11 +1074,15 @@ signalLost.style.opacity = 1;
 
 signalLost.classList.add("active");
 
+/* warning disappears */
+
 setTimeout(()=>{
 
 signalLost.style.opacity = 0;
 
-},1600);
+},1800);
+
+/* darkness pause */
 
 setTimeout(()=>{
 
@@ -934,7 +1092,9 @@ document
 
 .classList.add("visible");
 
-},2600);
+},3200);
+
+/* reconnect invitation */
 
 setTimeout(()=>{
 
@@ -946,13 +1106,25 @@ document
 
 .classList.add("active");
 
-},4300);
+},5000);
 
 }
+
+/* =========================================
+
+START
+
+========================================= */
 
 const matrixLoop =
 
 setInterval(drawMatrix,28);
+
+/* =========================================
+
+RECONNECT
+
+========================================= */
 
 const reconnect =
 
@@ -965,6 +1137,8 @@ reconnect.classList.remove("active");
 reconnect.style.opacity = 0;
 
 document.body.classList.add("connected");
+
+/* warmth from touch */
 
 document
 
@@ -980,19 +1154,21 @@ clipPath:"circle(0% at center)"
 
 {
 
-clipPath:"circle(60% at center)"
+clipPath:"circle(70% at center)"
 
 }
 
 ],{
 
-duration:6200,
+duration:7000,
 
 fill:"forwards",
 
 easing:"ease"
 
 });
+
+/* smoke */
 
 setTimeout(()=>{
 
@@ -1002,7 +1178,9 @@ document
 
 .style.opacity = 1;
 
-},1800);
+},2200);
+
+/* etchings emerge through darkness */
 
 setTimeout(()=>{
 
@@ -1012,7 +1190,7 @@ document
 
 .classList.add("visible");
 
-},5200);
+},6200);
 
 });
 
