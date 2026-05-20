@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -9,302 +8,78 @@
 
 <style>
 
-html, body {
+body{
 margin:0;
-padding:0;
-width:100%;
-height:100%;
-overflow:hidden;
 background:black;
-font-family:Courier New, monospace;
 color:white;
-}
-
-.screen{
-position:relative;
-width:100%;
-height:100vh;
-background:black;
+font-family:monospace;
 overflow:hidden;
 }
 
-
-
-/* VIOLENT SIGNAL TAKEOVER /
-
-.glitch{
+.center{
 position:absolute;
-top:0;
-left:0;
 width:100%;
-height:100%;
-
-background:
-repeating-linear-gradient(
-0deg,
-rgba(255,255,255,.10) 0px,
-rgba(255,255,255,.02) 1px,
-transparent 2px,
-transparent 4px
-);
-
-opacity:.05;
-
-animation:glitch 2s ease;
-
-pointer-events:none;
-
-z-index:20;
+text-align:center;
 }
 
-@keyframes glitch {
-
-0%{
-opacity:1;
-transform:
-translateX(-30px)
-skewX(12deg);
-}
-
-20%{
-opacity:.2;
-}
-
-40%{
-opacity:1;
-transform:
-translateX(20px)
-skewX(-10deg);
-}
-
-70%{
+#symbol{
+top:30%;
+font-size:80px;
 opacity:.1;
 }
 
-100%{
-opacity:.05;
-transform:none;
-}
-
-}
-
-
-
-/ TRIANGLE /
-
-.triangle{
-
-position:absolute;
-
-top:50%;
-left:50%;
-
-width:0;
-height:0;
-
-margin-left:-100px;
-margin-top:-150px;
-
-border-left:100px solid transparent;
-border-right:100px solid transparent;
-border-bottom:180px solid rgba(255,255,255,.05);
-
-opacity:.25;
-
-transition:4s ease;
-
-z-index:2;
-}
-
-
-
-/ INNER SIGNAL /
-
-.symbol{
-
-position:absolute;
-
-top:38%;
-left:0;
-
-width:100%;
-
-text-align:center;
-
-font-size:80px;
-
-letter-spacing:10px;
-
-opacity:.03;
-
-transition:4s ease;
-
-z-index:3;
-}
-
-
-
-/ SIGNAL LOST /
-
-.signal{
-
-position:absolute;
-
-top:63%;
-
-left:0;
-
-width:100%;
-
-text-align:center;
-
-font-size:12px;
-
+#signal{
+top:55%;
+font-size:14px;
 letter-spacing:6px;
-
-opacity:.6;
-
-z-index:5;
 }
 
-
-
-/ RECONNECT /
-
-.reconnect{
-
-position:absolute;
-
-top:70%;
-
-left:0;
-
-width:100%;
-
-text-align:center;
-
-font-size:15px;
-
+#reconnect{
+top:65%;
+font-size:18px;
 letter-spacing:8px;
-
-opacity:.9;
-
 cursor:pointer;
-
-z-index:6;
 }
 
-
-
-/ EMBER /
-
-.ember{
-
+#frequency{
 position:absolute;
-
-width:8px;
-height:8px;
-
-border-radius:50%;
-
+left:20px;
+bottom:20px;
 opacity:0;
-
-pointer-events:none;
-
-background:
-radial-gradient(
-circle,
-rgba(255,220,160,1) 0%,
-rgba(255,140,70,.6) 45%,
-transparent 100%
-);
-
-box-shadow:
-0 0 8px rgba(255,120,50,.35);
-
-z-index:15;
 }
 
-
-
-/ FREQUENCY ARCS /
-
-.frequency{
-
-position:absolute;
-
-left:25px;
-bottom:30px;
-
-opacity:0;
-
-transition:3s ease;
-
-z-index:10;
-}
-
-.frequency div{
-
+#frequency div{
 margin-top:10px;
-
 font-size:10px;
-
 letter-spacing:4px;
-
-opacity:.7;
 }
-
-
-
-/ AWAKEN */
 
 .show{
-opacity:1;
-}
-
-.awaken{
-opacity:.15;
-}
-
-.fade{
-opacity:.03;
+opacity:1 !important;
 }
 
 </style>
-
 </head>
 
 <body>
 
-<div class="screen">
-
-<div class="glitch"></div>
-
-<div class="triangle" id="triangle"></div>
-
-<div class="symbol" id="symbol">
+<div id="symbol" class="center">
 .17
 </div>
 
-<div class="signal" id="signal">
+<div id="signal" class="center">
 signal lost
 </div>
 
-<div class="reconnect" id="reconnect">
+<div id="reconnect" class="center">
 reconnect
 </div>
 
-<div class="frequency" id="frequency">
+<div id="frequency">
 
 <div>Latest Sesh</div>
-
 <div>Roach Tray</div>
-
 <div>Pass it Back</div>
-
-</div>
-
-<div class="ember" id="ember"></div>
 
 </div>
 
@@ -313,73 +88,16 @@ reconnect
 var reconnect =
 document.getElementById("reconnect");
 
-var signal =
-document.getElementById("signal");
-
-var ember =
-document.getElementById("ember");
-
 var frequency =
 document.getElementById("frequency");
 
-var symbol =
-document.getElementById("symbol");
+reconnect.onclick=function(){
 
-var triangle =
-document.getElementById("triangle");
+reconnect.style.display="none";
 
-
-
-reconnect.onclick=function(e){
-
-signal.style.opacity="0";
-
-reconnect.style.opacity="0";
-
-ember.style.left=e.clientX+"px";
-
-ember.style.top=e.clientY+"px";
-
-ember.style.opacity="1";
-
-
-
-ember.animate([
-
-{
-transform:"scale(.5)",
-opacity:1
-},
-
-{
-transform:"scale(6)",
-opacity:.02
-}
-
-],{
-
-duration:4000,
-fill:"forwards"
-
-});
-
-
-
-setTimeout(function(){
-
-symbol.classList.add("awaken");
-
-triangle.classList.add("fade");
-
-},700);
-
-
-
-setTimeout(function(){
+document.getElementById("signal").style.display="none";
 
 frequency.classList.add("show");
-
-},2200);
 
 };
 
