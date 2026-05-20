@@ -8,15 +8,21 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-<title>CHANNEL 17</title>
+<title>channel 17</title>
 
 <style>
 
-html,body{
+*{
 
 margin:0;
 
 padding:0;
+
+box-sizing:border-box;
+
+}
+
+html,body{
 
 width:100%;
 
@@ -28,167 +34,155 @@ background:#000;
 
 font-family:Courier New, monospace;
 
-cursor:crosshair;
-
 }
 
-/* MAIN WORLD */
-
-#world{
+body{
 
 position:relative;
 
-width:100%;
-
-height:100%;
-
-background:#000;
-
-overflow:hidden;
+color:#ddd;
 
 }
 
-/* STATIC */
+/* =========================
 
-#static{
+   SIGNAL CHAOS
 
-position:absolute;
-
-inset:0;
-
-opacity:.045;
-
-mix-blend-mode:screen;
-
-pointer-events:none;
-
-background-image:
-
-repeating-radial-gradient(circle at center,
-
-rgba(255,255,255,.03) 0px,
-
-rgba(255,255,255,0) 3px);
-
-animation:staticMove .25s infinite linear;
-
-}
-
-@keyframes staticMove{
-
-0%{transform:translate(0,0);}
-
-50%{transform:translate(-1px,1px);}
-
-100%{transform:translate(1px,-1px);}
-
-}
-
-/* VIOLENT SIGNAL GLITCH */
+========================= */
 
 #glitch{
 
-position:absolute;
+position:fixed;
 
 inset:0;
 
 background:#000;
 
-display:flex;
-
-align-items:center;
-
-justify-content:center;
-
-z-index:20;
+z-index:9999;
 
 pointer-events:none;
 
-animation:glitchOut 3.8s forwards;
+opacity:1;
+
+animation:glitchKill 3.2s forwards;
 
 }
 
-.glitchText{
+#glitch::before,
+
+#glitch::after{
+
+content:"";
 
 position:absolute;
 
-color:#bbb;
-
-font-size:11vw;
-
-opacity:.12;
-
-letter-spacing:.2em;
+inset:0;
 
 mix-blend-mode:screen;
 
-animation:glitchShake .08s infinite;
+}
+
+#glitch::before{
+
+background:
+
+repeating-linear-gradient(
+
+0deg,
+
+rgba(255,255,255,.04) 0px,
+
+rgba(255,255,255,.04) 1px,
+
+transparent 2px,
+
+transparent 4px
+
+);
+
+animation:
+
+scanMove .08s infinite,
+
+flicker .15s infinite;
 
 }
 
-@keyframes glitchShake{
+#glitch::after{
 
-0%{transform:translate(0px,0px);}
+background:
 
-25%{transform:translate(-6px,2px);}
+linear-gradient(
 
-50%{transform:translate(4px,-2px);}
+90deg,
 
-75%{transform:translate(-3px,3px);}
+transparent,
 
-100%{transform:translate(2px,-1px);}
+rgba(255,120,40,.12),
+
+transparent
+
+);
+
+filter:blur(30px);
+
+animation:burnFlash .4s infinite;
 
 }
 
-.scan{
+@keyframes glitchKill{
 
-position:absolute;
+0%{opacity:1;}
 
-width:100%;
+72%{opacity:1;}
 
-height:4px;
+100%{opacity:0;visibility:hidden;}
 
-background:rgba(255,255,255,.06);
+}
 
-animation:scanMove .18s infinite linear;
+@keyframes flicker{
+
+0%{opacity:.3;}
+
+20%{opacity:.7;}
+
+40%{opacity:.2;}
+
+60%{opacity:.9;}
+
+80%{opacity:.15;}
+
+100%{opacity:.6;}
 
 }
 
 @keyframes scanMove{
 
-0%{top:-10%;}
+from{transform:translateY(-10px);}
 
-100%{top:110%;}
-
-}
-
-@keyframes glitchOut{
-
-0%{opacity:1;}
-
-80%{opacity:1;}
-
-100%{
-
-opacity:0;
-
-visibility:hidden;
+to{transform:translateY(10px);}
 
 }
 
+@keyframes burnFlash{
+
+0%{transform:translateX(-100%);}
+
+100%{transform:translateX(100%);}
+
 }
 
-/* CENTER SIGNAL */
+/* =========================
 
-#center{
+   MAIN FIELD
 
-position:absolute;
+========================= */
 
-top:50%;
+#field{
 
-left:50%;
+position:fixed;
 
-transform:translate(-50%,-50%);
+inset:0;
 
 display:flex;
 
@@ -198,147 +192,161 @@ align-items:center;
 
 justify-content:center;
 
-z-index:5;
-
 }
 
-/* SYMBOL */
+/* =========================
+
+   SYMBOL
+
+========================= */
 
 #symbolWrap{
 
 position:relative;
 
-width:280px;
+width:52vw;
 
-height:280px;
+max-width:290px;
 
-display:flex;
+min-width:210px;
 
-align-items:center;
+aspect-ratio:1/1;
 
-justify-content:center;
+opacity:.18;
+
+transition:all 2.4s ease;
+
+filter:blur(.2px);
 
 }
-
-/* OUTER */
 
 #outer{
 
 position:absolute;
 
+inset:0;
+
 width:100%;
 
-opacity:.18;
+height:100%;
 
-filter:blur(.4px);
+object-fit:contain;
 
-animation:outerFloat 9s ease-in-out infinite;
+opacity:.2;
+
+transition:all 2.8s ease;
 
 }
-
-/* INNER */
 
 #inner{
 
 position:absolute;
 
-width:66%;
+inset:0;
 
-opacity:.18;
+width:100%;
 
-mix-blend-mode:screen;
+height:100%;
 
-animation:innerPulse 7s ease-in-out infinite;
+object-fit:contain;
 
-}
+opacity:.65;
 
-/* BEACON */
+filter:
 
-#beacon{
+drop-shadow(0 0 4px rgba(255,180,110,.06))
 
-position:absolute;
+drop-shadow(0 0 16px rgba(255,140,60,.12));
 
-width:52%;
-
-opacity:.22;
-
-mix-blend-mode:screen;
-
-transition:all 4s ease;
-
-filter:drop-shadow(0 0 0px rgba(255,120,40,0));
+transition:all 2.8s ease;
 
 }
 
-@keyframes outerFloat{
+/* after reconnect */
 
-0%{transform:translateY(0px);}
+.connected #outer{
 
-50%{transform:translateY(-4px);}
+opacity:0;
 
-100%{transform:translateY(0px);}
+filter:blur(8px);
 
-}
-
-@keyframes innerPulse{
-
-0%{opacity:.14;}
-
-50%{opacity:.23;}
-
-100%{opacity:.14;}
+transform:scale(1.12);
 
 }
 
-/* SIGNAL TEXT */
+.connected #inner{
+
+opacity:.92;
+
+filter:
+
+drop-shadow(0 0 6px rgba(255,190,120,.22))
+
+drop-shadow(0 0 22px rgba(255,120,40,.28));
+
+}
+
+/* =========================
+
+   SIGNAL TEXT
+
+========================= */
 
 #signalLost{
 
-margin-top:35px;
+margin-top:42px;
+
+letter-spacing:9px;
 
 font-size:13px;
 
-letter-spacing:.55em;
+opacity:.22;
 
-color:rgba(255,255,255,.23);
-
-text-transform:lowercase;
+transition:all 1.5s ease;
 
 }
 
 #reconnect{
 
-margin-top:48px;
+margin-top:40px;
 
-font-size:18px;
+font-size:22px;
 
-letter-spacing:.7em;
-
-color:rgba(255,255,255,.72);
+letter-spacing:12px;
 
 cursor:pointer;
 
-transition:all 1.2s ease;
+color:#ddd;
 
-user-select:none;
+opacity:.82;
+
+transition:all .6s ease;
+
+position:relative;
 
 }
 
 #reconnect:hover{
 
-color:#fff;
+opacity:1;
+
+letter-spacing:16px;
 
 }
 
-/* EMBER */
+/* =========================
 
-#ember{
+   AMBER TOUCH
 
-position:absolute;
+========================= */
 
-width:700px;
+#pulse{
 
-height:700px;
+position:fixed;
+
+width:20px;
+
+height:20px;
 
 border-radius:50%;
 
@@ -346,37 +354,157 @@ background:
 
 radial-gradient(circle,
 
-rgba(255,110,35,.12) 0%,
+rgba(255,170,90,.55),
 
-rgba(255,90,20,.05) 18%,
-
-rgba(255,80,10,.02) 35%,
+rgba(255,120,40,.18),
 
 transparent 70%);
 
-opacity:0;
-
 pointer-events:none;
 
-mix-blend-mode:screen;
+transform:translate(-50%,-50%) scale(0);
 
-filter:blur(60px);
+opacity:0;
 
-transition:
-
-opacity 4s ease,
-
-transform 6s ease;
-
-z-index:2;
+z-index:8000;
 
 }
 
-/* SMOKE */
+.pulsing{
 
-#smoke{
+animation:moodTouch 2.8s ease forwards;
 
-position:absolute;
+}
+
+@keyframes moodTouch{
+
+0%{
+
+transform:translate(-50%,-50%) scale(.4);
+
+opacity:.65;
+
+}
+
+100%{
+
+transform:translate(-50%,-50%) scale(28);
+
+opacity:0;
+
+}
+
+}
+
+/* =========================
+
+   ETCHINGS
+
+========================= */
+
+#etchings{
+
+position:fixed;
+
+left:7vw;
+
+bottom:13vh;
+
+display:flex;
+
+flex-direction:column;
+
+gap:52px;
+
+opacity:0;
+
+transform:translateY(30px);
+
+transition:all 2s ease;
+
+z-index:40;
+
+}
+
+.connected #etchings{
+
+opacity:1;
+
+transform:translateY(0);
+
+}
+
+.etch{
+
+display:block;
+
+cursor:pointer;
+
+user-select:none;
+
+transition:all .45s ease;
+
+filter:
+
+drop-shadow(0 0 4px rgba(255,120,40,.06));
+
+}
+
+.etch img{
+
+width:min(62vw,360px);
+
+height:auto;
+
+display:block;
+
+}
+
+.etch:hover{
+
+transform:translateX(8px);
+
+filter:
+
+drop-shadow(0 0 8px rgba(255,150,70,.2))
+
+drop-shadow(0 0 18px rgba(255,120,40,.15));
+
+}
+
+/* uneven humanity */
+
+#etch1{
+
+transform:rotate(-3deg);
+
+}
+
+#etch2{
+
+margin-left:28px;
+
+transform:rotate(1deg);
+
+}
+
+#etch3{
+
+margin-left:10px;
+
+transform:rotate(-1.5deg);
+
+}
+
+/* =========================
+
+   SMOKE
+
+========================= */
+
+.smoke{
+
+position:fixed;
 
 inset:-20%;
 
@@ -384,165 +512,109 @@ pointer-events:none;
 
 opacity:0;
 
-transition:opacity 6s ease;
+transition:opacity 4s ease;
 
 z-index:3;
 
 }
 
-.smokeLayer{
+.connected .smoke{
+
+opacity:.16;
+
+}
+
+.smoke::before,
+
+.smoke::after{
+
+content:"";
 
 position:absolute;
 
-width:140%;
+width:60vw;
 
-height:140%;
+height:60vw;
 
 background:
 
-radial-gradient(circle at center,
+radial-gradient(circle,
 
-rgba(255,255,255,.035),
+rgba(255,255,255,.08),
 
-transparent 60%);
+transparent 70%);
 
-filter:blur(90px);
+filter:blur(60px);
 
-animation:smokeDrift linear infinite;
-
-mix-blend-mode:screen;
+animation:drift 24s linear infinite;
 
 }
 
-.smokeLayer:nth-child(1){
+.smoke::after{
 
-animation-duration:35s;
+left:50%;
 
-top:-10%;
+top:40%;
 
-left:-20%;
+animation-duration:31s;
 
-}
-
-.smokeLayer:nth-child(2){
-
-animation-duration:42s;
-
-top:10%;
-
-left:-15%;
+opacity:.5;
 
 }
 
-.smokeLayer:nth-child(3){
-
-animation-duration:51s;
-
-top:-5%;
-
-left:-25%;
-
-}
-
-@keyframes smokeDrift{
+@keyframes drift{
 
 0%{
 
-transform:translateX(0px) translateY(0px);
+transform:translate(-10vw,5vh) scale(1);
 
 }
 
 50%{
 
-transform:translateX(60px) translateY(-20px);
+transform:translate(12vw,-8vh) scale(1.2);
 
 }
 
 100%{
 
-transform:translateX(0px) translateY(0px);
+transform:translate(-8vw,10vh) scale(.9);
 
 }
 
 }
 
-/* NOTES */
+/* =========================
 
-#notes{
+   MOBILE
 
-position:absolute;
-
-left:48px;
-
-bottom:90px;
-
-display:flex;
-
-flex-direction:column;
-
-gap:44px;
-
-opacity:0;
-
-transition:opacity 5s ease;
-
-z-index:8;
-
-}
-
-.note{
-
-width:230px;
-
-opacity:.92;
-
-filter:
-
-drop-shadow(0 0 12px rgba(255,110,35,.12));
-
-transition:all 1.5s ease;
-
-}
-
-.note:hover{
-
-transform:translateX(6px);
-
-filter:
-
-drop-shadow(0 0 20px rgba(255,130,40,.24));
-
-}
-
-/* MOBILE */
+========================= */
 
 @media(max-width:700px){
 
-#symbolWrap{
+#etchings{
 
-width:220px;
+left:9vw;
 
-height:220px;
+bottom:12vh;
+
+gap:40px;
+
+}
+
+#signalLost{
+
+font-size:11px;
+
+letter-spacing:7px;
 
 }
 
 #reconnect{
 
-font-size:15px;
+font-size:20px;
 
-}
-
-.note{
-
-width:180px;
-
-}
-
-#notes{
-
-left:28px;
-
-bottom:72px;
+letter-spacing:10px;
 
 }
 
@@ -554,43 +626,19 @@ bottom:72px;
 
 <body>
 
-<div id="world">
+<div id="glitch"></div>
 
-<div id="static"></div>
+<div class="smoke"></div>
 
-<div id="ember"></div>
+<div id="pulse"></div>
 
-<div id="smoke">
-
-<div class="smokeLayer"></div>
-
-<div class="smokeLayer"></div>
-
-<div class="smokeLayer"></div>
-
-</div>
-
-<!-- GLITCH -->
-
-<div id="glitch">
-
-<div class="glitchText">CHANNEL 17</div>
-
-<div class="scan"></div>
-
-</div>
-
-<!-- CENTER -->
-
-<div id="center">
+<div id="field">
 
 <div id="symbolWrap">
 
 <img id="outer" src="Outer17-final.png">
 
 <img id="inner" src="Inner17-final.png">
-
-<img id="beacon" src="Beacon17.png">
 
 </div>
 
@@ -600,17 +648,25 @@ bottom:72px;
 
 </div>
 
-<!-- NOTES -->
+<div id="etchings">
 
-<div id="notes">
+<a class="etch" id="etch1" href="#">
 
-<img class="note" src="lastsesh17.png">
+<img src="lastsesh17.png">
 
-<img class="note" src="RoachTray17.png">
+</a>
 
-<img class="note" src="PassItBack17.png">
+<a class="etch" id="etch2" href="#">
 
-</div>
+<img src="RoachTray17.png">
+
+</a>
+
+<a class="etch" id="etch3" href="#">
+
+<img src="PassItBack17.png">
+
+</a>
 
 </div>
 
@@ -618,103 +674,29 @@ bottom:72px;
 
 const reconnect = document.getElementById("reconnect");
 
-const notes = document.getElementById("notes");
+const pulse = document.getElementById("pulse");
 
-const ember = document.getElementById("ember");
+reconnect.addEventListener("click",(e)=>{
 
-const smoke = document.getElementById("smoke");
+pulse.style.left = e.clientX + "px";
 
-const beacon = document.getElementById("beacon");
+pulse.style.top = e.clientY + "px";
 
-let connected = false;
+pulse.classList.remove("pulsing");
 
-/* RECONNECT */
+void pulse.offsetWidth;
 
-reconnect.addEventListener("click", ()=>{
+pulse.classList.add("pulsing");
 
-if(connected) return;
-
-connected = true;
-
-/* SIGNAL LOCK */
+document.body.classList.add("connected");
 
 document.getElementById("signalLost").style.opacity = "0";
 
 reconnect.style.opacity = "0";
 
-/* NOTES APPEAR */
-
-setTimeout(()=>{
-
-notes.style.opacity = "1";
-
-},900);
-
-/* SMOKE */
-
-setTimeout(()=>{
-
-smoke.style.opacity = ".42";
-
-},1200);
-
-/* BEACON WAKE */
-
-setTimeout(()=>{
-
-beacon.style.opacity = ".65";
-
-beacon.style.filter =
-
-"drop-shadow(0 0 14px rgba(255,120,40,.22))";
-
-},1600);
+reconnect.style.pointerEvents = "none";
 
 });
-
-/* SACRED EMBER TOUCH */
-
-document.addEventListener("touchstart", emberTouch);
-
-document.addEventListener("mousemove", emberMove);
-
-function emberTouch(e){
-
-if(!connected) return;
-
-const touch = e.touches[0];
-
-ember.style.opacity = ".42";
-
-ember.style.left = (touch.clientX - 350) + "px";
-
-ember.style.top = (touch.clientY - 350) + "px";
-
-beacon.style.filter =
-
-"drop-shadow(0 0 24px rgba(255,130,40,.35))";
-
-setTimeout(()=>{
-
-ember.style.opacity = ".08";
-
-beacon.style.filter =
-
-"drop-shadow(0 0 14px rgba(255,120,40,.18))";
-
-},4500);
-
-}
-
-function emberMove(e){
-
-if(!connected) return;
-
-ember.style.left = (e.clientX - 350) + "px";
-
-ember.style.top = (e.clientY - 350) + "px";
-
-}
 
 </script>
 
