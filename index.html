@@ -3,7 +3,7 @@
 
 <head>
 
-<meta charset="UTF-8" />
+<meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
 <title>channel 17</title>
@@ -27,22 +27,28 @@ width:100vw;
 color:#d8d2c8;
 }
 
+
+
+/ MAIN /
+
 .screen{
 position:relative;
 width:100%;
 height:100vh;
 overflow:hidden;
+
 background:
 radial-gradient(
 circle at center,
-rgba(14,14,14,.94) 0%,
-#000 72%
+rgba(12,12,12,.92) 0%,
+#000 76%
 );
+
 }
 
 
 
-/ OPENING STATIC /
+/ STATIC /
 
 .glitch{
 position:absolute;
@@ -50,14 +56,16 @@ inset:-10%;
 opacity:0;
 pointer-events:none;
 z-index:999;
+
 background:
 repeating-linear-gradient(
 0deg,
-rgba(255,255,255,.18) 0px,
-rgba(255,255,255,.18) 2px,
+rgba(255,255,255,.16) 0px,
+rgba(255,255,255,.16) 2px,
 transparent 3px,
 transparent 7px
 ),
+
 repeating-linear-gradient(
 90deg,
 rgba(255,255,255,.06) 0px,
@@ -65,18 +73,18 @@ rgba(255,255,255,.06) 1px,
 transparent 2px,
 transparent 6px
 );
+
 mix-blend-mode:screen;
 }
 
 .glitch.active{
-animation:violentGlitch 1.4s steps(2) forwards;
+animation:violentGlitch 1.5s steps(2) forwards;
 }
 
 @keyframes violentGlitch{
 
 0%{
 opacity:0;
-transform:scale(1);
 }
 
 10%{
@@ -90,22 +98,22 @@ skewX(16deg);
 opacity:0;
 }
 
-35%{
+36%{
 opacity:1;
 transform:
-translateX(34px)
+translateX(28px)
 skewX(-10deg);
 }
 
-48%{
+52%{
 opacity:0;
 }
 
-68%{
+72%{
 opacity:.7;
 transform:
-translateY(-8px)
-scale(1.03);
+translateY(-6px)
+scale(1.02);
 }
 
 100%{
@@ -124,8 +132,8 @@ position:absolute;
 top:50%;
 left:50%;
 transform:translate(-50%,-50%);
-width:280px;
-height:280px;
+width:250px;
+height:250px;
 }
 
 .outer-symbol,
@@ -140,7 +148,7 @@ opacity:0;
 .outer-symbol{
 filter:
 blur(1px)
-brightness(.42);
+brightness(.4);
 }
 
 .outer-symbol.visible{
@@ -158,7 +166,6 @@ opacity:0;
 filter:
 blur(14px)
 brightness(.04);
-transform:scale(.95);
 }
 
 100%{
@@ -166,7 +173,6 @@ opacity:.34;
 filter:
 blur(1px)
 brightness(.5);
-transform:scale(1);
 }
 
 }
@@ -178,7 +184,7 @@ opacity:0;
 filter:
 blur(18px)
 brightness(.2);
-transform:scale(.92);
+transform:scale(.94);
 }
 
 100%{
@@ -191,28 +197,23 @@ transform:scale(1);
 
 
 
-/ SIGNAL TEXT /
+/ SIGNAL LOST /
 
-.text-zone{
+.signal-line{
 position:absolute;
 top:73%;
 left:50%;
 transform:translateX(-50%);
-width:340px;
-height:50px;
-}
 
-.signal-line{
-position:absolute;
-width:100%;
-text-align:center;
 letter-spacing:8px;
+font-size:.95rem;
+
 opacity:0;
 color:#cfc7bb;
 }
 
 .signal-line.active{
-animation:signalFlicker 2.8s ease forwards;
+animation:signalFlicker 3s ease forwards;
 }
 
 @keyframes signalFlicker{
@@ -223,21 +224,21 @@ filter:blur(8px);
 letter-spacing:18px;
 }
 
-22%{
+25%{
 opacity:.14;
 }
 
-44%{
+50%{
 opacity:.05;
 }
 
-70%{
-opacity:.84;
+75%{
+opacity:.8;
 letter-spacing:8px;
 }
 
 100%{
-opacity:.74;
+opacity:.7;
 filter:none;
 letter-spacing:8px;
 }
@@ -250,15 +251,22 @@ letter-spacing:8px;
 
 .reconnect{
 position:absolute;
-width:100%;
-text-align:center;
+
+top:73%;
+left:50%;
+
+transform:translateX(-50%);
+
 letter-spacing:8px;
+font-size:.95rem;
+
 opacity:0;
 cursor:pointer;
+color:#ddd5ca;
 }
 
 .reconnect.live{
-animation:reconnectPulse 2.6s ease infinite;
+animation:reconnectPulse 2.8s ease infinite;
 }
 
 @keyframes reconnectPulse{
@@ -269,8 +277,10 @@ opacity:.08;
 
 50%{
 opacity:1;
+
 text-shadow:
-0 0 14px rgba(255,255,255,.18);
+0 0 10px rgba(255,255,255,.18);
+
 }
 
 100%{
@@ -281,33 +291,45 @@ opacity:.08;
 
 
 
-/ WARMTH /
+/ EMBER /
 
-.warmth{
+.ember{
 position:absolute;
-top:50%;
+
+top:73%;
 left:50%;
-width:120px;
-height:120px;
+
+width:12px;
+height:12px;
+
 border-radius:50%;
-transform:translate(-50%,-50%);
-pointer-events:none;
+
 opacity:0;
+pointer-events:none;
+
+transform:
+translate(-50%,-50%)
+scale(.2);
 
 background:
 radial-gradient(
 circle,
-rgba(255,210,140,.12) 0%,
-rgba(255,180,120,.05) 36%,
-transparent 70%
+rgba(255,170,80,.95) 0%,
+rgba(255,120,50,.7) 30%,
+rgba(255,70,20,.25) 60%,
+transparent 100%
 );
+
+box-shadow:
+0 0 12px rgba(255,120,40,.4);
+
 }
 
-.warmth.active{
-animation:warmExpand 4.8s ease forwards;
+.ember.active{
+animation:emberPulse 5s ease forwards;
 }
 
-@keyframes warmExpand{
+@keyframes emberPulse{
 
 0%{
 opacity:0;
@@ -316,26 +338,29 @@ translate(-50%,-50%)
 scale(.2);
 }
 
-14%{
-opacity:.08;
+10%{
+opacity:1;
 }
 
-34%{
-opacity:.12;
+25%{
+transform:
+translate(-50%,-50%)
+scale(1);
 }
 
 100%{
 opacity:.22;
+
 transform:
 translate(-50%,-50%)
-scale(3.4);
+scale(18);
 }
 
 }
 
 
 
-/ INTERFERENCE DISSOLVE /
+/ OUTER INTERFERENCE /
 
 .outer-symbol.dissolve{
 animation:signalBreakdown 4s ease forwards;
@@ -349,9 +374,11 @@ opacity:.34;
 
 100%{
 opacity:0;
+
 filter:
-blur(20px)
+blur(22px)
 brightness(.08);
+
 }
 
 }
@@ -371,10 +398,12 @@ filter:brightness(1);
 }
 
 100%{
-filter:
-brightness(1.06);
 
 opacity:.16;
+
+filter:
+brightness(1.08);
+
 }
 
 }
@@ -385,15 +414,19 @@ opacity:.16;
 
 .frequency-zone{
 position:absolute;
-inset:0;
+
+bottom:8vh;
+left:8vw;
+
 display:flex;
 flex-direction:column;
-align-items:center;
-justify-content:flex-start;
-padding-top:60vh;
+
+gap:18px;
+
 opacity:0;
 pointer-events:none;
-z-index:20;
+
+z-index:50;
 }
 
 .frequency-zone.awake{
@@ -404,7 +437,7 @@ animation:frequencyReveal 3s ease forwards;
 
 0%{
 opacity:0;
-transform:translateY(10px);
+transform:translateY(8px);
 }
 
 100%{
@@ -414,31 +447,23 @@ transform:translateY(0px);
 
 }
 
-.frequency-mark{
-margin-bottom:34px;
-font-size:2rem;
-letter-spacing:12px;
-opacity:.9;
-}
-
-.frequency-links{
-display:flex;
-flex-direction:column;
-gap:24px;
-text-align:center;
-}
-
 .frequency-link{
-letter-spacing:5px;
-opacity:.68;
+font-size:.72rem;
+
+letter-spacing:3px;
+
+opacity:.65;
+
 cursor:pointer;
+
 transition:.3s ease;
 }
 
 .frequency-link:hover{
 opacity:1;
+
 text-shadow:
-0 0 10px rgba(255,230,180,.14);
+0 0 8px rgba(255,220,160,.12);
 }
 
 </style>
@@ -467,8 +492,6 @@ id="innerSymbol"
 
 </div>
 
-<div class="text-zone">
-
 <div
 class="signal-line"
 id="signalLine"
@@ -483,23 +506,15 @@ id="reconnect"
 reconnect
 </div>
 
-</div>
-
 <div
-class="warmth"
-id="warmth"
+class="ember"
+id="ember"
 ></div>
 
 <div
 class="frequency-zone"
 id="frequencyZone"
 >
-
-<div class="frequency-mark">
-:lll
-</div>
-
-<div class="frequency-links">
 
 <div class="frequency-link">
 Latest Sesh
@@ -511,8 +526,6 @@ Roach Tray
 
 <div class="frequency-link">
 Pass One Back
-</div>
-
 </div>
 
 </div>
@@ -536,15 +549,15 @@ document.getElementById("signalLine");
 const reconnect =
 document.getElementById("reconnect");
 
-const warmth =
-document.getElementById("warmth");
+const ember =
+document.getElementById("ember");
 
 const frequencyZone =
 document.getElementById("frequencyZone");
 
 
 
-/ OPENING STATIC /
+/ STATIC /
 
 setTimeout(() => {
 
@@ -586,7 +599,7 @@ signalLine.style.display = "none";
 
 
 
-/ SHOW RECONNECT /
+/ RECONNECT /
 
 setTimeout(() => {
 
@@ -598,17 +611,15 @@ reconnect.style.opacity = "1";
 
 
 
-/ HUMAN TOUCH */
+/ TOUCH */
 
 reconnect.addEventListener("click", () => {
 
 reconnect.classList.remove("live");
 
-reconnect.style.opacity = "0";
 
 
-
-warmth.classList.add("active");
+ember.classList.add("active");
 
 
 
@@ -626,7 +637,7 @@ reconnect.style.display = "none";
 
 frequencyZone.classList.add("awake");
 
-}, 1800);
+}, 1700);
 
 });
 
