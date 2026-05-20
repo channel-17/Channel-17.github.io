@@ -8,8 +8,6 @@
 
 <title>channel 17</title>
 
-<link rel="icon" href="Signal17.png?v=17">
-
 <style>
 
 {
@@ -18,18 +16,14 @@ padding:0;
 box-sizing:border-box;
 }
 
-body{
-background:#000;
+html,body{
+width:100%;
+height:100%;
 overflow:hidden;
+background:#000;
 font-family:"Courier New", monospace;
-height:100vh;
-width:100vw;
-color:#d8d2c8;
+touch-action:none;
 }
-
-
-
-/ MAIN /
 
 .screen{
 position:relative;
@@ -40,10 +34,9 @@ overflow:hidden;
 background:
 radial-gradient(
 circle at center,
-rgba(12,12,12,.92) 0%,
-#000 76%
+rgba(10,10,10,.96) 0%,
+#000 78%
 );
-
 }
 
 
@@ -60,16 +53,16 @@ z-index:999;
 background:
 repeating-linear-gradient(
 0deg,
-rgba(255,255,255,.16) 0px,
-rgba(255,255,255,.16) 2px,
+rgba(255,255,255,.14) 0px,
+rgba(255,255,255,.14) 2px,
 transparent 3px,
 transparent 7px
 ),
 
 repeating-linear-gradient(
 90deg,
-rgba(255,255,255,.06) 0px,
-rgba(255,255,255,.06) 1px,
+rgba(255,255,255,.05) 0px,
+rgba(255,255,255,.05) 1px,
 transparent 2px,
 transparent 6px
 );
@@ -87,32 +80,32 @@ animation:violentGlitch 1.5s steps(2) forwards;
 opacity:0;
 }
 
-10%{
+12%{
 opacity:1;
 transform:
 translateX(-40px)
 skewX(16deg);
 }
 
-22%{
+24%{
 opacity:0;
 }
 
-36%{
+38%{
 opacity:1;
 transform:
-translateX(28px)
+translateX(30px)
 skewX(-10deg);
 }
 
-52%{
+54%{
 opacity:0;
 }
 
 72%{
 opacity:.7;
 transform:
-translateY(-6px)
+translateY(-4px)
 scale(1.02);
 }
 
@@ -132,8 +125,8 @@ position:absolute;
 top:50%;
 left:50%;
 transform:translate(-50%,-50%);
-width:250px;
-height:250px;
+width:240px;
+height:240px;
 }
 
 .outer-symbol,
@@ -148,7 +141,7 @@ opacity:0;
 .outer-symbol{
 filter:
 blur(1px)
-brightness(.4);
+brightness(.35);
 }
 
 .outer-symbol.visible{
@@ -163,16 +156,18 @@ animation:innerReveal 4s ease forwards;
 
 0%{
 opacity:0;
+
 filter:
-blur(14px)
+blur(18px)
 brightness(.04);
 }
 
 100%{
-opacity:.34;
+opacity:.28;
+
 filter:
 blur(1px)
-brightness(.5);
+brightness(.45);
 }
 
 }
@@ -181,15 +176,19 @@ brightness(.5);
 
 0%{
 opacity:0;
+
 filter:
-blur(18px)
+blur(20px)
 brightness(.2);
-transform:scale(.94);
+
+transform:scale(.95);
 }
 
 100%{
 opacity:1;
+
 filter:none;
+
 transform:scale(1);
 }
 
@@ -201,15 +200,18 @@ transform:scale(1);
 
 .signal-line{
 position:absolute;
+
 top:73%;
 left:50%;
+
 transform:translateX(-50%);
 
 letter-spacing:8px;
-font-size:.95rem;
+font-size:.9rem;
 
 opacity:0;
-color:#cfc7bb;
+
+color:#d4cdc1;
 }
 
 .signal-line.active{
@@ -221,18 +223,18 @@ animation:signalFlicker 3s ease forwards;
 0%{
 opacity:0;
 filter:blur(8px);
-letter-spacing:18px;
+letter-spacing:16px;
 }
 
-25%{
+24%{
 opacity:.14;
 }
 
-50%{
+52%{
 opacity:.05;
 }
 
-75%{
+74%{
 opacity:.8;
 letter-spacing:8px;
 }
@@ -258,15 +260,17 @@ left:50%;
 transform:translateX(-50%);
 
 letter-spacing:8px;
-font-size:.95rem;
+font-size:.9rem;
 
 opacity:0;
+
 cursor:pointer;
+
 color:#ddd5ca;
 }
 
 .reconnect.live{
-animation:reconnectPulse 2.8s ease infinite;
+animation:reconnectPulse 2.6s ease infinite;
 }
 
 @keyframes reconnectPulse{
@@ -279,8 +283,7 @@ opacity:.08;
 opacity:1;
 
 text-shadow:
-0 0 10px rgba(255,255,255,.18);
-
+0 0 8px rgba(255,255,255,.18);
 }
 
 100%{
@@ -299,8 +302,8 @@ position:absolute;
 top:73%;
 left:50%;
 
-width:12px;
-height:12px;
+width:8px;
+height:8px;
 
 border-radius:50%;
 
@@ -309,58 +312,70 @@ pointer-events:none;
 
 transform:
 translate(-50%,-50%)
-scale(.2);
+scale(.15);
 
 background:
 radial-gradient(
 circle,
-rgba(255,170,80,.95) 0%,
-rgba(255,120,50,.7) 30%,
-rgba(255,70,20,.25) 60%,
+rgba(255,180,90,1) 0%,
+rgba(255,120,50,.9) 25%,
+rgba(255,70,20,.18) 55%,
 transparent 100%
 );
 
 box-shadow:
-0 0 12px rgba(255,120,40,.4);
-
+0 0 10px rgba(255,120,40,.42);
 }
 
 .ember.active{
-animation:emberPulse 5s ease forwards;
+animation:emberPulse 6s ease forwards;
 }
 
 @keyframes emberPulse{
 
 0%{
 opacity:0;
+
 transform:
 translate(-50%,-50%)
-scale(.2);
+scale(.15);
 }
 
-10%{
+8%{
 opacity:1;
 }
 
-25%{
+18%{
 transform:
 translate(-50%,-50%)
-scale(1);
+scale(.9);
+}
+
+42%{
+
+opacity:.38;
+
+transform:
+translate(-50%,-50%)
+scale(2.4);
+
 }
 
 100%{
-opacity:.22;
+
+opacity:.08;
 
 transform:
 translate(-50%,-50%)
-scale(18);
-}
+scale(7);
 
 }
 
+}
 
 
-/ OUTER INTERFERENCE /
+
+/ INTERFERENCE /
 
 .outer-symbol.dissolve{
 animation:signalBreakdown 4s ease forwards;
@@ -369,16 +384,15 @@ animation:signalBreakdown 4s ease forwards;
 @keyframes signalBreakdown{
 
 0%{
-opacity:.34;
+opacity:.28;
 }
 
 100%{
 opacity:0;
 
 filter:
-blur(22px)
+blur(24px)
 brightness(.08);
-
 }
 
 }
@@ -415,29 +429,30 @@ brightness(1.08);
 .frequency-zone{
 position:absolute;
 
-bottom:8vh;
-left:8vw;
+left:7vw;
+bottom:6vh;
 
 display:flex;
 flex-direction:column;
 
-gap:18px;
+gap:14px;
 
 opacity:0;
+
 pointer-events:none;
 
-z-index:50;
+z-index:40;
 }
 
 .frequency-zone.awake{
-animation:frequencyReveal 3s ease forwards;
+animation:frequencyReveal 2.8s ease forwards;
 }
 
 @keyframes frequencyReveal{
 
 0%{
 opacity:0;
-transform:translateY(8px);
+transform:translateY(10px);
 }
 
 100%{
@@ -448,22 +463,13 @@ transform:translateY(0px);
 }
 
 .frequency-link{
-font-size:.72rem;
+font-size:.58rem;
 
-letter-spacing:3px;
+letter-spacing:2px;
 
-opacity:.65;
+opacity:.52;
 
-cursor:pointer;
-
-transition:.3s ease;
-}
-
-.frequency-link:hover{
-opacity:1;
-
-text-shadow:
-0 0 8px rgba(255,220,160,.12);
+color:#d8d2c8;
 }
 
 </style>
@@ -557,13 +563,13 @@ document.getElementById("frequencyZone");
 
 
 
-/ STATIC /
+/ OPENING STATIC /
 
 setTimeout(() => {
 
 glitch.classList.add("active");
 
-}, 300);
+},300);
 
 
 
@@ -575,7 +581,7 @@ outerSymbol.classList.add("visible");
 
 innerSymbol.classList.add("visible");
 
-}, 1700);
+},1700);
 
 
 
@@ -585,7 +591,7 @@ setTimeout(() => {
 
 signalLine.classList.add("active");
 
-}, 5200);
+},5200);
 
 
 
@@ -593,29 +599,31 @@ signalLine.classList.add("active");
 
 setTimeout(() => {
 
-signalLine.style.display = "none";
+signalLine.style.display="none";
 
-}, 8600);
+},8600);
 
 
 
-/ RECONNECT /
+/ SHOW RECONNECT /
 
 setTimeout(() => {
 
 reconnect.classList.add("live");
 
-reconnect.style.opacity = "1";
+reconnect.style.opacity="1";
 
-}, 9300);
+},9300);
 
 
 
-/ TOUCH */
+/ HUMAN TOUCH */
 
-reconnect.addEventListener("click", () => {
+reconnect.addEventListener("click",()=>{
 
 reconnect.classList.remove("live");
+
+reconnect.style.opacity="0";
 
 
 
@@ -623,21 +631,23 @@ ember.classList.add("active");
 
 
 
+setTimeout(()=>{
+
 outerSymbol.classList.add("dissolve");
-
-
 
 innerSymbol.classList.add("stable");
 
+},350);
 
 
-setTimeout(() => {
 
-reconnect.style.display = "none";
+setTimeout(()=>{
+
+reconnect.style.display="none";
 
 frequencyZone.classList.add("awake");
 
-}, 1700);
+},2200);
 
 });
 
