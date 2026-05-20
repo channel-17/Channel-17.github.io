@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -29,70 +31,153 @@ background:black;
 
 
 
-/ DARK VIGNETTE /
+/ SCREEN /
 
-body::after{
-content:"";
+.screen{
 position:absolute;
 inset:0;
+overflow:hidden;
 
 background:
 radial-gradient(
 circle at center,
-transparent 0%,
-rgba(0,0,0,.45) 55%,
-rgba(0,0,0,.92) 100%
+rgba(8,8,8,.78) 0%,
+rgba(0,0,0,.96) 68%,
+black 100%
 );
-
-pointer-events:none;
-z-index:20;
 }
 
 
 
-/ GLITCH STATIC /
+/ VIOLENT GLITCH /
 
-.static{
+.glitch{
 position:absolute;
-inset:0;
+inset:-5%;
 
-opacity:.06;
+pointer-events:none;
 
-background-image:
+opacity:0;
+
+z-index:40;
+
+background:
+
 repeating-linear-gradient(
 0deg,
+rgba(255,255,255,.14) 0px,
+rgba(255,255,255,.03) 1px,
+transparent 2px,
+transparent 5px
+),
+
+repeating-linear-gradient(
+90deg,
 rgba(255,255,255,.06) 0px,
 rgba(255,255,255,.02) 1px,
 transparent 2px,
-transparent 4px
+transparent 6px
+);
+
+mix-blend-mode:screen;
+}
+
+.glitch.active{
+animation:
+violentGlitch 2.5s steps(2) forwards;
+}
+
+@keyframes violentGlitch{
+
+0%{
+opacity:0;
+}
+
+6%{
+opacity:1;
+transform:
+translateX(-50px)
+skewX(18deg);
+}
+
+14%{
+opacity:.12;
+}
+
+24%{
+opacity:1;
+transform:
+translateX(34px)
+skewX(-12deg);
+}
+
+36%{
+opacity:0;
+}
+
+52%{
+opacity:.9;
+transform:
+translateY(-5px)
+scale(1.03);
+}
+
+66%{
+opacity:.18;
+}
+
+82%{
+opacity:.5;
+}
+
+100%{
+opacity:.08;
+transform:none;
+}
+
+}
+
+
+
+/ EDGE INTERFERENCE /
+
+.interference{
+position:absolute;
+inset:0;
+
+pointer-events:none;
+
+opacity:.1;
+
+z-index:18;
+
+background:
+linear-gradient(
+90deg,
+rgba(255,255,255,.06),
+transparent 20%,
+transparent 80%,
+rgba(255,255,255,.05)
 );
 
 mix-blend-mode:screen;
 
 animation:
-staticShift .18s infinite;
+edgePulse 5s ease-in-out infinite;
 }
 
-@keyframes staticShift{
+@keyframes edgePulse{
 
 0%{
-transform:translateX(0px);
-}
-
-25%{
-transform:translateX(-1px);
+opacity:.05;
 }
 
 50%{
-transform:translateX(1px);
-}
-
-75%{
-transform:translateX(-1px);
+opacity:.14;
 }
 
 100%{
-transform:translateX(0px);
+opacity:.05;
 }
 
 }
@@ -101,7 +186,7 @@ transform:translateX(0px);
 
 / SYMBOL /
 
-.symbol{
+.symbol-wrap{
 position:absolute;
 
 top:50%;
@@ -110,22 +195,51 @@ left:50%;
 transform:
 translate(-50%,-50%);
 
-width:210px;
+width:250px;
+height:250px;
+
+z-index:6;
+}
+
+
+
+/ TRIANGLE /
+
+.outer{
+position:absolute;
+
+width:100%;
+height:100%;
+
+object-fit:contain;
+
+opacity:.16;
+
+filter:
+blur(1px)
+brightness(.45);
+
+transition:4s ease;
+}
+
+
+
+/ INNER MARK /
+
+.inner{
+position:absolute;
+
+width:100%;
+height:100%;
+
+object-fit:contain;
 
 opacity:.015;
 
-filter:blur(.4px);
+filter:
+blur(.5px);
 
-transition:
-opacity 4s ease,
-filter 4s ease;
-
-z-index:2;
-}
-
-.symbol.awaken{
-opacity:.14;
-filter:none;
+transition:4s ease;
 }
 
 
@@ -141,34 +255,34 @@ left:50%;
 transform:
 translateX(-50%);
 
-color:#b8b0a4;
-
 font-size:.7rem;
 
-letter-spacing:6px;
+letter-spacing:7px;
+
+color:#b9b1a6;
 
 opacity:0;
 
-z-index:5;
+z-index:10;
 
 animation:
-signalIn 2s ease forwards;
+signalAppear 2.5s ease forwards;
 
 animation-delay:4s;
 }
 
-@keyframes signalIn{
+@keyframes signalAppear{
 
 0%{
 opacity:0;
-filter:blur(12px);
-letter-spacing:16px;
+letter-spacing:18px;
+filter:blur(10px);
 }
 
 100%{
-opacity:.55;
+opacity:.58;
+letter-spacing:7px;
 filter:none;
-letter-spacing:6px;
 }
 
 }
@@ -180,38 +294,38 @@ letter-spacing:6px;
 .reconnect{
 position:absolute;
 
-top:67%;
+top:68%;
 left:50%;
 
 transform:
 translateX(-50%);
 
+font-size:.82rem;
+
+letter-spacing:8px;
+
 color:#d8d0c4;
-
-font-size:.78rem;
-
-letter-spacing:7px;
 
 opacity:0;
 
 cursor:pointer;
 
-z-index:6;
+z-index:12;
 
 animation:
-reconnectIn 2s ease forwards;
+reconnectAppear 2s ease forwards;
 
 animation-delay:7s;
 }
 
-@keyframes reconnectIn{
+@keyframes reconnectAppear{
 
 0%{
 opacity:0;
 }
 
 100%{
-opacity:.82;
+opacity:.84;
 }
 
 }
@@ -232,20 +346,20 @@ pointer-events:none;
 
 opacity:0;
 
+z-index:30;
+
 background:
 radial-gradient(
 circle,
 rgba(255,220,160,1) 0%,
 rgba(255,140,70,.95) 30%,
-rgba(255,70,20,.55) 55%,
+rgba(255,70,20,.5) 60%,
 transparent 100%
 );
 
 box-shadow:
-0 0 14px rgba(255,120,50,.9),
-0 0 32px rgba(255,80,20,.45);
-
-z-index:10;
+0 0 16px rgba(255,120,50,.9),
+0 0 42px rgba(255,70,20,.4);
 }
 
 
@@ -256,18 +370,18 @@ z-index:10;
 position:absolute;
 
 left:7vw;
-bottom:8vh;
+bottom:7vh;
 
 display:flex;
 flex-direction:column;
 
-gap:11px;
+gap:12px;
 
 opacity:0;
 
 transition:3s ease;
 
-z-index:7;
+z-index:14;
 }
 
 .frequency div{
@@ -276,9 +390,9 @@ font-size:.58rem;
 
 letter-spacing:4px;
 
-color:#c9c1b5;
+color:#cfc7bb;
 
-opacity:.72;
+opacity:.7;
 }
 
 .frequency.awaken{
@@ -287,61 +401,45 @@ opacity:1;
 
 
 
-/ EDGE INTERFERENCE */
+/ SIGNAL REVEAL /
 
-.edges{
-position:absolute;
-inset:0;
-
-pointer-events:none;
-
-opacity:.12;
-
-background:
-linear-gradient(
-90deg,
-rgba(255,255,255,.05),
-transparent 18%,
-transparent 82%,
-rgba(255,255,255,.04)
-);
-
-mix-blend-mode:screen;
-
-animation:
-edgePulse 4s ease-in-out infinite;
+.inner.awaken{
+opacity:.16;
+filter:none;
 }
 
-@keyframes edgePulse{
-
-0%{
-opacity:.06;
-}
-
-50%{
-opacity:.14;
-}
-
-100%{
-opacity:.06;
-}
-
+.outer.fade{
+opacity:.03;
+filter:blur(8px);
 }
 
 </style>
+
 </head>
 
 <body>
 
-<div class="static"></div>
+<div class="screen">
 
-<div class="edges"></div>
+<div class="glitch" id="glitch"></div>
+
+<div class="interference"></div>
+
+<div class="symbol-wrap">
 
 <img
 src="Trust17.png"
-class="symbol"
-id="symbol"
+class="outer"
+id="outer"
 >
+
+<img
+src="Trust17.png"
+class="inner"
+id="inner"
+>
+
+</div>
 
 <div
 class="signal"
@@ -363,7 +461,9 @@ id="frequency"
 >
 
 <div>Latest Sesh</div>
+
 <div>Roach Tray</div>
+
 <div>Pass One Back</div>
 
 </div>
@@ -373,7 +473,12 @@ class="ember"
 id="ember"
 ></div>
 
+</div>
+
 <script>
+
+const glitch =
+document.getElementById("glitch");
 
 const reconnect =
 document.getElementById("reconnect");
@@ -381,8 +486,11 @@ document.getElementById("reconnect");
 const signal =
 document.getElementById("signal");
 
-const symbol =
-document.getElementById("symbol");
+const outer =
+document.getElementById("outer");
+
+const inner =
+document.getElementById("inner");
 
 const ember =
 document.getElementById("ember");
@@ -391,6 +499,18 @@ const frequency =
 document.getElementById("frequency");
 
 
+
+/ OPENING GLITCH /
+
+setTimeout(()=>{
+
+glitch.classList.add("active");
+
+},200);
+
+
+
+/ TOUCH */
 
 reconnect.addEventListener("click",(e)=>{
 
@@ -418,13 +538,13 @@ opacity:1
 },
 
 {
-transform:"translate(-50%,-50%) scale(20)",
+transform:"translate(-50%,-50%) scale(18)",
 opacity:.02
 }
 
 ],{
 
-duration:5000,
+duration:5200,
 easing:"ease-out",
 fill:"forwards"
 
@@ -434,7 +554,9 @@ fill:"forwards"
 
 setTimeout(()=>{
 
-symbol.classList.add("awaken");
+inner.classList.add("awaken");
+
+outer.classList.add("fade");
 
 },500);
 
@@ -451,4 +573,5 @@ frequency.classList.add("awaken");
 </script>
 
 </body>
+
 </html>
