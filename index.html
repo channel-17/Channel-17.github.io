@@ -2,7 +2,7 @@
 
 CHANNEL 17
 
-FOUNDATION BUILD vNEXT
+FOUNDATION BUILD // CHECKPOINT
 
 ========================================= -->
 
@@ -14,9 +14,7 @@ FOUNDATION BUILD vNEXT
 
 <meta charset="UTF-8">
 
-<meta name="viewport"
-
-content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>CHANNEL 17</title>
 
@@ -94,7 +92,7 @@ z-index:1;
 
 /* =========================================
 
-BLACK PHONE EDGE
+PHONE EDGE DARKNESS
 
 ========================================= */
 
@@ -114,9 +112,9 @@ radial-gradient(
 
 circle,
 
-transparent 52%,
+transparent 50%,
 
-rgba(0,0,0,.28) 74%,
+rgba(0,0,0,.32) 72%,
 
 rgba(0,0,0,.96) 100%
 
@@ -136,11 +134,11 @@ position:fixed;
 
 inset:0;
 
+pointer-events:none;
+
 z-index:4;
 
 opacity:.06;
-
-pointer-events:none;
 
 mix-blend-mode:screen;
 
@@ -184,7 +182,7 @@ transform:translateY(3px);
 
 /* =========================================
 
-FLASH
+FLASHES
 
 ========================================= */
 
@@ -202,17 +200,75 @@ pointer-events:none;
 
 mix-blend-mode:screen;
 
-z-index:40;
+z-index:80;
 
-transition:
-
-.06s linear;
+transition:.06s linear;
 
 }
 
 /* =========================================
 
-FRACTURE
+SEARCH BAR GHOST
+
+========================================= */
+
+#ghostBar{
+
+position:fixed;
+
+top:0;
+
+left:0;
+
+width:100%;
+
+height:64px;
+
+pointer-events:none;
+
+opacity:0;
+
+z-index:120;
+
+mix-blend-mode:screen;
+
+background:
+
+linear-gradient(
+
+180deg,
+
+rgba(255,255,255,.08),
+
+transparent
+
+);
+
+filter:
+
+blur(.4px);
+
+}
+
+.ghostCopy{
+
+position:absolute;
+
+left:0;
+
+width:100%;
+
+height:64px;
+
+border-bottom:
+
+1px solid rgba(255,255,255,.08);
+
+}
+
+/* =========================================
+
+FRACTURES
 
 ========================================= */
 
@@ -224,7 +280,7 @@ inset:0;
 
 pointer-events:none;
 
-z-index:50;
+z-index:60;
 
 opacity:0;
 
@@ -246,7 +302,7 @@ filter:blur(.5px);
 
 /* =========================================
 
-WARNINGS
+WARNING LAYER
 
 ========================================= */
 
@@ -258,7 +314,7 @@ inset:0;
 
 pointer-events:none;
 
-z-index:90;
+z-index:140;
 
 }
 
@@ -272,17 +328,17 @@ clamp(10px,1.8vw,18px);
 
 letter-spacing:.22em;
 
+white-space:nowrap;
+
 color:#fff;
 
 opacity:0;
-
-white-space:nowrap;
 
 mix-blend-mode:screen;
 
 text-shadow:
 
-0 0 10px rgba(255,255,255,.2);
+0 0 12px rgba(255,255,255,.18);
 
 animation:
 
@@ -298,7 +354,7 @@ opacity:0;
 
 transform:
 
-translateX(-10px);
+translateX(-8px);
 
 }
 
@@ -314,7 +370,7 @@ opacity:0;
 
 transform:
 
-translateX(10px);
+translateX(8px);
 
 }
 
@@ -342,7 +398,7 @@ font-size:
 
 clamp(28px,5vw,74px);
 
-letter-spacing:.24em;
+letter-spacing:.26em;
 
 white-space:nowrap;
 
@@ -350,13 +406,13 @@ color:#fff;
 
 opacity:0;
 
-z-index:120;
+z-index:200;
 
 mix-blend-mode:screen;
 
 text-shadow:
 
-0 0 16px rgba(255,255,255,.22);
+0 0 16px rgba(255,255,255,.18);
 
 }
 
@@ -364,7 +420,7 @@ text-shadow:
 
 animation:
 
-signal .12s infinite;
+signal .1s infinite;
 
 }
 
@@ -406,7 +462,7 @@ pointer-events:none;
 
 opacity:0;
 
-z-index:80;
+z-index:180;
 
 mix-blend-mode:screen;
 
@@ -478,7 +534,7 @@ SYMBOL
 
 position:absolute;
 
-top:39%;
+top:38%;
 
 left:50%;
 
@@ -488,7 +544,7 @@ translate(-50%,-50%);
 
 width:
 
-min(76vw,460px);
+min(82vw,500px);
 
 aspect-ratio:1/1;
 
@@ -502,9 +558,9 @@ opacity:0;
 
 transition:
 
-2s ease;
+1.6s ease;
 
-z-index:200;
+z-index:300;
 
 }
 
@@ -520,11 +576,11 @@ position:absolute;
 
 width:100%;
 
-opacity:.32;
+opacity:.3;
 
 transition:
 
-10s ease;
+8s ease;
 
 }
 
@@ -534,11 +590,11 @@ position:absolute;
 
 width:100%;
 
-opacity:.28;
+opacity:.24;
 
 transition:
 
-10s ease;
+8s ease;
 
 }
 
@@ -552,7 +608,7 @@ RECONNECT
 
 position:absolute;
 
-top:61%;
+top:60%;
 
 left:50%;
 
@@ -564,7 +620,7 @@ font-size:
 
 clamp(18px,3vw,30px);
 
-letter-spacing:.26em;
+letter-spacing:.28em;
 
 color:#f2c287;
 
@@ -574,11 +630,11 @@ pointer-events:none;
 
 cursor:pointer;
 
-z-index:260;
+z-index:360;
 
 transition:
 
-1.2s ease;
+1s ease;
 
 }
 
@@ -608,7 +664,7 @@ opacity:1;
 
 text-shadow:
 
-0 0 16px rgba(255,170,60,.16),
+0 0 18px rgba(255,170,60,.18),
 
 0 0 40px rgba(255,120,20,.08);
 
@@ -626,9 +682,9 @@ THERMAL SMUDGE
 
 position:fixed;
 
-width:40px;
+width:34px;
 
-height:40px;
+height:34px;
 
 border-radius:50%;
 
@@ -636,7 +692,7 @@ pointer-events:none;
 
 opacity:0;
 
-z-index:12;
+z-index:30;
 
 background:
 
@@ -644,19 +700,19 @@ radial-gradient(
 
 circle,
 
-rgba(255,120,20,.45) 0%,
+rgba(255,110,20,.55) 0%,
 
-rgba(255,90,0,.22) 30%,
+rgba(255,80,0,.26) 35%,
 
-rgba(255,80,0,.08) 55%,
+rgba(255,60,0,.12) 58%,
 
-transparent 80%
+transparent 82%
 
 );
 
 filter:
 
-blur(10px);
+blur(8px);
 
 transform:
 
@@ -664,13 +720,13 @@ translate(-50%,-50%);
 
 transition:
 
-2.4s ease;
+1.6s ease;
 
 }
 
 /* =========================================
 
-INNER PAGE WARMTH
+INNER WARMTH
 
 ========================================= */
 
@@ -682,13 +738,13 @@ inset:0;
 
 pointer-events:none;
 
-z-index:6;
+z-index:8;
 
 opacity:0;
 
 transition:
 
-8s ease;
+7s ease;
 
 background:
 
@@ -696,19 +752,19 @@ linear-gradient(
 
 90deg,
 
-rgba(0,0,0,.96) 0%,
+rgba(0,0,0,.98) 0%,
 
-rgba(0,0,0,.92) 18%,
+rgba(0,0,0,.96) 22%,
 
-rgba(255,120,20,.025) 36%,
+rgba(255,110,20,.015) 38%,
 
-rgba(255,140,40,.05) 50%,
+rgba(255,120,30,.04) 50%,
 
-rgba(255,120,20,.025) 64%,
+rgba(255,110,20,.015) 62%,
 
-rgba(0,0,0,.92) 82%,
+rgba(0,0,0,.96) 78%,
 
-rgba(0,0,0,.96) 100%
+rgba(0,0,0,.98) 100%
 
 );
 
@@ -730,13 +786,13 @@ overflow:hidden;
 
 pointer-events:none;
 
-z-index:7;
+z-index:9;
 
 opacity:0;
 
 transition:
 
-8s ease;
+7s ease;
 
 }
 
@@ -864,9 +920,9 @@ pointer-events:none;
 
 transition:
 
-8s ease;
+7s ease;
 
-z-index:400;
+z-index:500;
 
 }
 
@@ -888,7 +944,7 @@ opacity:.02;
 
 transition:
 
-8s ease;
+7s ease;
 
 filter:
 
@@ -906,27 +962,31 @@ opacity:1;
 
 }
 
+/* LAST SESH */
+
 #etch1{
 
-width:min(44vw,250px);
+width:min(42vw,240px);
 
-left:7%;
+left:10%;
 
-top:64%;
+top:58%;
 
 transform:
 
-rotate(-5deg);
+rotate(-4deg);
 
 }
 
+/* ROACH TRAY */
+
 #etch2{
 
-width:min(58vw,360px);
+width:min(56vw,340px);
 
-left:34%;
+left:28%;
 
-top:58%;
+top:68%;
 
 transform:
 
@@ -934,13 +994,15 @@ rotate(2deg);
 
 }
 
+/* PASS IT BACK */
+
 #etch3{
 
-width:min(48vw,290px);
+width:min(44vw,270px);
 
-left:48%;
+left:52%;
 
-top:72%;
+top:76%;
 
 transform:
 
@@ -1002,6 +1064,8 @@ drop-shadow(
 
 <div id="flash"></div>
 
+<div id="ghostBar"></div>
+
 <div id="fracture"></div>
 
 <div id="warningWrap"></div>
@@ -1054,9 +1118,7 @@ id="etch1"
 
 href="#">
 
-<img src="lastsesh17.png"
-
-width="100%">
+<img src="lastsesh17.png" width="100%">
 
 </a>
 
@@ -1066,9 +1128,7 @@ id="etch2"
 
 href="#">
 
-<img src="RoachTray17.png"
-
-width="100%">
+<img src="RoachTray17.png" width="100%">
 
 </a>
 
@@ -1078,9 +1138,7 @@ id="etch3"
 
 href="#">
 
-<img src="PassItBack17.png"
-
-width="100%">
+<img src="PassItBack17.png" width="100%">
 
 </a>
 
@@ -1150,15 +1208,15 @@ const hidden17 = {
 
 x:
 
-canvas.width * .5,
+canvas.width * .43,
 
 y:
 
-canvas.height * .36,
+canvas.height * .18,
 
-w:620,
+w:260,
 
-h:300
+h:360
 
 };
 
@@ -1178,31 +1236,27 @@ i * fontSize,
 
 x:
 
-Math.random() * -4000,
+Math.random() * -3000,
 
 speed:
 
-8 + Math.random() * 8,
+6 + Math.random() * 6,
 
 length:
 
-14 + Math.random() * 22,
+16 + Math.random() * 26,
 
 laps:0,
 
 finished:false,
 
-dead:
-
-Math.random() > .82,
-
 flash:
 
 Math.random() > .94,
 
-vertical:
+dead:
 
-Math.random() > .9
+Math.random() > .84
 
 });
 
@@ -1222,13 +1276,13 @@ document.getElementById("flash");
 
 f.style.opacity =
 
-Math.random() * .14;
+Math.random() * .18;
 
 setTimeout(()=>{
 
 f.style.opacity = 0;
 
-},60);
+},45);
 
 }
 
@@ -1248,7 +1302,7 @@ layer.style.opacity = 1;
 
 layer.innerHTML = "";
 
-for(let i=0;i<4;i++){
+for(let i=0;i<5;i++){
 
 const s =
 
@@ -1270,7 +1324,7 @@ s.style.width =
 
 s.style.height =
 
-(10 + Math.random()*180)+"px";
+(10 + Math.random()*120)+"px";
 
 s.style.transform =
 
@@ -1316,11 +1370,11 @@ const messages = [
 
 "SYSTEM FAILURE",
 
-"UNAUTHORIZED SIGNAL",
+"CHANNEL COLLISION",
 
 "TRANSMISSION BREACH",
 
-"CHANNEL COLLISION",
+"UNAUTHORIZED SIGNAL",
 
 "MEMORY LEAK",
 
@@ -1360,6 +1414,54 @@ w.remove();
 
 /* =========================================
 
+GHOST BAR
+
+========================================= */
+
+function ghostBar(){
+
+const layer =
+
+document.getElementById("ghostBar");
+
+layer.style.opacity = .7;
+
+layer.innerHTML = "";
+
+for(let i=0;i<3;i++){
+
+const g =
+
+document.createElement("div");
+
+g.className =
+
+"ghostCopy";
+
+g.style.transform =
+
+`translate(
+
+${Math.random()*30-15}px,
+
+${Math.random()*30-15}px
+
+)`;
+
+layer.appendChild(g);
+
+}
+
+setTimeout(()=>{
+
+layer.style.opacity = 0;
+
+},120);
+
+}
+
+/* =========================================
+
 DRAW
 
 ========================================= */
@@ -1368,7 +1470,7 @@ function draw(){
 
 ctx.fillStyle =
 
-"rgba(0,0,0,0.18)";
+"rgba(0,0,0,0.14)";
 
 ctx.fillRect(
 
@@ -1402,13 +1504,13 @@ stream.y > hidden17.y &&
 
 stream.y < hidden17.y + hidden17.h;
 
-/* protected .17 */
+/* KEEP .17 CLEAN */
 
 if(!inside17){
 
 ctx.fillStyle =
 
-`rgba(185,220,80,${
+`rgba(175,185,60,${
 
 1 - (i / stream.length)
 
@@ -1417,64 +1519,6 @@ ctx.fillStyle =
 ctx.font =
 
 fontSize + "px monospace";
-
-ctx.fillText(
-
-chars[
-
-Math.floor(
-
-Math.random() * chars.length
-
-)
-
-],
-
-charX,
-
-stream.y
-
-);
-
-}
-
-/* dead holes */
-
-if(
-
-stream.dead &&
-
-Math.random() > .996
-
-){
-
-ctx.clearRect(
-
-charX,
-
-stream.y,
-
-fontSize,
-
-fontSize
-
-);
-
-}
-
-/* white corruption */
-
-if(
-
-stream.flash &&
-
-Math.random() > .996
-
-){
-
-ctx.fillStyle =
-
-"rgba(255,255,255,.92)";
 
 ctx.fillText(
 
@@ -1522,7 +1566,7 @@ stream.finished = true;
 
 stream.x =
 
-Math.random() * -4000;
+Math.random() * -3000;
 
 }
 
@@ -1530,7 +1574,7 @@ Math.random() * -4000;
 
 });
 
-/* layered chaos */
+/* CHAOS */
 
 if(Math.random() > .78){
 
@@ -1550,7 +1594,13 @@ warning();
 
 }
 
-/* finish */
+if(Math.random() > .92){
+
+ghostBar();
+
+}
+
+/* FINISH */
 
 const unfinished =
 
@@ -1564,7 +1614,7 @@ setTimeout(()=>{
 
 failure();
 
-},200);
+},120);
 
 }
 
@@ -1586,7 +1636,9 @@ const staticLayer =
 
 document.getElementById("static");
 
-for(let i=0;i<36;i++){
+/* STATIC */
+
+for(let i=0;i<42;i++){
 
 const line =
 
@@ -1618,9 +1670,13 @@ staticLayer.appendChild(line);
 
 staticLayer.style.opacity = .95;
 
+/* SIGNAL LOST */
+
 signalLost.style.opacity = 1;
 
 signalLost.classList.add("active");
+
+/* FADE */
 
 setTimeout(()=>{
 
@@ -1628,7 +1684,9 @@ signalLost.style.opacity = 0;
 
 staticLayer.style.opacity = 0;
 
-},900);
+},700);
+
+/* SYMBOL */
 
 setTimeout(()=>{
 
@@ -1638,7 +1696,9 @@ document
 
 .classList.add("visible");
 
-},1300);
+},900);
+
+/* RECONNECT */
 
 setTimeout(()=>{
 
@@ -1648,7 +1708,7 @@ document
 
 .classList.add("active");
 
-},1900);
+},1300);
 
 }
 
@@ -1660,7 +1720,7 @@ START
 
 const loop =
 
-setInterval(draw,40);
+setInterval(draw,52);
 
 /* =========================================
 
@@ -1676,9 +1736,7 @@ reconnect.addEventListener("click",e=>{
 
 reconnect.classList.remove("active");
 
-document.body.classList.add("connected");
-
-/* thermal smudge */
+/* THUMB HEAT */
 
 const smudge =
 
@@ -1694,37 +1752,51 @@ e.clientY + "px";
 
 smudge.style.opacity = 1;
 
+/* QUICK GROW */
+
+smudge.animate([
+
+{
+
+transform:
+
+"translate(-50%,-50%) scale(.7)"
+
+},
+
+{
+
+transform:
+
+"translate(-50%,-50%) scale(1.35)"
+
+}
+
+],{
+
+duration:260,
+
+fill:"forwards"
+
+});
+
+/* COOL */
+
 setTimeout(()=>{
 
 smudge.style.opacity = 0;
 
-},1600);
+},900);
 
-/* warmth enters page */
-
-setTimeout(()=>{
-
-document
-
-.getElementById("warmth")
-
-.style.opacity = 1;
-
-},600);
-
-/* smoke */
+/* PAGE WARMS */
 
 setTimeout(()=>{
 
-document
+document.body.classList.add("connected");
 
-.getElementById("smoke")
+},280);
 
-.style.opacity = 1;
-
-},2600);
-
-/* etchings */
+/* ETCHINGS */
 
 setTimeout(()=>{
 
@@ -1734,7 +1806,7 @@ document
 
 .classList.add("visible");
 
-},4200);
+},2400);
 
 });
 
