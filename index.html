@@ -1,6 +1,8 @@
 <!-- ========================================= -->
 
-<!-- CHANNEL 17 / INFECTION BUILD -->
+<!-- CHANNEL 17 / HOSTILE SIGNAL BUILD -->
+
+<!-- FOUNDATION LOCK -->
 
 <!-- ========================================= -->
 
@@ -12,7 +14,9 @@
 
 <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport"
+
+content="width=device-width,initial-scale=1.0">
 
 <title>CHANNEL 17</title>
 
@@ -74,29 +78,29 @@ height:100%;
 
 display:block;
 
-z-index:1;
-
 background:#000;
+
+z-index:1;
 
 }
 
 /* =========================================
 
-STATIC
+STATIC GRAIN
 
 ========================================= */
 
-#noise{
+#grain{
 
 position:fixed;
 
 inset:0;
 
+z-index:2;
+
 pointer-events:none;
 
 opacity:.05;
-
-z-index:2;
 
 background-image:
 
@@ -114,11 +118,13 @@ transparent 4px
 
 );
 
-animation:noise .05s linear infinite;
+animation:
+
+grain .05s linear infinite;
 
 }
 
-@keyframes noise{
+@keyframes grain{
 
 0%{
 
@@ -136,11 +142,11 @@ transform:translateY(4px);
 
 /* =========================================
 
-GLITCH FLASHES
+GLITCH CHAOS
 
 ========================================= */
 
-#glitchLayer{
+#glitch{
 
 position:fixed;
 
@@ -154,23 +160,23 @@ mix-blend-mode:screen;
 
 }
 
-.glitchFlash{
+.glitchBar{
 
 position:absolute;
 
 background:
 
-rgba(255,255,255,.12);
+rgba(255,255,255,.16);
 
 opacity:0;
 
 animation:
 
-glitchFlash .12s linear;
+glitchBar .08s linear;
 
 }
 
-@keyframes glitchFlash{
+@keyframes glitchBar{
 
 0%{
 
@@ -228,7 +234,7 @@ linear-gradient(
 
 transparent,
 
-rgba(255,255,255,.95),
+rgba(255,255,255,.92),
 
 transparent
 
@@ -244,7 +250,7 @@ signalMove linear infinite;
 
 0%{
 
-transform:translateX(-80px);
+transform:translateX(-100px);
 
 opacity:.02;
 
@@ -252,15 +258,15 @@ opacity:.02;
 
 50%{
 
-opacity:.3;
+opacity:.42;
 
 }
 
 100%{
 
-transform:translateX(80px);
+transform:translateX(100px);
 
-opacity:.04;
+opacity:.02;
 
 }
 
@@ -282,19 +288,23 @@ left:50%;
 
 transform:translateX(-50%);
 
-font-size:clamp(28px,4vw,54px);
+font-size:
 
-letter-spacing:.24em;
+clamp(28px,4vw,58px);
 
-color:white;
-
-opacity:0;
+letter-spacing:.25em;
 
 white-space:nowrap;
 
+color:#fff;
+
+opacity:0;
+
 mix-blend-mode:screen;
 
-filter:blur(.3px);
+filter:blur(.5px);
+
+z-index:10;
 
 }
 
@@ -302,7 +312,7 @@ filter:blur(.3px);
 
 animation:
 
-warningPulse .22s infinite;
+warningPulse .16s infinite;
 
 }
 
@@ -310,17 +320,19 @@ warningPulse .22s infinite;
 
 0%{
 
-opacity:.04;
+opacity:.02;
 
 transform:
 
 translateX(-50%)
 
-translateY(0px);
+translateY(0px)
+
+skewX(0deg);
 
 }
 
-20%{
+15%{
 
 opacity:1;
 
@@ -328,31 +340,35 @@ transform:
 
 translateX(-50%)
 
-translateY(-2px);
+translateY(-2px)
+
+skewX(-2deg);
 
 }
 
-45%{
+40%{
 
-opacity:.18;
+opacity:.14;
 
 }
 
-70%{
+65%{
 
-opacity:.92;
+opacity:.94;
 
 transform:
 
 translateX(-50%)
 
-translateY(2px);
+translateY(2px)
+
+skewX(2deg);
 
 }
 
 100%{
 
-opacity:.04;
+opacity:.03;
 
 }
 
@@ -372,9 +388,13 @@ top:39%;
 
 left:50%;
 
-transform:translate(-50%,-50%);
+transform:
 
-width:min(78vw,470px);
+translate(-50%,-50%);
+
+width:
+
+min(78vw,470px);
 
 aspect-ratio:1/1;
 
@@ -386,7 +406,11 @@ align-items:center;
 
 opacity:0;
 
-transition:2s ease;
+transition:
+
+2s ease;
+
+z-index:12;
 
 }
 
@@ -404,7 +428,9 @@ width:100%;
 
 opacity:.34;
 
-transition:8s ease;
+transition:
+
+8s ease;
 
 }
 
@@ -416,7 +442,9 @@ width:100%;
 
 opacity:.34;
 
-transition:8s ease;
+transition:
+
+8s ease;
 
 }
 
@@ -434,9 +462,13 @@ top:60%;
 
 left:50%;
 
-transform:translateX(-50%);
+transform:
 
-font-size:clamp(18px,3vw,28px);
+translateX(-50%);
+
+font-size:
+
+clamp(18px,3vw,28px);
 
 letter-spacing:.24em;
 
@@ -448,11 +480,15 @@ pointer-events:none;
 
 cursor:pointer;
 
-transition:3s ease;
+transition:
+
+3s ease;
 
 text-shadow:
 
-0 0 6px rgba(255,120,20,.04);
+0 0 8px rgba(255,120,20,.04);
+
+z-index:14;
 
 }
 
@@ -482,9 +518,9 @@ opacity:1;
 
 text-shadow:
 
-0 0 16px rgba(255,180,90,.22),
+0 0 18px rgba(255,180,90,.22),
 
-0 0 42px rgba(255,120,20,.12);
+0 0 50px rgba(255,120,20,.12);
 
 }
 
@@ -492,7 +528,7 @@ text-shadow:
 
 /* =========================================
 
-VIRUS STAIN
+THUMBPRINT STAIN
 
 ========================================= */
 
@@ -502,9 +538,9 @@ position:fixed;
 
 inset:0;
 
-z-index:3;
-
 pointer-events:none;
+
+z-index:3;
 
 opacity:0;
 
@@ -512,27 +548,31 @@ background:
 
 radial-gradient(circle at center,
 
-rgba(255,90,30,.28) 0%,
+rgba(255,90,30,.30) 0%,
 
-rgba(255,120,20,.12) 6%,
+rgba(255,120,20,.14) 5%,
 
-rgba(255,120,20,.05) 12%,
+rgba(255,120,20,.05) 11%,
 
-transparent 20%);
+transparent 18%
+
+);
 
 mix-blend-mode:screen;
 
-transition:10s ease;
+transition:
+
+10s ease;
 
 }
 
 /* =========================================
 
-BACKGROUND LIGHTEN
+BACKGROUND WARMTH
 
 ========================================= */
 
-#warmBackground{
+#warmth{
 
 position:fixed;
 
@@ -542,19 +582,23 @@ background:
 
 radial-gradient(circle at center,
 
-rgba(255,140,40,.05) 0%,
+rgba(255,140,40,.04) 0%,
 
 rgba(255,110,20,.02) 25%,
 
-transparent 60%);
+transparent 60%
+
+);
 
 opacity:0;
 
-z-index:2;
-
 pointer-events:none;
 
-transition:10s ease;
+z-index:2;
+
+transition:
+
+10s ease;
 
 }
 
@@ -578,7 +622,9 @@ z-index:4;
 
 opacity:0;
 
-transition:6s ease;
+transition:
+
+6s ease;
 
 }
 
@@ -600,7 +646,9 @@ rgba(255,255,255,.05) 0%,
 
 rgba(255,255,255,.02) 18%,
 
-transparent 70%);
+transparent 70%
+
+);
 
 filter:blur(45px);
 
@@ -700,7 +748,11 @@ opacity:0;
 
 pointer-events:none;
 
-transition:6s ease;
+transition:
+
+6s ease;
+
+z-index:15;
 
 }
 
@@ -720,6 +772,10 @@ display:block;
 
 opacity:.04;
 
+transition:
+
+6s ease;
+
 filter:
 
 drop-shadow(
@@ -729,8 +785,6 @@ drop-shadow(
 rgba(255,120,20,.06)
 
 );
-
-transition:6s ease;
 
 }
 
@@ -748,7 +802,9 @@ left:7%;
 
 top:43%;
 
-transform:rotate(-4deg);
+transform:
+
+rotate(-4deg);
 
 }
 
@@ -760,7 +816,9 @@ left:12%;
 
 top:50%;
 
-transform:rotate(2deg);
+transform:
+
+rotate(2deg);
 
 }
 
@@ -772,7 +830,9 @@ left:24%;
 
 bottom:2%;
 
-transform:rotate(-4deg);
+transform:
+
+rotate(-4deg);
 
 }
 
@@ -782,7 +842,7 @@ CONNECTED
 
 ========================================= */
 
-.connected #warmBackground{
+.connected #warmth{
 
 opacity:1;
 
@@ -836,15 +896,15 @@ rgba(255,120,20,.12)
 
 <canvas id="matrix"></canvas>
 
-<div id="noise"></div>
+<div id="grain"></div>
 
-<div id="warmBackground"></div>
+<div id="warmth"></div>
 
 <div id="stain"></div>
 
 <div id="signalNoise"></div>
 
-<div id="glitchLayer"></div>
+<div id="glitch"></div>
 
 <div id="smoke">
 
@@ -866,9 +926,13 @@ SIGNAL LOST
 
 <div id="symbolWrap">
 
-<img id="outer" src="Outer17-final.png">
+<img id="outer"
 
-<img id="inner" src="Inner17-final.png">
+src="Outer17-final.png">
+
+<img id="inner"
+
+src="Inner17-final.png">
 
 </div>
 
@@ -880,21 +944,39 @@ RECONNECT
 
 <div id="etchings">
 
-<a class="etch" id="etch1" href="#">
+<a class="etch"
 
-<img src="lastsesh17.png" width="100%">
+id="etch1"
+
+href="#">
+
+<img src="lastsesh17.png"
+
+width="100%">
 
 </a>
 
-<a class="etch" id="etch2" href="#">
+<a class="etch"
 
-<img src="RoachTray17.png" width="100%">
+id="etch2"
+
+href="#">
+
+<img src="RoachTray17.png"
+
+width="100%">
 
 </a>
 
-<a class="etch" id="etch3" href="#">
+<a class="etch"
 
-<img src="PassItBack17.png" width="100%">
+id="etch3"
+
+href="#">
+
+<img src="PassItBack17.png"
+
+width="100%">
 
 </a>
 
@@ -954,9 +1036,9 @@ y:
 
 canvas.height * .52,
 
-w:360,
+w:380,
 
-h:200
+h:210
 
 };
 
@@ -974,37 +1056,39 @@ y: i * fontSize,
 
 x:
 
-Math.random() * -2600,
+Math.random() * -2200,
 
 speed:
 
-34 + Math.random() * 60,
+10 + Math.random() * 24,
 
 length:
 
-20 + Math.random() * 90,
+20 + Math.random() * 60,
 
-laps:
-
-0,
+laps:0,
 
 finished:false,
 
 vertical:
 
-Math.random() > .68,
+Math.random() > .78,
 
 dead:
 
-Math.random() > .84,
+Math.random() > .86,
 
 flash:
 
-Math.random() > .90,
+Math.random() > .92,
 
 glitch:
 
-Math.random() > .86
+Math.random() > .88,
+
+freeze:
+
+Math.random() > .90
 
 });
 
@@ -1012,7 +1096,7 @@ Math.random() > .86
 
 /* =========================================
 
-GLITCH FLASHES
+GLITCH BURSTS
 
 ========================================= */
 
@@ -1020,9 +1104,9 @@ function glitchBurst(){
 
 const layer =
 
-document.getElementById("glitchLayer");
+document.getElementById("glitch");
 
-for(let i=0;i<12;i++){
+for(let i=0;i<18;i++){
 
 const flash =
 
@@ -1030,7 +1114,7 @@ document.createElement("div");
 
 flash.className =
 
-"glitchFlash";
+"glitchBar";
 
 flash.style.left =
 
@@ -1042,11 +1126,11 @@ Math.random()*100 + "%";
 
 flash.style.width =
 
-Math.random()*400 + "px";
+Math.random()*700 + "px";
 
 flash.style.height =
 
-(1 + Math.random()*4) + "px";
+(1 + Math.random()*6) + "px";
 
 flash.style.transform =
 
@@ -1058,7 +1142,7 @@ setTimeout(()=>{
 
 flash.remove();
 
-},120);
+},80);
 
 }
 
@@ -1074,7 +1158,7 @@ function drawMatrix(){
 
 ctx.fillStyle =
 
-"rgba(0,0,0,0.20)";
+"rgba(0,0,0,0.22)";
 
 ctx.fillRect(
 
@@ -1108,7 +1192,7 @@ stream.y > hidden17.y &&
 
 stream.y < hidden17.y + hidden17.h;
 
-/* hidden .17 */
+/* protected .17 */
 
 if(!inside17){
 
@@ -1150,13 +1234,13 @@ if(
 
 stream.vertical &&
 
-Math.random() > .978
+Math.random() > .988
 
 ){
 
 ctx.fillStyle =
 
-"rgba(100,255,100,.5)";
+"rgba(100,255,100,.4)";
 
 ctx.fillText(
 
@@ -1172,7 +1256,7 @@ Math.random() * chars.length
 
 charX,
 
-stream.y + (Math.random()*300)
+stream.y + (Math.random()*240)
 
 );
 
@@ -1184,13 +1268,13 @@ if(
 
 stream.flash &&
 
-Math.random() > .988
+Math.random() > .992
 
 ){
 
 ctx.fillStyle =
 
-"rgba(255,255,255,.9)";
+"rgba(255,255,255,.85)";
 
 ctx.fillText(
 
@@ -1212,13 +1296,41 @@ stream.y
 
 }
 
+/* frozen corruption */
+
+if(
+
+stream.freeze &&
+
+Math.random() > .995
+
+){
+
+ctx.fillStyle =
+
+"rgba(100,255,100,.18)";
+
+ctx.fillRect(
+
+charX,
+
+stream.y,
+
+120,
+
+2
+
+);
+
+}
+
 /* glitch tears */
 
 if(
 
 stream.glitch &&
 
-Math.random() > .990
+Math.random() > .992
 
 ){
 
@@ -1232,7 +1344,7 @@ charX,
 
 stream.y,
 
-Math.random() * 180,
+Math.random()*180,
 
 2
 
@@ -1246,7 +1358,7 @@ if(
 
 stream.dead &&
 
-Math.random() > .984
+Math.random() > .992
 
 ){
 
@@ -1292,7 +1404,7 @@ stream.finished = true;
 
 stream.x =
 
-Math.random() * -2400;
+Math.random() * -2200;
 
 }
 
@@ -1300,15 +1412,15 @@ Math.random() * -2400;
 
 });
 
-/* random glitch bursts */
+/* random glitch */
 
-if(Math.random() > .90){
+if(Math.random() > .82){
 
 glitchBurst();
 
 }
 
-/* all complete */
+/* all finished */
 
 const unfinished =
 
@@ -1322,7 +1434,7 @@ setTimeout(()=>{
 
 systemFailure();
 
-},500);
+},700);
 
 }
 
@@ -1344,9 +1456,9 @@ const signalNoise =
 
 document.getElementById("signalNoise");
 
-/* moving unstable signal */
+/* unstable signal */
 
-for(let i=0;i<24;i++){
+for(let i=0;i<28;i++){
 
 const bar =
 
@@ -1358,7 +1470,7 @@ bar.className =
 
 bar.style.width =
 
-(30 + Math.random()*60) + "%";
+(20 + Math.random()*70) + "%";
 
 bar.style.left =
 
@@ -1370,19 +1482,19 @@ Math.random()*100 + "%";
 
 bar.style.animationDuration =
 
-(.2 + Math.random()*1.1) + "s";
+(.08 + Math.random()*1.1) + "s";
 
 signalNoise.appendChild(bar);
 
 }
 
-signalNoise.style.opacity = .8;
+signalNoise.style.opacity = .92;
 
 signalLost.style.opacity = 1;
 
 signalLost.classList.add("active");
 
-/* failure fade */
+/* fade */
 
 setTimeout(()=>{
 
@@ -1390,7 +1502,7 @@ signalLost.style.opacity = 0;
 
 signalNoise.style.opacity = 0;
 
-},1700);
+},1900);
 
 /* symbol */
 
@@ -1402,7 +1514,7 @@ document
 
 .classList.add("visible");
 
-},3000);
+},3200);
 
 /* reconnect */
 
@@ -1416,7 +1528,7 @@ document
 
 .classList.add("active");
 
-},4700);
+},5000);
 
 }
 
@@ -1428,7 +1540,7 @@ START
 
 const matrixLoop =
 
-setInterval(drawMatrix,14);
+setInterval(drawMatrix,28);
 
 /* =========================================
 
@@ -1448,7 +1560,7 @@ reconnect.style.opacity = 0;
 
 document.body.classList.add("connected");
 
-/* thumbprint lava stain */
+/* thumb stain */
 
 const stain =
 
@@ -1456,17 +1568,17 @@ document.getElementById("stain");
 
 stain.style.opacity = 1;
 
-/* background warmth */
+/* warmth */
 
 setTimeout(()=>{
 
 document
 
-.getElementById("warmBackground")
+.getElementById("warmth")
 
 .style.opacity = 1;
 
-},1800);
+},2200);
 
 /* smoke */
 
@@ -1478,9 +1590,9 @@ document
 
 .style.opacity = 1;
 
-},3200);
+},3600);
 
-/* etchings uncovered */
+/* etchings */
 
 setTimeout(()=>{
 
@@ -1490,7 +1602,7 @@ document
 
 .classList.add("visible");
 
-},6200);
+},6800);
 
 });
 
