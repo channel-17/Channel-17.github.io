@@ -56,6 +56,8 @@ overflow:hidden;
 
 cursor:default;
 
+color:#fff;
+
 }
 
 /* =========================================
@@ -78,13 +80,13 @@ display:block;
 
 background:#000;
 
-z-index:1;
+z-index:5;
 
 }
 
 /* =========================================
 
-BLACK PHONE EDGE
+PHONE EDGE DARKNESS
 
 ========================================= */
 
@@ -96,7 +98,7 @@ inset:0;
 
 pointer-events:none;
 
-z-index:9999;
+z-index:99999;
 
 background:
 
@@ -106,9 +108,9 @@ circle,
 
 transparent 48%,
 
-rgba(0,0,0,.35) 74%,
+rgba(0,0,0,.38) 76%,
 
-rgba(0,0,0,.98) 100%
+rgba(0,0,0,.99) 100%
 
 );
 
@@ -128,9 +130,9 @@ inset:0;
 
 pointer-events:none;
 
-z-index:4;
-
 opacity:.08;
+
+z-index:8;
 
 mix-blend-mode:screen;
 
@@ -182,7 +184,7 @@ body.shake{
 
 animation:
 
-shake .06s linear infinite;
+shake .055s linear infinite;
 
 }
 
@@ -222,6 +224,100 @@ transform:translate(1px,1px);
 
 /* =========================================
 
+LOADING SCREEN
+
+========================================= */
+
+#loaderWrap{
+
+position:fixed;
+
+inset:0;
+
+display:flex;
+
+flex-direction:column;
+
+justify-content:center;
+
+align-items:center;
+
+background:#000;
+
+z-index:1000;
+
+}
+
+/* loading tube */
+
+#tube{
+
+width:min(72vw,420px);
+
+height:18px;
+
+border:
+
+1px solid rgba(255,255,255,.25);
+
+overflow:hidden;
+
+position:relative;
+
+background:
+
+rgba(255,255,255,.03);
+
+}
+
+/* progress */
+
+#fill{
+
+position:absolute;
+
+left:0;
+
+top:0;
+
+height:100%;
+
+width:0%;
+
+background:#fff;
+
+}
+
+/* turtle */
+
+#turtle{
+
+margin-top:18px;
+
+font-size:14px;
+
+letter-spacing:.2em;
+
+opacity:.45;
+
+}
+
+/* percent */
+
+#percent{
+
+margin-top:10px;
+
+font-size:12px;
+
+letter-spacing:.3em;
+
+opacity:.32;
+
+}
+
+/* =========================================
+
 FLASH
 
 ========================================= */
@@ -240,7 +336,7 @@ pointer-events:none;
 
 mix-blend-mode:screen;
 
-z-index:120;
+z-index:900;
 
 }
 
@@ -258,7 +354,7 @@ inset:0;
 
 pointer-events:none;
 
-z-index:160;
+z-index:600;
 
 opacity:0;
 
@@ -296,6 +392,82 @@ mix-blend-mode:screen;
 
 /* =========================================
 
+WARNINGS
+
+========================================= */
+
+#warningWrap{
+
+position:fixed;
+
+inset:0;
+
+pointer-events:none;
+
+z-index:700;
+
+}
+
+.warning{
+
+position:absolute;
+
+font-size:
+
+clamp(10px,1.7vw,18px);
+
+letter-spacing:.22em;
+
+white-space:nowrap;
+
+color:#ff2b2b;
+
+opacity:0;
+
+mix-blend-mode:screen;
+
+text-shadow:
+
+0 0 12px rgba(255,0,0,.35);
+
+animation:
+
+warning .12s linear;
+
+}
+
+@keyframes warning{
+
+0%{
+
+opacity:0;
+
+transform:
+
+translateX(-10px);
+
+}
+
+50%{
+
+opacity:1;
+
+}
+
+100%{
+
+opacity:0;
+
+transform:
+
+translateX(10px);
+
+}
+
+}
+
+/* =========================================
+
 FRACTURES
 
 ========================================= */
@@ -308,7 +480,7 @@ inset:0;
 
 pointer-events:none;
 
-z-index:100;
+z-index:500;
 
 opacity:0;
 
@@ -330,11 +502,11 @@ filter:blur(.4px);
 
 /* =========================================
 
-WARNINGS
+STATIC
 
 ========================================= */
 
-#warningWrap{
+#static{
 
 position:fixed;
 
@@ -342,63 +514,65 @@ inset:0;
 
 pointer-events:none;
 
-z-index:200;
-
-}
-
-.warning{
-
-position:absolute;
-
-font-size:
-
-clamp(10px,1.7vw,18px);
-
-letter-spacing:.2em;
-
-white-space:nowrap;
-
-color:#ff3b3b;
-
 opacity:0;
+
+z-index:800;
 
 mix-blend-mode:screen;
 
-text-shadow:
+}
 
-0 0 10px rgba(255,0,0,.3);
+.staticLine{
+
+position:absolute;
+
+height:1px;
+
+background:
+
+linear-gradient(
+
+90deg,
+
+transparent,
+
+rgba(255,255,255,.95),
+
+transparent
+
+);
 
 animation:
 
-warning .12s linear;
+staticMove linear infinite;
 
 }
 
-@keyframes warning{
+@keyframes staticMove{
 
 0%{
 
-opacity:0;
-
 transform:
 
-translateX(-14px);
+translateX(-260px);
+
+opacity:.02;
 
 }
 
 50%{
 
-opacity:1;
+opacity:.55;
 
 }
 
 100%{
 
-opacity:0;
-
 transform:
 
-translateX(14px);
+translateX(260px);
+
+opacity:.02;
 
 }
 
@@ -426,7 +600,7 @@ font-size:
 
 clamp(28px,5vw,74px);
 
-letter-spacing:.26em;
+letter-spacing:.28em;
 
 white-space:nowrap;
 
@@ -434,7 +608,7 @@ color:#fff;
 
 opacity:0;
 
-z-index:260;
+z-index:900;
 
 mix-blend-mode:screen;
 
@@ -476,84 +650,6 @@ opacity:.08;
 
 /* =========================================
 
-STATIC
-
-========================================= */
-
-#static{
-
-position:fixed;
-
-inset:0;
-
-pointer-events:none;
-
-opacity:0;
-
-z-index:240;
-
-mix-blend-mode:screen;
-
-}
-
-.staticLine{
-
-position:absolute;
-
-height:1px;
-
-background:
-
-linear-gradient(
-
-90deg,
-
-transparent,
-
-rgba(255,255,255,.92),
-
-transparent
-
-);
-
-animation:
-
-staticMove linear infinite;
-
-}
-
-@keyframes staticMove{
-
-0%{
-
-transform:
-
-translateX(-240px);
-
-opacity:.02;
-
-}
-
-50%{
-
-opacity:.55;
-
-}
-
-100%{
-
-transform:
-
-translateX(240px);
-
-opacity:.02;
-
-}
-
-}
-
-/* =========================================
-
 SYMBOL
 
 ========================================= */
@@ -562,7 +658,7 @@ SYMBOL
 
 position:absolute;
 
-top:38%;
+top:37%;
 
 left:50%;
 
@@ -588,7 +684,7 @@ transition:
 
 1s ease;
 
-z-index:320;
+z-index:1200;
 
 }
 
@@ -636,7 +732,7 @@ RECONNECT
 
 position:absolute;
 
-top:60%;
+top:58%;
 
 left:50%;
 
@@ -658,7 +754,7 @@ pointer-events:none;
 
 cursor:pointer;
 
-z-index:420;
+z-index:1500;
 
 transition:
 
@@ -674,7 +770,7 @@ pointer-events:auto;
 
 animation:
 
-pulse 2.6s ease infinite;
+pulse 2.8s ease infinite;
 
 }
 
@@ -720,7 +816,7 @@ pointer-events:none;
 
 opacity:0;
 
-z-index:40;
+z-index:50;
 
 background:
 
@@ -762,7 +858,7 @@ inset:0;
 
 pointer-events:none;
 
-z-index:8;
+z-index:20;
 
 opacity:0;
 
@@ -810,7 +906,7 @@ overflow:hidden;
 
 pointer-events:none;
 
-z-index:10;
+z-index:25;
 
 opacity:0;
 
@@ -946,7 +1042,7 @@ transition:
 
 4s ease;
 
-z-index:500;
+z-index:2000;
 
 }
 
@@ -992,7 +1088,7 @@ opacity:1;
 
 width:min(42vw,240px);
 
-left:10%;
+left:14%;
 
 top:56%;
 
@@ -1008,9 +1104,9 @@ rotate(-4deg);
 
 width:min(54vw,330px);
 
-left:28%;
+left:26%;
 
-top:68%;
+top:67%;
 
 transform:
 
@@ -1081,6 +1177,28 @@ drop-shadow(
 </head>
 
 <body>
+
+<div id="loaderWrap">
+
+<div id="tube">
+
+<div id="fill"></div>
+
+</div>
+
+<div id="turtle">
+
+🐢
+
+</div>
+
+<div id="percent">
+
+0%
+
+</div>
+
+</div>
 
 <canvas id="matrix"></canvas>
 
@@ -1160,7 +1278,95 @@ RECONNECT
 
 <script>
 
-window.onload = ()=>{
+/* =========================================
+
+LOADING
+
+========================================= */
+
+const fill =
+
+document.getElementById("fill");
+
+const percent =
+
+document.getElementById("percent");
+
+const loaderWrap =
+
+document.getElementById("loaderWrap");
+
+let load = 0;
+
+const loader =
+
+setInterval(()=>{
+
+load++;
+
+fill.style.width =
+
+load + "%";
+
+percent.innerText =
+
+load + "%";
+
+/* 17 INTERRUPT */
+
+if(load === 17){
+
+clearInterval(loader);
+
+interrupt();
+
+}
+
+},55);
+
+/* =========================================
+
+INTERRUPT
+
+========================================= */
+
+function interrupt(){
+
+document.body.classList.add("shake");
+
+/* micro pauses */
+
+setTimeout(()=>{
+
+flash();
+
+},140);
+
+setTimeout(()=>{
+
+ghostUI();
+
+},240);
+
+setTimeout(()=>{
+
+flash();
+
+},360);
+
+setTimeout(()=>{
+
+fracture();
+
+},500);
+
+setTimeout(()=>{
+
+chaos();
+
+},650);
+
+}
 
 /* =========================================
 
@@ -1244,23 +1450,19 @@ streams.push({
 
 y:
 
-i * fontSize,
+Math.random()*canvas.height,
 
 x:
 
-Math.random() * -3000,
+Math.random()*canvas.width,
 
 speed:
 
-7 + Math.random() * 5,
+4 + Math.random()*5,
 
 length:
 
-14 + Math.random() * 18,
-
-laps:0,
-
-finished:false,
+10 + Math.random()*18,
 
 charTimer:0,
 
@@ -1269,12 +1471,6 @@ charSet:[]
 });
 
 }
-
-/* =========================================
-
-PREBUILD CHARS
-
-========================================= */
 
 streams.forEach(stream=>{
 
@@ -1300,6 +1496,206 @@ Math.random()*chars.length
 
 /* =========================================
 
+CHAOS
+
+========================================= */
+
+function chaos(){
+
+loaderWrap.style.display = "none";
+
+const loop =
+
+setInterval(draw,42);
+
+setTimeout(()=>{
+
+clearInterval(loop);
+
+failure();
+
+},1800);
+
+}
+
+/* =========================================
+
+DRAW
+
+========================================= */
+
+function draw(){
+
+ctx.fillStyle =
+
+"rgba(0,0,0,0.14)";
+
+ctx.fillRect(
+
+0,
+
+0,
+
+canvas.width,
+
+canvas.height
+
+);
+
+streams.forEach(stream=>{
+
+stream.charTimer++;
+
+if(stream.charTimer > 5){
+
+stream.charTimer = 0;
+
+const rand =
+
+Math.floor(
+
+Math.random()*stream.length
+
+);
+
+stream.charSet[rand] =
+
+chars[
+
+Math.floor(
+
+Math.random()*chars.length
+
+)
+
+];
+
+}
+
+for(let i=0;i<stream.length;i++){
+
+const x =
+
+stream.x + (i * fontSize);
+
+const y =
+
+stream.y;
+
+const inside17 =
+
+x > hidden17.x &&
+
+x < hidden17.x + hidden17.w &&
+
+y > hidden17.y &&
+
+y < hidden17.y + hidden17.h;
+
+if(!inside17){
+
+ctx.fillStyle =
+
+`rgba(165,160,45,${
+
+1 - (i / stream.length)
+
+})`;
+
+ctx.font =
+
+fontSize + "px monospace";
+
+ctx.fillText(
+
+stream.charSet[i],
+
+x,
+
+y
+
+);
+
+}
+
+}
+
+/* movement */
+
+stream.x += stream.speed;
+
+if(stream.x > canvas.width + 200){
+
+stream.x =
+
+-400;
+
+stream.y =
+
+Math.random()*canvas.height;
+
+}
+
+/* random vertical leaks */
+
+if(Math.random() > .985){
+
+ctx.fillStyle =
+
+"rgba(165,160,45,.5)";
+
+ctx.fillText(
+
+chars[
+
+Math.floor(
+
+Math.random()*chars.length
+
+)
+
+],
+
+stream.x,
+
+stream.y + (Math.random()*220)
+
+);
+
+}
+
+});
+
+/* SYSTEM FAILURE */
+
+if(Math.random() > .58){
+
+flash();
+
+}
+
+if(Math.random() > .65){
+
+ghostUI();
+
+}
+
+if(Math.random() > .7){
+
+fracture();
+
+}
+
+if(Math.random() > .76){
+
+warning();
+
+}
+
+}
+
+/* =========================================
+
 FLASH
 
 ========================================= */
@@ -1312,13 +1708,61 @@ document.getElementById("flash");
 
 f.style.opacity =
 
-Math.random() * .18;
+Math.random() * .22;
 
 setTimeout(()=>{
 
 f.style.opacity = 0;
 
 },35);
+
+}
+
+/* =========================================
+
+GHOST UI
+
+========================================= */
+
+function ghostUI(){
+
+const layer =
+
+document.getElementById("ghostUI");
+
+layer.style.opacity = .82;
+
+layer.innerHTML = "";
+
+for(let i=0;i<4;i++){
+
+const g =
+
+document.createElement("div");
+
+g.className =
+
+"ghostBar";
+
+g.style.transform =
+
+`translate(
+
+${Math.random()*32-16}px,
+
+${Math.random()*20-10}px
+
+)`;
+
+layer.appendChild(g);
+
+}
+
+setTimeout(()=>{
+
+layer.style.opacity = 0;
+
+},70);
 
 }
 
@@ -1338,7 +1782,7 @@ layer.style.opacity = 1;
 
 layer.innerHTML = "";
 
-for(let i=0;i<5;i++){
+for(let i=0;i<6;i++){
 
 const s =
 
@@ -1366,9 +1810,9 @@ s.style.transform =
 
 `translate(
 
-${Math.random()*80-40}px,
+${Math.random()*90-45}px,
 
-${Math.random()*80-40}px
+${Math.random()*90-45}px
 
 )`;
 
@@ -1380,7 +1824,7 @@ setTimeout(()=>{
 
 layer.style.opacity = 0;
 
-},55);
+},60);
 
 }
 
@@ -1404,19 +1848,17 @@ w.className = "warning";
 
 const messages = [
 
-"SYSTEM FAILURE",
-
-"TRANSMISSION BREACH",
-
 "UNAUTHORIZED SIGNAL",
 
-"MEMORY LEAK",
-
-"CHANNEL COLLISION",
+"CONTAINMENT FAILURE",
 
 "RENDER FAILURE",
 
-"CONTAINMENT FAILURE"
+"TRANSMISSION BREACH",
+
+"SYSTEM FAILURE",
+
+"MEMORY LEAK"
 
 ];
 
@@ -1452,271 +1894,11 @@ w.remove();
 
 /* =========================================
 
-GHOST UI
-
-========================================= */
-
-function ghostUI(){
-
-const layer =
-
-document.getElementById("ghostUI");
-
-layer.style.opacity = .8;
-
-layer.innerHTML = "";
-
-for(let i=0;i<4;i++){
-
-const g =
-
-document.createElement("div");
-
-g.className =
-
-"ghostBar";
-
-g.style.transform =
-
-`translate(
-
-${Math.random()*28-14}px,
-
-${Math.random()*20-10}px
-
-)`;
-
-layer.appendChild(g);
-
-}
-
-setTimeout(()=>{
-
-layer.style.opacity = 0;
-
-},70);
-
-}
-
-/* =========================================
-
-DRAW
-
-========================================= */
-
-function draw(){
-
-ctx.fillStyle =
-
-"rgba(0,0,0,0.17)";
-
-ctx.fillRect(
-
-0,
-
-0,
-
-canvas.width,
-
-canvas.height
-
-);
-
-streams.forEach(stream=>{
-
-if(stream.finished) return;
-
-/* slower mutation */
-
-stream.charTimer++;
-
-if(stream.charTimer > 5){
-
-stream.charTimer = 0;
-
-const rand =
-
-Math.floor(
-
-Math.random()*stream.length
-
-);
-
-stream.charSet[rand] =
-
-chars[
-
-Math.floor(
-
-Math.random()*chars.length
-
-)
-
-];
-
-}
-
-for(let i=0;i<stream.length;i++){
-
-const charX =
-
-stream.x - (i * fontSize);
-
-const inside17 =
-
-charX > hidden17.x &&
-
-charX < hidden17.x + hidden17.w &&
-
-stream.y > hidden17.y &&
-
-stream.y < hidden17.y + hidden17.h;
-
-/* KEEP .17 CLEAN */
-
-if(!inside17){
-
-ctx.fillStyle =
-
-`rgba(165,160,45,${
-
-1 - (i / stream.length)
-
-})`;
-
-ctx.font =
-
-fontSize + "px monospace";
-
-ctx.fillText(
-
-stream.charSet[i],
-
-charX,
-
-stream.y
-
-);
-
-}
-
-}
-
-/* vertical leaks */
-
-if(Math.random() > .985){
-
-ctx.fillStyle =
-
-"rgba(165,160,45,.4)";
-
-ctx.fillText(
-
-chars[
-
-Math.floor(
-
-Math.random()*chars.length
-
-)
-
-],
-
-stream.x,
-
-stream.y + (Math.random()*180)
-
-);
-
-}
-
-stream.x += stream.speed;
-
-if(
-
-stream.x -
-
-(stream.length * fontSize)
-
->
-
-canvas.width + 220
-
-){
-
-stream.laps++;
-
-if(stream.laps >= 1){
-
-stream.finished = true;
-
-}else{
-
-stream.x =
-
-Math.random() * -3000;
-
-}
-
-}
-
-});
-
-/* CHAOS */
-
-if(Math.random() > .62){
-
-flash();
-
-}
-
-if(Math.random() > .72){
-
-fracture();
-
-}
-
-if(Math.random() > .76){
-
-warning();
-
-}
-
-if(Math.random() > .82){
-
-ghostUI();
-
-}
-
-/* FINISH */
-
-const unfinished =
-
-streams.some(s => !s.finished);
-
-if(!unfinished){
-
-clearInterval(loop);
-
-setTimeout(()=>{
-
-failure();
-
-},40);
-
-}
-
-}
-
-/* =========================================
-
 FAILURE
 
 ========================================= */
 
 function failure(){
-
-document.body.classList.remove("shake");
 
 const signalLost =
 
@@ -1726,7 +1908,7 @@ const staticLayer =
 
 document.getElementById("static");
 
-for(let i=0;i<32;i++){
+for(let i=0;i<28;i++){
 
 const line =
 
@@ -1762,7 +1944,7 @@ signalLost.style.opacity = 1;
 
 signalLost.classList.add("active");
 
-/* VERY QUICK */
+/* QUICK */
 
 setTimeout(()=>{
 
@@ -1772,31 +1954,19 @@ staticLayer.style.opacity = 0;
 
 document
 
-.getElementById("reconnect")
-
-.classList.add("active");
-
-document
-
 .getElementById("symbolWrap")
 
 .classList.add("visible");
 
-},420);
+document
+
+.getElementById("reconnect")
+
+.classList.add("active");
+
+},260);
 
 }
-
-/* =========================================
-
-START
-
-========================================= */
-
-document.body.classList.add("shake");
-
-const loop =
-
-setInterval(draw,42);
 
 /* =========================================
 
@@ -1812,7 +1982,7 @@ reconnect.addEventListener("click",e=>{
 
 reconnect.classList.remove("active");
 
-/* THUMBPRINT */
+/* thermal print */
 
 const smudge =
 
@@ -1827,8 +1997,6 @@ smudge.style.top =
 e.clientY + "px";
 
 smudge.style.opacity = 1;
-
-/* INSTANT */
 
 smudge.animate([
 
@@ -1856,7 +2024,7 @@ fill:"forwards"
 
 });
 
-/* COOL */
+/* cool */
 
 setTimeout(()=>{
 
@@ -1864,7 +2032,7 @@ smudge.style.opacity = 0;
 
 },600);
 
-/* PAGE WARMS */
+/* warmth */
 
 setTimeout(()=>{
 
@@ -1872,7 +2040,7 @@ document.body.classList.add("connected");
 
 },80);
 
-/* ETCHINGS */
+/* etchings */
 
 setTimeout(()=>{
 
@@ -1882,11 +2050,9 @@ document
 
 .classList.add("visible");
 
-},1300);
+},1200);
 
 });
-
-};
 
 </script>
 
