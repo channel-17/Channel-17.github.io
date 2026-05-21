@@ -1,8 +1,8 @@
 <!-- =========================================
 
-CHANNEL 17
+CHANNEL 17 // FOUNDATION RESET
 
-FOUNDATION BUILD // CHECKPOINT
+CHECKPOINT BUILD
 
 ========================================= -->
 
@@ -19,12 +19,6 @@ FOUNDATION BUILD // CHECKPOINT
 <title>CHANNEL 17</title>
 
 <style>
-
-/* =========================================
-
-RESET
-
-========================================= */
 
 *{
 
@@ -92,7 +86,7 @@ z-index:1;
 
 /* =========================================
 
-PHONE EDGE DARKNESS
+BLACK EDGE
 
 ========================================= */
 
@@ -112,9 +106,9 @@ radial-gradient(
 
 circle,
 
-transparent 50%,
+transparent 52%,
 
-rgba(0,0,0,.32) 72%,
+rgba(0,0,0,.28) 74%,
 
 rgba(0,0,0,.96) 100%
 
@@ -124,7 +118,7 @@ rgba(0,0,0,.96) 100%
 
 /* =========================================
 
-SCREEN NOISE
+NOISE
 
 ========================================= */
 
@@ -138,7 +132,7 @@ pointer-events:none;
 
 z-index:4;
 
-opacity:.06;
+opacity:.07;
 
 mix-blend-mode:screen;
 
@@ -182,7 +176,7 @@ transform:translateY(3px);
 
 /* =========================================
 
-FLASHES
+FLASH
 
 ========================================= */
 
@@ -200,57 +194,31 @@ pointer-events:none;
 
 mix-blend-mode:screen;
 
-z-index:80;
-
-transition:.06s linear;
+z-index:100;
 
 }
 
 /* =========================================
 
-SEARCH BAR GHOST
+GHOST SEARCH BAR
 
 ========================================= */
 
-#ghostBar{
+#ghostUI{
 
 position:fixed;
 
-top:0;
-
-left:0;
-
-width:100%;
-
-height:64px;
+inset:0;
 
 pointer-events:none;
 
-opacity:0;
-
 z-index:120;
 
-mix-blend-mode:screen;
-
-background:
-
-linear-gradient(
-
-180deg,
-
-rgba(255,255,255,.08),
-
-transparent
-
-);
-
-filter:
-
-blur(.4px);
+opacity:0;
 
 }
 
-.ghostCopy{
+.ghostBar{
 
 position:absolute;
 
@@ -258,11 +226,25 @@ left:0;
 
 width:100%;
 
-height:64px;
+height:58px;
 
 border-bottom:
 
 1px solid rgba(255,255,255,.08);
+
+background:
+
+linear-gradient(
+
+180deg,
+
+rgba(255,255,255,.06),
+
+transparent
+
+);
+
+mix-blend-mode:screen;
 
 }
 
@@ -280,7 +262,7 @@ inset:0;
 
 pointer-events:none;
 
-z-index:60;
+z-index:90;
 
 opacity:0;
 
@@ -296,13 +278,13 @@ rgba(255,255,255,.08);
 
 mix-blend-mode:screen;
 
-filter:blur(.5px);
+filter:blur(.4px);
 
 }
 
 /* =========================================
 
-WARNING LAYER
+WARNINGS
 
 ========================================= */
 
@@ -314,7 +296,7 @@ inset:0;
 
 pointer-events:none;
 
-z-index:140;
+z-index:150;
 
 }
 
@@ -324,9 +306,9 @@ position:absolute;
 
 font-size:
 
-clamp(10px,1.8vw,18px);
+clamp(10px,1.7vw,18px);
 
-letter-spacing:.22em;
+letter-spacing:.2em;
 
 white-space:nowrap;
 
@@ -338,11 +320,11 @@ mix-blend-mode:screen;
 
 text-shadow:
 
-0 0 12px rgba(255,255,255,.18);
+0 0 10px rgba(255,255,255,.2);
 
 animation:
 
-warning .18s linear;
+warning .14s linear;
 
 }
 
@@ -354,7 +336,7 @@ opacity:0;
 
 transform:
 
-translateX(-8px);
+translateX(-10px);
 
 }
 
@@ -370,7 +352,7 @@ opacity:0;
 
 transform:
 
-translateX(8px);
+translateX(10px);
 
 }
 
@@ -396,9 +378,9 @@ translate(-50%,-50%);
 
 font-size:
 
-clamp(28px,5vw,74px);
+clamp(26px,5vw,74px);
 
-letter-spacing:.26em;
+letter-spacing:.24em;
 
 white-space:nowrap;
 
@@ -406,7 +388,7 @@ color:#fff;
 
 opacity:0;
 
-z-index:200;
+z-index:240;
 
 mix-blend-mode:screen;
 
@@ -420,7 +402,7 @@ text-shadow:
 
 animation:
 
-signal .1s infinite;
+signal .08s infinite;
 
 }
 
@@ -428,7 +410,7 @@ signal .1s infinite;
 
 0%{
 
-opacity:.08;
+opacity:.1;
 
 }
 
@@ -440,7 +422,7 @@ opacity:1;
 
 100%{
 
-opacity:.08;
+opacity:.1;
 
 }
 
@@ -448,7 +430,7 @@ opacity:.08;
 
 /* =========================================
 
-STATIC SIGNAL
+STATIC
 
 ========================================= */
 
@@ -462,7 +444,7 @@ pointer-events:none;
 
 opacity:0;
 
-z-index:180;
+z-index:200;
 
 mix-blend-mode:screen;
 
@@ -482,7 +464,7 @@ linear-gradient(
 
 transparent,
 
-rgba(255,255,255,.92),
+rgba(255,255,255,.9),
 
 transparent
 
@@ -500,7 +482,7 @@ staticMove linear infinite;
 
 transform:
 
-translateX(-240px);
+translateX(-220px);
 
 opacity:.02;
 
@@ -516,7 +498,7 @@ opacity:.5;
 
 transform:
 
-translateX(240px);
+translateX(220px);
 
 opacity:.02;
 
@@ -558,7 +540,7 @@ opacity:0;
 
 transition:
 
-1.6s ease;
+1.2s ease;
 
 z-index:300;
 
@@ -576,7 +558,7 @@ position:absolute;
 
 width:100%;
 
-opacity:.3;
+opacity:.28;
 
 transition:
 
@@ -630,11 +612,11 @@ pointer-events:none;
 
 cursor:pointer;
 
-z-index:360;
+z-index:400;
 
 transition:
 
-1s ease;
+.8s ease;
 
 }
 
@@ -646,7 +628,7 @@ pointer-events:auto;
 
 animation:
 
-pulse 3s ease infinite;
+pulse 2.8s ease infinite;
 
 }
 
@@ -674,7 +656,7 @@ text-shadow:
 
 /* =========================================
 
-THERMAL SMUDGE
+THERMAL PRINT
 
 ========================================= */
 
@@ -682,9 +664,9 @@ THERMAL SMUDGE
 
 position:fixed;
 
-width:34px;
+width:32px;
 
-height:34px;
+height:32px;
 
 border-radius:50%;
 
@@ -692,7 +674,7 @@ pointer-events:none;
 
 opacity:0;
 
-z-index:30;
+z-index:20;
 
 background:
 
@@ -700,11 +682,11 @@ radial-gradient(
 
 circle,
 
-rgba(255,110,20,.55) 0%,
+rgba(255,110,20,.65) 0%,
 
-rgba(255,80,0,.26) 35%,
+rgba(255,70,0,.3) 35%,
 
-rgba(255,60,0,.12) 58%,
+rgba(255,50,0,.14) 60%,
 
 transparent 82%
 
@@ -712,21 +694,17 @@ transparent 82%
 
 filter:
 
-blur(8px);
+blur(7px);
 
 transform:
 
 translate(-50%,-50%);
 
-transition:
-
-1.6s ease;
-
 }
 
 /* =========================================
 
-INNER WARMTH
+WARMTH
 
 ========================================= */
 
@@ -744,7 +722,7 @@ opacity:0;
 
 transition:
 
-7s ease;
+5s ease;
 
 background:
 
@@ -754,15 +732,15 @@ linear-gradient(
 
 rgba(0,0,0,.98) 0%,
 
-rgba(0,0,0,.96) 22%,
+rgba(0,0,0,.96) 24%,
 
-rgba(255,110,20,.015) 38%,
+rgba(255,120,20,.02) 38%,
 
-rgba(255,120,30,.04) 50%,
+rgba(255,130,30,.05) 50%,
 
-rgba(255,110,20,.015) 62%,
+rgba(255,120,20,.02) 62%,
 
-rgba(0,0,0,.96) 78%,
+rgba(0,0,0,.96) 76%,
 
 rgba(0,0,0,.98) 100%
 
@@ -786,13 +764,13 @@ overflow:hidden;
 
 pointer-events:none;
 
-z-index:9;
+z-index:10;
 
 opacity:0;
 
 transition:
 
-7s ease;
+5s ease;
 
 }
 
@@ -920,7 +898,7 @@ pointer-events:none;
 
 transition:
 
-7s ease;
+5s ease;
 
 z-index:500;
 
@@ -944,13 +922,13 @@ opacity:.02;
 
 transition:
 
-7s ease;
+5s ease;
 
 filter:
 
 drop-shadow(
 
-0 0 12px rgba(255,120,20,.06)
+0 0 10px rgba(255,120,20,.05)
 
 );
 
@@ -968,7 +946,7 @@ opacity:1;
 
 width:min(42vw,240px);
 
-left:10%;
+left:12%;
 
 top:58%;
 
@@ -982,11 +960,11 @@ rotate(-4deg);
 
 #etch2{
 
-width:min(56vw,340px);
+width:min(54vw,330px);
 
 left:28%;
 
-top:68%;
+top:69%;
 
 transform:
 
@@ -998,11 +976,11 @@ rotate(2deg);
 
 #etch3{
 
-width:min(44vw,270px);
+width:min(42vw,260px);
 
-left:52%;
+left:56%;
 
-top:76%;
+top:77%;
 
 transform:
 
@@ -1046,7 +1024,7 @@ filter:
 
 drop-shadow(
 
-0 0 16px rgba(255,180,90,.18)
+0 0 14px rgba(255,180,90,.16)
 
 );
 
@@ -1064,7 +1042,7 @@ drop-shadow(
 
 <div id="flash"></div>
 
-<div id="ghostBar"></div>
+<div id="ghostUI"></div>
 
 <div id="fracture"></div>
 
@@ -1112,31 +1090,19 @@ RECONNECT
 
 <div id="etchings">
 
-<a class="etch"
-
-id="etch1"
-
-href="#">
+<a class="etch" id="etch1" href="#">
 
 <img src="lastsesh17.png" width="100%">
 
 </a>
 
-<a class="etch"
-
-id="etch2"
-
-href="#">
+<a class="etch" id="etch2" href="#">
 
 <img src="RoachTray17.png" width="100%">
 
 </a>
 
-<a class="etch"
-
-id="etch3"
-
-href="#">
+<a class="etch" id="etch3" href="#">
 
 <img src="PassItBack17.png" width="100%">
 
@@ -1208,15 +1174,15 @@ const hidden17 = {
 
 x:
 
-canvas.width * .43,
+canvas.width * .49,
 
 y:
 
-canvas.height * .18,
+canvas.height * .24,
 
-w:260,
+w:110,
 
-h:360
+h:170
 
 };
 
@@ -1240,27 +1206,51 @@ Math.random() * -3000,
 
 speed:
 
-6 + Math.random() * 6,
+7 + Math.random() * 4,
 
 length:
 
-16 + Math.random() * 26,
+18 + Math.random() * 18,
 
 laps:0,
 
 finished:false,
 
-flash:
+charTimer:0,
 
-Math.random() > .94,
-
-dead:
-
-Math.random() > .84
+charSet:[]
 
 });
 
 }
+
+/* =========================================
+
+PREBUILD CHARS
+
+========================================= */
+
+streams.forEach(stream=>{
+
+for(let i=0;i<stream.length;i++){
+
+stream.charSet.push(
+
+chars[
+
+Math.floor(
+
+Math.random()*chars.length
+
+)
+
+]
+
+);
+
+}
+
+});
 
 /* =========================================
 
@@ -1276,13 +1266,13 @@ document.getElementById("flash");
 
 f.style.opacity =
 
-Math.random() * .18;
+Math.random() * .16;
 
 setTimeout(()=>{
 
 f.style.opacity = 0;
 
-},45);
+},40);
 
 }
 
@@ -1302,7 +1292,7 @@ layer.style.opacity = 1;
 
 layer.innerHTML = "";
 
-for(let i=0;i<5;i++){
+for(let i=0;i<4;i++){
 
 const s =
 
@@ -1320,7 +1310,7 @@ s.style.top =
 
 s.style.width =
 
-(100 + Math.random()*500)+"px";
+(80 + Math.random()*400)+"px";
 
 s.style.height =
 
@@ -1330,9 +1320,9 @@ s.style.transform =
 
 `translate(
 
-${Math.random()*60-30}px,
+${Math.random()*80-40}px,
 
-${Math.random()*60-30}px
+${Math.random()*80-40}px
 
 )`;
 
@@ -1344,7 +1334,7 @@ setTimeout(()=>{
 
 layer.style.opacity = 0;
 
-},70);
+},65);
 
 }
 
@@ -1370,13 +1360,13 @@ const messages = [
 
 "SYSTEM FAILURE",
 
-"CHANNEL COLLISION",
-
 "TRANSMISSION BREACH",
 
 "UNAUTHORIZED SIGNAL",
 
 "MEMORY LEAK",
+
+"CHANNEL COLLISION",
 
 "RENDER FAILURE"
 
@@ -1408,23 +1398,23 @@ setTimeout(()=>{
 
 w.remove();
 
-},180);
+},150);
 
 }
 
 /* =========================================
 
-GHOST BAR
+GHOST UI
 
 ========================================= */
 
-function ghostBar(){
+function ghostUI(){
 
 const layer =
 
-document.getElementById("ghostBar");
+document.getElementById("ghostUI");
 
-layer.style.opacity = .7;
+layer.style.opacity = .75;
 
 layer.innerHTML = "";
 
@@ -1436,15 +1426,15 @@ document.createElement("div");
 
 g.className =
 
-"ghostCopy";
+"ghostBar";
 
 g.style.transform =
 
 `translate(
 
-${Math.random()*30-15}px,
+${Math.random()*20-10}px,
 
-${Math.random()*30-15}px
+${Math.random()*18-9}px
 
 )`;
 
@@ -1456,7 +1446,7 @@ setTimeout(()=>{
 
 layer.style.opacity = 0;
 
-},120);
+},90);
 
 }
 
@@ -1470,7 +1460,7 @@ function draw(){
 
 ctx.fillStyle =
 
-"rgba(0,0,0,0.14)";
+"rgba(0,0,0,0.15)";
 
 ctx.fillRect(
 
@@ -1488,6 +1478,36 @@ streams.forEach(stream=>{
 
 if(stream.finished) return;
 
+/* SLOWER CHARACTER MUTATION */
+
+stream.charTimer++;
+
+if(stream.charTimer > 5){
+
+stream.charTimer = 0;
+
+const rand =
+
+Math.floor(
+
+Math.random()*stream.length
+
+);
+
+stream.charSet[rand] =
+
+chars[
+
+Math.floor(
+
+Math.random()*chars.length
+
+)
+
+];
+
+}
+
 for(let i=0;i<stream.length;i++){
 
 const charX =
@@ -1504,13 +1524,11 @@ stream.y > hidden17.y &&
 
 stream.y < hidden17.y + hidden17.h;
 
-/* KEEP .17 CLEAN */
-
 if(!inside17){
 
 ctx.fillStyle =
 
-`rgba(175,185,60,${
+`rgba(170,165,55,${
 
 1 - (i / stream.length)
 
@@ -1522,15 +1540,7 @@ fontSize + "px monospace";
 
 ctx.fillText(
 
-chars[
-
-Math.floor(
-
-Math.random() * chars.length
-
-)
-
-],
+stream.charSet[i],
 
 charX,
 
@@ -1552,13 +1562,13 @@ stream.x -
 
 >
 
-canvas.width + 240
+canvas.width + 220
 
 ){
 
 stream.laps++;
 
-if(stream.laps >= 2){
+if(stream.laps >= 1){
 
 stream.finished = true;
 
@@ -1576,27 +1586,27 @@ Math.random() * -3000;
 
 /* CHAOS */
 
-if(Math.random() > .78){
+if(Math.random() > .72){
 
 flash();
 
 }
 
-if(Math.random() > .84){
+if(Math.random() > .8){
 
 fracture();
 
 }
 
-if(Math.random() > .9){
+if(Math.random() > .84){
 
 warning();
 
 }
 
-if(Math.random() > .92){
+if(Math.random() > .9){
 
-ghostBar();
+ghostUI();
 
 }
 
@@ -1614,7 +1624,7 @@ setTimeout(()=>{
 
 failure();
 
-},120);
+},80);
 
 }
 
@@ -1636,9 +1646,7 @@ const staticLayer =
 
 document.getElementById("static");
 
-/* STATIC */
-
-for(let i=0;i<42;i++){
+for(let i=0;i<34;i++){
 
 const line =
 
@@ -1662,7 +1670,7 @@ Math.random()*100+"%";
 
 line.style.animationDuration =
 
-(.05 + Math.random()*1)+"s";
+(.04 + Math.random()*1)+"s";
 
 staticLayer.appendChild(line);
 
@@ -1670,13 +1678,9 @@ staticLayer.appendChild(line);
 
 staticLayer.style.opacity = .95;
 
-/* SIGNAL LOST */
-
 signalLost.style.opacity = 1;
 
 signalLost.classList.add("active");
-
-/* FADE */
 
 setTimeout(()=>{
 
@@ -1684,9 +1688,7 @@ signalLost.style.opacity = 0;
 
 staticLayer.style.opacity = 0;
 
-},700);
-
-/* SYMBOL */
+},520);
 
 setTimeout(()=>{
 
@@ -1696,9 +1698,7 @@ document
 
 .classList.add("visible");
 
-},900);
-
-/* RECONNECT */
+},650);
 
 setTimeout(()=>{
 
@@ -1708,7 +1708,7 @@ document
 
 .classList.add("active");
 
-},1300);
+},950);
 
 }
 
@@ -1720,7 +1720,7 @@ START
 
 const loop =
 
-setInterval(draw,52);
+setInterval(draw,46);
 
 /* =========================================
 
@@ -1736,7 +1736,7 @@ reconnect.addEventListener("click",e=>{
 
 reconnect.classList.remove("active");
 
-/* THUMB HEAT */
+/* THERMAL PRINT */
 
 const smudge =
 
@@ -1752,7 +1752,7 @@ e.clientY + "px";
 
 smudge.style.opacity = 1;
 
-/* QUICK GROW */
+/* INSTANT HEAT */
 
 smudge.animate([
 
@@ -1760,7 +1760,7 @@ smudge.animate([
 
 transform:
 
-"translate(-50%,-50%) scale(.7)"
+"translate(-50%,-50%) scale(.6)"
 
 },
 
@@ -1768,13 +1768,13 @@ transform:
 
 transform:
 
-"translate(-50%,-50%) scale(1.35)"
+"translate(-50%,-50%) scale(1.2)"
 
 }
 
 ],{
 
-duration:260,
+duration:180,
 
 fill:"forwards"
 
@@ -1786,7 +1786,7 @@ setTimeout(()=>{
 
 smudge.style.opacity = 0;
 
-},900);
+},700);
 
 /* PAGE WARMS */
 
@@ -1794,7 +1794,7 @@ setTimeout(()=>{
 
 document.body.classList.add("connected");
 
-},280);
+},120);
 
 /* ETCHINGS */
 
@@ -1806,7 +1806,7 @@ document
 
 .classList.add("visible");
 
-},2400);
+},1600);
 
 });
 
