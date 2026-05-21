@@ -1,3 +1,11 @@
+<!-- =========================================
+
+CHANNEL 17
+
+FOUNDATION BUILD vNEXT
+
+========================================= -->
+
 <!DOCTYPE html>
 
 <html lang="en">
@@ -6,11 +14,19 @@
 
 <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport"
+
+content="width=device-width, initial-scale=1.0">
 
 <title>CHANNEL 17</title>
 
 <style>
+
+/* =========================================
+
+RESET
+
+========================================= */
 
 *{
 
@@ -34,13 +50,11 @@ background:#000;
 
 font-family:Courier New, monospace;
 
-cursor:default;
-
 }
 
 /* =========================================
 
-MAIN
+BASE
 
 ========================================= */
 
@@ -49,6 +63,8 @@ body{
 background:#000;
 
 overflow:hidden;
+
+cursor:default;
 
 }
 
@@ -70,15 +86,15 @@ height:100%;
 
 display:block;
 
-z-index:1;
-
 background:#000;
+
+z-index:1;
 
 }
 
 /* =========================================
 
-PHONE EDGES
+BLACK PHONE EDGE
 
 ========================================= */
 
@@ -98,11 +114,11 @@ radial-gradient(
 
 circle,
 
-transparent 54%,
+transparent 52%,
 
-rgba(0,0,0,.25) 76%,
+rgba(0,0,0,.28) 74%,
 
-rgba(0,0,0,.95) 100%
+rgba(0,0,0,.96) 100%
 
 );
 
@@ -110,29 +126,7 @@ rgba(0,0,0,.95) 100%
 
 /* =========================================
 
-CORRUPTION LAYER
-
-========================================= */
-
-#corruption{
-
-position:fixed;
-
-inset:0;
-
-pointer-events:none;
-
-z-index:20;
-
-mix-blend-mode:screen;
-
-opacity:1;
-
-}
-
-/* =========================================
-
-NOISE
+SCREEN NOISE
 
 ========================================= */
 
@@ -144,9 +138,9 @@ inset:0;
 
 z-index:4;
 
-pointer-events:none;
-
 opacity:.06;
+
+pointer-events:none;
 
 mix-blend-mode:screen;
 
@@ -168,7 +162,7 @@ transparent 3px
 
 animation:
 
-noise .04s linear infinite;
+noise .05s linear infinite;
 
 }
 
@@ -190,7 +184,7 @@ transform:translateY(3px);
 
 /* =========================================
 
-WHITE FLASH
+FLASH
 
 ========================================= */
 
@@ -204,67 +198,67 @@ background:#fff;
 
 opacity:0;
 
-z-index:60;
-
 pointer-events:none;
 
 mix-blend-mode:screen;
 
+z-index:40;
+
 transition:
 
-.08s linear;
+.06s linear;
 
 }
 
 /* =========================================
 
-SCREEN FRACTURES
+FRACTURE
 
 ========================================= */
 
-#fractures{
+#fracture{
 
 position:fixed;
 
 inset:0;
 
-z-index:50;
-
 pointer-events:none;
+
+z-index:50;
 
 opacity:0;
 
 }
 
-.fracture{
+.slice{
 
 position:absolute;
 
 background:
 
-rgba(255,255,255,.07);
+rgba(255,255,255,.08);
 
 mix-blend-mode:screen;
 
-filter:blur(.4px);
+filter:blur(.5px);
 
 }
 
 /* =========================================
 
-SYSTEM WARNINGS
+WARNINGS
 
 ========================================= */
 
 #warningWrap{
 
-position:absolute;
+position:fixed;
 
 inset:0;
 
 pointer-events:none;
 
-z-index:100;
+z-index:90;
 
 }
 
@@ -274,9 +268,9 @@ position:absolute;
 
 font-size:
 
-clamp(12px,2vw,22px);
+clamp(10px,1.8vw,18px);
 
-letter-spacing:.24em;
+letter-spacing:.22em;
 
 color:#fff;
 
@@ -288,7 +282,41 @@ mix-blend-mode:screen;
 
 text-shadow:
 
-0 0 8px rgba(255,255,255,.15);
+0 0 10px rgba(255,255,255,.2);
+
+animation:
+
+warning .18s linear;
+
+}
+
+@keyframes warning{
+
+0%{
+
+opacity:0;
+
+transform:
+
+translateX(-10px);
+
+}
+
+50%{
+
+opacity:1;
+
+}
+
+100%{
+
+opacity:0;
+
+transform:
+
+translateX(10px);
+
+}
 
 }
 
@@ -302,7 +330,7 @@ SIGNAL LOST
 
 position:absolute;
 
-top:52%;
+top:50%;
 
 left:50%;
 
@@ -312,13 +340,13 @@ translate(-50%,-50%);
 
 font-size:
 
-clamp(24px,5vw,74px);
+clamp(28px,5vw,74px);
 
 letter-spacing:.24em;
 
-color:#fff;
-
 white-space:nowrap;
+
+color:#fff;
 
 opacity:0;
 
@@ -332,9 +360,39 @@ text-shadow:
 
 }
 
+#signalLost.active{
+
+animation:
+
+signal .12s infinite;
+
+}
+
+@keyframes signal{
+
+0%{
+
+opacity:.08;
+
+}
+
+50%{
+
+opacity:1;
+
+}
+
+100%{
+
+opacity:.08;
+
+}
+
+}
+
 /* =========================================
 
-STATIC LINES
+STATIC SIGNAL
 
 ========================================= */
 
@@ -346,9 +404,9 @@ inset:0;
 
 pointer-events:none;
 
-z-index:80;
-
 opacity:0;
+
+z-index:80;
 
 mix-blend-mode:screen;
 
@@ -394,7 +452,7 @@ opacity:.02;
 
 50%{
 
-opacity:.55;
+opacity:.5;
 
 }
 
@@ -462,7 +520,7 @@ position:absolute;
 
 width:100%;
 
-opacity:.34;
+opacity:.32;
 
 transition:
 
@@ -506,7 +564,7 @@ font-size:
 
 clamp(18px,3vw,30px);
 
-letter-spacing:.28em;
+letter-spacing:.26em;
 
 color:#f2c287;
 
@@ -516,11 +574,11 @@ pointer-events:none;
 
 cursor:pointer;
 
-z-index:240;
+z-index:260;
 
 transition:
 
-1.5s ease;
+1.2s ease;
 
 }
 
@@ -532,15 +590,15 @@ pointer-events:auto;
 
 animation:
 
-reconnectPulse 3s ease infinite;
+pulse 3s ease infinite;
 
 }
 
-@keyframes reconnectPulse{
+@keyframes pulse{
 
 0%,100%{
 
-opacity:.18;
+opacity:.2;
 
 }
 
@@ -550,7 +608,7 @@ opacity:1;
 
 text-shadow:
 
-0 0 18px rgba(255,170,60,.18),
+0 0 16px rgba(255,170,60,.16),
 
 0 0 40px rgba(255,120,20,.08);
 
@@ -560,51 +618,63 @@ text-shadow:
 
 /* =========================================
 
-HUMAN WARMTH
+THERMAL SMUDGE
 
 ========================================= */
 
-#warmth{
+#smudge{
 
 position:fixed;
 
-inset:0;
+width:40px;
+
+height:40px;
+
+border-radius:50%;
 
 pointer-events:none;
 
-z-index:5;
-
 opacity:0;
 
-mix-blend-mode:screen;
-
-transition:
-
-10s ease;
+z-index:12;
 
 background:
 
-radial-gradient(circle at center,
+radial-gradient(
 
-rgba(255,130,40,.26) 0%,
+circle,
 
-rgba(255,120,20,.12) 5%,
+rgba(255,120,20,.45) 0%,
 
-rgba(255,120,20,.05) 10%,
+rgba(255,90,0,.22) 30%,
 
-transparent 20%
+rgba(255,80,0,.08) 55%,
+
+transparent 80%
 
 );
+
+filter:
+
+blur(10px);
+
+transform:
+
+translate(-50%,-50%);
+
+transition:
+
+2.4s ease;
 
 }
 
 /* =========================================
 
-ROOM LIGHT
+INNER PAGE WARMTH
 
 ========================================= */
 
-#room{
+#warmth{
 
 position:fixed;
 
@@ -618,17 +688,27 @@ opacity:0;
 
 transition:
 
-12s ease;
+8s ease;
 
 background:
 
-radial-gradient(circle at center,
+linear-gradient(
 
-rgba(255,180,90,.05) 0%,
+90deg,
 
-rgba(255,160,50,.02) 30%,
+rgba(0,0,0,.96) 0%,
 
-transparent 65%
+rgba(0,0,0,.92) 18%,
+
+rgba(255,120,20,.025) 36%,
+
+rgba(255,140,40,.05) 50%,
+
+rgba(255,120,20,.025) 64%,
+
+rgba(0,0,0,.92) 82%,
+
+rgba(0,0,0,.96) 100%
 
 );
 
@@ -672,7 +752,9 @@ border-radius:50%;
 
 background:
 
-radial-gradient(circle,
+radial-gradient(
+
+circle,
 
 rgba(255,255,255,.05) 0%,
 
@@ -782,7 +864,7 @@ pointer-events:none;
 
 transition:
 
-10s ease;
+8s ease;
 
 z-index:400;
 
@@ -806,15 +888,13 @@ opacity:.02;
 
 transition:
 
-10s ease;
+8s ease;
 
 filter:
 
 drop-shadow(
 
-0 0 10px
-
-rgba(255,120,20,.05)
+0 0 12px rgba(255,120,20,.06)
 
 );
 
@@ -828,25 +908,25 @@ opacity:1;
 
 #etch1{
 
-width:min(48vw,280px);
+width:min(44vw,250px);
 
-left:9%;
+left:7%;
 
 top:64%;
 
 transform:
 
-rotate(-4deg);
+rotate(-5deg);
 
 }
 
 #etch2{
 
-width:min(62vw,390px);
+width:min(58vw,360px);
 
-left:14%;
+left:34%;
 
-top:50%;
+top:58%;
 
 transform:
 
@@ -856,15 +936,15 @@ rotate(2deg);
 
 #etch3{
 
-width:min(56vw,330px);
+width:min(48vw,290px);
 
-left:30%;
+left:48%;
 
-bottom:-2%;
+top:72%;
 
 transform:
 
-rotate(-5deg);
+rotate(-4deg);
 
 }
 
@@ -875,12 +955,6 @@ CONNECTED
 ========================================= */
 
 .connected #warmth{
-
-opacity:1;
-
-}
-
-.connected #room{
 
 opacity:1;
 
@@ -910,17 +984,7 @@ filter:
 
 drop-shadow(
 
-0 0 18px
-
-rgba(255,180,90,.22)
-
-)
-
-drop-shadow(
-
-0 0 56px
-
-rgba(255,120,20,.12)
+0 0 16px rgba(255,180,90,.18)
 
 );
 
@@ -938,17 +1002,15 @@ rgba(255,120,20,.12)
 
 <div id="flash"></div>
 
-<div id="fractures"></div>
-
-<div id="corruption"></div>
+<div id="fracture"></div>
 
 <div id="warningWrap"></div>
 
 <div id="static"></div>
 
-<div id="warmth"></div>
+<div id="smudge"></div>
 
-<div id="room"></div>
+<div id="warmth"></div>
 
 <div id="smoke">
 
@@ -1028,7 +1090,7 @@ width="100%">
 
 <script>
 
-window.onload = () => {
+window.onload = ()=>{
 
 /* =========================================
 
@@ -1102,7 +1164,7 @@ h:300
 
 /* =========================================
 
-STREAMS
+BUILD STREAMS
 
 ========================================= */
 
@@ -1120,11 +1182,11 @@ Math.random() * -4000,
 
 speed:
 
-7 + Math.random() * 10,
+8 + Math.random() * 8,
 
 length:
 
-18 + Math.random() * 34,
+14 + Math.random() * 22,
 
 laps:0,
 
@@ -1132,7 +1194,7 @@ finished:false,
 
 dead:
 
-Math.random() > .8,
+Math.random() > .82,
 
 flash:
 
@@ -1160,7 +1222,7 @@ document.getElementById("flash");
 
 f.style.opacity =
 
-Math.random() * .16;
+Math.random() * .14;
 
 setTimeout(()=>{
 
@@ -1180,43 +1242,43 @@ function fracture(){
 
 const layer =
 
-document.getElementById("fractures");
+document.getElementById("fracture");
 
 layer.style.opacity = 1;
 
 layer.innerHTML = "";
 
-for(let i=0;i<5;i++){
+for(let i=0;i<4;i++){
 
 const s =
 
 document.createElement("div");
 
-s.className = "fracture";
+s.className = "slice";
 
 s.style.left =
 
-(Math.random()*100) + "%";
+(Math.random()*100)+"%";
 
 s.style.top =
 
-(Math.random()*100) + "%";
+(Math.random()*100)+"%";
 
 s.style.width =
 
-(100 + Math.random()*500) + "px";
+(100 + Math.random()*500)+"px";
 
 s.style.height =
 
-(10 + Math.random()*180) + "px";
+(10 + Math.random()*180)+"px";
 
 s.style.transform =
 
 `translate(
 
-${Math.random()*80-40}px,
+${Math.random()*60-30}px,
 
-${Math.random()*80-40}px
+${Math.random()*60-30}px
 
 )`;
 
@@ -1228,7 +1290,7 @@ setTimeout(()=>{
 
 layer.style.opacity = 0;
 
-},80);
+},70);
 
 }
 
@@ -1254,15 +1316,15 @@ const messages = [
 
 "SYSTEM FAILURE",
 
-"CONTAINMENT BREACH",
-
 "UNAUTHORIZED SIGNAL",
 
-"CHANNEL CONFLICT",
+"TRANSMISSION BREACH",
+
+"CHANNEL COLLISION",
 
 "MEMORY LEAK",
 
-"TRANSMISSION ERROR"
+"RENDER FAILURE"
 
 ];
 
@@ -1280,15 +1342,11 @@ Math.random()*messages.length
 
 w.style.left =
 
-(Math.random()*70+10) + "%";
+(Math.random()*70+10)+"%";
 
 w.style.top =
 
-(Math.random()*70+10) + "%";
-
-w.style.opacity =
-
-Math.random() * .8;
+(Math.random()*70+10)+"%";
 
 wrap.appendChild(w);
 
@@ -1310,7 +1368,7 @@ function draw(){
 
 ctx.fillStyle =
 
-"rgba(0,0,0,0.16)";
+"rgba(0,0,0,0.18)";
 
 ctx.fillRect(
 
@@ -1344,11 +1402,13 @@ stream.y > hidden17.y &&
 
 stream.y < hidden17.y + hidden17.h;
 
+/* protected .17 */
+
 if(!inside17){
 
 ctx.fillStyle =
 
-`rgba(100,255,100,${
+`rgba(185,220,80,${
 
 1 - (i / stream.length)
 
@@ -1436,40 +1496,6 @@ stream.y
 
 }
 
-/* vertical leaks */
-
-if(
-
-stream.vertical &&
-
-Math.random() > .995
-
-){
-
-ctx.fillStyle =
-
-"rgba(100,255,100,.42)";
-
-ctx.fillText(
-
-chars[
-
-Math.floor(
-
-Math.random() * chars.length
-
-)
-
-],
-
-charX,
-
-stream.y + (Math.random()*180)
-
-);
-
-}
-
 }
 
 stream.x += stream.speed;
@@ -1504,21 +1530,21 @@ Math.random() * -4000;
 
 });
 
-/* layered corruption */
+/* layered chaos */
 
-if(Math.random() > .76){
+if(Math.random() > .78){
 
 flash();
 
 }
 
-if(Math.random() > .82){
+if(Math.random() > .84){
 
 fracture();
 
 }
 
-if(Math.random() > .88){
+if(Math.random() > .9){
 
 warning();
 
@@ -1560,9 +1586,7 @@ const staticLayer =
 
 document.getElementById("static");
 
-/* static */
-
-for(let i=0;i<42;i++){
+for(let i=0;i<36;i++){
 
 const line =
 
@@ -1574,19 +1598,19 @@ line.className =
 
 line.style.width =
 
-(20 + Math.random()*70) + "%";
+(20 + Math.random()*70)+"%";
 
 line.style.left =
 
-Math.random()*60 + "%";
+Math.random()*60+"%";
 
 line.style.top =
 
-Math.random()*100 + "%";
+Math.random()*100+"%";
 
 line.style.animationDuration =
 
-(.05 + Math.random()*1) + "s";
+(.05 + Math.random()*1)+"s";
 
 staticLayer.appendChild(line);
 
@@ -1594,13 +1618,9 @@ staticLayer.appendChild(line);
 
 staticLayer.style.opacity = .95;
 
-/* signal */
-
 signalLost.style.opacity = 1;
 
 signalLost.classList.add("active");
-
-/* fade */
 
 setTimeout(()=>{
 
@@ -1608,9 +1628,7 @@ signalLost.style.opacity = 0;
 
 staticLayer.style.opacity = 0;
 
-},1000);
-
-/* symbol */
+},900);
 
 setTimeout(()=>{
 
@@ -1620,13 +1638,9 @@ document
 
 .classList.add("visible");
 
-},1400);
-
-/* reconnect */
+},1300);
 
 setTimeout(()=>{
-
-signalLost.classList.remove("active");
 
 document
 
@@ -1634,7 +1648,7 @@ document
 
 .classList.add("active");
 
-},2000);
+},1900);
 
 }
 
@@ -1646,7 +1660,7 @@ START
 
 const loop =
 
-setInterval(draw,38);
+setInterval(draw,40);
 
 /* =========================================
 
@@ -1664,35 +1678,53 @@ reconnect.classList.remove("active");
 
 document.body.classList.add("connected");
 
-/* warmth originates FROM touch */
+/* thermal smudge */
 
-const warmth =
+const smudge =
 
-document.getElementById("warmth");
+document.getElementById("smudge");
 
-const x =
+smudge.style.left =
 
-e.clientX;
+e.clientX + "px";
 
-const y =
+smudge.style.top =
 
-e.clientY;
+e.clientY + "px";
 
-warmth.style.background =
+smudge.style.opacity = 1;
 
-`
+setTimeout(()=>{
 
-radial-gradient(circle at ${x}px ${y}px,
+smudge.style.opacity = 0;
 
-rgba(255,130,40,.26) 0%,
+},1600);
 
-rgba(255,120,20,.12) 5%,
+/* warmth enters page */
 
-rgba(255,120,20,.05) 10%,
+setTimeout(()=>{
 
-transparent 20%)
+document
 
-`;
+.getElementById("warmth")
+
+.style.opacity = 1;
+
+},600);
+
+/* smoke */
+
+setTimeout(()=>{
+
+document
+
+.getElementById("smoke")
+
+.style.opacity = 1;
+
+},2600);
+
+/* etchings */
 
 setTimeout(()=>{
 
@@ -1702,7 +1734,7 @@ document
 
 .classList.add("visible");
 
-},4800);
+},4200);
 
 });
 
