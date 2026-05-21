@@ -1,7 +1,3 @@
- LOCK -->
-
-<!-- ========================================= -->
-
 <!DOCTYPE html>
 
 <html lang="en">
@@ -10,9 +6,7 @@
 
 <meta charset="UTF-8">
 
-<meta name="viewport"
-
-content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>CHANNEL 17</title>
 
@@ -54,6 +48,8 @@ background:#000;
 
 overflow:hidden;
 
+cursor:default;
+
 }
 
 /* =========================================
@@ -74,29 +70,63 @@ height:100%;
 
 display:block;
 
-background:#000;
-
 z-index:1;
+
+background:#000;
 
 }
 
 /* =========================================
 
-STATIC GRAIN
+PHONE DARKNESS EDGE
 
 ========================================= */
 
-#grain{
+#vignette{
 
 position:fixed;
 
 inset:0;
 
-z-index:2;
+pointer-events:none;
+
+z-index:100;
+
+background:
+
+radial-gradient(
+
+circle,
+
+transparent 52%,
+
+rgba(0,0,0,.32) 76%,
+
+rgba(0,0,0,.96) 100%
+
+);
+
+}
+
+/* =========================================
+
+CORRUPTION NOISE
+
+========================================= */
+
+#noise{
+
+position:fixed;
+
+inset:0;
 
 pointer-events:none;
 
-opacity:.05;
+z-index:8;
+
+opacity:.07;
+
+mix-blend-mode:screen;
 
 background-image:
 
@@ -104,23 +134,23 @@ repeating-linear-gradient(
 
 0deg,
 
-rgba(255,255,255,.03) 0px,
+rgba(255,255,255,.04) 0px,
 
-rgba(255,255,255,.03) 1px,
+rgba(255,255,255,.04) 1px,
 
 transparent 1px,
 
-transparent 4px
+transparent 3px
 
 );
 
 animation:
 
-grain .05s linear infinite;
+noise .05s linear infinite;
 
 }
 
-@keyframes grain{
+@keyframes noise{
 
 0%{
 
@@ -130,7 +160,7 @@ transform:translateY(0px);
 
 100%{
 
-transform:translateY(4px);
+transform:translateY(3px);
 
 }
 
@@ -138,11 +168,11 @@ transform:translateY(4px);
 
 /* =========================================
 
-GLITCH CHAOS
+RANDOM TEARING
 
 ========================================= */
 
-#glitch{
+#tears{
 
 position:fixed;
 
@@ -150,33 +180,47 @@ inset:0;
 
 pointer-events:none;
 
-z-index:6;
-
-mix-blend-mode:screen;
+z-index:9;
 
 }
 
-.glitchBar{
+.tear{
 
 position:absolute;
 
+height:1px;
+
 background:
 
-rgba(255,255,255,.16);
+linear-gradient(
+
+90deg,
+
+transparent,
+
+rgba(255,255,255,.75),
+
+transparent
+
+);
 
 opacity:0;
 
 animation:
 
-glitchBar .08s linear;
+tear .18s linear;
 
 }
 
-@keyframes glitchBar{
+@keyframes tear{
 
 0%{
 
 opacity:0;
+
+transform:
+
+translateX(-80px);
 
 }
 
@@ -190,17 +234,125 @@ opacity:1;
 
 opacity:0;
 
+transform:
+
+translateX(80px);
+
 }
 
 }
 
 /* =========================================
 
-WHITE SIGNAL CHAOS
+SIGNAL LOST
 
 ========================================= */
 
-#signalNoise{
+#signalLost{
+
+position:absolute;
+
+top:53%;
+
+left:50%;
+
+transform:
+
+translate(-50%,-50%);
+
+font-size:
+
+clamp(24px,5vw,64px);
+
+letter-spacing:.26em;
+
+color:#fff;
+
+opacity:0;
+
+z-index:30;
+
+white-space:nowrap;
+
+mix-blend-mode:screen;
+
+filter:
+
+blur(.3px);
+
+}
+
+#signalLost.active{
+
+animation:
+
+signal .12s infinite;
+
+}
+
+@keyframes signal{
+
+0%{
+
+opacity:.04;
+
+transform:
+
+translate(-50%,-50%)
+
+skewX(0deg);
+
+}
+
+25%{
+
+opacity:1;
+
+transform:
+
+translate(-50%,-50%)
+
+translateY(-2px)
+
+skewX(-5deg);
+
+}
+
+50%{
+
+opacity:.15;
+
+}
+
+75%{
+
+opacity:1;
+
+transform:
+
+translate(-50%,-50%)
+
+translateY(2px)
+
+skewX(5deg);
+
+}
+
+100%{
+
+opacity:.04;
+
+}
+
+}
+
+/* =========================================
+
+WHITE STATIC SIGNAL
+
+========================================= */
+
+#static{
 
 position:fixed;
 
@@ -208,7 +360,7 @@ inset:0;
 
 pointer-events:none;
 
-z-index:5;
+z-index:18;
 
 opacity:0;
 
@@ -216,7 +368,7 @@ mix-blend-mode:screen;
 
 }
 
-.signalLine{
+.staticLine{
 
 position:absolute;
 
@@ -238,15 +390,17 @@ transparent
 
 animation:
 
-signalMove linear infinite;
+staticMove linear infinite;
 
 }
 
-@keyframes signalMove{
+@keyframes staticMove{
 
 0%{
 
-transform:translateX(-100px);
+transform:
+
+translateX(-180px);
 
 opacity:.02;
 
@@ -254,117 +408,17 @@ opacity:.02;
 
 50%{
 
-opacity:.42;
+opacity:.45;
 
 }
 
 100%{
 
-transform:translateX(100px);
+transform:
+
+translateX(180px);
 
 opacity:.02;
-
-}
-
-}
-
-/* =========================================
-
-SIGNAL LOST
-
-========================================= */
-
-#signalLost{
-
-position:absolute;
-
-top:54%;
-
-left:50%;
-
-transform:translateX(-50%);
-
-font-size:
-
-clamp(28px,4vw,58px);
-
-letter-spacing:.25em;
-
-white-space:nowrap;
-
-color:#fff;
-
-opacity:0;
-
-mix-blend-mode:screen;
-
-filter:blur(.5px);
-
-z-index:10;
-
-}
-
-#signalLost.active{
-
-animation:
-
-warningPulse .16s infinite;
-
-}
-
-@keyframes warningPulse{
-
-0%{
-
-opacity:.02;
-
-transform:
-
-translateX(-50%)
-
-translateY(0px)
-
-skewX(0deg);
-
-}
-
-15%{
-
-opacity:1;
-
-transform:
-
-translateX(-50%)
-
-translateY(-2px)
-
-skewX(-2deg);
-
-}
-
-40%{
-
-opacity:.14;
-
-}
-
-65%{
-
-opacity:.94;
-
-transform:
-
-translateX(-50%)
-
-translateY(2px)
-
-skewX(2deg);
-
-}
-
-100%{
-
-opacity:.03;
 
 }
 
@@ -390,7 +444,7 @@ translate(-50%,-50%);
 
 width:
 
-min(78vw,470px);
+min(76vw,460px);
 
 aspect-ratio:1/1;
 
@@ -404,9 +458,9 @@ opacity:0;
 
 transition:
 
-2s ease;
+2.2s ease;
 
-z-index:12;
+z-index:40;
 
 }
 
@@ -422,11 +476,11 @@ position:absolute;
 
 width:100%;
 
-opacity:.34;
+opacity:.35;
 
 transition:
 
-8s ease;
+9s ease;
 
 }
 
@@ -436,11 +490,11 @@ position:absolute;
 
 width:100%;
 
-opacity:.34;
+opacity:.32;
 
 transition:
 
-8s ease;
+9s ease;
 
 }
 
@@ -454,7 +508,7 @@ RECONNECT
 
 position:absolute;
 
-top:60%;
+top:61%;
 
 left:50%;
 
@@ -466,9 +520,9 @@ font-size:
 
 clamp(18px,3vw,28px);
 
-letter-spacing:.24em;
+letter-spacing:.26em;
 
-color:#efc18a;
+color:#f1c287;
 
 opacity:0;
 
@@ -476,15 +530,15 @@ pointer-events:none;
 
 cursor:pointer;
 
+z-index:45;
+
 transition:
 
-3s ease;
+1.8s ease;
 
 text-shadow:
 
-0 0 8px rgba(255,120,20,.04);
-
-z-index:14;
+0 0 10px rgba(255,120,20,.03);
 
 }
 
@@ -496,7 +550,7 @@ pointer-events:auto;
 
 animation:
 
-reconnectPulse 4s ease infinite;
+reconnectPulse 3s ease infinite;
 
 }
 
@@ -504,7 +558,7 @@ reconnectPulse 4s ease infinite;
 
 0%,100%{
 
-opacity:.22;
+opacity:.18;
 
 }
 
@@ -514,9 +568,9 @@ opacity:1;
 
 text-shadow:
 
-0 0 18px rgba(255,180,90,.22),
+0 0 22px rgba(255,160,50,.15),
 
-0 0 50px rgba(255,120,20,.12);
+0 0 55px rgba(255,120,20,.08);
 
 }
 
@@ -524,11 +578,11 @@ text-shadow:
 
 /* =========================================
 
-THUMBPRINT STAIN
+WARMTH STAIN
 
 ========================================= */
 
-#stain{
+#warmth{
 
 position:fixed;
 
@@ -540,21 +594,21 @@ z-index:3;
 
 opacity:0;
 
+mix-blend-mode:screen;
+
 background:
 
 radial-gradient(circle at center,
 
-rgba(255,90,30,.30) 0%,
+rgba(255,140,40,.22) 0%,
 
-rgba(255,120,20,.14) 5%,
+rgba(255,120,20,.12) 4%,
 
-rgba(255,120,20,.05) 11%,
+rgba(255,120,20,.05) 8%,
 
-transparent 18%
+transparent 16%
 
 );
-
-mix-blend-mode:screen;
 
 transition:
 
@@ -564,37 +618,37 @@ transition:
 
 /* =========================================
 
-BACKGROUND WARMTH
+ROOM LIGHT
 
 ========================================= */
 
-#warmth{
+#room{
 
 position:fixed;
 
 inset:0;
 
-background:
-
-radial-gradient(circle at center,
-
-rgba(255,140,40,.04) 0%,
-
-rgba(255,110,20,.02) 25%,
-
-transparent 60%
-
-);
-
-opacity:0;
-
 pointer-events:none;
 
-z-index:2;
+z-index:4;
+
+opacity:0;
 
 transition:
 
 10s ease;
+
+background:
+
+radial-gradient(circle at center,
+
+rgba(255,180,90,.05) 0%,
+
+rgba(255,160,50,.02) 30%,
+
+transparent 62%
+
+);
 
 }
 
@@ -614,13 +668,13 @@ overflow:hidden;
 
 pointer-events:none;
 
-z-index:4;
+z-index:5;
 
 opacity:0;
 
 transition:
 
-6s ease;
+8s ease;
 
 }
 
@@ -746,9 +800,9 @@ pointer-events:none;
 
 transition:
 
-6s ease;
+8s ease;
 
-z-index:15;
+z-index:50;
 
 }
 
@@ -766,11 +820,11 @@ position:absolute;
 
 display:block;
 
-opacity:.04;
+opacity:.03;
 
 transition:
 
-6s ease;
+8s ease;
 
 filter:
 
@@ -778,7 +832,7 @@ drop-shadow(
 
 0 0 12px
 
-rgba(255,120,20,.06)
+rgba(255,120,20,.05)
 
 );
 
@@ -794,9 +848,9 @@ opacity:1;
 
 width:min(48vw,280px);
 
-left:7%;
+left:10%;
 
-top:43%;
+top:60%;
 
 transform:
 
@@ -808,7 +862,7 @@ rotate(-4deg);
 
 width:min(62vw,390px);
 
-left:12%;
+left:14%;
 
 top:50%;
 
@@ -822,9 +876,9 @@ rotate(2deg);
 
 width:min(56vw,330px);
 
-left:24%;
+left:28%;
 
-bottom:2%;
+bottom:-1%;
 
 transform:
 
@@ -844,6 +898,12 @@ opacity:1;
 
 }
 
+.connected #room{
+
+opacity:1;
+
+}
+
 .connected #smoke{
 
 opacity:1;
@@ -857,3 +917,699 @@ opacity:.02;
 filter:
 
 blur(2px);
+
+}
+
+.connected #inner{
+
+opacity:1;
+
+filter:
+
+drop-shadow(
+
+0 0 18px
+
+rgba(255,180,90,.22)
+
+)
+
+drop-shadow(
+
+0 0 56px
+
+rgba(255,120,20,.12)
+
+);
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<canvas id="matrix"></canvas>
+
+<div id="noise"></div>
+
+<div id="tears"></div>
+
+<div id="warmth"></div>
+
+<div id="room"></div>
+
+<div id="static"></div>
+
+<div id="smoke">
+
+<div class="cloud"></div>
+
+<div class="cloud"></div>
+
+<div class="cloud"></div>
+
+</div>
+
+<div id="signalLost">
+
+SIGNAL LOST
+
+</div>
+
+<div id="symbolWrap">
+
+<img id="outer"
+
+src="Outer17-final.png">
+
+<img id="inner"
+
+src="Inner17-final.png">
+
+</div>
+
+<div id="reconnect">
+
+RECONNECT
+
+</div>
+
+<div id="etchings">
+
+<a class="etch"
+
+id="etch1"
+
+href="#">
+
+<img src="lastsesh17.png"
+
+width="100%">
+
+</a>
+
+<a class="etch"
+
+id="etch2"
+
+href="#">
+
+<img src="RoachTray17.png"
+
+width="100%">
+
+</a>
+
+<a class="etch"
+
+id="etch3"
+
+href="#">
+
+<img src="PassItBack17.png"
+
+width="100%">
+
+</a>
+
+</div>
+
+<div id="vignette"></div>
+
+<script>
+
+/* =========================================
+
+SAFE INIT
+
+========================================= */
+
+window.onload = () => {
+
+/* =========================================
+
+CANVAS
+
+========================================= */
+
+const canvas =
+
+document.getElementById("matrix");
+
+const ctx =
+
+canvas.getContext("2d");
+
+function resize(){
+
+canvas.width =
+
+window.innerWidth;
+
+canvas.height =
+
+window.innerHeight;
+
+}
+
+resize();
+
+window.addEventListener(
+
+"resize",
+
+resize
+
+);
+
+/* =========================================
+
+SETTINGS
+
+========================================= */
+
+const chars =
+
+"ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789$#@%&*";
+
+const fontSize = 16;
+
+const rows =
+
+Math.floor(canvas.height / fontSize);
+
+const streams = [];
+
+const hidden17 = {
+
+x:
+
+canvas.width * .54,
+
+y:
+
+canvas.height * .38,
+
+w:520,
+
+h:260
+
+};
+
+/* =========================================
+
+STREAMS
+
+========================================= */
+
+for(let i=0;i<rows;i++){
+
+streams.push({
+
+y:
+
+i * fontSize,
+
+x:
+
+Math.random() * -3000,
+
+speed:
+
+3 + Math.random() * 7,
+
+length:
+
+18 + Math.random() * 40,
+
+laps:0,
+
+finished:false,
+
+dead:
+
+Math.random() > .83,
+
+flash:
+
+Math.random() > .92,
+
+vertical:
+
+Math.random() > .88
+
+});
+
+}
+
+/* =========================================
+
+TEARS
+
+========================================= */
+
+function tear(){
+
+const layer =
+
+document.getElementById("tears");
+
+const t =
+
+document.createElement("div");
+
+t.className = "tear";
+
+t.style.left =
+
+Math.random()*100 + "%";
+
+t.style.top =
+
+Math.random()*100 + "%";
+
+t.style.width =
+
+(100 + Math.random()*600) + "px";
+
+layer.appendChild(t);
+
+setTimeout(()=>{
+
+t.remove();
+
+},180);
+
+}
+
+/* =========================================
+
+DRAW
+
+========================================= */
+
+function draw(){
+
+ctx.fillStyle =
+
+"rgba(0,0,0,0.12)";
+
+ctx.fillRect(
+
+0,
+
+0,
+
+canvas.width,
+
+canvas.height
+
+);
+
+streams.forEach(stream=>{
+
+if(stream.finished) return;
+
+for(let i=0;i<stream.length;i++){
+
+const charX =
+
+stream.x - (i * fontSize);
+
+const inside17 =
+
+charX > hidden17.x &&
+
+charX < hidden17.x + hidden17.w &&
+
+stream.y > hidden17.y &&
+
+stream.y < hidden17.y + hidden17.h;
+
+/* protected .17 */
+
+if(!inside17){
+
+ctx.fillStyle =
+
+`rgba(100,255,100,${
+
+1 - (i / stream.length)
+
+})`;
+
+ctx.font =
+
+fontSize + "px monospace";
+
+ctx.fillText(
+
+chars[
+
+Math.floor(
+
+Math.random() * chars.length
+
+)
+
+],
+
+charX,
+
+stream.y
+
+);
+
+}
+
+/* dead gaps */
+
+if(
+
+stream.dead &&
+
+Math.random() > .996
+
+){
+
+ctx.clearRect(
+
+charX,
+
+stream.y,
+
+fontSize,
+
+fontSize
+
+);
+
+}
+
+/* white glitch */
+
+if(
+
+stream.flash &&
+
+Math.random() > .996
+
+){
+
+ctx.fillStyle =
+
+"rgba(255,255,255,.92)";
+
+ctx.fillText(
+
+chars[
+
+Math.floor(
+
+Math.random() * chars.length
+
+)
+
+],
+
+charX,
+
+stream.y
+
+);
+
+}
+
+/* vertical leaks */
+
+if(
+
+stream.vertical &&
+
+Math.random() > .995
+
+){
+
+ctx.fillStyle =
+
+"rgba(100,255,100,.42)";
+
+ctx.fillText(
+
+chars[
+
+Math.floor(
+
+Math.random() * chars.length
+
+)
+
+],
+
+charX,
+
+stream.y + (Math.random()*180)
+
+);
+
+}
+
+}
+
+stream.x += stream.speed;
+
+/* laps */
+
+if(
+
+stream.x -
+
+(stream.length * fontSize)
+
+>
+
+canvas.width + 240
+
+){
+
+stream.laps++;
+
+if(stream.laps >= 2){
+
+stream.finished = true;
+
+}else{
+
+stream.x =
+
+Math.random() * -3000;
+
+}
+
+}
+
+});
+
+/* random tears */
+
+if(Math.random() > .84){
+
+tear();
+
+}
+
+/* finish */
+
+const unfinished =
+
+streams.some(s => !s.finished);
+
+if(!unfinished){
+
+clearInterval(loop);
+
+setTimeout(()=>{
+
+failure();
+
+},300);
+
+}
+
+}
+
+/* =========================================
+
+FAILURE
+
+========================================= */
+
+function failure(){
+
+const signalLost =
+
+document.getElementById("signalLost");
+
+const staticLayer =
+
+document.getElementById("static");
+
+/* unstable lines */
+
+for(let i=0;i<36;i++){
+
+const line =
+
+document.createElement("div");
+
+line.className =
+
+"staticLine";
+
+line.style.width =
+
+(20 + Math.random()*70) + "%";
+
+line.style.left =
+
+Math.random()*60 + "%";
+
+line.style.top =
+
+Math.random()*100 + "%";
+
+line.style.animationDuration =
+
+(.04 + Math.random()*1) + "s";
+
+staticLayer.appendChild(line);
+
+}
+
+staticLayer.style.opacity = .95;
+
+signalLost.style.opacity = 1;
+
+signalLost.classList.add("active");
+
+/* fade */
+
+setTimeout(()=>{
+
+signalLost.style.opacity = 0;
+
+staticLayer.style.opacity = 0;
+
+},1000);
+
+/* symbol */
+
+setTimeout(()=>{
+
+document
+
+.getElementById("symbolWrap")
+
+.classList.add("visible");
+
+},1400);
+
+/* reconnect */
+
+setTimeout(()=>{
+
+signalLost.classList.remove("active");
+
+document
+
+.getElementById("reconnect")
+
+.classList.add("active");
+
+},1900);
+
+}
+
+/* =========================================
+
+START
+
+========================================= */
+
+const loop =
+
+setInterval(draw,42);
+
+/* =========================================
+
+RECONNECT
+
+========================================= */
+
+const reconnect =
+
+document.getElementById("reconnect");
+
+reconnect.addEventListener("click",()=>{
+
+reconnect.classList.remove("active");
+
+reconnect.style.opacity = 0;
+
+document.body.classList.add("connected");
+
+/* warmth */
+
+document
+
+.getElementById("warmth")
+
+.style.opacity = 1;
+
+/* room */
+
+setTimeout(()=>{
+
+document
+
+.getElementById("room")
+
+.style.opacity = 1;
+
+},2200);
+
+/* smoke */
+
+setTimeout(()=>{
+
+document
+
+.getElementById("smoke")
+
+.style.opacity = 1;
+
+},3400);
+
+/* etchings */
+
+setTimeout(()=>{
+
+document
+
+.getElementById("etchings")
+
+.classList.add("visible");
+
+},5000);
+
+});
+
+};
+
+</script>
+
+</body>
+
+</html>
