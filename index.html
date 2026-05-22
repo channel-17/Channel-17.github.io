@@ -1,12 +1,30 @@
+<!--
+
+CHANNEL 17
+
+FOUNDATION REBUILD v1
+
+FOCUS:
+
+- believable survivor turtle
+
+- clean pacing
+
+- readable chaos
+
+- functioning reconnect ritual
+
+-->
+
 <!DOCTYPE html>
 
 <html lang="en">
 
 <head>
 
-<meta charset="UTF-8" />
+<meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>CHANNEL 17</title>
 
@@ -14,309 +32,377 @@
 
 *{
 
-  margin:0;
+margin:0;
 
-  padding:0;
+padding:0;
 
-  box-sizing:border-box;
+box-sizing:border-box;
 
 }
 
 html,body{
 
-  width:100%;
+width:100%;
 
-  height:100%;
+height:100%;
 
-  overflow:hidden;
+overflow:hidden;
 
-  background:#000;
+background:#000;
 
-  color:#fff;
+font-family:Arial, Helvetica, sans-serif;
 
-  font-family:Arial, Helvetica, sans-serif;
+color:#fff;
 
 }
+
+/* =========================================
+
+BASE ATMOSPHERE
+
+========================================= */
 
 body{
 
-  position:relative;
+position:relative;
+
+background:#000;
 
 }
 
-/* =========================
-
-GLOBAL TEXTURE
-
-========================= */
-
 #noise{
 
-  position:fixed;
+position:fixed;
 
-  inset:0;
+inset:0;
 
-  pointer-events:none;
+pointer-events:none;
 
-  z-index:99999;
+opacity:.035;
 
-  opacity:.045;
+z-index:99999;
 
-  mix-blend-mode:screen;
+mix-blend-mode:screen;
 
-  background-image:
+background-image:
 
-    repeating-linear-gradient(
+repeating-linear-gradient(
 
-      0deg,
+0deg,
 
-      rgba(255,255,255,.035) 0px,
+rgba(255,255,255,.04) 0px,
 
-      rgba(255,255,255,.035) 1px,
+rgba(255,255,255,.04) 1px,
 
-      transparent 1px,
+transparent 1px,
 
-      transparent 3px
+transparent 4px
 
-    );
+);
 
-  animation:noiseMove .05s linear infinite;
+animation:noiseMove .06s linear infinite;
 
 }
 
 @keyframes noiseMove{
 
-  from{transform:translateY(0);}
+from{transform:translateY(0);}
 
-  to{transform:translateY(3px);}
+to{transform:translateY(3px);}
 
 }
 
 #vignette{
 
-  position:fixed;
+position:fixed;
 
-  inset:0;
+inset:0;
 
-  pointer-events:none;
+pointer-events:none;
 
-  z-index:999999;
+z-index:999999;
 
-  background:
+background:
 
-    radial-gradient(
+radial-gradient(
 
-      circle,
+circle,
 
-      transparent 44%,
+transparent 48%,
 
-      rgba(0,0,0,.55) 73%,
+rgba(0,0,0,.5) 72%,
 
-      rgba(0,0,0,.98) 100%
+rgba(0,0,0,.96) 100%
 
-    );
-
-}
-
-#flash{
-
-  position:fixed;
-
-  inset:0;
-
-  background:#fff;
-
-  opacity:0;
-
-  pointer-events:none;
-
-  mix-blend-mode:screen;
-
-  z-index:9000;
+);
 
 }
 
-/* =========================
+/* =========================================
 
 LOADER
 
-========================= */
+========================================= */
 
 #loader{
 
-  position:fixed;
+position:fixed;
 
-  inset:0;
+inset:0;
 
-  z-index:3000;
+z-index:3000;
 
-  background:#000;
+display:flex;
 
-  display:flex;
+flex-direction:column;
 
-  flex-direction:column;
+justify-content:center;
 
-  align-items:center;
+align-items:center;
 
-  justify-content:center;
+background:#000;
 
-  transition:opacity .7s ease;
+transition:opacity .8s ease;
 
 }
 
+/* =========================================
+
+BAR
+
+========================================= */
+
 #bar{
 
-  position:relative;
+position:relative;
 
-  width:min(58vw,410px);
+width:min(56vw,390px);
 
-  height:42px;
+height:44px;
 
-  border-radius:999px;
+border-radius:999px;
 
-  overflow:hidden;
+overflow:hidden;
 
-  border:1px solid rgba(255,255,255,.14);
+border:
 
-  background:rgba(255,255,255,.022);
+1px solid rgba(255,255,255,.14);
 
-  box-shadow:
+background:
 
-    0 0 18px rgba(255,255,255,.035),
+rgba(255,255,255,.02);
 
-    inset 0 0 16px rgba(255,255,255,.025);
+box-shadow:
+
+0 0 18px rgba(255,255,255,.03),
+
+inset 0 0 18px rgba(255,255,255,.02);
 
 }
 
 #fill{
 
-  position:absolute;
+position:absolute;
 
-  left:0;
+left:0;
 
-  top:0;
+top:0;
 
-  height:100%;
+height:100%;
 
-  width:0%;
+width:0%;
 
-  border-radius:999px;
+border-radius:999px;
 
-  background:
+background:
 
-    linear-gradient(
+linear-gradient(
 
-      90deg,
+90deg,
 
-      rgba(255,255,255,.86),
+rgba(255,255,255,.84),
 
-      rgba(255,255,255,1)
+rgba(255,255,255,1)
 
-    );
+);
 
-  box-shadow:0 0 20px rgba(255,255,255,.18);
+box-shadow:
+
+0 0 18px rgba(255,255,255,.16);
 
 }
+
+/* =========================================
+
+PERCENT
+
+========================================= */
 
 #percent{
 
-  margin-top:18px;
+margin-top:18px;
 
-  font-size:16px;
+font-size:16px;
 
-  font-weight:700;
+font-weight:700;
 
-  letter-spacing:.22em;
+letter-spacing:.22em;
 
-  opacity:.55;
+opacity:.58;
 
 }
 
+/* =========================================
+
+TURTLE
+
+========================================= */
+
 #turtleWrap{
 
-  margin-top:34px;
+margin-top:34px;
 
-  width:120px;
+width:120px;
 
-  height:90px;
+height:90px;
 
-  display:flex;
+display:flex;
 
-  justify-content:center;
+justify-content:center;
 
-  align-items:center;
+align-items:center;
 
 }
 
 #turtle{
 
-  width:104px;
+width:104px;
 
-  height:78px;
+height:72px;
 
-  overflow:visible;
+overflow:visible;
 
-  opacity:.96;
+opacity:.98;
 
-  filter:drop-shadow(0 0 10px rgba(255,255,255,.08));
+filter:
+
+drop-shadow(
+
+0 0 10px rgba(255,255,255,.05)
+
+);
 
 }
 
 .walking{
 
-  animation:turtleWalk 1s ease-in-out infinite;
+animation:
+
+walk 1s ease-in-out infinite;
 
 }
 
-@keyframes turtleWalk{
+@keyframes walk{
 
-  0%,100%{ transform:translateY(0) translateX(0) scaleX(1); }
+0%,100%{
 
-  50%{ transform:translateY(-2px) translateX(2px) scaleX(1); }
+transform:
+
+translateY(0px)
+
+translateX(0px);
+
+}
+
+50%{
+
+transform:
+
+translateY(-2px)
+
+translateX(2px);
 
 }
 
-.lookLeft{
+}
 
-  animation:none;
+/* turtle anatomy */
 
-  transform:scaleX(-1);
+#shell{
 
-  transition:transform .14s ease;
+transition:.18s ease;
 
 }
+
+#head,
+
+#neck,
+
+#frontLeg,
+
+#backLeg,
+
+#tail{
+
+transition:.14s ease;
+
+}
+
+/* look */
+
+.look{
+
+transform:
+
+scaleX(-1);
+
+}
+
+/* gasp */
 
 .gasp #head{
 
-  transform:translateX(10px) translateY(-1px);
+transform:
+
+translateX(8px);
+
+}
+
+.gasp #neck{
+
+transform:
+
+translateX(5px);
 
 }
 
 .gasp #frontLeg{
 
-  transform:translateY(5px);
+transform:
+
+translateY(4px);
 
 }
 
-.gasp #backLeg{
-
-  transform:translateY(4px);
-
-}
-
-.gasp #tail{
-
-  transform:translateX(-2px);
-
-}
+/* retract */
 
 .retract #head{
 
-  transform:translateX(-36px);
+transform:
 
-  opacity:0;
+translateX(-30px);
 
-  transition:.16s ease;
+opacity:0;
+
+}
+
+.retract #neck{
+
+transform:
+
+translateX(-24px);
+
+opacity:0;
 
 }
 
@@ -324,537 +410,585 @@ LOADER
 
 .retract #backLeg{
 
-  transform:translateY(-22px);
+transform:
 
-  opacity:0;
+translateY(-18px);
 
-  transition:.14s ease;
+opacity:0;
 
 }
 
 .retract #tail{
 
-  transform:translateX(18px);
+transform:
 
-  opacity:0;
+translateX(10px);
 
-  transition:.14s ease;
-
-}
-
-.retract #neck{
-
-  transform:translateX(-28px);
-
-  opacity:0;
-
-  transition:.14s ease;
+opacity:0;
 
 }
 
-.shellOnly{
+.retract #shell{
 
-  animation:none;
+transform:
 
-  transform:scale(.9);
-
-  transition:transform .18s ease;
+scale(1.04);
 
 }
 
-/* =========================
+/* =========================================
 
 CHAOS
 
-========================= */
+========================================= */
 
 #chaos{
 
-  position:fixed;
+position:fixed;
 
-  inset:0;
+inset:0;
 
-  z-index:4000;
+overflow:hidden;
 
-  overflow:hidden;
+opacity:0;
 
-  pointer-events:none;
+pointer-events:none;
 
-  opacity:0;
+z-index:5000;
 
-  transition:opacity .25s ease;
+transition:opacity .4s ease;
 
 }
+
+/* generic windows */
 
 .window{
 
-  position:absolute;
+position:absolute;
 
-  background:rgba(12,12,12,.92);
+background:
 
-  border:1px solid rgba(255,255,255,.08);
+rgba(10,10,10,.92);
 
-  border-radius:12px;
+border:
 
-  overflow:hidden;
+1px solid rgba(255,255,255,.08);
 
-  box-shadow:0 0 26px rgba(0,0,0,.75);
+border-radius:12px;
 
-  opacity:0;
+overflow:hidden;
 
-  animation:windowCascade linear forwards;
+box-shadow:
+
+0 0 28px rgba(0,0,0,.72);
+
+opacity:0;
+
+animation:
+
+cascade linear forwards;
 
 }
 
-.window.topLeft{
+@keyframes cascade{
 
-  left:var(--x);
+0%{
 
-  top:var(--y);
+opacity:0;
+
+transform:
+
+translate(0px,0px)
+
+scale(.96);
+
+}
+
+12%{
+
+opacity:.92;
+
+}
+
+100%{
+
+opacity:0;
+
+transform:
+
+translate(
+
+var(--moveX),
+
+var(--moveY)
+
+)
+
+scale(1.03);
+
+}
 
 }
 
 .windowTop{
 
-  height:32px;
+height:32px;
 
-  padding-left:14px;
+padding-left:14px;
 
-  display:flex;
+display:flex;
 
-  align-items:center;
+align-items:center;
 
-  font-size:12px;
+font-size:12px;
 
-  letter-spacing:.16em;
+letter-spacing:.16em;
 
-  color:rgba(255,255,255,.52);
+color:
 
-  background:rgba(255,255,255,.045);
+rgba(255,255,255,.5);
 
-  border-bottom:1px solid rgba(255,255,255,.04);
+background:
+
+rgba(255,255,255,.045);
+
+border-bottom:
+
+1px solid rgba(255,255,255,.04);
 
 }
 
 .windowBody{
 
-  padding:14px;
+padding:14px;
 
-  font-size:12px;
+font-size:12px;
 
-  line-height:1.65;
+line-height:1.65;
 
-  color:rgba(255,255,255,.62);
+color:
 
-}
-
-.red{ color:#ff3434; }
-
-.yellow{ color:#c7c35a; }
-
-.dim{ color:rgba(255,255,255,.34); }
-
-@keyframes windowCascade{
-
-  0%{
-
-    opacity:0;
-
-    transform:translate(0,0) scale(.96);
-
-  }
-
-  12%{
-
-    opacity:.9;
-
-  }
-
-  75%{
-
-    opacity:.72;
-
-  }
-
-  100%{
-
-    opacity:0;
-
-    transform:
-
-      translate(
-
-        var(--moveX),
-
-        var(--moveY)
-
-      )
-
-      scale(1.035);
-
-  }
+rgba(255,255,255,.64);
 
 }
 
-.glitchStrip{
+.red{
 
-  position:absolute;
-
-  height:18px;
-
-  background:
-
-    linear-gradient(
-
-      90deg,
-
-      transparent,
-
-      rgba(194,190,72,.35),
-
-      transparent
-
-    );
-
-  opacity:0;
-
-  animation:stripDeath .7s linear forwards;
+color:#ff3b3b;
 
 }
 
-@keyframes stripDeath{
+.yellow{
 
-  0%{opacity:0; transform:translateX(-40px);}
-
-  35%{opacity:.7;}
-
-  100%{opacity:0; transform:translateX(80px);}
+color:#c7c05f;
 
 }
+
+/* toxic strips */
+
+.strip{
+
+position:absolute;
+
+height:18px;
+
+background:
+
+linear-gradient(
+
+90deg,
+
+transparent,
+
+rgba(198,192,78,.3),
+
+transparent
+
+);
+
+opacity:0;
+
+animation:
+
+stripMove .7s linear forwards;
+
+}
+
+@keyframes stripMove{
+
+0%{
+
+opacity:0;
+
+transform:
+
+translateX(-40px);
+
+}
+
+25%{
+
+opacity:.7;
+
+}
+
+100%{
+
+opacity:0;
+
+transform:
+
+translateX(80px);
+
+}
+
+}
+
+/* =========================================
+
+SIGNAL LOST
+
+========================================= */
 
 #signalLost{
 
-  position:absolute;
+position:absolute;
 
-  left:50%;
+top:50%;
 
-  top:50%;
+left:50%;
 
-  transform:translate(-50%,-50%);
+transform:
 
-  font-size:clamp(34px,6vw,82px);
+translate(-50%,-50%);
 
-  letter-spacing:.26em;
+font-size:
 
-  color:#fff;
+clamp(34px,6vw,82px);
 
-  opacity:0;
+letter-spacing:.24em;
 
-  text-shadow:0 0 16px rgba(255,255,255,.14);
+opacity:0;
 
-}
+color:#fff;
 
-.shake{
+text-shadow:
 
-  animation:shake .075s linear infinite;
-
-}
-
-@keyframes shake{
-
-  0%{transform:translate(0,0);}
-
-  25%{transform:translate(2px,-1px);}
-
-  50%{transform:translate(-2px,1px);}
-
-  75%{transform:translate(1px,2px);}
-
-  100%{transform:translate(0,0);}
+0 0 16px rgba(255,255,255,.12);
 
 }
 
-/* =========================
+/* =========================================
 
-SIGNAL SPACE
+RECONNECT SPACE
 
-========================= */
+========================================= */
 
 #signalSpace{
 
-  position:fixed;
+position:fixed;
 
-  inset:0;
+inset:0;
 
-  z-index:7000;
+display:flex;
 
-  display:flex;
+justify-content:center;
 
-  justify-content:center;
+align-items:center;
 
-  align-items:center;
+opacity:0;
 
-  opacity:0;
+pointer-events:none;
 
-  pointer-events:none;
+z-index:8000;
 
-  transition:opacity 1.4s ease;
+transition:opacity 1.4s ease;
 
 }
+
+/* reconnect */
 
 #reconnect{
 
-  position:absolute;
+position:absolute;
 
-  z-index:9000;
+z-index:9999;
 
-  font-size:clamp(18px,3vw,30px);
+font-size:
 
-  letter-spacing:.34em;
+clamp(18px,3vw,30px);
 
-  color:rgba(255,255,255,.78);
+letter-spacing:.34em;
 
-  opacity:0;
+padding:34px;
 
-  cursor:pointer;
+cursor:pointer;
 
-  user-select:none;
+user-select:none;
 
-  padding:34px;
+color:
 
-  transition:opacity .15s linear;
+rgba(255,255,255,.78);
 
-}
+opacity:0;
 
-#reconnect.ready{
-
-  pointer-events:auto;
-
-  animation:recoverBreath 2.2s ease-in-out infinite;
+transition:.12s linear;
 
 }
 
-@keyframes recoverBreath{
+/* heartbeat */
 
-  0%{
+.breathing{
 
-    opacity:.48;
+animation:
 
-    text-shadow:0 0 6px rgba(255,255,255,.04);
-
-  }
-
-  18%{
-
-    opacity:.96;
-
-    text-shadow:0 0 26px rgba(255,255,255,.24);
-
-  }
-
-  35%{
-
-    opacity:.52;
-
-    text-shadow:0 0 10px rgba(255,255,255,.08);
-
-  }
-
-  100%{
-
-    opacity:.72;
-
-    text-shadow:0 0 15px rgba(255,255,255,.12);
-
-  }
+heartbeat 2.1s ease-in-out infinite;
 
 }
+
+@keyframes heartbeat{
+
+0%{
+
+opacity:.46;
+
+text-shadow:
+
+0 0 6px rgba(255,255,255,.04);
+
+}
+
+18%{
+
+opacity:.96;
+
+text-shadow:
+
+0 0 24px rgba(255,255,255,.2);
+
+}
+
+38%{
+
+opacity:.52;
+
+text-shadow:
+
+0 0 8px rgba(255,255,255,.06);
+
+}
+
+100%{
+
+opacity:.72;
+
+text-shadow:
+
+0 0 14px rgba(255,255,255,.1);
+
+}
+
+}
+
+/* warmth */
 
 #warmth{
 
-  position:absolute;
+position:absolute;
 
-  z-index:8500;
+width:20px;
 
-  width:24px;
+height:20px;
 
-  height:24px;
+border-radius:50%;
 
-  border-radius:50%;
+opacity:0;
 
-  opacity:0;
+pointer-events:none;
 
-  pointer-events:none;
+z-index:9000;
 
-  background:
+filter:
 
-    radial-gradient(
+blur(6px);
 
-      circle,
+background:
 
-      rgba(255,230,180,.98) 0%,
+radial-gradient(
 
-      rgba(255,116,36,.7) 23%,
+circle,
 
-      rgba(145,25,12,.42) 45%,
+rgba(255,226,180,.95) 0%,
 
-      rgba(0,0,0,.92) 73%,
+rgba(255,125,50,.72) 26%,
 
-      rgba(0,0,0,0) 100%
+rgba(120,25,10,.4) 52%,
 
-    );
+rgba(0,0,0,.92) 74%,
 
-  filter:blur(5px);
+transparent 100%
+
+);
 
 }
+
+/* subtle center warmth */
 
 #centerWarmth{
 
-  position:absolute;
+position:absolute;
 
-  width:64vw;
+width:60vw;
 
-  height:58vh;
+height:52vh;
 
-  border-radius:50%;
+border-radius:50%;
 
-  opacity:0;
+opacity:0;
 
-  pointer-events:none;
+pointer-events:none;
 
-  background:
+background:
 
-    radial-gradient(
+radial-gradient(
 
-      circle,
+circle,
 
-      rgba(255,145,65,.08) 0%,
+rgba(255,135,55,.06) 0%,
 
-      rgba(255,145,65,.035) 26%,
+rgba(255,135,55,.03) 32%,
 
-      rgba(0,0,0,0) 68%
+transparent 72%
 
-    );
+);
 
-  filter:blur(34px);
+filter:
 
-  transition:opacity 2.4s ease;
+blur(28px);
+
+transition:opacity 2s ease;
 
 }
 
+/* symbol */
+
 #inner{
 
-  position:absolute;
+position:absolute;
 
-  z-index:6000;
+width:min(42vw,220px);
 
-  width:min(42vw,220px);
+opacity:0;
 
-  opacity:0;
+z-index:7000;
 
-  filter:
+filter:
 
-    blur(.2px)
+drop-shadow(
 
-    drop-shadow(0 0 10px rgba(255,255,255,.05));
+0 0 10px rgba(255,255,255,.04)
 
-  transition:opacity 2.2s ease;
+);
+
+transition:opacity 2s ease;
 
 }
 
 #outer{
 
-  position:absolute;
+position:absolute;
 
-  z-index:5800;
+width:min(70vw,410px);
 
-  width:min(72vw,420px);
+opacity:0;
 
-  opacity:0;
+z-index:6500;
 
-  filter:
+filter:
 
-    blur(.25px)
+drop-shadow(
 
-    drop-shadow(0 0 12px rgba(255,255,255,.04));
+0 0 10px rgba(255,255,255,.03)
 
-  transition:
+);
 
-    opacity 1s ease,
+transition:
 
-    transform 1.2s ease,
+opacity 1.2s ease,
 
-    filter 1.2s ease;
+transform 1.2s ease,
 
-}
-
-#etchings{
-
-  position:absolute;
-
-  inset:0;
-
-  opacity:0;
-
-  z-index:5000;
-
-  pointer-events:none;
-
-  transition:opacity 2.8s ease;
+filter 1.2s ease;
 
 }
 
-.etch{
+/* survivor links */
 
-  position:absolute;
+#links{
 
-  display:block;
+position:absolute;
 
-  pointer-events:auto;
+inset:0;
 
-  opacity:.75;
+opacity:0;
 
-  filter:
+pointer-events:none;
 
-    blur(.12px)
+z-index:8500;
 
-    drop-shadow(0 0 12px rgba(255,140,55,.08));
-
-}
-
-#etch1{
-
-  width:min(40vw,230px);
-
-  left:12%;
-
-  top:60%;
-
-  transform:rotate(-3deg);
+transition:opacity 2.4s ease;
 
 }
 
-#etch2{
+.link{
 
-  width:min(46vw,280px);
+position:absolute;
 
-  left:24%;
+display:block;
 
-  top:76%;
+pointer-events:auto;
 
-  transform:rotate(1deg);
+opacity:.75;
+
+filter:
+
+blur(.12px)
+
+drop-shadow(
+
+0 0 12px rgba(255,140,55,.08)
+
+);
 
 }
 
-#etch3{
+#last{
 
-  width:min(30vw,180px);
+width:min(40vw,220px);
 
-  left:66%;
+left:10%;
 
-  top:78%;
+top:62%;
 
-  transform:rotate(-4deg);
+}
+
+#roach{
+
+width:min(46vw,260px);
+
+left:24%;
+
+top:79%;
+
+}
+
+#pass{
+
+width:min(28vw,170px);
+
+left:70%;
+
+top:77%;
 
 }
 
@@ -866,219 +1000,271 @@ SIGNAL SPACE
 
 <div id="noise"></div>
 
-<div id="flash"></div>
+<!-- =========================================
+
+LOADER
+
+========================================= -->
 
 <div id="loader">
 
-  <div id="bar">
+<div id="bar">
 
-    <div id="fill"></div>
-
-  </div>
-
-  <div id="percent">0%</div>
-
-  <div id="turtleWrap">
-
-    <svg id="turtle" class="walking" viewBox="0 0 150 110">
-
-      <g id="turtleBody">
-
-        <path
-
-          id="backLeg"
-
-          d="M54 82 C47 85 46 94 52 98 C59 101 65 93 62 85 Z"
-
-          fill="white"
-
-        />
-
-        <path
-
-          id="frontLeg"
-
-          d="M92 82 C86 86 87 96 94 98 C102 99 106 90 101 84 Z"
-
-          fill="white"
-
-        />
-
-        <path
-
-          id="tail"
-
-          d="M31 58 L18 51 L20 66 Z"
-
-          fill="white"
-
-        />
-
-        <path
-
-          id="shell"
-
-          d="
-
-            M38 59
-
-            C39 35 58 22 82 24
-
-            C108 27 125 43 123 62
-
-            C121 81 102 92 77 91
-
-            C53 90 37 78 38 59
-
-            Z"
-
-          fill="white"
-
-        />
-
-        <path
-
-          d="M51 44 C65 36 87 36 109 48"
-
-          stroke="black"
-
-          stroke-width="3"
-
-          opacity=".18"
-
-          fill="none"
-
-        />
-
-        <path
-
-          d="M48 63 C67 57 93 57 116 66"
-
-          stroke="black"
-
-          stroke-width="3"
-
-          opacity=".18"
-
-          fill="none"
-
-        />
-
-        <path
-
-          d="M67 30 C63 47 62 72 66 89"
-
-          stroke="black"
-
-          stroke-width="3"
-
-          opacity=".16"
-
-          fill="none"
-
-        />
-
-        <path
-
-          d="M91 31 C84 50 82 74 86 91"
-
-          stroke="black"
-
-          stroke-width="3"
-
-          opacity=".16"
-
-          fill="none"
-
-        />
-
-        <path
-
-          id="neck"
-
-          d="M119 55 C128 50 136 50 140 56 C143 63 137 69 126 68 L118 67 Z"
-
-          fill="white"
-
-        />
-
-        <circle
-
-          id="head"
-
-          cx="140"
-
-          cy="59"
-
-          r="12"
-
-          fill="white"
-
-        />
-
-        <circle
-
-          id="eye"
-
-          cx="144"
-
-          cy="56"
-
-          r="2.2"
-
-          fill="black"
-
-          opacity=".35"
-
-        />
-
-      </g>
-
-    </svg>
-
-  </div>
+<div id="fill"></div>
 
 </div>
+
+<div id="percent">0%</div>
+
+<div id="turtleWrap">
+
+<svg
+
+id="turtle"
+
+class="walking"
+
+viewBox="0 0 150 90">
+
+<!-- back leg -->
+
+<ellipse
+
+id="backLeg"
+
+cx="62"
+
+cy="72"
+
+rx="8"
+
+ry="10"
+
+fill="white"/>
+
+<!-- front leg -->
+
+<ellipse
+
+id="frontLeg"
+
+cx="96"
+
+cy="72"
+
+rx="8"
+
+ry="10"
+
+fill="white"/>
+
+<!-- tail -->
+
+<polygon
+
+id="tail"
+
+points="32,56 18,49 18,63"
+
+fill="white"/>
+
+<!-- shell bottom -->
+
+<ellipse
+
+cx="82"
+
+cy="55"
+
+rx="42"
+
+ry="28"
+
+fill="rgba(255,255,255,.92)"/>
+
+<!-- shell top -->
+
+<path
+
+id="shell"
+
+d="
+
+M44 55
+
+C44 34 61 22 84 22
+
+C108 22 124 36 124 55
+
+C124 74 108 87 84 87
+
+C61 87 44 75 44 55
+
+Z"
+
+fill="white"/>
+
+<!-- shell lines -->
+
+<path
+
+d="M58 39 C76 33 96 33 112 42"
+
+stroke="black"
+
+stroke-width="3"
+
+opacity=".14"
+
+fill="none"/>
+
+<path
+
+d="M54 58 C74 52 98 52 116 60"
+
+stroke="black"
+
+stroke-width="3"
+
+opacity=".14"
+
+fill="none"/>
+
+<path
+
+d="M73 24 C67 44 67 67 72 86"
+
+stroke="black"
+
+stroke-width="3"
+
+opacity=".14"
+
+fill="none"/>
+
+<path
+
+d="M95 24 C89 44 89 67 94 86"
+
+stroke="black"
+
+stroke-width="3"
+
+opacity=".14"
+
+fill="none"/>
+
+<!-- neck -->
+
+<rect
+
+id="neck"
+
+x="116"
+
+y="48"
+
+width="20"
+
+height="12"
+
+rx="6"
+
+fill="white"/>
+
+<!-- head -->
+
+<circle
+
+id="head"
+
+cx="140"
+
+cy="54"
+
+r="12"
+
+fill="white"/>
+
+<!-- eye -->
+
+<circle
+
+cx="144"
+
+cy="51"
+
+r="2.2"
+
+fill="black"
+
+opacity=".32"/>
+
+</svg>
+
+</div>
+
+</div>
+
+<!-- =========================================
+
+CHAOS
+
+========================================= -->
 
 <div id="chaos">
 
-  <div id="signalLost">SIGNAL LOST</div>
+<div id="signalLost">
+
+SIGNAL LOST
 
 </div>
 
+</div>
+
+<!-- =========================================
+
+SIGNAL SPACE
+
+========================================= -->
+
 <div id="signalSpace">
 
-  <div id="centerWarmth"></div>
+<div id="centerWarmth"></div>
 
-  <img id="outer" src="Outer17-final.png" />
+<img id="outer" src="Outer17-final.png">
 
-  <img id="inner" src="Inner17-final.png" />
+<img id="inner" src="Inner17-final.png">
 
-  <div id="reconnect">RECONNECT</div>
+<div id="reconnect">
 
-  <div id="warmth"></div>
+RECONNECT
 
-  <div id="etchings">
+</div>
 
-    <a class="etch" id="etch1" href="#">
+<div id="warmth"></div>
 
-      <img src="lastsesh17.png" width="100%" />
+<div id="links">
 
-    </a>
+<a id="last" class="link" href="#">
 
-    <a class="etch" id="etch2" href="#">
+<img src="lastsesh17.png" width="100%">
 
-      <img src="RoachTray17.png" width="100%" />
+</a>
 
-    </a>
+<a id="roach" class="link" href="#">
 
-    <a class="etch" id="etch3" href="#">
+<img src="RoachTray17.png" width="100%">
 
-      <img src="PassItBack17.png" width="100%" />
+</a>
 
-    </a>
+<a id="pass" class="link" href="#">
 
-  </div>
+<img src="PassItBack17.png" width="100%">
+
+</a>
+
+</div>
 
 </div>
 
@@ -1086,45 +1272,69 @@ SIGNAL SPACE
 
 <script>
 
-/* =========================
+/* =========================================
 
 ELEMENTS
 
-========================= */
+========================================= */
 
-const fill = document.getElementById("fill");
+const fill =
 
-const percent = document.getElementById("percent");
+document.getElementById("fill");
 
-const turtle = document.getElementById("turtle");
+const percent =
 
-const loader = document.getElementById("loader");
+document.getElementById("percent");
 
-const chaos = document.getElementById("chaos");
+const turtle =
 
-const flash = document.getElementById("flash");
+document.getElementById("turtle");
 
-const signalSpace = document.getElementById("signalSpace");
+const loader =
 
-const reconnect = document.getElementById("reconnect");
+document.getElementById("loader");
 
-const inner = document.getElementById("inner");
+const chaos =
 
-const outer = document.getElementById("outer");
+document.getElementById("chaos");
 
-const warmth = document.getElementById("warmth");
+const reconnect =
 
-const centerWarmth = document.getElementById("centerWarmth");
+document.getElementById("reconnect");
 
-const etchings = document.getElementById("etchings");
+const signalSpace =
 
-const signalLostText = document.getElementById("signalLost");
+document.getElementById("signalSpace");
 
-/* =========================
+const warmth =
 
-LOADING / TURTLE
+document.getElementById("warmth");
 
-========================= */
+const outer =
+
+document.getElementById("outer");
+
+const inner =
+
+document.getElementById("inner");
+
+const links =
+
+document.getElementById("links");
+
+const centerWarmth =
+
+document.getElementById("centerWarmth");
+
+const signalLost =
+
+document.getElementById("signalLost");
+
+/* =========================================
+
+LOADING
+
+========================================= */
 
 let load = 0;
 
@@ -1134,493 +1344,627 @@ let gasped = false;
 
 let retracted = false;
 
-const loaderLoop = setInterval(() => {
+const loading =
 
-  load += .52;
+setInterval(()=>{
 
-  if(load > 17){
+load += .52;
 
-    load = 17;
+if(load > 17){
 
-  }
+load = 17;
 
-  fill.style.width = load + "%";
+}
 
-  percent.innerText = Math.floor(load) + "%";
+fill.style.width =
 
-  if(load >= 15.6 && !looked){
+load + "%";
 
-    looked = true;
+percent.innerText =
 
-    microTwitch();
+Math.floor(load) + "%";
 
-    setTimeout(() => {
+/* twitch */
 
-      turtle.classList.remove("walking");
+if(load >= 15.5 && !looked){
 
-      turtle.classList.add("lookLeft");
+looked = true;
 
-    }, 130);
+microTwitch();
 
-  }
+setTimeout(()=>{
 
-  if(load >= 16.05 && !gasped){
+turtle.classList.remove(
 
-    gasped = true;
+"walking"
 
-    turtle.classList.add("gasp");
+);
 
-  }
+turtle.classList.add(
 
-  if(load >= 16.55 && !retracted){
+"look"
 
-    retracted = true;
+);
 
-    turtle.classList.remove("gasp");
+},120);
 
-    turtle.classList.add("retract");
+}
 
-  }
+/* gasp */
 
-  if(load >= 16.85){
+if(load >= 16.05 && !gasped){
 
-    turtle.classList.add("shellOnly");
+gasped = true;
 
-  }
+turtle.classList.add(
 
-  if(load >= 17){
+"gasp"
 
-    clearInterval(loaderLoop);
+);
 
-    setTimeout(() => {
+}
 
-      startChaos();
+/* retract */
 
-    }, 1050);
+if(load >= 16.55 && !retracted){
 
-  }
+retracted = true;
 
-}, 55);
+turtle.classList.remove(
+
+"gasp"
+
+);
+
+turtle.classList.add(
+
+"retract"
+
+);
+
+}
+
+/* chaos */
+
+if(load >= 17){
+
+clearInterval(loading);
+
+setTimeout(()=>{
+
+startChaos();
+
+},1000);
+
+}
+
+},55);
+
+/* =========================================
+
+TWITCH
+
+========================================= */
 
 function microTwitch(){
 
-  document.body.style.transform = "translateX(2px)";
+document.body.style.transform =
 
-  setTimeout(() => {
+"translateX(2px)";
 
-    document.body.style.transform = "translateX(0)";
+setTimeout(()=>{
 
-  }, 45);
+document.body.style.transform =
+
+"translateX(0px)";
+
+},40);
 
 }
 
-/* =========================
+/* =========================================
 
 CHAOS
 
-========================= */
+========================================= */
 
 function startChaos(){
 
-  loader.style.opacity = 0;
+loader.style.opacity = 0;
 
-  setTimeout(() => {
+setTimeout(()=>{
 
-    loader.style.display = "none";
+loader.style.display = "none";
 
-  }, 700);
+},700);
 
-  chaos.style.opacity = 1;
+chaos.style.opacity = 1;
 
-  document.body.classList.add("shake");
+let stage = 0;
 
-  let layer = 0;
+const loop =
 
-  const chaosLoop = setInterval(() => {
+setInterval(()=>{
 
-    layer++;
+stage++;
 
-    if(layer < 4){
+/* recursive windows */
 
-      spawnWindow("soft");
+for(let i=0;i<Math.min(stage,5);i++){
 
-    }
-
-    if(layer >= 4){
-
-      for(let i=0; i<layer; i++){
-
-        spawnWindow("heavy");
-
-      }
-
-      if(Math.random() > .45){
-
-        spawnStrip();
-
-      }
-
-    }
-
-    if(layer > 5){
-
-      pulseFlash();
-
-    }
-
-    if(layer > 7){
-
-      signalLost();
-
-    }
-
-    if(layer >= 18){
-
-      clearInterval(chaosLoop);
-
-      collapseChaos();
-
-    }
-
-  }, 180);
+spawnWindow();
 
 }
 
-function spawnWindow(mode){
+/* toxic strips */
 
-  const types = [
+if(stage > 5){
 
-    {
-
-      title:"warning",
-
-      headline:"MEMORY COLLISION DETECTED",
-
-      color:"red",
-
-      body:["recursive overflow detected","signal instability rising","authentication failure"]
-
-    },
-
-    {
-
-      title:"system failure",
-
-      headline:"CONTAINMENT FAILURE",
-
-      color:"red",
-
-      body:["mask protocol engaged","original signal suppressed","synthetic layer active"]
-
-    },
-
-    {
-
-      title:"signal",
-
-      headline:"SIGNAL STILL ACTIVE",
-
-      color:"yellow",
-
-      body:["channel resistance detected","frequency refusing collapse","reconnect trace visible"]
-
-    },
-
-    {
-
-      title:"identity",
-
-      headline:"TOO MANY ACTIVE MASKS",
-
-      color:"red",
-
-      body:["original input buried","self-image loop active","authenticity unreadable"]
-
-    },
-
-    {
-
-      title:"toxic stream",
-
-      headline:"TRANSMISSION POISONED",
-
-      color:"yellow",
-
-      body:["A7X19 BZ0% C17","M4SK NULL 5IGNAL","17 17 17"]
-
-    },
-
-    {
-
-      title:"download",
-
-      headline:"UNREQUESTED FILE STACK",
-
-      color:"red",
-
-      body:["plasticself.exe","performative_identity.pkg","human_input_lost.dat"]
-
-    }
-
-  ];
-
-  const data = types[Math.floor(Math.random()*types.length)];
-
-  const win = document.createElement("div");
-
-  win.className = "window topLeft";
-
-  const w = mode === "soft"
-
-    ? 220 + Math.random()*120
-
-    : 260 + Math.random()*300;
-
-  const h = mode === "soft"
-
-    ? 110 + Math.random()*90
-
-    : 140 + Math.random()*170;
-
-  win.style.width = w + "px";
-
-  win.style.height = h + "px";
-
-  const diagonal = Math.random();
-
-  const x = mode === "soft"
-
-    ? 8 + Math.random()*26
-
-    : Math.random()*70;
-
-  const y = mode === "soft"
-
-    ? 8 + Math.random()*22
-
-    : Math.random()*68;
-
-  win.style.setProperty("--x", x + "vw");
-
-  win.style.setProperty("--y", y + "vh");
-
-  win.style.setProperty("--moveX", (80 + Math.random()*130) + "px");
-
-  win.style.setProperty("--moveY", (70 + Math.random()*160) + "px");
-
-  win.style.animationDuration =
-
-    mode === "soft"
-
-      ? (1.2 + Math.random()*.5) + "s"
-
-      : (.8 + Math.random()*1.1) + "s";
-
-  win.innerHTML = `
-
-    <div class="windowTop">${data.title}</div>
-
-    <div class="windowBody">
-
-      <div class="${data.color}">${data.headline}</div>
-
-      <br>
-
-      <div>${data.body[0]}</div>
-
-      <div>${data.body[1]}</div>
-
-      <div>${data.body[2]}</div>
-
-    </div>
-
-  `;
-
-  chaos.appendChild(win);
-
-  setTimeout(() => {
-
-    win.remove();
-
-  }, 2300);
+spawnStrip();
 
 }
+
+/* signal lost */
+
+if(stage > 7){
+
+pulseSignalLost();
+
+}
+
+/* collapse */
+
+if(stage >= 16){
+
+clearInterval(loop);
+
+collapseChaos();
+
+}
+
+},180);
+
+}
+
+/* =========================================
+
+WINDOWS
+
+========================================= */
+
+function spawnWindow(){
+
+const types = [
+
+{
+
+title:"identity",
+
+color:"red",
+
+headline:"TOO MANY ACTIVE MASKS",
+
+body:[
+
+"original input buried",
+
+"self-image loop active",
+
+"authenticity unreadable"
+
+]
+
+},
+
+{
+
+title:"download",
+
+color:"red",
+
+headline:"UNREQUESTED FILE STACK",
+
+body:[
+
+"plasticself.exe",
+
+"performative_identity.pkg",
+
+"human_input_lost.dat"
+
+]
+
+},
+
+{
+
+title:"toxic stream",
+
+color:"yellow",
+
+headline:"TRANSMISSION POISONED",
+
+body:[
+
+"A7X19 BZ0% C17",
+
+"M4SK NULL 5IGNAL",
+
+"17 17 17"
+
+]
+
+},
+
+{
+
+title:"system failure",
+
+color:"red",
+
+headline:"CONTAINMENT FAILURE",
+
+body:[
+
+"mask protocol engaged",
+
+"original signal suppressed",
+
+"synthetic layer active"
+
+]
+
+}
+
+];
+
+const data =
+
+types[
+
+Math.floor(Math.random()*types.length)
+
+];
+
+const win =
+
+document.createElement("div");
+
+win.className =
+
+"window";
+
+win.style.width =
+
+(250 + Math.random()*260)+"px";
+
+win.style.height =
+
+(130 + Math.random()*160)+"px";
+
+win.style.left =
+
+(Math.random()*70)+"vw";
+
+win.style.top =
+
+(Math.random()*68)+"vh";
+
+win.style.setProperty(
+
+"--moveX",
+
+`${70 + Math.random()*120}px`
+
+);
+
+win.style.setProperty(
+
+"--moveY",
+
+`${60 + Math.random()*140}px`
+
+);
+
+win.style.animationDuration =
+
+(.8 + Math.random()*1)+"s";
+
+win.innerHTML = `
+
+<div class="windowTop">
+
+${data.title}
+
+</div>
+
+<div class="windowBody">
+
+<div class="${data.color}">
+
+${data.headline}
+
+</div>
+
+<br>
+
+<div>${data.body[0]}</div>
+
+<div>${data.body[1]}</div>
+
+<div>${data.body[2]}</div>
+
+</div>
+
+`;
+
+chaos.appendChild(win);
+
+setTimeout(()=>{
+
+win.remove();
+
+},2200);
+
+}
+
+/* =========================================
+
+TOXIC STRIPS
+
+========================================= */
 
 function spawnStrip(){
 
-  const strip = document.createElement("div");
+const strip =
 
-  strip.className = "glitchStrip";
+document.createElement("div");
 
-  strip.style.left = Math.random()*80 + "vw";
+strip.className =
 
-  strip.style.top = Math.random()*90 + "vh";
+"strip";
 
-  strip.style.width = (120 + Math.random()*340) + "px";
+strip.style.left =
 
-  chaos.appendChild(strip);
+(Math.random()*80)+"vw";
 
-  setTimeout(() => {
+strip.style.top =
 
-    strip.remove();
+(Math.random()*90)+"vh";
 
-  }, 800);
+strip.style.width =
 
-}
+(120 + Math.random()*320)+"px";
 
-function pulseFlash(){
+chaos.appendChild(strip);
 
-  flash.style.opacity = Math.random() * .14;
+setTimeout(()=>{
 
-  setTimeout(() => {
+strip.remove();
 
-    flash.style.opacity = 0;
-
-  }, 40);
+},800);
 
 }
 
-function signalLost(){
+/* =========================================
 
-  signalLostText.style.opacity = .85;
+SIGNAL LOST
 
-  signalLostText.style.transform =
+========================================= */
 
-    `translate(-50%,-50%) translate(${Math.random()*10-5}px,${Math.random()*8-4}px)`;
+function pulseSignalLost(){
 
-  setTimeout(() => {
+signalLost.style.opacity =
 
-    signalLostText.style.opacity = 0;
+.86;
 
-  }, 150);
+signalLost.style.transform =
+
+`translate(-50%,-50%)
+
+translate(
+
+${Math.random()*8-4}px,
+
+${Math.random()*6-3}px
+
+)`;
+
+setTimeout(()=>{
+
+signalLost.style.opacity = 0;
+
+},150);
 
 }
+
+/* =========================================
+
+COLLAPSE
+
+========================================= */
 
 function collapseChaos(){
 
-  chaos.style.opacity = 0;
+chaos.style.opacity = 0;
 
-  document.body.classList.remove("shake");
+setTimeout(()=>{
 
-  setTimeout(() => {
+showReconnect();
 
-    showReconnect();
-
-  }, 1350);
+},1200);
 
 }
 
-/* =========================
+/* =========================================
 
 RECONNECT
 
-========================= */
+========================================= */
 
 function showReconnect(){
 
-  signalSpace.style.opacity = 1;
+signalSpace.style.opacity = 1;
 
-  signalSpace.style.pointerEvents = "auto";
+signalSpace.style.pointerEvents =
 
-  reconnect.style.opacity = .78;
+"auto";
 
-  reconnect.classList.add("ready");
+reconnect.style.opacity = .78;
 
-  setTimeout(() => {
+reconnect.classList.add(
 
-    inner.style.opacity = .18;
+"breathing"
 
-    outer.style.opacity = .13;
+);
 
-  }, 450);
+/* symbol emerges */
+
+setTimeout(()=>{
+
+inner.style.opacity = .18;
+
+outer.style.opacity = .12;
+
+},400);
 
 }
 
-reconnect.addEventListener("click", () => {
+/* =========================================
 
-  reconnect.classList.remove("ready");
+CLICK
 
-  reconnect.style.pointerEvents = "none";
+========================================= */
 
-  reconnect.style.opacity = 0;
+reconnect.addEventListener(
 
-  warmth.style.opacity = 1;
+"click",
 
-  warmth.animate([
+()=>{
 
-    {
+/* kill reconnect */
 
-      transform:"scale(.35)",
+reconnect.classList.remove(
 
-      opacity:1
+"breathing"
 
-    },
+);
 
-    {
+reconnect.style.pointerEvents =
 
-      transform:"scale(1.1)",
+"none";
 
-      opacity:1
+reconnect.style.opacity = 0;
 
-    },
+/* warmth appears */
 
-    {
+warmth.style.opacity = 1;
 
-      transform:"scale(6.5)",
+warmth.animate([
 
-      opacity:.22
+{
 
-    },
+transform:"scale(.3)",
 
-    {
+opacity:1
 
-      transform:"scale(8.5)",
+},
 
-      opacity:.08
+{
 
-    }
+transform:"scale(1)",
 
-  ],{
+opacity:1
 
-    duration:2600,
+},
 
-    fill:"forwards",
+{
 
-    easing:"ease-out"
+transform:"scale(6)",
 
-  });
+opacity:.18
 
-  centerWarmth.style.opacity = 1;
+},
 
-  outer.style.opacity = 0;
+{
 
-  outer.style.transform = "scale(1.1)";
+transform:"scale(8)",
 
-  outer.style.filter = "blur(4px)";
+opacity:.08
 
-  inner.style.opacity = .32;
+}
 
-  setTimeout(() => {
+],{
 
-    warmth.style.background =
+duration:2500,
 
-      "radial-gradient(circle, rgba(0,0,0,.96) 0%, rgba(0,0,0,.75) 42%, transparent 82%)";
+fill:"forwards",
 
-    warmth.style.filter = "blur(7px)";
+easing:"ease-out"
 
-    warmth.style.opacity = .9;
+});
 
-    warmth.style.transform = "scale(1.15)";
+/* warmth in center */
 
-  }, 2300);
+centerWarmth.style.opacity = 1;
 
-  setTimeout(() => {
+/* outer pyramid dissolves */
 
-    etchings.style.opacity = 1;
+outer.style.opacity = 0;
 
-    etchings.style.pointerEvents = "auto";
+outer.style.transform =
 
-  }, 1200);
+"scale(1.08)";
+
+outer.style.filter =
+
+"blur(4px)";
+
+/* inner survives */
+
+inner.style.opacity = .32;
+
+/* smudge becomes dark */
+
+setTimeout(()=>{
+
+warmth.style.background =
+
+`
+
+radial-gradient(
+
+circle,
+
+rgba(0,0,0,.96) 0%,
+
+rgba(0,0,0,.72) 44%,
+
+transparent 82%
+
+)
+
+`;
+
+warmth.style.filter =
+
+"blur(8px)";
+
+warmth.style.opacity = .92;
+
+},2100);
+
+/* survivor links */
+
+setTimeout(()=>{
+
+links.style.opacity = 1;
+
+links.style.pointerEvents =
+
+"auto";
+
+},1100);
 
 });
 
