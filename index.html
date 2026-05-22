@@ -72,9 +72,9 @@ inset:0;
 
 pointer-events:none;
 
-z-index:999999;
+opacity:.045;
 
-opacity:.05;
+z-index:99999;
 
 mix-blend-mode:screen;
 
@@ -130,7 +130,7 @@ inset:0;
 
 pointer-events:none;
 
-z-index:99999999;
+z-index:999999;
 
 background:
 
@@ -138,9 +138,9 @@ radial-gradient(
 
 circle,
 
-transparent 52%,
+transparent 48%,
 
-rgba(0,0,0,.48) 72%,
+rgba(0,0,0,.52) 74%,
 
 rgba(0,0,0,.98) 100%
 
@@ -168,7 +168,7 @@ pointer-events:none;
 
 mix-blend-mode:screen;
 
-z-index:800;
+z-index:700;
 
 }
 
@@ -288,9 +288,9 @@ rgba(255,255,255,1)
 
 #turtleWrap{
 
-margin-top:30px;
+margin-top:32px;
 
-height:62px;
+height:66px;
 
 display:flex;
 
@@ -302,15 +302,15 @@ align-items:center;
 
 #turtle{
 
-width:54px;
+width:60px;
 
-height:54px;
+height:60px;
 
 opacity:.94;
 
 transition:
 
-.2s ease;
+.18s ease;
 
 filter:
 
@@ -319,6 +319,40 @@ drop-shadow(
 0 0 8px rgba(255,255,255,.08)
 
 );
+
+animation:
+
+walkBob 1.2s ease-in-out infinite;
+
+}
+
+@keyframes walkBob{
+
+0%,100%{
+
+transform:
+
+translateY(0px);
+
+}
+
+50%{
+
+transform:
+
+translateY(-2px);
+
+}
+
+}
+
+/* right */
+
+.walkRight{
+
+transform:
+
+scaleX(1);
 
 }
 
@@ -332,13 +366,29 @@ scaleX(-1);
 
 }
 
-/* right */
+/* gasp */
 
-.lookRight{
+.gasp #head{
 
 transform:
 
-scaleX(1);
+translateX(6px);
+
+}
+
+.gasp #leg1{
+
+transform:
+
+translateY(2px);
+
+}
+
+.gasp #leg2{
+
+transform:
+
+translateY(2px);
 
 }
 
@@ -354,7 +404,7 @@ opacity:0;
 
 transition:
 
-.16s ease;
+.14s ease;
 
 }
 
@@ -362,13 +412,13 @@ transition:
 
 transform:
 
-translateY(-10px);
+translateY(-12px);
 
 opacity:0;
 
 transition:
 
-.14s ease;
+.12s ease;
 
 }
 
@@ -376,13 +426,13 @@ transition:
 
 transform:
 
-translateY(-10px);
+translateY(-12px);
 
 opacity:0;
 
 transition:
 
-.14s ease;
+.12s ease;
 
 }
 
@@ -396,7 +446,7 @@ opacity:0;
 
 transition:
 
-.14s ease;
+.12s ease;
 
 }
 
@@ -408,11 +458,11 @@ transform:
 
 scale(.72);
 
-opacity:.78;
+opacity:.82;
 
 filter:
 
-blur(.15px)
+blur(.1px)
 
 drop-shadow(
 
@@ -426,13 +476,15 @@ drop-shadow(
 
 #percent{
 
-margin-top:12px;
+margin-top:14px;
 
-font-size:11px;
+font-size:14px;
 
-letter-spacing:.42em;
+font-weight:600;
 
-opacity:.12;
+letter-spacing:.28em;
+
+opacity:.42;
 
 }
 
@@ -458,11 +510,11 @@ z-index:2000;
 
 transition:
 
-.4s ease;
+.5s ease;
 
 }
 
-/* SIGNAL LOST */
+/* signal lost */
 
 #signalLost{
 
@@ -478,7 +530,7 @@ translate(-50%,-50%);
 
 font-size:
 
-clamp(32px,5vw,76px);
+clamp(30px,5vw,76px);
 
 letter-spacing:.24em;
 
@@ -496,7 +548,7 @@ text-shadow:
 
 /* =========================================================
 
-UI FRAGMENTS
+FRAGMENTS
 
 ========================================================= */
 
@@ -516,13 +568,13 @@ backdrop-filter:
 
 blur(1px);
 
-opacity:.06;
+opacity:.08;
 
 mix-blend-mode:screen;
 
 }
 
-/* browser */
+/* bars */
 
 .browserBar{
 
@@ -632,7 +684,7 @@ font-size:
 
 clamp(10px,1.5vw,18px);
 
-letter-spacing:.22em;
+letter-spacing:.18em;
 
 white-space:nowrap;
 
@@ -816,7 +868,7 @@ opacity:0;
 
 pointer-events:none;
 
-z-index:6000;
+z-index:5000;
 
 transition:
 
@@ -848,35 +900,11 @@ text-shadow:
 
 0 0 12px rgba(255,255,255,.06);
 
-animation:
-
-rePulse 5s ease-in-out infinite;
-
-transition:
-
-.6s ease;
-
 }
 
-@keyframes rePulse{
+/* warmth */
 
-0%,100%{
-
-opacity:.54;
-
-}
-
-50%{
-
-opacity:.84;
-
-}
-
-}
-
-/* touch */
-
-#touch{
+#warmth{
 
 position:absolute;
 
@@ -894,17 +922,17 @@ radial-gradient(
 
 circle,
 
-rgba(255,220,180,.95) 0%,
+rgba(255,210,150,.95) 0%,
 
-rgba(255,180,90,.45) 36%,
+rgba(255,160,70,.42) 34%,
 
-transparent 80%
+transparent 78%
 
 );
 
 filter:
 
-blur(4px);
+blur(5px);
 
 }
 
@@ -930,7 +958,7 @@ drop-shadow(
 
 transition:
 
-2s ease;
+2.5s ease;
 
 }
 
@@ -956,7 +984,7 @@ drop-shadow(
 
 transition:
 
-2.5s ease;
+3s ease;
 
 }
 
@@ -972,7 +1000,7 @@ opacity:0;
 
 transition:
 
-3s ease;
+4s ease;
 
 }
 
@@ -995,8 +1023,6 @@ drop-shadow(
 );
 
 }
-
-/* positions */
 
 #etch1{
 
@@ -1076,7 +1102,7 @@ LOADER
 
 id="turtle"
 
-class="lookLeft"
+class="walkRight"
 
 viewBox="0 0 120 120">
 
@@ -1095,6 +1121,38 @@ rx="30"
 ry="24"
 
 fill="white"/>
+
+<!-- shell lines -->
+
+<path
+
+d="M60 38 L60 82"
+
+stroke="black"
+
+stroke-width="2"
+
+opacity=".18"/>
+
+<path
+
+d="M38 60 L82 60"
+
+stroke="black"
+
+stroke-width="2"
+
+opacity=".18"/>
+
+<path
+
+d="M46 46 L74 74"
+
+stroke="black"
+
+stroke-width="2"
+
+opacity=".12"/>
 
 <!-- head -->
 
@@ -1204,7 +1262,7 @@ RECONNECT
 
 </div>
 
-<div id="touch"></div>
+<div id="warmth"></div>
 
 <img
 
@@ -1272,13 +1330,15 @@ let load = 0;
 
 let turned = false;
 
+let gasped = false;
+
 let hidden = false;
 
 const loading =
 
 setInterval(()=>{
 
-load += .42;
+load += .38;
 
 if(load > 17){
 
@@ -1294,21 +1354,41 @@ percent.innerText =
 
 Math.floor(load) + "%";
 
-/* TURN */
+/* TWITCH */
 
-if(load >= 16 && !turned){
+if(load >= 15.8 && !turned){
+
+microTwitch();
 
 turned = true;
 
+setTimeout(()=>{
+
 turtle.classList.remove(
 
-"lookLeft"
+"walkRight"
 
 );
 
 turtle.classList.add(
 
-"lookRight"
+"lookLeft"
+
+);
+
+},120);
+
+}
+
+/* GASP */
+
+if(load >= 16.3 && !gasped){
+
+gasped = true;
+
+turtle.classList.add(
+
+"gasp"
 
 );
 
@@ -1316,9 +1396,15 @@ turtle.classList.add(
 
 /* RETRACT */
 
-if(load >= 16.5 && !hidden){
+if(load >= 16.7 && !hidden){
 
 hidden = true;
+
+turtle.classList.remove(
+
+"gasp"
+
+);
 
 turtle.classList.add(
 
@@ -1328,9 +1414,9 @@ turtle.classList.add(
 
 }
 
-/* SHELL */
+/* SHELL HOLD */
 
-if(load >= 16.8){
+if(load >= 16.9){
 
 turtle.classList.add(
 
@@ -1354,7 +1440,29 @@ startChaos();
 
 }
 
-},52);
+},58);
+
+/* =========================================================
+
+MICRO TWITCH
+
+========================================================= */
+
+function microTwitch(){
+
+document.body.style.transform =
+
+"translateX(2px)";
+
+setTimeout(()=>{
+
+document.body.style.transform =
+
+"translateX(0px)";
+
+},40);
+
+}
 
 /* =========================================================
 
@@ -1382,7 +1490,7 @@ setTimeout(()=>{
 
 loader.style.display = "none";
 
-},600);
+},700);
 
 chaos.style.opacity = 1;
 
@@ -1402,9 +1510,9 @@ setInterval(()=>{
 
 intensity += 1;
 
-/* HEAVY CASCADE */
+/* slow contamination */
 
-for(let i=0;i<intensity*4;i++){
+for(let i=0;i<intensity*2;i++){
 
 fragmentCascade();
 
@@ -1412,31 +1520,31 @@ fragmentCascade();
 
 /* warnings */
 
-for(let i=0;i<intensity*.8;i++){
+if(intensity > 2){
 
 warning();
 
 }
 
-/* flashes */
+/* signal loss */
 
-if(intensity > 4){
-
-flash();
-
-}
-
-/* lost */
-
-if(intensity > 6){
+if(intensity > 5){
 
 lost();
 
 }
 
-/* full panic */
+/* flashes */
 
-if(intensity > 8){
+if(intensity > 6){
+
+flash();
+
+}
+
+/* heavy collapse */
+
+if(intensity > 9){
 
 document.body.classList.add(
 
@@ -1444,9 +1552,15 @@ document.body.classList.add(
 
 );
 
+for(let i=0;i<intensity;i++){
+
+fragmentCascade();
+
 }
 
-/* longer chaos */
+}
+
+/* collapse */
 
 if(intensity >= 18){
 
@@ -1528,7 +1642,7 @@ frag.style.animation =
 
 `cascade ${
 
-.4 + Math.random()*.7
+.5 + Math.random()*.7
 
 }s linear forwards`;
 
@@ -1576,17 +1690,23 @@ function warning(){
 
 const msgs = [
 
-"UNAUTHORIZED SIGNAL",
-
 "SYSTEM OVERLOAD",
-
-"TRANSMISSION BREACH",
 
 "MEMORY COLLISION",
 
-"FREQUENCY COLLAPSE",
+"SIGNAL CONFLICT",
 
-"CONTAINMENT FAILURE"
+"TRANSMISSION FAILURE",
+
+"IDENTITY COLLISION",
+
+"AUTHENTICATION FAILURE",
+
+"TOO MANY ACTIVE MASKS",
+
+"HUMAN INPUT LOST",
+
+"ORIGINAL SIGNAL LOST"
 
 ];
 
@@ -1622,7 +1742,7 @@ setTimeout(()=>{
 
 w.remove();
 
-},400);
+},420);
 
 }
 
@@ -1678,7 +1798,7 @@ document.body.classList.remove(
 
 );
 
-/* silence */
+/* uncomfortable silence */
 
 setTimeout(()=>{
 
@@ -1696,15 +1816,47 @@ signalSpace.style.pointerEvents =
 
 "auto";
 
-/* reconnect only */
+/* reconnect breathing */
+
+const reconnect =
 
 document.getElementById(
 
 "reconnect"
 
-).style.opacity = .84;
+);
 
-},1200);
+reconnect.style.opacity = .82;
+
+let breath = 0;
+
+const breathe =
+
+setInterval(()=>{
+
+breath++;
+
+if(breath < 5){
+
+reconnect.style.textShadow =
+
+`0 0 ${
+
+18 + Math.random()*26
+
+}px rgba(255,255,255,.22)`;
+
+}else{
+
+reconnect.style.textShadow =
+
+`0 0 14px rgba(255,255,255,.08)`;
+
+}
+
+},700);
+
+},1300);
 
 }
 
@@ -1864,31 +2016,31 @@ reconnect.addEventListener(
 
 ()=>{
 
-/* SAME FRAME */
+/* disappear */
 
 reconnect.style.opacity = 0;
 
-/* mud */
+/* warmth */
 
-const touch =
+const warmth =
 
 document.getElementById(
 
-"touch"
+"warmth"
 
 );
 
-touch.style.opacity = 1;
+warmth.style.opacity = 1;
 
-/* pulse */
+/* transfer */
 
-touch.animate([
+warmth.animate([
 
 {
 
 transform:
 
-"translate(-50%,-50%) scale(.2)",
+"translate(-50%,-50%) scale(.3)",
 
 opacity:1
 
@@ -1898,7 +2050,7 @@ opacity:1
 
 transform:
 
-"translate(-50%,-50%) scale(.8)",
+"translate(-50%,-50%) scale(1)",
 
 opacity:1
 
@@ -1908,15 +2060,15 @@ opacity:1
 
 transform:
 
-"translate(-50%,-50%) scale(1.2)",
+"translate(-50%,-50%) scale(5.8)",
 
-opacity:.7
+opacity:.14
 
 }
 
 ],{
 
-duration:1400,
+duration:2400,
 
 fill:"forwards"
 
@@ -1932,7 +2084,7 @@ document.getElementById(
 
 ).style.opacity = .24;
 
-},500);
+},700);
 
 /* outer */
 
@@ -1944,7 +2096,7 @@ document.getElementById(
 
 ).style.opacity = .28;
 
-},1000);
+},1400);
 
 /* etchings */
 
@@ -1956,7 +2108,7 @@ document.getElementById(
 
 ).style.opacity = 1;
 
-},1500);
+},2200);
 
 });
 
