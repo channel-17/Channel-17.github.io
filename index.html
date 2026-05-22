@@ -54,39 +54,13 @@ background:#000;
 
 overflow:hidden;
 
-cursor:default;
-
 color:#fff;
 
 }
 
 /* =========================================
 
-CANVAS
-
-========================================= */
-
-canvas{
-
-position:fixed;
-
-inset:0;
-
-width:100%;
-
-height:100%;
-
-display:block;
-
-background:#000;
-
-z-index:5;
-
-}
-
-/* =========================================
-
-PHONE EDGE DARKNESS
+PHONE DARKNESS
 
 ========================================= */
 
@@ -98,7 +72,7 @@ inset:0;
 
 pointer-events:none;
 
-z-index:99999;
+z-index:999999;
 
 background:
 
@@ -106,11 +80,11 @@ radial-gradient(
 
 circle,
 
-transparent 48%,
+transparent 52%,
 
-rgba(0,0,0,.38) 76%,
+rgba(0,0,0,.45) 76%,
 
-rgba(0,0,0,.99) 100%
+rgba(0,0,0,.98) 100%
 
 );
 
@@ -130,11 +104,11 @@ inset:0;
 
 pointer-events:none;
 
-opacity:.08;
-
-z-index:8;
+opacity:.05;
 
 mix-blend-mode:screen;
+
+z-index:50;
 
 background-image:
 
@@ -176,55 +150,7 @@ transform:translateY(3px);
 
 /* =========================================
 
-GLOBAL SHAKE
-
-========================================= */
-
-body.shake{
-
-animation:
-
-shake .055s linear infinite;
-
-}
-
-@keyframes shake{
-
-0%{
-
-transform:translate(0px,0px);
-
-}
-
-25%{
-
-transform:translate(-1px,1px);
-
-}
-
-50%{
-
-transform:translate(1px,-1px);
-
-}
-
-75%{
-
-transform:translate(-1px,-1px);
-
-}
-
-100%{
-
-transform:translate(1px,1px);
-
-}
-
-}
-
-/* =========================================
-
-LOADING SCREEN
+LOADER
 
 ========================================= */
 
@@ -248,29 +174,35 @@ z-index:1000;
 
 }
 
-/* loading tube */
+/* transmission tube */
 
 #tube{
 
-width:min(72vw,420px);
+width:min(84vw,540px);
 
-height:18px;
+height:24px;
 
-border:
-
-1px solid rgba(255,255,255,.25);
+border-radius:999px;
 
 overflow:hidden;
 
 position:relative;
 
+border:
+
+1px solid rgba(255,255,255,.18);
+
 background:
 
 rgba(255,255,255,.03);
 
+box-shadow:
+
+0 0 12px rgba(255,255,255,.04);
+
 }
 
-/* progress */
+/* fill */
 
 #fill{
 
@@ -284,7 +216,19 @@ height:100%;
 
 width:0%;
 
-background:#fff;
+border-radius:999px;
+
+background:
+
+linear-gradient(
+
+90deg,
+
+rgba(255,255,255,.85),
+
+rgba(255,255,255,1)
+
+);
 
 }
 
@@ -292,13 +236,23 @@ background:#fff;
 
 #turtle{
 
-margin-top:18px;
+margin-top:22px;
 
-font-size:14px;
+font-size:28px;
 
-letter-spacing:.2em;
+opacity:.82;
 
-opacity:.45;
+transition:
+
+.18s linear;
+
+filter:
+
+drop-shadow(
+
+0 0 10px rgba(255,255,255,.08)
+
+);
 
 }
 
@@ -306,13 +260,13 @@ opacity:.45;
 
 #percent{
 
-margin-top:10px;
+margin-top:14px;
 
 font-size:12px;
 
-letter-spacing:.3em;
+letter-spacing:.32em;
 
-opacity:.32;
+opacity:.18;
 
 }
 
@@ -336,17 +290,17 @@ pointer-events:none;
 
 mix-blend-mode:screen;
 
-z-index:900;
+z-index:500;
 
 }
 
 /* =========================================
 
-GHOST UI
+WORLD CHAOS
 
 ========================================= */
 
-#ghostUI{
+#chaos{
 
 position:fixed;
 
@@ -354,11 +308,15 @@ inset:0;
 
 pointer-events:none;
 
-z-index:600;
+overflow:hidden;
 
 opacity:0;
 
+z-index:300;
+
 }
+
+/* duplicated bars */
 
 .ghostBar{
 
@@ -368,7 +326,7 @@ left:0;
 
 width:100%;
 
-height:58px;
+height:54px;
 
 border-bottom:
 
@@ -390,23 +348,39 @@ mix-blend-mode:screen;
 
 }
 
-/* =========================================
+/* duplicated search bars */
 
-WARNINGS
+.searchGhost{
 
-========================================= */
+position:absolute;
 
-#warningWrap{
+width:68vw;
 
-position:fixed;
+height:46px;
 
-inset:0;
+left:50%;
 
-pointer-events:none;
+transform:
 
-z-index:700;
+translateX(-50%);
+
+border-radius:999px;
+
+border:
+
+1px solid rgba(255,255,255,.1);
+
+background:
+
+rgba(255,255,255,.03);
+
+opacity:.12;
+
+filter:blur(.4px);
 
 }
+
+/* warning */
 
 .warning{
 
@@ -414,13 +388,13 @@ position:absolute;
 
 font-size:
 
-clamp(10px,1.7vw,18px);
+clamp(10px,1.6vw,18px);
 
 letter-spacing:.22em;
 
 white-space:nowrap;
 
-color:#ff2b2b;
+color:#ff3131;
 
 opacity:0;
 
@@ -432,7 +406,7 @@ text-shadow:
 
 animation:
 
-warning .12s linear;
+warning .18s linear;
 
 }
 
@@ -444,7 +418,7 @@ opacity:0;
 
 transform:
 
-translateX(-10px);
+translateX(-8px);
 
 }
 
@@ -460,129 +434,13 @@ opacity:0;
 
 transform:
 
-translateX(10px);
+translateX(8px);
 
 }
 
 }
 
-/* =========================================
-
-FRACTURES
-
-========================================= */
-
-#fracture{
-
-position:fixed;
-
-inset:0;
-
-pointer-events:none;
-
-z-index:500;
-
-opacity:0;
-
-}
-
-.slice{
-
-position:absolute;
-
-background:
-
-rgba(255,255,255,.08);
-
-mix-blend-mode:screen;
-
-filter:blur(.4px);
-
-}
-
-/* =========================================
-
-STATIC
-
-========================================= */
-
-#static{
-
-position:fixed;
-
-inset:0;
-
-pointer-events:none;
-
-opacity:0;
-
-z-index:800;
-
-mix-blend-mode:screen;
-
-}
-
-.staticLine{
-
-position:absolute;
-
-height:1px;
-
-background:
-
-linear-gradient(
-
-90deg,
-
-transparent,
-
-rgba(255,255,255,.95),
-
-transparent
-
-);
-
-animation:
-
-staticMove linear infinite;
-
-}
-
-@keyframes staticMove{
-
-0%{
-
-transform:
-
-translateX(-260px);
-
-opacity:.02;
-
-}
-
-50%{
-
-opacity:.55;
-
-}
-
-100%{
-
-transform:
-
-translateX(260px);
-
-opacity:.02;
-
-}
-
-}
-
-/* =========================================
-
-SIGNAL LOST
-
-========================================= */
+/* signal lost */
 
 #signalLost{
 
@@ -600,77 +458,57 @@ font-size:
 
 clamp(28px,5vw,74px);
 
-letter-spacing:.28em;
+letter-spacing:.26em;
 
 white-space:nowrap;
 
-color:#fff;
-
 opacity:0;
 
-z-index:900;
+color:#fff;
 
 mix-blend-mode:screen;
 
 text-shadow:
 
-0 0 18px rgba(255,255,255,.18);
-
-}
-
-#signalLost.active{
-
-animation:
-
-signal .08s infinite;
-
-}
-
-@keyframes signal{
-
-0%{
-
-opacity:.08;
-
-}
-
-50%{
-
-opacity:1;
-
-}
-
-100%{
-
-opacity:.08;
-
-}
+0 0 18px rgba(255,255,255,.16);
 
 }
 
 /* =========================================
 
-SYMBOL
+YELLOW CONTAMINATION
 
 ========================================= */
 
-#symbolWrap{
+canvas{
 
-position:absolute;
+position:fixed;
 
-top:37%;
+inset:0;
 
-left:50%;
+width:100%;
 
-transform:
+height:100%;
 
-translate(-50%,-50%);
+z-index:260;
 
-width:
+pointer-events:none;
 
-min(82vw,500px);
+opacity:0;
 
-aspect-ratio:1/1;
+}
+
+/* =========================================
+
+RECONNECT SPACE
+
+========================================= */
+
+#signalSpace{
+
+position:fixed;
+
+inset:0;
 
 display:flex;
 
@@ -682,51 +520,65 @@ opacity:0;
 
 transition:
 
-1s ease;
+2s ease;
 
 z-index:1200;
 
 }
 
-#symbolWrap.visible{
+/* subtle humanity haze */
 
-opacity:1;
-
-}
-
-#outer{
+#signalGlow{
 
 position:absolute;
 
-width:100%;
+width:90vw;
 
-opacity:.28;
+height:70vh;
 
-transition:
+background:
 
-6s ease;
+radial-gradient(
+
+circle,
+
+rgba(255,180,90,.035) 0%,
+
+rgba(255,180,90,.015) 24%,
+
+transparent 72%
+
+);
+
+filter:
+
+blur(40px);
+
+opacity:.7;
 
 }
 
-#inner{
+/* symbol */
+
+#symbol{
 
 position:absolute;
 
-width:100%;
+width:min(72vw,420px);
 
-opacity:.24;
+opacity:.22;
 
-transition:
+filter:
 
-6s ease;
+drop-shadow(
+
+0 0 14px rgba(255,180,90,.06)
+
+);
 
 }
 
-/* =========================================
-
-RECONNECT
-
-========================================= */
+/* reconnect */
 
 #reconnect{
 
@@ -734,81 +586,49 @@ position:absolute;
 
 top:58%;
 
-left:50%;
-
-transform:
-
-translateX(-50%);
-
 font-size:
 
 clamp(18px,3vw,30px);
 
 letter-spacing:.28em;
 
-color:#f2c287;
-
 opacity:0;
-
-pointer-events:none;
 
 cursor:pointer;
 
-z-index:1500;
-
 transition:
 
-.6s ease;
+1s ease;
+
+color:
+
+rgba(255,255,255,.72);
+
+text-shadow:
+
+0 0 12px rgba(255,255,255,.08);
 
 }
 
 #reconnect.active{
 
-opacity:1;
-
-pointer-events:auto;
-
-animation:
-
-pulse 2.8s ease infinite;
-
-}
-
-@keyframes pulse{
-
-0%,100%{
-
-opacity:.2;
-
-}
-
-50%{
-
-opacity:1;
-
-text-shadow:
-
-0 0 18px rgba(255,170,60,.18),
-
-0 0 40px rgba(255,120,20,.08);
-
-}
+opacity:.88;
 
 }
 
 /* =========================================
 
-THERMAL PRINT
+THERMAL TOUCH
 
 ========================================= */
 
-#smudge{
+#touch{
 
 position:fixed;
 
-width:30px;
+width:34px;
 
-height:30px;
+height:34px;
 
 border-radius:50%;
 
@@ -816,7 +636,7 @@ pointer-events:none;
 
 opacity:0;
 
-z-index:50;
+z-index:2000;
 
 background:
 
@@ -824,201 +644,23 @@ radial-gradient(
 
 circle,
 
-rgba(255,120,20,.72) 0%,
+rgba(255,220,180,.22) 0%,
 
-rgba(255,70,0,.34) 35%,
+rgba(255,180,90,.14) 26%,
 
-rgba(255,40,0,.12) 60%,
+rgba(255,180,90,.04) 60%,
 
-transparent 82%
+transparent 80%
 
 );
 
 filter:
 
-blur(7px);
+blur(10px);
 
 transform:
 
 translate(-50%,-50%);
-
-}
-
-/* =========================================
-
-WARMTH
-
-========================================= */
-
-#warmth{
-
-position:fixed;
-
-inset:0;
-
-pointer-events:none;
-
-z-index:20;
-
-opacity:0;
-
-transition:
-
-4s ease;
-
-background:
-
-linear-gradient(
-
-90deg,
-
-rgba(0,0,0,.99) 0%,
-
-rgba(0,0,0,.97) 24%,
-
-rgba(255,120,20,.02) 40%,
-
-rgba(255,130,30,.05) 50%,
-
-rgba(255,120,20,.02) 60%,
-
-rgba(0,0,0,.97) 76%,
-
-rgba(0,0,0,.99) 100%
-
-);
-
-}
-
-/* =========================================
-
-SMOKE
-
-========================================= */
-
-#smoke{
-
-position:fixed;
-
-inset:0;
-
-overflow:hidden;
-
-pointer-events:none;
-
-z-index:25;
-
-opacity:0;
-
-transition:
-
-5s ease;
-
-}
-
-.cloud{
-
-position:absolute;
-
-width:55vw;
-
-height:55vw;
-
-border-radius:50%;
-
-background:
-
-radial-gradient(
-
-circle,
-
-rgba(255,255,255,.05) 0%,
-
-rgba(255,255,255,.02) 18%,
-
-transparent 70%
-
-);
-
-filter:blur(45px);
-
-animation:
-
-smoke linear infinite;
-
-}
-
-.cloud:nth-child(1){
-
-left:-10%;
-
-bottom:-10%;
-
-animation-duration:28s;
-
-}
-
-.cloud:nth-child(2){
-
-right:-20%;
-
-top:10%;
-
-animation-duration:34s;
-
-animation-delay:7s;
-
-}
-
-.cloud:nth-child(3){
-
-left:30%;
-
-bottom:-20%;
-
-animation-duration:30s;
-
-animation-delay:15s;
-
-}
-
-@keyframes smoke{
-
-0%{
-
-transform:
-
-translate(0,0)
-
-scale(1);
-
-opacity:0;
-
-}
-
-10%{
-
-opacity:.12;
-
-}
-
-50%{
-
-opacity:.05;
-
-}
-
-100%{
-
-transform:
-
-translate(160px,-220px)
-
-scale(1.35);
-
-opacity:0;
-
-}
 
 }
 
@@ -1034,25 +676,17 @@ position:absolute;
 
 inset:0;
 
-opacity:0;
-
 pointer-events:none;
+
+opacity:0;
 
 transition:
 
 4s ease;
 
-z-index:2000;
-
 }
 
-#etchings.visible{
-
-opacity:1;
-
-pointer-events:auto;
-
-}
+/* links */
 
 .etch{
 
@@ -1060,69 +694,59 @@ position:absolute;
 
 display:block;
 
-opacity:.02;
-
-transition:
-
-4s ease;
+opacity:.18;
 
 filter:
 
 drop-shadow(
 
-0 0 10px rgba(255,120,20,.05)
+0 0 10px rgba(255,180,90,.04)
 
 );
 
-}
+transition:
 
-.connected .etch{
-
-opacity:1;
+3s ease;
 
 }
 
-/* LAST SESH */
+/* imperfect placement */
 
 #etch1{
 
-width:min(42vw,240px);
+width:min(40vw,220px);
 
-left:14%;
+left:12%;
 
-top:56%;
+top:58%;
 
 transform:
 
-rotate(-4deg);
+rotate(-3deg);
 
 }
-
-/* ROACH TRAY */
 
 #etch2{
 
-width:min(54vw,330px);
+width:min(52vw,320px);
 
-left:26%;
+left:25%;
 
-top:67%;
+top:68%;
 
 transform:
 
-rotate(2deg);
+rotate(1deg);
 
 }
 
-/* PASS IT BACK */
-
 #etch3{
 
-width:min(42vw,260px);
+width:min(42vw,250px);
 
-left:54%;
+left:52%;
 
-top:78%;
+top:79%;
 
 transform:
 
@@ -1136,39 +760,21 @@ CONNECTED
 
 ========================================= */
 
-.connected #warmth{
+.connected #signalSpace{
 
 opacity:1;
 
 }
 
-.connected #smoke{
+.connected #etchings{
 
 opacity:1;
 
 }
 
-.connected #outer{
+.connected .etch{
 
-opacity:.02;
-
-filter:
-
-blur(2px);
-
-}
-
-.connected #inner{
-
-opacity:1;
-
-filter:
-
-drop-shadow(
-
-0 0 14px rgba(255,180,90,.16)
-
-);
+opacity:.72;
 
 }
 
@@ -1177,6 +783,44 @@ drop-shadow(
 </head>
 
 <body>
+
+<!-- ======================================
+
+NOISE
+
+====================================== -->
+
+<div id="noise"></div>
+
+<!-- ======================================
+
+FLASH
+
+====================================== -->
+
+<div id="flash"></div>
+
+<!-- ======================================
+
+CHAOS
+
+====================================== -->
+
+<div id="chaos">
+
+<div id="signalLost">
+
+SIGNAL LOST
+
+</div>
+
+</div>
+
+<!-- ======================================
+
+LOADER
+
+====================================== -->
 
 <div id="loaderWrap">
 
@@ -1200,51 +844,27 @@ drop-shadow(
 
 </div>
 
+<!-- ======================================
+
+CONTAMINATION
+
+====================================== -->
+
 <canvas id="matrix"></canvas>
 
-<div id="noise"></div>
+<!-- ======================================
 
-<div id="flash"></div>
+SIGNAL SPACE
 
-<div id="ghostUI"></div>
+====================================== -->
 
-<div id="fracture"></div>
+<div id="signalSpace">
 
-<div id="warningWrap"></div>
+<div id="signalGlow"></div>
 
-<div id="static"></div>
-
-<div id="smudge"></div>
-
-<div id="warmth"></div>
-
-<div id="smoke">
-
-<div class="cloud"></div>
-
-<div class="cloud"></div>
-
-<div class="cloud"></div>
-
-</div>
-
-<div id="signalLost">
-
-SIGNAL LOST
-
-</div>
-
-<div id="symbolWrap">
-
-<img id="outer"
+<img id="symbol"
 
 src="Outer17-final.png">
-
-<img id="inner"
-
-src="Inner17-final.png">
-
-</div>
 
 <div id="reconnect">
 
@@ -1274,13 +894,29 @@ RECONNECT
 
 </div>
 
+</div>
+
+<!-- ======================================
+
+TOUCH
+
+====================================== -->
+
+<div id="touch"></div>
+
+<!-- ======================================
+
+EDGE
+
+====================================== -->
+
 <div id="vignette"></div>
 
 <script>
 
 /* =========================================
 
-LOADING
+LOADER
 
 ========================================= */
 
@@ -1292,17 +928,29 @@ const percent =
 
 document.getElementById("percent");
 
+const turtle =
+
+document.getElementById("turtle");
+
 const loaderWrap =
 
 document.getElementById("loaderWrap");
 
 let load = 0;
 
+/* smooth pour */
+
 const loader =
 
 setInterval(()=>{
 
-load++;
+load += .45;
+
+if(load > 17){
+
+load = 17;
+
+}
 
 fill.style.width =
 
@@ -1310,85 +958,369 @@ load + "%";
 
 percent.innerText =
 
-load + "%";
+Math.floor(load) + "%";
 
-/* 17 INTERRUPT */
+/* turtle slight movement */
 
-if(load === 17){
+turtle.style.transform =
 
-clearInterval(loader);
+`translateX(${load * 1.8}px)`;
 
-interrupt();
+/* 16% turtle senses */
+
+if(load >= 16 && load < 16.5){
+
+turtle.innerText = "🐢";
+
+turtle.style.transform =
+
+`translateX(${load * 1.8}px)
+
+scaleX(-1)`;
 
 }
 
-},55);
+/* 17% */
 
-/* =========================================
+if(load >= 17){
 
-INTERRUPT
+clearInterval(loader);
 
-========================================= */
+turtle.innerText = "🐢";
 
-function interrupt(){
+turtle.style.transform =
 
-document.body.classList.add("shake");
+`translateX(${load * 1.8}px)
 
-/* micro pauses */
-
-setTimeout(()=>{
-
-flash();
-
-},140);
-
-setTimeout(()=>{
-
-ghostUI();
-
-},240);
-
-setTimeout(()=>{
-
-flash();
-
-},360);
-
-setTimeout(()=>{
-
-fracture();
-
-},500);
+scale(.92)`;
 
 setTimeout(()=>{
 
 chaos();
 
-},650);
+},520);
+
+}
+
+},65);
+
+/* =========================================
+
+CHAOS
+
+========================================= */
+
+const chaosLayer =
+
+document.getElementById("chaos");
+
+function chaos(){
+
+loaderWrap.style.opacity = 0;
+
+setTimeout(()=>{
+
+loaderWrap.style.display = "none";
+
+},500);
+
+chaosLayer.style.opacity = 1;
+
+document.body.classList.add("shake");
+
+matrix.style.opacity = .5;
+
+runChaos();
+
+setTimeout(()=>{
+
+collapse();
+
+},2600);
 
 }
 
 /* =========================================
 
-CANVAS
+FLASH
 
 ========================================= */
 
-const canvas =
+function flash(){
+
+const flash =
+
+document.getElementById("flash");
+
+flash.style.opacity =
+
+Math.random() * .18;
+
+setTimeout(()=>{
+
+flash.style.opacity = 0;
+
+},30);
+
+}
+
+/* =========================================
+
+WARNING
+
+========================================= */
+
+function warning(){
+
+const w =
+
+document.createElement("div");
+
+w.className = "warning";
+
+const msgs = [
+
+"TRANSMISSION BREACH",
+
+"UNAUTHORIZED SIGNAL",
+
+"MEMORY COLLISION",
+
+"SYSTEM FAILURE",
+
+"CONTAINMENT FAILURE",
+
+"SIGNAL OVERLOAD"
+
+];
+
+w.innerText =
+
+msgs[
+
+Math.floor(
+
+Math.random()*msgs.length
+
+)
+
+];
+
+w.style.left =
+
+(Math.random()*70+10)+"%";
+
+w.style.top =
+
+(Math.random()*70+10)+"%";
+
+chaosLayer.appendChild(w);
+
+setTimeout(()=>{
+
+w.remove();
+
+},180);
+
+}
+
+/* =========================================
+
+GHOST BARS
+
+========================================= */
+
+function ghostBar(){
+
+const g =
+
+document.createElement("div");
+
+g.className = "ghostBar";
+
+g.style.transform =
+
+`translate(
+
+${Math.random()*34-17}px,
+
+${Math.random()*22-11}px
+
+)`;
+
+chaosLayer.appendChild(g);
+
+setTimeout(()=>{
+
+g.remove();
+
+},90);
+
+}
+
+/* =========================================
+
+SEARCH GHOSTS
+
+========================================= */
+
+function searchGhost(){
+
+const s =
+
+document.createElement("div");
+
+s.className = "searchGhost";
+
+s.style.top =
+
+(Math.random()*70+10)+"%";
+
+s.style.transform =
+
+`translateX(-50%)
+
+translate(
+
+${Math.random()*70-35}px,
+
+${Math.random()*40-20}px
+
+)`;
+
+chaosLayer.appendChild(s);
+
+setTimeout(()=>{
+
+s.remove();
+
+},120);
+
+}
+
+/* =========================================
+
+SIGNAL LOST
+
+========================================= */
+
+function signalLost(){
+
+const s =
+
+document.getElementById("signalLost");
+
+s.style.opacity = 1;
+
+setTimeout(()=>{
+
+s.style.opacity = 0;
+
+},90);
+
+}
+
+/* =========================================
+
+RUN CHAOS
+
+========================================= */
+
+function runChaos(){
+
+const interval =
+
+setInterval(()=>{
+
+if(Math.random() > .35){
+
+ghostBar();
+
+}
+
+if(Math.random() > .42){
+
+searchGhost();
+
+}
+
+if(Math.random() > .55){
+
+warning();
+
+}
+
+if(Math.random() > .68){
+
+flash();
+
+}
+
+if(Math.random() > .72){
+
+signalLost();
+
+}
+
+},58);
+
+setTimeout(()=>{
+
+clearInterval(interval);
+
+},2500);
+
+}
+
+/* =========================================
+
+COLLAPSE
+
+========================================= */
+
+function collapse(){
+
+document.body.classList.remove("shake");
+
+chaosLayer.style.opacity = 0;
+
+matrix.style.opacity = 0;
+
+setTimeout(()=>{
+
+document.body.classList.add("connected");
+
+const reconnect =
+
+document.getElementById("reconnect");
+
+reconnect.classList.add("active");
+
+},400);
+
+}
+
+/* =========================================
+
+MATRIX CONTAMINATION
+
+========================================= */
+
+const matrix =
 
 document.getElementById("matrix");
 
 const ctx =
 
-canvas.getContext("2d");
+matrix.getContext("2d");
 
 function resize(){
 
-canvas.width =
+matrix.width =
 
 window.innerWidth;
 
-canvas.height =
+matrix.height =
 
 window.innerHeight;
 
@@ -1404,131 +1336,41 @@ resize
 
 );
 
-/* =========================================
-
-DATA
-
-========================================= */
-
 const chars =
 
-"ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789$#@%&*";
-
-const fontSize = 18;
-
-const rows =
-
-Math.floor(canvas.height / fontSize);
+"ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
 const streams = [];
 
-const hidden17 = {
-
-x:
-
-canvas.width * .48,
-
-y:
-
-canvas.height * .25,
-
-w:90,
-
-h:140
-
-};
-
-/* =========================================
-
-BUILD STREAMS
-
-========================================= */
-
-for(let i=0;i<rows;i++){
+for(let i=0;i<38;i++){
 
 streams.push({
 
-y:
-
-Math.random()*canvas.height,
-
 x:
 
-Math.random()*canvas.width,
+Math.random()*matrix.width,
+
+y:
+
+Math.random()*matrix.height,
 
 speed:
 
-4 + Math.random()*5,
+2 + Math.random()*5,
 
-length:
+len:
 
-10 + Math.random()*18,
-
-charTimer:0,
-
-charSet:[]
+10 + Math.random()*14
 
 });
 
 }
-
-streams.forEach(stream=>{
-
-for(let i=0;i<stream.length;i++){
-
-stream.charSet.push(
-
-chars[
-
-Math.floor(
-
-Math.random()*chars.length
-
-)
-
-]
-
-);
-
-}
-
-});
-
-/* =========================================
-
-CHAOS
-
-========================================= */
-
-function chaos(){
-
-loaderWrap.style.display = "none";
-
-const loop =
-
-setInterval(draw,42);
-
-setTimeout(()=>{
-
-clearInterval(loop);
-
-failure();
-
-},1800);
-
-}
-
-/* =========================================
-
-DRAW
-
-========================================= */
 
 function draw(){
 
 ctx.fillStyle =
 
-"rgba(0,0,0,0.14)";
+"rgba(0,0,0,.08)";
 
 ctx.fillRect(
 
@@ -1536,113 +1378,27 @@ ctx.fillRect(
 
 0,
 
-canvas.width,
+matrix.width,
 
-canvas.height
-
-);
-
-streams.forEach(stream=>{
-
-stream.charTimer++;
-
-if(stream.charTimer > 5){
-
-stream.charTimer = 0;
-
-const rand =
-
-Math.floor(
-
-Math.random()*stream.length
+matrix.height
 
 );
 
-stream.charSet[rand] =
+streams.forEach(s=>{
 
-chars[
-
-Math.floor(
-
-Math.random()*chars.length
-
-)
-
-];
-
-}
-
-for(let i=0;i<stream.length;i++){
-
-const x =
-
-stream.x + (i * fontSize);
-
-const y =
-
-stream.y;
-
-const inside17 =
-
-x > hidden17.x &&
-
-x < hidden17.x + hidden17.w &&
-
-y > hidden17.y &&
-
-y < hidden17.y + hidden17.h;
-
-if(!inside17){
+for(let i=0;i<s.len;i++){
 
 ctx.fillStyle =
 
 `rgba(165,160,45,${
 
-1 - (i / stream.length)
+1 - (i/s.len)
 
 })`;
 
 ctx.font =
 
-fontSize + "px monospace";
-
-ctx.fillText(
-
-stream.charSet[i],
-
-x,
-
-y
-
-);
-
-}
-
-}
-
-/* movement */
-
-stream.x += stream.speed;
-
-if(stream.x > canvas.width + 200){
-
-stream.x =
-
--400;
-
-stream.y =
-
-Math.random()*canvas.height;
-
-}
-
-/* random vertical leaks */
-
-if(Math.random() > .985){
-
-ctx.fillStyle =
-
-"rgba(165,160,45,.5)";
+"18px monospace";
 
 ctx.fillText(
 
@@ -1656,317 +1412,33 @@ Math.random()*chars.length
 
 ],
 
-stream.x,
+s.x + (i*18),
 
-stream.y + (Math.random()*220)
+s.y
 
 );
 
 }
 
+s.x += s.speed;
+
+if(s.x > matrix.width + 300){
+
+s.x = -400;
+
+s.y =
+
+Math.random()*matrix.height;
+
+}
+
 });
 
-/* SYSTEM FAILURE */
-
-if(Math.random() > .58){
-
-flash();
+requestAnimationFrame(draw);
 
 }
 
-if(Math.random() > .65){
-
-ghostUI();
-
-}
-
-if(Math.random() > .7){
-
-fracture();
-
-}
-
-if(Math.random() > .76){
-
-warning();
-
-}
-
-}
-
-/* =========================================
-
-FLASH
-
-========================================= */
-
-function flash(){
-
-const f =
-
-document.getElementById("flash");
-
-f.style.opacity =
-
-Math.random() * .22;
-
-setTimeout(()=>{
-
-f.style.opacity = 0;
-
-},35);
-
-}
-
-/* =========================================
-
-GHOST UI
-
-========================================= */
-
-function ghostUI(){
-
-const layer =
-
-document.getElementById("ghostUI");
-
-layer.style.opacity = .82;
-
-layer.innerHTML = "";
-
-for(let i=0;i<4;i++){
-
-const g =
-
-document.createElement("div");
-
-g.className =
-
-"ghostBar";
-
-g.style.transform =
-
-`translate(
-
-${Math.random()*32-16}px,
-
-${Math.random()*20-10}px
-
-)`;
-
-layer.appendChild(g);
-
-}
-
-setTimeout(()=>{
-
-layer.style.opacity = 0;
-
-},70);
-
-}
-
-/* =========================================
-
-FRACTURE
-
-========================================= */
-
-function fracture(){
-
-const layer =
-
-document.getElementById("fracture");
-
-layer.style.opacity = 1;
-
-layer.innerHTML = "";
-
-for(let i=0;i<6;i++){
-
-const s =
-
-document.createElement("div");
-
-s.className = "slice";
-
-s.style.left =
-
-(Math.random()*100)+"%";
-
-s.style.top =
-
-(Math.random()*100)+"%";
-
-s.style.width =
-
-(80 + Math.random()*400)+"px";
-
-s.style.height =
-
-(10 + Math.random()*120)+"px";
-
-s.style.transform =
-
-`translate(
-
-${Math.random()*90-45}px,
-
-${Math.random()*90-45}px
-
-)`;
-
-layer.appendChild(s);
-
-}
-
-setTimeout(()=>{
-
-layer.style.opacity = 0;
-
-},60);
-
-}
-
-/* =========================================
-
-WARNINGS
-
-========================================= */
-
-function warning(){
-
-const wrap =
-
-document.getElementById("warningWrap");
-
-const w =
-
-document.createElement("div");
-
-w.className = "warning";
-
-const messages = [
-
-"UNAUTHORIZED SIGNAL",
-
-"CONTAINMENT FAILURE",
-
-"RENDER FAILURE",
-
-"TRANSMISSION BREACH",
-
-"SYSTEM FAILURE",
-
-"MEMORY LEAK"
-
-];
-
-w.innerText =
-
-messages[
-
-Math.floor(
-
-Math.random()*messages.length
-
-)
-
-];
-
-w.style.left =
-
-(Math.random()*70+10)+"%";
-
-w.style.top =
-
-(Math.random()*70+10)+"%";
-
-wrap.appendChild(w);
-
-setTimeout(()=>{
-
-w.remove();
-
-},120);
-
-}
-
-/* =========================================
-
-FAILURE
-
-========================================= */
-
-function failure(){
-
-const signalLost =
-
-document.getElementById("signalLost");
-
-const staticLayer =
-
-document.getElementById("static");
-
-for(let i=0;i<28;i++){
-
-const line =
-
-document.createElement("div");
-
-line.className =
-
-"staticLine";
-
-line.style.width =
-
-(20 + Math.random()*70)+"%";
-
-line.style.left =
-
-Math.random()*60+"%";
-
-line.style.top =
-
-Math.random()*100+"%";
-
-line.style.animationDuration =
-
-(.04 + Math.random()*1)+"s";
-
-staticLayer.appendChild(line);
-
-}
-
-staticLayer.style.opacity = .95;
-
-signalLost.style.opacity = 1;
-
-signalLost.classList.add("active");
-
-/* QUICK */
-
-setTimeout(()=>{
-
-signalLost.style.opacity = 0;
-
-staticLayer.style.opacity = 0;
-
-document
-
-.getElementById("symbolWrap")
-
-.classList.add("visible");
-
-document
-
-.getElementById("reconnect")
-
-.classList.add("active");
-
-},260);
-
-}
+draw();
 
 /* =========================================
 
@@ -1982,29 +1454,29 @@ reconnect.addEventListener("click",e=>{
 
 reconnect.classList.remove("active");
 
-/* thermal print */
+/* human touch */
 
-const smudge =
+const touch =
 
-document.getElementById("smudge");
+document.getElementById("touch");
 
-smudge.style.left =
+touch.style.left =
 
 e.clientX + "px";
 
-smudge.style.top =
+touch.style.top =
 
 e.clientY + "px";
 
-smudge.style.opacity = 1;
+touch.style.opacity = 1;
 
-smudge.animate([
+touch.animate([
 
 {
 
 transform:
 
-"translate(-50%,-50%) scale(.7)"
+"translate(-50%,-50%) scale(.6)"
 
 },
 
@@ -2012,45 +1484,23 @@ transform:
 
 transform:
 
-"translate(-50%,-50%) scale(1.3)"
+"translate(-50%,-50%) scale(1.6)"
 
 }
 
 ],{
 
-duration:160,
+duration:260,
 
 fill:"forwards"
 
 });
 
-/* cool */
-
 setTimeout(()=>{
 
-smudge.style.opacity = 0;
+touch.style.opacity = 0;
 
-},600);
-
-/* warmth */
-
-setTimeout(()=>{
-
-document.body.classList.add("connected");
-
-},80);
-
-/* etchings */
-
-setTimeout(()=>{
-
-document
-
-.getElementById("etchings")
-
-.classList.add("visible");
-
-},1200);
+},700);
 
 });
 
