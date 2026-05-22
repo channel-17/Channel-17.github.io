@@ -12,1049 +12,329 @@
 
 <style>
 
-/* =========================================
-
-RESET
-
-========================================= */
-
-*{
-
-margin:0;
-
-padding:0;
-
-box-sizing:border-box;
-
-}
+*{margin:0;padding:0;box-sizing:border-box}
 
 html,body{
 
-width:100%;
+  width:100%;height:100%;overflow:hidden;background:#000;color:#fff;
 
-height:100%;
+  font-family:Arial,Helvetica,sans-serif;
 
-overflow:hidden;
-
-background:#000;
-
-font-family:Arial,Helvetica,sans-serif;
-
-color:#fff;
+  -webkit-tap-highlight-color:transparent;
 
 }
 
-/* =========================================
+body{position:relative}
 
-BASE ATMOSPHERE
-
-========================================= */
-
-body{
-
-position:relative;
-
-background:#000;
-
--webkit-tap-highlight-color:transparent;
-
-}
+/* ATMOSPHERE */
 
 #noise{
 
-position:fixed;
+  position:fixed;inset:0;pointer-events:none;z-index:99999;opacity:.035;
 
-inset:0;
+  mix-blend-mode:screen;
 
-pointer-events:none;
+  background-image:repeating-linear-gradient(0deg,rgba(255,255,255,.04) 0 1px,transparent 1px 4px);
 
-z-index:99999;
-
-opacity:.035;
-
-mix-blend-mode:screen;
-
-background-image:
-
-repeating-linear-gradient(
-
-0deg,
-
-rgba(255,255,255,.04) 0px,
-
-rgba(255,255,255,.04) 1px,
-
-transparent 1px,
-
-transparent 4px
-
-);
-
-animation:noiseMove .06s linear infinite;
+  animation:noise .06s linear infinite;
 
 }
 
-@keyframes noiseMove{
-
-from{
-
-transform:translateY(0px);
-
-}
-
-to{
-
-transform:translateY(3px);
-
-}
-
-}
+@keyframes noise{to{transform:translateY(3px)}}
 
 #vignette{
 
-position:fixed;
+  position:fixed;inset:0;pointer-events:none;z-index:999999;
 
-inset:0;
-
-pointer-events:none;
-
-z-index:999999;
-
-background:
-
-radial-gradient(
-
-circle,
-
-transparent 46%,
-
-rgba(0,0,0,.48) 72%,
-
-rgba(0,0,0,.98) 100%
-
-);
+  background:radial-gradient(circle,transparent 46%,rgba(0,0,0,.5) 72%,rgba(0,0,0,.98) 100%);
 
 }
 
-/* =========================================
+#flash{
 
-LOADER
+  position:fixed;inset:0;background:#fff;opacity:0;pointer-events:none;z-index:9000;mix-blend-mode:screen;
 
-========================================= */
+}
+
+/* LOADER */
 
 #loader{
 
-position:fixed;
+  position:fixed;inset:0;z-index:3000;background:#000;
 
-inset:0;
+  display:flex;flex-direction:column;justify-content:center;align-items:center;
 
-display:flex;
-
-flex-direction:column;
-
-justify-content:center;
-
-align-items:center;
-
-background:#000;
-
-z-index:2000;
-
-transition:opacity .7s ease;
+  transition:opacity .7s ease;
 
 }
 
-/* =========================================
-
-SEGMENT BAR
-
-========================================= */
-
-#bar{
-
-display:flex;
-
-gap:5px;
-
-width:min(58vw,320px);
-
-height:26px;
-
-}
+#bar{display:flex;gap:5px;width:min(58vw,320px);height:26px}
 
 .segment{
 
-flex:1;
+  flex:1;border:1px solid rgba(255,255,255,.14);border-radius:4px;
 
-border:
+  background:rgba(255,255,255,.025);
 
-1px solid rgba(255,255,255,.14);
+  box-shadow:inset 0 0 8px rgba(255,255,255,.02);
 
-background:
-
-rgba(255,255,255,.025);
-
-border-radius:4px;
-
-box-shadow:
-
-inset 0 0 8px rgba(255,255,255,.02);
-
-transition:
-
-background .18s ease,
-
-box-shadow .18s ease;
+  transition:.12s ease;
 
 }
 
 .segment.active{
 
-background:
+  background:rgba(255,255,255,.92);
 
-rgba(255,255,255,.92);
-
-box-shadow:
-
-0 0 12px rgba(255,255,255,.12);
+  box-shadow:0 0 12px rgba(255,255,255,.12);
 
 }
-
-/* =========================================
-
-PERCENT
-
-========================================= */
 
 #percent{
 
-margin-top:16px;
-
-font-size:14px;
-
-font-weight:700;
-
-letter-spacing:.22em;
-
-opacity:.54;
+  margin-top:16px;font-size:14px;font-weight:700;letter-spacing:.22em;opacity:.58;
 
 }
 
-/* =========================================
-
-TURTLE
-
-========================================= */
+/* BLOCK TURTLE */
 
 #turtleWrap{
 
-margin-top:36px;
-
-width:100px;
-
-height:70px;
-
-display:flex;
-
-justify-content:center;
-
-align-items:center;
+  margin-top:36px;width:120px;height:76px;display:flex;align-items:center;justify-content:center;
 
 }
 
 #turtle{
 
-width:84px;
-
-height:54px;
-
-overflow:visible;
-
-opacity:.98;
-
-filter:
-
-drop-shadow(
-
-0 0 8px rgba(255,255,255,.06)
-
-);
+  position:relative;width:78px;height:44px;filter:drop-shadow(0 0 8px rgba(255,255,255,.06));
 
 }
 
-.walk{
+.turtlePart{position:absolute;background:#fff}
 
-animation:
+.shell{
 
-walk 1s ease-in-out infinite;
+  left:22px;top:8px;width:40px;height:28px;border-radius:4px;
+
+  box-shadow:inset -8px 0 0 rgba(0,0,0,.08), inset 0 -6px 0 rgba(0,0,0,.06);
 
 }
+
+.shell:before,.shell:after{
+
+  content:"";position:absolute;background:rgba(0,0,0,.18);
+
+}
+
+.shell:before{left:13px;top:3px;width:2px;height:22px}
+
+.shell:after{left:4px;top:13px;width:31px;height:2px}
+
+.head{left:63px;top:14px;width:13px;height:13px;border-radius:3px}
+
+.neck{left:58px;top:17px;width:9px;height:7px;border-radius:2px}
+
+.eye{position:absolute;right:2px;top:3px;width:2px;height:2px;background:#000;opacity:.35}
+
+.tail{left:12px;top:19px;width:0;height:0;background:transparent;border-top:5px solid transparent;border-bottom:5px solid transparent;border-right:10px solid #fff}
+
+.leg1{left:30px;top:33px;width:8px;height:10px;border-radius:2px}
+
+.leg2{left:50px;top:33px;width:8px;height:10px;border-radius:2px}
+
+.walk{animation:walk 1s ease-in-out infinite}
 
 @keyframes walk{
 
-0%,100%{
+  0%,100%{transform:translate(0,0)}
 
-transform:
-
-translateX(0px)
-
-translateY(0px);
+  50%{transform:translate(2px,-2px)}
 
 }
 
-50%{
+.look{animation:none;transform:scaleX(-1)}
 
-transform:
+.gasp .head{transform:translateX(8px)}
 
-translateX(2px)
+.gasp .neck{transform:translateX(5px)}
 
-translateY(-2px);
+.gasp .leg2{transform:translateY(3px)}
 
-}
+.retract .head,.retract .neck{transform:translateX(-24px);opacity:0}
 
-}
+.retract .leg1,.retract .leg2{transform:translateY(-16px);opacity:0}
 
-/* anatomy */
+.retract .tail{transform:translateX(10px);opacity:0}
 
-#head,
+.retract .shell{transform:scale(1.08)}
 
-#neck,
+#turtle *{transition:.14s ease}
 
-#frontLeg,
-
-#backLeg,
-
-#tail,
-
-#shell{
-
-transition:.14s ease;
-
-}
-
-/* look back */
-
-.look{
-
-transform:
-
-scaleX(-1);
-
-}
-
-/* gasp */
-
-.gasp #head{
-
-transform:
-
-translateX(6px);
-
-}
-
-.gasp #neck{
-
-transform:
-
-translateX(4px);
-
-}
-
-.gasp #frontLeg{
-
-transform:
-
-translateY(3px);
-
-}
-
-/* retract */
-
-.retract #head{
-
-transform:
-
-translateX(-20px);
-
-opacity:0;
-
-}
-
-.retract #neck{
-
-transform:
-
-translateX(-18px);
-
-opacity:0;
-
-}
-
-.retract #frontLeg,
-
-.retract #backLeg{
-
-transform:
-
-translateY(-14px);
-
-opacity:0;
-
-}
-
-.retract #tail{
-
-transform:
-
-translateX(8px);
-
-opacity:0;
-
-}
-
-.retract #shell{
-
-transform:
-
-scale(1.04);
-
-}
-
-/* =========================================
-
-CHAOS
-
-========================================= */
+/* CHAOS */
 
 #chaos{
 
-position:fixed;
-
-inset:0;
-
-overflow:hidden;
-
-pointer-events:none;
-
-opacity:0;
-
-z-index:5000;
-
-transition:opacity .3s ease;
+  position:fixed;inset:0;z-index:5000;overflow:hidden;opacity:0;pointer-events:none;transition:opacity .3s ease;
 
 }
 
 .window{
 
-position:absolute;
+  position:absolute;background:rgba(10,10,10,.92);border:1px solid rgba(255,255,255,.08);
 
-background:
+  border-radius:10px;overflow:hidden;box-shadow:0 0 22px rgba(0,0,0,.72);
 
-rgba(10,10,10,.92);
-
-border:
-
-1px solid rgba(255,255,255,.08);
-
-border-radius:10px;
-
-overflow:hidden;
-
-box-shadow:
-
-0 0 22px rgba(0,0,0,.72);
-
-opacity:0;
-
-animation:
-
-cascade linear forwards;
+  opacity:0;animation:cascade linear forwards;
 
 }
 
 @keyframes cascade{
 
-0%{
+  0%{opacity:0;transform:translate(0,0) scale(.96)}
 
-opacity:0;
+  10%{opacity:.92}
 
-transform:
-
-translate(0px,0px)
-
-scale(.96);
-
-}
-
-10%{
-
-opacity:.92;
-
-}
-
-100%{
-
-opacity:0;
-
-transform:
-
-translate(
-
-var(--moveX),
-
-var(--moveY)
-
-)
-
-scale(1.03);
-
-}
+  100%{opacity:0;transform:translate(var(--mx),var(--my)) scale(1.03)}
 
 }
 
 .windowTop{
 
-height:28px;
+  height:28px;padding-left:12px;display:flex;align-items:center;font-size:11px;letter-spacing:.14em;
 
-padding-left:12px;
-
-display:flex;
-
-align-items:center;
-
-font-size:11px;
-
-letter-spacing:.14em;
-
-background:
-
-rgba(255,255,255,.04);
-
-border-bottom:
-
-1px solid rgba(255,255,255,.04);
-
-color:
-
-rgba(255,255,255,.48);
+  background:rgba(255,255,255,.04);border-bottom:1px solid rgba(255,255,255,.04);color:rgba(255,255,255,.48);
 
 }
 
-.windowBody{
+.windowBody{padding:12px;font-size:11px;line-height:1.6;color:rgba(255,255,255,.62)}
 
-padding:12px;
-
-font-size:11px;
-
-line-height:1.6;
-
-color:
-
-rgba(255,255,255,.62);
-
-}
-
-.red{
-
-color:#ff4141;
-
-}
-
-.amber{
-
-color:#c8b86a;
-
-}
-
-/* strips */
+.red{color:#ff4141}.amber{color:#c8b86a}
 
 .strip{
 
-position:absolute;
+  position:absolute;height:14px;opacity:0;
 
-height:14px;
+  background:linear-gradient(90deg,transparent,rgba(196,176,92,.24),transparent);
 
-opacity:0;
-
-background:
-
-linear-gradient(
-
-90deg,
-
-transparent,
-
-rgba(196,176,92,.24),
-
-transparent
-
-);
-
-animation:
-
-strip .7s linear forwards;
+  animation:strip .7s linear forwards;
 
 }
 
 @keyframes strip{
 
-0%{
+  0%{opacity:0;transform:translateX(-30px)}
 
-opacity:0;
+  20%{opacity:.7}
 
-transform:translateX(-30px);
-
-}
-
-20%{
-
-opacity:.7;
+  100%{opacity:0;transform:translateX(70px)}
 
 }
-
-100%{
-
-opacity:0;
-
-transform:translateX(70px);
-
-}
-
-}
-
-/* =========================================
-
-SIGNAL LOST
-
-========================================= */
 
 #signalLost{
 
-position:absolute;
+  position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
 
-left:50%;
-
-top:50%;
-
-transform:
-
-translate(-50%,-50%);
-
-font-size:
-
-clamp(32px,6vw,74px);
-
-letter-spacing:.24em;
-
-opacity:0;
-
-text-shadow:
-
-0 0 14px rgba(255,255,255,.12);
+  font-size:clamp(32px,6vw,74px);letter-spacing:.24em;opacity:0;text-shadow:0 0 14px rgba(255,255,255,.12);
 
 }
 
-/* =========================================
-
-RECONNECT SPACE
-
-========================================= */
+/* FINAL SIGNAL */
 
 #signalSpace{
 
-position:fixed;
+  position:fixed;inset:0;z-index:8000;opacity:0;pointer-events:none;transition:opacity 1.2s ease;
 
-inset:0;
-
-display:flex;
-
-justify-content:center;
-
-align-items:center;
-
-opacity:0;
-
-pointer-events:none;
-
-z-index:8000;
-
-transition:opacity 1.2s ease;
+  display:flex;justify-content:center;align-items:center;
 
 }
 
-/* symbols */
+#signalCanvas{
 
-#outer{
+  position:absolute;inset:0;width:100%;height:100%;opacity:0;z-index:7600;pointer-events:none;
 
-position:absolute;
-
-width:min(72vw,360px);
-
-opacity:0;
-
-transition:
-
-opacity 1.4s ease,
-
-filter 1.4s ease,
-
-transform 1.4s ease;
-
-filter:
-
-drop-shadow(
-
-0 0 8px rgba(255,255,255,.03)
-
-);
+  transition:opacity 1.2s ease;
 
 }
 
-#inner{
+#outer,#inner{
 
-position:absolute;
-
-width:min(42vw,190px);
-
-opacity:0;
-
-transition:
-
-opacity 1.8s ease;
-
-filter:
-
-drop-shadow(
-
-0 0 10px rgba(255,255,255,.05)
-
-);
+  position:absolute;opacity:0;transition:opacity 1.5s ease,filter 1.4s ease,transform 1.4s ease;
 
 }
 
-/* reconnect */
+#outer{width:min(72vw,360px);filter:drop-shadow(0 0 8px rgba(255,255,255,.03));z-index:8000}
+
+#inner{width:min(42vw,190px);filter:drop-shadow(0 0 10px rgba(255,255,255,.05));z-index:8100}
 
 #reconnect{
 
-position:absolute;
+  position:absolute;z-index:9000;font-size:clamp(18px,3vw,28px);letter-spacing:.34em;
 
-font-size:
+  padding:34px;cursor:pointer;user-select:none;opacity:0;color:rgba(255,255,255,.76);
 
-clamp(18px,3vw,28px);
-
-letter-spacing:.34em;
-
-padding:30px;
-
-cursor:pointer;
-
-user-select:none;
-
-opacity:0;
-
-z-index:9000;
-
-color:
-
-rgba(255,255,255,.76);
-
-transition:
-
-opacity .15s linear;
+  transition:opacity .15s linear;
 
 }
 
-.breathing{
-
-animation:
-
-heartbeat 2.2s ease-in-out infinite;
-
-}
+.breathing{animation:heartbeat 2.2s ease-in-out infinite}
 
 @keyframes heartbeat{
 
-0%{
+  0%{opacity:.44;text-shadow:0 0 6px rgba(255,255,255,.04)}
 
-opacity:.44;
+  18%{opacity:.98;text-shadow:0 0 22px rgba(255,255,255,.2)}
 
-text-shadow:
+  36%{opacity:.5;text-shadow:0 0 8px rgba(255,255,255,.05)}
 
-0 0 6px rgba(255,255,255,.04);
-
-}
-
-18%{
-
-opacity:.98;
-
-text-shadow:
-
-0 0 22px rgba(255,255,255,.2);
+  100%{opacity:.72;text-shadow:0 0 14px rgba(255,255,255,.08)}
 
 }
-
-36%{
-
-opacity:.5;
-
-text-shadow:
-
-0 0 8px rgba(255,255,255,.05);
-
-}
-
-100%{
-
-opacity:.72;
-
-text-shadow:
-
-0 0 14px rgba(255,255,255,.08);
-
-}
-
-}
-
-/* ripple */
-
-#ripple{
-
-position:absolute;
-
-width:18px;
-
-height:18px;
-
-border-radius:50%;
-
-opacity:0;
-
-pointer-events:none;
-
-z-index:8800;
-
-filter:
-
-blur(5px);
-
-background:
-
-radial-gradient(
-
-circle,
-
-rgba(255,214,170,.95) 0%,
-
-rgba(255,170,80,.72) 22%,
-
-rgba(190,130,50,.16) 46%,
-
-transparent 76%
-
-);
-
-}
-
-/* dormant signal */
-
-#signalField{
-
-position:absolute;
-
-inset:0;
-
-opacity:0;
-
-pointer-events:none;
-
-z-index:7600;
-
-}
-
-/* subtle traces */
-
-.trace{
-
-position:absolute;
-
-height:1px;
-
-background:
-
-linear-gradient(
-
-90deg,
-
-transparent,
-
-rgba(255,186,92,.14),
-
-transparent
-
-);
-
-opacity:.22;
-
-}
-
-/* channel links */
 
 #channels{
 
-position:absolute;
+  position:absolute;bottom:11vh;left:50%;transform:translateX(-50%);
 
-bottom:11vh;
-
-left:50%;
-
-transform:
-
-translateX(-50%);
-
-display:flex;
-
-flex-direction:column;
-
-gap:18px;
-
-opacity:0;
-
-transition:opacity 1.8s ease;
-
-z-index:9200;
+  display:flex;flex-direction:column;gap:18px;opacity:0;transition:opacity 1.8s ease;z-index:9200;
 
 }
 
 .channel{
 
-position:relative;
+  position:relative;font-size:15px;letter-spacing:.24em;color:rgba(255,255,255,.64);text-decoration:none;
 
-font-size:15px;
+  padding:10px 18px;border:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.015);
 
-letter-spacing:.24em;
-
-color:
-
-rgba(255,255,255,.64);
-
-text-decoration:none;
-
-padding:
-
-10px 18px;
-
-border:
-
-1px solid rgba(255,255,255,.06);
-
-background:
-
-rgba(255,255,255,.015);
-
-border-radius:6px;
-
-overflow:hidden;
-
-transition:
-
-.18s ease;
+  border-radius:6px;overflow:hidden;transition:.18s ease;
 
 }
 
-/* interaction */
+.channel:hover,.channel:active{
 
-.channel:hover,
+  color:rgba(255,255,255,.92);border-color:rgba(255,210,140,.18);
 
-.channel:active{
-
-color:
-
-rgba(255,255,255,.92);
-
-border-color:
-
-rgba(255,210,140,.18);
-
-background:
-
-rgba(255,210,140,.03);
-
-box-shadow:
-
-0 0 14px rgba(255,186,92,.08);
+  background:rgba(255,210,140,.03);box-shadow:0 0 14px rgba(255,186,92,.08);
 
 }
 
-/* pulse */
+.channel:after{
 
-.channel::after{
+  content:"";position:absolute;left:-40%;top:0;width:30%;height:100%;
 
-content:"";
+  background:linear-gradient(90deg,transparent,rgba(255,210,140,.08),transparent);
 
-position:absolute;
-
-left:-40%;
-
-top:0;
-
-width:30%;
-
-height:100%;
-
-background:
-
-linear-gradient(
-
-90deg,
-
-transparent,
-
-rgba(255,210,140,.08),
-
-transparent
-
-);
-
-transform:
-
-skewX(-20deg);
-
-opacity:0;
+  transform:skewX(-20deg);opacity:0;
 
 }
 
-.channel:hover::after{
-
-animation:
-
-signalPass .8s linear;
-
-}
+.channel:hover:after,.channel:active:after{animation:signalPass .8s linear}
 
 @keyframes signalPass{
 
-0%{
+  0%{left:-40%;opacity:0}
 
-left:-40%;
+  20%{opacity:1}
 
-opacity:0;
-
-}
-
-20%{
-
-opacity:1;
-
-}
-
-100%{
-
-left:140%;
-
-opacity:0;
-
-}
+  100%{left:140%;opacity:0}
 
 }
 
@@ -1066,253 +346,61 @@ opacity:0;
 
 <div id="noise"></div>
 
-<!-- =========================================
-
-LOADER
-
-========================================= -->
+<div id="flash"></div>
 
 <div id="loader">
 
-<div id="bar"></div>
+  <div id="bar"></div>
 
-<div id="percent">
+  <div id="percent">0%</div>
 
-0%
+  <div id="turtleWrap">
+
+    <div id="turtle" class="walk">
+
+      <div class="turtlePart tail"></div>
+
+      <div class="turtlePart shell"></div>
+
+      <div class="turtlePart neck"></div>
+
+      <div class="turtlePart head"><div class="eye"></div></div>
+
+      <div class="turtlePart leg1"></div>
+
+      <div class="turtlePart leg2"></div>
+
+    </div>
+
+  </div>
 
 </div>
-
-<div id="turtleWrap">
-
-<svg
-
-id="turtle"
-
-class="walk"
-
-viewBox="0 0 120 70">
-
-<!-- legs -->
-
-<ellipse
-
-id="backLeg"
-
-cx="48"
-
-cy="54"
-
-rx="5"
-
-ry="7"
-
-fill="white"/>
-
-<ellipse
-
-id="frontLeg"
-
-cx="76"
-
-cy="54"
-
-rx="5"
-
-ry="7"
-
-fill="white"/>
-
-<!-- tail -->
-
-<polygon
-
-id="tail"
-
-points="24,42 14,37 14,47"
-
-fill="white"/>
-
-<!-- shell underside -->
-
-<ellipse
-
-cx="62"
-
-cy="40"
-
-rx="28"
-
-ry="16"
-
-fill="rgba(255,255,255,.88)"/>
-
-<!-- shell -->
-
-<path
-
-id="shell"
-
-d="
-
-M34 40
-
-C34 24 48 14 66 14
-
-C86 14 98 25 98 40
-
-C98 55 86 66 66 66
-
-C48 66 34 56 34 40
-
-Z"
-
-fill="white"/>
-
-<!-- shell lines -->
-
-<path
-
-d="M44 30 C58 24 76 24 90 31"
-
-stroke="black"
-
-stroke-width="2"
-
-opacity=".12"
-
-fill="none"/>
-
-<path
-
-d="M42 44 C58 39 78 39 92 46"
-
-stroke="black"
-
-stroke-width="2"
-
-opacity=".12"
-
-fill="none"/>
-
-<!-- neck -->
-
-<rect
-
-id="neck"
-
-x="92"
-
-y="35"
-
-width="14"
-
-height="8"
-
-rx="4"
-
-fill="white"/>
-
-<!-- head -->
-
-<circle
-
-id="head"
-
-cx="110"
-
-cy="39"
-
-r="8"
-
-fill="white"/>
-
-<!-- eye -->
-
-<circle
-
-cx="113"
-
-cy="37"
-
-r="1.4"
-
-fill="black"
-
-opacity=".3"/>
-
-</svg>
-
-</div>
-
-</div>
-
-<!-- =========================================
-
-CHAOS
-
-========================================= -->
 
 <div id="chaos">
 
-<div id="signalLost">
-
-SIGNAL LOST
+  <div id="signalLost">SIGNAL LOST</div>
 
 </div>
-
-</div>
-
-<!-- =========================================
-
-FINAL SIGNAL
-
-========================================= -->
 
 <div id="signalSpace">
 
-<div id="signalField"></div>
+  <canvas id="signalCanvas"></canvas>
 
-<img
+  <img id="outer" src="Outer17-final.png">
 
-id="outer"
+  <img id="inner" src="Inner17-final.png">
 
-src="Outer17-final.png">
+  <div id="reconnect">RECONNECT</div>
 
-<img
+  <div id="channels">
 
-id="inner"
+    <a class="channel" href="#">LAST SESH</a>
 
-src="Inner17-final.png">
+    <a class="channel" href="#">ROACH TRAY</a>
 
-<div id="reconnect">
+    <a class="channel" href="#">PASS IT BACK</a>
 
-RECONNECT
-
-</div>
-
-<div id="ripple"></div>
-
-<div id="channels">
-
-<a class="channel" href="#">
-
-LAST SESH
-
-</a>
-
-<a class="channel" href="#">
-
-ROACH TRAY
-
-</a>
-
-<a class="channel" href="#">
-
-PASS IT BACK
-
-</a>
-
-</div>
+  </div>
 
 </div>
 
@@ -1320,745 +408,419 @@ PASS IT BACK
 
 <script>
 
-/* =========================================
-
-SEGMENTS
-
-========================================= */
-
-const bar =
-
-document.getElementById("bar");
+const bar=document.getElementById("bar");
 
 for(let i=0;i<17;i++){
 
-const seg =
+  const s=document.createElement("div");
 
-document.createElement("div");
+  s.className="segment";
 
-seg.className =
-
-"segment";
-
-bar.appendChild(seg);
+  bar.appendChild(s);
 
 }
 
-const segments =
+const segments=document.querySelectorAll(".segment");
 
-document.querySelectorAll(".segment");
+const percent=document.getElementById("percent");
 
-/* =========================================
+const turtle=document.getElementById("turtle");
 
-ELEMENTS
+const loader=document.getElementById("loader");
 
-========================================= */
+const chaos=document.getElementById("chaos");
 
-const percent =
+const flash=document.getElementById("flash");
 
-document.getElementById("percent");
+const signalLost=document.getElementById("signalLost");
 
-const turtle =
+const signalSpace=document.getElementById("signalSpace");
 
-document.getElementById("turtle");
+const reconnect=document.getElementById("reconnect");
 
-const loader =
+const outer=document.getElementById("outer");
 
-document.getElementById("loader");
+const inner=document.getElementById("inner");
 
-const chaos =
+const channels=document.getElementById("channels");
 
-document.getElementById("chaos");
+const canvas=document.getElementById("signalCanvas");
 
-const signalLost =
+const ctx=canvas.getContext("2d");
 
-document.getElementById("signalLost");
+let load=0, looked=false, gasped=false, retracted=false;
 
-const signalSpace =
+const loadLoop=setInterval(()=>{
 
-document.getElementById("signalSpace");
+  load++;
 
-const reconnect =
+  if(load>17) load=17;
 
-document.getElementById("reconnect");
+  segments.forEach((s,i)=>{ if(i<load) s.classList.add("active"); });
 
-const ripple =
+  percent.innerText=load+"%";
 
-document.getElementById("ripple");
+  if(load>=15 && !looked){
 
-const outer =
+    looked=true;
 
-document.getElementById("outer");
+    microTwitch();
 
-const inner =
+    setTimeout(()=>{
 
-document.getElementById("inner");
+      turtle.classList.remove("walk");
 
-const channels =
+      turtle.classList.add("look");
 
-document.getElementById("channels");
+    },120);
 
-const signalField =
+  }
 
-document.getElementById("signalField");
+  if(load>=16 && !gasped){
 
-/* =========================================
+    gasped=true;
 
-LOADING
+    turtle.classList.add("gasp");
 
-========================================= */
+  }
 
-let load = 0;
+  if(load>=17 && !retracted){
 
-let looked = false;
+    retracted=true;
 
-let gasped = false;
+    turtle.classList.remove("gasp");
 
-let retracted = false;
+    turtle.classList.add("retract");
 
-const loop =
+    clearInterval(loadLoop);
 
-setInterval(()=>{
+    setTimeout(startChaos,950);
 
-load++;
-
-if(load > 17){
-
-load = 17;
-
-}
-
-/* segments */
-
-segments.forEach((s,i)=>{
-
-if(i < load){
-
-s.classList.add("active");
-
-}
-
-});
-
-/* percent */
-
-percent.innerText =
-
-load + "%";
-
-/* look back */
-
-if(load >= 15 && !looked){
-
-looked = true;
-
-microTwitch();
-
-setTimeout(()=>{
-
-turtle.classList.remove(
-
-"walk"
-
-);
-
-turtle.classList.add(
-
-"look"
-
-);
-
-},120);
-
-}
-
-/* gasp */
-
-if(load >= 16 && !gasped){
-
-gasped = true;
-
-turtle.classList.add(
-
-"gasp"
-
-);
-
-}
-
-/* retract */
-
-if(load >= 17 && !retracted){
-
-retracted = true;
-
-turtle.classList.remove(
-
-"gasp"
-
-);
-
-turtle.classList.add(
-
-"retract"
-
-);
-
-clearInterval(loop);
-
-setTimeout(()=>{
-
-startChaos();
-
-},900);
-
-}
+  }
 
 },260);
 
-/* =========================================
-
-TWITCH
-
-========================================= */
-
 function microTwitch(){
 
-document.body.style.transform =
+  document.body.style.transform="translateX(2px)";
 
-"translateX(2px)";
-
-setTimeout(()=>{
-
-document.body.style.transform =
-
-"translateX(0px)";
-
-},40);
+  setTimeout(()=>document.body.style.transform="translateX(0)",40);
 
 }
-
-/* =========================================
-
-CHAOS
-
-========================================= */
 
 function startChaos(){
 
-loader.style.opacity = 0;
+  loader.style.opacity=0;
 
-setTimeout(()=>{
+  setTimeout(()=>loader.style.display="none",700);
 
-loader.style.display = "none";
+  chaos.style.opacity=1;
 
-},700);
+  let stage=0;
 
-chaos.style.opacity = 1;
+  const chaosLoop=setInterval(()=>{
 
-let stage = 0;
+    stage++;
 
-const chaosLoop =
+    for(let i=0;i<Math.min(stage,5);i++) spawnWindow();
 
-setInterval(()=>{
+    if(stage>5) spawnStrip();
 
-stage++;
+    if(stage>7) pulseSignal();
 
-for(let i=0;i<Math.min(stage,5);i++){
+    if(stage>8) pulseFlash();
 
-spawnWindow();
+    if(stage>=15){
 
-}
+      clearInterval(chaosLoop);
 
-if(stage > 5){
+      collapse();
 
-spawnStrip();
+    }
 
-}
-
-if(stage > 7){
-
-pulseSignal();
+  },180);
 
 }
-
-if(stage >= 15){
-
-clearInterval(chaosLoop);
-
-collapse();
-
-}
-
-},180);
-
-}
-
-/* =========================================
-
-WINDOWS
-
-========================================= */
 
 function spawnWindow(){
 
-const types = [
+  const types=[
 
-{
+    {title:"identity",color:"red",headline:"TOO MANY ACTIVE MASKS",body:["authentic signal buried","identity loop active","synthetic behavior detected"]},
 
-title:"identity",
+    {title:"download",color:"red",headline:"UNREQUESTED FILE STACK",body:["plasticself.exe","performative_identity.pkg","human_input_lost.dat"]},
 
-color:"red",
+    {title:"transmission",color:"amber",headline:"SIGNAL STILL ACTIVE",body:["frequency surviving","hidden packet received","reconnect possible"]},
 
-headline:"TOO MANY ACTIVE MASKS",
+    {title:"toxic stream",color:"amber",headline:"TRANSMISSION POISONED",body:["M4SK NULL 5IGNAL","17 17 17","carrier wave unstable"]}
 
-body:[
+  ];
 
-"authentic signal buried",
+  const data=types[Math.floor(Math.random()*types.length)];
 
-"identity loop active",
+  const win=document.createElement("div");
 
-"synthetic behavior detected"
+  win.className="window";
 
-]
+  win.style.width=(220+Math.random()*240)+"px";
 
-},
+  win.style.height=(120+Math.random()*120)+"px";
 
-{
+  win.style.left=(Math.random()*72)+"vw";
 
-title:"download",
+  win.style.top=(Math.random()*70)+"vh";
 
-color:"red",
+  win.style.setProperty("--mx",(70+Math.random()*120)+"px");
 
-headline:"UNREQUESTED FILE STACK",
+  win.style.setProperty("--my",(50+Math.random()*120)+"px");
 
-body:[
+  win.style.animationDuration=(.8+Math.random()*1)+"s";
 
-"plasticself.exe",
+  win.innerHTML=`
 
-"performative_identity.pkg",
+    <div class="windowTop">${data.title}</div>
 
-"human_input_lost.dat"
+    <div class="windowBody">
 
-]
+      <div class="${data.color}">${data.headline}</div><br>
 
-},
+      <div>${data.body[0]}</div>
 
-{
+      <div>${data.body[1]}</div>
 
-title:"transmission",
+      <div>${data.body[2]}</div>
 
-color:"amber",
+    </div>`;
 
-headline:"SIGNAL STILL ACTIVE",
+  chaos.appendChild(win);
 
-body:[
-
-"frequency surviving",
-
-"hidden packet received",
-
-"reconnect possible"
-
-]
+  setTimeout(()=>win.remove(),2000);
 
 }
-
-];
-
-const data =
-
-types[
-
-Math.floor(Math.random()*types.length)
-
-];
-
-const win =
-
-document.createElement("div");
-
-win.className =
-
-"window";
-
-win.style.width =
-
-(220 + Math.random()*240)+"px";
-
-win.style.height =
-
-(120 + Math.random()*120)+"px";
-
-win.style.left =
-
-(Math.random()*72)+"vw";
-
-win.style.top =
-
-(Math.random()*70)+"vh";
-
-win.style.setProperty(
-
-"--moveX",
-
-`${70 + Math.random()*120}px`
-
-);
-
-win.style.setProperty(
-
-"--moveY",
-
-`${50 + Math.random()*120}px`
-
-);
-
-win.style.animationDuration =
-
-(.8 + Math.random()*1)+"s";
-
-win.innerHTML = `
-
-<div class="windowTop">
-
-${data.title}
-
-</div>
-
-<div class="windowBody">
-
-<div class="${data.color}">
-
-${data.headline}
-
-</div>
-
-<br>
-
-<div>${data.body[0]}</div>
-
-<div>${data.body[1]}</div>
-
-<div>${data.body[2]}</div>
-
-</div>
-
-`;
-
-chaos.appendChild(win);
-
-setTimeout(()=>{
-
-win.remove();
-
-},2000);
-
-}
-
-/* =========================================
-
-STRIPS
-
-========================================= */
 
 function spawnStrip(){
 
-const strip =
+  const strip=document.createElement("div");
 
-document.createElement("div");
+  strip.className="strip";
 
-strip.className =
+  strip.style.left=(Math.random()*80)+"vw";
 
-"strip";
+  strip.style.top=(Math.random()*90)+"vh";
 
-strip.style.left =
+  strip.style.width=(100+Math.random()*260)+"px";
 
-(Math.random()*80)+"vw";
+  chaos.appendChild(strip);
 
-strip.style.top =
-
-(Math.random()*90)+"vh";
-
-strip.style.width =
-
-(100 + Math.random()*240)+"px";
-
-chaos.appendChild(strip);
-
-setTimeout(()=>{
-
-strip.remove();
-
-},700);
+  setTimeout(()=>strip.remove(),700);
 
 }
-
-/* =========================================
-
-SIGNAL LOST
-
-========================================= */
 
 function pulseSignal(){
 
-signalLost.style.opacity =
+  signalLost.style.opacity=.84;
 
-.84;
+  signalLost.style.transform=`translate(-50%,-50%) translate(${Math.random()*8-4}px,${Math.random()*6-3}px)`;
 
-signalLost.style.transform =
-
-`translate(-50%,-50%)
-
-translate(
-
-${Math.random()*8-4}px,
-
-${Math.random()*6-3}px
-
-)`;
-
-setTimeout(()=>{
-
-signalLost.style.opacity = 0;
-
-},150);
+  setTimeout(()=>signalLost.style.opacity=0,150);
 
 }
 
-/* =========================================
+function pulseFlash(){
 
-COLLAPSE
+  flash.style.opacity=Math.random()*.12;
 
-========================================= */
+  setTimeout(()=>flash.style.opacity=0,38);
+
+}
 
 function collapse(){
 
-chaos.style.opacity = 0;
+  chaos.style.opacity=0;
 
-setTimeout(()=>{
-
-showSignal();
-
-},1100);
+  setTimeout(showSignal,1100);
 
 }
-
-/* =========================================
-
-FINAL SIGNAL
-
-========================================= */
 
 function showSignal(){
 
-signalSpace.style.opacity = 1;
+  signalSpace.style.opacity=1;
 
-signalSpace.style.pointerEvents =
+  signalSpace.style.pointerEvents="auto";
 
-"auto";
+  outer.style.opacity=.16;
 
-/* symbols */
+  inner.style.opacity=.16;
 
-outer.style.opacity = .16;
+  reconnect.style.opacity=.76;
 
-inner.style.opacity = .16;
+  reconnect.classList.add("breathing");
 
-/* reconnect */
+  resizeCanvas();
 
-reconnect.style.opacity = .76;
-
-reconnect.classList.add(
-
-"breathing"
-
-);
-
-/* dormant traces */
-
-spawnDormantField();
+  drawDormantSignal();
 
 }
 
-/* =========================================
+function resizeCanvas(){
 
-DORMANT FIELD
+  canvas.width=window.innerWidth;
 
-========================================= */
-
-function spawnDormantField(){
-
-signalField.style.opacity = 1;
-
-for(let i=0;i<18;i++){
-
-const t =
-
-document.createElement("div");
-
-t.className =
-
-"trace";
-
-t.style.width =
-
-(40 + Math.random()*160)+"px";
-
-t.style.left =
-
-(Math.random()*100)+"vw";
-
-t.style.top =
-
-(Math.random()*100)+"vh";
-
-t.style.opacity =
-
-.08 + Math.random()*.08;
-
-signalField.appendChild(t);
+  canvas.height=window.innerHeight;
 
 }
 
-}
+window.addEventListener("resize",resizeCanvas);
 
-/* =========================================
+let rippleActive=false;
 
-RECONNECT
+let rippleStart=0;
 
-========================================= */
+function drawDormantSignal(){
 
-reconnect.addEventListener(
+  canvas.style.opacity=.16;
 
-"click",
+  ctx.clearRect(0,0,canvas.width,canvas.height);
 
-()=>{
+  for(let i=0;i<12;i++){
 
-/* remove reconnect */
+    const y=(canvas.height*.22)+(i*(canvas.height*.055));
 
-reconnect.classList.remove(
+    ctx.beginPath();
 
-"breathing"
+    ctx.strokeStyle=`rgba(255,190,100,${.025+(i%3)*.01})`;
 
-);
+    ctx.lineWidth=1;
 
-reconnect.style.pointerEvents =
+    ctx.moveTo(canvas.width*.15,y);
 
-"none";
+    ctx.lineTo(canvas.width*.85,y+Math.sin(i)*8);
 
-reconnect.style.opacity = 0;
+    ctx.stroke();
 
-/* ripple */
+  }
 
-ripple.style.opacity = 1;
-
-ripple.animate([
-
-{
-
-transform:"scale(.3)",
-
-opacity:1
-
-},
-
-{
-
-transform:"scale(1)",
-
-opacity:1
-
-},
-
-{
-
-transform:"scale(10)",
-
-opacity:.18
-
-},
-
-{
-
-transform:"scale(14)",
-
-opacity:0
+  if(!rippleActive) requestAnimationFrame(drawDormantSignal);
 
 }
 
-],{
+reconnect.addEventListener("click",()=>{
 
-duration:1800,
+  reconnect.classList.remove("breathing");
 
-fill:"forwards",
+  reconnect.style.pointerEvents="none";
 
-easing:"ease-out"
+  reconnect.style.opacity=0;
+
+  rippleActive=true;
+
+  rippleStart=performance.now();
+
+  canvas.style.opacity=1;
+
+  outer.style.opacity=.16;
+
+  inner.style.opacity=.28;
+
+  animateRipple();
+
+  setTimeout(()=>{
+
+    outer.style.opacity=0;
+
+    outer.style.filter="blur(4px)";
+
+    outer.style.transform="scale(1.08)";
+
+  },950);
+
+  setTimeout(()=>{
+
+    channels.style.opacity=1;
+
+  },1700);
 
 });
 
-/* wake traces */
+function animateRipple(){
 
-document.querySelectorAll(".trace")
+  const now=performance.now();
 
-.forEach((t,i)=>{
+  const t=(now-rippleStart)/2600;
 
-setTimeout(()=>{
+  ctx.clearRect(0,0,canvas.width,canvas.height);
 
-t.animate([
+  const cx=canvas.width/2;
 
-{
+  const cy=canvas.height/2;
 
-opacity:.08
+  const maxR=Math.max(canvas.width,canvas.height)*.85;
 
-},
+  const r=t*maxR;
 
-{
+  for(let ring=0;ring<5;ring++){
 
-opacity:.36
+    const rr=r-ring*42;
 
-},
+    if(rr>0){
 
-{
+      ctx.beginPath();
 
-opacity:.12
+      ctx.strokeStyle=`rgba(255,180,90,${Math.max(0,.34-t*.3-ring*.045)})`;
+
+      ctx.lineWidth=1.5;
+
+      ctx.arc(cx,cy,rr,0,Math.PI*2);
+
+      ctx.stroke();
+
+    }
+
+  }
+
+  for(let i=0;i<22;i++){
+
+    const y=cy + Math.sin(i*.75+t*7)*60 + (i-11)*12;
+
+    ctx.beginPath();
+
+    ctx.strokeStyle=`rgba(255,190,100,${Math.max(0,.2-t*.16)})`;
+
+    ctx.lineWidth=1;
+
+    for(let x=canvas.width*.08;x<canvas.width*.92;x+=12){
+
+      const amp=Math.sin((x*.018)+(t*12)+i)*8;
+
+      const dist=Math.abs(x-cx);
+
+      const wake=Math.max(0,1-Math.abs(dist-r)/180);
+
+      const yy=y+amp*wake;
+
+      if(x===canvas.width*.08) ctx.moveTo(x,yy);
+
+      else ctx.lineTo(x,yy);
+
+    }
+
+    ctx.stroke();
+
+  }
+
+  if(t<1){
+
+    requestAnimationFrame(animateRipple);
+
+  }else{
+
+    canvas.style.opacity=.22;
+
+    drawDormantSignal();
+
+  }
 
 }
-
-],{
-
-duration:1400
-
-});
-
-},i*40);
-
-});
-
-/* dissolve outer */
-
-outer.style.opacity = 0;
-
-outer.style.filter =
-
-"blur(4px)";
-
-outer.style.transform =
-
-"scale(1.08)";
-
-/* inner survives */
-
-inner.style.opacity = .32;
-
-/* reveal channels */
-
-setTimeout(()=>{
-
-channels.style.opacity = 1;
-
-},700);
-
-});
 
 </script>
 
