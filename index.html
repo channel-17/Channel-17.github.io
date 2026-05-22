@@ -1,3 +1,9 @@
+<!-- =========================================
+
+CHANNEL 17 :: MASTER PASS V2
+
+========================================= -->
+
 <!DOCTYPE html>
 
 <html lang="en">
@@ -11,12 +17,6 @@
 <title>CHANNEL 17</title>
 
 <style>
-
-/* =========================================
-
-RESET
-
-========================================= */
 
 *{
 
@@ -44,7 +44,7 @@ font-family:Courier New, monospace;
 
 /* =========================================
 
-BASE
+BODY
 
 ========================================= */
 
@@ -52,47 +52,15 @@ body{
 
 background:#000;
 
-overflow:hidden;
-
 color:#fff;
 
-}
-
-/* =========================================
-
-PHONE DARKNESS
-
-========================================= */
-
-#vignette{
-
-position:fixed;
-
-inset:0;
-
-pointer-events:none;
-
-z-index:999999;
-
-background:
-
-radial-gradient(
-
-circle,
-
-transparent 52%,
-
-rgba(0,0,0,.45) 76%,
-
-rgba(0,0,0,.98) 100%
-
-);
+overflow:hidden;
 
 }
 
 /* =========================================
 
-NOISE
+GLOBAL NOISE
 
 ========================================= */
 
@@ -104,11 +72,11 @@ inset:0;
 
 pointer-events:none;
 
-opacity:.05;
+opacity:.08;
+
+z-index:999;
 
 mix-blend-mode:screen;
-
-z-index:50;
 
 background-image:
 
@@ -128,7 +96,7 @@ transparent 3px
 
 animation:
 
-noise .05s linear infinite;
+noise .06s linear infinite;
 
 }
 
@@ -150,11 +118,95 @@ transform:translateY(3px);
 
 /* =========================================
 
+BREATHING DARKNESS
+
+========================================= */
+
+#breath{
+
+position:fixed;
+
+inset:0;
+
+pointer-events:none;
+
+z-index:5;
+
+opacity:.14;
+
+background:
+
+radial-gradient(
+
+circle,
+
+rgba(255,180,90,.03) 0%,
+
+transparent 70%
+
+);
+
+animation:
+
+breathe 7s ease-in-out infinite;
+
+}
+
+@keyframes breathe{
+
+0%,100%{
+
+opacity:.09;
+
+}
+
+50%{
+
+opacity:.17;
+
+}
+
+}
+
+/* =========================================
+
+VIGNETTE
+
+========================================= */
+
+#vignette{
+
+position:fixed;
+
+inset:0;
+
+pointer-events:none;
+
+z-index:999999;
+
+background:
+
+radial-gradient(
+
+circle,
+
+transparent 52%,
+
+rgba(0,0,0,.48) 72%,
+
+rgba(0,0,0,.98) 100%
+
+);
+
+}
+
+/* =========================================
+
 LOADER
 
 ========================================= */
 
-#loaderWrap{
+#loader{
 
 position:fixed;
 
@@ -172,33 +224,65 @@ background:#000;
 
 z-index:1000;
 
+transition:
+
+1s ease;
+
 }
 
 /* transmission tube */
 
 #tube{
 
-width:min(84vw,540px);
+position:relative;
 
-height:24px;
+width:min(84vw,560px);
+
+height:26px;
 
 border-radius:999px;
 
 overflow:hidden;
 
-position:relative;
-
 border:
 
-1px solid rgba(255,255,255,.18);
+1px solid rgba(255,255,255,.14);
 
 background:
 
-rgba(255,255,255,.03);
+rgba(255,255,255,.02);
 
 box-shadow:
 
-0 0 12px rgba(255,255,255,.04);
+0 0 12px rgba(255,255,255,.03);
+
+}
+
+/* subtle imperfection */
+
+#tube::after{
+
+content:"";
+
+position:absolute;
+
+inset:0;
+
+opacity:.15;
+
+background:
+
+linear-gradient(
+
+180deg,
+
+rgba(255,255,255,.08),
+
+transparent
+
+);
+
+mix-blend-mode:screen;
 
 }
 
@@ -224,7 +308,7 @@ linear-gradient(
 
 90deg,
 
-rgba(255,255,255,.85),
+rgba(255,255,255,.9),
 
 rgba(255,255,255,1)
 
@@ -236,21 +320,21 @@ rgba(255,255,255,1)
 
 #turtle{
 
-margin-top:22px;
+margin-top:28px;
 
 font-size:28px;
 
-opacity:.82;
+opacity:.88;
 
 transition:
 
-.18s linear;
+.28s ease;
 
 filter:
 
 drop-shadow(
 
-0 0 10px rgba(255,255,255,.08)
+0 0 12px rgba(255,255,255,.06)
 
 );
 
@@ -260,13 +344,215 @@ drop-shadow(
 
 #percent{
 
-margin-top:14px;
+margin-top:18px;
 
-font-size:12px;
+font-size:13px;
 
-letter-spacing:.32em;
+letter-spacing:.34em;
 
-opacity:.18;
+opacity:.16;
+
+}
+
+/* =========================================
+
+CHAOS
+
+========================================= */
+
+#chaos{
+
+position:fixed;
+
+inset:0;
+
+pointer-events:none;
+
+overflow:hidden;
+
+opacity:0;
+
+z-index:300;
+
+transition:
+
+.4s ease;
+
+}
+
+/* duplicated bars */
+
+.ghostBar{
+
+position:absolute;
+
+left:0;
+
+width:100%;
+
+height:54px;
+
+border-bottom:
+
+1px solid rgba(255,255,255,.06);
+
+background:
+
+linear-gradient(
+
+180deg,
+
+rgba(255,255,255,.03),
+
+transparent
+
+);
+
+mix-blend-mode:screen;
+
+}
+
+/* duplicated fake search */
+
+.searchGhost{
+
+position:absolute;
+
+width:72vw;
+
+height:48px;
+
+left:50%;
+
+transform:
+
+translateX(-50%);
+
+border-radius:999px;
+
+border:
+
+1px solid rgba(255,255,255,.08);
+
+background:
+
+rgba(255,255,255,.03);
+
+opacity:.08;
+
+}
+
+/* warnings */
+
+.warning{
+
+position:absolute;
+
+font-size:
+
+clamp(10px,1.6vw,18px);
+
+letter-spacing:.2em;
+
+white-space:nowrap;
+
+opacity:0;
+
+color:#ff3a3a;
+
+text-shadow:
+
+0 0 10px rgba(255,0,0,.35);
+
+animation:
+
+warn .32s linear;
+
+}
+
+@keyframes warn{
+
+0%{
+
+opacity:0;
+
+transform:
+
+translateX(-8px);
+
+}
+
+40%{
+
+opacity:1;
+
+}
+
+100%{
+
+opacity:0;
+
+transform:
+
+translateX(8px);
+
+}
+
+}
+
+/* SIGNAL LOST */
+
+#signalLost{
+
+position:absolute;
+
+top:50%;
+
+left:50%;
+
+transform:
+
+translate(-50%,-50%);
+
+font-size:
+
+clamp(28px,5vw,74px);
+
+letter-spacing:.24em;
+
+white-space:nowrap;
+
+opacity:0;
+
+color:#fff;
+
+text-shadow:
+
+0 0 18px rgba(255,255,255,.12);
+
+}
+
+/* =========================================
+
+MATRIX
+
+========================================= */
+
+canvas{
+
+position:fixed;
+
+inset:0;
+
+width:100%;
+
+height:100%;
+
+pointer-events:none;
+
+z-index:260;
+
+opacity:0;
 
 }
 
@@ -288,219 +574,15 @@ opacity:0;
 
 pointer-events:none;
 
-mix-blend-mode:screen;
-
 z-index:500;
 
-}
-
-/* =========================================
-
-WORLD CHAOS
-
-========================================= */
-
-#chaos{
-
-position:fixed;
-
-inset:0;
-
-pointer-events:none;
-
-overflow:hidden;
-
-opacity:0;
-
-z-index:300;
-
-}
-
-/* duplicated bars */
-
-.ghostBar{
-
-position:absolute;
-
-left:0;
-
-width:100%;
-
-height:54px;
-
-border-bottom:
-
-1px solid rgba(255,255,255,.08);
-
-background:
-
-linear-gradient(
-
-180deg,
-
-rgba(255,255,255,.06),
-
-transparent
-
-);
-
 mix-blend-mode:screen;
-
-}
-
-/* duplicated search bars */
-
-.searchGhost{
-
-position:absolute;
-
-width:68vw;
-
-height:46px;
-
-left:50%;
-
-transform:
-
-translateX(-50%);
-
-border-radius:999px;
-
-border:
-
-1px solid rgba(255,255,255,.1);
-
-background:
-
-rgba(255,255,255,.03);
-
-opacity:.12;
-
-filter:blur(.4px);
-
-}
-
-/* warning */
-
-.warning{
-
-position:absolute;
-
-font-size:
-
-clamp(10px,1.6vw,18px);
-
-letter-spacing:.22em;
-
-white-space:nowrap;
-
-color:#ff3131;
-
-opacity:0;
-
-mix-blend-mode:screen;
-
-text-shadow:
-
-0 0 12px rgba(255,0,0,.35);
-
-animation:
-
-warning .18s linear;
-
-}
-
-@keyframes warning{
-
-0%{
-
-opacity:0;
-
-transform:
-
-translateX(-8px);
-
-}
-
-50%{
-
-opacity:1;
-
-}
-
-100%{
-
-opacity:0;
-
-transform:
-
-translateX(8px);
-
-}
-
-}
-
-/* signal lost */
-
-#signalLost{
-
-position:absolute;
-
-top:50%;
-
-left:50%;
-
-transform:
-
-translate(-50%,-50%);
-
-font-size:
-
-clamp(28px,5vw,74px);
-
-letter-spacing:.26em;
-
-white-space:nowrap;
-
-opacity:0;
-
-color:#fff;
-
-mix-blend-mode:screen;
-
-text-shadow:
-
-0 0 18px rgba(255,255,255,.16);
 
 }
 
 /* =========================================
 
-YELLOW CONTAMINATION
-
-========================================= */
-
-canvas{
-
-position:fixed;
-
-inset:0;
-
-width:100%;
-
-height:100%;
-
-z-index:260;
-
-pointer-events:none;
-
-opacity:0;
-
-}
-
-/* =========================================
-
-RECONNECT SPACE
+SIGNAL SPACE
 
 ========================================= */
 
@@ -526,38 +608,6 @@ z-index:1200;
 
 }
 
-/* subtle humanity haze */
-
-#signalGlow{
-
-position:absolute;
-
-width:90vw;
-
-height:70vh;
-
-background:
-
-radial-gradient(
-
-circle,
-
-rgba(255,180,90,.035) 0%,
-
-rgba(255,180,90,.015) 24%,
-
-transparent 72%
-
-);
-
-filter:
-
-blur(40px);
-
-opacity:.7;
-
-}
-
 /* symbol */
 
 #symbol{
@@ -566,13 +616,15 @@ position:absolute;
 
 width:min(72vw,420px);
 
-opacity:.22;
+opacity:.34;
 
 filter:
 
+blur(.3px)
+
 drop-shadow(
 
-0 0 14px rgba(255,180,90,.06)
+0 0 14px rgba(255,255,255,.06)
 
 );
 
@@ -584,35 +636,163 @@ drop-shadow(
 
 position:absolute;
 
-top:58%;
+top:50%;
+
+transform:
+
+translateY(34px);
 
 font-size:
 
 clamp(18px,3vw,30px);
 
-letter-spacing:.28em;
+letter-spacing:.32em;
 
 opacity:0;
 
 cursor:pointer;
 
+color:
+
+rgba(255,255,255,.78);
+
+text-shadow:
+
+0 0 12px rgba(255,255,255,.06);
+
+animation:
+
+rePulse 4s ease-in-out infinite;
+
 transition:
 
 1s ease;
 
-color:
+}
 
-rgba(255,255,255,.72);
+@keyframes rePulse{
 
-text-shadow:
+0%,100%{
 
-0 0 12px rgba(255,255,255,.08);
+opacity:.62;
 
 }
 
-#reconnect.active{
+50%{
 
 opacity:.88;
+
+}
+
+}
+
+/* =========================================
+
+ETCHINGS
+
+========================================= */
+
+#etchings{
+
+position:absolute;
+
+inset:0;
+
+opacity:0;
+
+transition:
+
+4s ease;
+
+}
+
+/* links */
+
+.etch{
+
+position:absolute;
+
+display:block;
+
+opacity:.18;
+
+filter:
+
+blur(.15px)
+
+drop-shadow(
+
+0 0 12px rgba(255,180,90,.04)
+
+);
+
+}
+
+/* imperfect placements */
+
+#etch1{
+
+width:min(38vw,220px);
+
+left:11%;
+
+top:58%;
+
+transform:
+
+rotate(-3deg);
+
+opacity:.76;
+
+}
+
+#etch2{
+
+width:min(44vw,270px);
+
+left:26%;
+
+top:76%;
+
+transform:
+
+rotate(1.4deg);
+
+opacity:.54;
+
+}
+
+#etch3{
+
+width:min(28vw,160px);
+
+left:64%;
+
+top:77%;
+
+transform:
+
+rotate(-5deg);
+
+opacity:.34;
+
+}
+
+/* =========================================
+
+CONNECTED
+
+========================================= */
+
+.connected #signalSpace{
+
+opacity:1;
+
+}
+
+.connected #etchings{
+
+opacity:1;
 
 }
 
@@ -636,7 +816,7 @@ pointer-events:none;
 
 opacity:0;
 
-z-index:2000;
+z-index:999999;
 
 background:
 
@@ -644,11 +824,9 @@ radial-gradient(
 
 circle,
 
-rgba(255,220,180,.22) 0%,
+rgba(255,220,180,.28) 0%,
 
-rgba(255,180,90,.14) 26%,
-
-rgba(255,180,90,.04) 60%,
+rgba(255,180,90,.12) 28%,
 
 transparent 80%
 
@@ -666,115 +844,49 @@ translate(-50%,-50%);
 
 /* =========================================
 
-ETCHINGS
+SHAKE
 
 ========================================= */
 
-#etchings{
+.shake{
 
-position:absolute;
+animation:
 
-inset:0;
-
-pointer-events:none;
-
-opacity:0;
-
-transition:
-
-4s ease;
+shake .08s linear infinite;
 
 }
 
-/* links */
+@keyframes shake{
 
-.etch{
+0%{
 
-position:absolute;
-
-display:block;
-
-opacity:.18;
-
-filter:
-
-drop-shadow(
-
-0 0 10px rgba(255,180,90,.04)
-
-);
-
-transition:
-
-3s ease;
+transform:translate(0px,0px);
 
 }
 
-/* imperfect placement */
+25%{
 
-#etch1{
-
-width:min(40vw,220px);
-
-left:12%;
-
-top:58%;
-
-transform:
-
-rotate(-3deg);
+transform:translate(1px,-1px);
 
 }
 
-#etch2{
+50%{
 
-width:min(52vw,320px);
-
-left:25%;
-
-top:68%;
-
-transform:
-
-rotate(1deg);
+transform:translate(-1px,1px);
 
 }
 
-#etch3{
+75%{
 
-width:min(42vw,250px);
-
-left:52%;
-
-top:79%;
-
-transform:
-
-rotate(-4deg);
+transform:translate(1px,1px);
 
 }
 
-/* =========================================
+100%{
 
-CONNECTED
-
-========================================= */
-
-.connected #signalSpace{
-
-opacity:1;
+transform:translate(0px,0px);
 
 }
-
-.connected #etchings{
-
-opacity:1;
-
-}
-
-.connected .etch{
-
-opacity:.72;
 
 }
 
@@ -784,45 +896,19 @@ opacity:.72;
 
 <body>
 
-<!-- ======================================
-
-NOISE
-
-====================================== -->
-
 <div id="noise"></div>
 
-<!-- ======================================
-
-FLASH
-
-====================================== -->
+<div id="breath"></div>
 
 <div id="flash"></div>
 
-<!-- ======================================
-
-CHAOS
-
-====================================== -->
-
-<div id="chaos">
-
-<div id="signalLost">
-
-SIGNAL LOST
-
-</div>
-
-</div>
-
-<!-- ======================================
+<!-- =========================================
 
 LOADER
 
-====================================== -->
+========================================= -->
 
-<div id="loaderWrap">
+<div id="loader">
 
 <div id="tube">
 
@@ -844,23 +930,37 @@ LOADER
 
 </div>
 
-<!-- ======================================
+<!-- =========================================
 
-CONTAMINATION
+CHAOS
 
-====================================== -->
+========================================= -->
+
+<div id="chaos">
+
+<div id="signalLost">
+
+SIGNAL LOST
+
+</div>
+
+</div>
+
+<!-- =========================================
+
+MATRIX
+
+========================================= -->
 
 <canvas id="matrix"></canvas>
 
-<!-- ======================================
+<!-- =========================================
 
 SIGNAL SPACE
 
-====================================== -->
+========================================= -->
 
 <div id="signalSpace">
-
-<div id="signalGlow"></div>
 
 <img id="symbol"
 
@@ -896,19 +996,13 @@ RECONNECT
 
 </div>
 
-<!-- ======================================
+<!-- =========================================
 
 TOUCH
 
-====================================== -->
+========================================= -->
 
 <div id="touch"></div>
-
-<!-- ======================================
-
-EDGE
-
-====================================== -->
 
 <div id="vignette"></div>
 
@@ -924,27 +1018,27 @@ const fill =
 
 document.getElementById("fill");
 
-const percent =
-
-document.getElementById("percent");
-
 const turtle =
 
 document.getElementById("turtle");
 
-const loaderWrap =
+const percent =
 
-document.getElementById("loaderWrap");
-
-let load = 0;
-
-/* smooth pour */
+document.getElementById("percent");
 
 const loader =
 
+document.getElementById("loader");
+
+let load = 0;
+
+/* slower pacing */
+
+const loading =
+
 setInterval(()=>{
 
-load += .45;
+load += .18;
 
 if(load > 17){
 
@@ -960,49 +1054,57 @@ percent.innerText =
 
 Math.floor(load) + "%";
 
-/* turtle slight movement */
+/* turtle walk */
+
+if(load < 16){
 
 turtle.style.transform =
 
-`translateX(${load * 1.8}px)`;
+`translateX(${load * 3}px)`;
 
-/* 16% turtle senses */
+}
 
-if(load >= 16 && load < 16.5){
+/* turtle notices */
 
-turtle.innerText = "🐢";
+if(load >= 16 && load < 16.4){
 
 turtle.style.transform =
 
-`translateX(${load * 1.8}px)
+`translateX(${load * 3}px)
 
 scaleX(-1)`;
 
 }
 
-/* 17% */
+/* turtle shell */
 
-if(load >= 17){
-
-clearInterval(loader);
+if(load >= 16.4){
 
 turtle.innerText = "🐢";
 
 turtle.style.transform =
 
-`translateX(${load * 1.8}px)
+`translateX(${load * 3}px)
 
-scale(.92)`;
-
-setTimeout(()=>{
-
-chaos();
-
-},520);
+scale(.78)`;
 
 }
 
-},65);
+/* attack */
+
+if(load >= 17){
+
+clearInterval(loading);
+
+setTimeout(()=>{
+
+startChaos();
+
+},900);
+
+}
+
+},100);
 
 /* =========================================
 
@@ -1010,33 +1112,35 @@ CHAOS
 
 ========================================= */
 
-const chaosLayer =
+const chaos =
 
 document.getElementById("chaos");
 
-function chaos(){
+const signalLost =
 
-loaderWrap.style.opacity = 0;
+document.getElementById("signalLost");
+
+const matrix =
+
+document.getElementById("matrix");
+
+function startChaos(){
+
+loader.style.opacity = 0;
 
 setTimeout(()=>{
 
-loaderWrap.style.display = "none";
+loader.style.display = "none";
 
-},500);
+},800);
 
-chaosLayer.style.opacity = 1;
+chaos.style.opacity = 1;
+
+matrix.style.opacity = .55;
 
 document.body.classList.add("shake");
 
-matrix.style.opacity = .5;
-
 runChaos();
-
-setTimeout(()=>{
-
-collapse();
-
-},2600);
 
 }
 
@@ -1048,51 +1152,51 @@ FLASH
 
 function flash(){
 
-const flash =
+const f =
 
 document.getElementById("flash");
 
-flash.style.opacity =
+f.style.opacity =
 
-Math.random() * .18;
+Math.random() * .16;
 
 setTimeout(()=>{
 
-flash.style.opacity = 0;
+f.style.opacity = 0;
 
-},30);
+},34);
 
 }
 
 /* =========================================
 
-WARNING
+WARNINGS
 
 ========================================= */
 
 function warning(){
+
+const msgs = [
+
+"UNAUTHORIZED SIGNAL",
+
+"CONTAINMENT FAILURE",
+
+"MEMORY COLLISION",
+
+"TRANSMISSION BREACH",
+
+"SYSTEM OVERLOAD",
+
+"FREQUENCY COLLAPSE"
+
+];
 
 const w =
 
 document.createElement("div");
 
 w.className = "warning";
-
-const msgs = [
-
-"TRANSMISSION BREACH",
-
-"UNAUTHORIZED SIGNAL",
-
-"MEMORY COLLISION",
-
-"SYSTEM FAILURE",
-
-"CONTAINMENT FAILURE",
-
-"SIGNAL OVERLOAD"
-
-];
 
 w.innerText =
 
@@ -1108,19 +1212,19 @@ Math.random()*msgs.length
 
 w.style.left =
 
-(Math.random()*70+10)+"%";
+(Math.random()*70+8)+"%";
 
 w.style.top =
 
-(Math.random()*70+10)+"%";
+(Math.random()*74+8)+"%";
 
-chaosLayer.appendChild(w);
+chaos.appendChild(w);
 
 setTimeout(()=>{
 
 w.remove();
 
-},180);
+},320);
 
 }
 
@@ -1138,23 +1242,27 @@ document.createElement("div");
 
 g.className = "ghostBar";
 
+g.style.top =
+
+(Math.random()*100)+"%";
+
 g.style.transform =
 
 `translate(
 
-${Math.random()*34-17}px,
+${Math.random()*40-20}px,
 
-${Math.random()*22-11}px
+${Math.random()*16-8}px
 
 )`;
 
-chaosLayer.appendChild(g);
+chaos.appendChild(g);
 
 setTimeout(()=>{
 
 g.remove();
 
-},90);
+},120);
 
 }
 
@@ -1182,41 +1290,37 @@ s.style.transform =
 
 translate(
 
-${Math.random()*70-35}px,
+${Math.random()*60-30}px,
 
-${Math.random()*40-20}px
+${Math.random()*20-10}px
 
 )`;
 
-chaosLayer.appendChild(s);
+chaos.appendChild(s);
 
 setTimeout(()=>{
 
 s.remove();
 
-},120);
+},180);
 
 }
 
 /* =========================================
 
-SIGNAL LOST
+SIGNAL LOST FLASH
 
 ========================================= */
 
-function signalLost(){
+function lost(){
 
-const s =
-
-document.getElementById("signalLost");
-
-s.style.opacity = 1;
+signalLost.style.opacity = .92;
 
 setTimeout(()=>{
 
-s.style.opacity = 0;
+signalLost.style.opacity = 0;
 
-},90);
+},160);
 
 }
 
@@ -1228,87 +1332,75 @@ RUN CHAOS
 
 function runChaos(){
 
-const interval =
+const chaosLoop =
 
 setInterval(()=>{
 
-if(Math.random() > .35){
+if(Math.random() > .24){
 
 ghostBar();
 
 }
 
-if(Math.random() > .42){
+if(Math.random() > .38){
 
 searchGhost();
 
 }
 
-if(Math.random() > .55){
+if(Math.random() > .48){
 
 warning();
 
 }
 
-if(Math.random() > .68){
+if(Math.random() > .64){
 
 flash();
 
 }
 
-if(Math.random() > .72){
+if(Math.random() > .76){
 
-signalLost();
+lost();
 
 }
 
-},58);
+},70);
+
+/* longer collapse */
 
 setTimeout(()=>{
 
-clearInterval(interval);
-
-},2500);
-
-}
-
-/* =========================================
-
-COLLAPSE
-
-========================================= */
-
-function collapse(){
+clearInterval(chaosLoop);
 
 document.body.classList.remove("shake");
 
-chaosLayer.style.opacity = 0;
+chaos.style.opacity = 0;
 
 matrix.style.opacity = 0;
+
+/* BREATH */
 
 setTimeout(()=>{
 
 document.body.classList.add("connected");
 
-const reconnect =
+document.getElementById("etchings").style.opacity = 1;
 
-document.getElementById("reconnect");
+document.getElementById("reconnect").style.opacity = 1;
 
-reconnect.classList.add("active");
+},700);
 
-},400);
+},3800);
 
 }
 
 /* =========================================
 
-MATRIX CONTAMINATION
+MATRIX
 
 ========================================= */
-
-const matrix =
-
-document.getElementById("matrix");
 
 const ctx =
 
@@ -1342,7 +1434,7 @@ const chars =
 
 const streams = [];
 
-for(let i=0;i<38;i++){
+for(let i=0;i<32;i++){
 
 streams.push({
 
@@ -1356,11 +1448,11 @@ Math.random()*matrix.height,
 
 speed:
 
-2 + Math.random()*5,
+1.8 + Math.random()*2,
 
 len:
 
-10 + Math.random()*14
+12 + Math.random()*18
 
 });
 
@@ -1452,9 +1544,11 @@ document.getElementById("reconnect");
 
 reconnect.addEventListener("click",e=>{
 
-reconnect.classList.remove("active");
+/* remove text */
 
-/* human touch */
+reconnect.style.opacity = 0;
+
+/* thermal */
 
 const touch =
 
@@ -1476,7 +1570,9 @@ touch.animate([
 
 transform:
 
-"translate(-50%,-50%) scale(.6)"
+"translate(-50%,-50%) scale(.5)",
+
+opacity:1
 
 },
 
@@ -1484,23 +1580,33 @@ transform:
 
 transform:
 
-"translate(-50%,-50%) scale(1.6)"
+"translate(-50%,-50%) scale(3.6)",
+
+opacity:.7
+
+},
+
+{
+
+transform:
+
+"translate(-50%,-50%) scale(6.2)",
+
+opacity:0
 
 }
 
 ],{
 
-duration:260,
+duration:900,
 
 fill:"forwards"
 
 });
 
-setTimeout(()=>{
+/* humanity glow */
 
-touch.style.opacity = 0;
-
-},700);
+document.getElementById("breath").style.opacity = .34;
 
 });
 
