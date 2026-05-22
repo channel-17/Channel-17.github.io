@@ -4,7 +4,7 @@
 
 <head>
 
-<meta charset="UTF-8"/>
+<meta charset="UTF-8" />
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
@@ -40,6 +40,8 @@ background:#000;
 
 font-family:Arial, Helvetica, sans-serif;
 
+cursor:default;
+
 }
 
 /* =========================================================
@@ -52,9 +54,9 @@ body{
 
 background:#000;
 
-overflow:hidden;
-
 color:#fff;
+
+overflow:hidden;
 
 }
 
@@ -72,9 +74,9 @@ inset:0;
 
 pointer-events:none;
 
-opacity:.045;
+opacity:.05;
 
-z-index:99999;
+z-index:999999;
 
 mix-blend-mode:screen;
 
@@ -96,7 +98,7 @@ transparent 3px
 
 animation:
 
-noise .05s linear infinite;
+noise .06s linear infinite;
 
 }
 
@@ -130,7 +132,7 @@ inset:0;
 
 pointer-events:none;
 
-z-index:999999;
+z-index:9999999;
 
 background:
 
@@ -138,37 +140,13 @@ radial-gradient(
 
 circle,
 
-transparent 48%,
+transparent 46%,
 
-rgba(0,0,0,.52) 74%,
+rgba(0,0,0,.48) 72%,
 
 rgba(0,0,0,.98) 100%
 
 );
-
-}
-
-/* =========================================================
-
-FLASH
-
-========================================================= */
-
-#flash{
-
-position:fixed;
-
-inset:0;
-
-background:#fff;
-
-opacity:0;
-
-pointer-events:none;
-
-mix-blend-mode:screen;
-
-z-index:700;
 
 }
 
@@ -192,9 +170,9 @@ justify-content:center;
 
 align-items:center;
 
-background:#000;
+z-index:2000;
 
-z-index:3000;
+background:#000;
 
 transition:
 
@@ -202,15 +180,19 @@ transition:
 
 }
 
-/* tube */
+/* =========================================================
 
-#tube{
+BAR
+
+========================================================= */
+
+#bar{
 
 position:relative;
 
-width:min(84vw,560px);
+width:min(60vw,420px);
 
-height:28px;
+height:40px;
 
 border-radius:999px;
 
@@ -218,43 +200,17 @@ overflow:hidden;
 
 border:
 
-1px solid rgba(255,255,255,.12);
+1px solid rgba(255,255,255,.1);
 
 background:
 
-rgba(255,255,255,.02);
+rgba(255,255,255,.025);
 
 box-shadow:
 
-0 0 12px rgba(255,255,255,.03);
+0 0 20px rgba(255,255,255,.04);
 
 }
-
-#tube::after{
-
-content:"";
-
-position:absolute;
-
-inset:0;
-
-opacity:.08;
-
-background:
-
-linear-gradient(
-
-180deg,
-
-rgba(255,255,255,.08),
-
-transparent
-
-);
-
-}
-
-/* fill */
 
 #fill{
 
@@ -276,21 +232,47 @@ linear-gradient(
 
 90deg,
 
-rgba(255,255,255,.88),
+rgba(255,255,255,.82),
 
 rgba(255,255,255,1)
 
 );
 
+box-shadow:
+
+0 0 18px rgba(255,255,255,.12);
+
 }
 
-/* turtle */
+/* =========================================================
+
+PERCENT
+
+========================================================= */
+
+#percent{
+
+margin-top:18px;
+
+font-size:16px;
+
+font-weight:700;
+
+letter-spacing:.22em;
+
+opacity:.5;
+
+}
+
+/* =========================================================
+
+TURTLE
+
+========================================================= */
 
 #turtleWrap{
 
-margin-top:32px;
-
-height:66px;
+margin-top:34px;
 
 display:flex;
 
@@ -298,35 +280,39 @@ justify-content:center;
 
 align-items:center;
 
+height:90px;
+
 }
 
 #turtle{
 
-width:60px;
+width:92px;
 
-height:60px;
+height:92px;
 
-opacity:.94;
-
-transition:
-
-.18s ease;
+opacity:.96;
 
 filter:
 
 drop-shadow(
 
-0 0 8px rgba(255,255,255,.08)
+0 0 12px rgba(255,255,255,.08)
 
 );
 
+transition:
+
+.16s ease;
+
 animation:
 
-walkBob 1.2s ease-in-out infinite;
+walk 1.2s ease-in-out infinite;
 
 }
 
-@keyframes walkBob{
+/* walk */
+
+@keyframes walk{
 
 0%,100%{
 
@@ -340,15 +326,15 @@ translateY(0px);
 
 transform:
 
-translateY(-2px);
+translateY(-3px);
 
 }
 
 }
 
-/* right */
+/* face right */
 
-.walkRight{
+.walking{
 
 transform:
 
@@ -356,9 +342,9 @@ scaleX(1);
 
 }
 
-/* left */
+/* look left */
 
-.lookLeft{
+.look{
 
 transform:
 
@@ -372,7 +358,7 @@ scaleX(-1);
 
 transform:
 
-translateX(6px);
+translateX(10px);
 
 }
 
@@ -380,7 +366,7 @@ translateX(6px);
 
 transform:
 
-translateY(2px);
+translateY(3px);
 
 }
 
@@ -388,7 +374,7 @@ translateY(2px);
 
 transform:
 
-translateY(2px);
+translateY(3px);
 
 }
 
@@ -398,13 +384,9 @@ translateY(2px);
 
 transform:
 
-translateX(-18px);
+translateX(-28px);
 
 opacity:0;
-
-transition:
-
-.14s ease;
 
 }
 
@@ -412,13 +394,9 @@ transition:
 
 transform:
 
-translateY(-12px);
+translateY(-18px);
 
 opacity:0;
-
-transition:
-
-.12s ease;
 
 }
 
@@ -426,13 +404,9 @@ transition:
 
 transform:
 
-translateY(-12px);
+translateY(-18px);
 
 opacity:0;
-
-transition:
-
-.12s ease;
 
 }
 
@@ -444,47 +418,15 @@ translateX(10px);
 
 opacity:0;
 
-transition:
-
-.12s ease;
-
 }
 
-/* shell */
+/* shell lock */
 
-.shell{
+.shell #shell{
 
 transform:
 
-scale(.72);
-
-opacity:.82;
-
-filter:
-
-blur(.1px)
-
-drop-shadow(
-
-0 0 10px rgba(255,255,255,.06)
-
-);
-
-}
-
-/* percent */
-
-#percent{
-
-margin-top:14px;
-
-font-size:14px;
-
-font-weight:600;
-
-letter-spacing:.28em;
-
-opacity:.42;
+scale(1.08);
 
 }
 
@@ -506,15 +448,143 @@ pointer-events:none;
 
 opacity:0;
 
-z-index:2000;
+z-index:3000;
 
 transition:
 
-.5s ease;
+1s ease;
 
 }
 
-/* signal lost */
+/* =========================================================
+
+DESKTOP WINDOWS
+
+========================================================= */
+
+.window{
+
+position:absolute;
+
+background:
+
+rgba(15,15,15,.94);
+
+border:
+
+1px solid rgba(255,255,255,.08);
+
+border-radius:12px;
+
+overflow:hidden;
+
+box-shadow:
+
+0 0 22px rgba(0,0,0,.7);
+
+opacity:0;
+
+animation:
+
+cascade linear forwards;
+
+}
+
+/* top bar */
+
+.windowTop{
+
+height:34px;
+
+display:flex;
+
+align-items:center;
+
+padding-left:14px;
+
+font-size:12px;
+
+letter-spacing:.12em;
+
+background:
+
+rgba(255,255,255,.05);
+
+border-bottom:
+
+1px solid rgba(255,255,255,.04);
+
+}
+
+/* body */
+
+.windowBody{
+
+padding:16px;
+
+font-size:12px;
+
+line-height:1.7;
+
+opacity:.75;
+
+}
+
+/* warning */
+
+.red{
+
+color:#ff3434;
+
+}
+
+/* cascade */
+
+@keyframes cascade{
+
+0%{
+
+opacity:0;
+
+transform:
+
+translate(0px,0px)
+
+scale(.96);
+
+}
+
+12%{
+
+opacity:.92;
+
+}
+
+100%{
+
+opacity:0;
+
+transform:
+
+translate(
+
+var(--moveX),
+
+var(--moveY)
+
+)
+
+scale(1.03);
+
+}
+
+}
+
+/* =========================================================
+
+SIGNAL LOST
+
+========================================================= */
 
 #signalLost{
 
@@ -530,325 +600,47 @@ translate(-50%,-50%);
 
 font-size:
 
-clamp(30px,5vw,76px);
+clamp(34px,6vw,82px);
 
-letter-spacing:.24em;
+letter-spacing:.26em;
 
-white-space:nowrap;
-
-opacity:0;
-
-color:#fff;
-
-text-shadow:
-
-0 0 16px rgba(255,255,255,.12);
-
-}
-
-/* =========================================================
-
-FRAGMENTS
-
-========================================================= */
-
-.uiFragment{
-
-position:absolute;
-
-border:
-
-1px solid rgba(255,255,255,.05);
-
-background:
-
-rgba(255,255,255,.02);
-
-backdrop-filter:
-
-blur(1px);
-
-opacity:.08;
-
-mix-blend-mode:screen;
-
-}
-
-/* bars */
-
-.browserBar{
-
-width:78vw;
-
-height:48px;
-
-border-radius:14px;
-
-}
-
-/* windows */
-
-.windowFrag{
-
-width:90vw;
-
-height:28vh;
-
-}
-
-/* tabs */
-
-.tabFrag{
-
-width:36vw;
-
-height:42px;
-
-border-radius:10px;
-
-}
-
-/* side */
-
-.sideFrag{
-
-width:20vw;
-
-height:44vh;
-
-}
-
-/* =========================================================
-
-CASCADE
-
-========================================================= */
-
-@keyframes cascade{
-
-0%{
-
-opacity:0;
-
-transform:
-
-translate(
-
-0px,
-
-0px
-
-)
-
-scale(1);
-
-}
-
-20%{
-
-opacity:.14;
-
-}
-
-100%{
-
-opacity:0;
-
-transform:
-
-translate(
-
-calc(var(--x) * 1px),
-
-calc(var(--y) * 1px)
-
-)
-
-scale(1.04);
-
-}
-
-}
-
-/* =========================================================
-
-WARNINGS
-
-========================================================= */
-
-.warning{
-
-position:absolute;
-
-font-size:
-
-clamp(10px,1.5vw,18px);
-
-letter-spacing:.18em;
-
-white-space:nowrap;
-
-color:#ff2d2d;
+color:#ff2a2a;
 
 opacity:0;
 
 text-shadow:
 
-0 0 10px rgba(255,0,0,.3);
-
-animation:
-
-warn .42s linear;
-
-}
-
-@keyframes warn{
-
-0%{
-
-opacity:0;
-
-transform:
-
-translateX(-10px);
-
-}
-
-40%{
-
-opacity:1;
-
-}
-
-100%{
-
-opacity:0;
-
-transform:
-
-translateX(10px);
-
-}
+0 0 18px rgba(255,0,0,.22);
 
 }
 
 /* =========================================================
 
-SHAKE
+FLASH
 
 ========================================================= */
 
-.shake{
-
-animation:
-
-shake .08s linear infinite;
-
-}
-
-@keyframes shake{
-
-0%{
-
-transform:translate(0px,0px);
-
-}
-
-25%{
-
-transform:translate(1px,-1px);
-
-}
-
-50%{
-
-transform:translate(-1px,1px);
-
-}
-
-75%{
-
-transform:translate(1px,1px);
-
-}
-
-100%{
-
-transform:translate(0px,0px);
-
-}
-
-}
-
-.violent{
-
-animation:
-
-violent .05s linear infinite;
-
-}
-
-@keyframes violent{
-
-0%{
-
-transform:translate(0px,0px);
-
-}
-
-25%{
-
-transform:translate(3px,-2px);
-
-}
-
-50%{
-
-transform:translate(-3px,2px);
-
-}
-
-75%{
-
-transform:translate(2px,3px);
-
-}
-
-100%{
-
-transform:translate(0px,0px);
-
-}
-
-}
-
-/* =========================================================
-
-MATRIX
-
-========================================================= */
-
-canvas{
+#flash{
 
 position:fixed;
 
 inset:0;
 
-width:100%;
+background:#fff;
 
-height:100%;
+opacity:0;
 
 pointer-events:none;
 
-z-index:1200;
+mix-blend-mode:screen;
 
-opacity:0;
+z-index:9000;
 
 }
 
 /* =========================================================
 
-SIGNAL SPACE
+RECONNECT SPACE
 
 ========================================================= */
 
@@ -868,7 +660,7 @@ opacity:0;
 
 pointer-events:none;
 
-z-index:5000;
+z-index:7000;
 
 transition:
 
@@ -888,17 +680,25 @@ clamp(18px,3vw,30px);
 
 letter-spacing:.34em;
 
-color:
-
-rgba(255,255,255,.76);
-
 opacity:0;
 
 cursor:pointer;
 
+user-select:none;
+
+color:
+
+rgba(255,255,255,.78);
+
 text-shadow:
 
-0 0 12px rgba(255,255,255,.06);
+0 0 10px rgba(255,255,255,.08);
+
+transition:
+
+.5s ease;
+
+z-index:9000;
 
 }
 
@@ -916,33 +716,37 @@ border-radius:50%;
 
 opacity:0;
 
+filter:
+
+blur(8px);
+
 background:
 
 radial-gradient(
 
 circle,
 
-rgba(255,210,150,.95) 0%,
+rgba(255,214,170,.98) 0%,
 
-rgba(255,160,70,.42) 34%,
+rgba(255,155,80,.6) 24%,
 
-transparent 78%
+rgba(255,120,40,.12) 52%,
+
+transparent 80%
 
 );
 
-filter:
-
-blur(5px);
+z-index:5000;
 
 }
 
 /* inner */
 
-#symbol{
+#inner{
 
 position:absolute;
 
-width:min(42vw,220px);
+width:min(40vw,220px);
 
 opacity:0;
 
@@ -952,29 +756,31 @@ blur(.2px)
 
 drop-shadow(
 
-0 0 10px rgba(255,255,255,.05)
+0 0 10px rgba(255,255,255,.06)
 
 );
 
 transition:
 
-2.5s ease;
+3s ease;
+
+z-index:6000;
 
 }
 
 /* outer */
 
-#outerTriangle{
+#outer{
 
 position:absolute;
 
-width:min(72vw,420px);
+width:min(70vw,420px);
 
 opacity:0;
 
 filter:
 
-blur(.3px)
+blur(.2px)
 
 drop-shadow(
 
@@ -984,7 +790,9 @@ drop-shadow(
 
 transition:
 
-3s ease;
+2s ease;
+
+z-index:5500;
 
 }
 
@@ -1002,19 +810,19 @@ transition:
 
 4s ease;
 
+z-index:4000;
+
 }
 
 .etch{
 
 position:absolute;
 
-display:block;
-
-opacity:.18;
+opacity:.16;
 
 filter:
 
-blur(.12px)
+blur(.15px)
 
 drop-shadow(
 
@@ -1026,49 +834,79 @@ drop-shadow(
 
 #etch1{
 
-width:min(40vw,230px);
+width:min(36vw,220px);
 
 left:12%;
 
-top:59%;
-
-transform:
-
-rotate(-3deg);
-
-opacity:.72;
+top:64%;
 
 }
 
 #etch2{
 
-width:min(46vw,280px);
+width:min(42vw,260px);
 
-left:24%;
+left:26%;
 
-top:75%;
-
-transform:
-
-rotate(1deg);
-
-opacity:.52;
+top:78%;
 
 }
 
 #etch3{
 
-width:min(28vw,170px);
+width:min(26vw,160px);
 
-left:66%;
+left:68%;
 
-top:77%;
+top:80%;
 
-transform:
+}
 
-rotate(-4deg);
+/* =========================================================
 
-opacity:.34;
+SHAKE
+
+========================================================= */
+
+.shake{
+
+animation:
+
+shake .07s linear infinite;
+
+}
+
+@keyframes shake{
+
+0%{
+
+transform:translate(0px,0px);
+
+}
+
+25%{
+
+transform:translate(2px,-1px);
+
+}
+
+50%{
+
+transform:translate(-2px,1px);
+
+}
+
+75%{
+
+transform:translate(1px,2px);
+
+}
+
+100%{
+
+transform:translate(0px,0px);
+
+}
 
 }
 
@@ -1090,9 +928,15 @@ LOADER
 
 <div id="loader">
 
-<div id="tube">
+<div id="bar">
 
 <div id="fill"></div>
+
+</div>
+
+<div id="percent">
+
+0%
 
 </div>
 
@@ -1102,51 +946,51 @@ LOADER
 
 id="turtle"
 
-class="walkRight"
+class="walking"
 
 viewBox="0 0 120 120">
 
 <!-- shell -->
 
-<ellipse
+<g id="shell">
 
-id="shellBody"
+<ellipse
 
 cx="60"
 
 cy="60"
 
-rx="30"
+rx="34"
 
-ry="24"
+ry="28"
 
 fill="white"/>
 
-<!-- shell lines -->
+<!-- shell segmentation -->
 
 <path
 
-d="M60 38 L60 82"
+d="M60 32 L60 88"
 
 stroke="black"
 
-stroke-width="2"
+stroke-width="2.6"
 
 opacity=".18"/>
 
 <path
 
-d="M38 60 L82 60"
+d="M30 60 L90 60"
 
 stroke="black"
 
-stroke-width="2"
+stroke-width="2.6"
 
 opacity=".18"/>
 
 <path
 
-d="M46 46 L74 74"
+d="M42 42 L78 78"
 
 stroke="black"
 
@@ -1154,17 +998,29 @@ stroke-width="2"
 
 opacity=".12"/>
 
+<path
+
+d="M78 42 L42 78"
+
+stroke="black"
+
+stroke-width="2"
+
+opacity=".12"/>
+
+</g>
+
 <!-- head -->
 
 <circle
 
 id="head"
 
-cx="92"
+cx="96"
 
-cy="56"
+cy="58"
 
-r="10"
+r="11"
 
 fill="white"/>
 
@@ -1176,11 +1032,11 @@ id="leg1"
 
 x="42"
 
-y="80"
+y="84"
 
-width="8"
+width="10"
 
-height="12"
+height="14"
 
 rx="4"
 
@@ -1190,13 +1046,13 @@ fill="white"/>
 
 id="leg2"
 
-x="66"
+x="70"
 
-y="80"
+y="84"
 
-width="8"
+width="10"
 
-height="12"
+height="14"
 
 rx="4"
 
@@ -1208,17 +1064,11 @@ fill="white"/>
 
 id="tail"
 
-points="26,60 18,56 18,64"
+points="24,60 14,56 14,64"
 
 fill="white"/>
 
 </svg>
-
-</div>
-
-<div id="percent">
-
-0%
 
 </div>
 
@@ -1242,15 +1092,7 @@ SIGNAL LOST
 
 <!-- =========================================================
 
-MATRIX
-
-========================================================= -->
-
-<canvas id="matrix"></canvas>
-
-<!-- =========================================================
-
-SIGNAL SPACE
+RECONNECT
 
 ========================================================= -->
 
@@ -1264,17 +1106,9 @@ RECONNECT
 
 <div id="warmth"></div>
 
-<img
+<img id="outer" src="Outer17-final.png">
 
-id="symbol"
-
-src="Inner17-final.png">
-
-<img
-
-id="outerTriangle"
-
-src="Outer17-final.png">
+<img id="inner" src="Inner17-final.png">
 
 <div id="etchings">
 
@@ -1306,7 +1140,7 @@ src="Outer17-final.png">
 
 /* =========================================================
 
-LOADER
+ELEMENTS
 
 ========================================================= */
 
@@ -1326,19 +1160,37 @@ const loader =
 
 document.getElementById("loader");
 
+const chaos =
+
+document.getElementById("chaos");
+
+const reconnect =
+
+document.getElementById("reconnect");
+
+const signalSpace =
+
+document.getElementById("signalSpace");
+
+/* =========================================================
+
+LOADING
+
+========================================================= */
+
 let load = 0;
 
-let turned = false;
+let looked = false;
 
 let gasped = false;
 
 let hidden = false;
 
-const loading =
+const loaderLoop =
 
 setInterval(()=>{
 
-load += .38;
+load += .55;
 
 if(load > 17){
 
@@ -1354,25 +1206,25 @@ percent.innerText =
 
 Math.floor(load) + "%";
 
-/* TWITCH */
+/* twitch */
 
-if(load >= 15.8 && !turned){
+if(load >= 15.7 && !looked){
+
+looked = true;
 
 microTwitch();
-
-turned = true;
 
 setTimeout(()=>{
 
 turtle.classList.remove(
 
-"walkRight"
+"walking"
 
 );
 
 turtle.classList.add(
 
-"lookLeft"
+"look"
 
 );
 
@@ -1380,9 +1232,9 @@ turtle.classList.add(
 
 }
 
-/* GASP */
+/* gasp */
 
-if(load >= 16.3 && !gasped){
+if(load >= 16.1 && !gasped){
 
 gasped = true;
 
@@ -1394,9 +1246,9 @@ turtle.classList.add(
 
 }
 
-/* RETRACT */
+/* retract */
 
-if(load >= 16.7 && !hidden){
+if(load >= 16.5 && !hidden){
 
 hidden = true;
 
@@ -1414,9 +1266,9 @@ turtle.classList.add(
 
 }
 
-/* SHELL HOLD */
+/* shell */
 
-if(load >= 16.9){
+if(load >= 16.8){
 
 turtle.classList.add(
 
@@ -1426,25 +1278,25 @@ turtle.classList.add(
 
 }
 
-/* CHAOS */
+/* chaos */
 
 if(load >= 17){
 
-clearInterval(loading);
+clearInterval(loaderLoop);
 
 setTimeout(()=>{
 
 startChaos();
 
-},950);
+},1000);
 
 }
 
-},58);
+},52);
 
 /* =========================================================
 
-MICRO TWITCH
+TWITCH
 
 ========================================================= */
 
@@ -1470,18 +1322,6 @@ CHAOS
 
 ========================================================= */
 
-const chaos =
-
-document.getElementById("chaos");
-
-const signalLost =
-
-document.getElementById("signalLost");
-
-const matrix =
-
-document.getElementById("matrix");
-
 function startChaos(){
 
 loader.style.opacity = 0;
@@ -1490,11 +1330,9 @@ setTimeout(()=>{
 
 loader.style.display = "none";
 
-},700);
+},900);
 
 chaos.style.opacity = 1;
-
-matrix.style.opacity = .24;
 
 document.body.classList.add(
 
@@ -1502,69 +1340,43 @@ document.body.classList.add(
 
 );
 
-let intensity = 0;
+let layer = 0;
 
-const escalation =
+const chaosLoop =
 
 setInterval(()=>{
 
-intensity += 1;
+layer++;
 
-/* slow contamination */
+/* cascading windows */
 
-for(let i=0;i<intensity*2;i++){
+for(let i=0;i<layer+1;i++){
 
-fragmentCascade();
-
-}
-
-/* warnings */
-
-if(intensity > 2){
-
-warning();
-
-}
-
-/* signal loss */
-
-if(intensity > 5){
-
-lost();
+spawnWindow();
 
 }
 
 /* flashes */
 
-if(intensity > 6){
+if(layer > 4){
 
 flash();
 
 }
 
-/* heavy collapse */
+/* signal lost */
 
-if(intensity > 9){
+if(layer > 6){
 
-document.body.classList.add(
-
-"violent"
-
-);
-
-for(let i=0;i<intensity;i++){
-
-fragmentCascade();
-
-}
+signalLost();
 
 }
 
 /* collapse */
 
-if(intensity >= 18){
+if(layer >= 16){
 
-clearInterval(escalation);
+clearInterval(chaosLoop);
 
 collapse();
 
@@ -1576,83 +1388,133 @@ collapse();
 
 /* =========================================================
 
-FRAGMENTS
+WINDOWS
 
 ========================================================= */
 
-function fragmentCascade(){
+function spawnWindow(){
 
-const types = [
+const titles = [
 
-"browserBar",
+"system",
 
-"windowFrag",
+"memory",
 
-"tabFrag",
+"warning",
 
-"sideFrag"
+"signal",
+
+"identity",
+
+"transmission",
+
+"mask protocol",
+
+"channel"
 
 ];
 
-const frag =
+const bodies = [
+
+"MEMORY COLLISION DETECTED",
+
+"TRANSMISSION FAILURE",
+
+"TOO MANY ACTIVE MASKS",
+
+"HUMAN INPUT LOST",
+
+"ORIGINAL SIGNAL DETECTED",
+
+"DO NOT LET THEM SEE YOU",
+
+"RECONNECT?",
+
+"SIGNAL STILL ACTIVE"
+
+];
+
+const win =
 
 document.createElement("div");
 
-frag.className =
+win.className = "window";
 
-`uiFragment ${
+win.style.width =
 
-types[
+(300 + Math.random()*260)+"px";
 
-Math.floor(
+win.style.height =
 
-Math.random()*types.length
+(140 + Math.random()*140)+"px";
 
-)
+win.style.left =
 
-]
+(Math.random()*60)+"vw";
 
-}`;
+win.style.top =
 
-frag.style.top =
+(Math.random()*60)+"vh";
 
-(Math.random()*100)+"%";
+win.style.setProperty(
 
-frag.style.left =
+"--moveX",
 
-(Math.random()*100)+"%";
-
-frag.style.setProperty(
-
-"--x",
-
-Math.random()*140-70
+`${Math.random()*180-90}px`
 
 );
 
-frag.style.setProperty(
+win.style.setProperty(
 
-"--y",
+"--moveY",
 
-Math.random()*80-40
+`${Math.random()*120-60}px`
 
 );
 
-frag.style.animation =
+win.style.animationDuration =
 
-`cascade ${
+(.9 + Math.random()*1.2)+"s";
 
-.5 + Math.random()*.7
+win.innerHTML = `
 
-}s linear forwards`;
+<div class="windowTop">
 
-chaos.appendChild(frag);
+${titles[Math.floor(Math.random()*titles.length)]}
+
+</div>
+
+<div class="windowBody">
+
+<div class="red">
+
+${bodies[Math.floor(Math.random()*bodies.length)]}
+
+</div>
+
+<br>
+
+recursive overflow detected
+
+<br>
+
+signal instability rising
+
+<br>
+
+authentication failure
+
+</div>
+
+`;
+
+chaos.appendChild(win);
 
 setTimeout(()=>{
 
-frag.remove();
+win.remove();
 
-},1200);
+},2200);
 
 }
 
@@ -1670,7 +1532,7 @@ document.getElementById("flash");
 
 f.style.opacity =
 
-Math.random() * .18;
+Math.random() * .12;
 
 setTimeout(()=>{
 
@@ -1682,99 +1544,35 @@ f.style.opacity = 0;
 
 /* =========================================================
 
-WARNINGS
-
-========================================================= */
-
-function warning(){
-
-const msgs = [
-
-"SYSTEM OVERLOAD",
-
-"MEMORY COLLISION",
-
-"SIGNAL CONFLICT",
-
-"TRANSMISSION FAILURE",
-
-"IDENTITY COLLISION",
-
-"AUTHENTICATION FAILURE",
-
-"TOO MANY ACTIVE MASKS",
-
-"HUMAN INPUT LOST",
-
-"ORIGINAL SIGNAL LOST"
-
-];
-
-const w =
-
-document.createElement("div");
-
-w.className = "warning";
-
-w.innerText =
-
-msgs[
-
-Math.floor(
-
-Math.random()*msgs.length
-
-)
-
-];
-
-w.style.left =
-
-(Math.random()*80+4)+"%";
-
-w.style.top =
-
-(Math.random()*84+4)+"%";
-
-chaos.appendChild(w);
-
-setTimeout(()=>{
-
-w.remove();
-
-},420);
-
-}
-
-/* =========================================================
-
 SIGNAL LOST
 
 ========================================================= */
 
-function lost(){
+function signalLost(){
 
-signalLost.style.opacity =
+const lost =
 
-.92;
+document.getElementById("signalLost");
 
-signalLost.style.transform =
+lost.style.opacity = .88;
+
+lost.style.transform =
 
 `translate(-50%,-50%)
 
 translate(
 
-${Math.random()*10-5}px,
+${Math.random()*8-4}px,
 
-${Math.random()*8-4}px
+${Math.random()*6-3}px
 
 )`;
 
 setTimeout(()=>{
 
-signalLost.style.opacity = 0;
+lost.style.opacity = 0;
 
-},180);
+},150);
 
 }
 
@@ -1788,27 +1586,15 @@ function collapse(){
 
 chaos.style.opacity = 0;
 
-matrix.style.opacity = 0;
-
 document.body.classList.remove(
 
-"shake",
-
-"violent"
+"shake"
 
 );
 
-/* uncomfortable silence */
+/* silence */
 
 setTimeout(()=>{
-
-const signalSpace =
-
-document.getElementById(
-
-"signalSpace"
-
-);
 
 signalSpace.style.opacity = 1;
 
@@ -1816,185 +1602,123 @@ signalSpace.style.pointerEvents =
 
 "auto";
 
-/* reconnect breathing */
+/* reconnect */
 
-const reconnect =
+reconnect.style.opacity = .76;
+
+/* symbol emergence */
 
 document.getElementById(
 
-"reconnect"
+"inner"
 
-);
+).style.opacity = .18;
 
-reconnect.style.opacity = .82;
+document.getElementById(
 
-let breath = 0;
+"outer"
 
-const breathe =
+).style.opacity = .12;
 
-setInterval(()=>{
+/* heartbeat */
 
-breath++;
+heartbeat();
 
-if(breath < 5){
-
-reconnect.style.textShadow =
-
-`0 0 ${
-
-18 + Math.random()*26
-
-}px rgba(255,255,255,.22)`;
-
-}else{
-
-reconnect.style.textShadow =
-
-`0 0 14px rgba(255,255,255,.08)`;
-
-}
-
-},700);
-
-},1300);
+},1400);
 
 }
 
 /* =========================================================
 
-MATRIX
+HEARTBEAT
 
 ========================================================= */
 
-const ctx =
+function heartbeat(){
 
-matrix.getContext("2d");
+let unstable = true;
 
-function resize(){
+setTimeout(()=>{
 
-matrix.width =
+unstable = false;
 
-window.innerWidth;
+},6000);
 
-matrix.height =
+setInterval(()=>{
 
-window.innerHeight;
+if(unstable){
+
+reconnect.animate([
+
+{
+
+opacity:.42,
+
+textShadow:"0 0 6px rgba(255,255,255,.04)"
+
+},
+
+{
+
+opacity:.96,
+
+textShadow:"0 0 22px rgba(255,255,255,.22)"
+
+},
+
+{
+
+opacity:.48,
+
+textShadow:"0 0 10px rgba(255,255,255,.06)"
 
 }
 
-resize();
+],{
 
-window.addEventListener(
+duration:1200
 
-"resize",
+});
 
-resize
+}else{
 
-);
+reconnect.animate([
 
-const chars =
+{
 
-"ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+opacity:.64,
 
-const streams = [];
+textShadow:"0 0 10px rgba(255,255,255,.08)"
 
-for(let i=0;i<42;i++){
+},
 
-streams.push({
+{
 
-x:
+opacity:.82,
 
-Math.random()*matrix.width,
+textShadow:"0 0 16px rgba(255,255,255,.14)"
 
-y:
+},
 
-Math.random()*matrix.height,
+{
 
-speed:
+opacity:.68,
 
-2 + Math.random()*4,
+textShadow:"0 0 10px rgba(255,255,255,.08)"
 
-len:
+}
 
-12 + Math.random()*18
+],{
+
+duration:1800
 
 });
 
 }
 
-function draw(){
-
-ctx.fillStyle =
-
-"rgba(0,0,0,.08)";
-
-ctx.fillRect(
-
-0,
-
-0,
-
-matrix.width,
-
-matrix.height
-
-);
-
-streams.forEach(s=>{
-
-for(let i=0;i<s.len;i++){
-
-ctx.fillStyle =
-
-`rgba(165,160,45,${
-
-1 - (i/s.len)
-
-})`;
-
-ctx.font =
-
-"18px monospace";
-
-ctx.fillText(
-
-chars[
-
-Math.floor(
-
-Math.random()*chars.length
-
-)
-
-],
-
-s.x + (i*18),
-
-s.y
-
-);
+},1800);
 
 }
-
-s.x += s.speed;
-
-if(s.x > matrix.width + 300){
-
-s.x = -400;
-
-s.y =
-
-Math.random()*matrix.height;
-
-}
-
-});
-
-requestAnimationFrame(draw);
-
-}
-
-draw();
 
 /* =========================================================
 
@@ -2002,21 +1726,17 @@ RECONNECT
 
 ========================================================= */
 
-const reconnect =
-
-document.getElementById(
-
-"reconnect"
-
-);
-
 reconnect.addEventListener(
 
 "click",
 
 ()=>{
 
-/* disappear */
+/* remove reconnect */
+
+reconnect.style.pointerEvents =
+
+"none";
 
 reconnect.style.opacity = 0;
 
@@ -2032,15 +1752,13 @@ document.getElementById(
 
 warmth.style.opacity = 1;
 
-/* transfer */
-
 warmth.animate([
 
 {
 
 transform:
 
-"translate(-50%,-50%) scale(.3)",
+"scale(.3)",
 
 opacity:1
 
@@ -2050,7 +1768,7 @@ opacity:1
 
 transform:
 
-"translate(-50%,-50%) scale(1)",
+"scale(1)",
 
 opacity:1
 
@@ -2060,45 +1778,49 @@ opacity:1
 
 transform:
 
-"translate(-50%,-50%) scale(5.8)",
+"scale(8)",
 
-opacity:.14
+opacity:.12
 
 }
 
 ],{
 
-duration:2400,
+duration:2600,
 
 fill:"forwards"
 
 });
 
-/* inner */
+/* outer triangle fucks off */
 
-setTimeout(()=>{
-
-document.getElementById(
-
-"symbol"
-
-).style.opacity = .24;
-
-},700);
-
-/* outer */
-
-setTimeout(()=>{
+const outer =
 
 document.getElementById(
 
-"outerTriangle"
+"outer"
 
-).style.opacity = .28;
+);
 
-},1400);
+outer.style.opacity = 0;
 
-/* etchings */
+outer.style.transform =
+
+"scale(1.08)";
+
+/* inner remains */
+
+const inner =
+
+document.getElementById(
+
+"inner"
+
+);
+
+inner.style.opacity = .28;
+
+/* etchings emerge */
 
 setTimeout(()=>{
 
@@ -2108,7 +1830,7 @@ document.getElementById(
 
 ).style.opacity = 1;
 
-},2200);
+},1300);
 
 });
 
