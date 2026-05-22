@@ -1,34 +1,22 @@
-<!--
-
-CHANNEL 17
-
-FOUNDATION REBUILD v1
-
-FOCUS:
-
-- believable survivor turtle
-
-- clean pacing
-
-- readable chaos
-
-- functioning reconnect ritual
-
--->
-
 <!DOCTYPE html>
 
 <html lang="en">
 
 <head>
 
-<meta charset="UTF-8">
+<meta charset="UTF-8" />
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
 <title>CHANNEL 17</title>
 
 <style>
+
+/* =========================================
+
+RESET
+
+========================================= */
 
 *{
 
@@ -50,7 +38,7 @@ overflow:hidden;
 
 background:#000;
 
-font-family:Arial, Helvetica, sans-serif;
+font-family:Arial,Helvetica,sans-serif;
 
 color:#fff;
 
@@ -68,6 +56,8 @@ position:relative;
 
 background:#000;
 
+-webkit-tap-highlight-color:transparent;
+
 }
 
 #noise{
@@ -78,9 +68,9 @@ inset:0;
 
 pointer-events:none;
 
-opacity:.035;
-
 z-index:99999;
+
+opacity:.035;
 
 mix-blend-mode:screen;
 
@@ -106,9 +96,17 @@ animation:noiseMove .06s linear infinite;
 
 @keyframes noiseMove{
 
-from{transform:translateY(0);}
+from{
 
-to{transform:translateY(3px);}
+transform:translateY(0px);
+
+}
+
+to{
+
+transform:translateY(3px);
+
+}
 
 }
 
@@ -128,11 +126,11 @@ radial-gradient(
 
 circle,
 
-transparent 48%,
+transparent 46%,
 
-rgba(0,0,0,.5) 72%,
+rgba(0,0,0,.48) 72%,
 
-rgba(0,0,0,.96) 100%
+rgba(0,0,0,.98) 100%
 
 );
 
@@ -150,8 +148,6 @@ position:fixed;
 
 inset:0;
 
-z-index:3000;
-
 display:flex;
 
 flex-direction:column;
@@ -162,27 +158,33 @@ align-items:center;
 
 background:#000;
 
-transition:opacity .8s ease;
+z-index:2000;
+
+transition:opacity .7s ease;
 
 }
 
 /* =========================================
 
-BAR
+SEGMENT BAR
 
 ========================================= */
 
 #bar{
 
-position:relative;
+display:flex;
 
-width:min(56vw,390px);
+gap:5px;
 
-height:44px;
+width:min(58vw,320px);
 
-border-radius:999px;
+height:26px;
 
-overflow:hidden;
+}
+
+.segment{
+
+flex:1;
 
 border:
 
@@ -190,45 +192,31 @@ border:
 
 background:
 
-rgba(255,255,255,.02);
+rgba(255,255,255,.025);
+
+border-radius:4px;
 
 box-shadow:
 
-0 0 18px rgba(255,255,255,.03),
+inset 0 0 8px rgba(255,255,255,.02);
 
-inset 0 0 18px rgba(255,255,255,.02);
+transition:
+
+background .18s ease,
+
+box-shadow .18s ease;
 
 }
 
-#fill{
-
-position:absolute;
-
-left:0;
-
-top:0;
-
-height:100%;
-
-width:0%;
-
-border-radius:999px;
+.segment.active{
 
 background:
 
-linear-gradient(
-
-90deg,
-
-rgba(255,255,255,.84),
-
-rgba(255,255,255,1)
-
-);
+rgba(255,255,255,.92);
 
 box-shadow:
 
-0 0 18px rgba(255,255,255,.16);
+0 0 12px rgba(255,255,255,.12);
 
 }
 
@@ -240,15 +228,15 @@ PERCENT
 
 #percent{
 
-margin-top:18px;
+margin-top:16px;
 
-font-size:16px;
+font-size:14px;
 
 font-weight:700;
 
 letter-spacing:.22em;
 
-opacity:.58;
+opacity:.54;
 
 }
 
@@ -260,11 +248,11 @@ TURTLE
 
 #turtleWrap{
 
-margin-top:34px;
+margin-top:36px;
 
-width:120px;
+width:100px;
 
-height:90px;
+height:70px;
 
 display:flex;
 
@@ -276,9 +264,9 @@ align-items:center;
 
 #turtle{
 
-width:104px;
+width:84px;
 
-height:72px;
+height:54px;
 
 overflow:visible;
 
@@ -288,13 +276,13 @@ filter:
 
 drop-shadow(
 
-0 0 10px rgba(255,255,255,.05)
+0 0 8px rgba(255,255,255,.06)
 
 );
 
 }
 
-.walking{
+.walk{
 
 animation:
 
@@ -308,9 +296,9 @@ walk 1s ease-in-out infinite;
 
 transform:
 
-translateY(0px)
+translateX(0px)
 
-translateX(0px);
+translateY(0px);
 
 }
 
@@ -318,21 +306,15 @@ translateX(0px);
 
 transform:
 
-translateY(-2px)
+translateX(2px)
 
-translateX(2px);
-
-}
+translateY(-2px);
 
 }
 
-/* turtle anatomy */
-
-#shell{
-
-transition:.18s ease;
-
 }
+
+/* anatomy */
 
 #head,
 
@@ -342,13 +324,15 @@ transition:.18s ease;
 
 #backLeg,
 
-#tail{
+#tail,
+
+#shell{
 
 transition:.14s ease;
 
 }
 
-/* look */
+/* look back */
 
 .look{
 
@@ -364,7 +348,7 @@ scaleX(-1);
 
 transform:
 
-translateX(8px);
+translateX(6px);
 
 }
 
@@ -372,7 +356,7 @@ translateX(8px);
 
 transform:
 
-translateX(5px);
+translateX(4px);
 
 }
 
@@ -380,7 +364,7 @@ translateX(5px);
 
 transform:
 
-translateY(4px);
+translateY(3px);
 
 }
 
@@ -390,7 +374,7 @@ translateY(4px);
 
 transform:
 
-translateX(-30px);
+translateX(-20px);
 
 opacity:0;
 
@@ -400,7 +384,7 @@ opacity:0;
 
 transform:
 
-translateX(-24px);
+translateX(-18px);
 
 opacity:0;
 
@@ -412,7 +396,7 @@ opacity:0;
 
 transform:
 
-translateY(-18px);
+translateY(-14px);
 
 opacity:0;
 
@@ -422,7 +406,7 @@ opacity:0;
 
 transform:
 
-translateX(10px);
+translateX(8px);
 
 opacity:0;
 
@@ -450,17 +434,15 @@ inset:0;
 
 overflow:hidden;
 
-opacity:0;
-
 pointer-events:none;
+
+opacity:0;
 
 z-index:5000;
 
-transition:opacity .4s ease;
+transition:opacity .3s ease;
 
 }
-
-/* generic windows */
 
 .window{
 
@@ -474,13 +456,13 @@ border:
 
 1px solid rgba(255,255,255,.08);
 
-border-radius:12px;
+border-radius:10px;
 
 overflow:hidden;
 
 box-shadow:
 
-0 0 28px rgba(0,0,0,.72);
+0 0 22px rgba(0,0,0,.72);
 
 opacity:0;
 
@@ -504,7 +486,7 @@ scale(.96);
 
 }
 
-12%{
+10%{
 
 opacity:.92;
 
@@ -532,65 +514,67 @@ scale(1.03);
 
 .windowTop{
 
-height:32px;
+height:28px;
 
-padding-left:14px;
+padding-left:12px;
 
 display:flex;
 
 align-items:center;
 
-font-size:12px;
+font-size:11px;
 
-letter-spacing:.16em;
-
-color:
-
-rgba(255,255,255,.5);
+letter-spacing:.14em;
 
 background:
 
-rgba(255,255,255,.045);
+rgba(255,255,255,.04);
 
 border-bottom:
 
 1px solid rgba(255,255,255,.04);
 
+color:
+
+rgba(255,255,255,.48);
+
 }
 
 .windowBody{
 
-padding:14px;
+padding:12px;
 
-font-size:12px;
+font-size:11px;
 
-line-height:1.65;
+line-height:1.6;
 
 color:
 
-rgba(255,255,255,.64);
+rgba(255,255,255,.62);
 
 }
 
 .red{
 
-color:#ff3b3b;
+color:#ff4141;
 
 }
 
-.yellow{
+.amber{
 
-color:#c7c05f;
+color:#c8b86a;
 
 }
 
-/* toxic strips */
+/* strips */
 
 .strip{
 
 position:absolute;
 
-height:18px;
+height:14px;
+
+opacity:0;
 
 background:
 
@@ -600,33 +584,29 @@ linear-gradient(
 
 transparent,
 
-rgba(198,192,78,.3),
+rgba(196,176,92,.24),
 
 transparent
 
 );
 
-opacity:0;
-
 animation:
 
-stripMove .7s linear forwards;
+strip .7s linear forwards;
 
 }
 
-@keyframes stripMove{
+@keyframes strip{
 
 0%{
 
 opacity:0;
 
-transform:
-
-translateX(-40px);
+transform:translateX(-30px);
 
 }
 
-25%{
+20%{
 
 opacity:.7;
 
@@ -636,9 +616,7 @@ opacity:.7;
 
 opacity:0;
 
-transform:
-
-translateX(80px);
+transform:translateX(70px);
 
 }
 
@@ -654,9 +632,9 @@ SIGNAL LOST
 
 position:absolute;
 
-top:50%;
-
 left:50%;
+
+top:50%;
 
 transform:
 
@@ -664,17 +642,15 @@ translate(-50%,-50%);
 
 font-size:
 
-clamp(34px,6vw,82px);
+clamp(32px,6vw,74px);
 
 letter-spacing:.24em;
 
 opacity:0;
 
-color:#fff;
-
 text-shadow:
 
-0 0 16px rgba(255,255,255,.12);
+0 0 14px rgba(255,255,255,.12);
 
 }
 
@@ -702,7 +678,57 @@ pointer-events:none;
 
 z-index:8000;
 
-transition:opacity 1.4s ease;
+transition:opacity 1.2s ease;
+
+}
+
+/* symbols */
+
+#outer{
+
+position:absolute;
+
+width:min(72vw,360px);
+
+opacity:0;
+
+transition:
+
+opacity 1.4s ease,
+
+filter 1.4s ease,
+
+transform 1.4s ease;
+
+filter:
+
+drop-shadow(
+
+0 0 8px rgba(255,255,255,.03)
+
+);
+
+}
+
+#inner{
+
+position:absolute;
+
+width:min(42vw,190px);
+
+opacity:0;
+
+transition:
+
+opacity 1.8s ease;
+
+filter:
+
+drop-shadow(
+
+0 0 10px rgba(255,255,255,.05)
+
+);
 
 }
 
@@ -712,37 +738,37 @@ transition:opacity 1.4s ease;
 
 position:absolute;
 
-z-index:9999;
-
 font-size:
 
-clamp(18px,3vw,30px);
+clamp(18px,3vw,28px);
 
 letter-spacing:.34em;
 
-padding:34px;
+padding:30px;
 
 cursor:pointer;
 
 user-select:none;
 
-color:
-
-rgba(255,255,255,.78);
-
 opacity:0;
 
-transition:.12s linear;
+z-index:9000;
+
+color:
+
+rgba(255,255,255,.76);
+
+transition:
+
+opacity .15s linear;
 
 }
-
-/* heartbeat */
 
 .breathing{
 
 animation:
 
-heartbeat 2.1s ease-in-out infinite;
+heartbeat 2.2s ease-in-out infinite;
 
 }
 
@@ -750,7 +776,7 @@ heartbeat 2.1s ease-in-out infinite;
 
 0%{
 
-opacity:.46;
+opacity:.44;
 
 text-shadow:
 
@@ -760,21 +786,21 @@ text-shadow:
 
 18%{
 
-opacity:.96;
+opacity:.98;
 
 text-shadow:
 
-0 0 24px rgba(255,255,255,.2);
+0 0 22px rgba(255,255,255,.2);
 
 }
 
-38%{
+36%{
 
-opacity:.52;
+opacity:.5;
 
 text-shadow:
 
-0 0 8px rgba(255,255,255,.06);
+0 0 8px rgba(255,255,255,.05);
 
 }
 
@@ -784,21 +810,21 @@ opacity:.72;
 
 text-shadow:
 
-0 0 14px rgba(255,255,255,.1);
+0 0 14px rgba(255,255,255,.08);
 
 }
 
 }
 
-/* warmth */
+/* ripple */
 
-#warmth{
+#ripple{
 
 position:absolute;
 
-width:20px;
+width:18px;
 
-height:20px;
+height:18px;
 
 border-radius:50%;
 
@@ -806,11 +832,11 @@ opacity:0;
 
 pointer-events:none;
 
-z-index:9000;
+z-index:8800;
 
 filter:
 
-blur(6px);
+blur(5px);
 
 background:
 
@@ -818,113 +844,21 @@ radial-gradient(
 
 circle,
 
-rgba(255,226,180,.95) 0%,
+rgba(255,214,170,.95) 0%,
 
-rgba(255,125,50,.72) 26%,
+rgba(255,170,80,.72) 22%,
 
-rgba(120,25,10,.4) 52%,
+rgba(190,130,50,.16) 46%,
 
-rgba(0,0,0,.92) 74%,
-
-transparent 100%
+transparent 76%
 
 );
 
 }
 
-/* subtle center warmth */
+/* dormant signal */
 
-#centerWarmth{
-
-position:absolute;
-
-width:60vw;
-
-height:52vh;
-
-border-radius:50%;
-
-opacity:0;
-
-pointer-events:none;
-
-background:
-
-radial-gradient(
-
-circle,
-
-rgba(255,135,55,.06) 0%,
-
-rgba(255,135,55,.03) 32%,
-
-transparent 72%
-
-);
-
-filter:
-
-blur(28px);
-
-transition:opacity 2s ease;
-
-}
-
-/* symbol */
-
-#inner{
-
-position:absolute;
-
-width:min(42vw,220px);
-
-opacity:0;
-
-z-index:7000;
-
-filter:
-
-drop-shadow(
-
-0 0 10px rgba(255,255,255,.04)
-
-);
-
-transition:opacity 2s ease;
-
-}
-
-#outer{
-
-position:absolute;
-
-width:min(70vw,410px);
-
-opacity:0;
-
-z-index:6500;
-
-filter:
-
-drop-shadow(
-
-0 0 10px rgba(255,255,255,.03)
-
-);
-
-transition:
-
-opacity 1.2s ease,
-
-transform 1.2s ease,
-
-filter 1.2s ease;
-
-}
-
-/* survivor links */
-
-#links{
+#signalField{
 
 position:absolute;
 
@@ -934,61 +868,193 @@ opacity:0;
 
 pointer-events:none;
 
-z-index:8500;
-
-transition:opacity 2.4s ease;
+z-index:7600;
 
 }
 
-.link{
+/* subtle traces */
+
+.trace{
 
 position:absolute;
 
-display:block;
+height:1px;
 
-pointer-events:auto;
+background:
 
-opacity:.75;
+linear-gradient(
 
-filter:
+90deg,
 
-blur(.12px)
+transparent,
 
-drop-shadow(
+rgba(255,186,92,.14),
 
-0 0 12px rgba(255,140,55,.08)
+transparent
 
 );
 
-}
-
-#last{
-
-width:min(40vw,220px);
-
-left:10%;
-
-top:62%;
+opacity:.22;
 
 }
 
-#roach{
+/* channel links */
 
-width:min(46vw,260px);
+#channels{
 
-left:24%;
+position:absolute;
 
-top:79%;
+bottom:11vh;
+
+left:50%;
+
+transform:
+
+translateX(-50%);
+
+display:flex;
+
+flex-direction:column;
+
+gap:18px;
+
+opacity:0;
+
+transition:opacity 1.8s ease;
+
+z-index:9200;
 
 }
 
-#pass{
+.channel{
 
-width:min(28vw,170px);
+position:relative;
 
-left:70%;
+font-size:15px;
 
-top:77%;
+letter-spacing:.24em;
+
+color:
+
+rgba(255,255,255,.64);
+
+text-decoration:none;
+
+padding:
+
+10px 18px;
+
+border:
+
+1px solid rgba(255,255,255,.06);
+
+background:
+
+rgba(255,255,255,.015);
+
+border-radius:6px;
+
+overflow:hidden;
+
+transition:
+
+.18s ease;
+
+}
+
+/* interaction */
+
+.channel:hover,
+
+.channel:active{
+
+color:
+
+rgba(255,255,255,.92);
+
+border-color:
+
+rgba(255,210,140,.18);
+
+background:
+
+rgba(255,210,140,.03);
+
+box-shadow:
+
+0 0 14px rgba(255,186,92,.08);
+
+}
+
+/* pulse */
+
+.channel::after{
+
+content:"";
+
+position:absolute;
+
+left:-40%;
+
+top:0;
+
+width:30%;
+
+height:100%;
+
+background:
+
+linear-gradient(
+
+90deg,
+
+transparent,
+
+rgba(255,210,140,.08),
+
+transparent
+
+);
+
+transform:
+
+skewX(-20deg);
+
+opacity:0;
+
+}
+
+.channel:hover::after{
+
+animation:
+
+signalPass .8s linear;
+
+}
+
+@keyframes signalPass{
+
+0%{
+
+left:-40%;
+
+opacity:0;
+
+}
+
+20%{
+
+opacity:1;
+
+}
+
+100%{
+
+left:140%;
+
+opacity:0;
+
+}
 
 }
 
@@ -1008,13 +1074,13 @@ LOADER
 
 <div id="loader">
 
-<div id="bar">
+<div id="bar"></div>
 
-<div id="fill"></div>
+<div id="percent">
+
+0%
 
 </div>
-
-<div id="percent">0%</div>
 
 <div id="turtleWrap">
 
@@ -1022,39 +1088,37 @@ LOADER
 
 id="turtle"
 
-class="walking"
+class="walk"
 
-viewBox="0 0 150 90">
+viewBox="0 0 120 70">
 
-<!-- back leg -->
+<!-- legs -->
 
 <ellipse
 
 id="backLeg"
 
-cx="62"
+cx="48"
 
-cy="72"
+cy="54"
 
-rx="8"
+rx="5"
 
-ry="10"
+ry="7"
 
 fill="white"/>
-
-<!-- front leg -->
 
 <ellipse
 
 id="frontLeg"
 
-cx="96"
+cx="76"
 
-cy="72"
+cy="54"
 
-rx="8"
+rx="5"
 
-ry="10"
+ry="7"
 
 fill="white"/>
 
@@ -1064,25 +1128,25 @@ fill="white"/>
 
 id="tail"
 
-points="32,56 18,49 18,63"
+points="24,42 14,37 14,47"
 
 fill="white"/>
 
-<!-- shell bottom -->
+<!-- shell underside -->
 
 <ellipse
 
-cx="82"
+cx="62"
 
-cy="55"
+cy="40"
 
-rx="42"
+rx="28"
 
-ry="28"
+ry="16"
 
-fill="rgba(255,255,255,.92)"/>
+fill="rgba(255,255,255,.88)"/>
 
-<!-- shell top -->
+<!-- shell -->
 
 <path
 
@@ -1090,15 +1154,15 @@ id="shell"
 
 d="
 
-M44 55
+M34 40
 
-C44 34 61 22 84 22
+C34 24 48 14 66 14
 
-C108 22 124 36 124 55
+C86 14 98 25 98 40
 
-C124 74 108 87 84 87
+C98 55 86 66 66 66
 
-C61 87 44 75 44 55
+C48 66 34 56 34 40
 
 Z"
 
@@ -1108,49 +1172,25 @@ fill="white"/>
 
 <path
 
-d="M58 39 C76 33 96 33 112 42"
+d="M44 30 C58 24 76 24 90 31"
 
 stroke="black"
 
-stroke-width="3"
+stroke-width="2"
 
-opacity=".14"
+opacity=".12"
 
 fill="none"/>
 
 <path
 
-d="M54 58 C74 52 98 52 116 60"
+d="M42 44 C58 39 78 39 92 46"
 
 stroke="black"
 
-stroke-width="3"
+stroke-width="2"
 
-opacity=".14"
-
-fill="none"/>
-
-<path
-
-d="M73 24 C67 44 67 67 72 86"
-
-stroke="black"
-
-stroke-width="3"
-
-opacity=".14"
-
-fill="none"/>
-
-<path
-
-d="M95 24 C89 44 89 67 94 86"
-
-stroke="black"
-
-stroke-width="3"
-
-opacity=".14"
+opacity=".12"
 
 fill="none"/>
 
@@ -1160,15 +1200,15 @@ fill="none"/>
 
 id="neck"
 
-x="116"
+x="92"
 
-y="48"
+y="35"
 
-width="20"
+width="14"
 
-height="12"
+height="8"
 
-rx="6"
+rx="4"
 
 fill="white"/>
 
@@ -1178,11 +1218,11 @@ fill="white"/>
 
 id="head"
 
-cx="140"
+cx="110"
 
-cy="54"
+cy="39"
 
-r="12"
+r="8"
 
 fill="white"/>
 
@@ -1190,15 +1230,15 @@ fill="white"/>
 
 <circle
 
-cx="144"
+cx="113"
 
-cy="51"
+cy="37"
 
-r="2.2"
+r="1.4"
 
 fill="black"
 
-opacity=".32"/>
+opacity=".3"/>
 
 </svg>
 
@@ -1224,17 +1264,25 @@ SIGNAL LOST
 
 <!-- =========================================
 
-SIGNAL SPACE
+FINAL SIGNAL
 
 ========================================= -->
 
 <div id="signalSpace">
 
-<div id="centerWarmth"></div>
+<div id="signalField"></div>
 
-<img id="outer" src="Outer17-final.png">
+<img
 
-<img id="inner" src="Inner17-final.png">
+id="outer"
+
+src="Outer17-final.png">
+
+<img
+
+id="inner"
+
+src="Inner17-final.png">
 
 <div id="reconnect">
 
@@ -1242,25 +1290,25 @@ RECONNECT
 
 </div>
 
-<div id="warmth"></div>
+<div id="ripple"></div>
 
-<div id="links">
+<div id="channels">
 
-<a id="last" class="link" href="#">
+<a class="channel" href="#">
 
-<img src="lastsesh17.png" width="100%">
-
-</a>
-
-<a id="roach" class="link" href="#">
-
-<img src="RoachTray17.png" width="100%">
+LAST SESH
 
 </a>
 
-<a id="pass" class="link" href="#">
+<a class="channel" href="#">
 
-<img src="PassItBack17.png" width="100%">
+ROACH TRAY
+
+</a>
+
+<a class="channel" href="#">
+
+PASS IT BACK
 
 </a>
 
@@ -1274,13 +1322,37 @@ RECONNECT
 
 /* =========================================
 
-ELEMENTS
+SEGMENTS
 
 ========================================= */
 
-const fill =
+const bar =
 
-document.getElementById("fill");
+document.getElementById("bar");
+
+for(let i=0;i<17;i++){
+
+const seg =
+
+document.createElement("div");
+
+seg.className =
+
+"segment";
+
+bar.appendChild(seg);
+
+}
+
+const segments =
+
+document.querySelectorAll(".segment");
+
+/* =========================================
+
+ELEMENTS
+
+========================================= */
 
 const percent =
 
@@ -1298,17 +1370,21 @@ const chaos =
 
 document.getElementById("chaos");
 
-const reconnect =
+const signalLost =
 
-document.getElementById("reconnect");
+document.getElementById("signalLost");
 
 const signalSpace =
 
 document.getElementById("signalSpace");
 
-const warmth =
+const reconnect =
 
-document.getElementById("warmth");
+document.getElementById("reconnect");
+
+const ripple =
+
+document.getElementById("ripple");
 
 const outer =
 
@@ -1318,17 +1394,13 @@ const inner =
 
 document.getElementById("inner");
 
-const links =
+const channels =
 
-document.getElementById("links");
+document.getElementById("channels");
 
-const centerWarmth =
+const signalField =
 
-document.getElementById("centerWarmth");
-
-const signalLost =
-
-document.getElementById("signalLost");
+document.getElementById("signalField");
 
 /* =========================================
 
@@ -1344,11 +1416,11 @@ let gasped = false;
 
 let retracted = false;
 
-const loading =
+const loop =
 
 setInterval(()=>{
 
-load += .52;
+load++;
 
 if(load > 17){
 
@@ -1356,17 +1428,27 @@ load = 17;
 
 }
 
-fill.style.width =
+/* segments */
 
-load + "%";
+segments.forEach((s,i)=>{
+
+if(i < load){
+
+s.classList.add("active");
+
+}
+
+});
+
+/* percent */
 
 percent.innerText =
 
-Math.floor(load) + "%";
+load + "%";
 
-/* twitch */
+/* look back */
 
-if(load >= 15.5 && !looked){
+if(load >= 15 && !looked){
 
 looked = true;
 
@@ -1376,7 +1458,7 @@ setTimeout(()=>{
 
 turtle.classList.remove(
 
-"walking"
+"walk"
 
 );
 
@@ -1392,7 +1474,7 @@ turtle.classList.add(
 
 /* gasp */
 
-if(load >= 16.05 && !gasped){
+if(load >= 16 && !gasped){
 
 gasped = true;
 
@@ -1406,7 +1488,7 @@ turtle.classList.add(
 
 /* retract */
 
-if(load >= 16.55 && !retracted){
+if(load >= 17 && !retracted){
 
 retracted = true;
 
@@ -1422,23 +1504,17 @@ turtle.classList.add(
 
 );
 
-}
-
-/* chaos */
-
-if(load >= 17){
-
-clearInterval(loading);
+clearInterval(loop);
 
 setTimeout(()=>{
 
 startChaos();
 
-},1000);
+},900);
 
 }
 
-},55);
+},260);
 
 /* =========================================
 
@@ -1482,13 +1558,11 @@ chaos.style.opacity = 1;
 
 let stage = 0;
 
-const loop =
+const chaosLoop =
 
 setInterval(()=>{
 
 stage++;
-
-/* recursive windows */
 
 for(let i=0;i<Math.min(stage,5);i++){
 
@@ -1496,29 +1570,23 @@ spawnWindow();
 
 }
 
-/* toxic strips */
-
 if(stage > 5){
 
 spawnStrip();
 
 }
 
-/* signal lost */
-
 if(stage > 7){
 
-pulseSignalLost();
+pulseSignal();
 
 }
 
-/* collapse */
+if(stage >= 15){
 
-if(stage >= 16){
+clearInterval(chaosLoop);
 
-clearInterval(loop);
-
-collapseChaos();
+collapse();
 
 }
 
@@ -1546,11 +1614,11 @@ headline:"TOO MANY ACTIVE MASKS",
 
 body:[
 
-"original input buried",
+"authentic signal buried",
 
-"self-image loop active",
+"identity loop active",
 
-"authenticity unreadable"
+"synthetic behavior detected"
 
 ]
 
@@ -1578,39 +1646,19 @@ body:[
 
 {
 
-title:"toxic stream",
+title:"transmission",
 
-color:"yellow",
+color:"amber",
 
-headline:"TRANSMISSION POISONED",
-
-body:[
-
-"A7X19 BZ0% C17",
-
-"M4SK NULL 5IGNAL",
-
-"17 17 17"
-
-]
-
-},
-
-{
-
-title:"system failure",
-
-color:"red",
-
-headline:"CONTAINMENT FAILURE",
+headline:"SIGNAL STILL ACTIVE",
 
 body:[
 
-"mask protocol engaged",
+"frequency surviving",
 
-"original signal suppressed",
+"hidden packet received",
 
-"synthetic layer active"
+"reconnect possible"
 
 ]
 
@@ -1636,19 +1684,19 @@ win.className =
 
 win.style.width =
 
-(250 + Math.random()*260)+"px";
+(220 + Math.random()*240)+"px";
 
 win.style.height =
 
-(130 + Math.random()*160)+"px";
+(120 + Math.random()*120)+"px";
 
 win.style.left =
 
-(Math.random()*70)+"vw";
+(Math.random()*72)+"vw";
 
 win.style.top =
 
-(Math.random()*68)+"vh";
+(Math.random()*70)+"vh";
 
 win.style.setProperty(
 
@@ -1662,7 +1710,7 @@ win.style.setProperty(
 
 "--moveY",
 
-`${60 + Math.random()*140}px`
+`${50 + Math.random()*120}px`
 
 );
 
@@ -1704,13 +1752,13 @@ setTimeout(()=>{
 
 win.remove();
 
-},2200);
+},2000);
 
 }
 
 /* =========================================
 
-TOXIC STRIPS
+STRIPS
 
 ========================================= */
 
@@ -1734,7 +1782,7 @@ strip.style.top =
 
 strip.style.width =
 
-(120 + Math.random()*320)+"px";
+(100 + Math.random()*240)+"px";
 
 chaos.appendChild(strip);
 
@@ -1742,7 +1790,7 @@ setTimeout(()=>{
 
 strip.remove();
 
-},800);
+},700);
 
 }
 
@@ -1752,11 +1800,11 @@ SIGNAL LOST
 
 ========================================= */
 
-function pulseSignalLost(){
+function pulseSignal(){
 
 signalLost.style.opacity =
 
-.86;
+.84;
 
 signalLost.style.transform =
 
@@ -1784,15 +1832,93 @@ COLLAPSE
 
 ========================================= */
 
-function collapseChaos(){
+function collapse(){
 
 chaos.style.opacity = 0;
 
 setTimeout(()=>{
 
-showReconnect();
+showSignal();
 
-},1200);
+},1100);
+
+}
+
+/* =========================================
+
+FINAL SIGNAL
+
+========================================= */
+
+function showSignal(){
+
+signalSpace.style.opacity = 1;
+
+signalSpace.style.pointerEvents =
+
+"auto";
+
+/* symbols */
+
+outer.style.opacity = .16;
+
+inner.style.opacity = .16;
+
+/* reconnect */
+
+reconnect.style.opacity = .76;
+
+reconnect.classList.add(
+
+"breathing"
+
+);
+
+/* dormant traces */
+
+spawnDormantField();
+
+}
+
+/* =========================================
+
+DORMANT FIELD
+
+========================================= */
+
+function spawnDormantField(){
+
+signalField.style.opacity = 1;
+
+for(let i=0;i<18;i++){
+
+const t =
+
+document.createElement("div");
+
+t.className =
+
+"trace";
+
+t.style.width =
+
+(40 + Math.random()*160)+"px";
+
+t.style.left =
+
+(Math.random()*100)+"vw";
+
+t.style.top =
+
+(Math.random()*100)+"vh";
+
+t.style.opacity =
+
+.08 + Math.random()*.08;
+
+signalField.appendChild(t);
+
+}
 
 }
 
@@ -1802,47 +1928,13 @@ RECONNECT
 
 ========================================= */
 
-function showReconnect(){
-
-signalSpace.style.opacity = 1;
-
-signalSpace.style.pointerEvents =
-
-"auto";
-
-reconnect.style.opacity = .78;
-
-reconnect.classList.add(
-
-"breathing"
-
-);
-
-/* symbol emerges */
-
-setTimeout(()=>{
-
-inner.style.opacity = .18;
-
-outer.style.opacity = .12;
-
-},400);
-
-}
-
-/* =========================================
-
-CLICK
-
-========================================= */
-
 reconnect.addEventListener(
 
 "click",
 
 ()=>{
 
-/* kill reconnect */
+/* remove reconnect */
 
 reconnect.classList.remove(
 
@@ -1856,11 +1948,11 @@ reconnect.style.pointerEvents =
 
 reconnect.style.opacity = 0;
 
-/* warmth appears */
+/* ripple */
 
-warmth.style.opacity = 1;
+ripple.style.opacity = 1;
 
-warmth.animate([
+ripple.animate([
 
 {
 
@@ -1880,7 +1972,7 @@ opacity:1
 
 {
 
-transform:"scale(6)",
+transform:"scale(10)",
 
 opacity:.18
 
@@ -1888,15 +1980,15 @@ opacity:.18
 
 {
 
-transform:"scale(8)",
+transform:"scale(14)",
 
-opacity:.08
+opacity:0
 
 }
 
 ],{
 
-duration:2500,
+duration:1800,
 
 fill:"forwards",
 
@@ -1904,67 +1996,67 @@ easing:"ease-out"
 
 });
 
-/* warmth in center */
+/* wake traces */
 
-centerWarmth.style.opacity = 1;
+document.querySelectorAll(".trace")
 
-/* outer pyramid dissolves */
+.forEach((t,i)=>{
+
+setTimeout(()=>{
+
+t.animate([
+
+{
+
+opacity:.08
+
+},
+
+{
+
+opacity:.36
+
+},
+
+{
+
+opacity:.12
+
+}
+
+],{
+
+duration:1400
+
+});
+
+},i*40);
+
+});
+
+/* dissolve outer */
 
 outer.style.opacity = 0;
-
-outer.style.transform =
-
-"scale(1.08)";
 
 outer.style.filter =
 
 "blur(4px)";
 
+outer.style.transform =
+
+"scale(1.08)";
+
 /* inner survives */
 
 inner.style.opacity = .32;
 
-/* smudge becomes dark */
+/* reveal channels */
 
 setTimeout(()=>{
 
-warmth.style.background =
+channels.style.opacity = 1;
 
-`
-
-radial-gradient(
-
-circle,
-
-rgba(0,0,0,.96) 0%,
-
-rgba(0,0,0,.72) 44%,
-
-transparent 82%
-
-)
-
-`;
-
-warmth.style.filter =
-
-"blur(8px)";
-
-warmth.style.opacity = .92;
-
-},2100);
-
-/* survivor links */
-
-setTimeout(()=>{
-
-links.style.opacity = 1;
-
-links.style.pointerEvents =
-
-"auto";
-
-},1100);
+},700);
 
 });
 
