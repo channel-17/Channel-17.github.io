@@ -4,73 +4,35 @@
 
 <head>
 
-<meta charset="UTF-8" />
+<meta charset="UTF-8"/>
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-<title>Little Homie Test</title>
+<title>Little Homie V2</title>
 
 <style>
 
 *{margin:0;padding:0;box-sizing:border-box}
 
-html,body{
+html,body{width:100%;height:100%;overflow:hidden;background:#000;font-family:monospace;color:white}
 
-  width:100%;
+#stage{position:relative;width:100%;height:100%}
 
-  height:100%;
+#wrap{
 
-  overflow:hidden;
-
-  background:#000;
-
-  font-family:Arial,Helvetica,sans-serif;
-
-}
-
-body{
-
-  display:flex;
-
-  justify-content:center;
-
-  align-items:center;
-
-  color:white;
-
-}
-
-#stage{
-
-  position:relative;
-
-  width:100%;
-
-  height:100%;
-
-}
-
-#loaderWrap{
-
-  position:absolute;
-
-  left:50%;
-
-  top:42%;
+  position:absolute;left:50%;top:43%;
 
   transform:translateX(-50%);
 
-  width:min(76vw,380px);
+  width:min(76vw,390px);
 
 }
 
 #bar{
 
-  width:100%;
+  position:relative;width:100%;height:28px;
 
-  height:24px;
-
-  border:1px solid rgba(255,255,255,.16);
+  border:1px solid rgba(255,255,255,.2);
 
   background:rgba(255,255,255,.025);
 
@@ -80,57 +42,33 @@ body{
 
 #fill{
 
-  width:0%;
-
-  height:100%;
+  height:100%;width:0%;
 
   background:repeating-linear-gradient(
 
     90deg,
 
-    rgba(255,255,255,.95) 0px,
+    #fff 0 10px,
 
-    rgba(255,255,255,.95) 10px,
-
-    transparent 10px,
-
-    transparent 15px
+    transparent 10px 15px
 
   );
 
-  transition:width .35s linear;
+  transition:width .55s linear;
 
 }
 
-#percent{
+#pct{
 
-  margin-top:14px;
+  position:absolute;inset:0;
 
-  text-align:center;
+  display:flex;align-items:center;justify-content:center;
 
-  color:rgba(255,255,255,.55);
+  color:rgba(255,255,255,.58);
 
-  font-size:14px;
+  font-size:13px;letter-spacing:.22em;
 
-  letter-spacing:.24em;
-
-  font-weight:bold;
-
-}
-
-#lane{
-
-  position:absolute;
-
-  left:50%;
-
-  top:52%;
-
-  transform:translateX(-50%);
-
-  width:min(76vw,380px);
-
-  height:80px;
+  pointer-events:none;
 
 }
 
@@ -138,89 +76,73 @@ body{
 
   position:absolute;
 
-  left:0;
+  left:50%;top:54%;
 
-  top:16px;
+  transform:translateX(-50%);
 
-  width:64px;
-
-  height:42px;
-
-  transition:left .45s linear, transform .35s ease;
-
-}
-
-.sprite{
-
-  width:64px;
-
-  height:42px;
+  width:96px;height:63px;
 
   image-rendering:pixelated;
 
-  overflow:visible;
+}
+
+svg{width:96px;height:63px;overflow:visible;image-rendering:pixelated}
+
+.p{fill:#fff}
+
+.d{fill:rgba(255,255,255,.78)}
+
+.walking{animation:bodyBob 1.1s steps(2,end) infinite}
+
+@keyframes bodyBob{
+
+  0%,100%{margin-top:0}
+
+  50%{margin-top:2px}
 
 }
 
-.pixel{
+.jitter{animation:jitter .12s steps(2,end) infinite}
 
-  fill:#fff;
+@keyframes jitter{
 
-}
+  0%{transform:translateX(-50%) translateX(0)}
 
-.dim{
+  50%{transform:translateX(-50%) translateX(1px)}
 
-  fill:rgba(255,255,255,.82);
-
-}
-
-#homie.shake{
-
-  animation:shellJitter .11s steps(2,end) infinite;
+  100%{transform:translateX(-50%) translateX(-1px)}
 
 }
 
-@keyframes shellJitter{
+#chaos{
 
-  0%{transform:translateX(0)}
+  position:absolute;inset:0;background:#000;opacity:0;
 
-  25%{transform:translateX(1px)}
-
-  50%{transform:translateX(-1px)}
-
-  75%{transform:translateX(1px)}
-
-  100%{transform:translateX(0)}
+  pointer-events:none;transition:opacity 1.1s ease;
 
 }
 
-#fade{
+#chaosText{
 
-  position:absolute;
+  position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
 
-  inset:0;
-
-  background:#000;
+  color:rgba(255,40,40,.35);letter-spacing:.35em;font-size:18px;
 
   opacity:0;
 
-  pointer-events:none;
-
-  transition:opacity 1.6s ease;
-
 }
 
-.flash{
+.flash{animation:flash .8s infinite}
 
-  animation:flash .75s infinite;
+@keyframes flash{50%{opacity:.28}}
 
-}
+.run{animation:runAway 3s linear forwards}
 
-@keyframes flash{
+@keyframes runAway{
 
-  0%,100%{opacity:1}
+  from{left:50%}
 
-  50%{opacity:.25}
+  to{left:110%}
 
 }
 
@@ -232,249 +154,231 @@ body{
 
 <div id="stage">
 
-  <div id="loaderWrap">
+  <div id="wrap">
 
-    <div id="bar"><div id="fill"></div></div>
+    <div id="bar">
 
-    <div id="percent">0%</div>
+      <div id="fill"></div>
 
-  </div>
+      <div id="pct">0%</div>
 
-  <div id="lane">
-
-    <div id="homie"></div>
+    </div>
 
   </div>
 
-  <div id="fade"></div>
+  <div id="homie" class="walking"></div>
+
+  <div id="chaos">
+
+    <div id="chaosText">CHAOS</div>
+
+  </div>
 
 </div>
 
 <script>
 
-const homie = document.getElementById("homie");
+const homie=document.getElementById("homie");
 
-const fill = document.getElementById("fill");
+const fill=document.getElementById("fill");
 
-const percent = document.getElementById("percent");
+const pct=document.getElementById("pct");
 
-const fade = document.getElementById("fade");
+const chaos=document.getElementById("chaos");
 
-let p = 0;
+const chaosText=document.getElementById("chaosText");
 
-let x = 0;
+let percent=0;
 
-let frame = 0;
+let frame=0;
 
-function svg(blocks){
+function draw(blocks){
 
-  return `
+  homie.innerHTML=`<svg viewBox="0 0 32 21">
 
-  <svg class="sprite" viewBox="0 0 32 21">
-
-    ${blocks.map(b=>`<rect class="${b[4]||"pixel"}" x="${b[0]}" y="${b[1]}" width="${b[2]}" height="${b[3]}"/>`).join("")}
+    ${blocks.map(b=>`<rect class="${b[4]||"p"}" x="${b[0]}" y="${b[1]}" width="${b[2]}" height="${b[3]}"/>`).join("")}
 
   </svg>`;
 
 }
 
-const walk1 = [
+const walk1=[
 
-  [8,9,2,2],[10,8,3,2],[13,7,8,2],[21,8,3,2],[24,9,2,2],
+[7,8,2,2],[9,7,3,2],[12,6,8,2],[20,7,3,2],[23,8,2,2],
 
-  [9,11,16,2],[8,13,18,2],[10,15,14,2],
+[8,10,17,2],[7,12,19,2],[9,14,15,2],
 
-  [11,10,2,1,"dim"],[15,9,2,1,"dim"],[19,10,2,1,"dim"],
+[11,9,2,1,"d"],[15,8,2,1,"d"],[19,9,2,1,"d"],
 
-  [5,12,3,2],[3,11,2,2],
+[26,11,4,2],[30,10,2,2],
 
-  [26,12,4,2],[30,11,2,2],
+[4,13,3,2],[2,12,2,2],
 
-  [11,17,2,3],[21,17,2,3],
-
-  [7,15,2,2]
+[11,16,2,3],[21,16,2,3]
 
 ];
 
-const walk2 = [
+const walk2=[
 
-  [8,9,2,2],[10,8,3,2],[13,7,8,2],[21,8,3,2],[24,9,2,2],
+[7,8,2,2],[9,7,3,2],[12,6,8,2],[20,7,3,2],[23,8,2,2],
 
-  [9,11,16,2],[8,13,18,2],[10,15,14,2],
+[8,10,17,2],[7,12,19,2],[9,14,15,2],
 
-  [11,10,2,1,"dim"],[15,9,2,1,"dim"],[19,10,2,1,"dim"],
+[11,9,2,1,"d"],[15,8,2,1,"d"],[19,9,2,1,"d"],
 
-  [5,12,3,2],[3,11,2,2],
+[26,11,4,2],[30,10,2,2],
 
-  [26,12,4,2],[30,11,2,2],
+[4,13,3,2],[2,12,2,2],
 
-  [13,17,2,3],[19,17,2,3],
-
-  [7,15,2,2]
+[13,16,2,3],[19,16,2,3]
 
 ];
 
-const look = [
+const lookBack=[
 
-  [8,9,2,2],[10,8,3,2],[13,7,8,2],[21,8,3,2],[24,9,2,2],
+[7,8,2,2],[9,7,3,2],[12,6,8,2],[20,7,3,2],[23,8,2,2],
 
-  [9,11,16,2],[8,13,18,2],[10,15,14,2],
+[8,10,17,2],[7,12,19,2],[9,14,15,2],
 
-  [11,10,2,1,"dim"],[15,9,2,1,"dim"],[19,10,2,1,"dim"],
+[11,9,2,1,"d"],[15,8,2,1,"d"],[19,9,2,1,"d"],
 
-  [1,11,2,2],[3,12,4,2],
+[0,10,2,2],[2,11,4,2],
 
-  [26,13,3,2],
+[27,14,2,2],
 
-  [12,17,2,3],[21,17,2,3],
-
-  [27,15,2,2]
+[11,16,2,3],[21,16,2,3]
 
 ];
 
-const neck = [
+const peek=[
 
-  [8,9,2,2],[10,8,3,2],[13,7,8,2],[21,8,3,2],[24,9,2,2],
+[7,8,2,2],[9,7,3,2],[12,6,8,2],[20,7,3,2],[23,8,2,2],
 
-  [9,11,16,2],[8,13,18,2],[10,15,14,2],
+[8,10,17,2],[7,12,19,2],[9,14,15,2],
 
-  [11,10,2,1,"dim"],[15,9,2,1,"dim"],[19,10,2,1,"dim"],
+[11,9,2,1,"d"],[15,8,2,1,"d"],[19,9,2,1,"d"],
 
-  [1,6,2,2],[3,8,2,2],[5,10,2,2],
+[0,5,2,2],[2,7,2,2],[4,9,2,2],[6,11,2,2],
 
-  [26,13,3,2],
+[27,14,2,2],
 
-  [12,17,2,3],[21,17,2,3],
-
-  [27,15,2,2]
+[11,16,2,3],[21,16,2,3]
 
 ];
 
-const shell = [
+const shell=[
 
-  [8,9,2,2],[10,8,3,2],[13,7,8,2],[21,8,3,2],[24,9,2,2],
+[7,8,2,2],[9,7,3,2],[12,6,8,2],[20,7,3,2],[23,8,2,2],
 
-  [9,11,16,2],[8,13,18,2],[10,15,14,2],
+[8,10,17,2],[7,12,19,2],[9,14,15,2],
 
-  [11,10,2,1,"dim"],[15,9,2,1,"dim"],[19,10,2,1,"dim"],
-
-  [7,15,2,2]
+[11,9,2,1,"d"],[15,8,2,1,"d"],[19,9,2,1,"d"]
 
 ];
 
-function setSprite(type){
+function walk(){
 
-  if(type==="walk"){
-
-    homie.innerHTML = svg(frame % 2 ? walk1 : walk2);
-
-    frame++;
-
-  }
-
-  if(type==="look") homie.innerHTML = svg(look);
-
-  if(type==="neck") homie.innerHTML = svg(neck);
-
-  if(type==="shell") homie.innerHTML = svg(shell);
+  draw(frame++%2?walk1:walk2);
 
 }
 
-setSprite("walk");
+walk();
 
-const ticker = setInterval(()=>{
+const walkAnim=setInterval(walk,650);
 
-  p += 1;
+const load=setInterval(()=>{
 
-  x += 10;
+  percent++;
 
-  fill.style.width = p + "%";
+  fill.style.width=percent+"%";
 
-  percent.textContent = p + "%";
+  pct.textContent=percent+"%";
 
-  homie.style.left = x + "px";
+  if(percent===16){
 
-  setSprite("walk");
+    clearInterval(load);
 
-  if(p === 16){
+    homie.classList.remove("walking");
 
-    clearInterval(ticker);
+    clearInterval(walkAnim);
 
-    setTimeout(()=>setSprite("look"),450);
-
-    setTimeout(()=>{
-
-      p = 17;
-
-      fill.style.width = p + "%";
-
-      percent.textContent = p + "%";
-
-    },700);
+    setTimeout(()=>draw(lookBack),500);
 
     setTimeout(()=>{
 
-      p = 18;
+      percent=17;
 
-      fill.style.width = p + "%";
+      fill.style.width="17%";
 
-      percent.textContent = p + "%";
+      pct.textContent="17%";
 
-    },1050);
-
-    setTimeout(()=>setSprite("neck"),1250);
+    },900);
 
     setTimeout(()=>{
 
-      setSprite("shell");
+      percent=18;
 
-      homie.classList.add("shake");
+      fill.style.width="18%";
 
-    },2050);
+      pct.textContent="18%";
 
-    setTimeout(()=>fade.style.opacity = 1,3600);
+    },1350);
 
-    setTimeout(recovery,6200);
+    setTimeout(()=>draw(peek),1650);
+
+    setTimeout(()=>{
+
+      draw(shell);
+
+      homie.classList.add("jitter");
+
+    },2450);
+
+    setTimeout(()=>{
+
+      chaos.style.opacity=1;
+
+      chaosText.style.opacity=.55;
+
+    },3600);
+
+    setTimeout(recovery,6600);
 
   }
 
-},640);
+},520);
 
 function recovery(){
 
-  homie.classList.remove("shake");
+  chaos.style.opacity=0;
 
-  fade.style.opacity = 0;
+  chaosText.style.opacity=0;
 
-  p = 100;
+  homie.classList.remove("jitter");
 
-  fill.style.width = "100%";
+  fill.style.width="100%";
 
-  percent.textContent = "100%";
+  pct.textContent="100%";
 
-  percent.classList.add("flash");
+  pct.classList.add("flash");
 
-  homie.style.left = "50%";
+  draw(shell);
 
-  homie.style.transform = "translateX(-50%)";
-
-  setSprite("shell");
-
-  setTimeout(()=>setSprite("neck"),1200);
-
-  setTimeout(()=>setSprite("walk"),2200);
+  setTimeout(()=>draw(peek),1000);
 
   setTimeout(()=>{
 
-    homie.style.transition = "left 5s linear";
+    homie.classList.add("walking");
 
-    homie.style.transform = "translateX(0)";
+    setInterval(walk,420);
 
-    homie.style.left = "100%";
+  },1800);
 
-    setInterval(()=>setSprite("walk"),700);
+  setTimeout(()=>{
 
-  },2800);
+    homie.classList.add("run");
+
+  },2300);
 
 }
 
