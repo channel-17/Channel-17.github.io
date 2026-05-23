@@ -6,13 +6,21 @@
 
 <meta charset="UTF-8" />
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-<title>Little Homie Prototype</title>
+<title>Little Homie Stage 1</title>
 
 <style>
 
-*{margin:0;padding:0;box-sizing:border-box}
+*{
+
+  margin:0;
+
+  padding:0;
+
+  box-sizing:border-box;
+
+}
 
 html,body{
 
@@ -26,8 +34,6 @@ html,body{
 
   font-family:Arial,Helvetica,sans-serif;
 
-  color:#fff;
-
 }
 
 #stage{
@@ -38,59 +44,67 @@ html,body{
 
   height:100%;
 
-  overflow:hidden;
-
 }
 
-/* LOADER */
+/* =========================
+
+   LOADER
+
+========================= */
 
 #loaderWrap{
 
   position:absolute;
 
+  width:min(76vw,420px);
+
   left:50%;
 
-  top:40%;
+  top:42%;
 
   transform:translateX(-50%);
 
-  width:min(76vw,420px);
-
 }
 
-#bar{
-
-  position:relative;
+#loader{
 
   width:100%;
 
-  height:28px;
+  height:26px;
 
-  border:1px solid rgba(255,255,255,.16);
-
-  background:rgba(255,255,255,.025);
+  border:1px solid rgba(255,255,255,.15);
 
   overflow:hidden;
+
+  position:relative;
+
+  background:rgba(255,255,255,.02);
 
 }
 
 #fill{
 
-  height:100%;
-
   width:0%;
 
-  background:repeating-linear-gradient(
+  height:100%;
+
+  background:
+
+  repeating-linear-gradient(
 
     90deg,
 
-    #fff 0 12px,
+    #fff 0px,
 
-    transparent 12px 17px
+    #fff 12px,
+
+    transparent 12px,
+
+    transparent 17px
 
   );
 
-  transition:width .5s linear;
+  transition:width .58s linear;
 
 }
 
@@ -108,15 +122,35 @@ html,body{
 
   font-size:13px;
 
+  letter-spacing:.25em;
+
   font-weight:bold;
 
-  letter-spacing:.24em;
-
-  color:rgba(255,255,255,.48);
+  color:rgba(255,255,255,.45);
 
 }
 
-/* LITTLE HOMIE */
+/* =========================
+
+   LITTLE HOMIE
+
+========================= */
+
+#lane{
+
+  position:absolute;
+
+  width:min(76vw,420px);
+
+  height:100px;
+
+  left:50%;
+
+  top:52%;
+
+  transform:translateX(-50%);
+
+}
 
 #homie{
 
@@ -124,29 +158,33 @@ html,body{
 
   left:50%;
 
-  top:54%;
+  top:10px;
 
-  width:84px;
+  transform:translateX(-50%);
 
-  height:50px;
+  width:92px;
 
-  transform:translate(-50%,-50%);
+  height:58px;
 
-  transition:transform .22s ease, opacity .2s ease;
+  animation:
+
+    bob 1.2s steps(2,end) infinite;
 
 }
+
+/* body */
 
 .body{
 
   position:absolute;
 
-  left:18px;
+  left:22px;
 
-  top:14px;
+  top:18px;
 
-  width:42px;
+  width:44px;
 
-  height:25px;
+  height:24px;
 
   background:#fff;
 
@@ -154,13 +192,15 @@ html,body{
 
 }
 
+/* head */
+
 .head{
 
   position:absolute;
 
-  left:58px;
+  left:63px;
 
-  top:18px;
+  top:21px;
 
   width:16px;
 
@@ -170,17 +210,17 @@ html,body{
 
   border-radius:50%;
 
-  transition:.25s ease;
-
 }
+
+/* eye */
 
 .eye{
 
   position:absolute;
 
-  right:5px;
+  right:4px;
 
-  top:6px;
+  top:5px;
 
   width:3px;
 
@@ -192,13 +232,15 @@ html,body{
 
 }
 
+/* tail */
+
 .tail{
 
   position:absolute;
 
-  left:10px;
+  left:14px;
 
-  top:25px;
+  top:29px;
 
   width:0;
 
@@ -212,6 +254,8 @@ html,body{
 
 }
 
+/* legs */
+
 .leg{
 
   position:absolute;
@@ -220,203 +264,63 @@ html,body{
 
   height:11px;
 
-  top:38px;
-
   background:#fff;
 
   border-radius:4px;
 
-}
-
-.leg1{left:26px}
-
-.leg2{left:46px}
-
-/* mechanical walk */
-
-.walk{
-
-  animation:homieBob 1.25s steps(2,end) infinite;
+  top:42px;
 
 }
 
-.walk .leg1{
+.leg1{
 
-  animation:stepA 1.25s steps(2,end) infinite;
+  left:30px;
 
-}
-
-.walk .leg2{
-
-  animation:stepB 1.25s steps(2,end) infinite;
+  animation:legA 1.2s steps(2,end) infinite;
 
 }
 
-@keyframes homieBob{
+.leg2{
 
-  50%{margin-top:2px}
+  left:50px;
 
-}
-
-@keyframes stepA{
-
-  50%{transform:translateX(-3px)}
+  animation:legB 1.2s steps(2,end) infinite;
 
 }
 
-@keyframes stepB{
+/* =========================
 
-  50%{transform:translateX(3px)}
+   MOTION
 
-}
+========================= */
 
-/* look back */
+@keyframes bob{
 
-.look .head{
+  50%{
 
-  left:8px;
+    margin-top:2px;
 
-}
-
-.look .eye{
-
-  left:5px;
-
-  right:auto;
+  }
 
 }
 
-/* cautious peek */
+@keyframes legA{
 
-.peek .head{
+  50%{
 
-  left:7px;
+    transform:translateX(-3px);
 
-  top:7px;
-
-}
-
-/* shell */
-
-.hide .head,
-
-.hide .tail,
-
-.hide .leg{
-
-  opacity:0;
+  }
 
 }
 
-.hide .body{
+@keyframes legB{
 
-  transform:scale(.98);
+  50%{
 
-}
+    transform:translateX(3px);
 
-/* nervous shell */
-
-.jitter{
-
-  animation:jitter .11s steps(2,end) infinite;
-
-}
-
-@keyframes jitter{
-
-  0%{transform:translate(-50%,-50%) translateX(0)}
-
-  50%{transform:translate(-50%,-50%) translateX(1px)}
-
-  100%{transform:translate(-50%,-50%) translateX(-1px)}
-
-}
-
-/* chaos placeholder */
-
-#chaos{
-
-  position:absolute;
-
-  inset:0;
-
-  background:#000;
-
-  opacity:0;
-
-  pointer-events:none;
-
-  transition:opacity 1.2s ease;
-
-}
-
-.chaosText{
-
-  position:absolute;
-
-  left:50%;
-
-  top:50%;
-
-  transform:translate(-50%,-50%);
-
-  color:rgba(255,60,60,.35);
-
-  font-size:18px;
-
-  letter-spacing:.3em;
-
-}
-
-/* 100% */
-
-.flash{
-
-  animation:flash 1s infinite;
-
-}
-
-@keyframes flash{
-
-  50%{opacity:.24}
-
-}
-
-/* survivor hustle */
-
-.run{
-
-  animation:runAway 3s linear forwards;
-
-}
-
-.run::before,
-
-.run::after{
-
-  content:"";
-
-  position:absolute;
-
-  right:80px;
-
-  width:18px;
-
-  height:2px;
-
-  background:rgba(255,255,255,.65);
-
-}
-
-.run::before{top:20px}
-
-.run::after{top:31px}
-
-@keyframes runAway{
-
-  from{left:50%}
-
-  to{left:118%}
+  }
 
 }
 
@@ -428,9 +332,11 @@ html,body{
 
 <div id="stage">
 
+  <!-- loader -->
+
   <div id="loaderWrap">
 
-    <div id="bar">
+    <div id="loader">
 
       <div id="fill"></div>
 
@@ -440,23 +346,27 @@ html,body{
 
   </div>
 
-  <div id="homie" class="walk">
+  <!-- little homie -->
 
-    <div class="tail"></div>
+  <div id="lane">
 
-    <div class="body"></div>
+    <div id="homie">
 
-    <div class="head"><div class="eye"></div></div>
+      <div class="tail"></div>
 
-    <div class="leg leg1"></div>
+      <div class="body"></div>
 
-    <div class="leg leg2"></div>
+      <div class="head">
 
-  </div>
+        <div class="eye"></div>
 
-  <div id="chaos">
+      </div>
 
-    <div class="chaosText">CHAOS</div>
+      <div class="leg leg1"></div>
+
+      <div class="leg leg2"></div>
+
+    </div>
 
   </div>
 
@@ -468,125 +378,23 @@ const fill = document.getElementById("fill");
 
 const percent = document.getElementById("percent");
 
-const homie = document.getElementById("homie");
-
-const chaos = document.getElementById("chaos");
-
 let progress = 0;
 
-let paused = false;
-
-const loading = setInterval(() => {
-
-  if(paused) return;
+setInterval(()=>{
 
   progress++;
 
-  fill.style.width = progress + "%";
+  if(progress > 100){
 
-  percent.textContent = progress + "%";
-
-  if(progress === 16){
-
-    paused = true;
-
-    homie.classList.remove("walk");
-
-    setTimeout(() => {
-
-      homie.classList.add("look");
-
-    }, 520);
-
-    setTimeout(() => {
-
-      progress = 17;
-
-      fill.style.width = "17%";
-
-      percent.textContent = "17%";
-
-    }, 950);
-
-    setTimeout(() => {
-
-      progress = 18;
-
-      fill.style.width = "18%";
-
-      percent.textContent = "18%";
-
-    }, 1400);
-
-    setTimeout(() => {
-
-      homie.classList.remove("look");
-
-      homie.classList.add("peek");
-
-    }, 2050);
-
-    setTimeout(() => {
-
-      homie.classList.remove("peek");
-
-      homie.classList.add("hide");
-
-    }, 3050);
-
-    setTimeout(() => {
-
-      homie.classList.add("jitter");
-
-    }, 3350);
-
-    setTimeout(() => {
-
-      chaos.style.opacity = 1;
-
-    }, 4300);
-
-    setTimeout(recovery, 7600);
+    progress = 0;
 
   }
 
-}, 620);
+  fill.style.width = progress + "%";
 
-function recovery(){
+  percent.innerText = progress + "%";
 
-  chaos.style.opacity = 0;
-
-  fill.style.width = "100%";
-
-  percent.textContent = "100%";
-
-  percent.classList.add("flash");
-
-  homie.classList.remove("jitter");
-
-  setTimeout(() => {
-
-    homie.classList.remove("hide");
-
-    homie.classList.add("peek");
-
-  }, 900);
-
-  setTimeout(() => {
-
-    homie.classList.remove("peek");
-
-    homie.classList.add("walk");
-
-  }, 1700);
-
-  setTimeout(() => {
-
-    homie.classList.add("run");
-
-  }, 2400);
-
-}
+},580);
 
 </script>
 
