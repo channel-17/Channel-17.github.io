@@ -4,11 +4,11 @@
 
 <head>
 
-<meta charset="UTF-8"/>
+<meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Little Homie</title>
+<title>Little Homie Prototype</title>
 
 <style>
 
@@ -32,7 +32,7 @@ html,body{
 
   background:#000;
 
-  font-family:Arial,Helvetica,sans-serif;
+  font-family:Arial, Helvetica, sans-serif;
 
 }
 
@@ -130,7 +130,7 @@ body{
 
   justify-content:center;
 
-  color:rgba(255,255,255,.48);
+  color:rgba(255,255,255,.45);
 
   font-size:13px;
 
@@ -146,93 +146,41 @@ body{
 
 ========================= */
 
-#homieWrap{
-
-  position:absolute;
-
-  left:50%;
-
-  top:54%;
-
-  transform:translateX(-50%);
-
-  width:120px;
-
-  height:90px;
-
-}
-
 #homie{
 
   position:absolute;
 
   left:50%;
 
-  top:50%;
+  top:56%;
 
   transform:translate(-50%,-50%);
 
-  width:70px;
+  width:76px;
 
-  height:46px;
+  height:48px;
 
-  transition:.25s ease;
+  transition:.3s ease;
 
 }
 
-/* shell */
+/* body */
 
-.shell{
+.body{
 
   position:absolute;
 
-  width:34px;
+  left:18px;
 
-  height:22px;
+  top:13px;
 
-  left:16px;
+  width:38px;
 
-  top:10px;
+  height:24px;
 
   background:#fff;
 
-  border-radius:10px 10px 8px 8px;
-
-}
-
-.shell::before{
-
-  content:"";
-
-  position:absolute;
-
-  width:3px;
-
-  height:16px;
-
-  background:rgba(0,0,0,.14);
-
-  left:15px;
-
-  top:3px;
-
-}
-
-.shell::after{
-
-  content:"";
-
-  position:absolute;
-
-  width:24px;
-
-  height:2px;
-
-  background:rgba(0,0,0,.12);
-
-  left:5px;
-
-  top:10px;
+  border-radius:22px 22px 10px 10px;
 
 }
 
@@ -242,17 +190,17 @@ body{
 
   position:absolute;
 
-  width:10px;
+  left:55px;
 
-  height:10px;
+  top:18px;
+
+  width:14px;
+
+  height:14px;
 
   background:#fff;
 
-  border-radius:4px;
-
-  left:50px;
-
-  top:15px;
+  border-radius:50%;
 
   transition:.25s ease;
 
@@ -264,37 +212,17 @@ body{
 
   position:absolute;
 
-  width:2px;
+  right:4px;
 
-  height:2px;
+  top:5px;
+
+  width:3px;
+
+  height:3px;
 
   background:#000;
 
   border-radius:50%;
-
-  left:6px;
-
-  top:4px;
-
-}
-
-/* neck */
-
-.neck{
-
-  position:absolute;
-
-  width:8px;
-
-  height:4px;
-
-  background:#fff;
-
-  left:44px;
-
-  top:18px;
-
-  transition:.25s ease;
 
 }
 
@@ -304,19 +232,19 @@ body{
 
   position:absolute;
 
+  left:10px;
+
+  top:24px;
+
   width:0;
 
   height:0;
 
-  border-top:4px solid transparent;
+  border-top:5px solid transparent;
 
-  border-bottom:4px solid transparent;
+  border-bottom:5px solid transparent;
 
   border-right:10px solid #fff;
-
-  left:8px;
-
-  top:18px;
 
 }
 
@@ -326,31 +254,21 @@ body{
 
   position:absolute;
 
-  width:6px;
+  width:7px;
 
-  height:10px;
+  height:12px;
 
   background:#fff;
 
   border-radius:2px;
 
-}
-
-.leg1{
-
-  left:20px;
-
-  top:30px;
+  top:35px;
 
 }
 
-.leg2{
+.leg1{ left:25px; }
 
-  left:40px;
-
-  top:30px;
-
-}
+.leg2{ left:45px; }
 
 /* =========================
 
@@ -358,31 +276,25 @@ body{
 
 ========================= */
 
+.walk{
+
+  animation:bob 1.2s infinite steps(2,end);
+
+}
+
 .walk .leg1{
 
-  animation:leg1 .8s infinite;
+  animation:stepA 1.2s infinite steps(2,end);
 
 }
 
 .walk .leg2{
 
-  animation:leg2 .8s infinite;
-
-}
-
-.walk{
-
-  animation:bob 1.1s infinite;
+  animation:stepB 1.2s infinite steps(2,end);
 
 }
 
 @keyframes bob{
-
-  0%,100%{
-
-    margin-top:0;
-
-  }
 
   50%{
 
@@ -392,13 +304,7 @@ body{
 
 }
 
-@keyframes leg1{
-
-  0%,100%{
-
-    transform:translateX(0);
-
-  }
+@keyframes stepA{
 
   50%{
 
@@ -408,17 +314,11 @@ body{
 
 }
 
-@keyframes leg2{
-
-  0%,100%{
-
-    transform:translateX(-2px);
-
-  }
+@keyframes stepB{
 
   50%{
 
-    transform:translateX(0);
+    transform:translateX(2px);
 
   }
 
@@ -426,17 +326,11 @@ body{
 
 /* =========================
 
-   LOOK BACK
+   LOOK
 
 ========================= */
 
 .look .head{
-
-  left:2px;
-
-}
-
-.look .neck{
 
   left:8px;
 
@@ -444,7 +338,9 @@ body{
 
 .look .eye{
 
-  left:1px;
+  left:4px;
+
+  right:auto;
 
 }
 
@@ -456,19 +352,9 @@ body{
 
 .peek .head{
 
-  top:-2px;
+  left:7px;
 
-  left:0px;
-
-}
-
-.peek .neck{
-
-  width:16px;
-
-  left:8px;
-
-  top:8px;
+  top:7px;
 
 }
 
@@ -480,8 +366,6 @@ body{
 
 .hide .head,
 
-.hide .neck,
-
 .hide .tail,
 
 .hide .leg{
@@ -490,41 +374,29 @@ body{
 
 }
 
-.hide .shell{
+.hide .body{
 
-  transform:scale(1.04);
+  transform:scale(.96);
 
 }
 
 /* =========================
 
-   NERVOUS
+   JITTER
 
 ========================= */
 
-.shake{
+.jitter{
 
-  animation:shake .11s infinite;
+  animation:jitter .12s infinite steps(2,end);
 
 }
 
-@keyframes shake{
-
-  0%{
-
-    transform:translate(-50%,-50%) translateX(0);
-
-  }
+@keyframes jitter{
 
   50%{
 
     transform:translate(-50%,-50%) translateX(1px);
-
-  }
-
-  100%{
-
-    transform:translate(-50%,-50%) translateX(-1px);
 
   }
 
@@ -544,11 +416,11 @@ body{
 
   opacity:0;
 
+  background:#000;
+
   pointer-events:none;
 
-  transition:1.2s ease;
-
-  background:#000;
+  transition:1.4s ease;
 
 }
 
@@ -556,27 +428,25 @@ body{
 
   position:absolute;
 
-  color:rgba(255,60,60,.22);
+  color:rgba(255,60,60,.25);
 
   font-size:13px;
 
-  letter-spacing:.18em;
-
   font-weight:bold;
 
-  white-space:nowrap;
+  letter-spacing:.18em;
 
 }
 
 .g1{top:18%;left:10%}
 
-.g2{top:35%;right:8%}
+.g2{top:32%;right:10%}
 
-.g3{bottom:28%;left:14%}
+.g3{bottom:24%;left:14%}
 
-.g4{top:52%;left:48%}
+.g4{top:55%;right:18%}
 
-.g5{bottom:18%;right:10%}
+.g5{bottom:16%;right:8%}
 
 /* =========================
 
@@ -591,12 +461,6 @@ body{
 }
 
 @keyframes flash{
-
-  0%,100%{
-
-    opacity:1;
-
-  }
 
   50%{
 
@@ -614,7 +478,7 @@ body{
 
 .run{
 
-  animation:run 3.2s linear forwards;
+  animation:run 2.8s linear forwards;
 
 }
 
@@ -628,7 +492,7 @@ body{
 
   to{
 
-    left:120%;
+    left:115%;
 
   }
 
@@ -642,6 +506,8 @@ body{
 
 <div id="stage">
 
+  <!-- LOADER -->
+
   <div id="loaderWrap">
 
     <div id="loader">
@@ -654,41 +520,39 @@ body{
 
   </div>
 
-  <div id="homieWrap">
+  <!-- LITTLE HOMIE -->
 
-    <div id="homie" class="walk">
+  <div id="homie" class="walk">
 
-      <div class="tail"></div>
+    <div class="tail"></div>
 
-      <div class="shell"></div>
+    <div class="body"></div>
 
-      <div class="neck"></div>
+    <div class="head">
 
-      <div class="head">
-
-        <div class="eye"></div>
-
-      </div>
-
-      <div class="leg leg1"></div>
-
-      <div class="leg leg2"></div>
+      <div class="eye"></div>
 
     </div>
 
+    <div class="leg leg1"></div>
+
+    <div class="leg leg2"></div>
+
   </div>
+
+  <!-- CHAOS -->
 
   <div id="chaos">
 
-    <div class="glitch g1">TOO MANY ACTIVE MASKS</div>
+    <div class="glitch g1">UNREQUESTED FILE STACK</div>
 
     <div class="glitch g2">SIGNAL LOST</div>
 
-    <div class="glitch g3">UNREQUESTED FILE STACK</div>
+    <div class="glitch g3">IDENTITY LOOP ACTIVE</div>
 
-    <div class="glitch g4">IDENTITY LOOP ACTIVE</div>
+    <div class="glitch g4">NOISE OVERLOAD</div>
 
-    <div class="glitch g5">NOISE OVERLOAD</div>
+    <div class="glitch g5">TOO MANY ACTIVE MASKS</div>
 
   </div>
 
@@ -706,17 +570,17 @@ const chaos = document.getElementById("chaos");
 
 let progress = 0;
 
-let stopped = false;
+let frozen = false;
 
 /* =========================
 
-   NORMAL LOADING
+   LOADING LOOP
 
 ========================= */
 
-const loaderLoop = setInterval(()=>{
+const loading = setInterval(()=>{
 
-  if(stopped) return;
+  if(frozen) return;
 
   progress++;
 
@@ -724,17 +588,17 @@ const loaderLoop = setInterval(()=>{
 
   percent.innerText = progress + "%";
 
-  /* tremor */
+  /* TREMOR */
 
   if(progress === 16){
 
-    stopped = true;
+    frozen = true;
 
-    /* he stops walking */
+    /* stop walking */
 
     homie.classList.remove("walk");
 
-    /* he senses */
+    /* notice */
 
     setTimeout(()=>{
 
@@ -742,7 +606,7 @@ const loaderLoop = setInterval(()=>{
 
     },500);
 
-    /* inertia */
+    /* loader inertia */
 
     setTimeout(()=>{
 
@@ -752,7 +616,7 @@ const loaderLoop = setInterval(()=>{
 
       percent.innerText = "17%";
 
-    },900);
+    },1000);
 
     setTimeout(()=>{
 
@@ -762,9 +626,9 @@ const loaderLoop = setInterval(()=>{
 
       percent.innerText = "18%";
 
-    },1300);
+    },1450);
 
-    /* loader dies */
+    /* peek */
 
     setTimeout(()=>{
 
@@ -772,9 +636,9 @@ const loaderLoop = setInterval(()=>{
 
       homie.classList.add("peek");
 
-    },1900);
+    },2100);
 
-    /* panic */
+    /* shell */
 
     setTimeout(()=>{
 
@@ -782,25 +646,25 @@ const loaderLoop = setInterval(()=>{
 
       homie.classList.add("hide");
 
-    },3000);
+    },3200);
 
-    /* nervous shell */
+    /* nervous */
 
     setTimeout(()=>{
 
-      homie.classList.add("shake");
+      homie.classList.add("jitter");
 
-    },3300);
+    },3500);
 
-    /* CHAOS */
+    /* chaos */
 
     setTimeout(()=>{
 
       chaos.style.opacity = 1;
 
-    },4200);
+    },4300);
 
-    /* aftermath */
+    /* recovery */
 
     setTimeout(()=>{
 
@@ -828,9 +692,9 @@ function recovery(){
 
   percent.classList.add("flash");
 
-  homie.classList.remove("shake");
+  homie.classList.remove("jitter");
 
-  /* peeks out */
+  /* slowly emerges */
 
   setTimeout(()=>{
 
@@ -840,7 +704,7 @@ function recovery(){
 
   },900);
 
-  /* realizes */
+  /* realization */
 
   setTimeout(()=>{
 
@@ -848,9 +712,9 @@ function recovery(){
 
     homie.classList.add("walk");
 
-  },1800);
+  },1700);
 
-  /* SCURRY */
+  /* OH SHIT RUN */
 
   setTimeout(()=>{
 
