@@ -6,13 +6,21 @@
 
 <meta charset="UTF-8" />
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-<title>CHANNEL 17</title>
+<title>Little Homie Prototype</title>
 
 <style>
 
-*{margin:0;padding:0;box-sizing:border-box}
+*{
+
+  margin:0;
+
+  padding:0;
+
+  box-sizing:border-box;
+
+}
 
 html,body{
 
@@ -24,255 +32,183 @@ html,body{
 
   background:#000;
 
-  color:#fff;
-
   font-family:Arial,Helvetica,sans-serif;
 
-  -webkit-tap-highlight-color:transparent;
-
-  user-select:none;
-
 }
 
-body{position:relative}
-
-/* ATMOSPHERE */
-
-#noise{
-
-  position:fixed;
-
-  inset:0;
-
-  pointer-events:none;
-
-  z-index:99999;
-
-  opacity:.035;
-
-  mix-blend-mode:screen;
-
-  background-image:repeating-linear-gradient(
-
-    0deg,
-
-    rgba(255,255,255,.035) 0px,
-
-    rgba(255,255,255,.035) 1px,
-
-    transparent 1px,
-
-    transparent 4px
-
-  );
-
-  animation:noiseMove .06s linear infinite;
-
-}
-
-@keyframes noiseMove{
-
-  to{transform:translateY(3px)}
-
-}
-
-#vignette{
-
-  position:fixed;
-
-  inset:0;
-
-  pointer-events:none;
-
-  z-index:999999;
-
-  background:radial-gradient(
-
-    circle,
-
-    transparent 43%,
-
-    rgba(0,0,0,.54) 72%,
-
-    rgba(0,0,0,.985) 100%
-
-  );
-
-}
-
-#flash{
-
-  position:fixed;
-
-  inset:0;
-
-  background:#fff;
-
-  opacity:0;
-
-  pointer-events:none;
-
-  z-index:9000;
-
-  mix-blend-mode:screen;
-
-}
-
-#screenPulse{
-
-  position:fixed;
-
-  inset:0;
-
-  pointer-events:none;
-
-  z-index:8500;
-
-  opacity:0;
-
-  background:radial-gradient(
-
-    circle,
-
-    rgba(255,255,255,.08) 0%,
-
-    rgba(255,180,90,.045) 24%,
-
-    transparent 62%
-
-  );
-
-}
-
-/* LOADER */
-
-#loader{
-
-  position:fixed;
-
-  inset:0;
-
-  z-index:3000;
-
-  background:#000;
+body{
 
   display:flex;
-
-  flex-direction:column;
 
   justify-content:center;
 
   align-items:center;
 
-  transition:opacity .7s ease;
+}
+
+/* =========================
+
+   MAIN STAGE
+
+========================= */
+
+#stage{
+
+  position:relative;
+
+  width:100%;
+
+  height:100%;
+
+  overflow:hidden;
 
 }
 
-#bar{
+/* =========================
+
+   LOADER
+
+========================= */
+
+#loaderWrap{
+
+  position:absolute;
+
+  left:50%;
+
+  top:42%;
+
+  transform:translateX(-50%);
+
+  width:min(78vw,420px);
+
+}
+
+#loader{
+
+  width:100%;
 
   display:flex;
 
   gap:5px;
 
-  width:min(58vw,320px);
-
-  height:26px;
-
 }
 
-.segment{
+.block{
 
   flex:1;
 
+  height:22px;
+
   border:1px solid rgba(255,255,255,.14);
 
-  border-radius:4px;
+  background:rgba(255,255,255,.03);
 
-  background:rgba(255,255,255,.025);
-
-  box-shadow:inset 0 0 8px rgba(255,255,255,.02);
-
-  transition:.12s ease;
+  transition:.2s ease;
 
 }
 
-.segment.active{
+.block.active{
 
-  background:rgba(255,255,255,.92);
+  background:#fff;
 
-  box-shadow:0 0 12px rgba(255,255,255,.12);
+  box-shadow:0 0 10px rgba(255,255,255,.16);
 
 }
 
 #percent{
 
-  margin-top:16px;
+  margin-top:12px;
 
-  font-size:14px;
+  text-align:center;
 
-  font-weight:700;
+  color:rgba(255,255,255,.48);
+
+  font-size:13px;
 
   letter-spacing:.22em;
 
-  opacity:.58;
-
 }
 
-/* LITTLE HOMIE */
+/* =========================
 
-#turtleWrap{
+   LITTLE HOMIE
 
-  margin-top:36px;
+========================= */
 
-  width:132px;
+#turtleLane{
 
-  height:82px;
+  position:absolute;
 
-  display:flex;
+  width:min(78vw,420px);
 
-  align-items:center;
+  height:80px;
 
-  justify-content:center;
+  left:50%;
+
+  top:50%;
+
+  transform:translateX(-50%);
 
 }
 
 #turtle{
 
-  position:relative;
+  position:absolute;
 
-  width:74px;
+  left:0;
 
-  height:46px;
+  top:16px;
 
-  transform-origin:center;
+  width:48px;
 
-  filter:drop-shadow(0 0 8px rgba(255,255,255,.08));
+  height:32px;
+
+  transition:
+
+    transform .25s ease,
+
+    left .5s linear;
 
 }
 
-.turtlePart{position:absolute;background:#fff}
+/* shell */
 
 .shell{
 
-  left:22px;
+  position:absolute;
 
-  top:11px;
+  left:14px;
 
-  width:37px;
+  top:8px;
 
-  height:24px;
+  width:24px;
 
-  border-radius:7px 7px 5px 5px;
+  height:16px;
 
-  box-shadow:
+  background:#fff;
 
-    inset -7px 0 0 rgba(0,0,0,.08),
-
-    inset 0 -6px 0 rgba(0,0,0,.07);
+  border-radius:4px;
 
 }
 
-.shell::before,
+.shell::before{
+
+  content:"";
+
+  position:absolute;
+
+  left:11px;
+
+  top:1px;
+
+  width:2px;
+
+  height:14px;
+
+  background:rgba(0,0,0,.18);
+
+}
 
 .shell::after{
 
@@ -280,179 +216,129 @@ body{position:relative}
 
   position:absolute;
 
-  background:rgba(0,0,0,.18);
+  left:2px;
 
-}
+  top:7px;
 
-.shell::before{
-
-  left:12px;
-
-  top:4px;
-
-  width:2px;
-
-  height:17px;
-
-}
-
-.shell::after{
-
-  left:5px;
-
-  top:12px;
-
-  width:27px;
+  width:20px;
 
   height:2px;
 
-}
-
-.shellLine{
-
-  left:40px;
-
-  top:12px;
-
-  width:2px;
-
-  height:22px;
-
-  background:rgba(0,0,0,.12);
-
-  transform:rotate(12deg);
-
-  border-radius:2px;
+  background:rgba(0,0,0,.15);
 
 }
+
+/* head */
 
 .head{
 
-  left:64px;
+  position:absolute;
 
-  top:16px;
+  left:36px;
 
-  width:13px;
+  top:11px;
 
-  height:13px;
+  width:8px;
 
-  border-radius:4px;
+  height:8px;
 
-}
-
-.neck{
-
-  left:57px;
-
-  top:19px;
-
-  width:10px;
-
-  height:7px;
+  background:#fff;
 
   border-radius:2px;
 
+  transition:.2s ease;
+
 }
 
-.eye{
+/* neck */
+
+.neck{
 
   position:absolute;
 
-  right:3px;
+  left:31px;
 
-  top:3px;
+  top:13px;
 
-  width:2px;
+  width:6px;
 
-  height:2px;
+  height:4px;
 
-  background:#000;
+  background:#fff;
 
-  opacity:.36;
+  transition:.2s ease;
 
 }
 
+/* tail */
+
 .tail{
 
-  left:10px;
+  position:absolute;
 
-  top:20px;
+  left:8px;
+
+  top:14px;
 
   width:0;
 
   height:0;
 
-  background:transparent;
+  border-top:3px solid transparent;
 
-  border-top:5px solid transparent;
+  border-bottom:3px solid transparent;
 
-  border-bottom:5px solid transparent;
+  border-right:7px solid #fff;
 
-  border-right:11px solid #fff;
+}
+
+/* legs */
+
+.leg{
+
+  position:absolute;
+
+  width:5px;
+
+  height:7px;
+
+  background:#fff;
+
+  border-radius:1px;
 
 }
 
 .leg1{
 
-  left:30px;
+  left:18px;
 
-  top:34px;
-
-  width:7px;
-
-  height:10px;
-
-  border-radius:2px;
+  top:22px;
 
 }
 
 .leg2{
 
-  left:50px;
+  left:30px;
 
-  top:34px;
-
-  width:7px;
-
-  height:10px;
-
-  border-radius:2px;
+  top:22px;
 
 }
 
-.walk{
-
-  animation:turtleTruck 1.65s ease-in-out infinite;
-
-}
+/* walk cycle */
 
 .walk .leg1{
 
-  animation:stepOne 1.65s ease-in-out infinite;
+  animation:legA .7s infinite;
 
 }
 
 .walk .leg2{
 
-  animation:stepTwo 1.65s ease-in-out infinite;
+  animation:legB .7s infinite;
 
 }
 
-.walk .head{
-
-  animation:headBob 1.65s ease-in-out infinite;
-
-}
-
-@keyframes turtleTruck{
-
-  0%,100%{transform:translateX(0)}
-
-  50%{transform:translateX(2px)}
-
-}
-
-@keyframes stepOne{
+@keyframes legA{
 
   0%,100%{transform:translateX(0)}
 
@@ -460,605 +346,119 @@ body{position:relative}
 
 }
 
-@keyframes stepTwo{
+@keyframes legB{
 
   0%,100%{transform:translateX(-2px)}
 
-  50%{transform:translateX(1px)}
+  50%{transform:translateX(0)}
 
 }
 
-@keyframes headBob{
+/* lookback */
 
-  0%,100%{transform:translateY(0)}
-
-  50%{transform:translateY(1px)}
-
-}
-
-.look{
-
-  animation:none;
+.lookback{
 
   transform:scaleX(-1);
 
 }
 
-.look .leg1,
-
-.look .leg2,
-
-.look .head{
-
-  animation:none;
-
-}
+/* neck extension */
 
 .periscope .head{
 
-  transform:translateX(10px) translateY(-8px);
+  transform:translateX(8px) translateY(-4px);
 
 }
 
 .periscope .neck{
 
-  transform:translateX(8px) translateY(-4px) scaleX(1.35);
+  transform:translateX(5px) scaleX(1.8);
 
 }
 
-.gasp .head{
+/* shell retreat */
 
-  transform:translateX(15px) translateY(-10px);
+.hide .head,
 
-}
+.hide .neck,
 
-.gasp .neck{
+.hide .tail,
 
-  transform:translateX(11px) translateY(-5px) scaleX(1.5);
-
-}
-
-.gasp .leg1{transform:translateY(2px)}
-
-.gasp .leg2{transform:translateY(4px)}
-
-.retract .head,
-
-.retract .neck{
-
-  transform:translateX(-27px);
+.hide .leg{
 
   opacity:0;
 
-}
-
-.retract .leg1,
-
-.retract .leg2{
-
-  transform:translateY(-16px);
-
-  opacity:0;
+  transform:translateX(-12px);
 
 }
 
-.retract .tail{
+.hide .shell{
 
-  transform:translateX(9px);
-
-  opacity:0;
+  transform:scale(1.08);
 
 }
 
-.retract .shell{
+/* nervous jitter */
 
-  transform:scale(1.1);
+.jitter{
 
-}
-
-#turtle *{transition:.16s ease}
-
-/* CORRUPTION */
-
-#chaos{
-
-  position:fixed;
-
-  inset:0;
-
-  z-index:5000;
-
-  overflow:hidden;
-
-  opacity:0;
-
-  pointer-events:none;
-
-  transition:opacity .3s ease;
+  animation:jitter .14s infinite;
 
 }
 
-.window{
+@keyframes jitter{
 
-  position:absolute;
+  0%{transform:translateX(0)}
 
-  background:rgba(10,10,10,.92);
+  25%{transform:translateX(1px)}
 
-  border:1px solid rgba(255,255,255,.08);
+  50%{transform:translateX(-1px)}
 
-  border-radius:10px;
+  75%{transform:translateX(.5px)}
 
-  overflow:hidden;
-
-  box-shadow:0 0 22px rgba(0,0,0,.72);
-
-  opacity:0;
-
-  animation:cascade linear forwards;
+  100%{transform:translateX(0)}
 
 }
 
-@keyframes cascade{
+/* blackout */
 
-  0%{opacity:0;transform:translate(0,0) scale(.96)}
-
-  9%{opacity:.92}
-
-  76%{opacity:.74}
-
-  100%{opacity:0;transform:translate(var(--mx),var(--my)) scale(1.035)}
-
-}
-
-.windowTop{
-
-  height:28px;
-
-  padding-left:12px;
-
-  display:flex;
-
-  align-items:center;
-
-  justify-content:space-between;
-
-  padding-right:10px;
-
-  font-size:11px;
-
-  letter-spacing:.14em;
-
-  background:rgba(255,255,255,.04);
-
-  border-bottom:1px solid rgba(255,255,255,.04);
-
-  color:rgba(255,255,255,.48);
-
-}
-
-.windowBody{
-
-  padding:12px;
-
-  font-size:11px;
-
-  line-height:1.6;
-
-  color:rgba(255,255,255,.62);
-
-}
-
-.red{color:#ff4141}
-
-.amber{color:#c8b86a}
-
-.meter{
-
-  margin-top:8px;
-
-  width:100%;
-
-  height:6px;
-
-  border:1px solid rgba(255,255,255,.08);
-
-  overflow:hidden;
-
-}
-
-.meter span{
-
-  display:block;
-
-  height:100%;
-
-  width:35%;
-
-  background:rgba(200,184,106,.5);
-
-  animation:meterPanic .7s linear infinite;
-
-}
-
-@keyframes meterPanic{
-
-  0%{width:12%}
-
-  50%{width:92%}
-
-  100%{width:24%}
-
-}
-
-.blink{
-
-  animation:blink .35s steps(2,end) infinite;
-
-}
-
-@keyframes blink{
-
-  50%{opacity:.25}
-
-}
-
-.strip{
-
-  position:absolute;
-
-  height:14px;
-
-  opacity:0;
-
-  background:linear-gradient(
-
-    90deg,
-
-    transparent,
-
-    rgba(196,176,92,.24),
-
-    transparent
-
-  );
-
-  animation:stripMove .7s linear forwards;
-
-}
-
-@keyframes stripMove{
-
-  0%{opacity:0;transform:translateX(-30px)}
-
-  20%{opacity:.72}
-
-  100%{opacity:0;transform:translateX(70px)}
-
-}
-
-.screenWarning{
+#fade{
 
   position:absolute;
 
   inset:0;
 
-  display:flex;
-
-  justify-content:center;
-
-  align-items:center;
-
-  font-size:clamp(16px,4vw,44px);
-
-  letter-spacing:.26em;
-
-  color:rgba(255,65,65,.78);
-
-  background:rgba(0,0,0,.18);
-
-  opacity:0;
-
-  animation:screenWarning .65s ease forwards;
-
-}
-
-@keyframes screenWarning{
-
-  0%{opacity:0}
-
-  25%{opacity:.86}
-
-  100%{opacity:0}
-
-}
-
-#signalLost{
-
-  position:absolute;
-
-  left:50%;
-
-  top:50%;
-
-  transform:translate(-50%,-50%);
-
-  font-size:clamp(32px,6vw,74px);
-
-  letter-spacing:.24em;
-
-  opacity:0;
-
-  text-shadow:0 0 14px rgba(255,255,255,.12);
-
-}
-
-/* FINAL SIGNAL */
-
-#signalSpace{
-
-  position:fixed;
-
-  inset:0;
-
-  z-index:8000;
+  background:#000;
 
   opacity:0;
 
   pointer-events:none;
 
-  transition:opacity 1.2s ease;
-
-  display:flex;
-
-  justify-content:center;
-
-  align-items:center;
+  transition:2s ease;
 
 }
 
-#signalCanvas{
+/* final flash */
 
-  position:absolute;
+.flash100{
 
-  inset:0;
-
-  width:100%;
-
-  height:100%;
-
-  opacity:0;
-
-  z-index:7600;
-
-  pointer-events:none;
-
-  transition:opacity 1.2s ease;
+  animation:flash100 1s infinite;
 
 }
 
-#outer,
+@keyframes flash100{
 
-#inner{
+  0%,100%{
 
-  position:absolute;
+    opacity:1;
 
-  opacity:0;
+  }
 
-  pointer-events:none;
+  50%{
 
-  user-select:none;
+    opacity:.25;
 
-  -webkit-user-drag:none;
-
-  -webkit-touch-callout:none;
-
-  transition:
-
-    opacity 1.5s ease,
-
-    filter 1.4s ease,
-
-    transform 1.4s ease;
-
-}
-
-#outer{
-
-  width:min(72vw,360px);
-
-  filter:drop-shadow(0 0 8px rgba(255,255,255,.03));
-
-  z-index:8000;
-
-}
-
-#inner{
-
-  width:min(42vw,190px);
-
-  filter:drop-shadow(0 0 10px rgba(255,255,255,.05));
-
-  z-index:8100;
-
-}
-
-#reconnect{
-
-  position:absolute;
-
-  z-index:9000;
-
-  font-size:clamp(18px,3vw,28px);
-
-  letter-spacing:.34em;
-
-  padding:44px;
-
-  cursor:pointer;
-
-  user-select:none;
-
-  opacity:0;
-
-  color:rgba(255,255,255,.76);
-
-  transition:
-
-    opacity .15s linear,
-
-    transform .15s ease;
-
-}
-
-.breathing{
-
-  animation:
-
-    anxiousHeartbeat 5.8s ease-in-out forwards,
-
-    calmHeartbeat 2.4s ease-in-out 5.8s infinite;
-
-}
-
-@keyframes anxiousHeartbeat{
-
-  0%{opacity:.34;text-shadow:0 0 5px rgba(255,255,255,.03)}
-
-  7%{opacity:1;text-shadow:0 0 30px rgba(255,255,255,.26)}
-
-  15%{opacity:.4;text-shadow:0 0 7px rgba(255,255,255,.04)}
-
-  28%{opacity:.96;text-shadow:0 0 25px rgba(255,255,255,.22)}
-
-  40%{opacity:.48;text-shadow:0 0 8px rgba(255,255,255,.05)}
-
-  57%{opacity:.88;text-shadow:0 0 19px rgba(255,255,255,.16)}
-
-  72%{opacity:.56;text-shadow:0 0 10px rgba(255,255,255,.06)}
-
-  100%{opacity:.72;text-shadow:0 0 14px rgba(255,255,255,.09)}
-
-}
-
-@keyframes calmHeartbeat{
-
-  0%,100%{opacity:.62;text-shadow:0 0 10px rgba(255,255,255,.06)}
-
-  42%{opacity:.84;text-shadow:0 0 17px rgba(255,255,255,.13)}
-
-}
-
-#channels{
-
-  position:absolute;
-
-  bottom:10vh;
-
-  left:50%;
-
-  transform:translateX(-50%);
-
-  display:flex;
-
-  flex-direction:column;
-
-  gap:16px;
-
-  opacity:0;
-
-  transition:opacity 1.8s ease;
-
-  z-index:9200;
-
-}
-
-.channel{
-
-  position:relative;
-
-  font-size:15px;
-
-  letter-spacing:.24em;
-
-  color:rgba(255,255,255,.64);
-
-  text-decoration:none;
-
-  padding:10px 18px;
-
-  border:1px solid rgba(255,255,255,.06);
-
-  background:rgba(255,255,255,.012);
-
-  border-radius:6px;
-
-  overflow:hidden;
-
-  transition:.18s ease;
-
-}
-
-.channel:hover,
-
-.channel:active{
-
-  color:rgba(255,255,255,.92);
-
-  border-color:rgba(255,210,140,.18);
-
-  background:rgba(255,210,140,.03);
-
-  box-shadow:0 0 14px rgba(255,186,92,.08);
-
-}
-
-.channel::after{
-
-  content:"";
-
-  position:absolute;
-
-  left:-40%;
-
-  top:0;
-
-  width:30%;
-
-  height:100%;
-
-  background:linear-gradient(
-
-    90deg,
-
-    transparent,
-
-    rgba(255,210,140,.08),
-
-    transparent
-
-  );
-
-  transform:skewX(-20deg);
-
-  opacity:0;
-
-}
-
-.channel:hover::after,
-
-.channel:active::after{
-
-  animation:signalPass .8s linear;
-
-}
-
-@keyframes signalPass{
-
-  0%{left:-40%;opacity:0}
-
-  20%{opacity:1}
-
-  100%{left:140%;opacity:0}
+  }
 
 }
 
@@ -1068,837 +468,223 @@ body{position:relative}
 
 <body>
 
-<div id="noise"></div>
+<div id="stage">
 
-<div id="flash"></div>
+  <div id="loaderWrap">
 
-<div id="screenPulse"></div>
+    <div id="loader"></div>
 
-<div id="loader">
+    <div id="percent">0%</div>
 
-  <div id="bar"></div>
+  </div>
 
-  <div id="percent">0%</div>
-
-  <div id="turtleWrap">
+  <div id="turtleLane">
 
     <div id="turtle" class="walk">
 
-      <div class="turtlePart tail"></div>
+      <div class="tail"></div>
 
-      <div class="turtlePart shell"></div>
+      <div class="shell"></div>
 
-      <div class="turtlePart shellLine"></div>
+      <div class="neck"></div>
 
-      <div class="turtlePart neck"></div>
+      <div class="head"></div>
 
-      <div class="turtlePart head"><div class="eye"></div></div>
+      <div class="leg leg1"></div>
 
-      <div class="turtlePart leg1"></div>
-
-      <div class="turtlePart leg2"></div>
+      <div class="leg leg2"></div>
 
     </div>
 
   </div>
 
-</div>
-
-<div id="chaos">
-
-  <div id="signalLost">SIGNAL LOST</div>
+  <div id="fade"></div>
 
 </div>
-
-<div id="signalSpace">
-
-  <canvas id="signalCanvas"></canvas>
-
-  <img id="outer" src="Outer17-final.png" />
-
-  <img id="inner" src="Inner17-final.png" />
-
-  <div id="reconnect">RECONNECT</div>
-
-  <div id="channels">
-
-    <a class="channel" href="#">LAST SESH</a>
-
-    <a class="channel" href="#">ROACH TRAY</a>
-
-    <a class="channel" href="#">PASS IT BACK</a>
-
-  </div>
-
-</div>
-
-<div id="vignette"></div>
 
 <script>
 
-const bar = document.getElementById("bar");
-
-for(let i = 0; i < 17; i++){
-
-  const s = document.createElement("div");
-
-  s.className = "segment";
-
-  bar.appendChild(s);
-
-}
-
-const segments = document.querySelectorAll(".segment");
-
-const percent = document.getElementById("percent");
+const loader = document.getElementById("loader");
 
 const turtle = document.getElementById("turtle");
 
-const loader = document.getElementById("loader");
+const percent = document.getElementById("percent");
 
-const chaos = document.getElementById("chaos");
+const fade = document.getElementById("fade");
 
-const flash = document.getElementById("flash");
+const TOTAL = 20;
 
-const screenPulse = document.getElementById("screenPulse");
+const INTERRUPT = 17;
 
-const signalLost = document.getElementById("signalLost");
+let progress = 0;
 
-const signalSpace = document.getElementById("signalSpace");
+let turtleX = 0;
 
-const reconnect = document.getElementById("reconnect");
+for(let i=0;i<TOTAL;i++){
 
-const outer = document.getElementById("outer");
+  const block = document.createElement("div");
 
-const inner = document.getElementById("inner");
+  block.className = "block";
 
-const channels = document.getElementById("channels");
+  loader.appendChild(block);
 
-const canvas = document.getElementById("signalCanvas");
+}
 
-const ctx = canvas.getContext("2d");
+const blocks = document.querySelectorAll(".block");
 
-let load = 0;
+function activateBlock(index){
 
-let looked = false;
+  if(blocks[index]){
 
-let stretched = false;
-
-let gasped = false;
-
-let retracted = false;
-
-const loadLoop = setInterval(() => {
-
-  load++;
-
-  if(load > 17){
-
-    load = 17;
+    blocks[index].classList.add("active");
 
   }
 
-  segments.forEach((s,i) => {
+}
 
-    if(i < load){
+function updatePercent(num){
 
-      s.classList.add("active");
+  percent.innerText = `${num}%`;
 
-    }
+}
 
-  });
+function moveTurtle(){
 
-  percent.innerText = load + "%";
+  turtleX += 14;
 
-  if(load >= 14 && !looked){
+  turtle.style.left = turtleX + "px";
 
-    looked = true;
+}
 
-    microTwitch();
+const walkLoop = setInterval(() => {
+
+  progress++;
+
+  activateBlock(progress - 1);
+
+  updatePercent(Math.floor((progress / TOTAL) * 100));
+
+  moveTurtle();
+
+  /* INTERRUPT MOMENT */
+
+  if(progress === INTERRUPT){
+
+    turtle.classList.remove("walk");
 
     setTimeout(() => {
 
-      turtle.classList.remove("walk");
+      turtle.classList.add("lookback");
 
-      turtle.classList.add("look");
+    },300);
 
-    },120);
+    /* loader inertia */
 
-  }
+    setTimeout(() => {
 
-  if(load >= 15 && !stretched){
+      activateBlock(progress);
 
-    stretched = true;
+      updatePercent(
 
-    turtle.classList.add("periscope");
-
-  }
-
-  if(load >= 16 && !gasped){
-
-    gasped = true;
-
-    turtle.classList.remove("periscope");
-
-    turtle.classList.add("gasp");
-
-  }
-
-  if(load >= 17 && !retracted){
-
-    retracted = true;
-
-    turtle.classList.remove("gasp");
-
-    turtle.classList.add("retract");
-
-    clearInterval(loadLoop);
-
-    setTimeout(startChaos,1100);
-
-  }
-
-},280);
-
-function microTwitch(){
-
-  document.body.style.transform = "translateX(2px)";
-
-  setTimeout(() => {
-
-    document.body.style.transform = "translateX(0)";
-
-  },40);
-
-}
-
-function startChaos(){
-
-  loader.style.opacity = 0;
-
-  setTimeout(() => {
-
-    loader.style.display = "none";
-
-  },700);
-
-  chaos.style.opacity = 1;
-
-  let stage = 0;
-
-  const chaosLoop = setInterval(() => {
-
-    stage++;
-
-    for(let i = 0; i < Math.min(stage,6); i++){
-
-      spawnWindow(stage);
-
-    }
-
-    if(stage > 4 && Math.random() > .35){
-
-      spawnStrip();
-
-    }
-
-    if(stage === 7 || stage === 11 || stage === 15){
-
-      screenWarning();
-
-    }
-
-    if(stage > 8){
-
-      pulseSignal();
-
-    }
-
-    if(stage > 9){
-
-      pulseFlash();
-
-    }
-
-    if(stage >= 22){
-
-      clearInterval(chaosLoop);
-
-      collapse();
-
-    }
-
-  },190);
-
-}
-
-function spawnWindow(stage){
-
-  const types = [
-
-    {
-
-      title:"identity",
-
-      color:"red",
-
-      headline:"TOO MANY ACTIVE MASKS",
-
-      body:["authentic signal buried","identity loop active","synthetic behavior detected"],
-
-      mechanic:"meter"
-
-    },
-
-    {
-
-      title:"download",
-
-      color:"red",
-
-      headline:"UNREQUESTED FILE STACK",
-
-      body:["plasticself.exe","performative_identity.pkg","human_input_lost.dat"],
-
-      mechanic:"blink"
-
-    },
-
-    {
-
-      title:"transmission",
-
-      color:"amber",
-
-      headline:"SIGNAL STILL ACTIVE",
-
-      body:["frequency surviving","hidden packet received","reconnect possible"],
-
-      mechanic:"meter"
-
-    },
-
-    {
-
-      title:"toxic stream",
-
-      color:"amber",
-
-      headline:"TRANSMISSION POISONED",
-
-      body:["M4SK NULL 5IGNAL","17 17 17","carrier wave unstable"],
-
-      mechanic:"blink"
-
-    },
-
-    {
-
-      title:"warning",
-
-      color:"red",
-
-      headline:"DEVICE OVERRIDE ATTEMPT",
-
-      body:["external pressure rising","user authenticity blocked","incoming mask layer"],
-
-      mechanic:"meter"
-
-    }
-
-  ];
-
-  const data = types[Math.floor(Math.random() * types.length)];
-
-  const win = document.createElement("div");
-
-  win.className = "window";
-
-  win.style.width = (220 + Math.random() * 260) + "px";
-
-  win.style.height = (125 + Math.random() * 145) + "px";
-
-  win.style.left = (Math.random() * 72) + "vw";
-
-  win.style.top = (Math.random() * 70) + "vh";
-
-  win.style.setProperty("--mx",(70 + Math.random() * 150) + "px");
-
-  win.style.setProperty("--my",(50 + Math.random() * 150) + "px");
-
-  win.style.animationDuration = (1 + Math.random() * 1.15) + "s";
-
-  if(stage > 12 && Math.random() > .45){
-
-    win.style.filter = "blur(.35px)";
-
-  }
-
-  const mechanic =
-
-    data.mechanic === "meter"
-
-      ? `<div class="meter"><span></span></div>`
-
-      : `<div class="blink">${data.body[2]}</div>`;
-
-  win.innerHTML = `
-
-    <div class="windowTop">
-
-      <span>${data.title}</span>
-
-      <span class="${data.color}">!</span>
-
-    </div>
-
-    <div class="windowBody">
-
-      <div class="${data.color}">${data.headline}</div><br>
-
-      <div>${data.body[0]}</div>
-
-      <div>${data.body[1]}</div>
-
-      ${mechanic}
-
-    </div>
-
-  `;
-
-  chaos.appendChild(win);
-
-  setTimeout(() => {
-
-    win.remove();
-
-  },2600);
-
-}
-
-function spawnStrip(){
-
-  const strip = document.createElement("div");
-
-  strip.className = "strip";
-
-  strip.style.left = (Math.random() * 80) + "vw";
-
-  strip.style.top = (Math.random() * 90) + "vh";
-
-  strip.style.width = (100 + Math.random() * 300) + "px";
-
-  chaos.appendChild(strip);
-
-  setTimeout(() => {
-
-    strip.remove();
-
-  },800);
-
-}
-
-function screenWarning(){
-
-  const warn = document.createElement("div");
-
-  warn.className = "screenWarning";
-
-  warn.innerText =
-
-    Math.random() > .5
-
-      ? "SIGNAL SUPPRESSED"
-
-      : "AUTHENTICITY FAILURE";
-
-  chaos.appendChild(warn);
-
-  setTimeout(() => {
-
-    warn.remove();
-
-  },700);
-
-}
-
-function pulseSignal(){
-
-  signalLost.style.opacity = .84;
-
-  signalLost.style.transform =
-
-    `translate(-50%,-50%) translate(${Math.random()*8-4}px,${Math.random()*6-3}px)`;
-
-  setTimeout(() => {
-
-    signalLost.style.opacity = 0;
-
-  },150);
-
-}
-
-function pulseFlash(){
-
-  flash.style.opacity = Math.random() * .11;
-
-  setTimeout(() => {
-
-    flash.style.opacity = 0;
-
-  },38);
-
-}
-
-function collapse(){
-
-  chaos.style.opacity = 0;
-
-  setTimeout(showSignal,1250);
-
-}
-
-function showSignal(){
-
-  signalSpace.style.opacity = 1;
-
-  signalSpace.style.pointerEvents = "auto";
-
-  outer.style.opacity = .16;
-
-  inner.style.opacity = .16;
-
-  reconnect.style.opacity = .76;
-
-  reconnect.classList.add("breathing");
-
-  resizeCanvas();
-
-  drawDormantSignal();
-
-}
-
-function resizeCanvas(){
-
-  canvas.width = window.innerWidth;
-
-  canvas.height = window.innerHeight;
-
-}
-
-window.addEventListener("resize",resizeCanvas);
-
-let touchActive = false;
-
-let touchStart = 0;
-
-let dormantTick = 0;
-
-let touchX = 0;
-
-let touchY = 0;
-
-function drawDormantSignal(){
-
-  if(touchActive){
-
-    return;
-
-  }
-
-  canvas.style.opacity = .13;
-
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-
-  dormantTick += .01;
-
-  for(let i = 0; i < 18; i++){
-
-    const y =
-
-      canvas.height * .5 +
-
-      (i - 9) * 15 +
-
-      Math.sin(dormantTick + i) * 4;
-
-    ctx.beginPath();
-
-    ctx.strokeStyle = `rgba(215,225,222,${.012 + (i % 4) * .004})`;
-
-    ctx.lineWidth = 1;
-
-    for(let x = canvas.width * .05; x < canvas.width * .95; x += 8){
-
-      const yy =
-
-        y +
-
-        Math.sin(x * .012 + dormantTick * 5 + i) * 2;
-
-      if(x === canvas.width * .05){
-
-        ctx.moveTo(x,yy);
-
-      }else{
-
-        ctx.lineTo(x,yy);
-
-      }
-
-    }
-
-    ctx.stroke();
-
-  }
-
-  requestAnimationFrame(drawDormantSignal);
-
-}
-
-reconnect.addEventListener("pointerdown",(e) => {
-
-  const rect = canvas.getBoundingClientRect();
-
-  touchX = e.clientX - rect.left;
-
-  touchY = e.clientY - rect.top;
-
-  reconnect.classList.remove("breathing");
-
-  reconnect.style.pointerEvents = "none";
-
-  reconnect.animate([
-
-    {transform:"scale(1)",opacity:.9},
-
-    {transform:"scale(.96)",opacity:.62},
-
-    {transform:"scale(1.015)",opacity:0}
-
-  ],{
-
-    duration:340,
-
-    fill:"forwards",
-
-    easing:"ease-out"
-
-  });
-
-  if(navigator.vibrate){
-
-    navigator.vibrate([60,35,95]);
-
-  }
-
-  screenPulse.animate([
-
-    {opacity:0},
-
-    {opacity:.75},
-
-    {opacity:.18},
-
-    {opacity:0}
-
-  ],{
-
-    duration:900,
-
-    easing:"ease-out"
-
-  });
-
-  setTimeout(() => {
-
-    touchActive = true;
-
-    touchStart = performance.now();
-
-    canvas.style.opacity = 1;
-
-    inner.style.opacity = .3;
-
-    animateLivingTouch();
-
-  },230);
-
-  setTimeout(() => {
-
-    outer.style.opacity = 0;
-
-    outer.style.filter = "blur(4px)";
-
-    outer.style.transform = "scale(1.08)";
-
-  },1500);
-
-  setTimeout(() => {
-
-    channels.style.opacity = 1;
-
-  },2700);
-
-});
-
-function animateLivingTouch(){
-
-  const now = performance.now();
-
-  const t = (now - touchStart) / 4200;
-
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-
-  const cx = touchX || canvas.width / 2;
-
-  const cy = touchY || canvas.height / 2;
-
-  const spread = Math.max(canvas.width,canvas.height) * 1.15;
-
-  const front = t * spread;
-
-  for(let layer = 0; layer < 3; layer++){
-
-    for(let i = 0; i < 26; i++){
-
-      const baseY =
-
-        canvas.height * .5 +
-
-        (i - 13) * (10 + layer * 4) +
-
-        Math.sin(i * .5 + t * 4 + layer) * 20;
-
-      ctx.beginPath();
-
-      const alpha =
-
-        Math.max(0,.15 - t * .09 - layer * .025);
-
-      ctx.strokeStyle =
-
-        `rgba(220,235,230,${alpha})`;
-
-      ctx.lineWidth = 1;
-
-      for(let x = canvas.width * .04; x < canvas.width * .96; x += 7){
-
-        const dx = x - cx;
-
-        const dy = baseY - cy;
-
-        const dist = Math.sqrt(dx*dx + dy*dy);
-
-        const pressure =
-
-          Math.max(0,1 - Math.abs(dist - front) / (140 + layer * 50));
-
-        const ribs =
-
-          Math.sin(x * .018 + i * .65 + t * 12 + layer) * 3.5;
-
-        const pull =
-
-          Math.sin(dist * .03 - t * 16) * (18 - layer * 4) * pressure;
-
-        const y = baseY + ribs + pull;
-
-        if(x === canvas.width * .04){
-
-          ctx.moveTo(x,y);
-
-        }else{
-
-          ctx.lineTo(x,y);
-
-        }
-
-      }
-
-      ctx.stroke();
-
-    }
-
-  }
-
-  for(let spark = 0; spark < 7; spark++){
-
-    const delay = spark * .08;
-
-    const localT = Math.max(0,t - delay);
-
-    if(localT > 0 && localT < .75){
-
-      const angle = spark * 1.7;
-
-      const radius = localT * Math.max(canvas.width,canvas.height) * .95;
-
-      const x = cx + Math.cos(angle) * radius * .55;
-
-      const y = cy + Math.sin(angle) * radius * .55;
-
-      ctx.beginPath();
-
-      ctx.strokeStyle = `rgba(255,185,95,${.16 - localT*.15})`;
-
-      ctx.lineWidth = 1.2;
-
-      ctx.moveTo(x - 26,y);
-
-      ctx.bezierCurveTo(
-
-        x - 10,
-
-        y - 12,
-
-        x + 10,
-
-        y + 12,
-
-        x + 28,
-
-        y
+        Math.floor(((progress + 1)/TOTAL)*100)
 
       );
 
-      ctx.stroke();
+    },700);
 
-    }
+    setTimeout(() => {
+
+      turtle.classList.add("periscope");
+
+    },1000);
+
+    setTimeout(() => {
+
+      turtle.classList.remove("periscope");
+
+      turtle.classList.add("hide");
+
+    },1700);
+
+    setTimeout(() => {
+
+      turtle.classList.add("jitter");
+
+    },1900);
+
+    /* blackout */
+
+    setTimeout(() => {
+
+      fade.style.opacity = 1;
+
+    },3200);
+
+    clearInterval(walkLoop);
+
+    /* recovery */
+
+    setTimeout(recoveryScene,6200);
 
   }
 
-  const glow = ctx.createRadialGradient(
+},620);
 
-    cx,cy,0,
+/* =========================
 
-    cx,cy,Math.max(80,front * .28)
+   RECOVERY
 
-  );
+========================= */
 
-  glow.addColorStop(0,`rgba(255,220,160,${Math.max(0,.16 - t*.1)})`);
+function recoveryScene(){
 
-  glow.addColorStop(.35,`rgba(255,170,90,${Math.max(0,.045 - t*.03)})`);
+  fade.style.opacity = 0;
 
-  glow.addColorStop(1,"rgba(255,170,90,0)");
+  blocks.forEach(b => b.classList.add("active"));
 
-  ctx.fillStyle = glow;
+  percent.innerText = "100%";
 
-  ctx.fillRect(0,0,canvas.width,canvas.height);
+  percent.classList.add("flash100");
 
-  if(t < 1){
+  turtle.className = "";
 
-    requestAnimationFrame(animateLivingTouch);
+  turtle.style.left = "50%";
 
-  }else{
+  turtle.style.transform = "translateX(-50%)";
 
-    touchActive = false;
+  /* peeking */
 
-    canvas.style.opacity = .18;
+  turtle.classList.add("hide");
 
-    drawDormantSignal();
+  setTimeout(() => {
 
-  }
+    turtle.classList.remove("jitter");
+
+    document.querySelector(".head").style.opacity = 1;
+
+    document.querySelector(".neck").style.opacity = 1;
+
+  },900);
+
+  /* realize */
+
+  setTimeout(() => {
+
+    turtle.classList.remove("hide");
+
+  },1800);
+
+  /* OH SHIT */
+
+  setTimeout(() => {
+
+    turtle.style.transition = "left 3.2s linear";
+
+    turtle.style.left = "100%";
+
+    turtle.classList.add("walk");
+
+  },2600);
 
 }
 
