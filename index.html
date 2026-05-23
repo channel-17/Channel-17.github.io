@@ -8,19 +8,11 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-<title>Little Homie Prototype</title>
+<title>Little Homie Test</title>
 
 <style>
 
-*{
-
-  margin:0;
-
-  padding:0;
-
-  box-sizing:border-box;
-
-}
+*{margin:0;padding:0;box-sizing:border-box}
 
 html,body{
 
@@ -44,13 +36,9 @@ body{
 
   align-items:center;
 
+  color:white;
+
 }
-
-/* =========================
-
-   MAIN STAGE
-
-========================= */
 
 #stage{
 
@@ -60,15 +48,7 @@ body{
 
   height:100%;
 
-  overflow:hidden;
-
 }
-
-/* =========================
-
-   LOADER
-
-========================= */
 
 #loaderWrap{
 
@@ -80,79 +60,81 @@ body{
 
   transform:translateX(-50%);
 
-  width:min(78vw,420px);
+  width:min(76vw,380px);
 
 }
 
-#loader{
+#bar{
 
   width:100%;
 
-  display:flex;
+  height:24px;
 
-  gap:5px;
+  border:1px solid rgba(255,255,255,.16);
 
-}
+  background:rgba(255,255,255,.025);
 
-.block{
-
-  flex:1;
-
-  height:22px;
-
-  border:1px solid rgba(255,255,255,.14);
-
-  background:rgba(255,255,255,.03);
-
-  transition:.2s ease;
+  overflow:hidden;
 
 }
 
-.block.active{
+#fill{
 
-  background:#fff;
+  width:0%;
 
-  box-shadow:0 0 10px rgba(255,255,255,.16);
+  height:100%;
+
+  background:repeating-linear-gradient(
+
+    90deg,
+
+    rgba(255,255,255,.95) 0px,
+
+    rgba(255,255,255,.95) 10px,
+
+    transparent 10px,
+
+    transparent 15px
+
+  );
+
+  transition:width .35s linear;
 
 }
 
 #percent{
 
-  margin-top:12px;
+  margin-top:14px;
 
   text-align:center;
 
-  color:rgba(255,255,255,.48);
+  color:rgba(255,255,255,.55);
 
-  font-size:13px;
+  font-size:14px;
 
-  letter-spacing:.22em;
+  letter-spacing:.24em;
+
+  font-weight:bold;
 
 }
 
-/* =========================
-
-   LITTLE HOMIE
-
-========================= */
-
-#turtleLane{
+#lane{
 
   position:absolute;
 
-  width:min(78vw,420px);
-
-  height:80px;
-
   left:50%;
 
-  top:50%;
+  top:52%;
 
   transform:translateX(-50%);
 
+  width:min(76vw,380px);
+
+  height:80px;
+
 }
 
-#turtle{
+#homie{
 
   position:absolute;
 
@@ -160,253 +142,45 @@ body{
 
   top:16px;
 
-  width:48px;
+  width:64px;
 
-  height:32px;
+  height:42px;
 
-  transition:
-
-    transform .25s ease,
-
-    left .5s linear;
+  transition:left .45s linear, transform .35s ease;
 
 }
 
-/* shell */
+.sprite{
 
-.shell{
+  width:64px;
 
-  position:absolute;
+  height:42px;
 
-  left:14px;
+  image-rendering:pixelated;
 
-  top:8px;
-
-  width:24px;
-
-  height:16px;
-
-  background:#fff;
-
-  border-radius:4px;
+  overflow:visible;
 
 }
 
-.shell::before{
+.pixel{
 
-  content:"";
-
-  position:absolute;
-
-  left:11px;
-
-  top:1px;
-
-  width:2px;
-
-  height:14px;
-
-  background:rgba(0,0,0,.18);
+  fill:#fff;
 
 }
 
-.shell::after{
+.dim{
 
-  content:"";
-
-  position:absolute;
-
-  left:2px;
-
-  top:7px;
-
-  width:20px;
-
-  height:2px;
-
-  background:rgba(0,0,0,.15);
+  fill:rgba(255,255,255,.82);
 
 }
 
-/* head */
+#homie.shake{
 
-.head{
-
-  position:absolute;
-
-  left:36px;
-
-  top:11px;
-
-  width:8px;
-
-  height:8px;
-
-  background:#fff;
-
-  border-radius:2px;
-
-  transition:.2s ease;
+  animation:shellJitter .11s steps(2,end) infinite;
 
 }
 
-/* neck */
-
-.neck{
-
-  position:absolute;
-
-  left:31px;
-
-  top:13px;
-
-  width:6px;
-
-  height:4px;
-
-  background:#fff;
-
-  transition:.2s ease;
-
-}
-
-/* tail */
-
-.tail{
-
-  position:absolute;
-
-  left:8px;
-
-  top:14px;
-
-  width:0;
-
-  height:0;
-
-  border-top:3px solid transparent;
-
-  border-bottom:3px solid transparent;
-
-  border-right:7px solid #fff;
-
-}
-
-/* legs */
-
-.leg{
-
-  position:absolute;
-
-  width:5px;
-
-  height:7px;
-
-  background:#fff;
-
-  border-radius:1px;
-
-}
-
-.leg1{
-
-  left:18px;
-
-  top:22px;
-
-}
-
-.leg2{
-
-  left:30px;
-
-  top:22px;
-
-}
-
-/* walk cycle */
-
-.walk .leg1{
-
-  animation:legA .7s infinite;
-
-}
-
-.walk .leg2{
-
-  animation:legB .7s infinite;
-
-}
-
-@keyframes legA{
-
-  0%,100%{transform:translateX(0)}
-
-  50%{transform:translateX(-2px)}
-
-}
-
-@keyframes legB{
-
-  0%,100%{transform:translateX(-2px)}
-
-  50%{transform:translateX(0)}
-
-}
-
-/* lookback */
-
-.lookback{
-
-  transform:scaleX(-1);
-
-}
-
-/* neck extension */
-
-.periscope .head{
-
-  transform:translateX(8px) translateY(-4px);
-
-}
-
-.periscope .neck{
-
-  transform:translateX(5px) scaleX(1.8);
-
-}
-
-/* shell retreat */
-
-.hide .head,
-
-.hide .neck,
-
-.hide .tail,
-
-.hide .leg{
-
-  opacity:0;
-
-  transform:translateX(-12px);
-
-}
-
-.hide .shell{
-
-  transform:scale(1.08);
-
-}
-
-/* nervous jitter */
-
-.jitter{
-
-  animation:jitter .14s infinite;
-
-}
-
-@keyframes jitter{
+@keyframes shellJitter{
 
   0%{transform:translateX(0)}
 
@@ -414,13 +188,11 @@ body{
 
   50%{transform:translateX(-1px)}
 
-  75%{transform:translateX(.5px)}
+  75%{transform:translateX(1px)}
 
   100%{transform:translateX(0)}
 
 }
-
-/* blackout */
 
 #fade{
 
@@ -434,31 +206,21 @@ body{
 
   pointer-events:none;
 
-  transition:2s ease;
+  transition:opacity 1.6s ease;
 
 }
 
-/* final flash */
+.flash{
 
-.flash100{
-
-  animation:flash100 1s infinite;
+  animation:flash .75s infinite;
 
 }
 
-@keyframes flash100{
+@keyframes flash{
 
-  0%,100%{
+  0%,100%{opacity:1}
 
-    opacity:1;
-
-  }
-
-  50%{
-
-    opacity:.25;
-
-  }
+  50%{opacity:.25}
 
 }
 
@@ -472,29 +234,15 @@ body{
 
   <div id="loaderWrap">
 
-    <div id="loader"></div>
+    <div id="bar"><div id="fill"></div></div>
 
     <div id="percent">0%</div>
 
   </div>
 
-  <div id="turtleLane">
+  <div id="lane">
 
-    <div id="turtle" class="walk">
-
-      <div class="tail"></div>
-
-      <div class="shell"></div>
-
-      <div class="neck"></div>
-
-      <div class="head"></div>
-
-      <div class="leg leg1"></div>
-
-      <div class="leg leg2"></div>
-
-    </div>
+    <div id="homie"></div>
 
   </div>
 
@@ -504,187 +252,229 @@ body{
 
 <script>
 
-const loader = document.getElementById("loader");
+const homie = document.getElementById("homie");
 
-const turtle = document.getElementById("turtle");
+const fill = document.getElementById("fill");
 
 const percent = document.getElementById("percent");
 
 const fade = document.getElementById("fade");
 
-const TOTAL = 20;
+let p = 0;
 
-const INTERRUPT = 17;
+let x = 0;
 
-let progress = 0;
+let frame = 0;
 
-let turtleX = 0;
+function svg(blocks){
 
-for(let i=0;i<TOTAL;i++){
+  return `
 
-  const block = document.createElement("div");
+  <svg class="sprite" viewBox="0 0 32 21">
 
-  block.className = "block";
+    ${blocks.map(b=>`<rect class="${b[4]||"pixel"}" x="${b[0]}" y="${b[1]}" width="${b[2]}" height="${b[3]}"/>`).join("")}
 
-  loader.appendChild(block);
+  </svg>`;
 
 }
 
-const blocks = document.querySelectorAll(".block");
+const walk1 = [
 
-function activateBlock(index){
+  [8,9,2,2],[10,8,3,2],[13,7,8,2],[21,8,3,2],[24,9,2,2],
 
-  if(blocks[index]){
+  [9,11,16,2],[8,13,18,2],[10,15,14,2],
 
-    blocks[index].classList.add("active");
+  [11,10,2,1,"dim"],[15,9,2,1,"dim"],[19,10,2,1,"dim"],
+
+  [5,12,3,2],[3,11,2,2],
+
+  [26,12,4,2],[30,11,2,2],
+
+  [11,17,2,3],[21,17,2,3],
+
+  [7,15,2,2]
+
+];
+
+const walk2 = [
+
+  [8,9,2,2],[10,8,3,2],[13,7,8,2],[21,8,3,2],[24,9,2,2],
+
+  [9,11,16,2],[8,13,18,2],[10,15,14,2],
+
+  [11,10,2,1,"dim"],[15,9,2,1,"dim"],[19,10,2,1,"dim"],
+
+  [5,12,3,2],[3,11,2,2],
+
+  [26,12,4,2],[30,11,2,2],
+
+  [13,17,2,3],[19,17,2,3],
+
+  [7,15,2,2]
+
+];
+
+const look = [
+
+  [8,9,2,2],[10,8,3,2],[13,7,8,2],[21,8,3,2],[24,9,2,2],
+
+  [9,11,16,2],[8,13,18,2],[10,15,14,2],
+
+  [11,10,2,1,"dim"],[15,9,2,1,"dim"],[19,10,2,1,"dim"],
+
+  [1,11,2,2],[3,12,4,2],
+
+  [26,13,3,2],
+
+  [12,17,2,3],[21,17,2,3],
+
+  [27,15,2,2]
+
+];
+
+const neck = [
+
+  [8,9,2,2],[10,8,3,2],[13,7,8,2],[21,8,3,2],[24,9,2,2],
+
+  [9,11,16,2],[8,13,18,2],[10,15,14,2],
+
+  [11,10,2,1,"dim"],[15,9,2,1,"dim"],[19,10,2,1,"dim"],
+
+  [1,6,2,2],[3,8,2,2],[5,10,2,2],
+
+  [26,13,3,2],
+
+  [12,17,2,3],[21,17,2,3],
+
+  [27,15,2,2]
+
+];
+
+const shell = [
+
+  [8,9,2,2],[10,8,3,2],[13,7,8,2],[21,8,3,2],[24,9,2,2],
+
+  [9,11,16,2],[8,13,18,2],[10,15,14,2],
+
+  [11,10,2,1,"dim"],[15,9,2,1,"dim"],[19,10,2,1,"dim"],
+
+  [7,15,2,2]
+
+];
+
+function setSprite(type){
+
+  if(type==="walk"){
+
+    homie.innerHTML = svg(frame % 2 ? walk1 : walk2);
+
+    frame++;
 
   }
 
-}
+  if(type==="look") homie.innerHTML = svg(look);
 
-function updatePercent(num){
+  if(type==="neck") homie.innerHTML = svg(neck);
 
-  percent.innerText = `${num}%`;
-
-}
-
-function moveTurtle(){
-
-  turtleX += 14;
-
-  turtle.style.left = turtleX + "px";
+  if(type==="shell") homie.innerHTML = svg(shell);
 
 }
 
-const walkLoop = setInterval(() => {
+setSprite("walk");
 
-  progress++;
+const ticker = setInterval(()=>{
 
-  activateBlock(progress - 1);
+  p += 1;
 
-  updatePercent(Math.floor((progress / TOTAL) * 100));
+  x += 10;
 
-  moveTurtle();
+  fill.style.width = p + "%";
 
-  /* INTERRUPT MOMENT */
+  percent.textContent = p + "%";
 
-  if(progress === INTERRUPT){
+  homie.style.left = x + "px";
 
-    turtle.classList.remove("walk");
+  setSprite("walk");
 
-    setTimeout(() => {
+  if(p === 16){
 
-      turtle.classList.add("lookback");
+    clearInterval(ticker);
 
-    },300);
+    setTimeout(()=>setSprite("look"),450);
 
-    /* loader inertia */
+    setTimeout(()=>{
 
-    setTimeout(() => {
+      p = 17;
 
-      activateBlock(progress);
+      fill.style.width = p + "%";
 
-      updatePercent(
-
-        Math.floor(((progress + 1)/TOTAL)*100)
-
-      );
+      percent.textContent = p + "%";
 
     },700);
 
-    setTimeout(() => {
+    setTimeout(()=>{
 
-      turtle.classList.add("periscope");
+      p = 18;
 
-    },1000);
+      fill.style.width = p + "%";
 
-    setTimeout(() => {
+      percent.textContent = p + "%";
 
-      turtle.classList.remove("periscope");
+    },1050);
 
-      turtle.classList.add("hide");
+    setTimeout(()=>setSprite("neck"),1250);
 
-    },1700);
+    setTimeout(()=>{
 
-    setTimeout(() => {
+      setSprite("shell");
 
-      turtle.classList.add("jitter");
+      homie.classList.add("shake");
 
-    },1900);
+    },2050);
 
-    /* blackout */
+    setTimeout(()=>fade.style.opacity = 1,3600);
 
-    setTimeout(() => {
-
-      fade.style.opacity = 1;
-
-    },3200);
-
-    clearInterval(walkLoop);
-
-    /* recovery */
-
-    setTimeout(recoveryScene,6200);
+    setTimeout(recovery,6200);
 
   }
 
-},620);
+},640);
 
-/* =========================
+function recovery(){
 
-   RECOVERY
-
-========================= */
-
-function recoveryScene(){
+  homie.classList.remove("shake");
 
   fade.style.opacity = 0;
 
-  blocks.forEach(b => b.classList.add("active"));
+  p = 100;
 
-  percent.innerText = "100%";
+  fill.style.width = "100%";
 
-  percent.classList.add("flash100");
+  percent.textContent = "100%";
 
-  turtle.className = "";
+  percent.classList.add("flash");
 
-  turtle.style.left = "50%";
+  homie.style.left = "50%";
 
-  turtle.style.transform = "translateX(-50%)";
+  homie.style.transform = "translateX(-50%)";
 
-  /* peeking */
+  setSprite("shell");
 
-  turtle.classList.add("hide");
+  setTimeout(()=>setSprite("neck"),1200);
 
-  setTimeout(() => {
+  setTimeout(()=>setSprite("walk"),2200);
 
-    turtle.classList.remove("jitter");
+  setTimeout(()=>{
 
-    document.querySelector(".head").style.opacity = 1;
+    homie.style.transition = "left 5s linear";
 
-    document.querySelector(".neck").style.opacity = 1;
+    homie.style.transform = "translateX(0)";
 
-  },900);
+    homie.style.left = "100%";
 
-  /* realize */
+    setInterval(()=>setSprite("walk"),700);
 
-  setTimeout(() => {
-
-    turtle.classList.remove("hide");
-
-  },1800);
-
-  /* OH SHIT */
-
-  setTimeout(() => {
-
-    turtle.style.transition = "left 3.2s linear";
-
-    turtle.style.left = "100%";
-
-    turtle.classList.add("walk");
-
-  },2600);
+  },2800);
 
 }
 
