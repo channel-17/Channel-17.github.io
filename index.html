@@ -6,21 +6,13 @@
 
 <meta charset="UTF-8" />
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<title>Little Homie Stage 1</title>
+<title>Little Homie Sprite Test</title>
 
 <style>
 
-*{
-
-  margin:0;
-
-  padding:0;
-
-  box-sizing:border-box;
-
-}
+*{margin:0;padding:0;box-sizing:border-box}
 
 html,body{
 
@@ -46,17 +38,11 @@ html,body{
 
 }
 
-/* =========================
-
-   LOADER
-
-========================= */
+/* LOADER */
 
 #loaderWrap{
 
   position:absolute;
-
-  width:min(76vw,420px);
 
   left:50%;
 
@@ -64,47 +50,43 @@ html,body{
 
   transform:translateX(-50%);
 
+  width:min(76vw,420px);
+
 }
 
-#loader{
+#bar{
+
+  position:relative;
 
   width:100%;
 
   height:26px;
 
-  border:1px solid rgba(255,255,255,.15);
-
-  overflow:hidden;
-
-  position:relative;
+  border:1px solid rgba(255,255,255,.14);
 
   background:rgba(255,255,255,.02);
+
+  overflow:hidden;
 
 }
 
 #fill{
 
-  width:0%;
-
   height:100%;
 
-  background:
+  width:0%;
 
-  repeating-linear-gradient(
+  background:repeating-linear-gradient(
 
     90deg,
 
-    #fff 0px,
+    #fff 0 12px,
 
-    #fff 12px,
-
-    transparent 12px,
-
-    transparent 17px
+    transparent 12px 17px
 
   );
 
-  transition:width .58s linear;
+  transition:width .55s linear;
 
 }
 
@@ -120,37 +102,17 @@ html,body{
 
   justify-content:center;
 
-  font-size:13px;
+  color:rgba(255,255,255,.46);
 
-  letter-spacing:.25em;
+  font-size:13px;
 
   font-weight:bold;
 
-  color:rgba(255,255,255,.45);
+  letter-spacing:.24em;
 
 }
 
-/* =========================
-
-   LITTLE HOMIE
-
-========================= */
-
-#lane{
-
-  position:absolute;
-
-  width:min(76vw,420px);
-
-  height:100px;
-
-  left:50%;
-
-  top:52%;
-
-  transform:translateX(-50%);
-
-}
+/* HOMIE SPRITE */
 
 #homie{
 
@@ -158,169 +120,171 @@ html,body{
 
   left:50%;
 
-  top:10px;
+  top:56%;
 
-  transform:translateX(-50%);
+  transform:translate(-50%,-50%);
 
   width:92px;
 
-  height:58px;
+  height:auto;
 
-  animation:
+  image-rendering:auto;
 
-    bob 1.2s steps(2,end) infinite;
+  user-select:none;
 
-}
-
-/* body */
-
-.body{
-
-  position:absolute;
-
-  left:22px;
-
-  top:18px;
-
-  width:44px;
-
-  height:24px;
-
-  background:#fff;
-
-  border-radius:24px 24px 12px 12px;
+  pointer-events:none;
 
 }
 
-/* head */
+.walking{
 
-.head{
-
-  position:absolute;
-
-  left:63px;
-
-  top:21px;
-
-  width:16px;
-
-  height:16px;
-
-  background:#fff;
-
-  border-radius:50%;
+  animation:mechanicalWalk 1.25s steps(2,end) infinite;
 
 }
 
-/* eye */
+@keyframes mechanicalWalk{
 
-.eye{
+  50%{transform:translate(-50%,-50%) translateY(2px)}
+
+}
+
+.jitter{
+
+  animation:jitter .11s steps(2,end) infinite;
+
+}
+
+@keyframes jitter{
+
+  0%{transform:translate(-50%,-50%) translateX(0)}
+
+  50%{transform:translate(-50%,-50%) translateX(1px)}
+
+  100%{transform:translate(-50%,-50%) translateX(-1px)}
+
+}
+
+.scurry{
+
+  animation:scurry 3s linear forwards;
+
+}
+
+.scurry::after{
+
+  content:"";
+
+}
+
+@keyframes scurry{
+
+  from{left:50%}
+
+  to{left:115%}
+
+}
+
+/* SPEED LINES */
+
+#lineBox{
 
   position:absolute;
 
-  right:4px;
+  left:calc(50% - 76px);
 
-  top:5px;
+  top:56%;
 
-  width:3px;
+  width:48px;
 
-  height:3px;
+  height:28px;
+
+  transform:translateY(-50%);
+
+  opacity:0;
+
+}
+
+#lineBox.show{
+
+  opacity:1;
+
+}
+
+.line{
+
+  position:absolute;
+
+  right:0;
+
+  height:2px;
+
+  background:rgba(255,255,255,.7);
+
+  animation:speedLine .38s linear infinite;
+
+}
+
+.l1{top:4px;width:28px}
+
+.l2{top:13px;width:40px}
+
+.l3{top:22px;width:22px}
+
+@keyframes speedLine{
+
+  0%{transform:translateX(0);opacity:.2}
+
+  50%{opacity:.9}
+
+  100%{transform:translateX(-18px);opacity:0}
+
+}
+
+/* CHAOS PLACEHOLDER */
+
+#chaos{
+
+  position:absolute;
+
+  inset:0;
 
   background:#000;
 
-  border-radius:50%;
+  opacity:0;
+
+  pointer-events:none;
+
+  transition:opacity 1.2s ease;
 
 }
 
-/* tail */
-
-.tail{
+#chaosText{
 
   position:absolute;
 
-  left:14px;
+  left:50%;
 
-  top:29px;
+  top:50%;
 
-  width:0;
+  transform:translate(-50%,-50%);
 
-  height:0;
+  color:rgba(255,60,60,.35);
 
-  border-top:5px solid transparent;
+  font-size:18px;
 
-  border-bottom:5px solid transparent;
-
-  border-right:10px solid #fff;
+  letter-spacing:.28em;
 
 }
 
-/* legs */
+.flash{
 
-.leg{
-
-  position:absolute;
-
-  width:8px;
-
-  height:11px;
-
-  background:#fff;
-
-  border-radius:4px;
-
-  top:42px;
+  animation:flash 1s infinite;
 
 }
 
-.leg1{
+@keyframes flash{
 
-  left:30px;
-
-  animation:legA 1.2s steps(2,end) infinite;
-
-}
-
-.leg2{
-
-  left:50px;
-
-  animation:legB 1.2s steps(2,end) infinite;
-
-}
-
-/* =========================
-
-   MOTION
-
-========================= */
-
-@keyframes bob{
-
-  50%{
-
-    margin-top:2px;
-
-  }
-
-}
-
-@keyframes legA{
-
-  50%{
-
-    transform:translateX(-3px);
-
-  }
-
-}
-
-@keyframes legB{
-
-  50%{
-
-    transform:translateX(3px);
-
-  }
+  50%{opacity:.22}
 
 }
 
@@ -332,11 +296,9 @@ html,body{
 
 <div id="stage">
 
-  <!-- loader -->
-
   <div id="loaderWrap">
 
-    <div id="loader">
+    <div id="bar">
 
       <div id="fill"></div>
 
@@ -346,27 +308,21 @@ html,body{
 
   </div>
 
-  <!-- little homie -->
+  <img id="homie" class="walking" alt="Little Homie" />
 
-  <div id="lane">
+  <div id="lineBox">
 
-    <div id="homie">
+    <div class="line l1"></div>
 
-      <div class="tail"></div>
+    <div class="line l2"></div>
 
-      <div class="body"></div>
+    <div class="line l3"></div>
 
-      <div class="head">
+  </div>
 
-        <div class="eye"></div>
+  <div id="chaos">
 
-      </div>
-
-      <div class="leg leg1"></div>
-
-      <div class="leg leg2"></div>
-
-    </div>
+    <div id="chaosText">CHAOS</div>
 
   </div>
 
@@ -378,23 +334,247 @@ const fill = document.getElementById("fill");
 
 const percent = document.getElementById("percent");
 
+const homie = document.getElementById("homie");
+
+const chaos = document.getElementById("chaos");
+
+const lineBox = document.getElementById("lineBox");
+
+function svgData(svg){
+
+  return "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg);
+
+}
+
+/* THESE ARE SPRITES NOW — NOT CSS BODY PARTS */
+
+const idle = svgData(`
+
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 100">
+
+<rect width="180" height="100" fill="none"/>
+
+<path fill="white" d="M42 61 C45 36 62 25 86 25 C111 25 128 39 130 62 L146 62 C149 55 155 51 163 51 C173 51 179 58 179 68 C179 78 172 85 162 85 C154 85 148 80 145 73 L130 73 C125 84 112 88 91 88 L58 88 C48 88 40 80 42 61 Z"/>
+
+<path fill="white" d="M41 64 L18 75 L42 78 Z"/>
+
+<rect fill="white" x="55" y="82" width="12" height="18" rx="4"/>
+
+<rect fill="white" x="100" y="82" width="12" height="18" rx="4"/>
+
+<circle fill="black" cx="164" cy="67" r="4"/>
+
+</svg>
+
+`);
+
+const working = svgData(`
+
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 100">
+
+<rect width="180" height="100" fill="none"/>
+
+<path fill="white" d="M42 61 C45 36 62 25 86 25 C111 25 128 39 130 62 L146 62 C149 55 155 51 163 51 C173 51 179 58 179 68 C179 78 172 85 162 85 C154 85 148 80 145 73 L130 73 C125 84 112 88 91 88 L58 88 C48 88 40 80 42 61 Z"/>
+
+<path fill="white" d="M41 64 L18 75 L42 78 Z"/>
+
+<rect fill="white" x="50" y="80" width="12" height="20" rx="4" transform="rotate(16 56 90)"/>
+
+<rect fill="white" x="104" y="80" width="12" height="20" rx="4" transform="rotate(-12 110 90)"/>
+
+<circle fill="black" cx="164" cy="67" r="4"/>
+
+</svg>
+
+`);
+
+const uneasy = svgData(`
+
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 100">
+
+<rect width="180" height="100" fill="none"/>
+
+<path fill="white" d="M42 61 C45 36 62 25 86 25 C111 25 128 39 130 62 L146 62 C149 55 155 51 163 51 C173 51 179 58 179 68 C179 78 172 85 162 85 C154 85 148 80 145 73 L130 73 C125 84 112 88 91 88 L58 88 C48 88 40 80 42 61 Z"/>
+
+<path fill="white" d="M41 64 L18 75 L42 78 Z"/>
+
+<rect fill="white" x="55" y="82" width="12" height="18" rx="4"/>
+
+<rect fill="white" x="100" y="82" width="12" height="18" rx="4"/>
+
+<circle fill="black" cx="164" cy="67" r="4"/>
+
+</svg>
+
+`);
+
+const alert = svgData(`
+
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 120">
+
+<rect width="180" height="120" fill="none"/>
+
+<path fill="white" d="M42 76 C45 51 62 40 86 40 C111 40 126 54 128 76 L146 54 C151 47 157 43 165 43 C175 43 181 50 181 60 C181 70 174 77 164 77 C156 77 150 72 147 65 L128 87 C121 98 108 102 90 102 L58 102 C48 102 40 95 42 76 Z"/>
+
+<path fill="white" d="M41 79 L18 90 L42 93 Z"/>
+
+<rect fill="white" x="55" y="96" width="12" height="18" rx="4"/>
+
+<rect fill="white" x="100" y="96" width="12" height="18" rx="4"/>
+
+<circle fill="black" cx="165" cy="59" r="4"/>
+
+</svg>
+
+`);
+
+const shell = svgData(`
+
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 100">
+
+<rect width="180" height="100" fill="none"/>
+
+<path fill="white" d="M36 73 C39 42 61 27 91 27 C121 27 143 43 146 73 C136 87 116 92 91 92 C66 92 46 87 36 73 Z"/>
+
+<path fill="white" d="M35 72 L15 82 L37 84 Z"/>
+
+</svg>
+
+`);
+
+homie.src = idle;
+
 let progress = 0;
 
-setInterval(()=>{
+let stopped = false;
 
-  progress++;
+let frame = false;
 
-  if(progress > 100){
+const walkSwap = setInterval(() => {
 
-    progress = 0;
+  if(!stopped){
+
+    frame = !frame;
+
+    homie.src = frame ? idle : working;
 
   }
 
+}, 620);
+
+const loading = setInterval(() => {
+
+  if(stopped) return;
+
+  progress++;
+
   fill.style.width = progress + "%";
 
-  percent.innerText = progress + "%";
+  percent.textContent = progress + "%";
 
-},580);
+  if(progress === 16){
+
+    stopped = true;
+
+    homie.classList.remove("walking");
+
+    setTimeout(() => {
+
+      homie.src = uneasy;
+
+    }, 500);
+
+    setTimeout(() => {
+
+      progress = 17;
+
+      fill.style.width = "17%";
+
+      percent.textContent = "17%";
+
+    }, 950);
+
+    setTimeout(() => {
+
+      progress = 18;
+
+      fill.style.width = "18%";
+
+      percent.textContent = "18%";
+
+    }, 1400);
+
+    setTimeout(() => {
+
+      homie.src = alert;
+
+    }, 2100);
+
+    setTimeout(() => {
+
+      homie.src = shell;
+
+      homie.classList.add("jitter");
+
+    }, 3150);
+
+    setTimeout(() => {
+
+      chaos.style.opacity = 1;
+
+    }, 4300);
+
+    setTimeout(recovery, 7600);
+
+  }
+
+}, 620);
+
+function recovery(){
+
+  chaos.style.opacity = 0;
+
+  fill.style.width = "100%";
+
+  percent.textContent = "100%";
+
+  percent.classList.add("flash");
+
+  homie.classList.remove("jitter");
+
+  homie.src = shell;
+
+  setTimeout(() => {
+
+    homie.src = uneasy;
+
+  }, 900);
+
+  setTimeout(() => {
+
+    homie.src = idle;
+
+  }, 1600);
+
+  setTimeout(() => {
+
+    homie.classList.add("walking","scurry");
+
+    lineBox.classList.add("show");
+
+    let runFrame = false;
+
+    setInterval(() => {
+
+      runFrame = !runFrame;
+
+      homie.src = runFrame ? working : idle;
+
+    }, 220);
+
+  }, 2300);
+
+}
 
 </script>
 
