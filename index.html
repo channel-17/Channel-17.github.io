@@ -4,23 +4,15 @@
 
 <head>
 
-<meta charset="UTF-8">
+<meta charset="UTF-8" />
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
 <title>Little Homie Prototype</title>
 
 <style>
 
-*{
-
-  margin:0;
-
-  padding:0;
-
-  box-sizing:border-box;
-
-}
+*{margin:0;padding:0;box-sizing:border-box}
 
 html,body{
 
@@ -32,17 +24,9 @@ html,body{
 
   background:#000;
 
-  font-family:Arial, Helvetica, sans-serif;
+  font-family:Arial,Helvetica,sans-serif;
 
-}
-
-body{
-
-  display:flex;
-
-  justify-content:center;
-
-  align-items:center;
+  color:#fff;
 
 }
 
@@ -58,37 +42,35 @@ body{
 
 }
 
-/* =========================
-
-   LOADER
-
-========================= */
+/* LOADER */
 
 #loaderWrap{
 
   position:absolute;
 
-  width:min(76vw,420px);
-
   left:50%;
 
-  top:42%;
+  top:40%;
 
   transform:translateX(-50%);
 
+  width:min(76vw,420px);
+
 }
 
-#loader{
+#bar{
+
+  position:relative;
 
   width:100%;
 
-  height:24px;
+  height:28px;
 
-  border:1px solid rgba(255,255,255,.14);
+  border:1px solid rgba(255,255,255,.16);
+
+  background:rgba(255,255,255,.025);
 
   overflow:hidden;
-
-  position:relative;
 
 }
 
@@ -98,23 +80,17 @@ body{
 
   width:0%;
 
-  background:
-
-  repeating-linear-gradient(
+  background:repeating-linear-gradient(
 
     90deg,
 
-    #fff 0px,
+    #fff 0 12px,
 
-    #fff 12px,
-
-    transparent 12px,
-
-    transparent 17px
+    transparent 12px 17px
 
   );
 
-  transition:width .45s linear;
+  transition:width .5s linear;
 
 }
 
@@ -130,21 +106,17 @@ body{
 
   justify-content:center;
 
-  color:rgba(255,255,255,.45);
-
   font-size:13px;
 
   font-weight:bold;
 
-  letter-spacing:.25em;
+  letter-spacing:.24em;
+
+  color:rgba(255,255,255,.48);
 
 }
 
-/* =========================
-
-   LITTLE HOMIE
-
-========================= */
+/* LITTLE HOMIE */
 
 #homie{
 
@@ -152,19 +124,17 @@ body{
 
   left:50%;
 
-  top:56%;
+  top:54%;
+
+  width:84px;
+
+  height:50px;
 
   transform:translate(-50%,-50%);
 
-  width:76px;
-
-  height:48px;
-
-  transition:.3s ease;
+  transition:transform .22s ease, opacity .2s ease;
 
 }
-
-/* body */
 
 .body{
 
@@ -172,31 +142,29 @@ body{
 
   left:18px;
 
-  top:13px;
+  top:14px;
 
-  width:38px;
+  width:42px;
 
-  height:24px;
+  height:25px;
 
   background:#fff;
 
-  border-radius:22px 22px 10px 10px;
+  border-radius:24px 24px 12px 12px;
 
 }
-
-/* head */
 
 .head{
 
   position:absolute;
 
-  left:55px;
+  left:58px;
 
   top:18px;
 
-  width:14px;
+  width:16px;
 
-  height:14px;
+  height:16px;
 
   background:#fff;
 
@@ -206,15 +174,13 @@ body{
 
 }
 
-/* eye */
-
 .eye{
 
   position:absolute;
 
-  right:4px;
+  right:5px;
 
-  top:5px;
+  top:6px;
 
   width:3px;
 
@@ -226,15 +192,13 @@ body{
 
 }
 
-/* tail */
-
 .tail{
 
   position:absolute;
 
   left:10px;
 
-  top:24px;
+  top:25px;
 
   width:0;
 
@@ -248,87 +212,65 @@ body{
 
 }
 
-/* legs */
-
 .leg{
 
   position:absolute;
 
-  width:7px;
+  width:8px;
 
-  height:12px;
+  height:11px;
+
+  top:38px;
 
   background:#fff;
 
-  border-radius:2px;
-
-  top:35px;
+  border-radius:4px;
 
 }
 
-.leg1{ left:25px; }
+.leg1{left:26px}
 
-.leg2{ left:45px; }
+.leg2{left:46px}
 
-/* =========================
-
-   WALK
-
-========================= */
+/* mechanical walk */
 
 .walk{
 
-  animation:bob 1.2s infinite steps(2,end);
+  animation:homieBob 1.25s steps(2,end) infinite;
 
 }
 
 .walk .leg1{
 
-  animation:stepA 1.2s infinite steps(2,end);
+  animation:stepA 1.25s steps(2,end) infinite;
 
 }
 
 .walk .leg2{
 
-  animation:stepB 1.2s infinite steps(2,end);
+  animation:stepB 1.25s steps(2,end) infinite;
 
 }
 
-@keyframes bob{
+@keyframes homieBob{
 
-  50%{
-
-    margin-top:2px;
-
-  }
+  50%{margin-top:2px}
 
 }
 
 @keyframes stepA{
 
-  50%{
-
-    transform:translateX(-2px);
-
-  }
+  50%{transform:translateX(-3px)}
 
 }
 
 @keyframes stepB{
 
-  50%{
-
-    transform:translateX(2px);
-
-  }
+  50%{transform:translateX(3px)}
 
 }
 
-/* =========================
-
-   LOOK
-
-========================= */
+/* look back */
 
 .look .head{
 
@@ -338,17 +280,13 @@ body{
 
 .look .eye{
 
-  left:4px;
+  left:5px;
 
   right:auto;
 
 }
 
-/* =========================
-
-   PEEK
-
-========================= */
+/* cautious peek */
 
 .peek .head{
 
@@ -358,11 +296,7 @@ body{
 
 }
 
-/* =========================
-
-   SHELL
-
-========================= */
+/* shell */
 
 .hide .head,
 
@@ -376,37 +310,29 @@ body{
 
 .hide .body{
 
-  transform:scale(.96);
+  transform:scale(.98);
 
 }
 
-/* =========================
-
-   JITTER
-
-========================= */
+/* nervous shell */
 
 .jitter{
 
-  animation:jitter .12s infinite steps(2,end);
+  animation:jitter .11s steps(2,end) infinite;
 
 }
 
 @keyframes jitter{
 
-  50%{
+  0%{transform:translate(-50%,-50%) translateX(0)}
 
-    transform:translate(-50%,-50%) translateX(1px);
+  50%{transform:translate(-50%,-50%) translateX(1px)}
 
-  }
+  100%{transform:translate(-50%,-50%) translateX(-1px)}
 
 }
 
-/* =========================
-
-   CHAOS
-
-========================= */
+/* chaos placeholder */
 
 #chaos{
 
@@ -414,45 +340,35 @@ body{
 
   inset:0;
 
-  opacity:0;
-
   background:#000;
+
+  opacity:0;
 
   pointer-events:none;
 
-  transition:1.4s ease;
+  transition:opacity 1.2s ease;
 
 }
 
-.glitch{
+.chaosText{
 
   position:absolute;
 
-  color:rgba(255,60,60,.25);
+  left:50%;
 
-  font-size:13px;
+  top:50%;
 
-  font-weight:bold;
+  transform:translate(-50%,-50%);
 
-  letter-spacing:.18em;
+  color:rgba(255,60,60,.35);
+
+  font-size:18px;
+
+  letter-spacing:.3em;
 
 }
 
-.g1{top:18%;left:10%}
-
-.g2{top:32%;right:10%}
-
-.g3{bottom:24%;left:14%}
-
-.g4{top:55%;right:18%}
-
-.g5{bottom:16%;right:8%}
-
-/* =========================
-
-   100%
-
-========================= */
+/* 100% */
 
 .flash{
 
@@ -462,39 +378,45 @@ body{
 
 @keyframes flash{
 
-  50%{
-
-    opacity:.2;
-
-  }
+  50%{opacity:.24}
 
 }
 
-/* =========================
-
-   RUN
-
-========================= */
+/* survivor hustle */
 
 .run{
 
-  animation:run 2.8s linear forwards;
+  animation:runAway 3s linear forwards;
 
 }
 
-@keyframes run{
+.run::before,
 
-  from{
+.run::after{
 
-    left:50%;
+  content:"";
 
-  }
+  position:absolute;
 
-  to{
+  right:80px;
 
-    left:115%;
+  width:18px;
 
-  }
+  height:2px;
+
+  background:rgba(255,255,255,.65);
+
+}
+
+.run::before{top:20px}
+
+.run::after{top:31px}
+
+@keyframes runAway{
+
+  from{left:50%}
+
+  to{left:118%}
 
 }
 
@@ -506,11 +428,9 @@ body{
 
 <div id="stage">
 
-  <!-- LOADER -->
-
   <div id="loaderWrap">
 
-    <div id="loader">
+    <div id="bar">
 
       <div id="fill"></div>
 
@@ -520,19 +440,13 @@ body{
 
   </div>
 
-  <!-- LITTLE HOMIE -->
-
   <div id="homie" class="walk">
 
     <div class="tail"></div>
 
     <div class="body"></div>
 
-    <div class="head">
-
-      <div class="eye"></div>
-
-    </div>
+    <div class="head"><div class="eye"></div></div>
 
     <div class="leg leg1"></div>
 
@@ -540,19 +454,9 @@ body{
 
   </div>
 
-  <!-- CHAOS -->
-
   <div id="chaos">
 
-    <div class="glitch g1">UNREQUESTED FILE STACK</div>
-
-    <div class="glitch g2">SIGNAL LOST</div>
-
-    <div class="glitch g3">IDENTITY LOOP ACTIVE</div>
-
-    <div class="glitch g4">NOISE OVERLOAD</div>
-
-    <div class="glitch g5">TOO MANY ACTIVE MASKS</div>
+    <div class="chaosText">CHAOS</div>
 
   </div>
 
@@ -570,117 +474,83 @@ const chaos = document.getElementById("chaos");
 
 let progress = 0;
 
-let frozen = false;
+let paused = false;
 
-/* =========================
+const loading = setInterval(() => {
 
-   LOADING LOOP
-
-========================= */
-
-const loading = setInterval(()=>{
-
-  if(frozen) return;
+  if(paused) return;
 
   progress++;
 
   fill.style.width = progress + "%";
 
-  percent.innerText = progress + "%";
-
-  /* TREMOR */
+  percent.textContent = progress + "%";
 
   if(progress === 16){
 
-    frozen = true;
-
-    /* stop walking */
+    paused = true;
 
     homie.classList.remove("walk");
 
-    /* notice */
-
-    setTimeout(()=>{
+    setTimeout(() => {
 
       homie.classList.add("look");
 
-    },500);
+    }, 520);
 
-    /* loader inertia */
-
-    setTimeout(()=>{
+    setTimeout(() => {
 
       progress = 17;
 
       fill.style.width = "17%";
 
-      percent.innerText = "17%";
+      percent.textContent = "17%";
 
-    },1000);
+    }, 950);
 
-    setTimeout(()=>{
+    setTimeout(() => {
 
       progress = 18;
 
       fill.style.width = "18%";
 
-      percent.innerText = "18%";
+      percent.textContent = "18%";
 
-    },1450);
+    }, 1400);
 
-    /* peek */
-
-    setTimeout(()=>{
+    setTimeout(() => {
 
       homie.classList.remove("look");
 
       homie.classList.add("peek");
 
-    },2100);
+    }, 2050);
 
-    /* shell */
-
-    setTimeout(()=>{
+    setTimeout(() => {
 
       homie.classList.remove("peek");
 
       homie.classList.add("hide");
 
-    },3200);
+    }, 3050);
 
-    /* nervous */
-
-    setTimeout(()=>{
+    setTimeout(() => {
 
       homie.classList.add("jitter");
 
-    },3500);
+    }, 3350);
 
-    /* chaos */
-
-    setTimeout(()=>{
+    setTimeout(() => {
 
       chaos.style.opacity = 1;
 
-    },4300);
+    }, 4300);
 
-    /* recovery */
-
-    setTimeout(()=>{
-
-      recovery();
-
-    },7600);
+    setTimeout(recovery, 7600);
 
   }
 
-},620);
-
-/* =========================
-
-   RECOVERY
-
-========================= */
+}, 620);
 
 function recovery(){
 
@@ -688,39 +558,33 @@ function recovery(){
 
   fill.style.width = "100%";
 
-  percent.innerText = "100%";
+  percent.textContent = "100%";
 
   percent.classList.add("flash");
 
   homie.classList.remove("jitter");
 
-  /* slowly emerges */
-
-  setTimeout(()=>{
+  setTimeout(() => {
 
     homie.classList.remove("hide");
 
     homie.classList.add("peek");
 
-  },900);
+  }, 900);
 
-  /* realization */
-
-  setTimeout(()=>{
+  setTimeout(() => {
 
     homie.classList.remove("peek");
 
     homie.classList.add("walk");
 
-  },1700);
+  }, 1700);
 
-  /* OH SHIT RUN */
-
-  setTimeout(()=>{
+  setTimeout(() => {
 
     homie.classList.add("run");
 
-  },2400);
+  }, 2400);
 
 }
 
