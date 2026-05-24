@@ -1,18 +1,34 @@
+<!-- =========================
+
+PART 1 / CHANNEL 17
+
+Paste this first
+
+========================= -->
+
 <!DOCTYPE html>
 
 <html lang="en">
 
 <head>
 
-<meta charset="UTF-8" />
+<meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Little Homie Sprite Test</title>
+<title>channel 17</title>
 
 <style>
 
-*{margin:0;padding:0;box-sizing:border-box}
+*{
+
+  margin:0;
+
+  padding:0;
+
+  box-sizing:border-box;
+
+}
 
 html,body{
 
@@ -36,9 +52,17 @@ html,body{
 
   height:100%;
 
+  overflow:hidden;
+
+  background:#000;
+
 }
 
-/* LOADER */
+/* =========================
+
+LOADER
+
+========================= */
 
 #loaderWrap{
 
@@ -50,19 +74,19 @@ html,body{
 
   transform:translateX(-50%);
 
-  width:min(76vw,420px);
+  width:min(80vw,420px);
 
 }
 
-#bar{
+#loader{
 
   position:relative;
 
   width:100%;
 
-  height:26px;
+  height:28px;
 
-  border:1px solid rgba(255,255,255,.14);
+  border:1px solid rgba(255,255,255,.15);
 
   background:rgba(255,255,255,.02);
 
@@ -72,21 +96,29 @@ html,body{
 
 #fill{
 
-  height:100%;
+  position:absolute;
+
+  inset:0;
 
   width:0%;
 
-  background:repeating-linear-gradient(
+  background:
+
+  repeating-linear-gradient(
 
     90deg,
 
-    #fff 0 12px,
+    #fff 0px,
 
-    transparent 12px 17px
+    #fff 12px,
+
+    transparent 12px,
+
+    transparent 17px
 
   );
 
-  transition:width .55s linear;
+  transition:width .6s linear;
 
 }
 
@@ -102,17 +134,23 @@ html,body{
 
   justify-content:center;
 
-  color:rgba(255,255,255,.46);
-
-  font-size:13px;
+  font-size:12px;
 
   font-weight:bold;
 
-  letter-spacing:.24em;
+  letter-spacing:.25em;
+
+  color:#000;
+
+  mix-blend-mode:difference;
 
 }
 
-/* HOMIE SPRITE */
+/* =========================
+
+LITTLE HOMIE
+
+========================= */
 
 #homie{
 
@@ -120,97 +158,107 @@ html,body{
 
   left:50%;
 
-  top:56%;
+  top:55%;
 
   transform:translate(-50%,-50%);
 
-  width:92px;
-
-  height:auto;
-
-  image-rendering:auto;
-
-  user-select:none;
+  width:100px;
 
   pointer-events:none;
 
-}
+  user-select:none;
 
-.walking{
-
-  animation:mechanicalWalk 1.25s steps(2,end) infinite;
+  transition:transform .2s ease;
 
 }
 
-@keyframes mechanicalWalk{
+.walk{
 
-  50%{transform:translate(-50%,-50%) translateY(2px)}
-
-}
-
-.jitter{
-
-  animation:jitter .11s steps(2,end) infinite;
+  animation:walkBob 1.2s infinite steps(2,end);
 
 }
 
-@keyframes jitter{
+@keyframes walkBob{
 
-  0%{transform:translate(-50%,-50%) translateX(0)}
+  50%{
 
-  50%{transform:translate(-50%,-50%) translateX(1px)}
+    transform:translate(-50%,-50%) translateY(2px);
 
-  100%{transform:translate(-50%,-50%) translateX(-1px)}
+  }
+
+}
+
+.nervous{
+
+  animation:nervous .12s infinite steps(2,end);
+
+}
+
+@keyframes nervous{
+
+  50%{
+
+    transform:translate(-50%,-50%) translateX(1px);
+
+  }
 
 }
 
 .scurry{
 
-  animation:scurry 3s linear forwards;
-
-}
-
-.scurry::after{
-
-  content:"";
+  animation:scurry 4s linear forwards;
 
 }
 
 @keyframes scurry{
 
-  from{left:50%}
+  from{
 
-  to{left:115%}
+    left:50%;
+
+  }
+
+  to{
+
+    left:130%;
+
+  }
 
 }
 
-/* SPEED LINES */
+/* =========================
 
-#lineBox{
+SPEED LINES
+
+========================= */
+
+#speed{
 
   position:absolute;
 
-  left:calc(50% - 76px);
+  left:calc(50% - 88px);
 
-  top:56%;
-
-  width:48px;
-
-  height:28px;
+  top:55%;
 
   transform:translateY(-50%);
 
+  width:44px;
+
+  height:30px;
+
   opacity:0;
+
+  transition:opacity .4s ease;
 
 }
 
-#lineBox.show{
+#speed.active{
 
   opacity:1;
 
 }
 
-.line{
+.sline{
 
   position:absolute;
 
@@ -218,37 +266,67 @@ html,body{
 
   height:2px;
 
-  background:rgba(255,255,255,.7);
+  background:rgba(255,255,255,.55);
 
-  animation:speedLine .38s linear infinite;
-
-}
-
-.l1{top:4px;width:28px}
-
-.l2{top:13px;width:40px}
-
-.l3{top:22px;width:22px}
-
-@keyframes speedLine{
-
-  0%{transform:translateX(0);opacity:.2}
-
-  50%{opacity:.9}
-
-  100%{transform:translateX(-18px);opacity:0}
+  animation:speedMove .35s linear infinite;
 
 }
 
-/* CHAOS PLACEHOLDER */
+.s1{
+
+  width:24px;
+
+  top:4px;
+
+}
+
+.s2{
+
+  width:38px;
+
+  top:14px;
+
+}
+
+.s3{
+
+  width:20px;
+
+  top:24px;
+
+}
+
+@keyframes speedMove{
+
+  from{
+
+    transform:translateX(0);
+
+    opacity:.2;
+
+  }
+
+  to{
+
+    transform:translateX(-20px);
+
+    opacity:0;
+
+  }
+
+}
+
+/* =========================
+
+CHAOS
+
+========================= */
 
 #chaos{
 
   position:absolute;
 
   inset:0;
-
-  background:#000;
 
   opacity:0;
 
@@ -258,33 +336,121 @@ html,body{
 
 }
 
-#chaosText{
+.window{
+
+  position:absolute;
+
+  border:1px solid rgba(200,255,80,.2);
+
+  background:rgba(0,0,0,.88);
+
+  color:rgba(220,255,120,.75);
+
+  padding:10px;
+
+  font-size:11px;
+
+  letter-spacing:.12em;
+
+  box-shadow:0 0 20px rgba(180,255,80,.05);
+
+}
+
+.w1{top:12%;left:8%;width:180px}
+
+.w2{top:28%;right:10%;width:220px}
+
+.w3{bottom:18%;left:12%;width:250px}
+
+.w4{top:54%;right:18%;width:180px}
+
+.w5{top:42%;left:36%;width:210px}
+
+/* =========================
+
+RECONNECT
+
+========================= */
+
+#reconnect{
 
   position:absolute;
 
   left:50%;
 
-  top:50%;
+  top:48%;
 
   transform:translate(-50%,-50%);
 
-  color:rgba(255,60,60,.35);
+  font-size:22px;
 
-  font-size:18px;
+  letter-spacing:.32em;
 
-  letter-spacing:.28em;
+  color:rgba(210,255,90,.15);
+
+  opacity:0;
+
+  transition:opacity 2s ease;
+
+  animation:breathe 4s ease-in-out infinite;
 
 }
 
-.flash{
+@keyframes breathe{
 
-  animation:flash 1s infinite;
+  0%,100%{
+
+    opacity:.18;
+
+  }
+
+  50%{
+
+    opacity:.55;
+
+  }
 
 }
 
-@keyframes flash{
+/* =========================
 
-  50%{opacity:.22}
+CHANNELS
+
+========================= */
+
+#channels{
+
+  position:absolute;
+
+  left:50%;
+
+  top:56%;
+
+  transform:translateX(-50%);
+
+  width:min(80vw,420px);
+
+  opacity:0;
+
+  transition:opacity 2s ease;
+
+}
+
+.channel{
+
+  margin:18px 0;
+
+  font-size:17px;
+
+  letter-spacing:.18em;
+
+  color:rgba(220,255,120,.75);
+
+}
+
+.dormant{
+
+  color:rgba(220,255,120,.12);
 
 }
 
@@ -296,35 +462,98 @@ html,body{
 
 <div id="stage">
 
-  <div id="loaderWrap">
+<div id="loaderWrap">
 
-    <div id="bar">
+<div id="loader">
 
-      <div id="fill"></div>
+<div id="fill"></div>
 
-      <div id="percent">0%</div>
+<div id="percent">0%</div>
 
-    </div>
+</div>
 
-  </div>
+</div>
 
-  <img id="homie" class="walking" alt="Little Homie" />
+<img
 
-  <div id="lineBox">
+id="homie"
 
-    <div class="line l1"></div>
+class="walk"
 
-    <div class="line l2"></div>
+src="data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 100'%3E%3Cpath fill='white' d='M42 61 C45 36 62 25 86 25 C111 25 128 39 130 62 L146 62 C149 55 155 51 163 51 C173 51 179 58 179 68 C179 78 172 85 162 85 C154 85 148 80 145 73 L130 73 C125 84 112 88 91 88 L58 88 C48 88 40 80 42 61 Z'/%3E%3Cpath fill='white' d='M41 64 L18 75 L42 78 Z'/%3E%3Crect fill='white' x='50' y='80' width='12' height='20' rx='4' transform='rotate(16 56 90)'/%3E%3Crect fill='white' x='104' y='80' width='12' height='20' rx='4' transform='rotate(-12 110 90)'/%3E%3Ccircle fill='black' cx='164' cy='67' r='4'/%3E%3C/svg%3E"
 
-    <div class="line l3"></div>
+>
 
-  </div>
+<div id="speed">
 
-  <div id="chaos">
+<div class="sline s1"></div>
 
-    <div id="chaosText">CHAOS</div>
+<div class="sline s2"></div>
 
-  </div>
+<div class="sline s3"></div>
+
+</div>
+
+<div id="chaos">
+
+<div class="window w1">
+
+TOO MANY ACTIVE MASKS
+
+</div>
+
+<div class="window w2">
+
+MEMORY STACK OVERFLOW
+
+</div>
+
+<div class="window w3">
+
+UNRESOLVED SIGNAL THREADS
+
+</div>
+
+<div class="window w4">
+
+IDENTITY LOOP ACTIVE
+
+</div>
+
+<div class="window w5">
+
+NOISE LIMIT EXCEEDED
+
+</div>
+
+</div>
+
+<div id="reconnect">
+
+reconnect
+
+</div>
+
+<div id="channels">
+
+<div class="channel">.last upload</div>
+
+<div class="channel">.roach tray</div>
+
+<div class="channel">.pass it back</div>
+
+<div class="channel dormant">.█████ ████</div>
+
+<div class="channel dormant">.signal_lost</div>
+
+</div>
+<!-- =========================
+
+PART 2 / CHANNEL 17
+
+Paste this directly after PART 1
+
+========================= -->
 
 </div>
 
@@ -338,197 +567,73 @@ const homie = document.getElementById("homie");
 
 const chaos = document.getElementById("chaos");
 
-const lineBox = document.getElementById("lineBox");
+const reconnect = document.getElementById("reconnect");
 
-function svgData(svg){
+const channels = document.getElementById("channels");
 
-  return "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg);
-
-}
-
-/* THESE ARE SPRITES NOW — NOT CSS BODY PARTS */
-
-const idle = svgData(`
-
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 100">
-
-<rect width="180" height="100" fill="none"/>
-
-<path fill="white" d="M42 61 C45 36 62 25 86 25 C111 25 128 39 130 62 L146 62 C149 55 155 51 163 51 C173 51 179 58 179 68 C179 78 172 85 162 85 C154 85 148 80 145 73 L130 73 C125 84 112 88 91 88 L58 88 C48 88 40 80 42 61 Z"/>
-
-<path fill="white" d="M41 64 L18 75 L42 78 Z"/>
-
-<rect fill="white" x="55" y="82" width="12" height="18" rx="4"/>
-
-<rect fill="white" x="100" y="82" width="12" height="18" rx="4"/>
-
-<circle fill="black" cx="164" cy="67" r="4"/>
-
-</svg>
-
-`);
-
-const working = svgData(`
-
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 100">
-
-<rect width="180" height="100" fill="none"/>
-
-<path fill="white" d="M42 61 C45 36 62 25 86 25 C111 25 128 39 130 62 L146 62 C149 55 155 51 163 51 C173 51 179 58 179 68 C179 78 172 85 162 85 C154 85 148 80 145 73 L130 73 C125 84 112 88 91 88 L58 88 C48 88 40 80 42 61 Z"/>
-
-<path fill="white" d="M41 64 L18 75 L42 78 Z"/>
-
-<rect fill="white" x="50" y="80" width="12" height="20" rx="4" transform="rotate(16 56 90)"/>
-
-<rect fill="white" x="104" y="80" width="12" height="20" rx="4" transform="rotate(-12 110 90)"/>
-
-<circle fill="black" cx="164" cy="67" r="4"/>
-
-</svg>
-
-`);
-
-const uneasy = svgData(`
-
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 100">
-
-<rect width="180" height="100" fill="none"/>
-
-<path fill="white" d="M42 61 C45 36 62 25 86 25 C111 25 128 39 130 62 L146 62 C149 55 155 51 163 51 C173 51 179 58 179 68 C179 78 172 85 162 85 C154 85 148 80 145 73 L130 73 C125 84 112 88 91 88 L58 88 C48 88 40 80 42 61 Z"/>
-
-<path fill="white" d="M41 64 L18 75 L42 78 Z"/>
-
-<rect fill="white" x="55" y="82" width="12" height="18" rx="4"/>
-
-<rect fill="white" x="100" y="82" width="12" height="18" rx="4"/>
-
-<circle fill="black" cx="164" cy="67" r="4"/>
-
-</svg>
-
-`);
-
-const alert = svgData(`
-
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 120">
-
-<rect width="180" height="120" fill="none"/>
-
-<path fill="white" d="M42 76 C45 51 62 40 86 40 C111 40 126 54 128 76 L146 54 C151 47 157 43 165 43 C175 43 181 50 181 60 C181 70 174 77 164 77 C156 77 150 72 147 65 L128 87 C121 98 108 102 90 102 L58 102 C48 102 40 95 42 76 Z"/>
-
-<path fill="white" d="M41 79 L18 90 L42 93 Z"/>
-
-<rect fill="white" x="55" y="96" width="12" height="18" rx="4"/>
-
-<rect fill="white" x="100" y="96" width="12" height="18" rx="4"/>
-
-<circle fill="black" cx="165" cy="59" r="4"/>
-
-</svg>
-
-`);
-
-const shell = svgData(`
-
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 100">
-
-<rect width="180" height="100" fill="none"/>
-
-<path fill="white" d="M36 73 C39 42 61 27 91 27 C121 27 143 43 146 73 C136 87 116 92 91 92 C66 92 46 87 36 73 Z"/>
-
-<path fill="white" d="M35 72 L15 82 L37 84 Z"/>
-
-</svg>
-
-`);
-
-homie.src = idle;
+const speed = document.getElementById("speed");
 
 let progress = 0;
 
-let stopped = false;
+let halted = false;
 
-let frame = false;
+const loop = setInterval(()=>{
 
-const walkSwap = setInterval(() => {
-
-  if(!stopped){
-
-    frame = !frame;
-
-    homie.src = frame ? idle : working;
-
-  }
-
-}, 620);
-
-const loading = setInterval(() => {
-
-  if(stopped) return;
+  if(halted) return;
 
   progress++;
 
   fill.style.width = progress + "%";
 
-  percent.textContent = progress + "%";
+  percent.innerText = progress + "%";
 
   if(progress === 16){
 
-    stopped = true;
+    halted = true;
 
-    homie.classList.remove("walking");
+    homie.classList.remove("walk");
 
-    setTimeout(() => {
-
-      homie.src = uneasy;
-
-    }, 500);
-
-    setTimeout(() => {
+    setTimeout(()=>{
 
       progress = 17;
 
       fill.style.width = "17%";
 
-      percent.textContent = "17%";
+      percent.innerText = "17%";
 
-    }, 950);
+    },900);
 
-    setTimeout(() => {
+    setTimeout(()=>{
 
       progress = 18;
 
       fill.style.width = "18%";
 
-      percent.textContent = "18%";
+      percent.innerText = "18%";
 
-    }, 1400);
+    },1500);
 
-    setTimeout(() => {
+    setTimeout(()=>{
 
-      homie.src = alert;
+      homie.classList.add("nervous");
 
-    }, 2100);
+    },2400);
 
-    setTimeout(() => {
-
-      homie.src = shell;
-
-      homie.classList.add("jitter");
-
-    }, 3150);
-
-    setTimeout(() => {
+    setTimeout(()=>{
 
       chaos.style.opacity = 1;
 
-    }, 4300);
+    },3800);
 
-    setTimeout(recovery, 7600);
+    setTimeout(()=>{
+
+      recovery();
+
+    },7800);
 
   }
 
-}, 620);
+},580);
 
 function recovery(){
 
@@ -536,45 +641,57 @@ function recovery(){
 
   fill.style.width = "100%";
 
-  percent.textContent = "100%";
+  percent.innerText = "100%";
 
   percent.classList.add("flash");
 
-  homie.classList.remove("jitter");
+  homie.classList.remove("nervous");
 
-  homie.src = shell;
+  setTimeout(()=>{
 
-  setTimeout(() => {
+    homie.classList.add("walk");
 
-    homie.src = uneasy;
+    homie.classList.add("scurry");
 
-  }, 900);
+    speed.classList.add("active");
 
-  setTimeout(() => {
+  },1200);
 
-    homie.src = idle;
+  setTimeout(()=>{
 
-  }, 1600);
+    speed.classList.remove("active");
 
-  setTimeout(() => {
+  },5000);
 
-    homie.classList.add("walking","scurry");
+  setTimeout(()=>{
 
-    lineBox.classList.add("show");
+    reconnect.style.opacity = 1;
 
-    let runFrame = false;
-
-    setInterval(() => {
-
-      runFrame = !runFrame;
-
-      homie.src = runFrame ? working : idle;
-
-    }, 220);
-
-  }, 2300);
+  },5200);
 
 }
+
+reconnect.addEventListener("click",()=>{
+
+  channels.style.opacity = 1;
+
+});
+
+setInterval(()=>{
+
+  const dormant = document.querySelectorAll(".dormant");
+
+  const random = dormant[Math.floor(Math.random()*dormant.length)];
+
+  random.style.opacity = ".32";
+
+  setTimeout(()=>{
+
+    random.style.opacity = "";
+
+  },700);
+
+},18000);
 
 </script>
 
