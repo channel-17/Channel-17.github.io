@@ -1,29 +1,16 @@
-
 <!DOCTYPE html>
 
 <html lang="en">
 
 <head>
 
-<meta charset="UTF-8" />
+<meta charset="UTF-8"/>
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-<title>channel 17</title>
-
-<link rel="icon" href="Signal17.png?v=17">
-
-<link rel="shortcut icon" href="Signal17.png?v=17">
-
-<link rel="apple-touch-icon" sizes="180x180" href="Beacon17.png">
+<title>Little Homie</title>
 
 <style>
-
-/* ===================================================== */
-
-/* RESET */
-
-/* ===================================================== */
 
 *{
 
@@ -35,37 +22,21 @@
 
 }
 
-body{
-
-  background:#000;
-
-  overflow:hidden;
-
-  width:100vw;
-
-  height:100vh;
-
-  font-family:"Courier New", monospace;
-
-  color:#d8d2c8;
-
-}
-
-/* ===================================================== */
-
-/* MAIN SCREEN */
-
-/* ===================================================== */
-
-.screen{
-
-  position:relative;
+html,body{
 
   width:100%;
 
-  height:100vh;
+  height:100%;
 
   overflow:hidden;
+
+  background:#000;
+
+  font-family:Arial,Helvetica,sans-serif;
+
+}
+
+body{
 
   display:flex;
 
@@ -73,375 +44,125 @@ body{
 
   align-items:center;
 
-  background:#000;
-
 }
 
-/* ===================================================== */
-
-/* TIMING CONTROLS */
-
-/* ===================================================== */
-
-/*
-
-CHANGE THESE LATER
-
-WITHOUT TOUCHING ANYTHING ELSE
-
-*/
-
-:root{
-
-  --glitch-start: .3s;
-
-  --symbol-start: 1.2s;
-
-  --signal-start: 5.3s;
-
-  --signal-end: 8.5s;
-
-  --reconnect-start: 9.8s;
-
-}
-
-/* ===================================================== */
-
-/* OPENING GLITCH */
-
-/* ===================================================== */
-
-.glitch{
-
-  position:fixed;
-
-  inset:-5%;
-
-  opacity:0;
-
-  pointer-events:none;
-
-  z-index:9999;
-
-  background:
-
-  repeating-linear-gradient(
-
-    0deg,
-
-    rgba(255,255,255,.16) 0px,
-
-    rgba(255,255,255,.16) 2px,
-
-    transparent 3px,
-
-    transparent 7px
-
-  );
-
-  mix-blend-mode:screen;
-
-  filter:
-
-  blur(1.8px)
-
-  contrast(2.8)
-
-  brightness(2.6);
-
-}
-
-.glitch.active{
-
-  animation:violentGlitch 1.1s steps(2) forwards;
-
-}
-
-@keyframes violentGlitch{
-
-  0%{
-
-    opacity:0;
-
-    transform:scale(1);
-
-  }
-
-  8%{
-
-    opacity:1;
-
-    transform:
-
-    translateX(-38px)
-
-    skewX(18deg)
-
-    scale(1.02);
-
-  }
-
-  15%{
-
-    opacity:.2;
-
-  }
-
-  22%{
-
-    opacity:1;
-
-    transform:
-
-    translateX(24px)
-
-    skewX(-14deg)
-
-    scale(1.01);
-
-  }
-
-  35%{
-
-    opacity:0;
-
-  }
-
-  44%{
-
-    opacity:.9;
-
-    transform:
-
-    translateY(-12px)
-
-    skewY(5deg);
-
-  }
-
-  60%{
-
-    opacity:.2;
-
-  }
-
-  72%{
-
-    opacity:.8;
-
-    transform:
-
-    translateX(12px)
-
-    scale(1.01);
-
-  }
-
-  100%{
-
-    opacity:0;
-
-    transform:none;
-
-  }
-
-}
-
-/* ===================================================== */
-
-/* SYMBOL */
-
-/* ===================================================== */
-
-.symbol-wrap{
+#stage{
 
   position:relative;
-
-  width:260px;
-
-  height:260px;
-
-}
-
-.outer-symbol,
-
-.inner-symbol{
-
-  position:absolute;
-
-  inset:0;
 
   width:100%;
 
   height:100%;
 
-  object-fit:contain;
-
-  opacity:0;
+  overflow:hidden;
 
 }
 
-.inner-symbol{
+/* =========================
 
-  z-index:1;
+   LOADER
 
-  animation:
+========================= */
 
-  symbolRise 4.8s ease-out forwards;
-
-  animation-delay:var(--symbol-start);
-
-}
-
-.outer-symbol{
-
-  z-index:2;
-
-  animation:
-
-  symbolRise 4.8s ease-out forwards;
-
-  animation-delay:var(--symbol-start);
-
-}
-
-@keyframes symbolRise{
-
-  0%{
-
-    opacity:0;
-
-    transform:scale(.92);
-
-    filter:
-
-    blur(18px)
-
-    brightness(.2);
-
-  }
-
-  40%{
-
-    opacity:.16;
-
-  }
-
-  65%{
-
-    opacity:.42;
-
-    filter:
-
-    blur(3px)
-
-    brightness(.7);
-
-  }
-
-  100%{
-
-    opacity:1;
-
-    transform:scale(1);
-
-    filter:none;
-
-  }
-
-}
-
-/* ===================================================== */
-
-/* QUICK SIGNAL TEAR */
-
-/* ===================================================== */
-
-.signal-tear{
+#loaderWrap{
 
   position:absolute;
 
-  left:0;
-
-  top:48%;
-
-  width:100%;
-
-  height:12px;
-
-  background:#000;
-
-  opacity:0;
-
-  z-index:100;
-
-}
-
-.signal-tear.active{
-
-  animation:
-
-  tearFlash .14s linear forwards;
-
-}
-
-@keyframes tearFlash{
-
-  0%{
-
-    opacity:0;
-
-    transform:translateX(-100%);
-
-  }
-
-  35%{
-
-    opacity:1;
-
-  }
-
-  100%{
-
-    opacity:0;
-
-    transform:translateX(100%);
-
-  }
-
-}
-
-/* ===================================================== */
-
-/* TEXT ZONE */
-
-/* ===================================================== */
-
-.text-zone{
-
-  position:absolute;
+  width:min(76vw,420px);
 
   left:50%;
 
-  top:69%;
+  top:42%;
 
   transform:translateX(-50%);
 
-  width:320px;
+}
 
-  height:80px;
+#loader{
 
-  text-align:center;
+  width:100%;
+
+  height:24px;
+
+  border:1px solid rgba(255,255,255,.14);
+
+  overflow:hidden;
+
+  position:relative;
 
 }
 
-/* ===================================================== */
+#fill{
 
-/* SIGNAL LOST */
+  height:100%;
 
-/* ===================================================== */
+  width:0%;
 
-.signal-line{
+  background:
+
+  repeating-linear-gradient(
+
+    90deg,
+
+    #fff 0px,
+
+    #fff 12px,
+
+    transparent 12px,
+
+    transparent 17px
+
+  );
+
+  transition:width .45s linear;
+
+}
+
+#percent{
+
+  position:absolute;
+
+  inset:0;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  color:rgba(255,255,255,.48);
+
+  font-size:13px;
+
+  font-weight:bold;
+
+  letter-spacing:.25em;
+
+}
+
+/* =========================
+
+   LITTLE HOMIE
+
+========================= */
+
+#homieWrap{
+
+  position:absolute;
+
+  left:50%;
+
+  top:54%;
+
+  transform:translateX(-50%);
+
+  width:120px;
+
+  height:90px;
+
+}
+
+#homie{
 
   position:absolute;
 
@@ -451,261 +172,463 @@ WITHOUT TOUCHING ANYTHING ELSE
 
   transform:translate(-50%,-50%);
 
-  white-space:nowrap;
+  width:70px;
 
-  opacity:0;
+  height:46px;
 
-  font-size:1.15rem;
-
-  letter-spacing:10px;
-
-  color:#c2bcaf;
+  transition:.25s ease;
 
 }
 
-.signal-line.live{
+/* shell */
 
-  animation:
-
-  signalResolve 2.2s ease-out forwards;
-
-}
-
-@keyframes signalResolve{
-
-  0%{
-
-    opacity:0;
-
-    filter:
-
-    blur(8px);
-
-    letter-spacing:18px;
-
-    transform:
-
-    translate(-50%,-50%)
-
-    translateX(-10px);
-
-  }
-
-  22%{
-
-    opacity:.18;
-
-  }
-
-  38%{
-
-    opacity:.42;
-
-    transform:
-
-    translate(-50%,-50%)
-
-    translateX(3px);
-
-  }
-
-  56%{
-
-    opacity:.25;
-
-    filter:
-
-    blur(2px);
-
-  }
-
-  72%{
-
-    opacity:.7;
-
-    letter-spacing:10px;
-
-  }
-
-  100%{
-
-    opacity:.9;
-
-    filter:none;
-
-    letter-spacing:8px;
-
-    transform:
-
-    translate(-50%,-50%);
-
-  }
-
-}
-
-/* ===================================================== */
-
-/* RECONNECT */
-
-/* ===================================================== */
-
-.reconnect{
+.shell{
 
   position:absolute;
 
-  left:50%;
+  width:34px;
 
-  top:50%;
+  height:22px;
 
-  transform:translate(-50%,-50%);
+  left:16px;
+
+  top:10px;
+
+  background:#fff;
+
+  border-radius:10px 10px 8px 8px;
+
+}
+
+.shell::before{
+
+  content:"";
+
+  position:absolute;
+
+  width:3px;
+
+  height:16px;
+
+  background:rgba(0,0,0,.14);
+
+  left:15px;
+
+  top:3px;
+
+}
+
+.shell::after{
+
+  content:"";
+
+  position:absolute;
+
+  width:24px;
+
+  height:2px;
+
+  background:rgba(0,0,0,.12);
+
+  left:5px;
+
+  top:10px;
+
+}
+
+/* head */
+
+.head{
+
+  position:absolute;
+
+  width:10px;
+
+  height:10px;
+
+  background:#fff;
+
+  border-radius:4px;
+
+  left:50px;
+
+  top:15px;
+
+  transition:.25s ease;
+
+}
+
+/* eye */
+
+.eye{
+
+  position:absolute;
+
+  width:2px;
+
+  height:2px;
+
+  background:#000;
+
+  border-radius:50%;
+
+  left:6px;
+
+  top:4px;
+
+}
+
+/* neck */
+
+.neck{
+
+  position:absolute;
+
+  width:8px;
+
+  height:4px;
+
+  background:#fff;
+
+  left:44px;
+
+  top:18px;
+
+  transition:.25s ease;
+
+}
+
+/* tail */
+
+.tail{
+
+  position:absolute;
+
+  width:0;
+
+  height:0;
+
+  border-top:4px solid transparent;
+
+  border-bottom:4px solid transparent;
+
+  border-right:10px solid #fff;
+
+  left:8px;
+
+  top:18px;
+
+}
+
+/* legs */
+
+.leg{
+
+  position:absolute;
+
+  width:6px;
+
+  height:10px;
+
+  background:#fff;
+
+  border-radius:2px;
+
+}
+
+.leg1{
+
+  left:20px;
+
+  top:30px;
+
+}
+
+.leg2{
+
+  left:40px;
+
+  top:30px;
+
+}
+
+/* =========================
+
+   WALK
+
+========================= */
+
+.walk .leg1{
+
+  animation:leg1 .8s infinite;
+
+}
+
+.walk .leg2{
+
+  animation:leg2 .8s infinite;
+
+}
+
+.walk{
+
+  animation:bob 1.1s infinite;
+
+}
+
+@keyframes bob{
+
+  0%,100%{
+
+    margin-top:0;
+
+  }
+
+  50%{
+
+    margin-top:2px;
+
+  }
+
+}
+
+@keyframes leg1{
+
+  0%,100%{
+
+    transform:translateX(0);
+
+  }
+
+  50%{
+
+    transform:translateX(-2px);
+
+  }
+
+}
+
+@keyframes leg2{
+
+  0%,100%{
+
+    transform:translateX(-2px);
+
+  }
+
+  50%{
+
+    transform:translateX(0);
+
+  }
+
+}
+
+/* =========================
+
+   LOOK BACK
+
+========================= */
+
+.look .head{
+
+  left:2px;
+
+}
+
+.look .neck{
+
+  left:8px;
+
+}
+
+.look .eye{
+
+  left:1px;
+
+}
+
+/* =========================
+
+   PEEK
+
+========================= */
+
+.peek .head{
+
+  top:-2px;
+
+  left:0px;
+
+}
+
+.peek .neck{
+
+  width:16px;
+
+  left:8px;
+
+  top:8px;
+
+}
+
+/* =========================
+
+   SHELL
+
+========================= */
+
+.hide .head,
+
+.hide .neck,
+
+.hide .tail,
+
+.hide .leg{
 
   opacity:0;
 
-  cursor:pointer;
+}
 
-  user-select:none;
+.hide .shell{
+
+  transform:scale(1.04);
+
+}
+
+/* =========================
+
+   NERVOUS
+
+========================= */
+
+.shake{
+
+  animation:shake .11s infinite;
+
+}
+
+@keyframes shake{
+
+  0%{
+
+    transform:translate(-50%,-50%) translateX(0);
+
+  }
+
+  50%{
+
+    transform:translate(-50%,-50%) translateX(1px);
+
+  }
+
+  100%{
+
+    transform:translate(-50%,-50%) translateX(-1px);
+
+  }
+
+}
+
+/* =========================
+
+   CHAOS
+
+========================= */
+
+#chaos{
+
+  position:absolute;
+
+  inset:0;
+
+  opacity:0;
+
+  pointer-events:none;
+
+  transition:1.2s ease;
+
+  background:#000;
+
+}
+
+.glitch{
+
+  position:absolute;
+
+  color:rgba(255,60,60,.22);
+
+  font-size:13px;
+
+  letter-spacing:.18em;
+
+  font-weight:bold;
 
   white-space:nowrap;
 
-  font-size:1.1rem;
+}
 
-  letter-spacing:8px;
+.g1{top:18%;left:10%}
 
-  color:#d8d2c8;
+.g2{top:35%;right:8%}
+
+.g3{bottom:28%;left:14%}
+
+.g4{top:52%;left:48%}
+
+.g5{bottom:18%;right:10%}
+
+/* =========================
+
+   100%
+
+========================= */
+
+.flash{
+
+  animation:flash 1s infinite;
 
 }
 
-.reconnect.live{
+@keyframes flash{
 
-  animation:
+  0%,100%{
 
-  reconnectPulse 2.6s ease-in-out infinite;
-
-}
-
-@keyframes reconnectPulse{
-
-  0%{
-
-    opacity:.08;
-
-    text-shadow:none;
+    opacity:1;
 
   }
 
   50%{
 
-    opacity:1;
-
-    text-shadow:
-
-    0 0 12px rgba(255,255,255,.22),
-
-    0 0 24px rgba(255,255,255,.08);
-
-  }
-
-  100%{
-
-    opacity:.12;
-
-    text-shadow:none;
+    opacity:.2;
 
   }
 
 }
 
-/* ===================================================== */
+/* =========================
 
-/* OUTER WALL DISSOLVE */
+   RUN
 
-/* ===================================================== */
+========================= */
 
-.outer-symbol.dissolve{
+.run{
 
-  animation:
-
-  dissolveWalls 3.2s ease forwards;
+  animation:run 3.2s linear forwards;
 
 }
 
-@keyframes dissolveWalls{
+@keyframes run{
 
-  0%{
+  from{
 
-    opacity:1;
-
-    filter:none;
+    left:50%;
 
   }
 
-  50%{
+  to{
 
-    opacity:.7;
-
-    transform:
-
-    scale(1.01)
-
-    translateY(1px);
-
-    filter:
-
-    blur(1px)
-
-    brightness(.7);
-
-  }
-
-  100%{
-
-    opacity:0;
-
-    transform:
-
-    scale(1.03)
-
-    translateY(4px);
-
-    filter:
-
-    blur(14px)
-
-    brightness(.2);
-
-  }
-
-}
-
-/* ===================================================== */
-
-/* INNER CORE GLOW */
-
-/* ===================================================== */
-
-.inner-symbol.connected{
-
-  animation:
-
-  innerAlive 3s ease forwards;
-
-}
-
-@keyframes innerAlive{
-
-  0%{
-
-    filter:none;
-
-  }
-
-  100%{
-
-    filter:
-
-    drop-shadow(0 0 12px rgba(255,255,255,.08))
-
-    drop-shadow(0 0 26px rgba(255,255,255,.04));
+    left:120%;
 
   }
 
@@ -717,55 +640,55 @@ WITHOUT TOUCHING ANYTHING ELSE
 
 <body>
 
-<div class="screen">
+<div id="stage">
 
-  <!-- GLITCH -->
+  <div id="loaderWrap">
 
-  <div class="glitch" id="glitch"></div>
+    <div id="loader">
 
-  <!-- SYMBOL -->
+      <div id="fill"></div>
 
-  <div class="symbol-wrap">
+      <div id="percent">0%</div>
 
-    <div class="signal-tear" id="tear"></div>
-
-    <img
-
-      src="Inner17-final.png"
-
-      class="inner-symbol"
-
-      id="innerSymbol"
-
-    />
-
-    <img
-
-      src="Outer17-final.png"
-
-      class="outer-symbol"
-
-      id="outerSymbol"
-
-    />
+    </div>
 
   </div>
 
-  <!-- TEXT -->
+  <div id="homieWrap">
 
-  <div class="text-zone">
+    <div id="homie" class="walk">
 
-    <div class="signal-line" id="signalLine">
+      <div class="tail"></div>
 
-      signal lost
+      <div class="shell"></div>
+
+      <div class="neck"></div>
+
+      <div class="head">
+
+        <div class="eye"></div>
+
+      </div>
+
+      <div class="leg leg1"></div>
+
+      <div class="leg leg2"></div>
 
     </div>
 
-    <div class="reconnect" id="reconnect">
+  </div>
 
-      reconnect
+  <div id="chaos">
 
-    </div>
+    <div class="glitch g1">TOO MANY ACTIVE MASKS</div>
+
+    <div class="glitch g2">SIGNAL LOST</div>
+
+    <div class="glitch g3">UNREQUESTED FILE STACK</div>
+
+    <div class="glitch g4">IDENTITY LOOP ACTIVE</div>
+
+    <div class="glitch g5">NOISE OVERLOAD</div>
 
   </div>
 
@@ -773,123 +696,169 @@ WITHOUT TOUCHING ANYTHING ELSE
 
 <script>
 
-/* ===================================================== */
+const fill = document.getElementById("fill");
 
-/* ELEMENTS */
+const percent = document.getElementById("percent");
 
-/* ===================================================== */
+const homie = document.getElementById("homie");
 
-const glitch =
+const chaos = document.getElementById("chaos");
 
-document.getElementById("glitch");
+let progress = 0;
 
-const tear =
+let stopped = false;
 
-document.getElementById("tear");
+/* =========================
 
-const signalLine =
+   NORMAL LOADING
 
-document.getElementById("signalLine");
+========================= */
 
-const reconnect =
+const loaderLoop = setInterval(()=>{
 
-document.getElementById("reconnect");
+  if(stopped) return;
 
-const outerSymbol =
+  progress++;
 
-document.getElementById("outerSymbol");
+  fill.style.width = progress + "%";
 
-const innerSymbol =
+  percent.innerText = progress + "%";
 
-document.getElementById("innerSymbol");
+  /* tremor */
 
-/* ===================================================== */
+  if(progress === 16){
 
-/* OPENING GLITCH */
+    stopped = true;
 
-/* ===================================================== */
+    /* he stops walking */
 
-setTimeout(() => {
+    homie.classList.remove("walk");
 
-  glitch.classList.add("active");
+    /* he senses */
 
-}, 300);
+    setTimeout(()=>{
 
-/* ===================================================== */
+      homie.classList.add("look");
 
-/* QUICK SYMBOL TEAR */
+    },500);
 
-/* ===================================================== */
+    /* inertia */
 
-setTimeout(() => {
+    setTimeout(()=>{
 
-  tear.classList.add("active");
+      progress = 17;
 
-}, 3200);
+      fill.style.width = "17%";
 
-/* ===================================================== */
+      percent.innerText = "17%";
 
-/* SIGNAL LOST */
+    },900);
 
-/* ===================================================== */
+    setTimeout(()=>{
 
-setTimeout(() => {
+      progress = 18;
 
-  signalLine.style.opacity = 1;
+      fill.style.width = "18%";
 
-  signalLine.classList.add("live");
+      percent.innerText = "18%";
 
-}, 5300);
+    },1300);
 
-/* ===================================================== */
+    /* loader dies */
 
-/* REMOVE SIGNAL */
+    setTimeout(()=>{
 
-/* ===================================================== */
+      homie.classList.remove("look");
 
-setTimeout(() => {
+      homie.classList.add("peek");
 
-  signalLine.style.opacity = 0;
+    },1900);
 
-}, 8500);
+    /* panic */
 
-/* ===================================================== */
+    setTimeout(()=>{
 
-/* RECONNECT */
+      homie.classList.remove("peek");
 
-/* ===================================================== */
+      homie.classList.add("hide");
 
-setTimeout(() => {
+    },3000);
 
-  reconnect.style.opacity = 1;
+    /* nervous shell */
 
-  reconnect.classList.add("live");
+    setTimeout(()=>{
 
-}, 9800);
+      homie.classList.add("shake");
 
-/* ===================================================== */
+    },3300);
 
-/* CLICK RECONNECT */
+    /* CHAOS */
 
-/* ===================================================== */
+    setTimeout(()=>{
 
-reconnect.addEventListener("click", () => {
+      chaos.style.opacity = 1;
 
-  reconnect.style.pointerEvents = "none";
+    },4200);
 
-  reconnect.classList.remove("live");
+    /* aftermath */
 
-  reconnect.style.transition =
+    setTimeout(()=>{
 
-  "opacity 1.2s ease";
+      recovery();
 
-  reconnect.style.opacity = 0;
+    },7600);
 
-  outerSymbol.classList.add("dissolve");
+  }
 
-  innerSymbol.classList.add("connected");
+},620);
 
-});
+/* =========================
+
+   RECOVERY
+
+========================= */
+
+function recovery(){
+
+  chaos.style.opacity = 0;
+
+  fill.style.width = "100%";
+
+  percent.innerText = "100%";
+
+  percent.classList.add("flash");
+
+  homie.classList.remove("shake");
+
+  /* peeks out */
+
+  setTimeout(()=>{
+
+    homie.classList.remove("hide");
+
+    homie.classList.add("peek");
+
+  },900);
+
+  /* realizes */
+
+  setTimeout(()=>{
+
+    homie.classList.remove("peek");
+
+    homie.classList.add("walk");
+
+  },1800);
+
+  /* SCURRY */
+
+  setTimeout(()=>{
+
+    homie.classList.add("run");
+
+  },2400);
+
+}
 
 </script>
 
