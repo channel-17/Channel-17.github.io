@@ -171,3 +171,41 @@ signalNode.addEventListener("click", () => {
   }, 5600);
 
 });
+
+const authCascade = document.getElementById("authCascade");
+const authWarning = document.getElementById("authWarning");
+
+function runAuthCascade(){
+
+  authCascade.innerHTML = "";
+  authCascade.classList.add("active");
+
+  const total = 18;
+
+  for(let i = 0; i < total; i++){
+
+    const win = document.createElement("div");
+
+    win.className = "cascade-window";
+
+    const x = -10 + (i * 6);
+    const y = 5 + (i * 4.4);
+
+    win.style.left = `${x}%`;
+    win.style.top = `${y}%`;
+    win.style.animationDelay = `${i * .055}s`;
+
+    authCascade.appendChild(win);
+
+  }
+
+  setTimeout(() => {
+    authWarning.classList.add("active");
+  }, 1850);
+
+  setTimeout(() => {
+    authCascade.classList.remove("active");
+    authCascade.innerHTML = "";
+  }, 3600);
+
+}
