@@ -110,6 +110,8 @@ function completeSequence(){
 
     virusLayer.classList.add("clear");
 
+    runAuthCascade();
+
   }, 300);
 
   setTimeout(() => {
