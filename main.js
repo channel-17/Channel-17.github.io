@@ -182,7 +182,7 @@ function runAuthCascade(){
   authCascade.innerHTML = "";
   authCascade.classList.add("active");
 
-  const total = 18;
+  const total = 14;
 
   for(let i = 0; i < total; i++){
 
@@ -195,7 +195,7 @@ function runAuthCascade(){
 
     win.style.left = `${x}%`;
     win.style.top = `${y}%`;
-    win.style.animationDelay = `${i * .055}s`;
+    win.style.animationDelay = `${i * .18}s`;
 
     authCascade.appendChild(win);
 
