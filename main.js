@@ -112,7 +112,7 @@ function completeSequence(){
 
     runAuthCascade();
 
-  }, 300);
+  }, 50);
 
   setTimeout(() => {
 
