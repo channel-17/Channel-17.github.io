@@ -1551,3 +1551,127 @@ body{
   75%{ opacity:1; }
   100%{ opacity:0; filter:blur(3px); }
 }
+/* TURTLE BODY FIXES */
+
+.tail{
+  left:5px;
+  top:9px;
+  border-top:4px solid transparent;
+  border-bottom:4px solid transparent;
+  border-right:9px solid var(--cream);
+  transform:rotate(8deg);
+}
+
+.l1{
+  left:15px;
+}
+
+.l2{
+  left:25px;
+}
+
+/* ACTUAL EXIT OFF SCREEN */
+
+@keyframes escapeTurtle{
+  100%{
+    left:145vw;
+    opacity:0;
+    transform:scale(.76) translateY(-3px);
+  }
+}
+
+/* POPUPS SHOULD FEEL LIKE THEY’RE ACCUMULATING */
+
+.virus-layer.active .pop{
+  animation:slamIn .22s cubic-bezier(.08,.75,.12,1) forwards;
+}
+
+.p1{ animation-delay:.2s !important; }
+.p2{ animation-delay:.45s !important; }
+.p8{ animation-delay:.7s !important; }
+.p5{ animation-delay:.95s !important; }
+.p6{ animation-delay:1.18s !important; }
+.p7{ animation-delay:1.42s !important; }
+.p3{ animation-delay:1.66s !important; }
+.p4{ animation-delay:1.92s !important; }
+.p9{ animation-delay:2.16s !important; }
+
+/* SLOWER CASCADE / WORLD JUMP */
+
+.cascade-window{
+  animation:cascadeFall 4.8s ease forwards;
+}
+
+@keyframes cascadeFall{
+  0%{
+    opacity:0;
+    transform:translate(-40px,-40px) scale(.96);
+  }
+  18%{
+    opacity:.72;
+  }
+  72%{
+    opacity:.52;
+    transform:translate(95px,115px) scale(1.02);
+  }
+  100%{
+    opacity:0;
+    transform:translate(140px,170px) scale(1.04);
+  }
+}
+
+/* SYMBOL CLEARS THE NOISE */
+
+.signal-node.ready::before{
+  content:"";
+  position:absolute;
+  inset:8px;
+  border-radius:50%;
+  background:radial-gradient(
+    circle,
+    rgba(223,255,63,.32),
+    rgba(223,255,63,.11) 42%,
+    transparent 72%
+  );
+  filter:blur(18px);
+  z-index:-1;
+  animation:sickGlow 3s ease-in-out infinite;
+}
+
+@keyframes sickGlow{
+  50%{
+    opacity:.7;
+    transform:scale(1.18);
+  }
+}
+
+.virus-layer.clear{
+  animation:virusDissolveUnderSignal 3.8s ease forwards;
+}
+
+@keyframes virusDissolveUnderSignal{
+  0%{
+    opacity:1;
+    filter:blur(0);
+  }
+  55%{
+    opacity:.38;
+    filter:blur(1px);
+  }
+  100%{
+    opacity:.08;
+    filter:blur(3px);
+  }
+}
+
+/* CLICKABLE SYMBOL FEELS PRESSABLE */
+
+.signal-node.ready{
+  cursor:pointer;
+}
+
+.signal-node.ready:active{
+  transform:translate(-50%,-50%) scale(.94);
+  filter:brightness(1.3)
+    drop-shadow(0 0 45px rgba(223,255,63,.55));
+}
