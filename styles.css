@@ -1335,3 +1335,136 @@ body{
   color:var(--toxic);
 
 }
+/* CHANNEL 17 — SURGICAL FIXES */
+
+.turtle{
+
+  margin-left:-25px;
+
+}
+
+.turtle.notice .neck{
+
+  width:10px;
+
+  transform:rotate(-48deg);
+
+}
+
+.turtle.notice .head{
+
+  left:38px;
+
+  top:-2px;
+
+}
+
+.turtle.hide{
+
+  animation:shellShiver .09s steps(2) infinite;
+
+}
+
+@keyframes shellShiver{
+
+  50%{
+
+    transform:scale(.76) translate(-1px,1px) rotate(-1deg);
+
+  }
+
+}
+
+.virus-layer.active .pop{
+
+  animation:
+
+    slamIn .18s cubic-bezier(.08,.75,.12,1) forwards,
+
+    windowJitter .55s steps(2) infinite;
+
+}
+
+@keyframes windowJitter{
+
+  50%{
+
+    transform:translate(1px,-1px);
+
+    filter:brightness(1.15);
+
+  }
+
+}
+
+.virus-layer.clear{
+
+  animation:virusFadeBack 2.1s ease forwards;
+
+}
+
+@keyframes virusFadeBack{
+
+  0%{
+
+    opacity:1;
+
+  }
+
+  45%{
+
+    opacity:.55;
+
+  }
+
+  100%{
+
+    opacity:.14;
+
+    filter:blur(1.5px);
+
+  }
+
+}
+
+.signal-node.ready::before{
+
+  content:"";
+
+  position:absolute;
+
+  inset:18px;
+
+  border-radius:50%;
+
+  background:radial-gradient(
+
+    circle,
+
+    rgba(223,255,63,.24),
+
+    rgba(223,255,63,.08) 38%,
+
+    transparent 70%
+
+  );
+
+  filter:blur(14px);
+
+  z-index:-1;
+
+  animation:sickGlow 2.8s ease-in-out infinite;
+
+}
+
+@keyframes sickGlow{
+
+  50%{
+
+    opacity:.55;
+
+    transform:scale(1.18);
+
+  }
+
+}
