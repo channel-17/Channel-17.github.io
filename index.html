@@ -1,1156 +1,257 @@
 <!DOCTYPE html>
+
 <html lang="en">
+
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>channel 17</title>
 
-<link rel="icon" href="Trust17.png?v=17">
-<link rel="shortcut icon" href="Trust17.png?v=17">
-<link rel="apple-touch-icon" sizes="180x180" href="Beacon17.png">
+  <meta charset="UTF-8" />
 
-<style>
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-}
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-:root{
-  --cream:#f2eee5;
-  --soft:#d8d2c8;
-  --toxic:#dfff3f;
-  --ember:#ff8a2a;
-  --red:#c94038;
-}
+  <title>channel 17</title>
 
-html,
-body{
-  width:100%;
-  height:100%;
-  overflow:hidden;
-  background:#000;
-  color:var(--cream);
-  font-family:"Courier New", monospace;
-}
+  <link rel="icon" href="Trust17.png?v=17">
 
-.screen{
-  position:relative;
-  width:100vw;
-  height:100vh;
-  overflow:hidden;
-  background:#000;
-}
+  <link rel="shortcut icon" href="Trust17.png?v=17">
 
-/* ===================================================== */
-/* LOADER                                                */
-/* ===================================================== */
+  <link rel="apple-touch-icon" sizes="180x180" href="Beacon17.png">
 
-.loader-scene{
-  position:absolute;
-  left:50%;
-  top:48%;
-  transform:translate(-50%,-50%);
-  width:min(55vw,305px);
-  z-index:25;
-}
+  <link rel="stylesheet" href="styles.css" />
 
-.loader{
-  position:relative;
-  height:35px;
-  border:1px solid rgba(242,238,229,.42);
-  border-radius:999px;
-  padding:6px;
-  background:rgba(255,255,255,.012);
-  overflow:hidden;
-  box-shadow:
-    inset 0 0 18px rgba(255,255,255,.035),
-    0 0 18px rgba(255,255,255,.035);
-}
-
-.fill{
-  position:absolute;
-  left:6px;
-  top:6px;
-  bottom:6px;
-  width:0%;
-  border-radius:999px;
-  background:linear-gradient(90deg,#fff,#d9d4ca,#fff);
-  overflow:hidden;
-  box-shadow:
-    0 0 14px rgba(255,255,255,.28),
-    0 0 34px rgba(255,255,255,.08);
-}
-
-.fill::before{
-  content:"";
-  position:absolute;
-  inset:-22px;
-  background:repeating-linear-gradient(
-    115deg,
-    transparent 0 22px,
-    rgba(255,255,255,.28) 23px 28px,
-    transparent 29px 46px
-  );
-  animation:barSwim 1.15s linear infinite;
-}
-
-@keyframes barSwim{
-  from{transform:translateX(-80px);}
-  to{transform:translateX(80px);}
-}
-
-.percent{
-  position:absolute;
-  inset:0;
-  display:grid;
-  place-items:center;
-  z-index:4;
-  font-size:.72rem;
-  letter-spacing:5px;
-  color:#fff;
-  mix-blend-mode:difference;
-  pointer-events:none;
-  opacity:.88;
-}
-
-.loader.offcourse{
-  animation:offCourse .8s steps(2) infinite;
-}
-
-@keyframes offCourse{
-  50%{
-    box-shadow:
-      inset 0 0 18px rgba(255,255,255,.03),
-      0 0 22px rgba(255,255,255,.08);
-    transform:translateX(1px);
-  }
-}
-
-.loader.complete{
-  animation:barComplete .9s ease forwards;
-}
-
-@keyframes barComplete{
-  0%{
-    box-shadow:0 0 12px rgba(255,255,255,.12);
-  }
-  45%{
-    box-shadow:
-      0 0 30px rgba(255,255,255,.72),
-      0 0 70px rgba(255,255,255,.24);
-  }
-  100%{
-    box-shadow:0 0 16px rgba(255,255,255,.12);
-  }
-}
-
-/* ===================================================== */
-/* TURTLE â SMALL, CENTERED, NOT THE MAIN CHARACTER      */
-/* ===================================================== */
-
-.turtle-track{
-  position:relative;
-  height:50px;
-  width:100%;
-  pointer-events:none;
-}
-
-.turtle{
-  position:absolute;
-  top:12px;
-  left:50%;
-  margin-left:-21px;
-  width:42px;
-  height:24px;
-  opacity:.88;
-  transform:scale(.76);
-}
-
-.shell{
-  position:absolute;
-  left:11px;
-  top:4px;
-  width:28px;
-  height:18px;
-  background:var(--cream);
-  border-radius:50% 50% 42% 42%;
-}
-
-.neck{
-  position:absolute;
-  left:34px;
-  top:11px;
-  width:7px;
-  height:5px;
-  background:var(--cream);
-  border-radius:999px;
-  transform-origin:left center;
-  transition:.72s ease;
-}
-
-.head{
-  position:absolute;
-  left:39px;
-  top:8px;
-  width:12px;
-  height:12px;
-  border-radius:50%;
-  background:var(--cream);
-  transition:.72s ease;
-}
-
-.eye{
-  position:absolute;
-  right:3px;
-  top:4px;
-  width:2.8px;
-  height:2.8px;
-  border-radius:50%;
-  background:#000;
-}
-
-.tail{
-  position:absolute;
-  left:3px;
-  top:12px;
-  width:0;
-  height:0;
-  border-top:4px solid transparent;
-  border-bottom:4px solid transparent;
-  border-right:10px solid var(--cream);
-}
-
-.leg{
-  position:absolute;
-  width:6px;
-  height:9px;
-  top:20px;
-  background:var(--cream);
-  border-radius:0 0 6px 6px;
-  transform-origin:50% 0%;
-}
-
-.l1{
-  left:16px;
-}
-
-.l2{
-  left:32px;
-}
-
-/* wiper feet, not ballerina bounce */
-.turtle.walk .l1{
-  animation:wiperFront 1.36s ease-in-out infinite;
-}
-
-.turtle.walk .l2{
-  animation:wiperBack 1.36s ease-in-out infinite;
-}
-
-@keyframes wiperFront{
-  0%,100%{transform:rotate(-18deg) translateX(-1px);}
-  50%{transform:rotate(14deg) translateX(1px);}
-}
-
-@keyframes wiperBack{
-  0%,100%{transform:rotate(15deg) translateX(1px);}
-  50%{transform:rotate(-16deg) translateX(-1px);}
-}
-
-/* notice danger ABOVE, not to the right */
-.turtle.notice .neck{
-  width:15px;
-  transform:rotate(-58deg);
-}
-
-.turtle.notice .head{
-  left:41px;
-  top:-6px;
-}
-
-.turtle.notice .eye{
-  transform:scale(1.35);
-}
-
-/* In-shell: hide head, feet, tail. Only shell jitters. */
-.turtle.hide .neck,
-.turtle.hide .head,
-.turtle.hide .tail,
-.turtle.hide .leg{
-  opacity:0;
-}
-
-.turtle.hide .shell{
-  left:12px;
-  top:5px;
-  width:27px;
-  height:17px;
-  animation:shellFear .14s steps(2) infinite;
-}
-
-.turtle.hide::before,
-.turtle.hide::after{
-  content:"";
-  position:absolute;
-  opacity:.65;
-  width:6px;
-  height:10px;
-  border-left:1px solid rgba(242,238,229,.7);
-  transform:skewX(-18deg);
-  animation:fearSpark .28s steps(2) infinite;
-}
-
-.turtle.hide::before{
-  left:6px;
-  top:2px;
-}
-
-.turtle.hide::after{
-  right:2px;
-  top:2px;
-  animation-delay:.14s;
-}
-
-@keyframes shellFear{
-  0%{transform:translate(0,0);}
-  50%{transform:translate(-1px,1px);}
-  100%{transform:translate(1px,-1px);}
-}
-
-@keyframes fearSpark{
-  0%,100%{opacity:.12;}
-  50%{opacity:.8;}
-}
-
-/* cautious peek: only head comes out */
-.turtle.peek .neck{
-  width:10px;
-  opacity:1;
-}
-
-.turtle.peek .head{
-  left:43px;
-  top:7px;
-  opacity:1;
-}
-
-.turtle.peek .tail,
-.turtle.peek .leg{
-  opacity:0;
-}
-
-.turtle.escape{
-  animation:escapeTurtle 2.4s cubic-bezier(.28,.75,.28,1) forwards;
-}
-
-.turtle.escape .leg{
-  opacity:1;
-}
-
-.turtle.escape .l1{
-  animation:wiperFront .24s ease-in-out infinite;
-}
-
-.turtle.escape .l2{
-  animation:wiperBack .24s ease-in-out infinite;
-}
-
-.turtle.escape .tail{
-  opacity:1;
-}
-
-/* hustle lines â trying hard, not rocket speed */
-.turtle.escape::after{
-  content:"";
-  position:absolute;
-  left:-10px;
-  top:18px;
-  width:8px;
-  height:1px;
-  background:rgba(242,238,229,.55);
-  box-shadow:
-    -9px 2px 0 rgba(242,238,229,.38),
-    -18px -1px 0 rgba(242,238,229,.26),
-    -27px 1px 0 rgba(242,238,229,.16);
-}
-
-@keyframes escapeTurtle{
-  0%{
-    left:50%;
-    margin-left:-21px;
-    transform:scale(.76) translateY(0);
-  }
-  100%{
-    left:116%;
-    margin-left:-21px;
-    transform:scale(.76) translateY(-3px);
-  }
-}
-
-/* ===================================================== */
-/* PHONE / SYSTEM MALFUNCTION                            */
-/* ===================================================== */
-
-.virus-layer{
-  position:absolute;
-  inset:0;
-  opacity:0;
-  z-index:32;
-  pointer-events:none;
-}
-
-.virus-layer.active{
-  opacity:1;
-}
-
-.scanlines{
-  position:absolute;
-  inset:-10%;
-  opacity:0;
-  background:repeating-linear-gradient(
-    0deg,
-    rgba(255,255,255,.14) 0,
-    rgba(255,255,255,.14) 1px,
-    transparent 2px,
-    transparent 7px
-  );
-  mix-blend-mode:screen;
-}
-
-.virus-layer.active .scanlines{
-  animation:scanSmother .28s steps(2) infinite .7s;
-}
-
-@keyframes scanSmother{
-  50%{
-    opacity:.34;
-    transform:translateY(7px) skewX(2deg);
-  }
-}
-
-/* diagonal system tear, top-left to bottom-right */
-.system-tear{
-  position:absolute;
-  left:-24%;
-  top:43%;
-  width:150%;
-  height:48px;
-  background:linear-gradient(
-    90deg,
-    transparent,
-    rgba(255,255,255,.08),
-    rgba(255,255,255,.16),
-    transparent
-  );
-  opacity:0;
-  transform:rotate(-7deg) translateX(-60%);
-}
-
-.virus-layer.active .system-tear{
-  animation:tearSweep .5s ease-out 1.55s forwards;
-}
-
-@keyframes tearSweep{
-  0%{
-    opacity:0;
-    transform:rotate(-7deg) translateX(-60%);
-  }
-  30%{
-    opacity:.8;
-  }
-  100%{
-    opacity:0;
-    transform:rotate(-7deg) translateX(92%);
-  }
-}
-
-.warning-flash{
-  position:absolute;
-  left:50%;
-  top:50%;
-  transform:translate(-50%,-50%);
-  color:rgba(201,64,56,.7);
-  font-size:1rem;
-  letter-spacing:11px;
-  opacity:0;
-  text-align:center;
-  white-space:nowrap;
-  z-index:8;
-}
-
-.virus-layer.active .warning-flash{
-  animation:warningBlink .72s steps(2) 2.1s 2;
-}
-
-@keyframes warningBlink{
-  50%{
-    opacity:.95;
-    text-shadow:0 0 22px rgba(201,64,56,.32);
-  }
-}
-
-.pop{
-  position:absolute;
-  width:270px;
-  min-height:108px;
-  border:1px solid rgba(255,255,255,.22);
-  background:rgba(7,7,7,.96);
-  box-shadow:
-    0 0 44px rgba(0,0,0,.98),
-    inset 0 0 22px rgba(255,255,255,.025);
-  color:rgba(242,238,229,.74);
-  font-size:.7rem;
-  letter-spacing:1px;
-  overflow:hidden;
-  opacity:0;
-  transform:translateY(-55px) scale(1.03);
-}
-
-.virus-layer.active .pop{
-  animation:slamIn .26s cubic-bezier(.08,.75,.12,1) forwards;
-}
-
-.pop::before{
-  content:attr(data-title);
-  display:block;
-  padding:8px 12px;
-  border-bottom:1px solid rgba(255,255,255,.18);
-  color:rgba(255,255,255,.55);
-  background:rgba(255,255,255,.065);
-  letter-spacing:4px;
-}
-
-.pop p{
-  padding:9px 12px 0;
-  line-height:1.5;
-}
-
-.pop strong{
-  color:var(--red);
-  font-weight:400;
-}
-
-.pop em{
-  display:block;
-  padding:8px 12px 12px;
-  color:rgba(223,255,63,.42);
-  font-style:normal;
-}
-
-@keyframes slamIn{
-  0%{
-    opacity:0;
-    transform:translateY(-55px) scale(1.04);
-  }
-  60%{
-    opacity:1;
-    transform:translateY(6px) scale(1);
-  }
-  100%{
-    opacity:1;
-    transform:translateY(0) scale(1);
-  }
-}
-
-/* solid overlapping chaos; not ghosty floating */
-.p1{left:-26%;top:18%;animation-delay:.05s!important;}
-.p2{right:-22%;top:20%;animation-delay:.18s!important;}
-.p3{left:7%;bottom:14%;animation-delay:.34s!important;}
-.p4{right:-8%;bottom:19%;animation-delay:.48s!important;}
-.p5{left:25%;top:33%;width:330px;animation-delay:.6s!important;}
-.p6{left:-25%;top:47%;width:330px;animation-delay:.74s!important;}
-.p7{right:-28%;top:49%;animation-delay:.88s!important;}
-.p8{left:20%;top:8%;animation-delay:1.02s!important;}
-.p9{right:24%;bottom:7%;animation-delay:1.16s!important;}
-
-.virus-layer.clear{
-  animation:virusClear 1.3s ease forwards;
-}
-
-@keyframes virusClear{
-  to{
-    opacity:0;
-    filter:blur(8px);
-  }
-}
-
-/* ===================================================== */
-/* SYMBOL                                                */
-/* ===================================================== */
-
-.signal-node{
-  position:absolute;
-  left:50%;
-  top:45%;
-  width:128px;
-  height:128px;
-  transform:translate(-50%,-50%);
-  background:transparent;
-  border:0;
-  padding:0;
-  opacity:0;
-  pointer-events:none;
-  z-index:35;
-  cursor:pointer;
-}
-
-.signal-node.ready{
-  opacity:.5;
-  pointer-events:auto;
-  animation:symbolBreath 3s ease-in-out infinite;
-}
-
-.signal-node img{
-  position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
-  object-fit:contain;
-}
-
-.inner-symbol{z-index:1;}
-.outer-symbol{z-index:2;opacity:.58;}
-
-@keyframes symbolBreath{
-  0%,100%{
-    filter:
-      brightness(.48)
-      drop-shadow(0 0 8px rgba(223,255,63,.06));
-  }
-  50%{
-    filter:
-      brightness(.78)
-      drop-shadow(0 0 24px rgba(223,255,63,.32));
-  }
-}
-
-.outer-symbol.dissolve{
-  animation:dissolveOuter 1.35s ease forwards;
-}
-
-.inner-symbol.alive{
-  animation:innerAlive 1.5s ease forwards;
-}
-
-@keyframes dissolveOuter{
-  to{
-    opacity:0;
-    transform:scale(1.08);
-    filter:blur(14px) brightness(.35);
-  }
-}
-
-@keyframes innerAlive{
-  to{
-    filter:
-      drop-shadow(0 0 12px rgba(223,255,63,.6))
-      drop-shadow(0 0 34px rgba(223,255,63,.25));
-  }
-}
-
-/* ===================================================== */
-/* SIGNAL ROUTES â VISIBLE BEADS TRACING HIDDEN TUNNELS  */
-/* ===================================================== */
-
-.maze,
-.idle-maze{
-  position:absolute;
-  inset:0;
-  z-index:40;
-  pointer-events:none;
-  opacity:0;
-}
-
-.maze.active,
-.idle-maze.active{
-  opacity:1;
-}
-
-.pipe,
-.idle-pipe{
-  position:absolute;
-  left:50%;
-  top:45%;
-  width:7px;
-  height:7px;
-  border-radius:50%;
-  opacity:0;
-  background:var(--toxic);
-  box-shadow:
-    0 0 15px rgba(223,255,63,1),
-    0 0 38px rgba(223,255,63,.58),
-    0 0 62px rgba(223,255,63,.22);
-}
-
-.pipe.bright{
-  box-shadow:
-    0 0 18px rgba(223,255,63,1),
-    0 0 50px rgba(223,255,63,.72),
-    0 0 80px rgba(223,255,63,.28);
-}
-
-.pipe.fail{
-  background:var(--ember);
-  box-shadow:
-    0 0 12px rgba(255,138,42,.95),
-    0 0 28px rgba(255,138,42,.35);
-}
-
-.maze.active .pipe{
-  animation-duration:3.8s;
-  animation-timing-function:linear;
-  animation-fill-mode:forwards;
-}
-
-/* More frequent starts, but still 17 total. */
-.pulse1{animation-name:route1;animation-delay:.05s;}
-.pulse2{animation-name:route2;animation-delay:.16s;}
-.pulse3{animation-name:route3;animation-delay:.28s;}
-.pulse4{animation-name:route4;animation-delay:.42s;}
-.pulse5{animation-name:route5;animation-delay:.58s;}
-.pulse6{animation-name:route6;animation-delay:.72s;}
-.pulse7{animation-name:route7;animation-delay:.9s;}
-.pulse8{animation-name:route8;animation-delay:1.05s;}
-.pulse9{animation-name:route9;animation-delay:1.22s;}
-.pulse10{animation-name:route10;animation-delay:1.38s;}
-.pulse11{animation-name:route11;animation-delay:1.56s;}
-.pulse12{animation-name:route12;animation-delay:1.74s;}
-.pulse13{animation-name:route13;animation-delay:1.92s;}
-.pulse14{animation-name:route14;animation-delay:2.1s;}
-.pulse15{animation-name:route15;animation-delay:2.26s;}
-.pulse16{animation-name:route16;animation-delay:2.42s;}
-.pulse17{animation-name:route17;animation-delay:2.58s;}
-
-@keyframes route1{0%{opacity:0;transform:translate(0,0)}8%{opacity:1}22%{transform:translate(70px,0)}36%{transform:translate(70px,-70px)}55%{transform:translate(170px,-70px)}72%{transform:translate(170px,-150px)}100%{opacity:0;transform:translate(470px,-230px)}}
-@keyframes route2{0%{opacity:0;transform:translate(0,0)}8%{opacity:.95}28%{transform:translate(-62px,0)}44%{transform:translate(-62px,88px)}65%{transform:translate(-160px,88px)}100%{opacity:0;transform:translate(-470px,230px)}}
-@keyframes route3{0%{opacity:0;transform:translate(0,0)}8%{opacity:1}30%{transform:translate(0,-78px)}48%{transform:translate(-96px,-78px)}72%{transform:translate(-96px,-190px)}100%{opacity:0;transform:translate(-280px,-430px)}}
-@keyframes route4{0%{opacity:0;transform:translate(0,0)}8%{opacity:1}28%{transform:translate(0,72px)}46%{transform:translate(108px,72px)}70%{transform:translate(108px,190px)}100%{opacity:0;transform:translate(310px,430px)}}
-@keyframes route5{0%{opacity:0;transform:translate(0,0)}10%{opacity:.95}34%{transform:translate(88px,0)}52%{transform:translate(88px,90px)}76%{transform:translate(220px,90px)}100%{opacity:0;transform:translate(520px,80px)}}
-@keyframes route6{0%{opacity:0;transform:translate(0,0)}10%{opacity:.95}34%{transform:translate(-88px,0)}52%{transform:translate(-88px,-90px)}76%{transform:translate(-220px,-90px)}100%{opacity:0;transform:translate(-520px,-80px)}}
-@keyframes route7{0%{opacity:0;transform:translate(0,0)}12%{opacity:1}30%{transform:translate(48px,-48px)}52%{transform:translate(48px,-170px)}76%{transform:translate(150px,-170px)}100%{opacity:0;transform:translate(250px,-520px)}}
-@keyframes route8{0%{opacity:0;transform:translate(0,0)}12%{opacity:.95}32%{transform:translate(-48px,48px)}54%{transform:translate(-48px,170px)}76%{transform:translate(-150px,170px)}100%{opacity:0;transform:translate(-250px,520px)}}
-@keyframes route9{0%{opacity:0;transform:translate(0,0)}10%{opacity:.95}28%{transform:translate(115px,0)}40%{transform:translate(115px,-42px)}65%{transform:translate(250px,-42px)}100%{opacity:0;transform:translate(560px,-130px)}}
-@keyframes route10{0%{opacity:0;transform:translate(0,0)}10%{opacity:.95}28%{transform:translate(-115px,0)}42%{transform:translate(-115px,42px)}68%{transform:translate(-250px,42px)}100%{opacity:0;transform:translate(-560px,130px)}}
-@keyframes route11{0%{opacity:0;transform:translate(0,0)}12%{opacity:.95}30%{transform:translate(42px,42px)}46%{transform:translate(42px,140px)}62%{transform:translate(180px,140px)}100%{opacity:0;transform:translate(420px,360px)}}
-@keyframes route12{0%{opacity:0;transform:translate(0,0)}12%{opacity:.95}30%{transform:translate(-42px,-42px)}46%{transform:translate(-42px,-140px)}62%{transform:translate(-180px,-140px)}100%{opacity:0;transform:translate(-420px,-360px)}}
-@keyframes route13{0%{opacity:0;transform:translate(0,0)}15%{opacity:.95}35%{transform:translate(150px,0)}55%{transform:translate(150px,130px)}100%{opacity:0;transform:translate(610px,310px)}}
-@keyframes route14{0%{opacity:0;transform:translate(0,0)}15%{opacity:.95}36%{transform:translate(-150px,0)}55%{transform:translate(-150px,-130px)}100%{opacity:0;transform:translate(-610px,-310px)}}
-@keyframes route15{0%{opacity:0;transform:translate(0,0)}15%{opacity:.95}36%{transform:translate(0,150px)}55%{transform:translate(-110px,150px)}74%{background:var(--ember)}100%{opacity:0;transform:translate(-140px,190px)}}
-@keyframes route16{0%{opacity:0;transform:translate(0,0)}15%{opacity:.95}36%{transform:translate(0,-150px)}55%{transform:translate(110px,-150px)}100%{opacity:0;transform:translate(260px,-600px)}}
-@keyframes route17{0%{opacity:0;transform:translate(0,0)}10%{opacity:1}24%{transform:translate(65px,0)}38%{transform:translate(65px,65px)}54%{transform:translate(20px,65px)}68%{background:var(--ember)}100%{opacity:0;transform:translate(20px,65px)}}
-
-/* ===================================================== */
-/* FINAL PAGE                                            */
-/* ===================================================== */
-
-.home{
-  position:absolute;
-  inset:0;
-  opacity:0;
-  pointer-events:none;
-  z-index:45;
-  background:#000;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-
-.home.open{
-  animation:homeIn 1.5s ease forwards;
-  pointer-events:auto;
-}
-
-@keyframes homeIn{
-  to{opacity:1;}
-}
-
-.home-core{
-  position:relative;
-  width:min(78vw,330px);
-  min-height:430px;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  background:
-    radial-gradient(circle at 50% 43%, rgba(223,255,63,.12), transparent 25%),
-    radial-gradient(circle at 50% 56%, rgba(223,255,63,.045), transparent 40%);
-}
-
-.home-symbol{
-  width:102px;
-  height:102px;
-  object-fit:contain;
-  margin-bottom:54px;
-  filter:drop-shadow(0 0 18px rgba(223,255,63,.18));
-  animation:homeBreath 3.2s ease-in-out infinite;
-}
-
-@keyframes homeBreath{
-  50%{
-    filter:drop-shadow(0 0 28px rgba(223,255,63,.28));
-  }
-}
-
-.nodes{
-  display:flex;
-  flex-direction:column;
-  gap:18px;
-  align-items:center;
-}
-
-.node{
-  position:relative;
-  width:205px;
-  padding:14px 18px;
-  border:1px solid rgba(242,238,229,.14);
-  color:rgba(242,238,229,.72);
-  text-decoration:none;
-  letter-spacing:3px;
-  font-size:.76rem;
-  text-align:center;
-  background:rgba(0,0,0,.38);
-  box-shadow:0 0 16px rgba(223,255,63,.025);
-}
-
-.node::before{
-  content:"";
-  position:absolute;
-  left:14px;
-  top:50%;
-  width:7px;
-  height:7px;
-  border-radius:50%;
-  transform:translateY(-50%);
-  background:var(--toxic);
-  box-shadow:
-    0 0 12px rgba(223,255,63,1),
-    0 0 28px rgba(223,255,63,.48);
-  opacity:.9;
-  animation:nodePulse 3.8s ease-in-out infinite;
-}
-
-.node:nth-child(2)::before{animation-delay:1.2s;}
-.node:nth-child(3)::before{animation-delay:2.4s;}
-
-@keyframes nodePulse{
-  50%{
-    opacity:1;
-    box-shadow:
-      0 0 16px rgba(223,255,63,1),
-      0 0 38px rgba(223,255,63,.65);
-  }
-}
-
-.node:hover{
-  border-color:rgba(223,255,63,.45);
-  color:var(--toxic);
-}
-
-.idle-maze.active .idle-pipe{
-  animation-duration:2.8s;
-  animation-timing-function:linear;
-  animation-iteration-count:infinite;
-  animation-fill-mode:both;
-}
-
-.idle1{animation-name:idleToOne;animation-delay:1.2s;}
-.idle2{animation-name:idleToTwo;animation-delay:5.4s;}
-.idle3{animation-name:idleToThree;animation-delay:9.1s;}
-
-@keyframes idleToOne{
-  0%,70%,100%{opacity:0;transform:translate(-260px,-120px);}
-  10%{opacity:1;}
-  30%{transform:translate(-140px,-120px);}
-  52%{transform:translate(-140px,80px);}
-  68%{opacity:0;transform:translate(-82px,80px);}
-}
-@keyframes idleToTwo{
-  0%,70%,100%{opacity:0;transform:translate(250px,-70px);}
-  10%{opacity:1;}
-  32%{transform:translate(120px,-70px);}
-  54%{transform:translate(120px,132px);}
-  68%{opacity:0;transform:translate(-82px,132px);}
-}
-@keyframes idleToThree{
-  0%,70%,100%{opacity:0;transform:translate(-180px,270px);}
-  10%{opacity:1;}
-  35%{transform:translate(-40px,270px);}
-  55%{transform:translate(-40px,184px);}
-  68%{opacity:0;transform:translate(-82px,184px);}
-}
-
-.fade-out{
-  animation:fadeOut .9s ease forwards;
-}
-
-@keyframes fadeOut{
-  to{
-    opacity:0;
-    filter:blur(8px);
-  }
-}
-
-@media(max-width:600px){
-  .loader-scene{
-    width:min(58vw,275px);
-  }
-
-  .loader{
-    height:35px;
-  }
-
-  .pop{
-    width:246px;
-    font-size:.66rem;
-  }
-
-  .p5{
-    width:300px;
-  }
-
-  .p6{
-    width:310px;
-  }
-
-  .signal-node{
-    width:118px;
-    height:118px;
-  }
-}
-</style>
 </head>
 
 <body>
-<div class="screen">
 
-  <div class="virus-layer" id="virusLayer">
-    <div class="scanlines"></div>
-    <div class="system-tear"></div>
-    <div class="warning-flash">WARNING</div>
+  <div class="screen">
 
-    <div class="pop p1" data-title="IDENTITY">
-      <p><strong>TOO MANY ACTIVE MASKS</strong></p>
-      <p>authentic signal buried</p>
-      <em>pressure rising</em>
-    </div>
+    <div class="virus-layer" id="virusLayer">
 
-    <div class="pop p2" data-title="WARNING">
-      <p><strong>DEVICE OVERRIDE ATTEMPT</strong></p>
-      <p>carrier wave unstable</p>
-      <em>signal poisoned</em>
-    </div>
+      <div class="scanlines"></div>
 
-    <div class="pop p3" data-title="DOWNLOAD">
-      <p>plasticself.exe</p>
-      <p>performative_identity.pkg</p>
-      <p>human_input_lost.dat</p>
-    </div>
+      <div class="blackout"></div>
 
-    <div class="pop p4" data-title="TRANSMISSION">
-      <p><strong>SIGNAL STILL ACTIVE</strong></p>
-      <p>hidden packet received</p>
-      <em>reconnect possible</em>
-    </div>
+      <div class="system-tear"></div>
 
-    <div class="pop p5" data-title="ERROR">
-      <p><strong>M4SK NULL 5IGNAL</strong></p>
-      <p>17 17 17</p>
-      <em>authenticity blocked</em>
-    </div>
+      <div class="warning-flash">WARNING</div>
 
-    <div class="pop p6" data-title="SYSTEM">
-      <p>emotion suppressed</p>
-      <p>external script injected</p>
-    </div>
+      <div class="file-stack">
 
-    <div class="pop p7" data-title="ALERT">
-      <p><strong>NOISE EXCEEDS LIMIT</strong></p>
-      <p>signal buried under feed</p>
-    </div>
+        <div class="tile t1"><b>SYS_FAULT</b><br>external pressure rising</div>
 
-    <div class="pop p8" data-title="MASK">
-      <p>public_self.loaded</p>
-      <p>private_signal.hidden</p>
-    </div>
+        <div class="tile t2"><b>FEED FLOOD</b><br>meaning compression</div>
 
-    <div class="pop p9" data-title="FEED">
-      <p><strong>INPUT FLOOD</strong></p>
-      <p>meaning compressed</p>
-    </div>
-  </div>
+        <div class="tile t3"><b>AUTH BLOCK</b><br>human signal buried</div>
 
-  <div class="loader-scene" id="loaderScene">
-    <div class="loader" id="loader">
-      <div class="fill" id="fill"></div>
-      <div class="percent" id="percent">0%</div>
-    </div>
+        <div class="tile t4"><b>MASK LOOP</b><br>identity overwrite</div>
 
-    <div class="turtle-track">
-      <div class="turtle walk" id="turtle">
-        <div class="tail"></div>
-        <div class="shell"></div>
-        <div class="neck"></div>
-        <div class="head"><div class="eye"></div></div>
-        <div class="leg l1"></div>
-        <div class="leg l2"></div>
+        <div class="tile t5"><b>CHANNEL JAM</b><br>frequency suffocated</div>
+
+        <div class="tile t6"><b>NOISE STACK</b><br>input exceeds limit</div>
+
       </div>
+
+      <div class="pop p1" data-title="IDENTITY">
+
+        <p><strong>TOO MANY ACTIVE MASKS</strong></p>
+
+        <p>authentic signal buried</p>
+
+        <em>pressure rising</em>
+
+      </div>
+
+      <div class="pop p2" data-title="WARNING">
+
+        <p><strong>DEVICE OVERRIDE ATTEMPT</strong></p>
+
+        <p>carrier wave unstable</p>
+
+        <em>signal poisoned</em>
+
+      </div>
+
+      <div class="pop p3" data-title="DOWNLOAD">
+
+        <p>plasticself.exe</p>
+
+        <p>performative_identity.pkg</p>
+
+        <p>human_input_lost.dat</p>
+
+      </div>
+
+      <div class="pop p4" data-title="TRANSMISSION">
+
+        <p><strong>SIGNAL STILL ACTIVE</strong></p>
+
+        <p>hidden packet received</p>
+
+        <em>reconnect possible</em>
+
+      </div>
+
+      <div class="pop p5" data-title="ERROR">
+
+        <p><strong>M4SK NULL 5IGNAL</strong></p>
+
+        <p>17 17 17</p>
+
+        <em>authenticity blocked</em>
+
+      </div>
+
+      <div class="pop p6" data-title="SYSTEM">
+
+        <p>emotion suppressed</p>
+
+        <p>external script injected</p>
+
+      </div>
+
+      <div class="pop p7" data-title="ALERT">
+
+        <p><strong>NOISE EXCEEDS LIMIT</strong></p>
+
+        <p>signal buried under feed</p>
+
+      </div>
+
+      <div class="pop p8" data-title="MASK">
+
+        <p>public_self.loaded</p>
+
+        <p>private_signal.hidden</p>
+
+      </div>
+
+      <div class="pop p9" data-title="FEED">
+
+        <p><strong>INPUT FLOOD</strong></p>
+
+        <p>meaning compressed</p>
+
+      </div>
+
     </div>
-  </div>
 
-  <button class="signal-node" id="signalNode" aria-label="connect">
-    <img src="Inner17-final.png" class="inner-symbol" id="innerSymbol" alt="">
-    <img src="Outer17-final.png" class="outer-symbol" id="outerSymbol" alt="">
-  </button>
+    <div class="loader-scene" id="loaderScene">
 
-  <div class="maze" id="maze">
-    <div class="pipe pulse1 bright"></div>
-    <div class="pipe pulse2"></div>
-    <div class="pipe pulse3"></div>
-    <div class="pipe pulse4 bright"></div>
-    <div class="pipe pulse5"></div>
-    <div class="pipe pulse6"></div>
-    <div class="pipe pulse7 bright"></div>
-    <div class="pipe pulse8"></div>
-    <div class="pipe pulse9"></div>
-    <div class="pipe pulse10"></div>
-    <div class="pipe pulse11"></div>
-    <div class="pipe pulse12"></div>
-    <div class="pipe pulse13"></div>
-    <div class="pipe pulse14"></div>
-    <div class="pipe pulse15 fail"></div>
-    <div class="pipe pulse16"></div>
-    <div class="pipe pulse17 fail"></div>
-  </div>
+      <div class="loader" id="loader">
 
-  <main class="home" id="home">
-    <div class="home-core">
-      <img src="Inner17-final.png" class="home-symbol" alt="Channel 17">
+        <div class="fill" id="fill"></div>
 
-      <nav class="nodes">
-        <a class="node" href="#">Last Sesh</a>
-        <a class="node" href="#">Roach Tray</a>
-        <a class="node" href="#">Pass It Back</a>
-      </nav>
+        <div class="percent" id="percent">0%</div>
+
+      </div>
+
+      <div class="turtle-track">
+
+        <div class="turtle walk" id="turtle">
+
+          <div class="tail"></div>
+
+          <div class="shell"></div>
+
+          <div class="neck"></div>
+
+          <div class="head">
+
+            <div class="eye"></div>
+
+          </div>
+
+          <div class="leg l1"></div>
+
+          <div class="leg l2"></div>
+
+        </div>
+
+      </div>
+
     </div>
-  </main>
 
-  <div class="idle-maze" id="idleMaze">
-    <div class="idle-pipe idle1"></div>
-    <div class="idle-pipe idle2"></div>
-    <div class="idle-pipe idle3"></div>
+    <button class="signal-node" id="signalNode" aria-label="connect">
+
+      <img src="Inner17-final.png" class="inner-symbol" id="innerSymbol" alt="">
+
+      <img src="Outer17-final.png" class="outer-symbol" id="outerSymbol" alt="">
+
+    </button>
+
+    <div class="maze" id="maze">
+
+      <div class="pipe pulse1 bright"></div>
+
+      <div class="pipe pulse2"></div>
+
+      <div class="pipe pulse3"></div>
+
+      <div class="pipe pulse4 bright"></div>
+
+      <div class="pipe pulse5"></div>
+
+      <div class="pipe pulse6"></div>
+
+      <div class="pipe pulse7 bright"></div>
+
+      <div class="pipe pulse8"></div>
+
+      <div class="pipe pulse9"></div>
+
+      <div class="pipe pulse10"></div>
+
+      <div class="pipe pulse11"></div>
+
+      <div class="pipe pulse12"></div>
+
+      <div class="pipe pulse13"></div>
+
+      <div class="pipe pulse14"></div>
+
+      <div class="pipe pulse15 fail"></div>
+
+      <div class="pipe pulse16"></div>
+
+      <div class="pipe pulse17 fail"></div>
+
+    </div>
+
+    <main class="home" id="home">
+
+      <div class="home-core">
+
+        <img src="Inner17-final.png" class="home-symbol" alt="Channel 17">
+
+        <nav class="nodes">
+
+          <a class="node" href="#">Last Sesh</a>
+
+          <a class="node" href="#">Roach Tray</a>
+
+          <a class="node" href="#">Pass It Back</a>
+
+        </nav>
+
+      </div>
+
+    </main>
+
+    <div class="idle-maze" id="idleMaze">
+
+      <div class="idle-pipe idle1"></div>
+
+      <div class="idle-pipe idle2"></div>
+
+      <div class="idle-pipe idle3"></div>
+
+      <div class="idle-pipe idle4"></div>
+
+    </div>
+
   </div>
 
-</div>
-
-<script>
-const fill = document.getElementById("fill");
-const percent = document.getElementById("percent");
-const turtle = document.getElementById("turtle");
-const virusLayer = document.getElementById("virusLayer");
-const loader = document.getElementById("loader");
-const loaderScene = document.getElementById("loaderScene");
-const signalNode = document.getElementById("signalNode");
-const outerSymbol = document.getElementById("outerSymbol");
-const innerSymbol = document.getElementById("innerSymbol");
-const maze = document.getElementById("maze");
-const home = document.getElementById("home");
-const idleMaze = document.getElementById("idleMaze");
-
-let progress = 0;
-let state = "normal";
-
-function setProgress(value){
-  progress = Math.max(0, Math.min(100, value));
-  fill.style.width = `calc(${progress}% - 12px)`;
-  percent.textContent = `${Math.round(progress)}%`;
-}
-
-const loading = setInterval(() => {
-  if(state === "normal"){
-    progress += .16;
-  }
-
-  if(state === "notice"){
-    progress += .038;
-  }
-
-  if(state === "hide"){
-    progress += .18;
-  }
-
-  if(progress >= 100){
-    progress = 100;
-    clearInterval(loading);
-    completeSequence();
-  }
-
-  setProgress(progress);
-}, 45);
-
-setTimeout(() => {
-  state = "notice";
-  turtle.classList.remove("walk");
-  turtle.classList.add("notice");
-  loader.classList.add("offcourse");
-}, 4500);
-
-setTimeout(() => {
-  state = "hide";
-  turtle.classList.remove("notice");
-  turtle.classList.add("hide");
-  virusLayer.classList.add("active");
-}, 6800);
-
-function completeSequence(){
-  state = "done";
-  loader.classList.remove("offcourse");
-  loader.classList.add("complete");
-
-  setTimeout(() => {
-    virusLayer.classList.add("clear");
-  }, 650);
-
-  setTimeout(() => {
-    turtle.classList.remove("hide");
-    turtle.classList.add("peek");
-  }, 1650);
-
-  setTimeout(() => {
-    turtle.classList.remove("peek");
-    turtle.classList.add("escape");
-  }, 2900);
-
-  setTimeout(() => {
-    loaderScene.classList.add("fade-out");
-  }, 5100);
-
-  setTimeout(() => {
-    signalNode.classList.add("ready");
-  }, 6100);
-}
-
-signalNode.addEventListener("click", () => {
-  signalNode.style.pointerEvents = "none";
-
-  outerSymbol.classList.add("dissolve");
-  innerSymbol.classList.add("alive");
-
-  maze.classList.remove("active");
-  void maze.offsetWidth;
-  maze.classList.add("active");
-
-  setTimeout(() => {
-    signalNode.classList.add("fade-out");
-  }, 4700);
-
-  setTimeout(() => {
-    home.classList.add("open");
-    idleMaze.classList.add("active");
-  }, 5600);
-});
-</script>
+  <script src="main.js"></script>
 
 </body>
+
 </html>
