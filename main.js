@@ -110,7 +110,7 @@ function completeSequence(){
 
     virusLayer.classList.add("clear");
 
-  }, 650);
+  }, 300);
 
   setTimeout(() => {
 
