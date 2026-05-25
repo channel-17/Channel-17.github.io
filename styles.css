@@ -1,18 +1,7 @@
-/* CHANNEL 17 — FULL styles.css REPLACEMENT */
-/* GROUND ZERO BUILD */
-
 *{
   margin:0;
   padding:0;
   box-sizing:border-box;
-}
-
-:root{
-  --cream:#f2eee5;
-  --soft:#d8d2c8;
-  --toxic:#dfff3f;
-  --ember:#ff8a2a;
-  --red:#c94038;
 }
 
 html,
@@ -21,8 +10,14 @@ body{
   height:100%;
   overflow:hidden;
   background:#000;
-  color:var(--cream);
-  font-family:"Courier New", monospace;
+  font-family:Courier New, monospace;
+}
+
+body{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  color:#f2eee5;
 }
 
 .screen{
@@ -33,250 +28,335 @@ body{
   background:#000;
 }
 
+/* =========================
+   LOADER
+========================= */
+
 .loader-scene{
   position:absolute;
-  left:50%;
-  top:48%;
-  transform:translate(-50%,-50%);
-  width:min(55vw,305px);
-  z-index:25;
+  inset:0;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  gap:34px;
+  z-index:20;
 }
 
 .loader{
   position:relative;
-  height:35px;
-  border:1px solid rgba(242,238,229,.42);
-  border-radius:999px;
-  padding:6px;
-  background:rgba(255,255,255,.012);
+  width:72vw;
+  max-width:720px;
+  height:56px;
+  border:2px solid rgba(255,255,255,.32);
+  border-radius:40px;
   overflow:hidden;
+  background:rgba(255,255,255,.02);
+  backdrop-filter:blur(3px);
 }
 
 .fill{
   position:absolute;
-  left:6px;
-  top:6px;
-  bottom:6px;
+  inset:0 auto 0 0;
   width:0%;
-  border-radius:999px;
-  background:linear-gradient(
-    90deg,
-    #fff,
-    #d9d4ca,
-    #fff
-  );
+  background:#f2eee5;
+  border-radius:40px;
+  transition:width .18s linear;
 }
 
 .percent{
   position:absolute;
   inset:0;
-  display:grid;
-  place-items:center;
-  z-index:4;
-  font-size:.72rem;
-  letter-spacing:5px;
-  color:#fff;
-  opacity:.88;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:2rem;
+  letter-spacing:10px;
+  z-index:2;
+  color:rgba(255,255,255,.7);
 }
 
-.turtle-track{
+/* =========================
+   TURTLE
+========================= */
+
+.turtle-wrap{
   position:relative;
-  height:50px;
-  width:100%;
-  pointer-events:none;
+  width:120px;
+  height:70px;
 }
 
 .turtle{
   position:absolute;
-  top:12px;
   left:50%;
-  margin-left:-25px;
-  width:42px;
-  height:24px;
-  opacity:.88;
-  transform:scale(.76);
+  top:50%;
+  transform:translate(-52%,-50%);
+  width:92px;
+  height:50px;
 }
 
 .shell{
   position:absolute;
-  left:10px;
-  top:4px;
-  width:29px;
-  height:18px;
-  background:var(--cream);
-  border-radius:50% 50% 42% 42%;
-}
-
-.neck{
-  position:absolute;
-  left:34px;
-  top:11px;
-  width:7px;
-  height:5px;
-  background:var(--cream);
-  border-radius:999px;
+  width:58px;
+  height:40px;
+  background:#f2eee5;
+  border-radius:60% 60% 50% 50%;
+  left:18px;
+  top:6px;
 }
 
 .head{
   position:absolute;
-  left:39px;
-  top:8px;
-  width:12px;
-  height:12px;
+  width:22px;
+  height:22px;
   border-radius:50%;
-  background:var(--cream);
+  background:#f2eee5;
+  right:-2px;
+  top:12px;
 }
 
 .eye{
   position:absolute;
-  right:3px;
-  top:4px;
-  width:2.8px;
-  height:2.8px;
+  width:7px;
+  height:7px;
   border-radius:50%;
   background:#000;
-}
-
-.tail{
-  position:absolute;
-  left:5px;
-  top:9px;
-  width:0;
-  height:0;
-  border-top:4px solid transparent;
-  border-bottom:4px solid transparent;
-  border-right:9px solid var(--cream);
-  transform:rotate(8deg);
+  right:6px;
+  top:7px;
 }
 
 .leg{
   position:absolute;
-  width:6px;
-  height:9px;
-  top:18px;
-  background:var(--cream);
-  border-radius:0 0 6px 6px;
+  width:14px;
+  height:18px;
+  border-radius:0 0 10px 10px;
+  background:#f2eee5;
+  bottom:-6px;
 }
 
-.l1{
-  left:15px;
+.leg.l1{ left:28px; }
+.leg.l2{ left:54px; }
+
+.tail{
+  position:absolute;
+  width:0;
+  height:0;
+  border-top:8px solid transparent;
+  border-bottom:8px solid transparent;
+  border-right:18px solid #f2eee5;
+  left:2px;
+  top:22px;
 }
 
-.l2{
-  left:25px;
-}
+/* =========================
+   SHIVER
+========================= */
 
-.turtle.notice .neck{
-  width:10px;
-  transform:rotate(-48deg);
-}
-
-.turtle.notice .head{
-  left:38px;
-  top:-2px;
-}
-
-.turtle.hide .neck,
-.turtle.hide .head,
-.turtle.hide .tail,
-.turtle.hide .leg{
-  opacity:0;
+.turtle.hide{
+  animation:shellFear .18s infinite;
 }
 
 .turtle.hide .shell{
-  animation:shellShiver .18s infinite;
-  filter:drop-shadow(0 0 2px rgba(255,255,255,.04));
+  animation:shellFear .18s infinite;
 }
 
-@keyframes shellShiver{
+@keyframes shellFear{
+  0%{ transform:translate(0,0); }
+  25%{ transform:translate(-1px,1px); }
+  50%{ transform:translate(1px,-1px); }
+  75%{ transform:translate(-1px,-1px); }
+  100%{ transform:translate(0,0); }
+}
 
-  0%{
-    transform:translateX(0px) scale(1);
+/* =========================
+   PEEK
+========================= */
+
+.turtle.peek .head{
+  transform:translateX(8px);
+}
+
+.turtle.peek{
+  transition:transform .9s ease;
+}
+
+/* =========================
+   ESCAPE
+========================= */
+
+.turtle.escape{
+  transition:transform 2.8s linear;
+  transform:translate(120vw,-50%);
+}
+
+/* =========================
+   VIRUS LAYER
+========================= */
+
+.virus-layer{
+  position:absolute;
+  inset:0;
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+  z-index:15;
+}
+
+.virus-layer.active{
+  opacity:1;
+  visibility:visible;
+}
+
+/* =========================
+   BACKGROUND WARNINGS
+========================= */
+
+.file-stack{
+  position:absolute;
+  inset:0;
+  overflow:hidden;
+  opacity:.24;
+}
+
+.tile{
+  position:absolute;
+  color:#f2eee5;
+  line-height:1.1;
+  white-space:nowrap;
+}
+
+.tile b{
+  font-size:1.15rem;
+}
+
+.tile span{
+  opacity:.6;
+  font-style:italic;
+}
+
+/* =========================
+   POP WINDOWS
+========================= */
+
+.pop{
+  position:absolute;
+  width:260px;
+  border:1px solid rgba(255,255,255,.18);
+  background:rgba(0,0,0,.72);
+  backdrop-filter:blur(4px);
+  box-shadow:0 0 30px rgba(0,0,0,.7);
+  overflow:hidden;
+  opacity:0;
+  animation:popIn .45s forwards;
+}
+
+.pop .title{
+  padding:8px 12px;
+  border-bottom:1px solid rgba(255,255,255,.08);
+  font-size:.8rem;
+  letter-spacing:4px;
+  color:rgba(255,255,255,.4);
+}
+
+.pop .body{
+  padding:16px 14px 18px;
+  line-height:1.6;
+}
+
+.pop .red{
+  color:#d94c4c;
+}
+
+.pop .green{
+  color:#7c9442;
+}
+
+@keyframes popIn{
+  from{
+    opacity:0;
+    transform:scale(.92);
   }
-
-  20%{
-    transform:translateX(-0.6px) scale(1.002);
+  to{
+    opacity:1;
+    transform:scale(1);
   }
+}
 
-  40%{
-    transform:translateX(0.5px) scale(.998);
-  }
+/* =========================
+   CASCADE
+========================= */
 
-  60%{
-    transform:translateX(-0.4px) scale(1.001);
-  }
-
-  80%{
-    transform:translateX(0.3px) scale(.999);
-  }
-
-  100%{
-    transform:translateX(0px) scale(1);
-  }
-
+.auth-cascade{
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  z-index:33;
 }
 
 .cascade-window{
   position:absolute;
-  width:145px;
-  height:82px;
-  border:1px solid rgba(242,238,229,.32);
-  background:rgba(5,5,5,.88);
-  box-shadow:0 0 22px rgba(0,0,0,.9);
-  font-size:.55rem;
-  color:rgba(242,238,229,.64);
-  overflow:hidden;
-  animation:cascadeFall 7.2s ease forwards;
+  width:240px;
+  height:120px;
+  border:1px solid rgba(255,255,255,.14);
+  background:rgba(0,0,0,.22);
+  backdrop-filter:blur(3px);
+  opacity:0;
+  animation:cascadeFall 4.6s linear forwards;
 }
 
 @keyframes cascadeFall{
-
   0%{
     opacity:0;
-    transform:translate(-40px,-40px) scale(.96);
+    transform:translate(-40px,-40px);
   }
 
-  18%{
-    opacity:.72;
-  }
-
-  72%{
-    opacity:.52;
-    transform:translate(95px,115px) scale(1.02);
+  15%{
+    opacity:.6;
   }
 
   100%{
     opacity:0;
-    transform:translate(140px,170px) scale(1.04);
+    transform:translate(220px,220px);
   }
-
 }
 
-.signal-node.ready::before{
-  content:"";
+/* =========================
+   SYMBOL
+========================= */
+
+.signal-node{
   position:absolute;
-  inset:8px;
-  border-radius:50%;
-  background:radial-gradient(
-    circle,
-    rgba(223,255,63,.32),
-    rgba(223,255,63,.11) 42%,
-    transparent 72%
-  );
-  filter:blur(18px);
-  z-index:-1;
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-50%);
+  opacity:0;
+  z-index:50;
+  cursor:pointer;
+  transition:opacity 1.2s ease;
 }
 
-.turtle.escape{
-  animation:escapeTurtle 5.8s linear forwards;
+.signal-node.ready{
+  opacity:1;
 }
 
-@keyframes escapeTurtle{
+.signal-node img{
+  width:140px;
+  filter:
+    drop-shadow(0 0 12px rgba(170,255,0,.18))
+    drop-shadow(0 0 40px rgba(170,255,0,.12));
+  animation:signalBreath 3s ease-in-out infinite;
+}
 
-  100%{
-    left:145vw;
-    opacity:0;
-    transform:scale(.76) translateY(-3px);
+@keyframes signalBreath{
+  0%{
+    transform:scale(1);
   }
 
+  50%{
+    transform:scale(1.04);
+  }
+
+  100%{
+    transform:scale(1);
+  }
 }
