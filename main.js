@@ -195,7 +195,7 @@ function runAuthCascade(){
 
     win.style.left = `${x}%`;
     win.style.top = `${y}%`;
-    win.style.animationDelay = `${i * .18}s`;
+    win.style.animationDelay = `${i * .34}s`;
 
     authCascade.appendChild(win);
 
