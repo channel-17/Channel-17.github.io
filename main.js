@@ -80,7 +80,7 @@ setTimeout(() => {
 
   loader.classList.add("offcourse");
 
-}, 4500);
+}, 3400);
 
 setTimeout(() => {
 
@@ -90,13 +90,13 @@ setTimeout(() => {
 
   turtle.classList.add("hide");
 
-}, 6100);
+}, 7200);
 
 setTimeout(() => {
 
   virusLayer.classList.add("active");
 
-}, 7200);
+}, 8000);
 
 function completeSequence(){
 
