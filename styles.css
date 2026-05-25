@@ -1468,3 +1468,86 @@ body{
   }
 
 }
+.auth-cascade{
+  position:absolute;
+  inset:0;
+  z-index:33;
+  pointer-events:none;
+  opacity:0;
+}
+
+.auth-cascade.active{
+  opacity:1;
+}
+
+.cascade-window{
+  position:absolute;
+  width:145px;
+  height:82px;
+  border:1px solid rgba(242,238,229,.32);
+  background:rgba(5,5,5,.88);
+  box-shadow:0 0 22px rgba(0,0,0,.9);
+  font-size:.55rem;
+  color:rgba(242,238,229,.64);
+  overflow:hidden;
+  animation:cascadeFall 2.2s ease forwards;
+}
+
+.cascade-window::before{
+  content:"SIGNAL ERROR";
+  display:block;
+  padding:5px 8px;
+  border-bottom:1px solid rgba(242,238,229,.22);
+  background:rgba(223,255,63,.08);
+  color:rgba(223,255,63,.62);
+  letter-spacing:2px;
+}
+
+.cascade-window::after{
+  content:"authentic source resisted";
+  display:block;
+  padding:12px 8px;
+  line-height:1.5;
+}
+
+@keyframes cascadeFall{
+  0%{
+    opacity:0;
+    transform:translate(-30px,-30px) scale(.96);
+  }
+  15%{
+    opacity:.92;
+  }
+  100%{
+    opacity:.14;
+    transform:translate(70px,90px) scale(1.02);
+  }
+}
+
+.auth-warning{
+  position:absolute;
+  left:50%;
+  top:41%;
+  transform:translate(-50%,-50%);
+  z-index:38;
+  opacity:0;
+  pointer-events:none;
+  color:var(--toxic);
+  font-size:.78rem;
+  letter-spacing:5px;
+  text-align:center;
+  text-shadow:
+    0 0 12px rgba(223,255,63,.75),
+    0 0 34px rgba(223,255,63,.32);
+}
+
+.auth-warning.active{
+  animation:authWarningIn 2.8s ease forwards;
+}
+
+@keyframes authWarningIn{
+  0%{ opacity:0; filter:blur(5px); }
+  25%{ opacity:1; filter:blur(0); }
+  75%{ opacity:1; }
+  100%{ opacity:0; filter:blur(3px); }
+}
