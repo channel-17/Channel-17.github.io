@@ -90,9 +90,13 @@ setTimeout(() => {
 
   turtle.classList.add("hide");
 
+}, 6100);
+
+setTimeout(() => {
+
   virusLayer.classList.add("active");
 
-}, 6800);
+}, 7200);
 
 function completeSequence(){
 
