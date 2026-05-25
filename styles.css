@@ -1599,7 +1599,7 @@ body{
 /* SLOWER CASCADE / WORLD JUMP */
 
 .cascade-window{
-  animation:cascadeFall 4.8s ease forwards;
+  animation:cascadeFall 7.2s ease forwards;
 }
 
 @keyframes cascadeFall{
