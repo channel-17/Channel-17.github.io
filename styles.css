@@ -1195,3 +1195,187 @@ body{
 .turtle.escape .l2{
   animation:turtlePaddleRight .24s ease-in-out infinite !important;
 }
+
+
+/* =========================================================
+   CHANNEL 17 - TURTLE REPAIR ONLY
+   Full styles.css replacement.
+   ========================================================= */
+
+.turtle{
+  margin-left:-32px !important;
+}
+
+.shell{
+  left:10px !important;
+  top:4px !important;
+  width:29px !important;
+  height:18px !important;
+  border-radius:50% 50% 42% 42% !important;
+}
+
+.tail{
+  left:5px !important;
+  top:10px !important;
+  border-top:3.5px solid transparent !important;
+  border-bottom:3.5px solid transparent !important;
+  border-right:8px solid var(--cream) !important;
+  transform:rotate(4deg) !important;
+}
+
+.leg{
+  position:absolute !important;
+  width:8px !important;
+  height:5px !important;
+  top:19px !important;
+  background:var(--cream) !important;
+  border-radius:70% 70% 55% 55% !important;
+  transform-origin:center center !important;
+}
+
+.l1{
+  left:18px !important;
+}
+
+.l2{
+  left:30px !important;
+}
+
+.turtle.walk .l1{
+  animation:turtleFinBack 1.46s ease-in-out infinite !important;
+}
+
+.turtle.walk .l2{
+  animation:turtleFinFront 1.46s ease-in-out infinite !important;
+}
+
+@keyframes turtleFinBack{
+  0%,100%{
+    transform:translateX(-.7px) rotate(-3deg) scaleX(1.08);
+  }
+
+  50%{
+    transform:translateX(.5px) rotate(3deg) scaleX(.95);
+  }
+}
+
+@keyframes turtleFinFront{
+  0%,100%{
+    transform:translateX(.5px) rotate(3deg) scaleX(.95);
+  }
+
+  50%{
+    transform:translateX(-.7px) rotate(-3deg) scaleX(1.08);
+  }
+}
+
+.turtle.notice .neck{
+  left:34px !important;
+  top:10px !important;
+  width:9px !important;
+  height:5px !important;
+  transform:rotate(-34deg) !important;
+}
+
+.turtle.notice .head{
+  left:40px !important;
+  top:2px !important;
+}
+
+.turtle.notice .eye{
+  right:4px !important;
+  top:2px !important;
+  transform:translateY(-1.2px) scale(1.18) !important;
+}
+
+.turtle.hide{
+  animation:none !important;
+}
+
+.turtle.hide::before,
+.turtle.hide::after{
+  display:none !important;
+  content:none !important;
+  opacity:0 !important;
+}
+
+.turtle.hide .neck,
+.turtle.hide .head,
+.turtle.hide .tail,
+.turtle.hide .leg{
+  opacity:0 !important;
+}
+
+.turtle.hide .shell{
+  left:12px !important;
+  top:5px !important;
+  width:27px !important;
+  height:17px !important;
+  animation:turtleShellRealFear .12s steps(2) infinite !important;
+  filter:drop-shadow(0 0 4px rgba(242,238,229,.10)) !important;
+}
+
+@keyframes turtleShellRealFear{
+  0%{
+    transform:translate(0,0) scale(1);
+  }
+
+  25%{
+    transform:translate(-1px,.4px) scale(1.003);
+  }
+
+  50%{
+    transform:translate(.8px,-.3px) scale(.998);
+  }
+
+  75%{
+    transform:translate(-.5px,-.2px) scale(1.001);
+  }
+
+  100%{
+    transform:translate(0,0) scale(1);
+  }
+}
+
+.turtle.escape .l1{
+  animation:turtleFinBack .26s ease-in-out infinite !important;
+}
+
+.turtle.escape .l2{
+  animation:turtleFinFront .26s ease-in-out infinite !important;
+}
+
+.turtle.escape{
+  animation:turtleExitRepair 4.2s cubic-bezier(.18,.78,.22,1) forwards !important;
+}
+
+@keyframes turtleExitRepair{
+  0%{
+    left:50%;
+    opacity:.88;
+    transform:scale(.76) translateY(0);
+  }
+
+  70%{
+    opacity:.88;
+  }
+
+  100%{
+    left:150vw;
+    opacity:0;
+    transform:scale(.76) translateY(-3px);
+  }
+}
+
+.turtle.escape::after{
+  content:"" !important;
+  position:absolute !important;
+  left:-7px !important;
+  top:18px !important;
+  width:4px !important;
+  height:1px !important;
+  background:rgba(242,238,229,.16) !important;
+  box-shadow:
+    -8px 1px 0 rgba(242,238,229,.09),
+    -16px -1px 0 rgba(242,238,229,.04) !important;
+}
