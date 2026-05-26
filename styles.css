@@ -1,7 +1,18 @@
+/* CHANNEL 17 CLEAN GROUND ZERO CSS */
+
+
 *{
   margin:0;
   padding:0;
   box-sizing:border-box;
+}
+
+:root{
+  --cream:#f2eee5;
+  --soft:#d8d2c8;
+  --toxic:#dfff3f;
+  --ember:#ff8a2a;
+  --red:#c94038;
 }
 
 html,
@@ -10,353 +21,20 @@ body{
   height:100%;
   overflow:hidden;
   background:#000;
-  font-family:Courier New, monospace;
+  color:var(--cream);
+  font-family:"Courier New", monospace;
 }
 
 body{
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  color:#f2eee5;
+  position:fixed;
+  inset:0;
 }
 
 .screen{
   position:relative;
   width:100vw;
-  height:100vh;
+  height:100svh;
+  min-height:100vh;
   overflow:hidden;
   background:#000;
-}
-
-/* =========================
-   LOADER
-========================= */
-
-.loader-scene{
-  position:absolute;
-  inset:0;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-  gap:34px;
-  z-index:20;
-}
-
-.loader{
-  position:relative;
-  width:72vw;
-  max-width:720px;
-  height:56px;
-  border:2px solid rgba(255,255,255,.32);
-  border-radius:40px;
-  overflow:hidden;
-  background:rgba(255,255,255,.02);
-  backdrop-filter:blur(3px);
-}
-
-.fill{
-  position:absolute;
-  inset:0 auto 0 0;
-  width:0%;
-  background:#f2eee5;
-  border-radius:40px;
-  transition:width .18s linear;
-}
-
-.percent{
-  position:absolute;
-  inset:0;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:2rem;
-  letter-spacing:10px;
-  z-index:2;
-  color:rgba(255,255,255,.7);
-}
-
-/* =========================
-   TURTLE
-========================= */
-
-.turtle-wrap{
-  position:relative;
-  width:120px;
-  height:70px;
-}
-
-.turtle{
-  position:absolute;
-  left:50%;
-  top:50%;
-  transform:translate(-52%,-50%);
-  width:92px;
-  height:50px;
-}
-
-.shell{
-  position:absolute;
-  width:58px;
-  height:40px;
-  background:#f2eee5;
-  border-radius:60% 60% 50% 50%;
-  left:18px;
-  top:6px;
-}
-
-.head{
-  position:absolute;
-  width:22px;
-  height:22px;
-  border-radius:50%;
-  background:#f2eee5;
-  right:-2px;
-  top:12px;
-}
-
-.eye{
-  position:absolute;
-  width:7px;
-  height:7px;
-  border-radius:50%;
-  background:#000;
-  right:6px;
-  top:7px;
-}
-
-.leg{
-  position:absolute;
-  width:14px;
-  height:18px;
-  border-radius:0 0 10px 10px;
-  background:#f2eee5;
-  bottom:-6px;
-}
-
-.leg.l1{ left:28px; }
-.leg.l2{ left:54px; }
-
-.tail{
-  position:absolute;
-  width:0;
-  height:0;
-  border-top:8px solid transparent;
-  border-bottom:8px solid transparent;
-  border-right:18px solid #f2eee5;
-  left:2px;
-  top:22px;
-}
-
-/* =========================
-   SHIVER
-========================= */
-
-.turtle.hide{
-  animation:shellFear .18s infinite;
-}
-
-.turtle.hide .shell{
-  animation:shellFear .18s infinite;
-}
-
-@keyframes shellFear{
-  0%{ transform:translate(0,0); }
-  25%{ transform:translate(-1px,1px); }
-  50%{ transform:translate(1px,-1px); }
-  75%{ transform:translate(-1px,-1px); }
-  100%{ transform:translate(0,0); }
-}
-
-/* =========================
-   PEEK
-========================= */
-
-.turtle.peek .head{
-  transform:translateX(8px);
-}
-
-.turtle.peek{
-  transition:transform .9s ease;
-}
-
-/* =========================
-   ESCAPE
-========================= */
-
-.turtle.escape{
-  transition:transform 2.8s linear;
-  transform:translate(120vw,-50%);
-}
-
-/* =========================
-   VIRUS LAYER
-========================= */
-
-.virus-layer{
-  position:absolute;
-  inset:0;
-  opacity:0;
-  visibility:hidden;
-  pointer-events:none;
-  z-index:15;
-}
-
-.virus-layer.active{
-  opacity:1;
-  visibility:visible;
-}
-
-/* =========================
-   BACKGROUND WARNINGS
-========================= */
-
-.file-stack{
-  position:absolute;
-  inset:0;
-  overflow:hidden;
-  opacity:.24;
-}
-
-.tile{
-  position:absolute;
-  color:#f2eee5;
-  line-height:1.1;
-  white-space:nowrap;
-}
-
-.tile b{
-  font-size:1.15rem;
-}
-
-.tile span{
-  opacity:.6;
-  font-style:italic;
-}
-
-/* =========================
-   POP WINDOWS
-========================= */
-
-.pop{
-  position:absolute;
-  width:260px;
-  border:1px solid rgba(255,255,255,.18);
-  background:rgba(0,0,0,.72);
-  backdrop-filter:blur(4px);
-  box-shadow:0 0 30px rgba(0,0,0,.7);
-  overflow:hidden;
-  opacity:0;
-  animation:popIn .45s forwards;
-}
-
-.pop .title{
-  padding:8px 12px;
-  border-bottom:1px solid rgba(255,255,255,.08);
-  font-size:.8rem;
-  letter-spacing:4px;
-  color:rgba(255,255,255,.4);
-}
-
-.pop .body{
-  padding:16px 14px 18px;
-  line-height:1.6;
-}
-
-.pop .red{
-  color:#d94c4c;
-}
-
-.pop .green{
-  color:#7c9442;
-}
-
-@keyframes popIn{
-  from{
-    opacity:0;
-    transform:scale(.92);
-  }
-  to{
-    opacity:1;
-    transform:scale(1);
-  }
-}
-
-/* =========================
-   CASCADE
-========================= */
-
-.auth-cascade{
-  position:absolute;
-  inset:0;
-  pointer-events:none;
-  z-index:33;
-}
-
-.cascade-window{
-  position:absolute;
-  width:240px;
-  height:120px;
-  border:1px solid rgba(255,255,255,.14);
-  background:rgba(0,0,0,.22);
-  backdrop-filter:blur(3px);
-  opacity:0;
-  animation:cascadeFall 4.6s linear forwards;
-}
-
-@keyframes cascadeFall{
-  0%{
-    opacity:0;
-    transform:translate(-40px,-40px);
-  }
-
-  15%{
-    opacity:.6;
-  }
-
-  100%{
-    opacity:0;
-    transform:translate(220px,220px);
-  }
-}
-
-/* =========================
-   SYMBOL
-========================= */
-
-.signal-node{
-  position:absolute;
-  left:50%;
-  top:50%;
-  transform:translate(-50%,-50%);
-  opacity:0;
-  z-index:50;
-  cursor:pointer;
-  transition:opacity 1.2s ease;
-}
-
-.signal-node.ready{
-  opacity:1;
-}
-
-.signal-node img{
-  width:140px;
-  filter:
-    drop-shadow(0 0 12px rgba(170,255,0,.18))
-    drop-shadow(0 0 40px rgba(170,255,0,.12));
-  animation:signalBreath 3s ease-in-out infinite;
-}
-
-@keyframes signalBreath{
-  0%{
-    transform:scale(1);
-  }
-
-  50%{
-    transform:scale(1.04);
-  }
-
-  100%{
-    transform:scale(1);
-  }
 }
