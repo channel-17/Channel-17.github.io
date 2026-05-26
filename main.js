@@ -17,6 +17,9 @@ let progress = 0;
 let state = "normal";
 let completed = false;
 
+let spamTimer = null;
+let extraSpamCount = 0;
+
 function setProgress(value){
 
   progress = Math.max(0, Math.min(100, value));
@@ -29,6 +32,8 @@ function setProgress(value){
   percent.textContent = `${Math.round(progress)}%`;
 
 }
+
+/* MAIN LOADING LOOP */
 
 const loading = setInterval(() => {
 
@@ -44,10 +49,15 @@ const loading = setInterval(() => {
     progress += .26;
   }
 
+  /* red spam starts around 13% */
+  if(progress >= 13 && !virusLayer.classList.contains("active")){
+    virusLayer.classList.add("active");
+    startRedSpam();
+  }
+
   if(progress >= 100 && !completed){
 
     completed = true;
-
     progress = 100;
 
     clearInterval(loading);
@@ -60,7 +70,7 @@ const loading = setInterval(() => {
 
 }, 45);
 
-/* LITTLE HOMIE senses it earlier */
+/* TURTLE STORY — DO NOT CHANGE ORDER */
 
 setTimeout(() => {
 
@@ -75,8 +85,6 @@ setTimeout(() => {
 
 }, 3200);
 
-/* hide/shiver */
-
 setTimeout(() => {
 
   if(completed) return;
@@ -88,17 +96,7 @@ setTimeout(() => {
 
 }, 7600);
 
-/* virus begins */
-
-setTimeout(() => {
-
-  if(completed) return;
-
-  virusLayer.classList.add("active");
-
-  addExtraVirusSpam();
-
-}, 8300);
+/* 100% — SYMBOL SAVES HIM */
 
 function completeSequence(){
 
@@ -107,53 +105,141 @@ function completeSequence(){
   loader.classList.remove("offcourse");
   loader.classList.add("complete");
 
-  /* signal begins clearing noise sooner */
-
+  /* green cascade begins as separate sequence */
   setTimeout(() => {
-
-    virusLayer.classList.add("clear");
 
     runAuthCascade();
 
-  }, 50);
+  }, 180);
 
-  /* symbol appears faster */
-
+  /* symbol starts breaking through sooner */
   setTimeout(() => {
 
     signalNode.classList.add("ready");
 
-  }, 650);
+    killVirusesOneByOne();
 
-  /* little homie peeks */
+  }, 850);
 
+  /* turtle peeks only AFTER symbol starts saving him */
   setTimeout(() => {
 
     turtle.classList.remove("hide");
     turtle.classList.add("peek");
 
-  }, 1450);
+  }, 1850);
 
-  /* little homie commits and escapes */
-
+  /* turtle escapes after surviving */
   setTimeout(() => {
 
     turtle.classList.remove("peek");
     turtle.classList.add("escape");
 
-  }, 2400);
+  }, 3100);
 
-  /* loader disappears faster */
-
+  /* loader area leaves after survival beat */
   setTimeout(() => {
 
     loaderScene.classList.add("fade-out");
 
-  }, 5000);
+  }, 5200);
 
 }
 
-/* CASCADE */
+/* RED SPAM — WORLD ATTACK */
+
+function startRedSpam(){
+
+  if(spamTimer) return;
+
+  addSpamBurst();
+
+  spamTimer = setInterval(() => {
+
+    if(completed){
+      clearInterval(spamTimer);
+      spamTimer = null;
+      return;
+    }
+
+    addSpamWindow();
+
+  }, 380);
+
+}
+
+function addSpamBurst(){
+
+  for(let i = 0; i < 8; i++){
+
+    setTimeout(() => {
+
+      addSpamWindow();
+
+    }, i * 95);
+
+  }
+
+}
+
+function addSpamWindow(){
+
+  const labels = [
+    ["AUTH", "external meaning rejected"],
+    ["SIGNAL", "human packet resisting"],
+    ["MASK", "forced identity loop"],
+    ["FEED", "compression overload"],
+    ["SOURCE", "private signal detected"],
+    ["ERROR", "synthetic pressure rising"],
+    ["ALERT", "carrier instability"],
+    ["STACK", "emotional suppression"],
+    ["DEVICE", "override attempt"],
+    ["INPUT", "meaning compression"]
+  ];
+
+  const item =
+    labels[extraSpamCount % labels.length];
+
+  const box = document.createElement("div");
+
+  box.className = "pop extra-pop";
+
+  box.setAttribute("data-title", item[0]);
+
+  box.innerHTML = `
+    <p><strong>${item[0]} INTERRUPT</strong></p>
+    <p>${item[1]}</p>
+    <em>signal contaminated</em>
+  `;
+
+  const position = extraSpamCount % 12;
+
+  const positions = [
+    [4, 10],
+    [52, 11],
+    [16, 22],
+    [62, 26],
+    [2, 37],
+    [45, 40],
+    [68, 48],
+    [10, 55],
+    [36, 62],
+    [58, 67],
+    [22, 75],
+    [70, 78]
+  ];
+
+  box.style.left = `${positions[position][0]}%`;
+  box.style.top = `${positions[position][1]}%`;
+  box.style.width = `${220 + ((extraSpamCount % 3) * 34)}px`;
+
+  virusLayer.appendChild(box);
+
+  extraSpamCount++;
+
+}
+
+/* GREEN CASCADE — ONE FILE COPYING DOWN SCREEN */
 
 function runAuthCascade(){
 
@@ -163,7 +249,7 @@ function runAuthCascade(){
 
   authWarning.classList.remove("active");
 
-  const total = 22;
+  const total = 16;
 
   for(let i = 0; i < total; i++){
 
@@ -171,90 +257,69 @@ function runAuthCascade(){
 
     win.className = "cascade-window";
 
-    const x = -10 + (i * 4.8);
-    const y = 5 + (i * 3.9);
+    const x = -8 + (i * 4.8);
+    const y = 2 + (i * 5.2);
 
     win.style.left = `${x}%`;
     win.style.top = `${y}%`;
 
-    /* slower bomb countdown pacing */
-
-    win.style.animationDelay = `${i * .62}s`;
+    /* slow file-copy countdown */
+    win.style.animationDelay = `${i * .72}s`;
 
     authCascade.appendChild(win);
 
   }
 
-  /* authentic source warning */
-
   setTimeout(() => {
 
     authWarning.classList.add("active");
 
-  }, 3200);
-
-  /* clear cascade */
+  }, 3800);
 
   setTimeout(() => {
 
     authCascade.classList.remove("active");
-
     authCascade.innerHTML = "";
 
-  }, 12200);
+  }, 13500);
 
 }
 
-/* EXTRA VIRUS CHAOS */
+/* SYMBOL CLEANSE — VIRUSES DIE ONE BY ONE */
 
-function addExtraVirusSpam(){
+function killVirusesOneByOne(){
 
-  const labels = [
+  virusLayer.classList.add("clear");
 
-    ["AUTH","external meaning rejected"],
-    ["SIGNAL","human packet resisting"],
-    ["MASK","forced identity loop"],
-    ["FEED","compression overload"],
-    ["SOURCE","private signal detected"],
-    ["ERROR","synthetic pressure rising"],
-    ["ALERT","carrier instability"],
-    ["STACK","emotional suppression"]
+  const allVirusWindows =
+    Array.from(virusLayer.querySelectorAll(".pop"));
 
-  ];
-
-  labels.forEach((item, i) => {
+  allVirusWindows.forEach((box, index) => {
 
     setTimeout(() => {
 
-      const box = document.createElement("div");
+      box.style.transition =
+        "opacity .55s ease, transform .55s ease, filter .55s ease";
 
-      box.className = "pop extra-pop";
+      box.style.opacity = "0";
 
-      box.setAttribute("data-title", item[0]);
+      box.style.transform =
+        "translateY(12px) scale(.96)";
 
-      box.innerHTML = `
-        <p><strong>${item[0]} INTERRUPT</strong></p>
-        <p>${item[1]}</p>
-        <em>signal contaminated</em>
-      `;
+      box.style.filter = "blur(3px)";
 
-      box.style.left = `${6 + (i * 9)}%`;
-      box.style.top = `${10 + (i * 7)}%`;
-
-      box.style.width =
-        `${220 + ((i % 2) * 40)}px`;
-
-      virusLayer.appendChild(box);
-
-      setTimeout(() => {
-
-        box.style.opacity = ".82";
-
-      }, 30);
-
-    }, 350 + (i * 260));
+    }, index * 115);
 
   });
+
+  setTimeout(() => {
+
+    virusLayer.classList.remove("active");
+
+    virusLayer.style.visibility = "hidden";
+    virusLayer.style.opacity = "0";
+
+  }, Math.min(3200, allVirusWindows.length * 115 + 800));
 
 }
 
