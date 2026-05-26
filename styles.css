@@ -1131,3 +1131,67 @@ body{
     margin-bottom:62px;
   }
 }
+
+/* =========================================================
+   CHANNEL 17 — TURTLE LEG CORRECTION
+   Full styles.css replacement.
+   - legs shifted right under shell
+   - nub/paddle turtle feet
+   - subtle left/right paddle, not dog-step up/down
+   ========================================================= */
+
+.leg{
+  width:7px !important;
+  height:7px !important;
+  top:18px !important;
+  background:var(--cream) !important;
+  border-radius:55% 55% 45% 45% !important;
+  transform-origin:center center !important;
+}
+
+/* Shift both feet right so they live under the shell */
+.l1{
+  left:23px !important;
+}
+
+.l2{
+  left:34px !important;
+}
+
+/* Turtle paddle motion: tiny side-to-side, no up/down walking */
+.turtle.walk .l1{
+  animation:turtlePaddleLeft 1.36s ease-in-out infinite !important;
+}
+
+.turtle.walk .l2{
+  animation:turtlePaddleRight 1.36s ease-in-out infinite !important;
+}
+
+@keyframes turtlePaddleLeft{
+  0%,100%{
+    transform:translateX(-.8px) rotate(-5deg) scaleX(1.04);
+  }
+
+  50%{
+    transform:translateX(.8px) rotate(4deg) scaleX(.96);
+  }
+}
+
+@keyframes turtlePaddleRight{
+  0%,100%{
+    transform:translateX(.8px) rotate(4deg) scaleX(.96);
+  }
+
+  50%{
+    transform:translateX(-.8px) rotate(-5deg) scaleX(1.04);
+  }
+}
+
+/* Escape keeps same turtle-foot language */
+.turtle.escape .l1{
+  animation:turtlePaddleLeft .24s ease-in-out infinite !important;
+}
+
+.turtle.escape .l2{
+  animation:turtlePaddleRight .24s ease-in-out infinite !important;
+}
