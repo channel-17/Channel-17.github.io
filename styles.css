@@ -1379,3 +1379,352 @@ body{
     -8px 1px 0 rgba(242,238,229,.09),
     -16px -1px 0 rgba(242,238,229,.04) !important;
 }
+
+/* =========================================================
+   CHANNEL 17 — LIVING SIGNAL BUILD: CSS ONLY
+   Full styles.css replacement.
+   - turtle fins shifted left
+   - slow turtle escape with fast haste lines above shell
+   - symbol breathes / feels pressable
+   - signal map dots trail, pulse, and sometimes burn out
+   ========================================================= */
+
+/* Turtle fins: shift both slightly left, tucked under shell */
+.l1{
+  left:16px !important;
+}
+
+.l2{
+  left:27px !important;
+}
+
+/* Slightly flatter fin read */
+.leg{
+  width:8px !important;
+  height:5px !important;
+  top:19px !important;
+  border-radius:75% 75% 55% 55% !important;
+}
+
+/* Slow escape, because he is still a turtle */
+.turtle.escape{
+  animation:turtleSlowEscapeWithPanic 5.6s cubic-bezier(.18,.72,.22,1) forwards !important;
+}
+
+/* Fast haste lines above shell while body moves slow */
+.turtle.escape::before{
+  content:"" !important;
+  position:absolute !important;
+  left:7px !important;
+  top:-5px !important;
+  width:20px !important;
+  height:1px !important;
+  background:rgba(242,238,229,.28) !important;
+  box-shadow:
+    -6px 3px 0 rgba(242,238,229,.18),
+    7px 5px 0 rgba(242,238,229,.11),
+    -11px 8px 0 rgba(242,238,229,.07) !important;
+  opacity:.65 !important;
+  animation:turtleHasteLines .22s steps(2) infinite !important;
+  display:block !important;
+}
+
+/* Keep old lower trail extremely subtle, not stringy */
+.turtle.escape::after{
+  content:"" !important;
+  position:absolute !important;
+  left:-8px !important;
+  top:17px !important;
+  width:3px !important;
+  height:1px !important;
+  background:rgba(242,238,229,.10) !important;
+  box-shadow:
+    -7px 1px 0 rgba(242,238,229,.06),
+    -14px -1px 0 rgba(242,238,229,.03) !important;
+}
+
+@keyframes turtleSlowEscapeWithPanic{
+  0%{
+    left:50%;
+    opacity:.9;
+    transform:scale(.76) translateY(0);
+  }
+
+  78%{
+    opacity:.9;
+  }
+
+  100%{
+    left:150vw;
+    opacity:0;
+    transform:scale(.76) translateY(-2px);
+  }
+}
+
+@keyframes turtleHasteLines{
+  0%{
+    transform:translateX(0);
+    opacity:.16;
+  }
+
+  50%{
+    transform:translateX(-4px);
+    opacity:.68;
+  }
+
+  100%{
+    transform:translateX(-8px);
+    opacity:.04;
+  }
+}
+
+/* Symbol: breathes like it wants to be pressed */
+.signal-node.ready{
+  animation:symbolLivingBreath 2.85s ease-in-out infinite !important;
+  filter:
+    drop-shadow(0 0 10px rgba(223,255,63,.18))
+    drop-shadow(0 0 32px rgba(223,255,63,.08)) !important;
+}
+
+.signal-node.ready::before{
+  content:"" !important;
+  position:absolute !important;
+  inset:-12px !important;
+  border-radius:50% !important;
+  background:radial-gradient(
+    circle,
+    rgba(223,255,63,.26),
+    rgba(223,255,63,.09) 38%,
+    transparent 72%
+  ) !important;
+  filter:blur(18px) !important;
+  z-index:-1 !important;
+  animation:symbolHaloBreath 2.85s ease-in-out infinite !important;
+}
+
+.signal-node.ready::after{
+  content:"" !important;
+  position:absolute !important;
+  left:50% !important;
+  top:50% !important;
+  width:70% !important;
+  height:70% !important;
+  transform:translate(-50%,-50%) scale(.84) !important;
+  border-radius:50% !important;
+  border:1px solid rgba(223,255,63,.18) !important;
+  opacity:0 !important;
+  pointer-events:none !important;
+  animation:symbolPressMeRipple 4.8s ease-in-out infinite !important;
+}
+
+.signal-node.ready:active{
+  transform:translate(-50%,-50%) scale(.91) !important;
+  filter:
+    brightness(1.35)
+    drop-shadow(0 0 24px rgba(223,255,63,.55))
+    drop-shadow(0 0 60px rgba(223,255,63,.25)) !important;
+}
+
+@keyframes symbolLivingBreath{
+  0%,100%{
+    opacity:.56;
+    transform:translate(-50%,-50%) scale(1);
+  }
+
+  45%{
+    opacity:.82;
+    transform:translate(-50%,-50%) scale(1.028);
+  }
+
+  58%{
+    opacity:.72;
+    transform:translate(-50%,-50%) scale(1.012);
+  }
+}
+
+@keyframes symbolHaloBreath{
+  0%,100%{
+    opacity:.18;
+    transform:scale(.92);
+  }
+
+  50%{
+    opacity:.62;
+    transform:scale(1.05);
+  }
+}
+
+@keyframes symbolPressMeRipple{
+  0%,72%,100%{
+    opacity:0;
+    transform:translate(-50%,-50%) scale(.72);
+  }
+
+  82%{
+    opacity:.32;
+  }
+
+  96%{
+    opacity:0;
+    transform:translate(-50%,-50%) scale(1.35);
+  }
+}
+
+/* Home-node submission hint: very occasional new-signal glow */
+.node{
+  overflow:visible !important;
+}
+
+.node::before{
+  animation:nodePulse 3.8s ease-in-out infinite, occasionalInboxGlow 17s ease-in-out infinite !important;
+}
+
+.node:nth-child(1)::before{
+  animation-delay:0s, 2s !important;
+}
+
+.node:nth-child(2)::before{
+  animation-delay:1.2s, 8s !important;
+}
+
+.node:nth-child(3)::before{
+  animation-delay:2.4s, 13s !important;
+}
+
+/* fourth/inactive node should blink very rarely like a submission inbox waking */
+.inactive-node::before{
+  background:rgba(223,255,63,.18) !important;
+  box-shadow:0 0 10px rgba(223,255,63,.08) !important;
+  opacity:.24 !important;
+  animation:submissionPing 23s ease-in-out infinite !important;
+}
+
+@keyframes occasionalInboxGlow{
+  0%,88%,100%{
+    box-shadow:
+      0 0 12px rgba(223,255,63,.75),
+      0 0 26px rgba(223,255,63,.28);
+    background:var(--toxic);
+  }
+
+  91%{
+    box-shadow:
+      0 0 18px rgba(223,255,63,1),
+      0 0 46px rgba(223,255,63,.62);
+    background:#ecff66;
+  }
+
+  94%{
+    box-shadow:
+      0 0 8px rgba(255,138,42,.72),
+      0 0 28px rgba(255,138,42,.28);
+    background:var(--ember);
+  }
+
+  96%{
+    box-shadow:0 0 2px rgba(255,138,42,.12);
+    background:rgba(255,138,42,.28);
+  }
+}
+
+@keyframes submissionPing{
+  0%,82%,100%{
+    opacity:.14;
+    background:rgba(223,255,63,.14);
+    box-shadow:0 0 8px rgba(223,255,63,.05);
+  }
+
+  88%{
+    opacity:.92;
+    background:var(--toxic);
+    box-shadow:
+      0 0 14px rgba(223,255,63,.85),
+      0 0 38px rgba(223,255,63,.38);
+  }
+
+  92%{
+    opacity:.5;
+    background:var(--ember);
+    box-shadow:
+      0 0 8px rgba(255,138,42,.62),
+      0 0 24px rgba(255,138,42,.22);
+  }
+
+  95%{
+    opacity:.08;
+    background:#111;
+    box-shadow:none;
+  }
+}
+
+/* Path dots: directional trail like invisible map footsteps */
+.idle-pipe::after{
+  box-shadow:
+    0 0 14px rgba(223,255,63,.45),
+    -8px 0 0 rgba(223,255,63,.22),
+    -16px 0 0 rgba(223,255,63,.10),
+    -24px 0 0 rgba(223,255,63,.04) !important;
+  animation:signalFootstepTrail 5.8s ease-in-out infinite !important;
+}
+
+.idle1::after{
+  animation-delay:.2s !important;
+}
+
+.idle2::after{
+  animation-delay:1.8s !important;
+}
+
+.idle3::after{
+  animation-delay:3.1s !important;
+}
+
+.idle4::after{
+  animation-delay:4.2s !important;
+}
+
+@keyframes signalFootstepTrail{
+  0%,54%,100%{
+    opacity:.16;
+    background:rgba(223,255,63,.32);
+    box-shadow:
+      0 0 10px rgba(223,255,63,.18),
+      -8px 0 0 rgba(223,255,63,.08),
+      -16px 0 0 rgba(223,255,63,.035);
+    transform:translateX(0) scale(.82);
+  }
+
+  64%{
+    opacity:.88;
+    background:var(--toxic);
+    box-shadow:
+      0 0 16px rgba(223,255,63,.62),
+      -9px 0 0 rgba(223,255,63,.28),
+      -18px 0 0 rgba(223,255,63,.13),
+      -27px 0 0 rgba(223,255,63,.05);
+    transform:translateX(8px) scale(1);
+  }
+
+  72%{
+    opacity:.56;
+    background:#dfff3f;
+    transform:translateX(15px) scale(.92);
+  }
+
+  78%{
+    opacity:.72;
+    background:var(--ember);
+    box-shadow:
+      0 0 12px rgba(255,138,42,.52),
+      -8px 0 0 rgba(255,138,42,.18),
+      -16px 0 0 rgba(255,138,42,.06);
+    transform:translateX(21px) scale(.86);
+  }
+
+  84%{
+    opacity:.05;
+    background:#0a0a0a;
+    box-shadow:none;
+    transform:translateX(26px) scale(.6);
+  }
+}
