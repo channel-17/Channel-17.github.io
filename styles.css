@@ -990,7 +990,7 @@ body{
 
 
 /* =========================================================
-   CHANNEL 17 â STEP 1 LITTLE HOMIE FIXES
+   CHANNEL 17 — STEP 1 LITTLE HOMIE FIXES
    Full styles.css replacement includes these locked refinements:
    - visual centering
    - better leg placement
@@ -1049,7 +1049,7 @@ body{
   content:none !important;
 }
 
-/* shell-only vibration â no cartoon panic marks */
+/* shell-only vibration — no cartoon panic marks */
 .turtle.hide .shell{
   left:12px !important;
   top:5px !important;
@@ -1107,6 +1107,137 @@ body{
   }
   100%{
     left:145vw;
+    opacity:0;
+    transform:scale(.76) translateY(-3px);
+  }
+}
+
+
+/* =========================================================
+   CHANNEL 17 — LITTLE HOMIE VISUAL CORRECTION PASS
+   Full styles.css replacement.
+   ========================================================= */
+
+/* Pull whole turtle left enough to visually center the head-weight */
+.turtle{
+  margin-left:-36px !important;
+}
+
+/* Legs forward and tucked under shell */
+.l1{
+  left:20px !important;
+}
+
+.l2{
+  left:31px !important;
+}
+
+/* Tail slightly higher and tucked inward */
+.tail{
+  left:6px !important;
+  top:8px !important;
+  border-top:4px solid transparent !important;
+  border-bottom:4px solid transparent !important;
+  border-right:8px solid var(--cream) !important;
+  transform:rotate(10deg) !important;
+}
+
+/* Notice pose: neck shorter, head up, eye actually searches upward */
+.turtle.notice .neck{
+  width:9px !important;
+  transform:rotate(-52deg) !important;
+}
+
+.turtle.notice .head{
+  left:38px !important;
+  top:-4px !important;
+}
+
+.turtle.notice .eye{
+  right:4px !important;
+  top:2px !important;
+  transform:translateY(-1.6px) scale(1.22) !important;
+}
+
+/* Kill all fake panic marks completely */
+.turtle.hide::before,
+.turtle.hide::after{
+  display:none !important;
+  opacity:0 !important;
+  content:none !important;
+}
+
+/* Hide pose: shell is the only thing trembling */
+.turtle.hide{
+  animation:none !important;
+}
+
+.turtle.hide .shell{
+  left:12px !important;
+  top:5px !important;
+  width:27px !important;
+  height:17px !important;
+  animation:shellVibrationVisible .115s steps(2) infinite !important;
+  filter:
+    drop-shadow(0 0 3px rgba(255,255,255,.08))
+    blur(.05px) !important;
+}
+
+/* Visible, but not cartoon. Tiny real shell tremble. */
+@keyframes shellVibrationVisible{
+  0%{
+    transform:translate(0px,0px) scale(1);
+  }
+
+  25%{
+    transform:translate(-1.1px,.4px) scale(1.004);
+  }
+
+  50%{
+    transform:translate(.9px,-.3px) scale(.997);
+  }
+
+  75%{
+    transform:translate(-.6px,-.2px) scale(1.002);
+  }
+
+  100%{
+    transform:translate(0px,0px) scale(1);
+  }
+}
+
+/* Softer escape trail: pressure blur, not string */
+.turtle.escape::after{
+  content:"" !important;
+  position:absolute !important;
+  left:-7px !important;
+  top:18px !important;
+  width:4px !important;
+  height:1px !important;
+  background:rgba(242,238,229,.22) !important;
+  box-shadow:
+    -8px 1px 0 rgba(242,238,229,.13),
+    -16px -1px 0 rgba(242,238,229,.06) !important;
+}
+
+/* Confirm full exit offscreen */
+.turtle.escape{
+  animation:escapeTurtleFinal 4.2s cubic-bezier(.18,.78,.22,1) forwards !important;
+}
+
+@keyframes escapeTurtleFinal{
+  0%{
+    left:50%;
+    opacity:.88;
+    transform:scale(.76) translateY(0);
+  }
+
+  70%{
+    opacity:.88;
+  }
+
+  100%{
+    left:150vw;
     opacity:0;
     transform:scale(.76) translateY(-3px);
   }
