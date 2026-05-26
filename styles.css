@@ -45,7 +45,10 @@ body{
   transform:translate(-50%,-50%);
   width:min(55vw,305px);
   z-index:25;
-  transition:opacity 1.2s ease, transform 1.2s ease, filter 1.2s ease;
+  transition:
+    opacity 1.2s ease,
+    transform 1.2s ease,
+    filter 1.2s ease;
 }
 
 .loader-scene.fade-out{
@@ -155,7 +158,7 @@ body{
   position:absolute;
   top:12px;
   left:50%;
-  margin-left:-25px;
+  margin-left:-34px;
   width:42px;
   height:24px;
   opacity:.88;
@@ -204,58 +207,85 @@ body{
   height:2.8px;
   border-radius:50%;
   background:#000;
+  transition:.35s ease;
 }
 
 .tail{
   position:absolute;
-  left:5px;
-  top:9px;
+  left:6px;
+  top:8px;
   width:0;
   height:0;
   border-top:4px solid transparent;
   border-bottom:4px solid transparent;
-  border-right:9px solid var(--cream);
-  transform:rotate(8deg);
+  border-right:8px solid var(--cream);
+  transform:rotate(10deg);
 }
 
 .leg{
   position:absolute;
-  width:6px;
-  height:9px;
-  top:18px;
+  width:7px;
+  height:7px;
+  top:17px;
   background:var(--cream);
-  border-radius:0 0 6px 6px;
+  border-radius:50% 50% 45% 45%;
   transform-origin:50% 0%;
 }
 
-.l1{ left:15px; }
-.l2{ left:25px; }
+.l1{ left:20px; }
+.l2{ left:31px; }
 
-.turtle.walk .l1{ animation:wiperFront 1.36s ease-in-out infinite; }
-.turtle.walk .l2{ animation:wiperBack 1.36s ease-in-out infinite; }
-
-@keyframes wiperFront{
-  0%,100%{ transform:rotate(-16deg) translateX(-1px); }
-  50%{ transform:rotate(12deg) translateX(1px); }
+.turtle.walk .l1{
+  animation:nubStepA 1.36s ease-in-out infinite;
 }
 
-@keyframes wiperBack{
-  0%,100%{ transform:rotate(14deg) translateX(1px); }
-  50%{ transform:rotate(-14deg) translateX(-1px); }
+.turtle.walk .l2{
+  animation:nubStepB 1.36s ease-in-out infinite;
 }
+
+@keyframes nubStepA{
+  0%,100%{
+    transform:translateY(0) translateX(-.5px) scaleY(1);
+  }
+  50%{
+    transform:translateY(1px) translateX(.5px) scaleY(.92);
+  }
+}
+
+@keyframes nubStepB{
+  0%,100%{
+    transform:translateY(1px) translateX(.5px) scaleY(.92);
+  }
+  50%{
+    transform:translateY(0) translateX(-.5px) scaleY(1);
+  }
+}
+
+/* TURTLE NOTICE */
 
 .turtle.notice .neck{
-  width:10px;
-  transform:rotate(-48deg);
+  width:8px;
+  height:5px;
+  left:34px;
+  top:10px;
+  transform:rotate(-38deg);
 }
 
 .turtle.notice .head{
-  left:38px;
-  top:-2px;
+  left:39px;
+  top:1px;
 }
 
 .turtle.notice .eye{
-  transform:scale(1.25);
+  right:4px;
+  top:2px;
+  transform:translateY(-1.5px) scale(1.18);
+}
+
+/* TURTLE HIDE / SHIVER */
+
+.turtle.hide{
+  animation:none;
 }
 
 .turtle.hide .neck,
@@ -265,29 +295,33 @@ body{
   opacity:0;
 }
 
+.turtle.hide::before,
+.turtle.hide::after{
+  display:none;
+  opacity:0;
+  content:none;
+}
+
 .turtle.hide .shell{
   left:12px;
   top:5px;
   width:27px;
   height:17px;
-  animation:shellShiver .18s infinite;
-  filter:drop-shadow(0 0 2px rgba(255,255,255,.04));
+  animation:shellVibe .10s steps(2) infinite;
+  filter:
+    drop-shadow(0 0 5px rgba(242,238,229,.12))
+    blur(.04px);
 }
 
-.turtle.hide::before,
-.turtle.hide::after{
-  display:none;
-  content:none;
+@keyframes shellVibe{
+  0%{ transform:translate(0,0) scale(1); }
+  25%{ transform:translate(-1.2px,.5px) scale(1.004); }
+  50%{ transform:translate(1px,-.4px) scale(.997); }
+  75%{ transform:translate(-.7px,-.3px) scale(1.002); }
+  100%{ transform:translate(0,0) scale(1); }
 }
 
-@keyframes shellShiver{
-  0%{ transform:translateX(0) scale(1); }
-  20%{ transform:translateX(-.6px) scale(1.002); }
-  40%{ transform:translateX(.5px) scale(.998); }
-  60%{ transform:translateX(-.4px) scale(1.001); }
-  80%{ transform:translateX(.3px) scale(.999); }
-  100%{ transform:translateX(0) scale(1); }
-}
+/* TURTLE PEEK / ESCAPE */
 
 .turtle.peek .neck{
   width:10px;
@@ -306,37 +340,57 @@ body{
 }
 
 .turtle.escape{
-  animation:escapeTurtle 5.8s linear forwards;
+  animation:escapeTurtle 3.8s cubic-bezier(.18,.78,.22,1) forwards;
 }
 
-.turtle.escape .leg{ opacity:1; }
-.turtle.escape .tail{ opacity:1; }
-.turtle.escape .l1{ animation:wiperFront .24s ease-in-out infinite; }
-.turtle.escape .l2{ animation:wiperBack .24s ease-in-out infinite; }
+.turtle.escape .leg{
+  opacity:1;
+}
+
+.turtle.escape .tail{
+  opacity:1;
+}
+
+.turtle.escape .l1{
+  animation:nubStepA .24s ease-in-out infinite;
+}
+
+.turtle.escape .l2{
+  animation:nubStepB .24s ease-in-out infinite;
+}
 
 .turtle.escape::after{
   content:"";
   position:absolute;
-  left:-10px;
+  left:-7px;
   top:18px;
-  width:8px;
+  width:4px;
   height:1px;
-  background:rgba(242,238,229,.55);
+  background:rgba(242,238,229,.18);
   box-shadow:
-    -9px 2px 0 rgba(242,238,229,.38),
-    -18px -1px 0 rgba(242,238,229,.26),
-    -27px 1px 0 rgba(242,238,229,.16);
+    -8px 1px 0 rgba(242,238,229,.10),
+    -16px -1px 0 rgba(242,238,229,.05);
 }
 
 @keyframes escapeTurtle{
+  0%{
+    left:50%;
+    opacity:.88;
+    transform:scale(.76) translateY(0);
+  }
+
+  70%{
+    opacity:.88;
+  }
+
   100%{
-    left:145vw;
+    left:150vw;
     opacity:0;
     transform:scale(.76) translateY(-3px);
   }
 }
 
-/* VIRUS */
+/* VIRUS LAYER */
 
 .virus-layer{
   position:absolute;
@@ -354,13 +408,24 @@ body{
 }
 
 .virus-layer.clear{
-  animation:virusDissolveUnderSignal 3.8s ease forwards;
+  animation:virusDissolveFast 2.4s ease forwards;
 }
 
-@keyframes virusDissolveUnderSignal{
-  0%{ opacity:1; filter:blur(0); }
-  55%{ opacity:.38; filter:blur(1px); }
-  100%{ opacity:.08; filter:blur(3px); }
+@keyframes virusDissolveFast{
+  0%{
+    opacity:1;
+    filter:blur(0);
+  }
+
+  45%{
+    opacity:.36;
+    filter:blur(1px);
+  }
+
+  100%{
+    opacity:.06;
+    filter:blur(3px);
+  }
 }
 
 .scanlines{
@@ -511,7 +576,9 @@ body{
 }
 
 .virus-layer.active .pop{
-  animation:slamIn .22s cubic-bezier(.08,.75,.12,1) forwards;
+  animation:
+    slamIn .22s cubic-bezier(.08,.75,.12,1) forwards,
+    windowPulse 1.1s steps(2) infinite;
 }
 
 .pop::before{
@@ -522,6 +589,15 @@ body{
   color:rgba(255,255,255,.55);
   background:rgba(255,255,255,.065);
   letter-spacing:4px;
+}
+
+.pop::after{
+  content:"";
+  position:absolute;
+  inset:8px -8px -8px 8px;
+  border:1px solid rgba(255,255,255,.08);
+  opacity:.35;
+  pointer-events:none;
 }
 
 .pop p{
@@ -552,6 +628,12 @@ body{
   }
 }
 
+@keyframes windowPulse{
+  50%{
+    filter:brightness(1.1);
+  }
+}
+
 .p1{ left:-30%; top:18%; animation-delay:.2s !important; }
 .p2{ right:-24%; top:20%; animation-delay:.45s !important; }
 .p8{ left:20%; top:8%; animation-delay:.7s !important; }
@@ -561,6 +643,11 @@ body{
 .p3{ left:7%; bottom:14%; animation-delay:1.66s !important; }
 .p4{ right:-11%; bottom:19%; animation-delay:1.92s !important; }
 .p9{ right:24%; bottom:7%; animation-delay:2.16s !important; }
+
+.extra-pop{
+  opacity:.82 !important;
+  z-index:4;
+}
 
 /* CASCADE */
 
@@ -588,7 +675,7 @@ body{
   color:rgba(242,238,229,.42);
   overflow:hidden;
   opacity:0;
-  animation:cascadeFall 7.2s ease forwards;
+  animation:cascadeFall 9.6s ease forwards;
 }
 
 .cascade-window::before{
@@ -611,18 +698,21 @@ body{
 @keyframes cascadeFall{
   0%{
     opacity:0;
-    transform:translate(-40px,-40px) scale(.96);
+    transform:translate(-35px,-35px) scale(.96);
   }
-  18%{
-    opacity:.72;
+
+  10%{
+    opacity:.68;
   }
-  72%{
-    opacity:.52;
-    transform:translate(95px,115px) scale(1.02);
+
+  58%{
+    opacity:.58;
+    transform:translate(70px,86px) scale(1.01);
   }
+
   100%{
     opacity:0;
-    transform:translate(140px,170px) scale(1.04);
+    transform:translate(135px,165px) scale(1.035);
   }
 }
 
@@ -644,7 +734,7 @@ body{
 }
 
 .auth-warning.active{
-  animation:authWarningIn 2.8s ease forwards;
+  animation:authWarningIn 2.4s ease forwards;
 }
 
 @keyframes authWarningIn{
@@ -674,9 +764,9 @@ body{
 }
 
 .signal-node.ready{
-  opacity:.54;
+  opacity:.58;
   pointer-events:auto;
-  animation:symbolBreath 3s ease-in-out infinite;
+  animation:symbolBreath 3.4s ease-in-out infinite;
 }
 
 .signal-node.ready::before{
@@ -692,6 +782,13 @@ body{
   );
   filter:blur(18px);
   z-index:-1;
+}
+
+.signal-node.ready:active{
+  transform:translate(-50%,-50%) scale(.94);
+  filter:
+    brightness(1.3)
+    drop-shadow(0 0 45px rgba(223,255,63,.55));
 }
 
 .signal-node.fade-out{
@@ -773,7 +870,10 @@ body{
   height:7px;
   border-radius:50%;
   background:rgba(223,255,63,.88);
-  box-shadow:0 0 18px rgba(223,255,63,.55);
+  box-shadow:
+    0 0 18px rgba(223,255,63,.55),
+    -10px 0 0 rgba(223,255,63,.16),
+    -20px 0 0 rgba(223,255,63,.07);
   opacity:0;
 }
 
@@ -781,7 +881,9 @@ body{
   animation:beaconRun 2.4s ease forwards;
 }
 
-.pipe.bright{ background:rgba(140,116,30,.23); }
+.pipe.bright{
+  background:rgba(140,116,30,.23);
+}
 
 .pipe.fail::before{
   background:rgba(201,64,56,.72);
@@ -882,7 +984,9 @@ body{
 }
 
 @keyframes homeBreath{
-  50%{ filter:drop-shadow(0 0 30px rgba(223,255,63,.3)); }
+  50%{
+    filter:drop-shadow(0 0 30px rgba(223,255,63,.3));
+  }
 }
 
 .nodes{
@@ -923,8 +1027,13 @@ body{
   animation:nodePulse 3.8s ease-in-out infinite;
 }
 
-.node:nth-child(2)::before{ animation-delay:1.2s; }
-.node:nth-child(3)::before{ animation-delay:2.4s; }
+.node:nth-child(2)::before{
+  animation-delay:1.2s;
+}
+
+.node:nth-child(3)::before{
+  animation-delay:2.4s;
+}
 
 @keyframes nodePulse{
   50%{
@@ -933,6 +1042,21 @@ body{
       0 0 16px rgba(223,255,63,1),
       0 0 38px rgba(223,255,63,.65);
   }
+}
+
+.inactive-node{
+  opacity:.28;
+  color:rgba(242,238,229,.38);
+  border-color:rgba(242,238,229,.08);
+  pointer-events:none;
+  box-shadow:none;
+}
+
+.inactive-node::before{
+  background:rgba(223,255,63,.18);
+  box-shadow:0 0 10px rgba(223,255,63,.08);
+  opacity:.35;
+  animation:none;
 }
 
 /* IDLE MAZE */
@@ -963,7 +1087,10 @@ body{
   height:6px;
   border-radius:50%;
   background:rgba(223,255,63,.62);
-  box-shadow:0 0 16px rgba(223,255,63,.42);
+  box-shadow:
+    0 0 16px rgba(223,255,63,.42),
+    -10px 0 0 rgba(223,255,63,.16),
+    -20px 0 0 rgba(223,255,63,.07);
   animation:idleBlink 5.5s ease-in-out infinite;
 }
 
@@ -982,263 +1109,25 @@ body{
 }
 
 @media (max-width:430px){
-  .loader-scene{ top:48%; width:56vw; }
-  .signal-node{ top:31%; width:148px; height:148px; }
-  .home-core{ width:78vw; min-height:548px; }
-  .home-symbol{ width:122px; height:122px; margin-bottom:62px; }
-}
-
-
-/* =========================================================
-   CHANNEL 17 — STEP 1 LITTLE HOMIE FIXES
-   Full styles.css replacement includes these locked refinements:
-   - visual centering
-   - better leg placement
-   - searching eye
-   - no fear streaks
-   - subtle shell vibration
-   - softer escape trail
-   - real offscreen exit
-   ========================================================= */
-
-/* visual centering: whole turtle shifts left, not just parts */
-.turtle{
-  margin-left:-31px !important;
-}
-
-/* feet tucked under shell more naturally */
-.l1{
-  left:18px !important;
-}
-
-.l2{
-  left:29px !important;
-}
-
-/* tail slightly up/inward: more turtle, less spike */
-.tail{
-  left:5px !important;
-  top:9px !important;
-  border-top:4px solid transparent !important;
-  border-bottom:4px solid transparent !important;
-  border-right:9px solid var(--cream) !important;
-  transform:rotate(8deg) !important;
-}
-
-/* looking up / searching moment */
-.turtle.notice .neck{
-  width:10px !important;
-  transform:rotate(-48deg) !important;
-}
-
-.turtle.notice .head{
-  left:38px !important;
-  top:-2px !important;
-}
-
-.turtle.notice .eye{
-  right:3px !important;
-  top:2px !important;
-  transform:scale(1.25) translateY(-1px) !important;
-}
-
-/* kill old fear streaks completely */
-.turtle.hide::before,
-.turtle.hide::after{
-  display:none !important;
-  content:none !important;
-}
-
-/* shell-only vibration — no cartoon panic marks */
-.turtle.hide .shell{
-  left:12px !important;
-  top:5px !important;
-  width:27px !important;
-  height:17px !important;
-  animation:shellVibrateReal .16s infinite !important;
-  filter:drop-shadow(0 0 2px rgba(255,255,255,.04)) !important;
-}
-
-@keyframes shellVibrateReal{
-  0%{
-    transform:translateX(0px) scale(1);
-  }
-  25%{
-    transform:translateX(-.7px) scale(1.002);
-  }
-  50%{
-    transform:translateX(.6px) scale(.998);
-  }
-  75%{
-    transform:translateX(-.4px) scale(1.001);
-  }
-  100%{
-    transform:translateX(0px) scale(1);
-  }
-}
-
-/* softer escape trail, no string-behind-him look */
-.turtle.escape::after{
-  content:"" !important;
-  position:absolute !important;
-  left:-8px !important;
-  top:18px !important;
-  width:5px !important;
-  height:1px !important;
-  background:rgba(242,238,229,.26) !important;
-  box-shadow:
-    -9px 1px 0 rgba(242,238,229,.16),
-    -18px -1px 0 rgba(242,238,229,.09) !important;
-}
-
-/* real escape: he leaves the phone edge */
-.turtle.escape{
-  animation:escapeTurtleReal 4.4s cubic-bezier(.18,.78,.22,1) forwards !important;
-}
-
-@keyframes escapeTurtleReal{
-  0%{
-    left:50%;
-    opacity:.88;
-    transform:scale(.76) translateY(0);
-  }
-  65%{
-    opacity:.88;
-  }
-  100%{
-    left:145vw;
-    opacity:0;
-    transform:scale(.76) translateY(-3px);
-  }
-}
-
-
-/* =========================================================
-   CHANNEL 17 — LITTLE HOMIE VISUAL CORRECTION PASS
-   Full styles.css replacement.
-   ========================================================= */
-
-/* Pull whole turtle left enough to visually center the head-weight */
-.turtle{
-  margin-left:-36px !important;
-}
-
-/* Legs forward and tucked under shell */
-.l1{
-  left:20px !important;
-}
-
-.l2{
-  left:31px !important;
-}
-
-/* Tail slightly higher and tucked inward */
-.tail{
-  left:6px !important;
-  top:8px !important;
-  border-top:4px solid transparent !important;
-  border-bottom:4px solid transparent !important;
-  border-right:8px solid var(--cream) !important;
-  transform:rotate(10deg) !important;
-}
-
-/* Notice pose: neck shorter, head up, eye actually searches upward */
-.turtle.notice .neck{
-  width:9px !important;
-  transform:rotate(-52deg) !important;
-}
-
-.turtle.notice .head{
-  left:38px !important;
-  top:-4px !important;
-}
-
-.turtle.notice .eye{
-  right:4px !important;
-  top:2px !important;
-  transform:translateY(-1.6px) scale(1.22) !important;
-}
-
-/* Kill all fake panic marks completely */
-.turtle.hide::before,
-.turtle.hide::after{
-  display:none !important;
-  opacity:0 !important;
-  content:none !important;
-}
-
-/* Hide pose: shell is the only thing trembling */
-.turtle.hide{
-  animation:none !important;
-}
-
-.turtle.hide .shell{
-  left:12px !important;
-  top:5px !important;
-  width:27px !important;
-  height:17px !important;
-  animation:shellVibrationVisible .115s steps(2) infinite !important;
-  filter:
-    drop-shadow(0 0 3px rgba(255,255,255,.08))
-    blur(.05px) !important;
-}
-
-/* Visible, but not cartoon. Tiny real shell tremble. */
-@keyframes shellVibrationVisible{
-  0%{
-    transform:translate(0px,0px) scale(1);
+  .loader-scene{
+    top:48%;
+    width:56vw;
   }
 
-  25%{
-    transform:translate(-1.1px,.4px) scale(1.004);
+  .signal-node{
+    top:31%;
+    width:148px;
+    height:148px;
   }
 
-  50%{
-    transform:translate(.9px,-.3px) scale(.997);
+  .home-core{
+    width:78vw;
+    min-height:548px;
   }
 
-  75%{
-    transform:translate(-.6px,-.2px) scale(1.002);
-  }
-
-  100%{
-    transform:translate(0px,0px) scale(1);
-  }
-}
-
-/* Softer escape trail: pressure blur, not string */
-.turtle.escape::after{
-  content:"" !important;
-  position:absolute !important;
-  left:-7px !important;
-  top:18px !important;
-  width:4px !important;
-  height:1px !important;
-  background:rgba(242,238,229,.22) !important;
-  box-shadow:
-    -8px 1px 0 rgba(242,238,229,.13),
-    -16px -1px 0 rgba(242,238,229,.06) !important;
-}
-
-/* Confirm full exit offscreen */
-.turtle.escape{
-  animation:escapeTurtleFinal 4.2s cubic-bezier(.18,.78,.22,1) forwards !important;
-}
-
-@keyframes escapeTurtleFinal{
-  0%{
-    left:50%;
-    opacity:.88;
-    transform:scale(.76) translateY(0);
-  }
-
-  70%{
-    opacity:.88;
-  }
-
-  100%{
-    left:150vw;
-    opacity:0;
-    transform:scale(.76) translateY(-3px);
+  .home-symbol{
+    width:122px;
+    height:122px;
+    margin-bottom:62px;
   }
 }
