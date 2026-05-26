@@ -17,11 +17,16 @@ let progress = 0;
 let state = "normal";
 let completed = false;
 
-let spamTimer = null;
-let spamCount = 0;
+let noticed = false;
+let hidden = false;
+let breached = false;
 let cascadeStarted = false;
 
+let spamTimer = null;
+let spamCount = 0;
+
 function setProgress(value){
+
   progress = Math.max(0, Math.min(100, value));
 
   fill.style.width =
@@ -30,9 +35,10 @@ function setProgress(value){
       : `calc(${progress}% - 12px)`;
 
   percent.textContent = `${Math.round(progress)}%`;
+
 }
 
-/* MAIN LOADING LOOP */
+/* MAIN LOADING LOOP — LOADING BAR IS THE TIMELINE */
 
 const loading = setInterval(() => {
 
@@ -41,148 +47,162 @@ const loading = setInterval(() => {
   }
 
   if(state === "notice"){
-    progress += .038;
+    progress += .035;
   }
 
   if(state === "hide"){
-    progress += .26;
+    progress += .25;
   }
 
-  /*
-    VIRUS RHYTHM:
-    The scan belongs to turtle/symbol.
-    The virus is outside pressure invading around 13%.
-  */
-  if(progress >= 13 && !virusLayer.classList.contains("active")){
+  /* 17% — Little Homie senses something */
+  if(progress >= 17 && !noticed){
+
+    noticed = true;
+
+    state = "notice";
+
+    turtle.classList.remove("walk");
+    turtle.classList.add("notice");
+
+    loader.classList.add("offcourse");
+
+  }
+
+  /* 21% — fear takes over, shell shiver */
+  if(progress >= 21 && !hidden){
+
+    hidden = true;
+
+    state = "hide";
+
+    turtle.classList.remove("notice");
+    turtle.classList.add("hide");
+
+  }
+
+  /* 22% — outside-world virus breach */
+  if(progress >= 22 && !breached){
+
+    breached = true;
+
     virusLayer.classList.add("active");
+
     startRedSpam();
+
   }
 
-  /*
-    Green cascade is separate from red spam.
-    It starts after red spam has begun to bury the scan.
-  */
-  if(progress >= 24 && !cascadeStarted){
+  /* Green cascade is separate, after the red breach has started burying the scan */
+  if(progress >= 31 && !cascadeStarted){
+
     cascadeStarted = true;
+
     runAuthCascade();
+
   }
 
   if(progress >= 100 && !completed){
+
     completed = true;
+
     progress = 100;
 
     clearInterval(loading);
 
     completeSequence();
+
   }
 
   setProgress(progress);
 
 }, 45);
 
-/* TURTLE STORY — LOCKED ORDER */
-
-setTimeout(() => {
-  if(completed) return;
-
-  state = "notice";
-
-  turtle.classList.remove("walk");
-  turtle.classList.add("notice");
-
-  loader.classList.add("offcourse");
-}, 3200);
-
-setTimeout(() => {
-  if(completed) return;
-
-  state = "hide";
-
-  turtle.classList.remove("notice");
-  turtle.classList.add("hide");
-}, 7600);
-
 /* 100% — SYMBOL SAVES HIM */
 
 function completeSequence(){
+
   state = "done";
 
   loader.classList.remove("offcourse");
   loader.classList.add("complete");
 
-  /*
-    At 100%, the signal starts winning.
-    Viruses die progressively, not instantly.
-  */
   setTimeout(() => {
-    signalNode.classList.add("ready");
-    beginSignalCleanse();
-  }, 450);
 
-  /*
-    Little Homie peeks after the symbol has started clearing the room.
-  */
+    signalNode.classList.add("ready");
+
+    beginSignalCleanse();
+
+  }, 500);
+
   setTimeout(() => {
+
     turtle.classList.remove("hide");
     turtle.classList.add("peek");
-  }, 1750);
 
-  /*
-    He escapes after surviving, not before.
-  */
+  }, 2100);
+
   setTimeout(() => {
+
     turtle.classList.remove("peek");
     turtle.classList.add("escape");
-  }, 3300);
 
-  /*
-    Loader scene fades after turtle has committed to leaving.
-  */
+  }, 3700);
+
   setTimeout(() => {
+
     loaderScene.classList.add("fade-out");
-  }, 5600);
+
+  }, 6200);
+
 }
 
-/* RED SPAM — STICKY OUTSIDE WORLD */
+/* RED SPAM — OUTSIDE WORLD ATTACK */
 
 function startRedSpam(){
+
   if(spamTimer) return;
 
-  /*
-    Initial hit: fast enough to feel invasive,
-    not so much that it becomes wallpaper instantly.
-  */
-  addSpamBurst(7, 120);
+  addSpamBurst(8, 105);
 
-  /*
-    Continues spamming while loading continues.
-    The rhythm is uneven on purpose.
-  */
   spamTimer = setInterval(() => {
+
     if(completed){
+
       clearInterval(spamTimer);
+
       spamTimer = null;
+
       return;
+
     }
 
     addSpamWindow();
 
-    if(spamCount % 4 === 0){
-      setTimeout(addSpamWindow, 160);
+    if(spamCount % 5 === 0){
+
+      setTimeout(addSpamWindow, 170);
+
     }
 
-  }, 520);
+  }, 560);
+
 }
 
 function addSpamBurst(amount, gap){
+
   for(let i = 0; i < amount; i++){
+
     setTimeout(() => {
+
       addSpamWindow();
+
     }, i * gap);
+
   }
+
 }
 
 function addSpamWindow(){
+
   const labels = [
     ["AUTH", "external meaning rejected"],
     ["SIGNAL", "human packet resisting"],
@@ -195,8 +215,6 @@ function addSpamWindow(){
     ["DEVICE", "override attempt"],
     ["INPUT", "meaning compression"]
   ];
-
-  const item = labels[spamCount % labels.length];
 
   const positions = [
     [4, 10],
@@ -215,10 +233,14 @@ function addSpamWindow(){
     [72, 32]
   ];
 
+  const item = labels[spamCount % labels.length];
+
   const pos = positions[spamCount % positions.length];
 
   const box = document.createElement("div");
+
   box.className = "pop extra-pop";
+
   box.setAttribute("data-title", item[0]);
 
   box.innerHTML = `
@@ -235,14 +257,17 @@ function addSpamWindow(){
   virusLayer.appendChild(box);
 
   spamCount++;
+
 }
 
-/* GREEN CASCADE — SLOW COPY/REPLICATION DOWN SCREEN */
+/* GREEN CASCADE — SLOW FILE-COPY VIRUS */
 
 function runAuthCascade(){
+
   if(!authCascade) return;
 
   authCascade.innerHTML = "";
+
   authCascade.classList.add("active");
 
   if(authWarning){
@@ -252,13 +277,11 @@ function runAuthCascade(){
   const total = 13;
 
   for(let i = 0; i < total; i++){
+
     const win = document.createElement("div");
+
     win.className = "cascade-window";
 
-    /*
-      Top-left to bottom-right.
-      Slow enough to read as one file copying to the next.
-    */
     const x = -9 + (i * 5.6);
     const y = 3 + (i * 5.9);
 
@@ -268,18 +291,23 @@ function runAuthCascade(){
     win.style.animationDelay = `${i * .92}s`;
 
     authCascade.appendChild(win);
+
   }
 
   setTimeout(() => {
+
     if(authWarning){
       authWarning.classList.add("active");
     }
+
   }, 4300);
+
 }
 
-/* SYMBOL CLEANSE — SIGNAL WINS, VIRUS DIES */
+/* SYMBOL CLEANSE — VIRUS DIES UNDER SIGNAL PRESSURE */
 
 function beginSignalCleanse(){
+
   stopSpamCreation();
 
   virusLayer.classList.add("clear");
@@ -290,83 +318,108 @@ function beginSignalCleanse(){
   const greenWindows =
     Array.from(authCascade.querySelectorAll(".cascade-window"));
 
-  /*
-    Red spam dies from newest to oldest so the room feels like
-    it is losing power under the symbol.
-  */
   redWindows.reverse().forEach((box, index) => {
+
     setTimeout(() => {
+
       fadeVirusBox(box);
+
     }, index * 90);
+
   });
 
-  /*
-    Green cascade dies after red begins fading, one by one.
-  */
   greenWindows.forEach((box, index) => {
+
     setTimeout(() => {
+
       fadeVirusBox(box);
+
     }, 650 + (index * 115));
+
   });
 
-  /*
-    Final cleanup before symbol is fully dominant.
-  */
   setTimeout(() => {
+
     authCascade.classList.remove("active");
     authCascade.innerHTML = "";
 
     virusLayer.classList.remove("active");
+    virusLayer.classList.remove("clear");
     virusLayer.style.visibility = "hidden";
     virusLayer.style.opacity = "0";
-  }, 3150);
+
+  }, 3300);
+
 }
 
 function stopSpamCreation(){
+
   if(spamTimer){
+
     clearInterval(spamTimer);
+
     spamTimer = null;
+
   }
+
 }
 
 function fadeVirusBox(box){
+
   if(!box) return;
 
   box.style.transition =
     "opacity .55s ease, transform .55s ease, filter .55s ease";
 
   box.style.opacity = "0";
-  box.style.transform = "translateY(12px) scale(.96)";
+
+  box.style.transform =
+    "translateY(12px) scale(.96)";
+
   box.style.filter = "blur(3px)";
+
 }
 
 /* OPEN CHANNEL */
 
 function openChannel(){
+
   if(!signalNode.classList.contains("ready")) return;
 
   signalNode.style.pointerEvents = "none";
 
   outerSymbol.classList.add("dissolve");
+
   innerSymbol.classList.add("alive");
 
   maze.classList.remove("active");
+
   void maze.offsetWidth;
+
   maze.classList.add("active");
 
   setTimeout(() => {
+
     signalNode.classList.add("fade-out");
+
   }, 4700);
 
   setTimeout(() => {
+
     home.classList.add("open");
+
     idleMaze.classList.add("active");
+
   }, 5600);
+
 }
 
 signalNode.addEventListener("click", openChannel);
 
 signalNode.addEventListener("touchend", event => {
+
   event.preventDefault();
+
   openChannel();
+
 }, { passive:false });
