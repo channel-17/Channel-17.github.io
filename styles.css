@@ -987,3 +987,127 @@ body{
   .home-core{ width:78vw; min-height:548px; }
   .home-symbol{ width:122px; height:122px; margin-bottom:62px; }
 }
+
+
+/* =========================================================
+   CHANNEL 17 â STEP 1 LITTLE HOMIE FIXES
+   Full styles.css replacement includes these locked refinements:
+   - visual centering
+   - better leg placement
+   - searching eye
+   - no fear streaks
+   - subtle shell vibration
+   - softer escape trail
+   - real offscreen exit
+   ========================================================= */
+
+/* visual centering: whole turtle shifts left, not just parts */
+.turtle{
+  margin-left:-31px !important;
+}
+
+/* feet tucked under shell more naturally */
+.l1{
+  left:18px !important;
+}
+
+.l2{
+  left:29px !important;
+}
+
+/* tail slightly up/inward: more turtle, less spike */
+.tail{
+  left:5px !important;
+  top:9px !important;
+  border-top:4px solid transparent !important;
+  border-bottom:4px solid transparent !important;
+  border-right:9px solid var(--cream) !important;
+  transform:rotate(8deg) !important;
+}
+
+/* looking up / searching moment */
+.turtle.notice .neck{
+  width:10px !important;
+  transform:rotate(-48deg) !important;
+}
+
+.turtle.notice .head{
+  left:38px !important;
+  top:-2px !important;
+}
+
+.turtle.notice .eye{
+  right:3px !important;
+  top:2px !important;
+  transform:scale(1.25) translateY(-1px) !important;
+}
+
+/* kill old fear streaks completely */
+.turtle.hide::before,
+.turtle.hide::after{
+  display:none !important;
+  content:none !important;
+}
+
+/* shell-only vibration â no cartoon panic marks */
+.turtle.hide .shell{
+  left:12px !important;
+  top:5px !important;
+  width:27px !important;
+  height:17px !important;
+  animation:shellVibrateReal .16s infinite !important;
+  filter:drop-shadow(0 0 2px rgba(255,255,255,.04)) !important;
+}
+
+@keyframes shellVibrateReal{
+  0%{
+    transform:translateX(0px) scale(1);
+  }
+  25%{
+    transform:translateX(-.7px) scale(1.002);
+  }
+  50%{
+    transform:translateX(.6px) scale(.998);
+  }
+  75%{
+    transform:translateX(-.4px) scale(1.001);
+  }
+  100%{
+    transform:translateX(0px) scale(1);
+  }
+}
+
+/* softer escape trail, no string-behind-him look */
+.turtle.escape::after{
+  content:"" !important;
+  position:absolute !important;
+  left:-8px !important;
+  top:18px !important;
+  width:5px !important;
+  height:1px !important;
+  background:rgba(242,238,229,.26) !important;
+  box-shadow:
+    -9px 1px 0 rgba(242,238,229,.16),
+    -18px -1px 0 rgba(242,238,229,.09) !important;
+}
+
+/* real escape: he leaves the phone edge */
+.turtle.escape{
+  animation:escapeTurtleReal 4.4s cubic-bezier(.18,.78,.22,1) forwards !important;
+}
+
+@keyframes escapeTurtleReal{
+  0%{
+    left:50%;
+    opacity:.88;
+    transform:scale(.76) translateY(0);
+  }
+  65%{
+    opacity:.88;
+  }
+  100%{
+    left:145vw;
+    opacity:0;
+    transform:scale(.76) translateY(-3px);
+  }
+}
