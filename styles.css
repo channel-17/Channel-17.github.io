@@ -3003,3 +3003,124 @@ body{
   75%{opacity:.16;filter:blur(3px);transform:translateX(-1px);}
   100%{opacity:0;visibility:hidden;filter:blur(5px);}
 }
+
+
+/* =========================================================
+   CHANNEL 17 — HOMIE VISIBLE DOOR CORRECTION
+   Full styles.css replacement.
+   Door is below/right of the bar where Homie reaches it.
+   ========================================================= */
+
+/* Remove wrong door inside loading bar */
+.loader::after{
+  content:none !important;
+  display:none !important;
+  opacity:0 !important;
+}
+
+/* No old X marks */
+.turtle.hide::before,
+.turtle.hide::after,
+.eye::before,
+.eye::after,
+.turtle.hide .eye::before,
+.turtle.hide .eye::after,
+.turtle.escape .eye::before,
+.turtle.escape .eye::after{
+  content:none !important;
+  display:none !important;
+  opacity:0 !important;
+}
+
+/* Better exterior shell fear arc */
+.turtle.hide .shell{
+  overflow:visible !important;
+  animation:homieDoorShellShake .07s steps(2) infinite !important;
+}
+
+.turtle.hide .shell::before{
+  content:"" !important;
+  position:absolute !important;
+  left:-8px !important;
+  top:-11px !important;
+  width:42px !important;
+  height:24px !important;
+  pointer-events:none !important;
+  opacity:.88 !important;
+  border-top:2px solid rgba(242,238,229,.66) !important;
+  border-radius:50% 50% 0 0 !important;
+  background:
+    linear-gradient(135deg, transparent 0 18%, rgba(242,238,229,.72) 19% 24%, transparent 25% 100%),
+    linear-gradient(55deg, transparent 0 31%, rgba(242,238,229,.62) 32% 38%, transparent 39% 100%),
+    linear-gradient(125deg, transparent 0 47%, rgba(242,238,229,.56) 48% 54%, transparent 55% 100%),
+    linear-gradient(55deg, transparent 0 62%, rgba(242,238,229,.46) 63% 69%, transparent 70% 100%),
+    linear-gradient(125deg, transparent 0 76%, rgba(242,238,229,.36) 77% 83%, transparent 84% 100%) !important;
+  clip-path:polygon(0% 100%,2% 70%,9% 48%,18% 30%,30% 18%,43% 10%,56% 9%,70% 16%,83% 32%,94% 55%,100% 80%,100% 100%) !important;
+  animation:homieDoorFearArc .095s steps(2) infinite !important;
+}
+
+.turtle.hide .shell::after{
+  content:none !important;
+  display:none !important;
+}
+
+@keyframes homieDoorShellShake{
+  0%{ transform:translate(0,0) scale(1); }
+  25%{ transform:translate(-1.5px,.5px) scale(1.004); }
+  50%{ transform:translate(1.2px,-.5px) scale(.997); }
+  75%{ transform:translate(-.8px,-.3px) scale(1.002); }
+  100%{ transform:translate(0,0) scale(1); }
+}
+
+@keyframes homieDoorFearArc{
+  0%{ transform:translate(-1px,0); opacity:.34; }
+  50%{ transform:translate(1px,-1px); opacity:.92; }
+  100%{ transform:translate(-1px,0); opacity:.32; }
+}
+
+/* Correct visible door: below/right of bar, not inside it */
+.loader-scene::after{
+  content:"" !important;
+  display:block !important;
+  position:absolute !important;
+  left:calc(50% + 112px) !important;
+  top:calc(50% + 84px) !important;
+  width:3px !important;
+  height:0 !important;
+  background:rgba(242,238,229,.98) !important;
+  border-radius:10px !important;
+  opacity:0 !important;
+  transform:translateY(-50%) !important;
+  box-shadow:
+    0 0 8px rgba(242,238,229,.70),
+    0 0 20px rgba(242,238,229,.34),
+    0 0 38px rgba(242,238,229,.14) !important;
+  z-index:90 !important;
+  pointer-events:none !important;
+  transition:height .28s ease, opacity .28s ease !important;
+}
+
+.loader-scene:has(.loader.portal-open)::after{
+  height:52px !important;
+  opacity:1 !important;
+}
+
+.loader-scene:has(.loader.portal-close)::after{
+  height:0 !important;
+  opacity:0 !important;
+}
+
+/* Walk to the visible below-bar slit, then vanish only at contact */
+.turtle.escape{
+  animation:homieWalkIntoVisibleDoor 5.2s linear forwards !important;
+}
+
+@keyframes homieWalkIntoVisibleDoor{
+  0%{ left:50%; opacity:.92; transform:scale(.68) translateY(0); }
+  20%{ left:55%; opacity:.92; transform:scale(.68) translateY(-.2px); }
+  40%{ left:60%; opacity:.92; transform:scale(.68) translateY(.2px); }
+  60%{ left:65%; opacity:.92; transform:scale(.68) translateY(-.2px); }
+  82%{ left:70%; opacity:.92; transform:scale(.68) translateY(.1px); }
+  96%{ left:72%; opacity:.92; transform:scale(.68) translateY(0); }
+  100%{ left:72.5%; opacity:0; transform:scale(.44) translateY(0); }
+}
