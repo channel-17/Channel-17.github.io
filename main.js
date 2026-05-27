@@ -69,7 +69,7 @@ const loading = setInterval(() => {
   }
 
   /* 21% — fear takes over, shell shiver */
-  if(progress >= 21 && !hidden){
+  if(progress >= 19 && !hidden){
 
     hidden = true;
 
@@ -126,32 +126,35 @@ function completeSequence(){
   loader.classList.add("complete");
 
   setTimeout(() => {
-
     signalNode.classList.add("ready");
-
     beginSignalCleanse();
-
   }, 500);
 
   setTimeout(() => {
-
     turtle.classList.remove("hide");
     turtle.classList.add("peek");
-
-  }, 2600);
+  }, 2400);
 
   setTimeout(() => {
+    loader.classList.add("portal-open");
+  }, 3600);
 
+  setTimeout(() => {
     turtle.classList.remove("peek");
     turtle.classList.add("escape");
-
-  }, 5200);
+  }, 4200);
 
   setTimeout(() => {
+    loader.classList.add("portal-close");
+  }, 9300);
 
+  setTimeout(() => {
+    loader.classList.add("homie-cut-out");
+  }, 9600);
+
+  setTimeout(() => {
     loaderScene.classList.add("fade-out");
-
-  }, 16800);
+  }, 10500);
 
 }
 
