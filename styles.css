@@ -1996,3 +1996,193 @@ body{
     opacity:.04;
   }
 }
+
+
+/* =========================================================
+   CHANNEL 17 - LITTLE HOMIE LOCKED FINAL
+   Full styles.css replacement.
+   ========================================================= */
+
+.turtle{
+  transform:scale(.68) !important;
+}
+
+.turtle.escape{
+  animation:littleHomieLockedSlowExit 15.5s linear forwards !important;
+}
+
+.turtle.hide::before,
+.turtle.hide::after{
+  content:"" !important;
+  display:block !important;
+  position:absolute !important;
+  width:8px !important;
+  height:12px !important;
+  opacity:.72 !important;
+  pointer-events:none !important;
+  background:
+    linear-gradient(135deg, transparent 0 38%, rgba(242,238,229,.72) 39% 48%, transparent 49% 100%),
+    linear-gradient(45deg, transparent 0 48%, rgba(242,238,229,.50) 49% 58%, transparent 59% 100%) !important;
+  animation:littleHomieFearZig .13s steps(2) infinite !important;
+}
+
+.turtle.hide::before{
+  left:7px !important;
+  top:-7px !important;
+}
+
+.turtle.hide::after{
+  right:2px !important;
+  top:-8px !important;
+  animation-delay:.06s !important;
+}
+
+.turtle.hide .shell{
+  left:12px !important;
+  top:5px !important;
+  width:27px !important;
+  height:17px !important;
+  animation:littleHomieLockedShellShiver .08s steps(2) infinite !important;
+  filter:drop-shadow(0 0 5px rgba(242,238,229,.16)) !important;
+}
+
+@keyframes littleHomieFearZig{
+  0%{
+    transform:translate(0,0) skewX(-10deg);
+    opacity:.22;
+  }
+
+  50%{
+    transform:translate(-1px,1px) skewX(12deg);
+    opacity:.78;
+  }
+
+  100%{
+    transform:translate(0,0) skewX(-10deg);
+    opacity:.18;
+  }
+}
+
+@keyframes littleHomieLockedShellShiver{
+  0%{
+    transform:translate(0,0) scale(1);
+  }
+
+  25%{
+    transform:translate(-1.3px,.5px) scale(1.004);
+  }
+
+  50%{
+    transform:translate(1px,-.4px) scale(.997);
+  }
+
+  75%{
+    transform:translate(-.7px,-.3px) scale(1.002);
+  }
+
+  100%{
+    transform:translate(0,0) scale(1);
+  }
+}
+
+@keyframes littleHomieLockedSlowExit{
+  0%{
+    left:50%;
+    opacity:.9;
+    transform:scale(.68) translateY(0);
+  }
+
+  20%{
+    left:57%;
+    opacity:.9;
+    transform:scale(.68) translateY(-.5px);
+  }
+
+  40%{
+    left:65%;
+    opacity:.9;
+    transform:scale(.68) translateY(.5px);
+  }
+
+  60%{
+    left:75%;
+    opacity:.9;
+    transform:scale(.68) translateY(-.5px);
+  }
+
+  80%{
+    left:91%;
+    opacity:.86;
+    transform:scale(.68) translateY(.5px);
+  }
+
+  100%{
+    left:122vw;
+    opacity:0;
+    transform:scale(.68) translateY(-1px);
+  }
+}
+
+.turtle.escape::before{
+  content:"" !important;
+  display:block !important;
+  position:absolute !important;
+  left:5px !important;
+  top:-6px !important;
+  width:12px !important;
+  height:1px !important;
+  background:rgba(242,238,229,.30) !important;
+  box-shadow:
+    5px -3px 0 rgba(242,238,229,.22),
+    -4px 4px 0 rgba(242,238,229,.16),
+    10px 5px 0 rgba(242,238,229,.09) !important;
+  opacity:.68 !important;
+  animation:littleHomieLockedPanicMarks .16s steps(2) infinite !important;
+}
+
+.turtle.escape::after{
+  content:"" !important;
+  position:absolute !important;
+  left:2px !important;
+  top:0px !important;
+  width:8px !important;
+  height:1px !important;
+  background:rgba(242,238,229,.11) !important;
+  box-shadow:6px -4px 0 rgba(242,238,229,.06) !important;
+  opacity:.32 !important;
+  animation:littleHomieLockedStressDash .22s steps(2) infinite !important;
+}
+
+@keyframes littleHomieLockedPanicMarks{
+  0%{
+    transform:translate(0,0);
+    opacity:.10;
+  }
+
+  50%{
+    transform:translate(-2px,-1px);
+    opacity:.76;
+  }
+
+  100%{
+    transform:translate(-5px,1px);
+    opacity:.05;
+  }
+}
+
+@keyframes littleHomieLockedStressDash{
+  0%{
+    transform:translateX(0);
+    opacity:.06;
+  }
+
+  50%{
+    transform:translateX(-2px);
+    opacity:.34;
+  }
+
+  100%{
+    transform:translateX(-5px);
+    opacity:.04;
+  }
+}
