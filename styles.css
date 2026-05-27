@@ -2856,3 +2856,150 @@ body{
     filter:blur(5px);
   }
 }
+
+
+/* CHANNEL 17 - HOMIE PORTAL LOCK */
+.turtle{transform:scale(.68)!important;}
+.turtle.notice{transform:scale(.68)!important;}
+
+.turtle.hide::before,
+.turtle.hide::after,
+.eye::before,
+.eye::after,
+.turtle.hide .eye::before,
+.turtle.hide .eye::after,
+.turtle.escape .eye::before,
+.turtle.escape .eye::after{
+  content:none!important;
+  display:none!important;
+  opacity:0!important;
+}
+
+.turtle.hide .shell{
+  overflow:visible!important;
+  left:12px!important;
+  top:5px!important;
+  width:27px!important;
+  height:17px!important;
+  animation:homiePortalShellShake .07s steps(2) infinite!important;
+  filter:drop-shadow(0 0 5px rgba(242,238,229,.18))!important;
+}
+
+.turtle.hide .shell::before{
+  content:""!important;
+  position:absolute!important;
+  left:-7px!important;
+  top:-10px!important;
+  width:41px!important;
+  height:23px!important;
+  pointer-events:none!important;
+  opacity:.82!important;
+  border-top:2px solid rgba(242,238,229,.58)!important;
+  border-radius:50% 50% 0 0!important;
+  background:
+    linear-gradient(135deg, transparent 0 18%, rgba(242,238,229,.72) 19% 24%, transparent 25% 100%),
+    linear-gradient(55deg, transparent 0 31%, rgba(242,238,229,.62) 32% 38%, transparent 39% 100%),
+    linear-gradient(125deg, transparent 0 47%, rgba(242,238,229,.56) 48% 54%, transparent 55% 100%),
+    linear-gradient(55deg, transparent 0 62%, rgba(242,238,229,.46) 63% 69%, transparent 70% 100%),
+    linear-gradient(125deg, transparent 0 76%, rgba(242,238,229,.36) 77% 83%, transparent 84% 100%)!important;
+  clip-path:polygon(0% 100%,2% 70%,9% 48%,18% 30%,30% 18%,43% 10%,56% 9%,70% 16%,83% 32%,94% 55%,100% 80%,100% 100%)!important;
+  filter:blur(.12px)!important;
+  animation:homiePortalFearArc .105s steps(2) infinite!important;
+}
+
+.turtle.hide .shell::after{content:none!important;display:none!important;}
+
+@keyframes homiePortalShellShake{
+  0%{transform:translate(0,0) scale(1);}
+  25%{transform:translate(-1.5px,.5px) scale(1.004);}
+  50%{transform:translate(1.2px,-.5px) scale(.997);}
+  75%{transform:translate(-.8px,-.3px) scale(1.002);}
+  100%{transform:translate(0,0) scale(1);}
+}
+
+@keyframes homiePortalFearArc{
+  0%{transform:translate(-1px,0);opacity:.32;}
+  50%{transform:translate(1px,-1px);opacity:.90;}
+  100%{transform:translate(-1px,0);opacity:.30;}
+}
+
+.loader.complete{
+  animation:loaderCompletePulse .9s steps(2) infinite!important;
+}
+
+@keyframes loaderCompletePulse{
+  0%{filter:brightness(1);box-shadow:0 0 20px rgba(242,238,229,.10);}
+  50%{filter:brightness(1.25);box-shadow:0 0 30px rgba(242,238,229,.24);}
+  100%{filter:brightness(1);box-shadow:0 0 20px rgba(242,238,229,.10);}
+}
+
+.loader::after{
+  content:""!important;
+  position:absolute!important;
+  right:18px!important;
+  top:50%!important;
+  width:3px!important;
+  height:0!important;
+  transform:translateY(-50%)!important;
+  background:rgba(242,238,229,.98)!important;
+  border-radius:10px!important;
+  opacity:0!important;
+  box-shadow:0 0 8px rgba(242,238,229,.68),0 0 20px rgba(242,238,229,.34),0 0 38px rgba(242,238,229,.15)!important;
+  z-index:6!important;
+  pointer-events:none!important;
+  transition:height .28s ease,opacity .28s ease!important;
+}
+
+.loader.portal-open::after{height:72px!important;opacity:1!important;}
+.loader.portal-close::after{height:0!important;opacity:0!important;}
+
+.turtle.escape{
+  animation:homiePortalWalkIn 4.9s linear forwards!important;
+}
+
+.turtle.escape::before{
+  content:""!important;
+  position:absolute!important;
+  left:4px!important;
+  top:-6px!important;
+  width:12px!important;
+  height:1px!important;
+  background:rgba(242,238,229,.24)!important;
+  box-shadow:5px -3px 0 rgba(242,238,229,.16),-4px 4px 0 rgba(242,238,229,.10)!important;
+  opacity:.54!important;
+  animation:homiePortalEffort .17s steps(2) infinite!important;
+}
+
+.turtle.escape::after{content:none!important;display:none!important;}
+
+@keyframes homiePortalWalkIn{
+  0%{left:50%;opacity:.92;transform:scale(.68) translateY(0);}
+  22%{left:55%;opacity:.92;transform:scale(.68) translateY(-.25px);}
+  44%{left:60%;opacity:.92;transform:scale(.68) translateY(.25px);}
+  66%{left:65%;opacity:.92;transform:scale(.68) translateY(-.2px);}
+  86%{left:69%;opacity:.92;transform:scale(.68) translateY(.15px);}
+  96%{left:71%;opacity:.92;transform:scale(.68) translateY(0);}
+  100%{left:72%;opacity:0;transform:scale(.42) translateY(0);}
+}
+
+@keyframes homiePortalEffort{
+  0%{transform:translate(0,0);opacity:.06;}
+  50%{transform:translate(-2px,-1px);opacity:.55;}
+  100%{transform:translate(-5px,1px);opacity:.03;}
+}
+
+.loader.homie-cut-out{
+  animation:homieBarCutOut .62s steps(2) forwards!important;
+}
+.loader.homie-cut-out .fill,
+.loader.homie-cut-out .percent{
+  animation:homieBarCutOut .62s steps(2) forwards!important;
+}
+
+@keyframes homieBarCutOut{
+  0%{opacity:1;filter:none;transform:translateX(0);}
+  25%{opacity:.75;filter:blur(1px);transform:translateX(-2px);}
+  50%{opacity:.38;filter:blur(2px);transform:translateX(2px);}
+  75%{opacity:.16;filter:blur(3px);transform:translateX(-1px);}
+  100%{opacity:0;visibility:hidden;filter:blur(5px);}
+}
