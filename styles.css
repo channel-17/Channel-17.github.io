@@ -1845,3 +1845,154 @@ body{
     opacity:.04;
   }
 }
+
+
+/* =========================================================
+   CHANNEL 17 - LITTLE HOMIE FINAL FEAR / ESCAPE FEEL
+   Full styles.css replacement.
+   Fixes:
+   - visible shiver when scared
+   - no crawl-then-bolt
+   - slow steady turtle escape
+   - believable frantic worry marks
+   ========================================================= */
+
+.turtle.hide .shell{
+  left:12px !important;
+  top:5px !important;
+  width:27px !important;
+  height:17px !important;
+  animation:littleHomieVisibleShellFear .075s steps(2) infinite !important;
+  filter:
+    drop-shadow(0 0 5px rgba(242,238,229,.18))
+    blur(.03px) !important;
+}
+
+@keyframes littleHomieVisibleShellFear{
+  0%{
+    transform:translate(0,0) rotate(0deg) scale(1);
+  }
+
+  25%{
+    transform:translate(-1.6px,.6px) rotate(-1deg) scale(1.006);
+  }
+
+  50%{
+    transform:translate(1.3px,-.5px) rotate(1deg) scale(.996);
+  }
+
+  75%{
+    transform:translate(-.9px,-.4px) rotate(-.5deg) scale(1.003);
+  }
+
+  100%{
+    transform:translate(0,0) rotate(0deg) scale(1);
+  }
+}
+
+.turtle.escape{
+  animation:littleHomieTrueTurtleExit 13.5s linear forwards !important;
+}
+
+.turtle.escape::before{
+  content:"" !important;
+  position:absolute !important;
+  left:5px !important;
+  top:-5px !important;
+  width:12px !important;
+  height:1px !important;
+  background:rgba(242,238,229,.32) !important;
+  box-shadow:
+    5px -3px 0 rgba(242,238,229,.24),
+    -4px 4px 0 rgba(242,238,229,.18),
+    10px 5px 0 rgba(242,238,229,.10) !important;
+  display:block !important;
+  opacity:.7 !important;
+  animation:littleHomieWorryMarks .16s steps(2) infinite !important;
+}
+
+.turtle.escape::after{
+  content:"" !important;
+  position:absolute !important;
+  left:2px !important;
+  top:0px !important;
+  width:8px !important;
+  height:1px !important;
+  background:rgba(242,238,229,.14) !important;
+  box-shadow:
+    6px -4px 0 rgba(242,238,229,.08) !important;
+  opacity:.35 !important;
+  animation:littleHomieStressFlicker .22s steps(2) infinite !important;
+}
+
+@keyframes littleHomieTrueTurtleExit{
+  0%{
+    left:50%;
+    opacity:.9;
+    transform:scale(.76) translateY(0);
+  }
+
+  20%{
+    left:58%;
+    opacity:.9;
+    transform:scale(.76) translateY(-.5px);
+  }
+
+  40%{
+    left:66%;
+    opacity:.9;
+    transform:scale(.76) translateY(.5px);
+  }
+
+  60%{
+    left:76%;
+    opacity:.9;
+    transform:scale(.76) translateY(-.5px);
+  }
+
+  80%{
+    left:92%;
+    opacity:.86;
+    transform:scale(.76) translateY(.5px);
+  }
+
+  100%{
+    left:122vw;
+    opacity:0;
+    transform:scale(.76) translateY(-1px);
+  }
+}
+
+@keyframes littleHomieWorryMarks{
+  0%{
+    transform:translate(0,0);
+    opacity:.12;
+  }
+
+  50%{
+    transform:translate(-2px,-1px);
+    opacity:.72;
+  }
+
+  100%{
+    transform:translate(-5px,1px);
+    opacity:.06;
+  }
+}
+
+@keyframes littleHomieStressFlicker{
+  0%{
+    transform:translateX(0);
+    opacity:.06;
+  }
+
+  50%{
+    transform:translateX(-2px);
+    opacity:.38;
+  }
+
+  100%{
+    transform:translateX(-5px);
+    opacity:.04;
+  }
+}
