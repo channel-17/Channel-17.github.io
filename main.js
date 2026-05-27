@@ -138,20 +138,20 @@ function completeSequence(){
     turtle.classList.remove("hide");
     turtle.classList.add("peek");
 
-  }, 2100);
+  }, 2600);
 
   setTimeout(() => {
 
     turtle.classList.remove("peek");
     turtle.classList.add("escape");
 
-  }, 3700);
+  }, 5200);
 
   setTimeout(() => {
 
     loaderScene.classList.add("fade-out");
 
-  }, 6200);
+  }, 16800);
 
 }
 
