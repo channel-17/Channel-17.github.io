@@ -137,12 +137,12 @@ function completeSequence(){
 
   setTimeout(() => {
     loader.classList.add("portal-open");
-  }, 3600);
+  }, 3500);
 
   setTimeout(() => {
     turtle.classList.remove("peek");
     turtle.classList.add("escape");
-  }, 4200);
+  }, 4100);
 
   setTimeout(() => {
     loader.classList.add("portal-close");
