@@ -135,8 +135,9 @@ function completeSequence(){
     turtle.classList.add("peek");
   }, 2400);
 
+  /* Door appears on Homie's path, not in/under the bar */
   setTimeout(() => {
-    loader.classList.add("portal-open");
+    loaderScene.classList.add("portal-open");
   }, 3500);
 
   setTimeout(() => {
@@ -145,7 +146,7 @@ function completeSequence(){
   }, 4100);
 
   setTimeout(() => {
-    loader.classList.add("portal-close");
+    loaderScene.classList.add("portal-close");
   }, 9300);
 
   setTimeout(() => {
