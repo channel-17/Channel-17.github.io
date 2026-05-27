@@ -3124,3 +3124,174 @@ body{
   96%{ left:72%; opacity:.92; transform:scale(.68) translateY(0); }
   100%{ left:72.5%; opacity:0; transform:scale(.44) translateY(0); }
 }
+
+
+/* =========================================================
+   CHANNEL 17 — ACTUAL HOMIE SHELL + DOOR FIX
+   Full styles.css replacement.
+   - visible zigzag half-shell fear arc
+   - no X marks
+   - door sits on Homie's walking path
+   - Homie reaches and enters visible door
+   ========================================================= */
+
+/* Kill all previous bad marks */
+.turtle.hide::before,
+.turtle.hide::after,
+.eye::before,
+.eye::after,
+.turtle.hide .eye::before,
+.turtle.hide .eye::after,
+.turtle.escape .eye::before,
+.turtle.escape .eye::after{
+  content:none !important;
+  display:none !important;
+  opacity:0 !important;
+}
+
+/* Keep Homie small */
+.turtle,
+.turtle.notice{
+  transform:scale(.68) !important;
+}
+
+/* Shell tremble */
+.turtle.hide .shell{
+  overflow:visible !important;
+  animation:homieRealShellShake .065s steps(2) infinite !important;
+}
+
+/* THE FEAR MARK: actual zigzag half-shell sitting above/exterior of shell */
+.turtle.hide .shell::before{
+  content:"" !important;
+  display:block !important;
+  position:absolute !important;
+  left:-10px !important;
+  top:-14px !important;
+  width:48px !important;
+  height:26px !important;
+  opacity:.95 !important;
+  pointer-events:none !important;
+  background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%2048%2026%27%3E%0A%3Cpolyline%20points%3D%272%2C22%206%2C13%2010%2C17%2014%2C8%2018%2C14%2023%2C5%2028%2C13%2033%2C6%2038%2C15%2043%2C10%2046%2C20%27%20fill%3D%27none%27%20stroke%3D%27rgb%28242%2C238%2C229%29%27%20stroke-width%3D%272.4%27%20stroke-linecap%3D%27round%27%20stroke-linejoin%3D%27round%27/%3E%0A%3Cpolyline%20points%3D%277%2C21%2012%2C14%2017%2C18%2022%2C10%2027%2C17%2032%2C11%2038%2C19%27%20fill%3D%27none%27%20stroke%3D%27rgb%28242%2C238%2C229%29%27%20stroke-opacity%3D%27.55%27%20stroke-width%3D%271.2%27%20stroke-linecap%3D%27round%27%20stroke-linejoin%3D%27round%27/%3E%0A%3C/svg%3E") !important;
+  background-repeat:no-repeat !important;
+  background-size:48px 26px !important;
+  z-index:9 !important;
+  filter:
+    drop-shadow(0 0 2px rgba(242,238,229,.45))
+    blur(.05px) !important;
+  animation:homieRealFearDome .09s steps(2) infinite !important;
+}
+
+.turtle.hide .shell::after{
+  content:none !important;
+  display:none !important;
+}
+
+@keyframes homieRealShellShake{
+  0%{ transform:translate(0,0); }
+  25%{ transform:translate(-1.4px,.5px); }
+  50%{ transform:translate(1.2px,-.4px); }
+  75%{ transform:translate(-.8px,-.3px); }
+  100%{ transform:translate(0,0); }
+}
+
+@keyframes homieRealFearDome{
+  0%{ transform:translate(-1px,0); opacity:.45; }
+  50%{ transform:translate(1px,-1px); opacity:1; }
+  100%{ transform:translate(-1px,0); opacity:.42; }
+}
+
+/* Remove wrong bar-door entirely */
+.loader::after{
+  content:none !important;
+  display:none !important;
+  opacity:0 !important;
+}
+
+/* Correct visible portal: ON HOMIE'S PATH, not underground */
+.loader-scene::after{
+  content:"" !important;
+  display:block !important;
+  position:absolute !important;
+  left:calc(50% + 118px) !important;
+  top:calc(50% + 52px) !important;
+  width:3px !important;
+  height:0 !important;
+  background:rgba(242,238,229,.98) !important;
+  border-radius:10px !important;
+  opacity:0 !important;
+  transform:translateY(-50%) !important;
+  box-shadow:
+    0 0 8px rgba(242,238,229,.72),
+    0 0 22px rgba(242,238,229,.36),
+    0 0 42px rgba(242,238,229,.14) !important;
+  z-index:90 !important;
+  pointer-events:none !important;
+  transition:height .25s ease, opacity .25s ease !important;
+}
+
+.loader-scene.portal-open::after{
+  height:48px !important;
+  opacity:1 !important;
+}
+
+.loader-scene.portal-close::after{
+  height:0 !important;
+  opacity:0 !important;
+}
+
+/* Homie walks into that visible slit */
+.turtle.escape{
+  animation:homieActuallyEnterDoor 5.25s linear forwards !important;
+}
+
+.turtle.escape::before{
+  content:"" !important;
+  display:block !important;
+  position:absolute !important;
+  left:4px !important;
+  top:-6px !important;
+  width:12px !important;
+  height:1px !important;
+  background:rgba(242,238,229,.24) !important;
+  box-shadow:
+    5px -3px 0 rgba(242,238,229,.16),
+    -4px 4px 0 rgba(242,238,229,.10) !important;
+  opacity:.54 !important;
+  animation:homieTinyEffort .17s steps(2) infinite !important;
+}
+
+.turtle.escape::after{
+  content:none !important;
+  display:none !important;
+}
+
+@keyframes homieActuallyEnterDoor{
+  0%{ left:50%; opacity:.92; transform:scale(.68) translateY(0); }
+  20%{ left:55%; opacity:.92; transform:scale(.68) translateY(-.2px); }
+  40%{ left:60%; opacity:.92; transform:scale(.68) translateY(.2px); }
+  60%{ left:65%; opacity:.92; transform:scale(.68) translateY(-.2px); }
+  82%{ left:70%; opacity:.92; transform:scale(.68) translateY(.1px); }
+  96%{ left:73%; opacity:.92; transform:scale(.68) translateY(0); }
+  100%{ left:74%; opacity:0; transform:scale(.40) translateY(0); }
+}
+
+@keyframes homieTinyEffort{
+  0%{ transform:translate(0,0); opacity:.06; }
+  50%{ transform:translate(-2px,-1px); opacity:.55; }
+  100%{ transform:translate(-5px,1px); opacity:.03; }
+}
+
+/* Full bar gets impatient, then dies after Homie exits */
+.loader.complete{
+  animation:loaderCompletePulse .9s steps(2) infinite !important;
+}
+
+.loader.homie-cut-out{
+  animation:homieBarCutOut .62s steps(2) forwards !important;
+}
+
+.loader.homie-cut-out .fill,
+.loader.homie-cut-out .percent{
+  animation:homieBarCutOut .62s steps(2) forwards !important;
+}
