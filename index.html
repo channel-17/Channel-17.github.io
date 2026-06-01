@@ -3,23 +3,28 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
   <title>channel 17</title>
-
   <link rel="icon" href="Trust17.png?v=17">
   <link rel="shortcut icon" href="Trust17.png?v=17">
   <link rel="apple-touch-icon" sizes="180x180" href="Beacon17.png">
   <link rel="stylesheet" href="styles.css" />
 </head>
-
 <body>
   <div class="screen">
+    <div class="virus-layer" id="virusLayer" aria-hidden="true">
+      <div class="motion-field" id="motionField"></div>
+      <div class="engagement-field" id="engagementField"></div>
+      <div class="profile-field" id="profileField"></div>
+      <div class="check-generals" id="checkGenerals">
+        <div class="general g1"><span>✔</span><small>verified</small></div>
+        <div class="general g2"><span>✔</span><small>approved</small></div>
+        <div class="general g3"><span>✔</span><small>authorized</small></div>
+      </div>
+      <div class="impact-field" id="impactField"></div>
+    </div>
 
-    <div class="virus-layer" id="virusLayer">
-      <div class="pollution-field" id="pollutionField"></div>
-      <div class="avatar-field" id="avatarField"></div>
-      <div class="symbol-burn" id="symbolBurn"></div>
-      <div class="blackout" id="blackout"></div>
+    <div class="signal-ghost" id="signalGhost">
+      <img src="Inner17-final.png" alt="" />
     </div>
 
     <div class="loader-scene" id="loaderScene">
@@ -27,15 +32,12 @@
         <div class="fill" id="fill"></div>
         <div class="percent" id="percent">0%</div>
       </div>
-
       <div class="turtle-track">
-        <div class="turtle walk" id="turtle">
+        <div class="turtle walk" id="turtle" aria-hidden="true">
           <div class="tail"></div>
           <div class="shell"></div>
           <div class="neck"></div>
-          <div class="head">
-            <div class="eye"></div>
-          </div>
+          <div class="head"><div class="eye"></div></div>
           <div class="leg l1"></div>
           <div class="leg l2"></div>
         </div>
@@ -48,46 +50,30 @@
     </button>
 
     <div class="maze" id="maze">
-      <div class="pipe pulse1 bright"></div>
-      <div class="pipe pulse2"></div>
-      <div class="pipe pulse3"></div>
-      <div class="pipe pulse4 bright"></div>
-      <div class="pipe pulse5"></div>
-      <div class="pipe pulse6"></div>
-      <div class="pipe pulse7 bright"></div>
-      <div class="pipe pulse8"></div>
-      <div class="pipe pulse9"></div>
-      <div class="pipe pulse10"></div>
-      <div class="pipe pulse11"></div>
-      <div class="pipe pulse12"></div>
-      <div class="pipe pulse13"></div>
-      <div class="pipe pulse14"></div>
-      <div class="pipe pulse15 fail"></div>
-      <div class="pipe pulse16"></div>
-      <div class="pipe pulse17 fail"></div>
+      <div class="pipe pulse1 bright"></div><div class="pipe pulse2"></div><div class="pipe pulse3"></div>
+      <div class="pipe pulse4 bright"></div><div class="pipe pulse5"></div><div class="pipe pulse6"></div>
+      <div class="pipe pulse7 bright"></div><div class="pipe pulse8"></div><div class="pipe pulse9"></div>
+      <div class="pipe pulse10"></div><div class="pipe pulse11"></div><div class="pipe pulse12"></div>
+      <div class="pipe pulse13"></div><div class="pipe pulse14"></div><div class="pipe pulse15 fail"></div>
+      <div class="pipe pulse16"></div><div class="pipe pulse17 fail"></div>
     </div>
 
     <main class="home" id="home">
       <div class="home-core">
         <img src="Inner17-final.png" class="home-symbol" alt="Channel 17">
-
         <nav class="nodes">
-          <a class="node" href="#">Last Sesh</a>
-          <a class="node" href="#">Roach Tray</a>
-          <a class="node" href="#">Pass It Back</a>
+          <a class="node" href="#last-sesh">Last Sesh</a>
+          <a class="node" href="#roach-tray">Roach Tray</a>
+          <a class="node" href="#pass-it-back">Pass It Back</a>
         </nav>
       </div>
     </main>
 
     <div class="idle-maze" id="idleMaze">
-      <div class="idle-pipe idle1"></div>
-      <div class="idle-pipe idle2"></div>
-      <div class="idle-pipe idle3"></div>
-      <div class="idle-pipe idle4"></div>
+      <div class="idle-pipe idle1"></div><div class="idle-pipe idle2"></div>
+      <div class="idle-pipe idle3"></div><div class="idle-pipe idle4"></div>
     </div>
-
   </div>
-
   <script src="main.js"></script>
 </body>
 </html>
