@@ -91,13 +91,7 @@ body{
   content:"";
   position:absolute;
   inset:-22px;
-  background:
-    repeating-linear-gradient(
-      115deg,
-      transparent 0 22px,
-      rgba(255,255,255,.22) 23px 28px,
-      transparent 29px 46px
-    );
+  background:repeating-linear-gradient(115deg, transparent 0 22px, rgba(255,255,255,.22) 23px 28px, transparent 29px 46px);
   animation:barSwim 1.15s linear infinite;
 }
 
@@ -134,15 +128,27 @@ body{
 }
 
 .loader.complete{
-  animation:barComplete .9s ease forwards;
+  animation:loaderCompletePulse .9s steps(2) infinite;
 }
 
-@keyframes barComplete{
-  45%{
-    box-shadow:
-      0 0 30px rgba(255,255,255,.72),
-      0 0 70px rgba(255,255,255,.24);
-  }
+@keyframes loaderCompletePulse{
+  0%{ filter:brightness(1); box-shadow:0 0 20px rgba(242,238,229,.10); }
+  50%{ filter:brightness(1.25); box-shadow:0 0 30px rgba(242,238,229,.24); }
+  100%{ filter:brightness(1); box-shadow:0 0 20px rgba(242,238,229,.10); }
+}
+
+.loader.homie-cut-out,
+.loader.homie-cut-out .fill,
+.loader.homie-cut-out .percent{
+  animation:homieBarCutOut .62s steps(2) forwards !important;
+}
+
+@keyframes homieBarCutOut{
+  0%{ opacity:1; filter:none; transform:translateX(0); }
+  25%{ opacity:.75; filter:blur(1px); transform:translateX(-2px); }
+  50%{ opacity:.38; filter:blur(2px); transform:translateX(2px); }
+  75%{ opacity:.16; filter:blur(3px); transform:translateX(-1px); }
+  100%{ opacity:0; visibility:hidden; filter:blur(5px); }
 }
 
 /* TURTLE */
@@ -158,11 +164,11 @@ body{
   position:absolute;
   top:12px;
   left:50%;
-  margin-left:-34px;
+  margin-left:-32px;
   width:42px;
   height:24px;
   opacity:.88;
-  transform:scale(.76);
+  transform:scale(.68);
   transition:opacity .5s ease;
 }
 
@@ -212,80 +218,61 @@ body{
 
 .tail{
   position:absolute;
-  left:6px;
-  top:8px;
+  left:5px;
+  top:10px;
   width:0;
   height:0;
-  border-top:4px solid transparent;
-  border-bottom:4px solid transparent;
+  border-top:3.5px solid transparent;
+  border-bottom:3.5px solid transparent;
   border-right:8px solid var(--cream);
-  transform:rotate(10deg);
+  transform:rotate(4deg);
 }
 
 .leg{
   position:absolute;
-  width:7px;
-  height:7px;
-  top:17px;
-  background:var(--cream);
-  border-radius:50% 50% 45% 45%;
-  transform-origin:50% 0%;
-}
-
-.l1{ left:20px; }
-.l2{ left:31px; }
-
-.turtle.walk .l1{
-  animation:nubStepA 1.36s ease-in-out infinite;
-}
-
-.turtle.walk .l2{
-  animation:nubStepB 1.36s ease-in-out infinite;
-}
-
-@keyframes nubStepA{
-  0%,100%{
-    transform:translateY(0) translateX(-.5px) scaleY(1);
-  }
-  50%{
-    transform:translateY(1px) translateX(.5px) scaleY(.92);
-  }
-}
-
-@keyframes nubStepB{
-  0%,100%{
-    transform:translateY(1px) translateX(.5px) scaleY(.92);
-  }
-  50%{
-    transform:translateY(0) translateX(-.5px) scaleY(1);
-  }
-}
-
-/* TURTLE NOTICE */
-
-.turtle.notice .neck{
   width:8px;
   height:5px;
+  top:19px;
+  background:var(--cream);
+  border-radius:75% 75% 55% 55%;
+  transform-origin:center center;
+}
+
+.l1{ left:16px; }
+.l2{ left:27px; }
+
+.turtle.walk .l1{ animation:turtleFinBack 1.46s ease-in-out infinite; }
+.turtle.walk .l2{ animation:turtleFinFront 1.46s ease-in-out infinite; }
+
+@keyframes turtleFinBack{
+  0%,100%{ transform:translateX(-.7px) rotate(-3deg) scaleX(1.08); }
+  50%{ transform:translateX(.5px) rotate(3deg) scaleX(.95); }
+}
+
+@keyframes turtleFinFront{
+  0%,100%{ transform:translateX(.5px) rotate(3deg) scaleX(.95); }
+  50%{ transform:translateX(-.7px) rotate(-3deg) scaleX(1.08); }
+}
+
+.turtle.notice{ transform:scale(.68); }
+
+.turtle.notice .neck{
   left:34px;
   top:10px;
-  transform:rotate(-38deg);
+  width:9px;
+  height:5px;
+  transform:rotate(-34deg);
 }
 
 .turtle.notice .head{
-  left:39px;
-  top:1px;
+  left:40px;
+  top:2px;
 }
 
 .turtle.notice .eye{
   right:4px;
   top:2px;
-  transform:translateY(-1.5px) scale(1.18);
-}
-
-/* TURTLE HIDE / SHIVER */
-
-.turtle.hide{
-  animation:none;
+  transform:translateY(-1.2px) scale(1.18);
 }
 
 .turtle.hide .neck,
@@ -296,101 +283,158 @@ body{
 }
 
 .turtle.hide::before,
-.turtle.hide::after{
-  display:none;
-  opacity:0;
-  content:none;
+.turtle.hide::after,
+.eye::before,
+.eye::after,
+.turtle.hide .eye::before,
+.turtle.hide .eye::after,
+.turtle.escape .eye::before,
+.turtle.escape .eye::after{
+  content:none !important;
+  display:none !important;
+  opacity:0 !important;
 }
 
 .turtle.hide .shell{
+  overflow:visible;
   left:12px;
   top:5px;
   width:27px;
   height:17px;
-  animation:shellVibe .10s steps(2) infinite;
-  filter:
-    drop-shadow(0 0 5px rgba(242,238,229,.12))
-    blur(.04px);
+  animation:homieTwentyShellShake .075s steps(2) infinite;
+  filter:drop-shadow(0 0 5px rgba(242,238,229,.18));
 }
 
-@keyframes shellVibe{
-  0%{ transform:translate(0,0) scale(1); }
-  25%{ transform:translate(-1.2px,.5px) scale(1.004); }
-  50%{ transform:translate(1px,-.4px) scale(.997); }
-  75%{ transform:translate(-.7px,-.3px) scale(1.002); }
-  100%{ transform:translate(0,0) scale(1); }
+.turtle.hide .shell::before,
+.turtle.hide .shell::after{
+  content:"";
+  display:block;
+  position:absolute;
+  pointer-events:none;
+  border:2px solid transparent;
+  border-top-color:rgba(242,238,229,.66);
+  border-left-color:rgba(242,238,229,.26);
+  border-right-color:rgba(242,238,229,.26);
+  border-radius:50% 50% 0 0;
+  background:none;
+  clip-path:polygon(0 0,100% 0,100% 78%,0 78%);
+  filter:blur(.12px);
+  z-index:8;
 }
 
-/* TURTLE PEEK / ESCAPE */
-
-.turtle.peek .neck{
-  width:10px;
-  opacity:1;
+.turtle.hide .shell::before{
+  left:-10px;
+  top:-12px;
+  width:47px;
+  height:25px;
+  opacity:.88;
+  animation:homieTwentyArcA .105s steps(2) infinite;
 }
 
-.turtle.peek .head{
-  left:43px;
-  top:7px;
-  opacity:1;
+.turtle.hide .shell::after{
+  left:-14px;
+  top:-16px;
+  width:55px;
+  height:31px;
+  opacity:.45;
+  animation:homieTwentyArcB .13s steps(2) infinite reverse;
 }
 
+@keyframes homieTwentyShellShake{
+  0%{ transform:translate(0,0); }
+  25%{ transform:translate(-1.4px,.45px); }
+  50%{ transform:translate(1.1px,-.4px); }
+  75%{ transform:translate(-.8px,-.3px); }
+  100%{ transform:translate(0,0); }
+}
+
+@keyframes homieTwentyArcA{
+  0%{ transform:translate(-1px,0) scaleX(.98); opacity:.32; }
+  50%{ transform:translate(1px,-1px) scaleX(1.04); opacity:.92; }
+  100%{ transform:translate(-1px,0) scaleX(.98); opacity:.34; }
+}
+
+@keyframes homieTwentyArcB{
+  0%{ transform:translate(1px,0) scaleX(1.03); opacity:.18; }
+  50%{ transform:translate(-1px,-1px) scaleX(.98); opacity:.52; }
+  100%{ transform:translate(1px,0) scaleX(1.03); opacity:.20; }
+}
+
+.turtle.peek .neck{ width:10px; opacity:1; }
+.turtle.peek .head{ left:43px; top:7px; opacity:1; }
 .turtle.peek .tail,
-.turtle.peek .leg{
+.turtle.peek .leg{ opacity:0; }
+
+.loader-scene::after{
+  content:"";
+  display:block;
+  position:absolute;
+  left:calc(50% + 117px);
+  top:calc(50% + 54px);
+  width:3px;
+  height:0;
+  background:rgba(242,238,229,.98);
+  border-radius:10px;
   opacity:0;
+  transform:translateY(-50%);
+  box-shadow:
+    0 0 8px rgba(242,238,229,.72),
+    0 0 22px rgba(242,238,229,.36),
+    0 0 42px rgba(242,238,229,.14);
+  z-index:95;
+  pointer-events:none;
+  transition:height .25s ease, opacity .25s ease;
 }
+
+.loader-scene.portal-open::after{ height:42px; opacity:1; }
+.loader-scene.portal-close::after{ height:0; opacity:0; }
 
 .turtle.escape{
-  animation:escapeTurtle 3.8s cubic-bezier(.18,.78,.22,1) forwards;
+  animation:homieCutThroughPortal 5.25s linear forwards;
+  clip-path:inset(0 0 0 0);
 }
 
-.turtle.escape .leg{
-  opacity:1;
-}
+.turtle.escape .l1{ animation:turtleFinBack .26s ease-in-out infinite; opacity:1; }
+.turtle.escape .l2{ animation:turtleFinFront .26s ease-in-out infinite; opacity:1; }
+.turtle.escape .tail{ opacity:1; }
 
-.turtle.escape .tail{
-  opacity:1;
-}
-
-.turtle.escape .l1{
-  animation:nubStepA .24s ease-in-out infinite;
-}
-
-.turtle.escape .l2{
-  animation:nubStepB .24s ease-in-out infinite;
-}
-
-.turtle.escape::after{
+.turtle.escape::before{
   content:"";
+  display:block;
   position:absolute;
-  left:-7px;
-  top:18px;
-  width:4px;
+  left:4px;
+  top:-6px;
+  width:12px;
   height:1px;
-  background:rgba(242,238,229,.18);
+  background:rgba(242,238,229,.22);
   box-shadow:
-    -8px 1px 0 rgba(242,238,229,.10),
-    -16px -1px 0 rgba(242,238,229,.05);
+    5px -3px 0 rgba(242,238,229,.14),
+    -4px 4px 0 rgba(242,238,229,.09);
+  opacity:.5;
+  animation:homiePortalEffortFinal .17s steps(2) infinite;
 }
 
-@keyframes escapeTurtle{
-  0%{
-    left:50%;
-    opacity:.88;
-    transform:scale(.76) translateY(0);
-  }
+.turtle.escape::after{ content:none; display:none; }
 
-  70%{
-    opacity:.88;
-  }
-
-  100%{
-    left:150vw;
-    opacity:0;
-    transform:scale(.76) translateY(-3px);
-  }
+@keyframes homieCutThroughPortal{
+  0%{ left:50%; opacity:.92; transform:scale(.68) translateY(0); clip-path:inset(0 0 0 0); }
+  20%{ left:55%; opacity:.92; transform:scale(.68) translateY(-.2px); clip-path:inset(0 0 0 0); }
+  40%{ left:60%; opacity:.92; transform:scale(.68) translateY(.2px); clip-path:inset(0 0 0 0); }
+  60%{ left:65%; opacity:.92; transform:scale(.68) translateY(-.2px); clip-path:inset(0 0 0 0); }
+  80%{ left:70%; opacity:.92; transform:scale(.68) translateY(.1px); clip-path:inset(0 0 0 0); }
+  88%{ left:72%; opacity:.92; transform:scale(.68) translateY(0); clip-path:inset(0 0 0 0); }
+  93%{ left:73%; opacity:.92; transform:scale(.68) translateY(0); clip-path:inset(0 38% 0 0); }
+  97%{ left:73.8%; opacity:.92; transform:scale(.68) translateY(0); clip-path:inset(0 78% 0 0); }
+  100%{ left:74%; opacity:0; transform:scale(.68) translateY(0); clip-path:inset(0 100% 0 0); }
 }
 
-/* VIRUS LAYER */
+@keyframes homiePortalEffortFinal{
+  0%{ transform:translate(0,0); opacity:.06; }
+  50%{ transform:translate(-2px,-1px); opacity:.5; }
+  100%{ transform:translate(-5px,1px); opacity:.03; }
+}
+
+/* VIRUS: ATTENTION MACHINE, NOT ERROR WINDOWS */
 
 .virus-layer{
   position:absolute;
@@ -399,7 +443,8 @@ body{
   visibility:hidden;
   pointer-events:none;
   z-index:32;
-  transition:opacity .32s ease, filter 1.2s ease;
+  overflow:hidden;
+  transition:opacity .4s ease, filter 1.2s ease;
 }
 
 .virus-layer.active{
@@ -408,340 +453,250 @@ body{
 }
 
 .virus-layer.clear{
-  animation:virusDissolveFast 2.4s ease forwards;
+  animation:attentionFadeToBlack 3.2s ease forwards;
 }
 
-@keyframes virusDissolveFast{
-  0%{
-    opacity:1;
-    filter:blur(0);
-  }
-
-  45%{
-    opacity:.36;
-    filter:blur(1px);
-  }
-
-  100%{
-    opacity:.06;
-    filter:blur(3px);
-  }
+@keyframes attentionFadeToBlack{
+  0%{ opacity:1; filter:blur(0); }
+  55%{ opacity:.92; filter:blur(.8px); }
+  100%{ opacity:0; filter:blur(6px); }
 }
 
-.scanlines{
-  position:absolute;
-  inset:-10%;
-  opacity:0;
-  background:
-    repeating-linear-gradient(
-      0deg,
-      rgba(255,255,255,.14) 0,
-      rgba(255,255,255,.14) 1px,
-      transparent 2px,
-      transparent 7px
-    );
-  mix-blend-mode:screen;
-}
-
-.virus-layer.active .scanlines{
-  animation:scanSmother .28s steps(2) infinite .7s;
-}
-
-@keyframes scanSmother{
-  50%{
-    opacity:.34;
-    transform:translateY(7px) skewX(2deg);
-  }
-}
-
-.blackout{
+.attention-field,
+.attention-vortex,
+.collapse-quiet,
+.far-pulse{
   position:absolute;
   inset:0;
+  pointer-events:none;
+}
+
+.attention-vortex{
+  opacity:0;
+  background:
+    radial-gradient(circle at var(--target-x, 54%) var(--target-y, 45%), rgba(223,255,63,.035), transparent 15%),
+    radial-gradient(circle at var(--target-x, 54%) var(--target-y, 45%), rgba(242,238,229,.045), transparent 29%);
+  transition:opacity 1.5s ease;
+}
+
+.virus-layer.converge .attention-vortex{
+  opacity:1;
+}
+
+.attention-item{
+  position:absolute;
+  left:var(--x);
+  top:var(--y);
+  width:var(--s);
+  height:var(--s);
+  display:grid;
+  place-items:center;
+  opacity:0;
+  color:rgba(242,238,229,.82);
+  font-size:calc(var(--s) * .68);
+  line-height:1;
+  text-shadow:0 0 14px rgba(242,238,229,.12);
+  transform:translate(-50%,-50%) scale(.72);
+  filter:saturate(.84) brightness(.95);
+  animation:attentionAppear .75s ease forwards;
+  animation-delay:var(--delay);
+}
+
+.attention-item.social{
+  color:rgba(242,238,229,.84);
+}
+
+.attention-item.heart{
+  color:rgba(255,86,86,.92);
+  text-shadow:0 0 18px rgba(255,86,86,.18);
+}
+
+.attention-item.like,
+.attention-item.bell,
+.attention-item.check,
+.attention-item.trend{
+  color:rgba(242,238,229,.84);
+}
+
+@keyframes attentionAppear{
+  0%{ opacity:0; transform:translate(-50%,-50%) scale(.5); filter:blur(2px); }
+  100%{ opacity:var(--op, .82); transform:translate(-50%,-50%) scale(1); filter:blur(0); }
+}
+
+.attention-item.drift{
+  animation:
+    attentionAppear .75s ease forwards,
+    familiarDrift 7.5s ease-in-out infinite;
+  animation-delay:var(--delay), calc(var(--delay) + .4s);
+}
+
+@keyframes familiarDrift{
+  0%,100%{ margin-left:0; margin-top:0; }
+  50%{ margin-left:var(--dx); margin-top:var(--dy); }
+}
+
+.avatar{
+  border-radius:50%;
+  background:
+    linear-gradient(145deg, rgba(255,255,255,.16), rgba(255,255,255,.045)),
+    radial-gradient(circle at 50% 38%, rgba(242,238,229,.84) 0 13%, transparent 14%),
+    radial-gradient(ellipse at 50% 76%, rgba(242,238,229,.76) 0 24%, transparent 25%);
+  border:1px solid rgba(242,238,229,.18);
+  box-shadow:
+    inset 0 0 22px rgba(255,255,255,.04),
+    0 0 18px rgba(0,0,0,.72);
+  overflow:hidden;
+}
+
+.avatar::before{
+  content:"";
+  position:absolute;
+  left:50%;
+  top:50%;
+  width:18%;
+  height:18%;
+  border-radius:50%;
+  background:#050505;
+  box-shadow:calc(var(--look, 0px) + 9px) 0 0 #050505;
+  transform:translate(calc(-50% + var(--look, 0px)), -42%);
+  opacity:.72;
+  transition:transform .55s ease, box-shadow .55s ease;
+}
+
+.avatar::after{
+  content:"";
+  position:absolute;
+  left:23%;
+  right:23%;
+  bottom:28%;
+  height:1px;
+  background:rgba(0,0,0,.46);
+  opacity:.55;
+}
+
+.avatar.turn{
+  --look:5px;
+  animation:
+    attentionAppear .75s ease forwards,
+    avatarTurn .52s steps(2) forwards;
+  animation-delay:var(--delay), 0s;
+}
+
+@keyframes avatarTurn{
+  0%{ transform:translate(-50%,-50%) scale(1); }
+  100%{ transform:translate(-50%,-50%) scale(1.02); }
+}
+
+.virus-layer.converge .attention-item{
+  transition:
+    left 5.2s cubic-bezier(.28,.01,.24,1),
+    top 5.2s cubic-bezier(.28,.01,.24,1),
+    opacity 1.2s ease,
+    filter 1.2s ease,
+    transform 1.2s ease;
+}
+
+.attention-item.to-target{
+  left:var(--tx) !important;
+  top:var(--ty) !important;
+  opacity:.9;
+  filter:saturate(.72) brightness(.86);
+}
+
+.attention-item.gray{
+  color:rgba(165,165,165,.72) !important;
+  text-shadow:none !important;
+  filter:saturate(0) brightness(.66);
+}
+
+.attention-item.sick{
+  animation:sickFlicker .34s steps(2) infinite !important;
+}
+
+@keyframes sickFlicker{
+  0%{ opacity:.92; filter:saturate(.7) brightness(.9); }
+  50%{ opacity:.28; filter:saturate(0) brightness(.55) blur(.7px); }
+  100%{ opacity:.82; filter:saturate(.6) brightness(.8); }
+}
+
+.placeholder-1358{
+  width:92px;
+  height:36px;
+  border-radius:4px;
+  border:1px solid rgba(242,238,229,.18);
+  background:rgba(6,6,6,.84);
+  color:rgba(242,238,229,.72);
+  font-size:.55rem;
+  letter-spacing:1px;
+  text-align:center;
+  padding-top:10px;
+  box-shadow:0 0 18px rgba(0,0,0,.8);
+}
+
+.placeholder-1358::before,
+.placeholder-1358::after{
+  content:none !important;
+}
+
+.placeholder-1358.lookdown{
+  transform:translate(-50%,-50%) scale(.92) rotate(1deg);
+}
+
+.placeholder-1358.lookup{
+  transform:translate(-50%,-50%) scale(.98) rotate(-1deg);
+  color:rgba(223,255,63,.78);
+  border-color:rgba(223,255,63,.24);
+}
+
+.attention-item.consume{
+  animation:machineConsume .9s steps(3) forwards !important;
+}
+
+@keyframes machineConsume{
+  0%{ opacity:.9; transform:translate(-50%,-50%) scale(1); filter:blur(0); }
+  33%{ opacity:.62; transform:translate(-50%,-50%) scale(.82) rotate(4deg); filter:blur(1px) saturate(0); }
+  66%{ opacity:.38; transform:translate(-50%,-50%) scale(1.12) rotate(-6deg); filter:blur(2px) saturate(0); }
+  100%{ opacity:0; transform:translate(-50%,-50%) scale(.12); filter:blur(5px) saturate(0); }
+}
+
+.collapse-quiet{
   background:#000;
   opacity:0;
 }
 
-.virus-layer.active .blackout{
-  animation:blackoutPulse 2.2s steps(2) 1.8s 1;
+.collapse-quiet.active{
+  animation:quietBlack 1.9s ease forwards;
 }
 
-@keyframes blackoutPulse{
-  12%{ opacity:.72; }
-  16%{ opacity:0; }
-  36%{ opacity:.55; }
-  42%{ opacity:0; }
-}
-
-.system-tear{
-  position:absolute;
-  left:-24%;
-  top:43%;
-  width:150%;
-  height:48px;
-  background:
-    linear-gradient(
-      90deg,
-      transparent,
-      rgba(255,255,255,.08),
-      rgba(255,255,255,.16),
-      transparent
-    );
-  opacity:0;
-  transform:rotate(-7deg) translateX(-60%);
-}
-
-.virus-layer.active .system-tear{
-  animation:tearSweep .5s ease-out 1.55s forwards;
-}
-
-@keyframes tearSweep{
-  30%{ opacity:.8; }
-  100%{
-    opacity:0;
-    transform:rotate(-7deg) translateX(92%);
-  }
-}
-
-.warning-flash{
-  position:absolute;
-  left:-4px;
-  top:6.5%;
-  opacity:0;
-  color:rgba(242,238,229,.85);
-  font-size:.82rem;
-  letter-spacing:2px;
-  font-weight:700;
-}
-
-.virus-layer.active .warning-flash{
-  animation:warningBlink .2s steps(2) 9 alternate .35s;
-}
-
-@keyframes warningBlink{
+@keyframes quietBlack{
   to{ opacity:1; }
 }
 
-.file-stack{
-  position:absolute;
-  inset:0;
-  opacity:.38;
-  font-size:.8rem;
-  letter-spacing:1px;
-  color:rgba(242,238,229,.7);
-}
-
-.tile{
-  position:absolute;
-  opacity:0;
-  line-height:1.8;
-  white-space:nowrap;
-}
-
-.tile b{
-  color:rgba(242,238,229,.9);
-}
-
-.virus-layer.active .tile{
-  animation:tileFlood .28s steps(2) forwards;
-}
-
-@keyframes tileFlood{
-  to{ opacity:1; }
-}
-
-.t1{ left:-6%; top:8%; animation-delay:.15s !important; }
-.t2{ right:-16%; top:16%; animation-delay:.24s !important; }
-.t3{ left:-7%; top:29%; animation-delay:.32s !important; }
-.t4{ right:-8%; top:42%; animation-delay:.45s !important; }
-.t5{ left:-9%; top:55%; animation-delay:.58s !important; }
-.t6{ right:-12%; top:68%; animation-delay:.72s !important; }
-
-/* POP WINDOWS */
-
-.pop{
-  position:absolute;
-  width:270px;
-  min-height:108px;
-  border:1px solid rgba(255,255,255,.22);
-  background:rgba(7,7,7,.96);
-  box-shadow:
-    0 0 44px rgba(0,0,0,.98),
-    inset 0 0 22px rgba(255,255,255,.025);
-  color:rgba(242,238,229,.74);
-  font-size:.7rem;
-  letter-spacing:1px;
-  overflow:hidden;
-  opacity:0;
-  transform:translateY(-55px) scale(1.03);
-}
-
-.virus-layer.active .pop{
-  animation:
-    slamIn .22s cubic-bezier(.08,.75,.12,1) forwards,
-    windowPulse 1.1s steps(2) infinite;
-}
-
-.pop::before{
-  content:attr(data-title);
-  display:block;
-  padding:8px 12px;
-  border-bottom:1px solid rgba(255,255,255,.18);
-  color:rgba(255,255,255,.55);
-  background:rgba(255,255,255,.065);
-  letter-spacing:4px;
-}
-
-.pop::after{
+.far-pulse::before{
   content:"";
   position:absolute;
-  inset:8px -8px -8px 8px;
-  border:1px solid rgba(255,255,255,.08);
-  opacity:.35;
-  pointer-events:none;
-}
-
-.pop p{
-  padding:9px 12px 0;
-  line-height:1.5;
-}
-
-.pop strong{
-  color:var(--red);
-  font-weight:400;
-}
-
-.pop em{
-  display:block;
-  padding:8px 12px 12px;
-  color:rgba(223,255,63,.42);
-  font-style:normal;
-}
-
-@keyframes slamIn{
-  60%{
-    opacity:1;
-    transform:translateY(6px) scale(1);
-  }
-  100%{
-    opacity:1;
-    transform:translateY(0) scale(1);
-  }
-}
-
-@keyframes windowPulse{
-  50%{
-    filter:brightness(1.1);
-  }
-}
-
-.p1{ left:-30%; top:18%; animation-delay:.2s !important; }
-.p2{ right:-24%; top:20%; animation-delay:.45s !important; }
-.p8{ left:20%; top:8%; animation-delay:.7s !important; }
-.p5{ left:25%; top:33%; width:330px; animation-delay:.95s !important; }
-.p6{ left:-28%; top:47%; width:330px; animation-delay:1.18s !important; }
-.p7{ right:-30%; top:49%; animation-delay:1.42s !important; }
-.p3{ left:7%; bottom:14%; animation-delay:1.66s !important; }
-.p4{ right:-11%; bottom:19%; animation-delay:1.92s !important; }
-.p9{ right:24%; bottom:7%; animation-delay:2.16s !important; }
-
-.extra-pop{
-  opacity:.82 !important;
-  z-index:4;
-}
-
-/* CASCADE */
-
-.auth-cascade{
-  position:absolute;
-  inset:0;
-  z-index:37;
-  pointer-events:none;
-  opacity:0;
-}
-
-.auth-cascade.active{
-  opacity:1;
-}
-
-.cascade-window{
-  position:absolute;
-  width:145px;
-  height:82px;
-  border:1px solid rgba(242,238,229,.26);
-  background:rgba(5,5,5,.42);
-  box-shadow:0 0 22px rgba(0,0,0,.7);
-  backdrop-filter:blur(1.5px);
-  font-size:.55rem;
-  color:rgba(242,238,229,.42);
-  overflow:hidden;
-  opacity:0;
-  animation:cascadeFall 9.6s ease forwards;
-}
-
-.cascade-window::before{
-  content:"SIGNAL ERROR";
-  display:block;
-  padding:5px 8px;
-  border-bottom:1px solid rgba(242,238,229,.16);
-  background:rgba(223,255,63,.07);
-  color:rgba(223,255,63,.48);
-  letter-spacing:2px;
-}
-
-.cascade-window::after{
-  content:"authentic source resisted";
-  display:block;
-  padding:12px 8px;
-  line-height:1.5;
-}
-
-@keyframes cascadeFall{
-  0%{
-    opacity:0;
-    transform:translate(-35px,-35px) scale(.96);
-  }
-
-  10%{
-    opacity:.68;
-  }
-
-  58%{
-    opacity:.58;
-    transform:translate(70px,86px) scale(1.01);
-  }
-
-  100%{
-    opacity:0;
-    transform:translate(135px,165px) scale(1.035);
-  }
-}
-
-.auth-warning{
-  position:absolute;
   left:50%;
-  top:41%;
-  transform:translate(-50%,-50%);
-  z-index:38;
+  top:38%;
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:var(--toxic);
   opacity:0;
-  pointer-events:none;
-  color:var(--toxic);
-  font-size:.78rem;
-  letter-spacing:5px;
-  text-align:center;
-  text-shadow:
+  transform:translate(-50%,-50%) scale(.2);
+  box-shadow:
     0 0 12px rgba(223,255,63,.75),
-    0 0 34px rgba(223,255,63,.32);
+    0 0 34px rgba(223,255,63,.28);
 }
 
-.auth-warning.active{
-  animation:authWarningIn 2.4s ease forwards;
+.far-pulse.active::before{
+  animation:tinyGreenPulse 2.2s ease forwards;
 }
 
-@keyframes authWarningIn{
-  0%{ opacity:0; filter:blur(5px); }
-  25%{ opacity:1; filter:blur(0); }
-  75%{ opacity:1; }
-  100%{ opacity:0; filter:blur(3px); }
+@keyframes tinyGreenPulse{
+  0%{ opacity:0; transform:translate(-50%,-50%) scale(.2); filter:blur(2px); }
+  38%{ opacity:.9; transform:translate(-50%,-50%) scale(1); filter:blur(0); }
+  72%{ opacity:.42; transform:translate(-50%,-50%) scale(1.45); }
+  100%{ opacity:0; transform:translate(-50%,-50%) scale(2.5); filter:blur(4px); }
 }
 
 /* SYMBOL */
@@ -766,29 +721,44 @@ body{
 .signal-node.ready{
   opacity:.58;
   pointer-events:auto;
-  animation:symbolBreath 3.4s ease-in-out infinite;
+  animation:symbolLivingBreath 2.85s ease-in-out infinite;
+  filter:
+    drop-shadow(0 0 10px rgba(223,255,63,.18))
+    drop-shadow(0 0 32px rgba(223,255,63,.08));
 }
 
 .signal-node.ready::before{
   content:"";
   position:absolute;
-  inset:8px;
+  inset:-12px;
   border-radius:50%;
-  background:radial-gradient(
-    circle,
-    rgba(223,255,63,.32),
-    rgba(223,255,63,.11) 42%,
-    transparent 72%
-  );
+  background:radial-gradient(circle, rgba(223,255,63,.26), rgba(223,255,63,.09) 38%, transparent 72%);
   filter:blur(18px);
   z-index:-1;
+  animation:symbolHaloBreath 2.85s ease-in-out infinite;
+}
+
+.signal-node.ready::after{
+  content:"";
+  position:absolute;
+  left:50%;
+  top:50%;
+  width:70%;
+  height:70%;
+  transform:translate(-50%,-50%) scale(.84);
+  border-radius:50%;
+  border:1px solid rgba(223,255,63,.18);
+  opacity:0;
+  pointer-events:none;
+  animation:symbolPressMeRipple 4.8s ease-in-out infinite;
 }
 
 .signal-node.ready:active{
-  transform:translate(-50%,-50%) scale(.94);
+  transform:translate(-50%,-50%) scale(.91);
   filter:
-    brightness(1.3)
-    drop-shadow(0 0 45px rgba(223,255,63,.55));
+    brightness(1.35)
+    drop-shadow(0 0 24px rgba(223,255,63,.55))
+    drop-shadow(0 0 60px rgba(223,255,63,.25));
 }
 
 .signal-node.fade-out{
@@ -809,28 +779,28 @@ body{
 .inner-symbol{ z-index:1; }
 .outer-symbol{ z-index:2; opacity:.58; }
 
-.outer-symbol.dissolve{
-  animation:outerDissolve 1.9s ease forwards;
+.outer-symbol.dissolve{ animation:outerDissolve 1.9s ease forwards; }
+.inner-symbol.alive{ animation:innerWake 4.7s ease forwards; }
+
+@keyframes symbolLivingBreath{
+  0%,100%{ opacity:.56; transform:translate(-50%,-50%) scale(1); }
+  45%{ opacity:.82; transform:translate(-50%,-50%) scale(1.028); }
+  58%{ opacity:.72; transform:translate(-50%,-50%) scale(1.012); }
 }
 
-.inner-symbol.alive{
-  animation:innerWake 4.7s ease forwards;
+@keyframes symbolHaloBreath{
+  0%,100%{ opacity:.18; transform:scale(.92); }
+  50%{ opacity:.62; transform:scale(1.05); }
 }
 
-@keyframes symbolBreath{
-  50%{
-    filter:
-      brightness(.8)
-      drop-shadow(0 0 28px rgba(223,255,63,.34));
-  }
+@keyframes symbolPressMeRipple{
+  0%,72%,100%{ opacity:0; transform:translate(-50%,-50%) scale(.72); }
+  82%{ opacity:.32; }
+  96%{ opacity:0; transform:translate(-50%,-50%) scale(1.35); }
 }
 
 @keyframes outerDissolve{
-  to{
-    opacity:0;
-    filter:blur(9px);
-    transform:scale(1.2) rotate(3deg);
-  }
+  to{ opacity:0; filter:blur(9px); transform:scale(1.2) rotate(3deg); }
 }
 
 @keyframes innerWake{
@@ -848,9 +818,7 @@ body{
   pointer-events:none;
 }
 
-.maze.active{
-  opacity:1;
-}
+.maze.active{ opacity:1; }
 
 .pipe{
   position:absolute;
@@ -859,9 +827,7 @@ body{
   opacity:0;
 }
 
-.maze.active .pipe{
-  animation:pipeWake 2.9s ease forwards;
-}
+.maze.active .pipe{ animation:pipeWake 2.9s ease forwards; }
 
 .pipe::before{
   content:"";
@@ -877,18 +843,9 @@ body{
   opacity:0;
 }
 
-.maze.active .pipe::before{
-  animation:beaconRun 2.4s ease forwards;
-}
-
-.pipe.bright{
-  background:rgba(140,116,30,.23);
-}
-
-.pipe.fail::before{
-  background:rgba(201,64,56,.72);
-  box-shadow:0 0 18px rgba(201,64,56,.42);
-}
+.maze.active .pipe::before{ animation:beaconRun 2.4s ease forwards; }
+.pipe.bright{ background:rgba(140,116,30,.23); }
+.pipe.fail::before{ background:rgba(201,64,56,.72); box-shadow:0 0 18px rgba(201,64,56,.42); }
 
 @keyframes pipeWake{
   0%{ opacity:0; filter:blur(3px); }
@@ -957,9 +914,7 @@ body{
   pointer-events:auto;
 }
 
-@keyframes homeIn{
-  to{ opacity:1; }
-}
+@keyframes homeIn{ to{ opacity:1; } }
 
 .home-core{
   position:relative;
@@ -984,9 +939,7 @@ body{
 }
 
 @keyframes homeBreath{
-  50%{
-    filter:drop-shadow(0 0 30px rgba(223,255,63,.3));
-  }
+  50%{ filter:drop-shadow(0 0 30px rgba(223,255,63,.3)); }
 }
 
 .nodes{
@@ -1008,6 +961,7 @@ body{
   text-align:center;
   background:rgba(0,0,0,.38);
   box-shadow:0 0 16px rgba(223,255,63,.025);
+  overflow:visible;
 }
 
 .node::before{
@@ -1020,20 +974,13 @@ body{
   border-radius:50%;
   transform:translateY(-50%);
   background:var(--toxic);
-  box-shadow:
-    0 0 12px rgba(223,255,63,1),
-    0 0 28px rgba(223,255,63,.48);
   opacity:.9;
-  animation:nodePulse 3.8s ease-in-out infinite;
+  animation:nodePulse 3.8s ease-in-out infinite, occasionalInboxGlow 17s ease-in-out infinite;
 }
 
-.node:nth-child(2)::before{
-  animation-delay:1.2s;
-}
-
-.node:nth-child(3)::before{
-  animation-delay:2.4s;
-}
+.node:nth-child(1)::before{ animation-delay:0s, 2s; }
+.node:nth-child(2)::before{ animation-delay:1.2s, 8s; }
+.node:nth-child(3)::before{ animation-delay:2.4s, 13s; }
 
 @keyframes nodePulse{
   50%{
@@ -1044,19 +991,29 @@ body{
   }
 }
 
-.inactive-node{
-  opacity:.28;
-  color:rgba(242,238,229,.38);
-  border-color:rgba(242,238,229,.08);
-  pointer-events:none;
-  box-shadow:none;
-}
-
-.inactive-node::before{
-  background:rgba(223,255,63,.18);
-  box-shadow:0 0 10px rgba(223,255,63,.08);
-  opacity:.35;
-  animation:none;
+@keyframes occasionalInboxGlow{
+  0%,88%,100%{
+    box-shadow:
+      0 0 12px rgba(223,255,63,.75),
+      0 0 26px rgba(223,255,63,.28);
+    background:var(--toxic);
+  }
+  91%{
+    box-shadow:
+      0 0 18px rgba(223,255,63,1),
+      0 0 46px rgba(223,255,63,.62);
+    background:#ecff66;
+  }
+  94%{
+    box-shadow:
+      0 0 8px rgba(255,138,42,.72),
+      0 0 28px rgba(255,138,42,.28);
+    background:var(--ember);
+  }
+  96%{
+    box-shadow:0 0 2px rgba(255,138,42,.12);
+    background:rgba(255,138,42,.28);
+  }
 }
 
 /* IDLE MAZE */
@@ -1070,9 +1027,7 @@ body{
   transition:opacity 2s ease;
 }
 
-.idle-maze.active{
-  opacity:1;
-}
+.idle-maze.active{ opacity:1; }
 
 .idle-pipe{
   position:absolute;
@@ -1088,24 +1043,62 @@ body{
   border-radius:50%;
   background:rgba(223,255,63,.62);
   box-shadow:
-    0 0 16px rgba(223,255,63,.42),
-    -10px 0 0 rgba(223,255,63,.16),
-    -20px 0 0 rgba(223,255,63,.07);
-  animation:idleBlink 5.5s ease-in-out infinite;
+    0 0 14px rgba(223,255,63,.45),
+    -8px 0 0 rgba(223,255,63,.22),
+    -16px 0 0 rgba(223,255,63,.10),
+    -24px 0 0 rgba(223,255,63,.04);
+  animation:signalFootstepTrail 5.8s ease-in-out infinite;
 }
 
 .idle1{ left:8%; top:23%; width:36%; height:3px; }
-.idle1::after{ left:14%; top:-2px; }
+.idle1::after{ left:14%; top:-2px; animation-delay:.2s; }
 .idle2{ right:13%; top:19%; width:3px; height:34%; }
-.idle2::after{ left:-2px; top:17%; animation-delay:1.3s; }
+.idle2::after{ left:-2px; top:17%; animation-delay:1.8s; }
 .idle3{ left:7%; bottom:27%; width:35%; height:3px; }
-.idle3::after{ right:18%; top:-2px; animation-delay:2.2s; }
+.idle3::after{ right:18%; top:-2px; animation-delay:3.1s; }
 .idle4{ left:39%; bottom:15%; width:23%; height:3px; }
-.idle4::after{ right:0; top:-2px; animation-delay:3.4s; }
+.idle4::after{ right:0; top:-2px; animation-delay:4.2s; }
 
-@keyframes idleBlink{
-  0%,74%,100%{ opacity:.18; }
-  82%{ opacity:.92; }
+@keyframes signalFootstepTrail{
+  0%,54%,100%{
+    opacity:.16;
+    background:rgba(223,255,63,.32);
+    box-shadow:
+      0 0 10px rgba(223,255,63,.18),
+      -8px 0 0 rgba(223,255,63,.08),
+      -16px 0 0 rgba(223,255,63,.035);
+    transform:translateX(0) scale(.82);
+  }
+  64%{
+    opacity:.88;
+    background:var(--toxic);
+    box-shadow:
+      0 0 16px rgba(223,255,63,.62),
+      -9px 0 0 rgba(223,255,63,.28),
+      -18px 0 0 rgba(223,255,63,.13),
+      -27px 0 0 rgba(223,255,63,.05);
+    transform:translateX(8px) scale(1);
+  }
+  72%{
+    opacity:.56;
+    background:#dfff3f;
+    transform:translateX(15px) scale(.92);
+  }
+  78%{
+    opacity:.72;
+    background:var(--ember);
+    box-shadow:
+      0 0 12px rgba(255,138,42,.52),
+      -8px 0 0 rgba(255,138,42,.18),
+      -16px 0 0 rgba(255,138,42,.06);
+    transform:translateX(21px) scale(.86);
+  }
+  84%{
+    opacity:.05;
+    background:#0a0a0a;
+    box-shadow:none;
+    transform:translateX(26px) scale(.6);
+  }
 }
 
 @media (max-width:430px){
@@ -1130,2342 +1123,4 @@ body{
     height:122px;
     margin-bottom:62px;
   }
-}
-
-/* =========================================================
-   CHANNEL 17 — TURTLE LEG CORRECTION
-   Full styles.css replacement.
-   - legs shifted right under shell
-   - nub/paddle turtle feet
-   - subtle left/right paddle, not dog-step up/down
-   ========================================================= */
-
-.leg{
-  width:7px !important;
-  height:7px !important;
-  top:18px !important;
-  background:var(--cream) !important;
-  border-radius:55% 55% 45% 45% !important;
-  transform-origin:center center !important;
-}
-
-/* Shift both feet right so they live under the shell */
-.l1{
-  left:23px !important;
-}
-
-.l2{
-  left:34px !important;
-}
-
-/* Turtle paddle motion: tiny side-to-side, no up/down walking */
-.turtle.walk .l1{
-  animation:turtlePaddleLeft 1.36s ease-in-out infinite !important;
-}
-
-.turtle.walk .l2{
-  animation:turtlePaddleRight 1.36s ease-in-out infinite !important;
-}
-
-@keyframes turtlePaddleLeft{
-  0%,100%{
-    transform:translateX(-.8px) rotate(-5deg) scaleX(1.04);
-  }
-
-  50%{
-    transform:translateX(.8px) rotate(4deg) scaleX(.96);
-  }
-}
-
-@keyframes turtlePaddleRight{
-  0%,100%{
-    transform:translateX(.8px) rotate(4deg) scaleX(.96);
-  }
-
-  50%{
-    transform:translateX(-.8px) rotate(-5deg) scaleX(1.04);
-  }
-}
-
-/* Escape keeps same turtle-foot language */
-.turtle.escape .l1{
-  animation:turtlePaddleLeft .24s ease-in-out infinite !important;
-}
-
-.turtle.escape .l2{
-  animation:turtlePaddleRight .24s ease-in-out infinite !important;
-}
-
-
-/* =========================================================
-   CHANNEL 17 - TURTLE REPAIR ONLY
-   Full styles.css replacement.
-   ========================================================= */
-
-.turtle{
-  margin-left:-32px !important;
-}
-
-.shell{
-  left:10px !important;
-  top:4px !important;
-  width:29px !important;
-  height:18px !important;
-  border-radius:50% 50% 42% 42% !important;
-}
-
-.tail{
-  left:5px !important;
-  top:10px !important;
-  border-top:3.5px solid transparent !important;
-  border-bottom:3.5px solid transparent !important;
-  border-right:8px solid var(--cream) !important;
-  transform:rotate(4deg) !important;
-}
-
-.leg{
-  position:absolute !important;
-  width:8px !important;
-  height:5px !important;
-  top:19px !important;
-  background:var(--cream) !important;
-  border-radius:70% 70% 55% 55% !important;
-  transform-origin:center center !important;
-}
-
-.l1{
-  left:18px !important;
-}
-
-.l2{
-  left:30px !important;
-}
-
-.turtle.walk .l1{
-  animation:turtleFinBack 1.46s ease-in-out infinite !important;
-}
-
-.turtle.walk .l2{
-  animation:turtleFinFront 1.46s ease-in-out infinite !important;
-}
-
-@keyframes turtleFinBack{
-  0%,100%{
-    transform:translateX(-.7px) rotate(-3deg) scaleX(1.08);
-  }
-
-  50%{
-    transform:translateX(.5px) rotate(3deg) scaleX(.95);
-  }
-}
-
-@keyframes turtleFinFront{
-  0%,100%{
-    transform:translateX(.5px) rotate(3deg) scaleX(.95);
-  }
-
-  50%{
-    transform:translateX(-.7px) rotate(-3deg) scaleX(1.08);
-  }
-}
-
-.turtle.notice .neck{
-  left:34px !important;
-  top:10px !important;
-  width:9px !important;
-  height:5px !important;
-  transform:rotate(-34deg) !important;
-}
-
-.turtle.notice .head{
-  left:40px !important;
-  top:2px !important;
-}
-
-.turtle.notice .eye{
-  right:4px !important;
-  top:2px !important;
-  transform:translateY(-1.2px) scale(1.18) !important;
-}
-
-.turtle.hide{
-  animation:none !important;
-}
-
-.turtle.hide::before,
-.turtle.hide::after{
-  display:none !important;
-  content:none !important;
-  opacity:0 !important;
-}
-
-.turtle.hide .neck,
-.turtle.hide .head,
-.turtle.hide .tail,
-.turtle.hide .leg{
-  opacity:0 !important;
-}
-
-.turtle.hide .shell{
-  left:12px !important;
-  top:5px !important;
-  width:27px !important;
-  height:17px !important;
-  animation:turtleShellRealFear .12s steps(2) infinite !important;
-  filter:drop-shadow(0 0 4px rgba(242,238,229,.10)) !important;
-}
-
-@keyframes turtleShellRealFear{
-  0%{
-    transform:translate(0,0) scale(1);
-  }
-
-  25%{
-    transform:translate(-1px,.4px) scale(1.003);
-  }
-
-  50%{
-    transform:translate(.8px,-.3px) scale(.998);
-  }
-
-  75%{
-    transform:translate(-.5px,-.2px) scale(1.001);
-  }
-
-  100%{
-    transform:translate(0,0) scale(1);
-  }
-}
-
-.turtle.escape .l1{
-  animation:turtleFinBack .26s ease-in-out infinite !important;
-}
-
-.turtle.escape .l2{
-  animation:turtleFinFront .26s ease-in-out infinite !important;
-}
-
-.turtle.escape{
-  animation:turtleExitRepair 4.2s cubic-bezier(.18,.78,.22,1) forwards !important;
-}
-
-@keyframes turtleExitRepair{
-  0%{
-    left:50%;
-    opacity:.88;
-    transform:scale(.76) translateY(0);
-  }
-
-  70%{
-    opacity:.88;
-  }
-
-  100%{
-    left:150vw;
-    opacity:0;
-    transform:scale(.76) translateY(-3px);
-  }
-}
-
-.turtle.escape::after{
-  content:"" !important;
-  position:absolute !important;
-  left:-7px !important;
-  top:18px !important;
-  width:4px !important;
-  height:1px !important;
-  background:rgba(242,238,229,.16) !important;
-  box-shadow:
-    -8px 1px 0 rgba(242,238,229,.09),
-    -16px -1px 0 rgba(242,238,229,.04) !important;
-}
-
-/* =========================================================
-   CHANNEL 17 — LIVING SIGNAL BUILD: CSS ONLY
-   Full styles.css replacement.
-   - turtle fins shifted left
-   - slow turtle escape with fast haste lines above shell
-   - symbol breathes / feels pressable
-   - signal map dots trail, pulse, and sometimes burn out
-   ========================================================= */
-
-/* Turtle fins: shift both slightly left, tucked under shell */
-.l1{
-  left:16px !important;
-}
-
-.l2{
-  left:27px !important;
-}
-
-/* Slightly flatter fin read */
-.leg{
-  width:8px !important;
-  height:5px !important;
-  top:19px !important;
-  border-radius:75% 75% 55% 55% !important;
-}
-
-/* Slow escape, because he is still a turtle */
-.turtle.escape{
-  animation:turtleSlowEscapeWithPanic 5.6s cubic-bezier(.18,.72,.22,1) forwards !important;
-}
-
-/* Fast haste lines above shell while body moves slow */
-.turtle.escape::before{
-  content:"" !important;
-  position:absolute !important;
-  left:7px !important;
-  top:-5px !important;
-  width:20px !important;
-  height:1px !important;
-  background:rgba(242,238,229,.28) !important;
-  box-shadow:
-    -6px 3px 0 rgba(242,238,229,.18),
-    7px 5px 0 rgba(242,238,229,.11),
-    -11px 8px 0 rgba(242,238,229,.07) !important;
-  opacity:.65 !important;
-  animation:turtleHasteLines .22s steps(2) infinite !important;
-  display:block !important;
-}
-
-/* Keep old lower trail extremely subtle, not stringy */
-.turtle.escape::after{
-  content:"" !important;
-  position:absolute !important;
-  left:-8px !important;
-  top:17px !important;
-  width:3px !important;
-  height:1px !important;
-  background:rgba(242,238,229,.10) !important;
-  box-shadow:
-    -7px 1px 0 rgba(242,238,229,.06),
-    -14px -1px 0 rgba(242,238,229,.03) !important;
-}
-
-@keyframes turtleSlowEscapeWithPanic{
-  0%{
-    left:50%;
-    opacity:.9;
-    transform:scale(.76) translateY(0);
-  }
-
-  78%{
-    opacity:.9;
-  }
-
-  100%{
-    left:150vw;
-    opacity:0;
-    transform:scale(.76) translateY(-2px);
-  }
-}
-
-@keyframes turtleHasteLines{
-  0%{
-    transform:translateX(0);
-    opacity:.16;
-  }
-
-  50%{
-    transform:translateX(-4px);
-    opacity:.68;
-  }
-
-  100%{
-    transform:translateX(-8px);
-    opacity:.04;
-  }
-}
-
-/* Symbol: breathes like it wants to be pressed */
-.signal-node.ready{
-  animation:symbolLivingBreath 2.85s ease-in-out infinite !important;
-  filter:
-    drop-shadow(0 0 10px rgba(223,255,63,.18))
-    drop-shadow(0 0 32px rgba(223,255,63,.08)) !important;
-}
-
-.signal-node.ready::before{
-  content:"" !important;
-  position:absolute !important;
-  inset:-12px !important;
-  border-radius:50% !important;
-  background:radial-gradient(
-    circle,
-    rgba(223,255,63,.26),
-    rgba(223,255,63,.09) 38%,
-    transparent 72%
-  ) !important;
-  filter:blur(18px) !important;
-  z-index:-1 !important;
-  animation:symbolHaloBreath 2.85s ease-in-out infinite !important;
-}
-
-.signal-node.ready::after{
-  content:"" !important;
-  position:absolute !important;
-  left:50% !important;
-  top:50% !important;
-  width:70% !important;
-  height:70% !important;
-  transform:translate(-50%,-50%) scale(.84) !important;
-  border-radius:50% !important;
-  border:1px solid rgba(223,255,63,.18) !important;
-  opacity:0 !important;
-  pointer-events:none !important;
-  animation:symbolPressMeRipple 4.8s ease-in-out infinite !important;
-}
-
-.signal-node.ready:active{
-  transform:translate(-50%,-50%) scale(.91) !important;
-  filter:
-    brightness(1.35)
-    drop-shadow(0 0 24px rgba(223,255,63,.55))
-    drop-shadow(0 0 60px rgba(223,255,63,.25)) !important;
-}
-
-@keyframes symbolLivingBreath{
-  0%,100%{
-    opacity:.56;
-    transform:translate(-50%,-50%) scale(1);
-  }
-
-  45%{
-    opacity:.82;
-    transform:translate(-50%,-50%) scale(1.028);
-  }
-
-  58%{
-    opacity:.72;
-    transform:translate(-50%,-50%) scale(1.012);
-  }
-}
-
-@keyframes symbolHaloBreath{
-  0%,100%{
-    opacity:.18;
-    transform:scale(.92);
-  }
-
-  50%{
-    opacity:.62;
-    transform:scale(1.05);
-  }
-}
-
-@keyframes symbolPressMeRipple{
-  0%,72%,100%{
-    opacity:0;
-    transform:translate(-50%,-50%) scale(.72);
-  }
-
-  82%{
-    opacity:.32;
-  }
-
-  96%{
-    opacity:0;
-    transform:translate(-50%,-50%) scale(1.35);
-  }
-}
-
-/* Home-node submission hint: very occasional new-signal glow */
-.node{
-  overflow:visible !important;
-}
-
-.node::before{
-  animation:nodePulse 3.8s ease-in-out infinite, occasionalInboxGlow 17s ease-in-out infinite !important;
-}
-
-.node:nth-child(1)::before{
-  animation-delay:0s, 2s !important;
-}
-
-.node:nth-child(2)::before{
-  animation-delay:1.2s, 8s !important;
-}
-
-.node:nth-child(3)::before{
-  animation-delay:2.4s, 13s !important;
-}
-
-/* fourth/inactive node should blink very rarely like a submission inbox waking */
-.inactive-node::before{
-  background:rgba(223,255,63,.18) !important;
-  box-shadow:0 0 10px rgba(223,255,63,.08) !important;
-  opacity:.24 !important;
-  animation:submissionPing 23s ease-in-out infinite !important;
-}
-
-@keyframes occasionalInboxGlow{
-  0%,88%,100%{
-    box-shadow:
-      0 0 12px rgba(223,255,63,.75),
-      0 0 26px rgba(223,255,63,.28);
-    background:var(--toxic);
-  }
-
-  91%{
-    box-shadow:
-      0 0 18px rgba(223,255,63,1),
-      0 0 46px rgba(223,255,63,.62);
-    background:#ecff66;
-  }
-
-  94%{
-    box-shadow:
-      0 0 8px rgba(255,138,42,.72),
-      0 0 28px rgba(255,138,42,.28);
-    background:var(--ember);
-  }
-
-  96%{
-    box-shadow:0 0 2px rgba(255,138,42,.12);
-    background:rgba(255,138,42,.28);
-  }
-}
-
-@keyframes submissionPing{
-  0%,82%,100%{
-    opacity:.14;
-    background:rgba(223,255,63,.14);
-    box-shadow:0 0 8px rgba(223,255,63,.05);
-  }
-
-  88%{
-    opacity:.92;
-    background:var(--toxic);
-    box-shadow:
-      0 0 14px rgba(223,255,63,.85),
-      0 0 38px rgba(223,255,63,.38);
-  }
-
-  92%{
-    opacity:.5;
-    background:var(--ember);
-    box-shadow:
-      0 0 8px rgba(255,138,42,.62),
-      0 0 24px rgba(255,138,42,.22);
-  }
-
-  95%{
-    opacity:.08;
-    background:#111;
-    box-shadow:none;
-  }
-}
-
-/* Path dots: directional trail like invisible map footsteps */
-.idle-pipe::after{
-  box-shadow:
-    0 0 14px rgba(223,255,63,.45),
-    -8px 0 0 rgba(223,255,63,.22),
-    -16px 0 0 rgba(223,255,63,.10),
-    -24px 0 0 rgba(223,255,63,.04) !important;
-  animation:signalFootstepTrail 5.8s ease-in-out infinite !important;
-}
-
-.idle1::after{
-  animation-delay:.2s !important;
-}
-
-.idle2::after{
-  animation-delay:1.8s !important;
-}
-
-.idle3::after{
-  animation-delay:3.1s !important;
-}
-
-.idle4::after{
-  animation-delay:4.2s !important;
-}
-
-@keyframes signalFootstepTrail{
-  0%,54%,100%{
-    opacity:.16;
-    background:rgba(223,255,63,.32);
-    box-shadow:
-      0 0 10px rgba(223,255,63,.18),
-      -8px 0 0 rgba(223,255,63,.08),
-      -16px 0 0 rgba(223,255,63,.035);
-    transform:translateX(0) scale(.82);
-  }
-
-  64%{
-    opacity:.88;
-    background:var(--toxic);
-    box-shadow:
-      0 0 16px rgba(223,255,63,.62),
-      -9px 0 0 rgba(223,255,63,.28),
-      -18px 0 0 rgba(223,255,63,.13),
-      -27px 0 0 rgba(223,255,63,.05);
-    transform:translateX(8px) scale(1);
-  }
-
-  72%{
-    opacity:.56;
-    background:#dfff3f;
-    transform:translateX(15px) scale(.92);
-  }
-
-  78%{
-    opacity:.72;
-    background:var(--ember);
-    box-shadow:
-      0 0 12px rgba(255,138,42,.52),
-      -8px 0 0 rgba(255,138,42,.18),
-      -16px 0 0 rgba(255,138,42,.06);
-    transform:translateX(21px) scale(.86);
-  }
-
-  84%{
-    opacity:.05;
-    background:#0a0a0a;
-    box-shadow:none;
-    transform:translateX(26px) scale(.6);
-  }
-}
-
-
-/* =========================================================
-   CHANNEL 17 - SNAIL-SPEED PANIC ESCAPE
-   Full styles.css replacement.
-   - Little Homie moves slowly like a turtle
-   - worry/haste lines move fast above him
-   - no bunny sprint
-   ========================================================= */
-
-.turtle.escape{
-  animation:littleHomieSnailPanicExit 11.5s linear forwards !important;
-}
-
-/* fast worry lines ABOVE shell, not behind him like a string */
-.turtle.escape::before{
-  content:"" !important;
-  position:absolute !important;
-  left:11px !important;
-  top:-7px !important;
-  width:18px !important;
-  height:1px !important;
-  background:rgba(242,238,229,.30) !important;
-  box-shadow:
-    -6px 3px 0 rgba(242,238,229,.20),
-    8px 4px 0 rgba(242,238,229,.13),
-    -10px 7px 0 rgba(242,238,229,.08) !important;
-  display:block !important;
-  opacity:.7 !important;
-  animation:littleHomiePanicLines .18s steps(2) infinite !important;
-}
-
-/* kill any long string-trail feeling */
-.turtle.escape::after{
-  content:"" !important;
-  position:absolute !important;
-  left:8px !important;
-  top:-2px !important;
-  width:10px !important;
-  height:1px !important;
-  background:rgba(242,238,229,.10) !important;
-  box-shadow:none !important;
-  opacity:.35 !important;
-  animation:littleHomieTinyStressDash .25s steps(2) infinite !important;
-}
-
-@keyframes littleHomieSnailPanicExit{
-  0%{
-    left:50%;
-    opacity:.9;
-    transform:scale(.76) translateY(0);
-  }
-
-  12%{
-    left:54%;
-    opacity:.9;
-    transform:scale(.76) translateY(-1px);
-  }
-
-  35%{
-    left:68%;
-    opacity:.9;
-    transform:scale(.76) translateY(0);
-  }
-
-  60%{
-    left:88%;
-    opacity:.9;
-    transform:scale(.76) translateY(-1px);
-  }
-
-  82%{
-    left:112%;
-    opacity:.82;
-    transform:scale(.76) translateY(0);
-  }
-
-  100%{
-    left:145vw;
-    opacity:0;
-    transform:scale(.76) translateY(-2px);
-  }
-}
-
-@keyframes littleHomiePanicLines{
-  0%{
-    transform:translateX(0);
-    opacity:.10;
-  }
-
-  50%{
-    transform:translateX(-5px);
-    opacity:.78;
-  }
-
-  100%{
-    transform:translateX(-10px);
-    opacity:.06;
-  }
-}
-
-@keyframes littleHomieTinyStressDash{
-  0%{
-    transform:translateX(0);
-    opacity:.08;
-  }
-
-  50%{
-    transform:translateX(-3px);
-    opacity:.35;
-  }
-
-  100%{
-    transform:translateX(-6px);
-    opacity:.04;
-  }
-}
-
-
-/* =========================================================
-   CHANNEL 17 - LITTLE HOMIE FINAL FEAR / ESCAPE FEEL
-   Full styles.css replacement.
-   Fixes:
-   - visible shiver when scared
-   - no crawl-then-bolt
-   - slow steady turtle escape
-   - believable frantic worry marks
-   ========================================================= */
-
-.turtle.hide .shell{
-  left:12px !important;
-  top:5px !important;
-  width:27px !important;
-  height:17px !important;
-  animation:littleHomieVisibleShellFear .075s steps(2) infinite !important;
-  filter:
-    drop-shadow(0 0 5px rgba(242,238,229,.18))
-    blur(.03px) !important;
-}
-
-@keyframes littleHomieVisibleShellFear{
-  0%{
-    transform:translate(0,0) rotate(0deg) scale(1);
-  }
-
-  25%{
-    transform:translate(-1.6px,.6px) rotate(-1deg) scale(1.006);
-  }
-
-  50%{
-    transform:translate(1.3px,-.5px) rotate(1deg) scale(.996);
-  }
-
-  75%{
-    transform:translate(-.9px,-.4px) rotate(-.5deg) scale(1.003);
-  }
-
-  100%{
-    transform:translate(0,0) rotate(0deg) scale(1);
-  }
-}
-
-.turtle.escape{
-  animation:littleHomieTrueTurtleExit 13.5s linear forwards !important;
-}
-
-.turtle.escape::before{
-  content:"" !important;
-  position:absolute !important;
-  left:5px !important;
-  top:-5px !important;
-  width:12px !important;
-  height:1px !important;
-  background:rgba(242,238,229,.32) !important;
-  box-shadow:
-    5px -3px 0 rgba(242,238,229,.24),
-    -4px 4px 0 rgba(242,238,229,.18),
-    10px 5px 0 rgba(242,238,229,.10) !important;
-  display:block !important;
-  opacity:.7 !important;
-  animation:littleHomieWorryMarks .16s steps(2) infinite !important;
-}
-
-.turtle.escape::after{
-  content:"" !important;
-  position:absolute !important;
-  left:2px !important;
-  top:0px !important;
-  width:8px !important;
-  height:1px !important;
-  background:rgba(242,238,229,.14) !important;
-  box-shadow:
-    6px -4px 0 rgba(242,238,229,.08) !important;
-  opacity:.35 !important;
-  animation:littleHomieStressFlicker .22s steps(2) infinite !important;
-}
-
-@keyframes littleHomieTrueTurtleExit{
-  0%{
-    left:50%;
-    opacity:.9;
-    transform:scale(.76) translateY(0);
-  }
-
-  20%{
-    left:58%;
-    opacity:.9;
-    transform:scale(.76) translateY(-.5px);
-  }
-
-  40%{
-    left:66%;
-    opacity:.9;
-    transform:scale(.76) translateY(.5px);
-  }
-
-  60%{
-    left:76%;
-    opacity:.9;
-    transform:scale(.76) translateY(-.5px);
-  }
-
-  80%{
-    left:92%;
-    opacity:.86;
-    transform:scale(.76) translateY(.5px);
-  }
-
-  100%{
-    left:122vw;
-    opacity:0;
-    transform:scale(.76) translateY(-1px);
-  }
-}
-
-@keyframes littleHomieWorryMarks{
-  0%{
-    transform:translate(0,0);
-    opacity:.12;
-  }
-
-  50%{
-    transform:translate(-2px,-1px);
-    opacity:.72;
-  }
-
-  100%{
-    transform:translate(-5px,1px);
-    opacity:.06;
-  }
-}
-
-@keyframes littleHomieStressFlicker{
-  0%{
-    transform:translateX(0);
-    opacity:.06;
-  }
-
-  50%{
-    transform:translateX(-2px);
-    opacity:.38;
-  }
-
-  100%{
-    transform:translateX(-5px);
-    opacity:.04;
-  }
-}
-
-
-/* =========================================================
-   CHANNEL 17 - LITTLE HOMIE LOCKED FINAL
-   Full styles.css replacement.
-   ========================================================= */
-
-.turtle{
-  transform:scale(.68) !important;
-}
-
-.turtle.escape{
-  animation:littleHomieLockedSlowExit 15.5s linear forwards !important;
-}
-
-.turtle.hide::before,
-.turtle.hide::after{
-  content:"" !important;
-  display:block !important;
-  position:absolute !important;
-  width:8px !important;
-  height:12px !important;
-  opacity:.72 !important;
-  pointer-events:none !important;
-  background:
-    linear-gradient(135deg, transparent 0 38%, rgba(242,238,229,.72) 39% 48%, transparent 49% 100%),
-    linear-gradient(45deg, transparent 0 48%, rgba(242,238,229,.50) 49% 58%, transparent 59% 100%) !important;
-  animation:littleHomieFearZig .13s steps(2) infinite !important;
-}
-
-.turtle.hide::before{
-  left:7px !important;
-  top:-7px !important;
-}
-
-.turtle.hide::after{
-  right:2px !important;
-  top:-8px !important;
-  animation-delay:.06s !important;
-}
-
-.turtle.hide .shell{
-  left:12px !important;
-  top:5px !important;
-  width:27px !important;
-  height:17px !important;
-  animation:littleHomieLockedShellShiver .08s steps(2) infinite !important;
-  filter:drop-shadow(0 0 5px rgba(242,238,229,.16)) !important;
-}
-
-@keyframes littleHomieFearZig{
-  0%{
-    transform:translate(0,0) skewX(-10deg);
-    opacity:.22;
-  }
-
-  50%{
-    transform:translate(-1px,1px) skewX(12deg);
-    opacity:.78;
-  }
-
-  100%{
-    transform:translate(0,0) skewX(-10deg);
-    opacity:.18;
-  }
-}
-
-@keyframes littleHomieLockedShellShiver{
-  0%{
-    transform:translate(0,0) scale(1);
-  }
-
-  25%{
-    transform:translate(-1.3px,.5px) scale(1.004);
-  }
-
-  50%{
-    transform:translate(1px,-.4px) scale(.997);
-  }
-
-  75%{
-    transform:translate(-.7px,-.3px) scale(1.002);
-  }
-
-  100%{
-    transform:translate(0,0) scale(1);
-  }
-}
-
-@keyframes littleHomieLockedSlowExit{
-  0%{
-    left:50%;
-    opacity:.9;
-    transform:scale(.68) translateY(0);
-  }
-
-  20%{
-    left:57%;
-    opacity:.9;
-    transform:scale(.68) translateY(-.5px);
-  }
-
-  40%{
-    left:65%;
-    opacity:.9;
-    transform:scale(.68) translateY(.5px);
-  }
-
-  60%{
-    left:75%;
-    opacity:.9;
-    transform:scale(.68) translateY(-.5px);
-  }
-
-  80%{
-    left:91%;
-    opacity:.86;
-    transform:scale(.68) translateY(.5px);
-  }
-
-  100%{
-    left:122vw;
-    opacity:0;
-    transform:scale(.68) translateY(-1px);
-  }
-}
-
-.turtle.escape::before{
-  content:"" !important;
-  display:block !important;
-  position:absolute !important;
-  left:5px !important;
-  top:-6px !important;
-  width:12px !important;
-  height:1px !important;
-  background:rgba(242,238,229,.30) !important;
-  box-shadow:
-    5px -3px 0 rgba(242,238,229,.22),
-    -4px 4px 0 rgba(242,238,229,.16),
-    10px 5px 0 rgba(242,238,229,.09) !important;
-  opacity:.68 !important;
-  animation:littleHomieLockedPanicMarks .16s steps(2) infinite !important;
-}
-
-.turtle.escape::after{
-  content:"" !important;
-  position:absolute !important;
-  left:2px !important;
-  top:0px !important;
-  width:8px !important;
-  height:1px !important;
-  background:rgba(242,238,229,.11) !important;
-  box-shadow:6px -4px 0 rgba(242,238,229,.06) !important;
-  opacity:.32 !important;
-  animation:littleHomieLockedStressDash .22s steps(2) infinite !important;
-}
-
-@keyframes littleHomieLockedPanicMarks{
-  0%{
-    transform:translate(0,0);
-    opacity:.10;
-  }
-
-  50%{
-    transform:translate(-2px,-1px);
-    opacity:.76;
-  }
-
-  100%{
-    transform:translate(-5px,1px);
-    opacity:.05;
-  }
-}
-
-@keyframes littleHomieLockedStressDash{
-  0%{
-    transform:translateX(0);
-    opacity:.06;
-  }
-
-  50%{
-    transform:translateX(-2px);
-    opacity:.34;
-  }
-
-  100%{
-    transform:translateX(-5px);
-    opacity:.04;
-  }
-}
-
-/* =========================================================
-   CHANNEL 17 — LITTLE HOMIE FINAL CLEAN LOCK
-   Full styles.css replacement.
-   Fixes:
-   - smaller / less mascot
-   - no X marks
-   - real vibration zigzags above shell
-   - short exit path like disappearing into a slit/portal
-   - no rocket jump
-   ========================================================= */
-
-.turtle{
-  transform:scale(.68) !important;
-}
-
-.turtle.notice{
-  transform:scale(.68) !important;
-}
-
-.turtle.hide .eye::before,
-.turtle.hide .eye::after,
-.turtle.escape .eye::before,
-.turtle.escape .eye::after{
-  content:none !important;
-  display:none !important;
-}
-
-.turtle.hide .shell{
-  left:12px !important;
-  top:5px !important;
-  width:27px !important;
-  height:17px !important;
-  animation:homieCleanShellShiver .08s steps(2) infinite !important;
-  filter:drop-shadow(0 0 5px rgba(242,238,229,.16)) !important;
-}
-
-.turtle.hide::before{
-  content:"" !important;
-  display:block !important;
-  position:absolute !important;
-  left:8px !important;
-  top:-9px !important;
-  width:28px !important;
-  height:14px !important;
-  pointer-events:none !important;
-  opacity:.72 !important;
-  background:
-    linear-gradient(135deg, transparent 0 34%, rgba(242,238,229,.66) 35% 43%, transparent 44% 100%),
-    linear-gradient(45deg, transparent 0 48%, rgba(242,238,229,.52) 49% 58%, transparent 59% 100%),
-    linear-gradient(135deg, transparent 0 64%, rgba(242,238,229,.38) 65% 72%, transparent 73% 100%) !important;
-  filter:blur(.15px) !important;
-  animation:homieCleanFearZig .12s steps(2) infinite !important;
-}
-
-.turtle.hide::after{
-  content:none !important;
-  display:none !important;
-}
-
-@keyframes homieCleanShellShiver{
-  0%{ transform:translate(0,0) scale(1); }
-  25%{ transform:translate(-1.3px,.5px) scale(1.004); }
-  50%{ transform:translate(1px,-.4px) scale(.997); }
-  75%{ transform:translate(-.7px,-.3px) scale(1.002); }
-  100%{ transform:translate(0,0) scale(1); }
-}
-
-@keyframes homieCleanFearZig{
-  0%{ transform:translateX(-1px); opacity:.32; }
-  50%{ transform:translateX(1px); opacity:.82; }
-  100%{ transform:translateX(-1px); opacity:.26; }
-}
-
-.turtle.escape{
-  animation:homieCleanPortalExit 5.8s linear forwards !important;
-}
-
-.turtle.escape::before{
-  content:"" !important;
-  display:block !important;
-  position:absolute !important;
-  left:3px !important;
-  top:-6px !important;
-  width:13px !important;
-  height:1px !important;
-  background:rgba(242,238,229,.30) !important;
-  box-shadow:
-    5px -3px 0 rgba(242,238,229,.22),
-    -4px 4px 0 rgba(242,238,229,.16),
-    9px 5px 0 rgba(242,238,229,.08) !important;
-  opacity:.68 !important;
-  animation:homieCleanPanicMarks .16s steps(2) infinite !important;
-}
-
-.turtle.escape::after{
-  content:"" !important;
-  position:absolute !important;
-  left:0px !important;
-  top:0px !important;
-  width:7px !important;
-  height:1px !important;
-  background:rgba(242,238,229,.10) !important;
-  box-shadow:none !important;
-  opacity:.28 !important;
-  animation:homieCleanStressDash .22s steps(2) infinite !important;
-}
-
-@keyframes homieCleanPortalExit{
-  0%{
-    left:50%;
-    opacity:.9;
-    transform:scale(.68) translateY(0);
-  }
-
-  25%{
-    left:54%;
-    opacity:.9;
-    transform:scale(.68) translateY(-.4px);
-  }
-
-  50%{
-    left:59%;
-    opacity:.9;
-    transform:scale(.68) translateY(.3px);
-  }
-
-  75%{
-    left:64%;
-    opacity:.82;
-    transform:scale(.68) translateY(-.3px);
-  }
-
-  100%{
-    left:69%;
-    opacity:0;
-    transform:scale(.68) translateY(0);
-  }
-}
-
-@keyframes homieCleanPanicMarks{
-  0%{ transform:translate(0,0); opacity:.10; }
-  50%{ transform:translate(-2px,-1px); opacity:.74; }
-  100%{ transform:translate(-5px,1px); opacity:.05; }
-}
-
-@keyframes homieCleanStressDash{
-  0%{ transform:translateX(0); opacity:.05; }
-  50%{ transform:translateX(-2px); opacity:.30; }
-  100%{ transform:translateX(-5px); opacity:.03; }
-}
-
-/* =========================================================
-   CHANNEL 17 — LITTLE HOMIE ACTUAL FINAL LOCK
-   Full styles.css replacement.
-   Fixes:
-   - kills ugly X marks completely
-   - restores trembling half-arc zigzag above shell
-   - creates white vertical slit/door near symbol edge
-   - Little Homie walks into slit instead of fading randomly
-   ========================================================= */
-
-/* keep Little Homie small / hidden-survivor energy */
-.turtle{
-  transform:scale(.68) !important;
-}
-
-.turtle.notice{
-  transform:scale(.68) !important;
-}
-
-/* absolutely kill ALL old X / fake stress marks */
-.turtle.hide::before,
-.turtle.hide::after{
-  content:none !important;
-  display:none !important;
-}
-
-.turtle.hide .eye::before,
-.turtle.hide .eye::after,
-.turtle.escape .eye::before,
-.turtle.escape .eye::after,
-.eye::before,
-.eye::after{
-  content:none !important;
-  display:none !important;
-}
-
-/* use the shell itself as the anchor for the fear arc */
-.turtle.hide .shell{
-  left:12px !important;
-  top:5px !important;
-  width:27px !important;
-  height:17px !important;
-  animation:homieActualShellShiver .075s steps(2) infinite !important;
-  filter:drop-shadow(0 0 5px rgba(242,238,229,.18)) !important;
-}
-
-/* trembling half-circle / zigzag halo ABOVE the shell */
-.turtle.hide .shell::before{
-  content:"" !important;
-  display:block !important;
-  position:absolute !important;
-  left:-5px !important;
-  top:-11px !important;
-  width:36px !important;
-  height:18px !important;
-  pointer-events:none !important;
-  opacity:.74 !important;
-  border-top:2px solid rgba(242,238,229,.55) !important;
-  border-radius:50% 50% 0 0 !important;
-  clip-path:polygon(
-    0% 100%,
-    7% 45%,
-    14% 70%,
-    21% 32%,
-    29% 62%,
-    37% 22%,
-    46% 54%,
-    55% 18%,
-    65% 52%,
-    75% 26%,
-    86% 58%,
-    100% 36%,
-    100% 100%
-  ) !important;
-  background:linear-gradient(
-    to right,
-    transparent 0%,
-    rgba(242,238,229,.30) 18%,
-    rgba(242,238,229,.58) 48%,
-    rgba(242,238,229,.30) 78%,
-    transparent 100%
-  ) !important;
-  filter:blur(.2px) !important;
-  animation:homieActualFearArc .11s steps(2) infinite !important;
-}
-
-/* no second weird mark */
-.turtle.hide .shell::after{
-  content:none !important;
-  display:none !important;
-}
-
-@keyframes homieActualShellShiver{
-  0%{ transform:translate(0,0) scale(1); }
-  25%{ transform:translate(-1.4px,.5px) scale(1.004); }
-  50%{ transform:translate(1.1px,-.4px) scale(.997); }
-  75%{ transform:translate(-.8px,-.3px) scale(1.002); }
-  100%{ transform:translate(0,0) scale(1); }
-}
-
-@keyframes homieActualFearArc{
-  0%{ transform:translateX(-1px) translateY(0); opacity:.28; }
-  50%{ transform:translateX(1px) translateY(-1px); opacity:.86; }
-  100%{ transform:translateX(-1px) translateY(0); opacity:.32; }
-}
-
-/* slit/door: hidden until JS activates it */
-.loader-scene::after{
-  content:"" !important;
-  position:absolute !important;
-  left:calc(50% + 104px) !important;
-  top:calc(50% + 45px) !important;
-  width:2px !important;
-  height:0px !important;
-  background:rgba(242,238,229,.82) !important;
-  border-radius:8px !important;
-  opacity:0 !important;
-  box-shadow:
-    0 0 7px rgba(242,238,229,.42),
-    0 0 18px rgba(242,238,229,.18) !important;
-  transform:translateY(-50%) !important;
-  transition:
-    height .55s ease,
-    opacity .55s ease,
-    filter .55s ease !important;
-  z-index:34 !important;
-  pointer-events:none !important;
-}
-
-.loader-scene.slit-open::after{
-  height:38px !important;
-  opacity:.72 !important;
-  filter:blur(.1px) !important;
-}
-
-.loader-scene.slit-close::after{
-  height:0px !important;
-  opacity:0 !important;
-}
-
-/* walk INTO the slit, do not fade randomly across the screen */
-.turtle.escape{
-  animation:homieWalkIntoSlit 5.2s linear forwards !important;
-}
-
-/* subtle effort marks, no rocket trail */
-.turtle.escape::before{
-  content:"" !important;
-  display:block !important;
-  position:absolute !important;
-  left:4px !important;
-  top:-6px !important;
-  width:12px !important;
-  height:1px !important;
-  background:rgba(242,238,229,.26) !important;
-  box-shadow:
-    5px -3px 0 rgba(242,238,229,.18),
-    -4px 4px 0 rgba(242,238,229,.12) !important;
-  opacity:.58 !important;
-  animation:homieSlitPanicMarks .17s steps(2) infinite !important;
-}
-
-.turtle.escape::after{
-  content:none !important;
-  display:none !important;
-}
-
-@keyframes homieWalkIntoSlit{
-  0%{
-    left:50%;
-    opacity:.9;
-    transform:scale(.68) translateY(0);
-  }
-
-  25%{
-    left:54%;
-    opacity:.9;
-    transform:scale(.68) translateY(-.3px);
-  }
-
-  50%{
-    left:58%;
-    opacity:.9;
-    transform:scale(.68) translateY(.3px);
-  }
-
-  75%{
-    left:62%;
-    opacity:.9;
-    transform:scale(.68) translateY(-.3px);
-  }
-
-  92%{
-    left:65%;
-    opacity:.9;
-    transform:scale(.68) translateY(.2px);
-  }
-
-  100%{
-    left:66%;
-    opacity:0;
-    transform:scale(.50) translateY(0);
-  }
-}
-
-@keyframes homieSlitPanicMarks{
-  0%{ transform:translate(0,0); opacity:.08; }
-  50%{ transform:translate(-2px,-1px); opacity:.64; }
-  100%{ transform:translate(-5px,1px); opacity:.04; }
-}
-
-/* loading bar glitched-out ending after Homie escapes */
-.loader.homie-cut-out{
-  animation:homieCutsProgram .7s steps(2) forwards !important;
-}
-
-@keyframes homieCutsProgram{
-  0%{
-    opacity:1;
-    filter:none;
-    transform:translateX(0);
-  }
-
-  25%{
-    opacity:.7;
-    filter:blur(1px);
-    transform:translateX(-2px);
-  }
-
-  50%{
-    opacity:.35;
-    filter:blur(2px);
-    transform:translateX(2px);
-  }
-
-  75%{
-    opacity:.15;
-    filter:blur(3px);
-    transform:translateX(-1px);
-  }
-
-  100%{
-    opacity:0;
-    visibility:hidden;
-    filter:blur(5px);
-  }
-}
-
-/* =========================================================
-   CHANNEL 17 — LITTLE HOMIE DIRECTION LOCK CSS
-   Full styles.css replacement.
-   Fixes:
-   - removes dumb X marks
-   - restores watermelon/half-shell vibrating fear arc
-   - makes exit slit read as a visible white door
-   - turtle should enter slit, not fade randomly
-   ========================================================= */
-
-/* absolutely no X marks */
-.turtle.hide::before,
-.turtle.hide::after{
-  content:none !important;
-  display:none !important;
-  opacity:0 !important;
-}
-
-.eye::before,
-.eye::after,
-.turtle.hide .eye::before,
-.turtle.hide .eye::after,
-.turtle.escape .eye::before,
-.turtle.escape .eye::after{
-  content:none !important;
-  display:none !important;
-  opacity:0 !important;
-}
-
-/* Little Homie remains slightly smaller / hidden survivor */
-.turtle{
-  transform:scale(.68) !important;
-}
-
-.turtle.notice{
-  transform:scale(.68) !important;
-}
-
-/* Fear is shell-based, not eye/X based */
-.turtle.hide .shell{
-  overflow:visible !important;
-  left:12px !important;
-  top:5px !important;
-  width:27px !important;
-  height:17px !important;
-  animation:homieLockedShellTremble .07s steps(2) infinite !important;
-  filter:drop-shadow(0 0 5px rgba(242,238,229,.18)) !important;
-}
-
-/* watermelon-looking trembling half-shell arc ON/AROUND shell */
-.turtle.hide .shell::before{
-  content:"" !important;
-  display:block !important;
-  position:absolute !important;
-  left:-6px !important;
-  top:-8px !important;
-  width:39px !important;
-  height:22px !important;
-  pointer-events:none !important;
-  opacity:.76 !important;
-  background:
-    repeating-radial-gradient(
-      ellipse at 50% 100%,
-      transparent 0px,
-      transparent 3px,
-      rgba(242,238,229,.58) 4px,
-      rgba(242,238,229,.58) 5px,
-      transparent 6px,
-      transparent 9px
-    ) !important;
-  clip-path:polygon(
-    0% 100%,
-    0% 62%,
-    7% 44%,
-    14% 36%,
-    22% 28%,
-    31% 20%,
-    42% 14%,
-    52% 12%,
-    63% 15%,
-    74% 22%,
-    84% 32%,
-    93% 48%,
-    100% 66%,
-    100% 100%
-  ) !important;
-  filter:blur(.16px) !important;
-  animation:homieWatermelonFearArc .105s steps(2) infinite !important;
-}
-
-.turtle.hide .shell::after{
-  content:none !important;
-  display:none !important;
-  opacity:0 !important;
-}
-
-@keyframes homieLockedShellTremble{
-  0%{ transform:translate(0,0) scale(1); }
-  25%{ transform:translate(-1.5px,.5px) scale(1.004); }
-  50%{ transform:translate(1.2px,-.5px) scale(.997); }
-  75%{ transform:translate(-.8px,-.3px) scale(1.002); }
-  100%{ transform:translate(0,0) scale(1); }
-}
-
-@keyframes homieWatermelonFearArc{
-  0%{
-    transform:translate(-1px,0) scaleX(1);
-    opacity:.30;
-  }
-
-  50%{
-    transform:translate(1px,-1px) scaleX(1.04);
-    opacity:.86;
-  }
-
-  100%{
-    transform:translate(-1px,0) scaleX(1);
-    opacity:.28;
-  }
-}
-
-/* visible white slit/door: hidden until main.js opens it */
-.loader-scene::after{
-  content:"" !important;
-  position:absolute !important;
-  left:calc(50% + 112px) !important;
-  top:calc(50% + 45px) !important;
-  width:2px !important;
-  height:0px !important;
-  background:rgba(242,238,229,.95) !important;
-  border-radius:10px !important;
-  opacity:0 !important;
-  box-shadow:
-    0 0 8px rgba(242,238,229,.55),
-    0 0 20px rgba(242,238,229,.24),
-    0 0 36px rgba(242,238,229,.08) !important;
-  transform:translateY(-50%) !important;
-  transition:
-    height .42s ease,
-    opacity .42s ease,
-    filter .42s ease !important;
-  z-index:44 !important;
-  pointer-events:none !important;
-}
-
-.loader-scene.slit-open::after{
-  height:44px !important;
-  opacity:.88 !important;
-  filter:blur(.05px) !important;
-}
-
-.loader-scene.slit-close::after{
-  height:0px !important;
-  opacity:0 !important;
-}
-
-/* turtle moves to the slit and disappears only at contact */
-.turtle.escape{
-  animation:homieEnterVisibleSlit 5.4s linear forwards !important;
-}
-
-.turtle.escape::before{
-  content:"" !important;
-  display:block !important;
-  position:absolute !important;
-  left:4px !important;
-  top:-6px !important;
-  width:12px !important;
-  height:1px !important;
-  background:rgba(242,238,229,.24) !important;
-  box-shadow:
-    5px -3px 0 rgba(242,238,229,.16),
-    -4px 4px 0 rgba(242,238,229,.10) !important;
-  opacity:.54 !important;
-  border:0 !important;
-  border-radius:0 !important;
-  filter:none !important;
-  animation:homieFinalEffortMarks .17s steps(2) infinite !important;
-}
-
-.turtle.escape::after{
-  content:none !important;
-  display:none !important;
-}
-
-@keyframes homieEnterVisibleSlit{
-  0%{
-    left:50%;
-    opacity:.9;
-    transform:scale(.68) translateY(0);
-  }
-
-  24%{
-    left:54%;
-    opacity:.9;
-    transform:scale(.68) translateY(-.3px);
-  }
-
-  48%{
-    left:58%;
-    opacity:.9;
-    transform:scale(.68) translateY(.3px);
-  }
-
-  72%{
-    left:62%;
-    opacity:.9;
-    transform:scale(.68) translateY(-.25px);
-  }
-
-  92%{
-    left:66%;
-    opacity:.9;
-    transform:scale(.68) translateY(.15px);
-  }
-
-  100%{
-    left:67.5%;
-    opacity:0;
-    transform:scale(.48) translateY(0);
-  }
-}
-
-@keyframes homieFinalEffortMarks{
-  0%{ transform:translate(0,0); opacity:.07; }
-  50%{ transform:translate(-2px,-1px); opacity:.58; }
-  100%{ transform:translate(-5px,1px); opacity:.03; }
-}
-
-/* loading bar cut-out ending */
-.loader.homie-cut-out{
-  animation:homieProgramCutOut .62s steps(2) forwards !important;
-}
-
-.loader.homie-cut-out .percent,
-.loader.homie-cut-out .fill{
-  animation:homieProgramCutOut .62s steps(2) forwards !important;
-}
-
-@keyframes homieProgramCutOut{
-  0%{
-    opacity:1;
-    filter:none;
-    transform:translateX(0);
-  }
-
-  25%{
-    opacity:.72;
-    filter:blur(1px);
-    transform:translateX(-2px);
-  }
-
-  50%{
-    opacity:.34;
-    filter:blur(2px);
-    transform:translateX(2px);
-  }
-
-  75%{
-    opacity:.14;
-    filter:blur(3px);
-    transform:translateX(-1px);
-  }
-
-  100%{
-    opacity:0;
-    visibility:hidden;
-    filter:blur(5px);
-  }
-}
-
-
-/* CHANNEL 17 - HOMIE PORTAL LOCK */
-.turtle{transform:scale(.68)!important;}
-.turtle.notice{transform:scale(.68)!important;}
-
-.turtle.hide::before,
-.turtle.hide::after,
-.eye::before,
-.eye::after,
-.turtle.hide .eye::before,
-.turtle.hide .eye::after,
-.turtle.escape .eye::before,
-.turtle.escape .eye::after{
-  content:none!important;
-  display:none!important;
-  opacity:0!important;
-}
-
-.turtle.hide .shell{
-  overflow:visible!important;
-  left:12px!important;
-  top:5px!important;
-  width:27px!important;
-  height:17px!important;
-  animation:homiePortalShellShake .07s steps(2) infinite!important;
-  filter:drop-shadow(0 0 5px rgba(242,238,229,.18))!important;
-}
-
-.turtle.hide .shell::before{
-  content:""!important;
-  position:absolute!important;
-  left:-7px!important;
-  top:-10px!important;
-  width:41px!important;
-  height:23px!important;
-  pointer-events:none!important;
-  opacity:.82!important;
-  border-top:2px solid rgba(242,238,229,.58)!important;
-  border-radius:50% 50% 0 0!important;
-  background:
-    linear-gradient(135deg, transparent 0 18%, rgba(242,238,229,.72) 19% 24%, transparent 25% 100%),
-    linear-gradient(55deg, transparent 0 31%, rgba(242,238,229,.62) 32% 38%, transparent 39% 100%),
-    linear-gradient(125deg, transparent 0 47%, rgba(242,238,229,.56) 48% 54%, transparent 55% 100%),
-    linear-gradient(55deg, transparent 0 62%, rgba(242,238,229,.46) 63% 69%, transparent 70% 100%),
-    linear-gradient(125deg, transparent 0 76%, rgba(242,238,229,.36) 77% 83%, transparent 84% 100%)!important;
-  clip-path:polygon(0% 100%,2% 70%,9% 48%,18% 30%,30% 18%,43% 10%,56% 9%,70% 16%,83% 32%,94% 55%,100% 80%,100% 100%)!important;
-  filter:blur(.12px)!important;
-  animation:homiePortalFearArc .105s steps(2) infinite!important;
-}
-
-.turtle.hide .shell::after{content:none!important;display:none!important;}
-
-@keyframes homiePortalShellShake{
-  0%{transform:translate(0,0) scale(1);}
-  25%{transform:translate(-1.5px,.5px) scale(1.004);}
-  50%{transform:translate(1.2px,-.5px) scale(.997);}
-  75%{transform:translate(-.8px,-.3px) scale(1.002);}
-  100%{transform:translate(0,0) scale(1);}
-}
-
-@keyframes homiePortalFearArc{
-  0%{transform:translate(-1px,0);opacity:.32;}
-  50%{transform:translate(1px,-1px);opacity:.90;}
-  100%{transform:translate(-1px,0);opacity:.30;}
-}
-
-.loader.complete{
-  animation:loaderCompletePulse .9s steps(2) infinite!important;
-}
-
-@keyframes loaderCompletePulse{
-  0%{filter:brightness(1);box-shadow:0 0 20px rgba(242,238,229,.10);}
-  50%{filter:brightness(1.25);box-shadow:0 0 30px rgba(242,238,229,.24);}
-  100%{filter:brightness(1);box-shadow:0 0 20px rgba(242,238,229,.10);}
-}
-
-.loader::after{
-  content:""!important;
-  position:absolute!important;
-  right:18px!important;
-  top:50%!important;
-  width:3px!important;
-  height:0!important;
-  transform:translateY(-50%)!important;
-  background:rgba(242,238,229,.98)!important;
-  border-radius:10px!important;
-  opacity:0!important;
-  box-shadow:0 0 8px rgba(242,238,229,.68),0 0 20px rgba(242,238,229,.34),0 0 38px rgba(242,238,229,.15)!important;
-  z-index:6!important;
-  pointer-events:none!important;
-  transition:height .28s ease,opacity .28s ease!important;
-}
-
-.loader.portal-open::after{height:72px!important;opacity:1!important;}
-.loader.portal-close::after{height:0!important;opacity:0!important;}
-
-.turtle.escape{
-  animation:homiePortalWalkIn 4.9s linear forwards!important;
-}
-
-.turtle.escape::before{
-  content:""!important;
-  position:absolute!important;
-  left:4px!important;
-  top:-6px!important;
-  width:12px!important;
-  height:1px!important;
-  background:rgba(242,238,229,.24)!important;
-  box-shadow:5px -3px 0 rgba(242,238,229,.16),-4px 4px 0 rgba(242,238,229,.10)!important;
-  opacity:.54!important;
-  animation:homiePortalEffort .17s steps(2) infinite!important;
-}
-
-.turtle.escape::after{content:none!important;display:none!important;}
-
-@keyframes homiePortalWalkIn{
-  0%{left:50%;opacity:.92;transform:scale(.68) translateY(0);}
-  22%{left:55%;opacity:.92;transform:scale(.68) translateY(-.25px);}
-  44%{left:60%;opacity:.92;transform:scale(.68) translateY(.25px);}
-  66%{left:65%;opacity:.92;transform:scale(.68) translateY(-.2px);}
-  86%{left:69%;opacity:.92;transform:scale(.68) translateY(.15px);}
-  96%{left:71%;opacity:.92;transform:scale(.68) translateY(0);}
-  100%{left:72%;opacity:0;transform:scale(.42) translateY(0);}
-}
-
-@keyframes homiePortalEffort{
-  0%{transform:translate(0,0);opacity:.06;}
-  50%{transform:translate(-2px,-1px);opacity:.55;}
-  100%{transform:translate(-5px,1px);opacity:.03;}
-}
-
-.loader.homie-cut-out{
-  animation:homieBarCutOut .62s steps(2) forwards!important;
-}
-.loader.homie-cut-out .fill,
-.loader.homie-cut-out .percent{
-  animation:homieBarCutOut .62s steps(2) forwards!important;
-}
-
-@keyframes homieBarCutOut{
-  0%{opacity:1;filter:none;transform:translateX(0);}
-  25%{opacity:.75;filter:blur(1px);transform:translateX(-2px);}
-  50%{opacity:.38;filter:blur(2px);transform:translateX(2px);}
-  75%{opacity:.16;filter:blur(3px);transform:translateX(-1px);}
-  100%{opacity:0;visibility:hidden;filter:blur(5px);}
-}
-
-
-/* =========================================================
-   CHANNEL 17 — HOMIE VISIBLE DOOR CORRECTION
-   Full styles.css replacement.
-   Door is below/right of the bar where Homie reaches it.
-   ========================================================= */
-
-/* Remove wrong door inside loading bar */
-.loader::after{
-  content:none !important;
-  display:none !important;
-  opacity:0 !important;
-}
-
-/* No old X marks */
-.turtle.hide::before,
-.turtle.hide::after,
-.eye::before,
-.eye::after,
-.turtle.hide .eye::before,
-.turtle.hide .eye::after,
-.turtle.escape .eye::before,
-.turtle.escape .eye::after{
-  content:none !important;
-  display:none !important;
-  opacity:0 !important;
-}
-
-/* Better exterior shell fear arc */
-.turtle.hide .shell{
-  overflow:visible !important;
-  animation:homieDoorShellShake .07s steps(2) infinite !important;
-}
-
-.turtle.hide .shell::before{
-  content:"" !important;
-  position:absolute !important;
-  left:-8px !important;
-  top:-11px !important;
-  width:42px !important;
-  height:24px !important;
-  pointer-events:none !important;
-  opacity:.88 !important;
-  border-top:2px solid rgba(242,238,229,.66) !important;
-  border-radius:50% 50% 0 0 !important;
-  background:
-    linear-gradient(135deg, transparent 0 18%, rgba(242,238,229,.72) 19% 24%, transparent 25% 100%),
-    linear-gradient(55deg, transparent 0 31%, rgba(242,238,229,.62) 32% 38%, transparent 39% 100%),
-    linear-gradient(125deg, transparent 0 47%, rgba(242,238,229,.56) 48% 54%, transparent 55% 100%),
-    linear-gradient(55deg, transparent 0 62%, rgba(242,238,229,.46) 63% 69%, transparent 70% 100%),
-    linear-gradient(125deg, transparent 0 76%, rgba(242,238,229,.36) 77% 83%, transparent 84% 100%) !important;
-  clip-path:polygon(0% 100%,2% 70%,9% 48%,18% 30%,30% 18%,43% 10%,56% 9%,70% 16%,83% 32%,94% 55%,100% 80%,100% 100%) !important;
-  animation:homieDoorFearArc .095s steps(2) infinite !important;
-}
-
-.turtle.hide .shell::after{
-  content:none !important;
-  display:none !important;
-}
-
-@keyframes homieDoorShellShake{
-  0%{ transform:translate(0,0) scale(1); }
-  25%{ transform:translate(-1.5px,.5px) scale(1.004); }
-  50%{ transform:translate(1.2px,-.5px) scale(.997); }
-  75%{ transform:translate(-.8px,-.3px) scale(1.002); }
-  100%{ transform:translate(0,0) scale(1); }
-}
-
-@keyframes homieDoorFearArc{
-  0%{ transform:translate(-1px,0); opacity:.34; }
-  50%{ transform:translate(1px,-1px); opacity:.92; }
-  100%{ transform:translate(-1px,0); opacity:.32; }
-}
-
-/* Correct visible door: below/right of bar, not inside it */
-.loader-scene::after{
-  content:"" !important;
-  display:block !important;
-  position:absolute !important;
-  left:calc(50% + 112px) !important;
-  top:calc(50% + 84px) !important;
-  width:3px !important;
-  height:0 !important;
-  background:rgba(242,238,229,.98) !important;
-  border-radius:10px !important;
-  opacity:0 !important;
-  transform:translateY(-50%) !important;
-  box-shadow:
-    0 0 8px rgba(242,238,229,.70),
-    0 0 20px rgba(242,238,229,.34),
-    0 0 38px rgba(242,238,229,.14) !important;
-  z-index:90 !important;
-  pointer-events:none !important;
-  transition:height .28s ease, opacity .28s ease !important;
-}
-
-.loader-scene:has(.loader.portal-open)::after{
-  height:52px !important;
-  opacity:1 !important;
-}
-
-.loader-scene:has(.loader.portal-close)::after{
-  height:0 !important;
-  opacity:0 !important;
-}
-
-/* Walk to the visible below-bar slit, then vanish only at contact */
-.turtle.escape{
-  animation:homieWalkIntoVisibleDoor 5.2s linear forwards !important;
-}
-
-@keyframes homieWalkIntoVisibleDoor{
-  0%{ left:50%; opacity:.92; transform:scale(.68) translateY(0); }
-  20%{ left:55%; opacity:.92; transform:scale(.68) translateY(-.2px); }
-  40%{ left:60%; opacity:.92; transform:scale(.68) translateY(.2px); }
-  60%{ left:65%; opacity:.92; transform:scale(.68) translateY(-.2px); }
-  82%{ left:70%; opacity:.92; transform:scale(.68) translateY(.1px); }
-  96%{ left:72%; opacity:.92; transform:scale(.68) translateY(0); }
-  100%{ left:72.5%; opacity:0; transform:scale(.44) translateY(0); }
-}
-
-
-/* =========================================================
-   CHANNEL 17 — ACTUAL HOMIE SHELL + DOOR FIX
-   Full styles.css replacement.
-   - visible zigzag half-shell fear arc
-   - no X marks
-   - door sits on Homie's walking path
-   - Homie reaches and enters visible door
-   ========================================================= */
-
-/* Kill all previous bad marks */
-.turtle.hide::before,
-.turtle.hide::after,
-.eye::before,
-.eye::after,
-.turtle.hide .eye::before,
-.turtle.hide .eye::after,
-.turtle.escape .eye::before,
-.turtle.escape .eye::after{
-  content:none !important;
-  display:none !important;
-  opacity:0 !important;
-}
-
-/* Keep Homie small */
-.turtle,
-.turtle.notice{
-  transform:scale(.68) !important;
-}
-
-/* Shell tremble */
-.turtle.hide .shell{
-  overflow:visible !important;
-  animation:homieRealShellShake .065s steps(2) infinite !important;
-}
-
-/* THE FEAR MARK: actual zigzag half-shell sitting above/exterior of shell */
-.turtle.hide .shell::before{
-  content:"" !important;
-  display:block !important;
-  position:absolute !important;
-  left:-10px !important;
-  top:-14px !important;
-  width:48px !important;
-  height:26px !important;
-  opacity:.95 !important;
-  pointer-events:none !important;
-  background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%2048%2026%27%3E%0A%3Cpolyline%20points%3D%272%2C22%206%2C13%2010%2C17%2014%2C8%2018%2C14%2023%2C5%2028%2C13%2033%2C6%2038%2C15%2043%2C10%2046%2C20%27%20fill%3D%27none%27%20stroke%3D%27rgb%28242%2C238%2C229%29%27%20stroke-width%3D%272.4%27%20stroke-linecap%3D%27round%27%20stroke-linejoin%3D%27round%27/%3E%0A%3Cpolyline%20points%3D%277%2C21%2012%2C14%2017%2C18%2022%2C10%2027%2C17%2032%2C11%2038%2C19%27%20fill%3D%27none%27%20stroke%3D%27rgb%28242%2C238%2C229%29%27%20stroke-opacity%3D%27.55%27%20stroke-width%3D%271.2%27%20stroke-linecap%3D%27round%27%20stroke-linejoin%3D%27round%27/%3E%0A%3C/svg%3E") !important;
-  background-repeat:no-repeat !important;
-  background-size:48px 26px !important;
-  z-index:9 !important;
-  filter:
-    drop-shadow(0 0 2px rgba(242,238,229,.45))
-    blur(.05px) !important;
-  animation:homieRealFearDome .09s steps(2) infinite !important;
-}
-
-.turtle.hide .shell::after{
-  content:none !important;
-  display:none !important;
-}
-
-@keyframes homieRealShellShake{
-  0%{ transform:translate(0,0); }
-  25%{ transform:translate(-1.4px,.5px); }
-  50%{ transform:translate(1.2px,-.4px); }
-  75%{ transform:translate(-.8px,-.3px); }
-  100%{ transform:translate(0,0); }
-}
-
-@keyframes homieRealFearDome{
-  0%{ transform:translate(-1px,0); opacity:.45; }
-  50%{ transform:translate(1px,-1px); opacity:1; }
-  100%{ transform:translate(-1px,0); opacity:.42; }
-}
-
-/* Remove wrong bar-door entirely */
-.loader::after{
-  content:none !important;
-  display:none !important;
-  opacity:0 !important;
-}
-
-/* Correct visible portal: ON HOMIE'S PATH, not underground */
-.loader-scene::after{
-  content:"" !important;
-  display:block !important;
-  position:absolute !important;
-  left:calc(50% + 118px) !important;
-  top:calc(50% + 52px) !important;
-  width:3px !important;
-  height:0 !important;
-  background:rgba(242,238,229,.98) !important;
-  border-radius:10px !important;
-  opacity:0 !important;
-  transform:translateY(-50%) !important;
-  box-shadow:
-    0 0 8px rgba(242,238,229,.72),
-    0 0 22px rgba(242,238,229,.36),
-    0 0 42px rgba(242,238,229,.14) !important;
-  z-index:90 !important;
-  pointer-events:none !important;
-  transition:height .25s ease, opacity .25s ease !important;
-}
-
-.loader-scene.portal-open::after{
-  height:48px !important;
-  opacity:1 !important;
-}
-
-.loader-scene.portal-close::after{
-  height:0 !important;
-  opacity:0 !important;
-}
-
-/* Homie walks into that visible slit */
-.turtle.escape{
-  animation:homieActuallyEnterDoor 5.25s linear forwards !important;
-}
-
-.turtle.escape::before{
-  content:"" !important;
-  display:block !important;
-  position:absolute !important;
-  left:4px !important;
-  top:-6px !important;
-  width:12px !important;
-  height:1px !important;
-  background:rgba(242,238,229,.24) !important;
-  box-shadow:
-    5px -3px 0 rgba(242,238,229,.16),
-    -4px 4px 0 rgba(242,238,229,.10) !important;
-  opacity:.54 !important;
-  animation:homieTinyEffort .17s steps(2) infinite !important;
-}
-
-.turtle.escape::after{
-  content:none !important;
-  display:none !important;
-}
-
-@keyframes homieActuallyEnterDoor{
-  0%{ left:50%; opacity:.92; transform:scale(.68) translateY(0); }
-  20%{ left:55%; opacity:.92; transform:scale(.68) translateY(-.2px); }
-  40%{ left:60%; opacity:.92; transform:scale(.68) translateY(.2px); }
-  60%{ left:65%; opacity:.92; transform:scale(.68) translateY(-.2px); }
-  82%{ left:70%; opacity:.92; transform:scale(.68) translateY(.1px); }
-  96%{ left:73%; opacity:.92; transform:scale(.68) translateY(0); }
-  100%{ left:74%; opacity:0; transform:scale(.40) translateY(0); }
-}
-
-@keyframes homieTinyEffort{
-  0%{ transform:translate(0,0); opacity:.06; }
-  50%{ transform:translate(-2px,-1px); opacity:.55; }
-  100%{ transform:translate(-5px,1px); opacity:.03; }
-}
-
-/* Full bar gets impatient, then dies after Homie exits */
-.loader.complete{
-  animation:loaderCompletePulse .9s steps(2) infinite !important;
-}
-
-.loader.homie-cut-out{
-  animation:homieBarCutOut .62s steps(2) forwards !important;
-}
-
-.loader.homie-cut-out .fill,
-.loader.homie-cut-out .percent{
-  animation:homieBarCutOut .62s steps(2) forwards !important;
-}
-
-/* CHANNEL 17 - HOMIE OPTION 20 + PORTAL CUT FINAL */
-
-.turtle.hide::before,
-.turtle.hide::after,
-.eye::before,
-.eye::after,
-.turtle.hide .eye::before,
-.turtle.hide .eye::after,
-.turtle.escape .eye::before,
-.turtle.escape .eye::after{
-  content:none !important;
-  display:none !important;
-  opacity:0 !important;
-}
-
-.turtle,
-.turtle.notice{
-  transform:scale(.68) !important;
-}
-
-.turtle.hide .shell{
-  overflow:visible !important;
-  animation:homieTwentyShellShake .075s steps(2) infinite !important;
-  filter:drop-shadow(0 0 5px rgba(242,238,229,.18)) !important;
-}
-
-.turtle.hide .shell::before,
-.turtle.hide .shell::after{
-  content:"" !important;
-  display:block !important;
-  position:absolute !important;
-  pointer-events:none !important;
-  border:2px solid transparent !important;
-  border-top-color:rgba(242,238,229,.66) !important;
-  border-left-color:rgba(242,238,229,.26) !important;
-  border-right-color:rgba(242,238,229,.26) !important;
-  border-radius:50% 50% 0 0 !important;
-  background:none !important;
-  clip-path:polygon(0 0,100% 0,100% 78%,0 78%) !important;
-  filter:blur(.12px) !important;
-  z-index:8 !important;
-}
-
-.turtle.hide .shell::before{
-  left:-10px !important;
-  top:-12px !important;
-  width:47px !important;
-  height:25px !important;
-  opacity:.88 !important;
-  animation:homieTwentyArcA .105s steps(2) infinite !important;
-}
-
-.turtle.hide .shell::after{
-  left:-14px !important;
-  top:-16px !important;
-  width:55px !important;
-  height:31px !important;
-  opacity:.45 !important;
-  animation:homieTwentyArcB .13s steps(2) infinite reverse !important;
-}
-
-@keyframes homieTwentyShellShake{
-  0%{ transform:translate(0,0); }
-  25%{ transform:translate(-1.4px,.45px); }
-  50%{ transform:translate(1.1px,-.4px); }
-  75%{ transform:translate(-.8px,-.3px); }
-  100%{ transform:translate(0,0); }
-}
-
-@keyframes homieTwentyArcA{
-  0%{ transform:translate(-1px,0) scaleX(.98); opacity:.32; }
-  50%{ transform:translate(1px,-1px) scaleX(1.04); opacity:.92; }
-  100%{ transform:translate(-1px,0) scaleX(.98); opacity:.34; }
-}
-
-@keyframes homieTwentyArcB{
-  0%{ transform:translate(1px,0) scaleX(1.03); opacity:.18; }
-  50%{ transform:translate(-1px,-1px) scaleX(.98); opacity:.52; }
-  100%{ transform:translate(1px,0) scaleX(1.03); opacity:.20; }
-}
-
-.loader::after{
-  content:none !important;
-  display:none !important;
-}
-
-.loader-scene::after{
-  content:"" !important;
-  display:block !important;
-  position:absolute !important;
-  left:calc(50% + 117px) !important;
-  top:calc(50% + 54px) !important;
-  width:3px !important;
-  height:0 !important;
-  background:rgba(242,238,229,.98) !important;
-  border-radius:10px !important;
-  opacity:0 !important;
-  transform:translateY(-50%) !important;
-  box-shadow:
-    0 0 8px rgba(242,238,229,.72),
-    0 0 22px rgba(242,238,229,.36),
-    0 0 42px rgba(242,238,229,.14) !important;
-  z-index:95 !important;
-  pointer-events:none !important;
-  transition:height .25s ease, opacity .25s ease !important;
-}
-
-.loader-scene.portal-open::after{
-  height:42px !important;
-  opacity:1 !important;
-}
-
-.loader-scene.portal-close::after{
-  height:0 !important;
-  opacity:0 !important;
-}
-
-.turtle.escape{
-  animation:homieCutThroughPortal 5.25s linear forwards !important;
-  clip-path:inset(0 0 0 0) !important;
-}
-
-.turtle.escape::before{
-  content:"" !important;
-  display:block !important;
-  position:absolute !important;
-  left:4px !important;
-  top:-6px !important;
-  width:12px !important;
-  height:1px !important;
-  background:rgba(242,238,229,.22) !important;
-  box-shadow:
-    5px -3px 0 rgba(242,238,229,.14),
-    -4px 4px 0 rgba(242,238,229,.09) !important;
-  opacity:.5 !important;
-  animation:homiePortalEffortFinal .17s steps(2) infinite !important;
-}
-
-.turtle.escape::after{
-  content:none !important;
-  display:none !important;
-}
-
-@keyframes homieCutThroughPortal{
-  0%{ left:50%; opacity:.92; transform:scale(.68) translateY(0); clip-path:inset(0 0 0 0); }
-  20%{ left:55%; opacity:.92; transform:scale(.68) translateY(-.2px); clip-path:inset(0 0 0 0); }
-  40%{ left:60%; opacity:.92; transform:scale(.68) translateY(.2px); clip-path:inset(0 0 0 0); }
-  60%{ left:65%; opacity:.92; transform:scale(.68) translateY(-.2px); clip-path:inset(0 0 0 0); }
-  80%{ left:70%; opacity:.92; transform:scale(.68) translateY(.1px); clip-path:inset(0 0 0 0); }
-  88%{ left:72%; opacity:.92; transform:scale(.68) translateY(0); clip-path:inset(0 0 0 0); }
-  93%{ left:73%; opacity:.92; transform:scale(.68) translateY(0); clip-path:inset(0 38% 0 0); }
-  97%{ left:73.8%; opacity:.92; transform:scale(.68) translateY(0); clip-path:inset(0 78% 0 0); }
-  100%{ left:74%; opacity:0; transform:scale(.68) translateY(0); clip-path:inset(0 100% 0 0); }
-}
-
-@keyframes homiePortalEffortFinal{
-  0%{ transform:translate(0,0); opacity:.06; }
-  50%{ transform:translate(-2px,-1px); opacity:.5; }
-  100%{ transform:translate(-5px,1px); opacity:.03; }
-}
-
-.loader.complete{
-  animation:loaderCompletePulse .9s steps(2) infinite !important;
-}
-
-.loader.homie-cut-out{
-  animation:homieBarCutOut .62s steps(2) forwards !important;
-}
-
-.loader.homie-cut-out .fill,
-.loader.homie-cut-out .percent{
-  animation:homieBarCutOut .62s steps(2) forwards !important;
 }
