@@ -13,8 +13,9 @@ const idleMaze = document.getElementById("idleMaze");
 
 const attentionFeed = document.getElementById("attentionFeed");
 const avatarField = document.getElementById("avatarField");
-const smotherField = document.getElementById("smotherField");
-const frankZone = document.getElementById("frankZone");
+const burnField = document.getElementById("burnField");
+const frankStage = document.getElementById("frankStage");
+const panicWash = document.getElementById("panicWash");
 
 let progress = 0;
 let state = "normal";
@@ -23,47 +24,56 @@ let completed = false;
 let noticed = false;
 let hidden = false;
 let virusStarted = false;
-let avatarsStarted = false;
-let smotherStarted = false;
-let symbolAttackStarted = false;
+let heavyStarted = false;
+let burnStarted = false;
 let frankStarted = false;
-let panicStarted = false;
+let bumRushStarted = false;
 
 let reactionTimer = null;
 let avatarTimer = null;
-let attackTimer = null;
-let swarmTimer = null;
-
-let avatarCount = 0;
 let reactionCount = 0;
-let attackCount = 0;
+let avatarCount = 0;
+let allAvatars = [];
+let allReactions = [];
 
 const names = [
-  "Sue W", "Mike J", "Terry P", "Donna R", "Kevin M", "Jules V",
-  "Mara K", "Ron T", "Lisa B", "Carl N", "Amy S", "Drew C",
-  "Nina Q", "Paul E", "Kim L", "Ben H", "Rita D", "Sam G"
+  "Sally W", "Mark T", "Terry P", "Mara K", "Jules V", "Mike J", "Donna R", "Kevin M",
+  "Sue V", "Britt C", "Paul N", "Amy L", "Rick D", "Nina S", "Kyle B", "Wendy R",
+  "Josh P", "Lena M", "Derek C", "Tina F", "Cody J", "April V", "Shane K", "Rosa B",
+  "Brad Y", "Kara N", "Dawn H", "Mitch L", "Casey R", "Kim J", "Tony G", "Erin C"
 ];
 
-const deploySpots = [
-  [18, 20], [42, 17], [70, 19], [12, 34], [35, 33], [62, 34], [84, 36],
-  [20, 49], [48, 48], [76, 51], [8, 64], [30, 66], [55, 64], [82, 67],
-  [16, 79], [42, 80], [68, 78], [91, 82]
+const palettes = [
+  { skin:"#e4b88f", hair:"#e6c15e", shirt:"#244d7c" },
+  { skin:"#c98f67", hair:"#221b16", shirt:"#7f2635" },
+  { skin:"#f0c7a4", hair:"#654321", shirt:"#3d6f4e" },
+  { skin:"#b77a55", hair:"#111", shirt:"#543c9b" },
+  { skin:"#d9a276", hair:"#8a5b2f", shirt:"#a24a2a" },
+  { skin:"#edc5a2", hair:"#d8d0bf", shirt:"#384b66" },
+  { skin:"#9f6749", hair:"#2a1a14", shirt:"#1f5d70" },
+  { skin:"#f2d0b5", hair:"#b56b39", shirt:"#882c62" }
 ];
 
 function setProgress(value){
   progress = Math.max(0, Math.min(100, value));
-  fill.style.width = progress <= 0 ? "0%" : `calc(${progress}% - 12px)`;
+
+  fill.style.width =
+    progress <= 0
+      ? "0%"
+      : `calc(${progress}% - 12px)`;
+
   percent.textContent = `${Math.round(progress)}%`;
 }
 
 const loading = setInterval(() => {
   if(state === "normal") progress += .16;
   if(state === "notice") progress += .035;
-  if(state === "hide") progress += .22;
+  if(state === "hide") progress += .23;
 
   if(progress >= 17 && !noticed){
     noticed = true;
     state = "notice";
+
     turtle.classList.remove("walk");
     turtle.classList.add("notice");
     loader.classList.add("offcourse");
@@ -72,41 +82,34 @@ const loading = setInterval(() => {
   if(progress >= 19 && !hidden){
     hidden = true;
     state = "hide";
+
     turtle.classList.remove("notice");
     turtle.classList.add("hide");
   }
 
   if(progress >= 21 && !virusStarted){
     virusStarted = true;
-    virusLayer.classList.add("active");
-    startRightSideEngagement();
+    startAttentionSystem();
   }
 
-  if(progress >= 29 && !avatarsStarted){
-    avatarsStarted = true;
-    deploySystemAvatars();
+  if(progress >= 38 && !heavyStarted){
+    heavyStarted = true;
+    intensifyCoverage();
   }
 
-  if(progress >= 46 && !smotherStarted){
-    smotherStarted = true;
-    smotherTheScreen();
+  if(progress >= 62 && !burnStarted){
+    burnStarted = true;
+    startSymbolExposure();
   }
 
-  if(progress >= 64 && !symbolAttackStarted){
-    symbolAttackStarted = true;
-    signalNode.classList.add("breaching");
-    beginSymbolAttack();
-  }
-
-  if(progress >= 75 && !frankStarted){
+  if(progress >= 72 && !frankStarted){
     frankStarted = true;
-    frankMoment();
+    runFrankMoment();
   }
 
-  if(progress >= 88 && !panicStarted){
-    panicStarted = true;
-    virusLayer.classList.add("panic");
-    finalSwarm();
+  if(progress >= 80 && !bumRushStarted){
+    bumRushStarted = true;
+    beginBumRush();
   }
 
   if(progress >= 100 && !completed){
@@ -119,242 +122,272 @@ const loading = setInterval(() => {
   setProgress(progress);
 }, 45);
 
-function startRightSideEngagement(){
-  addReactionBurst(9, false, 120);
+function startAttentionSystem(){
+  virusLayer.classList.add("active");
+
+  for(let i = 0; i < 18; i++){
+    setTimeout(() => spawnReaction(false), i * 90);
+  }
+
+  for(let i = 0; i < 10; i++){
+    setTimeout(() => spawnAvatar("drop"), 500 + i * 150);
+  }
+
   reactionTimer = setInterval(() => {
-    if(completed) return;
-    addReaction(false);
-    if(reactionCount % 4 === 0) setTimeout(() => addReaction(false), 90);
-  }, 420);
-}
-
-function addReactionBurst(amount, attacking, gap){
-  for(let i = 0; i < amount; i++){
-    setTimeout(() => addReaction(attacking), i * gap);
-  }
-}
-
-function addReaction(attacking){
-  if(!attentionFeed) return;
-
-  const symbols = attacking ? ["❤️", "👍", "🔔", "✔", "?", "🩶"] : ["❤️", "❤️", "👍", "🔔", "✔"];
-  const item = document.createElement("div");
-  const symbol = symbols[reactionCount % symbols.length];
-
-  item.className = "reaction";
-  if(reactionCount % 5 === 0) item.classList.add("big");
-  if(reactionCount % 3 === 0) item.classList.add("small");
-
-  item.textContent = symbol;
-  item.style.right = `${3 + Math.random() * 22}%`;
-  item.style.bottom = `${-8 + Math.random() * 8}%`;
-  item.style.setProperty("--drift", `${-70 + Math.random() * 95}px`);
-  item.style.setProperty("--dur", `${3.2 + Math.random() * 2.7}s`);
-
-  if(attacking){
-    item.classList.add("attack");
-    if(symbol === "🩶" || symbol === "?" || reactionCount % 2 === 0) item.classList.add("gray");
-    item.style.left = `${60 + Math.random() * 34}%`;
-    item.style.top = `${18 + Math.random() * 72}%`;
-    item.style.right = "auto";
-    item.style.bottom = "auto";
-    item.style.setProperty("--tx", `${-18 - Math.random() * 34}vw`);
-    item.style.setProperty("--ty", `${-8 - Math.random() * 34}vh`);
-    item.style.setProperty("--dur", `${1.7 + Math.random() * 1.35}s`);
-  }
-
-  attentionFeed.appendChild(item);
-  reactionCount++;
-
-  setTimeout(() => item.remove(), attacking ? 3600 : 6500);
-}
-
-function deploySystemAvatars(){
-  addAvatarWave(7, 115);
+    spawnReaction(false);
+    if(reactionCount % 3 === 0) spawnReaction(false);
+  }, 190);
 
   avatarTimer = setInterval(() => {
-    if(completed) return;
-    addAvatar();
-    if(avatarCount > 32){
-      clearInterval(avatarTimer);
-      avatarTimer = null;
-    }
-  }, 310);
+    spawnAvatar("drop");
+  }, 330);
 }
 
-function addAvatarWave(amount, gap){
-  for(let i = 0; i < amount; i++){
-    setTimeout(addAvatar, i * gap);
+function intensifyCoverage(){
+  for(let i = 0; i < 38; i++){
+    setTimeout(() => spawnAvatar("drop"), i * 70);
+  }
+
+  for(let i = 0; i < 70; i++){
+    setTimeout(() => spawnReaction(false), i * 38);
   }
 }
 
-function makeAvatar(name, x, y, frank = false){
-  const avatar = document.createElement("div");
-  avatar.className = frank ? "avatar frank deploy" : "avatar deploy";
-  avatar.style.setProperty("--x", `${x}%`);
-  avatar.style.setProperty("--y", `${y}%`);
+function spawnReaction(forceAttack){
+  if(!attentionFeed) return;
 
-  avatar.innerHTML = `
-    <div class="bubble"><div class="face"></div></div>
-    <div class="body"></div>
-    <div class="name">${name}</div>
-  `;
+  const types = ["heart", "heart", "heart", "like", "check", "bell", "trend"];
+  const type = types[reactionCount % types.length];
+  const node = document.createElement("div");
+  node.className = `reaction ${type}`;
 
-  return avatar;
+  let symbol = "❤️";
+  if(type === "like") symbol = "👍";
+  if(type === "check") symbol = "✔";
+  if(type === "bell") symbol = "🔔";
+  if(type === "trend") symbol = "↗";
+
+  node.textContent = symbol;
+
+  const rightSide = type === "heart" || type === "like" || type === "bell";
+  const x = forceAttack
+    ? 35 + Math.random() * 30
+    : rightSide
+      ? 76 + Math.random() * 20
+      : 8 + Math.random() * 84;
+  const y = forceAttack
+    ? 28 + Math.random() * 35
+    : 58 + Math.random() * 36;
+
+  node.style.setProperty("--x", `${x}%`);
+  node.style.setProperty("--y", `${y}%`);
+  node.style.setProperty("--s", `${18 + Math.random() * 16}px`);
+  node.style.setProperty("--rise", `${Math.round(Math.random() * 90)}px`);
+  node.style.setProperty("--drift", `${Math.round(-45 + Math.random() * 90)}px`);
+  node.style.setProperty("--drift2", `${Math.round(-45 + Math.random() * 90)}px`);
+  node.style.setProperty("--drift3", `${Math.round(-45 + Math.random() * 90)}px`);
+
+  attentionFeed.appendChild(node);
+  allReactions.push(node);
+  reactionCount++;
+
+  if(forceAttack || burnStarted){
+    setTimeout(() => corruptReaction(node), 650 + Math.random() * 1100);
+  }
+
+  setTimeout(() => node.remove(), 7600);
 }
 
-function addAvatar(){
+function corruptReaction(node){
+  if(!node || !node.isConnected) return;
+
+  if(node.classList.contains("check")){
+    node.textContent = "?";
+    node.classList.add("question");
+    return;
+  }
+
+  if(node.classList.contains("heart")){
+    node.textContent = "♥";
+  }
+
+  node.classList.add("dead");
+}
+
+function spawnAvatar(mode){
   if(!avatarField) return;
 
-  const spot = deploySpots[avatarCount % deploySpots.length];
-  const jitterX = (Math.random() * 8) - 4;
-  const jitterY = (Math.random() * 6) - 3;
-  const name = names[avatarCount % names.length];
+  const index = avatarCount++;
+  const node = document.createElement("div");
+  node.className = "avatar";
 
-  const avatar = makeAvatar(name, spot[0] + jitterX, spot[1] + jitterY);
-  avatarField.appendChild(avatar);
+  const size = Math.round(62 + Math.random() * 22);
+  const startX = 6 + Math.random() * 88;
+  const startY = mode === "drop" ? -8 - Math.random() * 22 : 6 + Math.random() * 86;
+  const landX = 4 + Math.random() * 92;
+  const landY = 12 + Math.random() * 78;
+  const palette = palettes[index % palettes.length];
 
-  const convertToStock = 700 + Math.random() * 1200;
-  const convertToPlaceholder = convertToStock + 800 + Math.random() * 1400;
+  node.style.setProperty("--size", `${size}px`);
+  node.style.setProperty("--sx", `${startX}%`);
+  node.style.setProperty("--sy", `${startY}%`);
+  node.style.setProperty("--skin", palette.skin);
+  node.style.setProperty("--hair", palette.hair);
+  node.style.setProperty("--shirt", palette.shirt);
 
-  setTimeout(() => avatar.classList.add("stock"), convertToStock);
-  setTimeout(() => avatar.classList.add("placeholder"), convertToPlaceholder);
+  node.innerHTML = `
+    <div class="bubble">
+      <div class="face"></div>
+      <div class="stock"></div>
+      <div class="placeholder"></div>
+    </div>
+    <div class="name">${names[index % names.length]}</div>
+  `;
 
-  avatarCount++;
-}
+  avatarField.appendChild(node);
+  allAvatars.push(node);
 
-function smotherTheScreen(){
-  const total = 38;
+  requestAnimationFrame(() => {
+    node.style.left = `${landX}%`;
+    node.style.top = `${landY}%`;
+    node.style.setProperty("--sx", `${landX}%`);
+    node.style.setProperty("--sy", `${landY}%`);
+    node.classList.add("smother");
+  });
 
-  for(let i = 0; i < total; i++){
-    setTimeout(() => {
-      const dot = document.createElement("div");
-      dot.className = "smother-dot";
-      dot.style.left = `${-4 + Math.random() * 108}%`;
-      dot.style.top = `${5 + Math.random() * 88}%`;
-      dot.style.transform = `scale(${.7 + Math.random() * .85})`;
-      smotherField.appendChild(dot);
-    }, i * 55);
+  if(burnStarted || index % 5 === 0){
+    setTimeout(() => exposeAvatar(node), 900 + Math.random() * 2100);
   }
+
+  return node;
 }
 
-function beginSymbolAttack(){
-  addReactionBurst(12, true, 65);
-  rushExistingAvatars();
+function exposeAvatar(node){
+  if(!node || !node.isConnected) return;
 
-  attackTimer = setInterval(() => {
-    if(completed) return;
-    addReaction(true);
-    if(attackCount % 2 === 0) rushOneFreshAvatar();
-    attackCount++;
-  }, 260);
+  node.classList.add("breaking");
+  setTimeout(() => node.classList.add("stage-stock"), 180 + Math.random() * 420);
+  setTimeout(() => node.classList.add("stage-blue"), 620 + Math.random() * 700);
+  setTimeout(() => node.classList.add("dead"), 1100 + Math.random() * 700);
 }
 
-function rushExistingAvatars(){
-  const avatars = Array.from(avatarField.querySelectorAll(".avatar"));
+function startSymbolExposure(){
+  if(!burnField) return;
 
-  avatars.forEach((avatar, index) => {
-    setTimeout(() => rushAvatar(avatar), index * 70);
+  const hole = document.createElement("div");
+  hole.className = "burn-hole";
+  burnField.appendChild(hole);
+
+  for(let i = 0; i < 42; i++){
+    setTimeout(() => spawnBurnSpark(), i * 70);
+  }
+
+  allAvatars.forEach((avatar, index) => {
+    const rectDelay = 100 + index * 24;
+    setTimeout(() => {
+      if(isNearSymbol(avatar) || index % 3 === 0) exposeAvatar(avatar);
+    }, rectDelay);
+  });
+
+  allReactions.forEach((reaction, index) => {
+    setTimeout(() => corruptReaction(reaction), index * 22);
   });
 }
 
-function rushAvatar(avatar){
-  if(!avatar || avatar.classList.contains("rush")) return;
+function spawnBurnSpark(){
+  const spark = document.createElement("div");
+  spark.className = "burn-spark";
 
-  avatar.classList.add("turn");
+  const angle = Math.random() * Math.PI * 2;
+  const radius = 4 + Math.random() * 24;
+  const x = 50 + Math.cos(angle) * radius / 5;
+  const y = 31 + Math.sin(angle) * radius / 5;
 
-  const rect = avatar.getBoundingClientRect();
-  const targetX = window.innerWidth * .5;
-  const targetY = window.innerHeight * .31;
-  const dx = targetX - (rect.left + rect.width / 2);
-  const dy = targetY - (rect.top + rect.height / 2);
+  spark.style.setProperty("--x", `${x}%`);
+  spark.style.setProperty("--y", `${y}%`);
+  spark.style.setProperty("--s", `${4 + Math.random() * 8}px`);
 
-  avatar.style.setProperty("--tx", `${dx}px`);
-  avatar.style.setProperty("--ty", `${dy}px`);
-  avatar.style.setProperty("--rush", `${1.65 + Math.random() * 1.1}s`);
-
-  setTimeout(() => avatar.classList.add("exposed"), 220);
-  setTimeout(() => avatar.classList.add("stock"), 420);
-  setTimeout(() => avatar.classList.add("placeholder"), 780);
-  setTimeout(() => avatar.classList.add("rush"), 260);
+  burnField.appendChild(spark);
+  setTimeout(() => spark.remove(), 2600);
 }
 
-function rushOneFreshAvatar(){
-  const side = Math.random() > .5 ? 106 : -6;
-  const y = 14 + Math.random() * 76;
-  const name = names[(avatarCount + attackCount) % names.length];
-  const avatar = makeAvatar(name, side, y);
-  avatarField.appendChild(avatar);
-  avatarCount++;
-
-  setTimeout(() => rushAvatar(avatar), 180);
-  setTimeout(() => avatar.remove(), 4200);
+function isNearSymbol(node){
+  const x = parseFloat(node.style.left || "0");
+  const y = parseFloat(node.style.top || "0");
+  const dx = x - 50;
+  const dy = y - 31;
+  return Math.sqrt(dx * dx + dy * dy) < 28;
 }
 
-function frankMoment(){
-  const frank = makeAvatar("Frank 1358", 20, 74, true);
-  frankZone.appendChild(frank);
+function runFrankMoment(){
+  if(!frankStage) return;
 
-  setTimeout(() => frank.classList.add("stock"), 600);
-  setTimeout(() => frank.classList.add("placeholder"), 950);
+  const frank = document.createElement("div");
+  frank.className = "frank-avatar";
+  frank.innerHTML = `
+    <div class="bubble">
+      <div class="body"></div>
+      <div class="arm left"></div>
+      <div class="arm right"></div>
+    </div>
+    <div class="name">Frank 1358</div>
+  `;
+
+  frankStage.appendChild(frank);
+
+  setTimeout(() => frank.classList.add("realize"), 520);
 
   setTimeout(() => {
-    frank.classList.add("awake");
-  }, 1320);
-
-  setTimeout(() => {
-    frank.classList.remove("awake");
-    buryFrank();
-  }, 2050);
-}
-
-function buryFrank(){
-  addAvatarWave(10, 45);
-
-  const frank = frankZone.querySelector(".frank");
-  if(frank){
-    setTimeout(() => frank.classList.add("buried"), 320);
-    setTimeout(() => frank.remove(), 900);
-  }
-
-  for(let i = 0; i < 16; i++){
-    setTimeout(() => {
-      const dot = document.createElement("div");
-      dot.className = "smother-dot";
-      dot.style.left = `${9 + Math.random() * 28}%`;
-      dot.style.top = `${60 + Math.random() * 25}%`;
-      dot.style.transform = `scale(${.9 + Math.random() * .75})`;
-      smotherField.appendChild(dot);
-    }, i * 38);
-  }
-}
-
-function finalSwarm(){
-  let count = 0;
-
-  swarmTimer = setInterval(() => {
-    if(completed || count > 42){
-      clearInterval(swarmTimer);
-      swarmTimer = null;
-      return;
+    for(let i = 0; i < 18; i++){
+      setTimeout(() => {
+        const avatar = spawnAvatar("drop");
+        if(avatar){
+          avatar.style.left = `${6 + Math.random() * 22}%`;
+          avatar.style.top = `${58 + Math.random() * 30}%`;
+          setTimeout(() => avatar.classList.add("stage-blue"), 150);
+        }
+      }, i * 38);
     }
+  }, 1180);
 
-    rushOneFreshAvatar();
-    addReaction(true);
-    if(count % 2 === 0) addReaction(true);
-
-    count++;
-  }, 105);
+  setTimeout(() => frank.classList.add("buried"), 1540);
 }
 
-function stopAllVirusTimers(){
-  [reactionTimer, avatarTimer, attackTimer, swarmTimer].forEach(timer => {
-    if(timer) clearInterval(timer);
-  });
-  reactionTimer = null;
-  avatarTimer = null;
-  attackTimer = null;
-  swarmTimer = null;
+function beginBumRush(){
+  if(panicWash) panicWash.classList.add("active");
+
+  if(reactionTimer){
+    clearInterval(reactionTimer);
+    reactionTimer = null;
+  }
+
+  if(avatarTimer){
+    clearInterval(avatarTimer);
+    avatarTimer = null;
+  }
+
+  for(let i = 0; i < 70; i++){
+    setTimeout(() => spawnReaction(true), i * 24);
+  }
+
+  for(let i = 0; i < 58; i++){
+    setTimeout(() => spawnAvatar("drop"), i * 42);
+  }
+
+  setTimeout(() => {
+    allAvatars.forEach((avatar, index) => {
+      if(!avatar || !avatar.isConnected) return;
+
+      const jitterX = -8 + Math.random() * 16;
+      const jitterY = -9 + Math.random() * 16;
+
+      avatar.classList.add("attack");
+      avatar.style.left = `${50 + jitterX}%`;
+      avatar.style.top = `${31 + jitterY}%`;
+
+      setTimeout(() => exposeAvatar(avatar), 260 + (index % 9) * 80);
+    });
+  }, 680);
 }
 
 function completeSequence(){
@@ -363,43 +396,85 @@ function completeSequence(){
   loader.classList.remove("offcourse");
   loader.classList.add("complete");
 
-  stopAllVirusTimers();
+  fullSystemRetreat();
 
-  signalNode.classList.remove("breaching");
-  signalNode.classList.add("ready");
-  virusLayer.classList.add("retreat");
+  setTimeout(() => {
+    signalNode.classList.add("ready");
+  }, 520);
 
   setTimeout(() => {
     turtle.classList.remove("hide");
     turtle.classList.add("peek");
-  }, 1450);
+  }, 2300);
 
   setTimeout(() => {
     loaderScene.classList.add("portal-open");
-  }, 2450);
+  }, 3350);
 
   setTimeout(() => {
     turtle.classList.remove("peek");
     turtle.classList.add("escape");
-  }, 3050);
+  }, 4000);
 
   setTimeout(() => {
     loaderScene.classList.add("portal-close");
-  }, 8350);
+  }, 9250);
 
   setTimeout(() => {
     loader.classList.add("homie-cut-out");
-  }, 8600);
+  }, 9500);
 
   setTimeout(() => {
     loaderScene.classList.add("fade-out");
-  }, 9500);
+  }, 10400);
+}
+
+function fullSystemRetreat(){
+  if(panicWash) panicWash.classList.remove("active");
+
+  if(reactionTimer){
+    clearInterval(reactionTimer);
+    reactionTimer = null;
+  }
+
+  if(avatarTimer){
+    clearInterval(avatarTimer);
+    avatarTimer = null;
+  }
+
+  allAvatars.forEach((avatar, index) => {
+    if(!avatar || !avatar.isConnected) return;
+    avatar.style.setProperty("--r", `${-35 + Math.random() * 70}deg`);
+    setTimeout(() => avatar.classList.add("retreating"), index * 11);
+  });
+
+  allReactions.forEach((reaction, index) => {
+    if(!reaction || !reaction.isConnected) return;
+    setTimeout(() => {
+      reaction.style.transition = "opacity .45s ease, transform .45s ease, filter .45s ease";
+      reaction.style.opacity = "0";
+      reaction.style.filter = "blur(5px) grayscale(1)";
+    }, index * 7);
+  });
+
+  setTimeout(() => {
+    virusLayer.classList.add("retreat");
+  }, 900);
+
+  setTimeout(() => {
+    attentionFeed.innerHTML = "";
+    avatarField.innerHTML = "";
+    burnField.innerHTML = "";
+    frankStage.innerHTML = "";
+    virusLayer.classList.remove("active", "retreat");
+  }, 3200);
 }
 
 function openChannel(){
   if(!signalNode.classList.contains("ready")) return;
 
   signalNode.style.pointerEvents = "none";
+
   outerSymbol.classList.add("dissolve");
   innerSymbol.classList.add("alive");
 
