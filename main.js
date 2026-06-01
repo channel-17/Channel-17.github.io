@@ -2,9 +2,6 @@ const fill = document.getElementById("fill");
 const percent = document.getElementById("percent");
 const turtle = document.getElementById("turtle");
 const virusLayer = document.getElementById("virusLayer");
-const attentionField = document.getElementById("attentionField");
-const collapseQuiet = document.getElementById("collapseQuiet");
-const farPulse = document.getElementById("farPulse");
 const loader = document.getElementById("loader");
 const loaderScene = document.getElementById("loaderScene");
 const signalNode = document.getElementById("signalNode");
@@ -14,505 +11,415 @@ const maze = document.getElementById("maze");
 const home = document.getElementById("home");
 const idleMaze = document.getElementById("idleMaze");
 
+const attentionFeed = document.getElementById("attentionFeed");
+const avatarField = document.getElementById("avatarField");
+const smotherField = document.getElementById("smotherField");
+const frankZone = document.getElementById("frankZone");
+
 let progress = 0;
 let state = "normal";
 let completed = false;
 
 let noticed = false;
 let hidden = false;
-let attentionStarted = false;
-let populationStarted = false;
-let turnStarted = false;
-let convergenceStarted = false;
-let sicknessStarted = false;
+let virusStarted = false;
+let avatarsStarted = false;
+let smotherStarted = false;
+let symbolAttackStarted = false;
 let frankStarted = false;
-let collapseStarted = false;
+let panicStarted = false;
 
-const attentionItems = [];
+let reactionTimer = null;
+let avatarTimer = null;
+let attackTimer = null;
+let swarmTimer = null;
 
-const target = {
-  x: 54,
-  y: 45
-};
+let avatarCount = 0;
+let reactionCount = 0;
+let attackCount = 0;
+
+const names = [
+  "Sue W", "Mike J", "Terry P", "Donna R", "Kevin M", "Jules V",
+  "Mara K", "Ron T", "Lisa B", "Carl N", "Amy S", "Drew C",
+  "Nina Q", "Paul E", "Kim L", "Ben H", "Rita D", "Sam G"
+];
+
+const deploySpots = [
+  [18, 20], [42, 17], [70, 19], [12, 34], [35, 33], [62, 34], [84, 36],
+  [20, 49], [48, 48], [76, 51], [8, 64], [30, 66], [55, 64], [82, 67],
+  [16, 79], [42, 80], [68, 78], [91, 82]
+];
 
 function setProgress(value){
-
   progress = Math.max(0, Math.min(100, value));
-
-  fill.style.width =
-    progress <= 0
-      ? "0%"
-      : `calc(${progress}% - 12px)`;
-
+  fill.style.width = progress <= 0 ? "0%" : `calc(${progress}% - 12px)`;
   percent.textContent = `${Math.round(progress)}%`;
-
 }
 
-/* MAIN LOADING LOOP — LOADING BAR IS THE TIMELINE */
-
 const loading = setInterval(() => {
+  if(state === "normal") progress += .16;
+  if(state === "notice") progress += .035;
+  if(state === "hide") progress += .22;
 
-  if(state === "normal"){
-    progress += .16;
-  }
-
-  if(state === "notice"){
-    progress += .035;
-  }
-
-  if(state === "hide"){
-    progress += .25;
-  }
-
-  /* 17% — Little Homie senses attention shifting */
   if(progress >= 17 && !noticed){
-
     noticed = true;
-
     state = "notice";
-
     turtle.classList.remove("walk");
     turtle.classList.add("notice");
-
     loader.classList.add("offcourse");
-
-    startAttentionMachine();
-
   }
 
-  /* 19% — fear takes over, shell shiver */
   if(progress >= 19 && !hidden){
-
     hidden = true;
-
     state = "hide";
-
     turtle.classList.remove("notice");
     turtle.classList.add("hide");
-
   }
 
-  /* 22% — familiar modern-life icons begin gathering */
-  if(progress >= 22 && !attentionStarted){
-
-    attentionStarted = true;
-
-    seedFamiliarIcons();
-
+  if(progress >= 21 && !virusStarted){
+    virusStarted = true;
+    virusLayer.classList.add("active");
+    startRightSideEngagement();
   }
 
-  /* 35% — corporate frozen faces join the field */
-  if(progress >= 35 && !populationStarted){
-
-    populationStarted = true;
-
-    populateAvatars();
-
+  if(progress >= 29 && !avatarsStarted){
+    avatarsStarted = true;
+    deploySystemAvatars();
   }
 
-  /* 50% — money shot: every avatar turns */
-  if(progress >= 50 && !turnStarted){
-
-    turnStarted = true;
-
-    turnAvatars();
-
+  if(progress >= 46 && !smotherStarted){
+    smotherStarted = true;
+    smotherTheScreen();
   }
 
-  /* 56% — machine identifies the target and begins routing attention */
-  if(progress >= 56 && !convergenceStarted){
-
-    convergenceStarted = true;
-
-    beginConvergence();
-
+  if(progress >= 64 && !symbolAttackStarted){
+    symbolAttackStarted = true;
+    signalNode.classList.add("breaching");
+    beginSymbolAttack();
   }
 
-  /* 77% — meaning loss: red hearts go gray */
-  if(progress >= 77 && !sicknessStarted){
-
-    sicknessStarted = true;
-
-    startSickness();
-
-  }
-
-  /* 88% — Placeholder 1358 notices for half a breath */
-  if(progress >= 88 && !frankStarted){
-
+  if(progress >= 75 && !frankStarted){
     frankStarted = true;
-
-    runPlaceholder1358();
-
+    frankMoment();
   }
 
-  /* 94% — the machine eats itself */
-  if(progress >= 94 && !collapseStarted){
-
-    collapseStarted = true;
-
-    collapseMachine();
-
+  if(progress >= 88 && !panicStarted){
+    panicStarted = true;
+    virusLayer.classList.add("panic");
+    finalSwarm();
   }
 
   if(progress >= 100 && !completed){
-
     completed = true;
-
     progress = 100;
-
     clearInterval(loading);
-
     completeSequence();
-
   }
 
   setProgress(progress);
-
 }, 45);
 
-/* ATTENTION MACHINE */
-
-function startAttentionMachine(){
-
-  virusLayer.classList.add("active");
-  virusLayer.style.visibility = "visible";
-  virusLayer.style.opacity = "1";
-
-  virusLayer.style.setProperty("--target-x", `${target.x}%`);
-  virusLayer.style.setProperty("--target-y", `${target.y}%`);
-
+function startRightSideEngagement(){
+  addReactionBurst(9, false, 120);
+  reactionTimer = setInterval(() => {
+    if(completed) return;
+    addReaction(false);
+    if(reactionCount % 4 === 0) setTimeout(() => addReaction(false), 90);
+  }, 420);
 }
 
-function seedFamiliarIcons(){
-
-  const seeds = [
-    { kind:"heart", symbol:"♥", x:18, y:22, s:28, d:0 },
-    { kind:"like", symbol:"👍", x:76, y:19, s:25, d:.25 },
-    { kind:"bell", symbol:"🔔", x:15, y:61, s:25, d:.48 },
-    { kind:"check", symbol:"✓", x:79, y:64, s:27, d:.74 },
-    { kind:"trend", symbol:"↗", x:61, y:15, s:26, d:1.0 },
-    { kind:"heart", symbol:"♥", x:36, y:72, s:22, d:1.28 },
-    { kind:"check", symbol:"✓", x:41, y:20, s:23, d:1.52 },
-    { kind:"bell", symbol:"🔔", x:64, y:72, s:22, d:1.74 }
-  ];
-
-  seeds.forEach(item => createAttentionItem(item));
-
-  setTimeout(() => {
-    addIconWave(13, 0);
-  }, 1500);
-
-  setTimeout(() => {
-    addIconWave(18, 0);
-  }, 3400);
-
-}
-
-function addIconWave(amount, baseDelay){
-
-  const symbols = [
-    { kind:"heart", symbol:"♥" },
-    { kind:"like", symbol:"👍" },
-    { kind:"bell", symbol:"🔔" },
-    { kind:"check", symbol:"✓" },
-    { kind:"trend", symbol:"↗" },
-    { kind:"dot", symbol:"●" }
-  ];
-
+function addReactionBurst(amount, attacking, gap){
   for(let i = 0; i < amount; i++){
-
-    const picked = symbols[i % symbols.length];
-
-    createAttentionItem({
-      kind:picked.kind,
-      symbol:picked.symbol,
-      x:8 + ((i * 17) % 84),
-      y:9 + ((i * 23) % 78),
-      s:18 + ((i * 5) % 16),
-      d:baseDelay + (i * .13)
-    });
-
+    setTimeout(() => addReaction(attacking), i * gap);
   }
-
 }
 
-function populateAvatars(){
+function addReaction(attacking){
+  if(!attentionFeed) return;
 
-  const avatarPositions = [
-    [11,14], [31,10], [52,11], [72,13], [90,24],
-    [8,36], [25,33], [44,31], [64,34], [82,39],
-    [15,55], [35,52], [56,55], [76,58], [91,69],
-    [20,78], [43,74], [66,79], [84,82]
-  ];
-
-  avatarPositions.forEach((pos, index) => {
-
-    createAttentionItem({
-      kind:"avatar",
-      symbol:"",
-      x:pos[0],
-      y:pos[1],
-      s:30 + ((index % 4) * 4),
-      d:index * .12
-    });
-
-  });
-
-}
-
-function createAttentionItem(config){
-
-  if(!attentionField) return null;
-
+  const symbols = attacking ? ["❤️", "👍", "🔔", "✔", "?", "🩶"] : ["❤️", "❤️", "👍", "🔔", "✔"];
   const item = document.createElement("div");
+  const symbol = symbols[reactionCount % symbols.length];
 
-  item.className = `attention-item ${config.kind}`;
+  item.className = "reaction";
+  if(reactionCount % 5 === 0) item.classList.add("big");
+  if(reactionCount % 3 === 0) item.classList.add("small");
 
-  if(config.kind !== "avatar"){
-    item.classList.add("social", "drift");
+  item.textContent = symbol;
+  item.style.right = `${3 + Math.random() * 22}%`;
+  item.style.bottom = `${-8 + Math.random() * 8}%`;
+  item.style.setProperty("--drift", `${-70 + Math.random() * 95}px`);
+  item.style.setProperty("--dur", `${3.2 + Math.random() * 2.7}s`);
+
+  if(attacking){
+    item.classList.add("attack");
+    if(symbol === "🩶" || symbol === "?" || reactionCount % 2 === 0) item.classList.add("gray");
+    item.style.left = `${60 + Math.random() * 34}%`;
+    item.style.top = `${18 + Math.random() * 72}%`;
+    item.style.right = "auto";
+    item.style.bottom = "auto";
+    item.style.setProperty("--tx", `${-18 - Math.random() * 34}vw`);
+    item.style.setProperty("--ty", `${-8 - Math.random() * 34}vh`);
+    item.style.setProperty("--dur", `${1.7 + Math.random() * 1.35}s`);
   }
 
-  item.textContent = config.symbol || "";
+  attentionFeed.appendChild(item);
+  reactionCount++;
 
-  const dx = ((config.x % 2 === 0) ? 1 : -1) * (6 + (config.x % 12));
-  const dy = ((config.y % 2 === 0) ? -1 : 1) * (5 + (config.y % 9));
-
-  item.style.setProperty("--x", `${config.x}%`);
-  item.style.setProperty("--y", `${config.y}%`);
-  item.style.setProperty("--s", `${config.s}px`);
-  item.style.setProperty("--delay", `${config.d || 0}s`);
-  item.style.setProperty("--dx", `${dx}px`);
-  item.style.setProperty("--dy", `${dy}px`);
-  item.style.setProperty("--op", String(config.kind === "avatar" ? .78 : .84));
-
-  attentionField.appendChild(item);
-
-  attentionItems.push(item);
-
-  return item;
-
+  setTimeout(() => item.remove(), attacking ? 3600 : 6500);
 }
 
-function turnAvatars(){
+function deploySystemAvatars(){
+  addAvatarWave(7, 115);
 
-  const avatars = attentionItems.filter(item => item.classList.contains("avatar"));
+  avatarTimer = setInterval(() => {
+    if(completed) return;
+    addAvatar();
+    if(avatarCount > 32){
+      clearInterval(avatarTimer);
+      avatarTimer = null;
+    }
+  }, 310);
+}
+
+function addAvatarWave(amount, gap){
+  for(let i = 0; i < amount; i++){
+    setTimeout(addAvatar, i * gap);
+  }
+}
+
+function makeAvatar(name, x, y, frank = false){
+  const avatar = document.createElement("div");
+  avatar.className = frank ? "avatar frank deploy" : "avatar deploy";
+  avatar.style.setProperty("--x", `${x}%`);
+  avatar.style.setProperty("--y", `${y}%`);
+
+  avatar.innerHTML = `
+    <div class="bubble"><div class="face"></div></div>
+    <div class="body"></div>
+    <div class="name">${name}</div>
+  `;
+
+  return avatar;
+}
+
+function addAvatar(){
+  if(!avatarField) return;
+
+  const spot = deploySpots[avatarCount % deploySpots.length];
+  const jitterX = (Math.random() * 8) - 4;
+  const jitterY = (Math.random() * 6) - 3;
+  const name = names[avatarCount % names.length];
+
+  const avatar = makeAvatar(name, spot[0] + jitterX, spot[1] + jitterY);
+  avatarField.appendChild(avatar);
+
+  const convertToStock = 700 + Math.random() * 1200;
+  const convertToPlaceholder = convertToStock + 800 + Math.random() * 1400;
+
+  setTimeout(() => avatar.classList.add("stock"), convertToStock);
+  setTimeout(() => avatar.classList.add("placeholder"), convertToPlaceholder);
+
+  avatarCount++;
+}
+
+function smotherTheScreen(){
+  const total = 38;
+
+  for(let i = 0; i < total; i++){
+    setTimeout(() => {
+      const dot = document.createElement("div");
+      dot.className = "smother-dot";
+      dot.style.left = `${-4 + Math.random() * 108}%`;
+      dot.style.top = `${5 + Math.random() * 88}%`;
+      dot.style.transform = `scale(${.7 + Math.random() * .85})`;
+      smotherField.appendChild(dot);
+    }, i * 55);
+  }
+}
+
+function beginSymbolAttack(){
+  addReactionBurst(12, true, 65);
+  rushExistingAvatars();
+
+  attackTimer = setInterval(() => {
+    if(completed) return;
+    addReaction(true);
+    if(attackCount % 2 === 0) rushOneFreshAvatar();
+    attackCount++;
+  }, 260);
+}
+
+function rushExistingAvatars(){
+  const avatars = Array.from(avatarField.querySelectorAll(".avatar"));
 
   avatars.forEach((avatar, index) => {
-
-    setTimeout(() => {
-      avatar.classList.add("turn");
-    }, index * 45);
-
+    setTimeout(() => rushAvatar(avatar), index * 70);
   });
-
 }
 
-function beginConvergence(){
+function rushAvatar(avatar){
+  if(!avatar || avatar.classList.contains("rush")) return;
 
-  virusLayer.classList.add("converge");
+  avatar.classList.add("turn");
 
-  attentionItems.forEach((item, index) => {
+  const rect = avatar.getBoundingClientRect();
+  const targetX = window.innerWidth * .5;
+  const targetY = window.innerHeight * .31;
+  const dx = targetX - (rect.left + rect.width / 2);
+  const dy = targetY - (rect.top + rect.height / 2);
 
-    const offsetX = ((index % 7) - 3) * 3.5;
-    const offsetY = ((index % 5) - 2) * 3.2;
+  avatar.style.setProperty("--tx", `${dx}px`);
+  avatar.style.setProperty("--ty", `${dy}px`);
+  avatar.style.setProperty("--rush", `${1.65 + Math.random() * 1.1}s`);
 
-    item.style.setProperty("--tx", `${target.x + offsetX}%`);
-    item.style.setProperty("--ty", `${target.y + offsetY}%`);
-
-    setTimeout(() => {
-      item.classList.add("to-target");
-    }, index * 55);
-
-  });
-
+  setTimeout(() => avatar.classList.add("exposed"), 220);
+  setTimeout(() => avatar.classList.add("stock"), 420);
+  setTimeout(() => avatar.classList.add("placeholder"), 780);
+  setTimeout(() => avatar.classList.add("rush"), 260);
 }
 
-function startSickness(){
+function rushOneFreshAvatar(){
+  const side = Math.random() > .5 ? 106 : -6;
+  const y = 14 + Math.random() * 76;
+  const name = names[(avatarCount + attackCount) % names.length];
+  const avatar = makeAvatar(name, side, y);
+  avatarField.appendChild(avatar);
+  avatarCount++;
 
-  const hearts = attentionItems.filter(item => item.classList.contains("heart"));
-  const avatars = attentionItems.filter(item => item.classList.contains("avatar"));
-  const checks = attentionItems.filter(item => item.classList.contains("check"));
-  const bells = attentionItems.filter(item => item.classList.contains("bell"));
-
-  hearts.forEach((heart, index) => {
-
-    setTimeout(() => {
-      heart.textContent = "♥";
-      heart.classList.add("gray");
-    }, index * 360);
-
-  });
-
-  [...avatars.slice(2, 8), ...checks.slice(0, 4), ...bells.slice(0, 3)].forEach((item, index) => {
-
-    setTimeout(() => {
-      item.classList.add("sick");
-    }, 650 + (index * 210));
-
-  });
-
+  setTimeout(() => rushAvatar(avatar), 180);
+  setTimeout(() => avatar.remove(), 4200);
 }
 
-function runPlaceholder1358(){
+function frankMoment(){
+  const frank = makeAvatar("Frank 1358", 20, 74, true);
+  frankZone.appendChild(frank);
 
-  const candidate = createAttentionItem({
-    kind:"avatar",
-    symbol:"",
-    x:33,
-    y:49,
-    s:36,
-    d:0
-  });
-
-  if(!candidate) return;
-
-  candidate.style.zIndex = "12";
+  setTimeout(() => frank.classList.add("stock"), 600);
+  setTimeout(() => frank.classList.add("placeholder"), 950);
 
   setTimeout(() => {
-    candidate.className = "attention-item placeholder-1358";
-    candidate.textContent = "PLACEHOLDER 1358";
-  }, 520);
+    frank.classList.add("awake");
+  }, 1320);
 
   setTimeout(() => {
-    candidate.classList.add("lookdown");
-  }, 1050);
-
-  setTimeout(() => {
-    candidate.classList.remove("lookdown");
-    candidate.classList.add("lookup");
-  }, 1500);
-
-  setTimeout(() => {
-    candidate.classList.add("consume");
-  }, 1950);
-
+    frank.classList.remove("awake");
+    buryFrank();
+  }, 2050);
 }
 
-function collapseMachine(){
+function buryFrank(){
+  addAvatarWave(10, 45);
 
-  const shuffled = [...attentionItems].sort(() => Math.random() - .5);
+  const frank = frankZone.querySelector(".frank");
+  if(frank){
+    setTimeout(() => frank.classList.add("buried"), 320);
+    setTimeout(() => frank.remove(), 900);
+  }
 
-  shuffled.forEach((item, index) => {
-
+  for(let i = 0; i < 16; i++){
     setTimeout(() => {
-      item.classList.add("consume");
-    }, index * 34);
-
-  });
-
-  setTimeout(() => {
-    collapseQuiet.classList.add("active");
-  }, 1250);
-
+      const dot = document.createElement("div");
+      dot.className = "smother-dot";
+      dot.style.left = `${9 + Math.random() * 28}%`;
+      dot.style.top = `${60 + Math.random() * 25}%`;
+      dot.style.transform = `scale(${.9 + Math.random() * .75})`;
+      smotherField.appendChild(dot);
+    }, i * 38);
+  }
 }
 
-/* 100% — NOT VICTORY, DISCOVERY */
+function finalSwarm(){
+  let count = 0;
+
+  swarmTimer = setInterval(() => {
+    if(completed || count > 42){
+      clearInterval(swarmTimer);
+      swarmTimer = null;
+      return;
+    }
+
+    rushOneFreshAvatar();
+    addReaction(true);
+    if(count % 2 === 0) addReaction(true);
+
+    count++;
+  }, 105);
+}
+
+function stopAllVirusTimers(){
+  [reactionTimer, avatarTimer, attackTimer, swarmTimer].forEach(timer => {
+    if(timer) clearInterval(timer);
+  });
+  reactionTimer = null;
+  avatarTimer = null;
+  attackTimer = null;
+  swarmTimer = null;
+}
 
 function completeSequence(){
-
   state = "done";
 
   loader.classList.remove("offcourse");
   loader.classList.add("complete");
 
-  setTimeout(() => {
-    farPulse.classList.add("active");
-  }, 250);
+  stopAllVirusTimers();
 
-  setTimeout(() => {
-    signalNode.classList.add("ready");
-    beginSignalReveal();
-  }, 1750);
+  signalNode.classList.remove("breaching");
+  signalNode.classList.add("ready");
+  virusLayer.classList.add("retreat");
 
   setTimeout(() => {
     turtle.classList.remove("hide");
     turtle.classList.add("peek");
-  }, 2700);
+  }, 1450);
 
   setTimeout(() => {
     loaderScene.classList.add("portal-open");
-  }, 3450);
+  }, 2450);
 
   setTimeout(() => {
     turtle.classList.remove("peek");
     turtle.classList.add("escape");
-  }, 4100);
+  }, 3050);
 
   setTimeout(() => {
     loaderScene.classList.add("portal-close");
-  }, 9350);
+  }, 8350);
 
   setTimeout(() => {
     loader.classList.add("homie-cut-out");
-  }, 9600);
+  }, 8600);
 
   setTimeout(() => {
     loaderScene.classList.add("fade-out");
-  }, 10500);
-
+  }, 9500);
 }
-
-function beginSignalReveal(){
-
-  virusLayer.classList.add("clear");
-
-  setTimeout(() => {
-
-    attentionField.innerHTML = "";
-    attentionItems.length = 0;
-
-    virusLayer.classList.remove("active", "clear", "converge");
-    collapseQuiet.classList.remove("active");
-    farPulse.classList.remove("active");
-
-    virusLayer.style.visibility = "hidden";
-    virusLayer.style.opacity = "0";
-
-  }, 3300);
-
-}
-
-/* OPEN CHANNEL */
 
 function openChannel(){
-
   if(!signalNode.classList.contains("ready")) return;
 
   signalNode.style.pointerEvents = "none";
-
   outerSymbol.classList.add("dissolve");
-
   innerSymbol.classList.add("alive");
 
   maze.classList.remove("active");
-
   void maze.offsetWidth;
-
   maze.classList.add("active");
 
   setTimeout(() => {
-
     signalNode.classList.add("fade-out");
-
   }, 4700);
 
   setTimeout(() => {
-
     home.classList.add("open");
-
     idleMaze.classList.add("active");
-
   }, 5600);
-
 }
 
 signalNode.addEventListener("click", openChannel);
 
 signalNode.addEventListener("touchend", event => {
-
   event.preventDefault();
-
   openChannel();
-
 }, { passive:false });
