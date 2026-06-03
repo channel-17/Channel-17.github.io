@@ -1,5 +1,5 @@
-// CHANNEL 17 — Ground Zero Surgical Build
-// CPR active. The Law wins. Avatars are manufactured identity, not characters.
+// CHANNEL 17 — SexyLexy17 Build Pass 1
+// CPR active. The Law wins. Surgical continuation from Ground Zero.
 
 const fill = document.getElementById("fill");
 const percent = document.getElementById("percent");
@@ -19,7 +19,6 @@ const engagementField = document.getElementById("engagementField");
 const profileField = document.getElementById("profileField");
 const impactField = document.getElementById("impactField");
 const checkGenerals = document.getElementById("checkGenerals");
-const carlProfileFlash = document.getElementById("carlProfileFlash");
 
 let progress = 0;
 let state = "normal";
@@ -33,6 +32,7 @@ let generals = false;
 let frankSeen = false;
 let carlSeen = false;
 let wrenSeen = false;
+let carlClicked = false;
 
 let profileTimer = null;
 let engageTimer = null;
@@ -40,33 +40,11 @@ let slashTimer = null;
 let profileCount = 0;
 let engageCount = 0;
 
-// Repo assets. CSS handles circle crop, ring, object-fit.
-// Special rule: Wren, Frank, Carl appear once only.
 const avatarPool = [
-  "Asset1.PNG",
-  "Asset2.PNG",
-  "Asset3.png",
-  "Asset4.PNG",
-  "Asset5.PNG",
-  "Asset6.PNG",
-  "Asset7.PNG",
-  "Asset8.PNG",
-  "Asset9.PNG",
-  "Asset10.PNG",
-  "Asset11.PNG",
-  "Asset12.PNG",
-  "Asset13.PNG",
-  "Asset14.PNG",
-  "Asset15.PNG",
-  "Asset16.PNG",
-  "Asset17.PNG",
-  "Asset18.PNG",
-  "Asset19.PNG",
-  "Asset20.PNG",
-  "Asset21.PNG",
-  "Asset22.PNG",
-  "Asset23.PNG",
-  "Asset24.PNG"
+  "Asset1.PNG", "Asset2.PNG", "Asset3.png", "Asset4.PNG", "Asset5.PNG", "Asset6.PNG",
+  "Asset7.PNG", "Asset8.PNG", "Asset9.PNG", "Asset10.PNG", "Asset11.PNG", "Asset12.PNG",
+  "Asset13.PNG", "Asset14.PNG", "Asset15.PNG", "Asset16.PNG", "Asset17.PNG", "Asset18.PNG",
+  "Asset19.PNG", "Asset20.PNG", "Asset21.PNG", "Asset22.PNG", "Asset23.PNG", "Asset24.PNG"
 ];
 
 const specialAssets = {
@@ -75,22 +53,17 @@ const specialAssets = {
   carl: "AssetCARL.PNG"
 };
 
-const targets = [
-  { x: 50, y: 31 },
-  { x: 50, y: 48 },
-  { x: 50, y: 55 },
-  { x: 42, y: 47 },
-  { x: 58, y: 47 },
-  { x: 37, y: 31 },
-  { x: 63, y: 31 },
-  { x: 48, y: 39 },
-  { x: 54, y: 38 },
-  { x: 43, y: 58 },
-  { x: 60, y: 58 },
-  { x: 30, y: 42 },
-  { x: 72, y: 44 },
-  { x: 26, y: 64 },
-  { x: 74, y: 62 }
+const carlDestination = "CGatesSSProfile.PNG";
+
+// Coverage priority: symbol first, loader second, Homie collateral third.
+// These are intentionally tight and overlapping so the swarm feels like pressure, not decoration.
+const coverageTargets = [
+  { x: 50, y: 31 }, { x: 46, y: 30 }, { x: 54, y: 30 }, { x: 50, y: 36 },
+  { x: 42, y: 31 }, { x: 58, y: 31 }, { x: 47, y: 25 }, { x: 55, y: 38 },
+  { x: 50, y: 48 }, { x: 43, y: 48 }, { x: 57, y: 48 }, { x: 50, y: 52 },
+  { x: 39, y: 53 }, { x: 61, y: 53 }, { x: 46, y: 58 }, { x: 56, y: 58 },
+  { x: 44, y: 55 }, { x: 51, y: 55 }, { x: 58, y: 55 },
+  { x: 35, y: 42 }, { x: 65, y: 42 }, { x: 32, y: 61 }, { x: 68, y: 61 }
 ];
 
 function setProgress(v) {
@@ -132,13 +105,14 @@ const loading = setInterval(() => {
 
   if (progress >= 35 && !wrenSeen) {
     wrenSeen = true;
-    spawnSpecial("wren", 72, 24, "right", 1850);
+    spawnWren();
   }
 
   if (progress >= 42 && !burning) {
     burning = true;
     signalGhost.classList.add("burning");
     startBurnPulse();
+    triggerHiveRevealWave();
   }
 
   if (progress >= 52 && !carlSeen) {
@@ -168,19 +142,20 @@ const loading = setInterval(() => {
 
 function startAttack() {
   spawnProfile("top", 0, true);
-  setTimeout(() => spawnProfile("right"), 240);
-  setTimeout(() => spawnProfile("left"), 420);
-  setTimeout(() => spawnProfile("top"), 610);
+  setTimeout(() => spawnProfile("right"), 190);
+  setTimeout(() => spawnProfile("left"), 330);
+  setTimeout(() => spawnProfile("top"), 470);
+  setTimeout(() => spawnCoverageRush(5), 720);
 
   profileTimer = setInterval(() => {
     if (completed) return;
     spawnProfile(randomSide());
-  }, 310);
+  }, 230);
 
   engageTimer = setInterval(() => {
     if (completed) return;
     spawnEngagement();
-  }, 115);
+  }, 235);
 
   slashTimer = setInterval(() => {
     if (completed) return;
@@ -195,28 +170,22 @@ function randomSide() {
 function sideVector(side) {
   let sx = "0px";
   let sy = "0px";
-
   if (side === "top") sy = "-115vh";
   if (side === "bottom") sy = "115vh";
   if (side === "left") sx = "-115vw";
   if (side === "right") sx = "115vw";
-
   return { sx, sy };
 }
 
 function spawnSlash(side) {
   const s = document.createElement("div");
   s.className = "slash";
-
-  const y = Math.random() * 100;
-  const x = Math.random() * 100;
-  s.style.left = x + "%";
-  s.style.top = y + "%";
+  s.style.left = Math.random() * 100 + "%";
+  s.style.top = Math.random() * 100 + "%";
 
   let sx = "0px";
   let sy = "0px";
   let r = "0deg";
-
   if (side === "top") { sy = "-120px"; r = "90deg"; }
   if (side === "bottom") { sy = "120px"; r = "-90deg"; }
   if (side === "left") { sx = "-160px"; r = "0deg"; }
@@ -225,42 +194,50 @@ function spawnSlash(side) {
   s.style.setProperty("--sx", sx);
   s.style.setProperty("--sy", sy);
   s.style.setProperty("--r", r);
-
   motionField.appendChild(s);
   setTimeout(() => s.remove(), 700);
 }
 
 function spawnEngagement() {
   const e = document.createElement("div");
-  const kind = engageCount % 9;
+  const kind = engageCount % 14;
 
   let txt = "❤️";
   let cls = "heart";
 
-  if (kind === 3) { txt = "👍"; cls = "like"; }
-  if (kind === 5) { txt = "🔔"; cls = "bell"; }
-  if (kind === 7) { txt = "✔"; cls = "mark"; }
-  if (progress > 45 && cls === "heart") { txt = "🩶"; cls = "heart dead"; }
+  if (kind === 1 || kind === 6) { txt = "💕"; cls = "heart pink"; }
+  if (kind === 4) { txt = "👍"; cls = "like"; }
+  if (kind === 8) { txt = "🔔"; cls = "bell"; }
+  if (kind === 11) { txt = "✔"; cls = "mark"; }
+
+  if (progress > 43 && cls.includes("heart")) {
+    txt = "♥";
+    cls = "heart dying";
+  }
+
+  if (progress > 58 && cls.includes("heart") && Math.random() > .35) {
+    txt = "♥";
+    cls = "heart dead";
+  }
 
   e.className = "engage " + cls;
   e.textContent = txt;
-  e.style.left = (72 + Math.random() * 22) + "%";
+  e.style.left = (70 + Math.random() * 23) + "%";
   e.style.top = (78 + Math.random() * 15) + "%";
-  e.style.setProperty("--dur", (1.8 + Math.random() * 1.4) + "s");
+  e.style.setProperty("--dur", (1.6 + Math.random() * 1.2) + "s");
   e.style.setProperty("--drift", ((-30 + Math.random() * 60) | 0) + "px");
 
   engagementField.appendChild(e);
   engageCount++;
-
-  setTimeout(() => e.remove(), 3400);
+  setTimeout(() => e.remove(), 3200);
 }
 
 function createImageProfile(src, x, y, side, extraClass = "") {
   const p = document.createElement("button");
   p.type = "button";
   p.className = `profile ${extraClass}`.trim();
-  p.style.left = `calc(${x}% - 35px)`;
-  p.style.top = `calc(${y}% - 35px)`;
+  p.style.left = `calc(${x}% - 43px)`;
+  p.style.top = `calc(${y}% - 43px)`;
 
   const v = sideVector(side);
   p.style.setProperty("--sx", v.sx);
@@ -274,127 +251,136 @@ function createImageProfile(src, x, y, side, extraClass = "") {
 
   profileField.appendChild(p);
   spawnSlash(side);
-
   return p;
 }
 
 function spawnProfile(side, delay = 0, forceCenter = false) {
   setTimeout(() => {
-    const old = profileField.querySelectorAll(".profile:not(.special):not(.carl-gate)");
-    if (old.length > 16) old[0].remove();
+    const old = profileField.querySelectorAll(".profile:not(.special):not(.carl):not(.carl-gate)");
+    if (old.length > 24) old[0].remove();
 
     const src = avatarPool[profileCount % avatarPool.length];
-    const t = targets[profileCount % targets.length];
-    const x = forceCenter ? 50 : t.x;
-    const y = forceCenter ? 31 : t.y;
-    const stage = progress > 58 ? "blue" : progress > 42 ? "stock" : "";
+    const t = coverageTargets[profileCount % coverageTargets.length];
+    const x = forceCenter ? 50 : t.x + (Math.random() * 3.6 - 1.8);
+    const y = forceCenter ? 31 : t.y + (Math.random() * 3.6 - 1.8);
+    const stage = progress > 58 ? "blue swarm-cover" : progress > 42 ? "stock swarm-cover" : "swarm-cover";
 
     const p = createImageProfile(src, x, y, side, stage);
     profileCount++;
 
-    if (progress > 44 && Math.random() > .35) {
-      setTimeout(() => decayProfile(p), 450 + Math.random() * 500);
+    if (progress > 42) {
+      const dist = Math.hypot(x - 50, y - 31);
+      const waveDelay = Math.max(80, dist * 35 + Math.random() * 260);
+      setTimeout(() => decayProfile(p), waveDelay);
     }
 
     setTimeout(() => {
-      if (p && p.parentNode && !p.classList.contains("special") && !p.classList.contains("carl-gate")) {
-        p.remove();
-      }
-    }, 3600);
+      if (p && p.parentNode && !p.classList.contains("special") && !p.classList.contains("carl") && !p.classList.contains("carl-gate")) p.remove();
+    }, 4300);
   }, delay);
 }
 
 function decayProfile(p) {
-  if (!p || !p.parentNode) return;
-  p.classList.add("decay");
-
+  if (!p || !p.parentNode || p.classList.contains("wren")) return;
+  p.classList.add("decay", "revealing");
   setTimeout(() => {
     if (p && p.parentNode) {
-      p.classList.remove("stock");
+      p.classList.remove("stock", "revealing");
       p.classList.add("blue");
     }
   }, 260);
 }
 
-function spawnSpecial(key, x, y, side, duration = 1800) {
-  const p = createImageProfile(specialAssets[key], x, y, side, `special ${key} stock`);
+function triggerHiveRevealWave() {
+  [...profileField.querySelectorAll(".profile:not(.wren)")].forEach((p) => {
+    const rect = p.getBoundingClientRect();
+    const cx = rect.left + rect.width / 2;
+    const cy = rect.top + rect.height / 2;
+    const sx = window.innerWidth * .5;
+    const sy = window.innerHeight * .31;
+    const dist = Math.hypot(cx - sx, cy - sy);
+    setTimeout(() => decayProfile(p), Math.min(1100, dist * 1.6));
+  });
+}
 
-  setTimeout(() => p.classList.add("blue"), Math.floor(duration * .52));
+function spawnCoverageRush(amount = 8) {
+  for (let i = 0; i < amount; i++) setTimeout(() => spawnProfile(randomSide()), i * 70);
+}
 
+function spawnWren() {
+  const p = createImageProfile(specialAssets.wren, 70, 24, "right", "special wren stock");
+  setTimeout(() => p.classList.add("linger"), 900);
+  setTimeout(() => spawnCoverageRush(5), 1280);
   setTimeout(() => {
-    for (let i = 0; i < 5; i++) {
-      setTimeout(() => spawnProfile(randomSide()), i * 65);
-    }
-  }, Math.floor(duration * .58));
-
+    if (p && p.parentNode) p.classList.add("revealing");
+  }, 1900);
   setTimeout(() => {
     if (p && p.parentNode) p.remove();
-  }, duration);
-
-  return p;
+  }, 2450);
 }
 
 function spawnCarlFirefly() {
-  const p = createImageProfile(specialAssets.carl, 18, 47, "left", "special carl-gate stock");
+  const carl = createImageProfile(specialAssets.carl, 22, 47, "left", "special carl stock buried");
 
-  p.addEventListener("click", (event) => {
+  setTimeout(() => spawnCoverageRush(5), 140);
+  setTimeout(() => driftDeadHeartIntoCarl(carl), 430);
+  setTimeout(() => {
+    if (carl && carl.parentNode) carl.classList.add("carl-gate");
+  }, 970);
+
+  const openCarl = (event) => {
     event.preventDefault();
     event.stopPropagation();
-    flashCarlProfile();
-  });
+    if (carlClicked) return;
+    carlClicked = true;
+    window.location.href = carlDestination;
+  };
 
-  p.addEventListener("touchend", (event) => {
-    event.preventDefault();
-    event.stopPropagation();
-    flashCarlProfile();
-  }, { passive: false });
-
-  setTimeout(() => {
-    flashCarlProfile(false);
-  }, 470);
+  carl.addEventListener("click", openCarl);
+  carl.addEventListener("touchend", openCarl, { passive: false });
 
   setTimeout(() => {
-    for (let i = 0; i < 7; i++) {
-      setTimeout(() => spawnProfile("left"), i * 55);
-    }
-  }, 610);
+    if (carl && carl.parentNode) carl.classList.remove("carl-gate");
+  }, 1540);
 
+  setTimeout(() => spawnCoverageRush(9), 1580);
   setTimeout(() => {
-    if (p && p.parentNode) p.remove();
-  }, 980);
+    if (carl && carl.parentNode) carl.remove();
+  }, 2050);
 }
 
-function flashCarlProfile(userFoundIt = true) {
-  if (!carlProfileFlash) return;
+function driftDeadHeartIntoCarl(carl) {
+  if (!carl || !carl.parentNode) return;
+  const h = document.createElement("div");
+  h.className = "dead-heart-trigger";
+  h.textContent = "♥";
+  h.style.left = "72%";
+  h.style.top = "78%";
 
-  carlProfileFlash.classList.remove("show");
-  void carlProfileFlash.offsetWidth;
-  carlProfileFlash.classList.add("show");
+  const c = carl.getBoundingClientRect();
+  const targetX = c.left + c.width * .52;
+  const targetY = c.top + c.height * .18;
+  const startX = window.innerWidth * .72;
+  const startY = window.innerHeight * .78;
+  h.style.setProperty("--dx", `${targetX - startX}px`);
+  h.style.setProperty("--dy", `${targetY - startY}px`);
 
-  setTimeout(() => {
-    carlProfileFlash.classList.remove("show");
-  }, userFoundIt ? 1250 : 620);
+  engagementField.appendChild(h);
+  setTimeout(() => h.remove(), 1200);
 }
 
 function spawnFrank() {
-  const p = createImageProfile(specialAssets.frank, 22, 68, "left", "special frank stock");
-
-  setTimeout(() => p.classList.add("pause"), 420);
-
+  const p = createImageProfile(specialAssets.frank, 26, 64, "left", "special frank stock");
+  setTimeout(() => p.classList.add("pause"), 360);
   setTimeout(() => {
+    if (!p || !p.parentNode) return;
     p.classList.remove("stock");
-    p.classList.add("blue");
-  }, 980);
-
-  setTimeout(() => {
-    for (let i = 0; i < 6; i++) {
-      setTimeout(() => spawnProfile(randomSide()), i * 70);
-    }
-  }, 1100);
-
+    p.classList.add("blue", "what");
+  }, 1250);
+  setTimeout(() => spawnCoverageRush(8), 1680);
   setTimeout(() => {
     if (p && p.parentNode) p.remove();
-  }, 1900);
+  }, 2550);
 }
 
 function startBurnPulse() {
@@ -411,15 +397,12 @@ function startBurnPulse() {
 function deployGenerals() {
   checkGenerals.classList.add("active");
   const gens = [...checkGenerals.querySelectorAll(".general")];
-
   setTimeout(() => gens.forEach(g => g.classList.add("verify")), 700);
-
   setTimeout(() => gens.forEach(g => {
     g.classList.remove("verify");
     g.classList.add("target");
     g.querySelector("small").textContent = "target";
   }), 1300);
-
   [0, 1, 2].forEach((n) => setTimeout(() => fireBlast(n), 1700 + n * 260));
 }
 
@@ -429,21 +412,16 @@ function fireBlast(n) {
   b.style.setProperty("--a", [-18, 0, 18][n] + "deg");
   impactField.appendChild(b);
   setTimeout(() => b.remove(), 430);
-
-  for (let i = 0; i < 3; i++) {
-    setTimeout(() => spawnProfile(["left", "right", "top"][i]), i * 80);
-  }
+  for (let i = 0; i < 4; i++) setTimeout(() => spawnProfile(["left", "right", "top", "bottom"][i]), i * 65);
 }
 
 function stopAttack() {
   clearInterval(profileTimer);
   clearInterval(engageTimer);
   clearInterval(slashTimer);
-
   profileTimer = null;
   engageTimer = null;
   slashTimer = null;
-
   virusLayer.classList.add("retreat");
 
   setTimeout(() => {
@@ -486,17 +464,13 @@ function completeSequence() {
 
 function openChannel() {
   if (!signalNode.classList.contains("ready")) return;
-
   signalNode.style.pointerEvents = "none";
   outerSymbol.classList.add("dissolve");
   innerSymbol.classList.add("alive");
-
   maze.classList.remove("active");
   void maze.offsetWidth;
   maze.classList.add("active");
-
   setTimeout(() => signalNode.classList.add("fade-out"), 4700);
-
   setTimeout(() => {
     home.classList.add("open");
     idleMaze.classList.add("active");
@@ -504,7 +478,6 @@ function openChannel() {
 }
 
 signalNode.addEventListener("click", openChannel);
-
 signalNode.addEventListener("touchend", e => {
   e.preventDefault();
   openChannel();
