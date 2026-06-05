@@ -412,7 +412,7 @@ body {
   content: "";
   position: absolute;
   left: calc(50% + 116px);
-  top: calc(100% - 16px);
+  top: calc(100% - 17px);
   width: 3px;
   height: 0;
   border-radius: 10px;
@@ -1319,7 +1319,9 @@ body {
   position: relative;
   width: min(88vw, 360px);
   min-height: 570px;
-  overflow: hidden;
+  max-height: 88svh;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
   border: 1px solid rgba(255,255,255,0.26);
   border-radius: 28px;
   background:
@@ -1357,9 +1359,11 @@ body {
 }
 
 .carl-close {
-  position: absolute;
-  right: 14px;
+  position: sticky;
+  left: calc(100% - 48px);
   top: 14px;
+  margin-left: auto;
+  margin-right: 14px;
   z-index: 5;
   display: grid;
   place-items: center;
@@ -1370,6 +1374,13 @@ body {
   background: rgba(0,0,0,0.24);
   color: #fff;
   font-size: 20px;
+  animation: carlWhiteX 1.05s steps(2) infinite;
+}
+
+
+@keyframes carlWhiteX {
+  0%,100% { opacity: 1; box-shadow: 0 0 12px rgba(255,255,255,0.35); }
+  50% { opacity: 0.28; box-shadow: none; }
 }
 
 .carl-header {
