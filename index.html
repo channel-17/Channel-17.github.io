@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <title>channel 17</title>
 
   <link rel="icon" href="Trust17.png?v=17">
@@ -10,8 +11,9 @@
   <link rel="apple-touch-icon" sizes="180x180" href="Beacon17.png">
   <link rel="stylesheet" href="styles.css" />
 </head>
+
 <body>
-  <div class="screen">
+  <div class="screen" id="screen">
 
     <div class="virus-layer" id="virusLayer" aria-hidden="true">
       <div class="motion-field" id="motionField"></div>
@@ -19,15 +21,26 @@
       <div class="profile-field" id="profileField"></div>
 
       <div class="check-generals" id="checkGenerals">
-        <div class="general g1"><span>✔</span><small>verified</small></div>
-        <div class="general g2"><span>✔</span><small>approved</small></div>
-        <div class="general g3"><span>✔</span><small>authorized</small></div>
+        <div class="general g1">
+          <span>✔</span>
+          <small>verified</small>
+        </div>
+
+        <div class="general g2">
+          <span>✔</span>
+          <small>approved</small>
+        </div>
+
+        <div class="general g3">
+          <span>✔</span>
+          <small>authorized</small>
+        </div>
       </div>
 
       <div class="impact-field" id="impactField"></div>
     </div>
 
-    <div class="signal-ghost" id="signalGhost">
+    <div class="signal-ghost" id="signalGhost" aria-hidden="true">
       <img src="Inner17-final.png" alt="" />
     </div>
 
@@ -37,12 +50,14 @@
         <div class="percent" id="percent">0%</div>
       </div>
 
-      <div class="turtle-track">
+      <div class="turtle-track" id="turtleTrack">
         <div class="turtle walk" id="turtle" aria-hidden="true">
           <div class="tail"></div>
           <div class="shell"></div>
           <div class="neck"></div>
-          <div class="head"><div class="eye"></div></div>
+          <div class="head">
+            <div class="eye"></div>
+          </div>
           <div class="leg l1"></div>
           <div class="leg l2"></div>
         </div>
@@ -54,7 +69,7 @@
       <img src="Outer17-final.png" class="outer-symbol" id="outerSymbol" alt="">
     </button>
 
-    <div class="maze" id="maze">
+    <div class="maze" id="maze" aria-hidden="true">
       <div class="pipe pulse1 bright"></div>
       <div class="pipe pulse2"></div>
       <div class="pipe pulse3"></div>
@@ -77,6 +92,7 @@
     <main class="home" id="home">
       <div class="home-core">
         <img src="Inner17-final.png" class="home-symbol" alt="Channel 17">
+
         <nav class="nodes">
           <a class="node" href="#last-sesh">Last Sesh</a>
           <a class="node" href="#roach-tray">Roach Tray</a>
@@ -85,14 +101,69 @@
       </div>
     </main>
 
-    <div class="idle-maze" id="idleMaze">
+    <div class="idle-maze" id="idleMaze" aria-hidden="true">
       <div class="idle-pipe idle1"></div>
       <div class="idle-pipe idle2"></div>
       <div class="idle-pipe idle3"></div>
       <div class="idle-pipe idle4"></div>
     </div>
 
-    <a class="chalk" href="#" aria-label="chalk mark">.</a>
+    <section class="carl-profile" id="carlProfile" aria-hidden="true">
+      <div class="carl-card">
+        <button class="carl-close" id="carlClose" aria-label="close Carl profile">×</button>
+
+        <div class="carl-card-bg"></div>
+
+        <div class="carl-header">
+          <div class="carl-brand">HEARTSYNC</div>
+          <div class="carl-online">active 17 min ago</div>
+        </div>
+
+        <div class="carl-photo-wrap">
+          <img src="AssetCARL.PNG" class="carl-photo" alt="Carl Gates profile photo">
+        </div>
+
+        <div class="carl-copy">
+          <h1>Carl Gates</h1>
+          <p class="carl-tag">37 • Growth-minded • Emotionally available Q3</p>
+
+          <div class="carl-match">
+            <span>17%</span>
+            <small>compatibility</small>
+          </div>
+
+          <div class="carl-prompt">
+            <b>Favorite quote</b>
+            <p>“T.E.A.M. — Together Everyone Achieves More.”</p>
+          </div>
+
+          <div class="carl-prompt">
+            <b>Favorite movie</b>
+            <p><em>I, Robot</em>. It really makes you think about what it means to be human.</p>
+          </div>
+
+          <div class="carl-prompt">
+            <b>Looking for</b>
+            <p>Authentic connection, clear communication, and someone willing to circle back.</p>
+          </div>
+
+          <div class="carl-prompt">
+            <b>Biggest fear</b>
+            <p>Being perceived as a silo.</p>
+          </div>
+
+          <div class="carl-pills">
+            <span>Leadership</span>
+            <span>Coffee</span>
+            <span>Networking</span>
+            <span>Quarterly Wins</span>
+            <span>Synergy</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="chalk" aria-hidden="true">17</div>
   </div>
 
   <script src="main.js"></script>
