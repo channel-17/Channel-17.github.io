@@ -490,7 +490,7 @@ function triggerCarl(carl) {
     if (!carlOpened) {
       carl.classList.remove("carl-ready");
     }
-  }, 850);
+  }, 2800);
 
   setTimeout(() => {
     if (!carl || !carl.parentNode) return;
@@ -503,7 +503,7 @@ function triggerCarl(carl) {
     }
 
     setTimeout(() => carl.remove(), 520);
-  }, 1250);
+  }, 3350);
 }
 
 function openCarlProfile() {
@@ -515,6 +515,10 @@ function openCarlProfile() {
 function closeCarlProfile() {
   carlProfile.classList.remove("open");
   carlProfile.setAttribute("aria-hidden", "true");
+
+  signalNode.classList.add("ready");
+  signalNode.classList.remove("fade-out");
+  signalNode.style.pointerEvents = "auto";
 }
 
 carlClose.addEventListener("click", closeCarlProfile);
