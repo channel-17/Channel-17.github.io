@@ -21,6 +21,14 @@ const impactField = document.getElementById("impactField");
 const checkGenerals = document.getElementById("checkGenerals");
 const carlProfile = document.getElementById("carlProfile");
 const carlClose = document.getElementById("carlClose");
+const carlPhotosButton = document.getElementById("carlPhotosButton");
+const carlPhotoModal = document.getElementById("carlPhotoModal");
+const carlPhotoClose = document.getElementById("carlPhotoClose");
+const carlPhotoLarge = document.getElementById("carlPhotoLarge");
+const carlPhotoCaption = document.getElementById("carlPhotoCaption");
+const hiveWound = document.getElementById("hiveWound");
+const hiveCarlFile = document.getElementById("hiveCarlFile");
+const hiveClose = document.getElementById("hiveClose");
 
 let progress = 0;
 let state = "normal";
@@ -39,6 +47,8 @@ let carlTriggered = false;
 let carlOpened = false;
 let hiveWaveStarted = false;
 let deadHeartReleased = false;
+let woundPulseTimer = null;
+let hiveWoundUsed = false;
 
 let profileTimer = null;
 let engageTimer = null;
@@ -510,18 +520,84 @@ function openCarlProfile() {
   carlOpened = true;
   carlProfile.classList.add("open");
   carlProfile.setAttribute("aria-hidden", "false");
+  startWoundPulse();
 }
 
 function closeCarlProfile() {
   carlProfile.classList.remove("open");
   carlProfile.setAttribute("aria-hidden", "true");
+  closeCarlPhotos();
+  closeHiveFile();
+  stopWoundPulse();
 
   signalNode.classList.add("ready");
   signalNode.classList.remove("fade-out");
   signalNode.style.pointerEvents = "auto";
 }
 
+function startWoundPulse() {
+  if (!hiveWound || hiveWoundUsed) return;
+  stopWoundPulse();
+
+  const pulse = () => {
+    if (!carlProfile.classList.contains("open") || hiveWoundUsed) return;
+    hiveWound.classList.add("pulse-open");
+    setTimeout(() => {
+      if (hiveWound) hiveWound.classList.remove("pulse-open");
+    }, 1700);
+  };
+
+  setTimeout(pulse, 800);
+  woundPulseTimer = setInterval(pulse, 17000);
+}
+
+function stopWoundPulse() {
+  clearInterval(woundPulseTimer);
+  woundPulseTimer = null;
+  if (hiveWound) hiveWound.classList.remove("pulse-open");
+}
+
+function openCarlPhotos() {
+  if (!carlPhotoModal) return;
+  carlPhotoModal.classList.add("open");
+  carlPhotoModal.setAttribute("aria-hidden", "false");
+}
+
+function closeCarlPhotos() {
+  if (!carlPhotoModal) return;
+  carlPhotoModal.classList.remove("open");
+  carlPhotoModal.setAttribute("aria-hidden", "true");
+}
+
+function openHiveFile() {
+  if (!hiveWound || !hiveWound.classList.contains("pulse-open") || hiveWoundUsed) return;
+  hiveCarlFile.classList.add("open");
+  hiveCarlFile.setAttribute("aria-hidden", "false");
+  hiveWoundUsed = true;
+  hiveWound.classList.add("used");
+  stopWoundPulse();
+}
+
+function closeHiveFile() {
+  if (!hiveCarlFile) return;
+  hiveCarlFile.classList.remove("open");
+  hiveCarlFile.setAttribute("aria-hidden", "true");
+}
+
 carlClose.addEventListener("click", closeCarlProfile);
+if (carlPhotosButton) carlPhotosButton.addEventListener("click", openCarlPhotos);
+if (carlPhotoClose) carlPhotoClose.addEventListener("click", closeCarlPhotos);
+if (hiveWound) hiveWound.addEventListener("click", openHiveFile);
+if (hiveClose) hiveClose.addEventListener("click", closeHiveFile);
+
+document.querySelectorAll(".photo-thumb").forEach(button => {
+  button.addEventListener("click", () => {
+    document.querySelectorAll(".photo-thumb").forEach(item => item.classList.remove("active"));
+    button.classList.add("active");
+    if (carlPhotoLarge) carlPhotoLarge.src = button.dataset.src;
+    if (carlPhotoCaption) carlPhotoCaption.textContent = button.dataset.caption;
+  });
+});
 
 function spawnWren() {
   const wren = document.createElement("div");
@@ -536,19 +612,27 @@ function spawnWren() {
   profileField.appendChild(wren);
 
   setTimeout(() => {
-    wren.classList.add("mask-dropping");
-  }, 1500);
+    if (!wren || !wren.parentNode) return;
+    wren.style.opacity = "0.98";
+    wren.style.filter = "drop-shadow(0 0 7px rgba(223,255,63,0.18))";
+  }, 1400);
 
   setTimeout(() => {
-    wren.classList.add("hive-reveal");
-  }, 2200);
+    if (!wren || !wren.parentNode) return;
+    const pulse = document.createElement("div");
+    pulse.className = "wren-exit-pulse";
+    pulse.style.left = wren.style.left;
+    pulse.style.top = wren.style.top;
+    impactField.appendChild(pulse);
+    setTimeout(() => pulse.remove(), 1800);
+  }, 2850);
 
   setTimeout(() => {
     if (wren && wren.parentNode) {
       wren.classList.add("burying");
       setTimeout(() => wren.remove(), 520);
     }
-  }, 4100);
+  }, 3000);
 }
 
 function spawnFrank() {
