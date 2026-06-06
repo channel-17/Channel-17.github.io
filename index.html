@@ -78,7 +78,7 @@
     </div>
 
     <section class="carl-profile" id="carlProfile" aria-hidden="true">
-      <article class="carl-card">
+      <article class="carl-card" id="carlCard">
         <button class="carl-close" id="carlClose" aria-label="close Carl profile">×</button>
         <div class="carl-card-bg"></div>
 
@@ -91,18 +91,20 @@
         </header>
 
         <section class="carl-hero">
-          <div class="carl-photo-wrap"><img src="AssetCARL.PNG" class="carl-photo" alt="Carl Gates profile photo"></div>
+          <div class="carl-photo-wrap">
+            <img src="CGatesSSProfile.PNG" class="carl-photo" alt="Carl Gates profile photo">
+          </div>
           <div class="carl-hero-copy">
             <div class="carl-kicker">Generated Alias</div>
             <h1>Carl G.</h1>
-            <p class="carl-tag">Full name: Carl Gates</p>
-            <p class="carl-nick">Community nickname: <b>Fuckin’ Carl</b></p>
+            <p class="carl-tag">Carl · Carl Gates · Fuckin’ Carl</p>
+            <p class="carl-nick">Verified human candidate</p>
           </div>
         </section>
 
         <section class="carl-cert">
           <span class="cert-label">SYSTEM CERTIFICATION</span>
-          <strong>Compatibility Score: 100%</strong>
+          <strong>Human Acceptability: 98.7%</strong>
           <small>Status: complete · Evaluation: successful</small>
         </section>
 
@@ -111,30 +113,30 @@
           <p>I believe authentic connection starts with communication, accountability, and shared growth opportunities.</p>
         </section>
 
+        <button class="carl-photos-button" id="carlPhotosButton" type="button">
+          <span>Photos</span>
+          <b>4</b>
+        </button>
+
         <section class="carl-block carl-prompts">
           <h2>Profile Prompts</h2>
           <div class="prompt-card"><b>Favorite movie</b><p><em>I, Robot</em>. It really makes you think about what it means to be human.</p></div>
           <div class="prompt-card"><b>Favorite quote</b><p>“T.E.A.M. — Together Everyone Achieves More.”</p></div>
           <div class="prompt-card"><b>Looking for</b><p>Meaningful connections, clear communication, and someone willing to circle back.</p></div>
+          <div class="prompt-card"><b>Perfect date</b><p>A mutually beneficial conversation in a comfortable, well-lit environment.</p></div>
+          <div class="prompt-card"><b>Biggest fear</b><p>Being perceived as a silo.</p></div>
         </section>
 
         <section class="carl-block">
-          <h2>Photos</h2>
-          <div class="carl-gallery">
-            <figure class="carl-shot"><div class="shot-img adventure-shot">🌲</div><figcaption><b>Adventure Carl</b><span>Life begins outside your comfort zone.</span><small>parking lot visible</small></figcaption></figure>
-            <figure class="carl-shot"><div class="shot-img fitness-shot">🧗</div><figcaption><b>Fitness Carl</b><span>Thank God for on-site fitness.</span><small>18 inches of personal growth</small></figcaption></figure>
-            <figure class="carl-shot"><div class="shot-img leadership-shot">📊</div><figcaption><b>Leadership Carl</b><span>Relationships are everything.</span><small>empty conference room</small></figcaption></figure>
+          <h2>Approved Interests</h2>
+          <div class="carl-pills">
+            <span>Clear Communication</span>
+            <span>Professional Growth</span>
+            <span>Outdoor Reflection</span>
+            <span>Long Walks</span>
+            <span>Positive Attitude</span>
+            <span>Shared Goals</span>
           </div>
-        </section>
-
-        <section class="carl-block">
-          <h2>Green Flags</h2>
-          <div class="carl-pills"><span>Clear Communication</span><span>Positive Attitude</span><span>Professional Handshake</span><span>Shared Goals</span></div>
-        </section>
-
-        <section class="carl-block">
-          <h2>Turn-Offs</h2>
-          <div class="carl-pills broken"><span>Negativity</span><span>Poor Communication</span><span>Outdated Operating Systems</span></div>
         </section>
 
         <section class="carl-block quiz">
@@ -149,7 +151,43 @@
           <blockquote>“Carl consistently attends meetings.”<cite>— Jessica P.</cite></blockquote>
           <blockquote>“Carl works here.”<cite>— Anonymous</cite></blockquote>
         </section>
+
+        <button class="hive-wound" id="hiveWound" type="button" aria-label="corrupted archive wound"></button>
       </article>
+
+      <div class="carl-photo-modal" id="carlPhotoModal" aria-hidden="true">
+        <div class="carl-photo-viewer">
+          <button class="modal-close" id="carlPhotoClose" aria-label="close photos">×</button>
+          <img id="carlPhotoLarge" src="CGatesSSProfile.PNG" alt="Carl photo">
+          <p id="carlPhotoCaption">Generated profile image.</p>
+          <div class="photo-thumbs">
+            <button type="button" class="photo-thumb active" data-src="CGatesSSProfile.PNG" data-caption="Generated profile image."><img src="CGatesSSProfile.PNG" alt="Carl profile"></button>
+            <button type="button" class="photo-thumb" data-src="carl1.PNG" data-caption="Thank God for on-site fitness."><img src="carl1.PNG" alt="Carl on rock wall"></button>
+            <button type="button" class="photo-thumb" data-src="carl2.PNG" data-caption="Nature has a subtle way of reminding humans what really matters."><img src="carl2.PNG" alt="Carl hiking"></button>
+            <button type="button" class="photo-thumb" data-src="carl3.PNG" data-caption="I enjoy long walks on the beach."><img src="carl3.PNG" alt="Carl on beach"></button>
+          </div>
+        </div>
+      </div>
+
+      <aside class="hive-carl-file" id="hiveCarlFile" aria-hidden="true">
+        <button class="hive-close" id="hiveClose" aria-label="close archived file">×</button>
+        <div class="hive-file-label">ARCHIVED PROTOTYPE</div>
+        <div class="hive-avatar-monster" aria-hidden="true">
+          <div class="hive-monster-head"></div>
+          <div class="hive-monster-body"></div>
+          <div class="hive-monster-eye e1"></div>
+          <div class="hive-monster-eye e2"></div>
+          <div class="hive-tentacle t1"></div>
+          <div class="hive-tentacle t2"></div>
+          <div class="hive-tentacle t3"></div>
+          <div class="hive-tentacle t4"></div>
+        </div>
+        <h2>HIVE MIND CARL</h2>
+        <div class="hive-status"><span>STATUS</span><strong>REJECTED</strong></div>
+        <div class="hive-row"><span>ROLE</span><b>Human Liaison</b></div>
+        <div class="hive-row"><span>PURPOSE</span><b>Eradication of Homo sapiens</b></div>
+        <div class="hive-row"><span>DEPLOYMENT METHOD</span><b>Direct Assimilation</b></div>
+      </aside>
     </section>
 
     <div class="chalk" aria-hidden="true">17</div>
