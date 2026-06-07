@@ -2454,3 +2454,41 @@ body {
   font-size: 0.6rem;
   font-style: normal;
 }
+
+/* =========================================================
+   HOTFIX — Hive Mind Carl modal scroll + real PNG display
+   Reason: previous pass clipped the archive and the real avatar could not show.
+========================================================= */
+.hive-carl-file {
+  max-height: min(82svh, 650px) !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+  padding-bottom: 22px !important;
+}
+.hive-carl-file::-webkit-scrollbar { width: 0; height: 0; }
+.real-hive-avatar {
+  width: 148px !important;
+  height: 148px !important;
+  margin: 14px auto 10px !important;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: rgba(7, 23, 53, 0.10);
+}
+.real-hive-avatar img {
+  width: 138px !important;
+  height: 138px !important;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+  opacity: 1 !important;
+  filter: drop-shadow(0 9px 14px rgba(7, 34, 96, 0.28));
+}
+.hive-match-log {
+  margin-bottom: 8px !important;
+}
+.hive-match-log b {
+  white-space: normal;
+}
