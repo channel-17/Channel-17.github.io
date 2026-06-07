@@ -29,6 +29,7 @@ const carlPhotoCaption = document.getElementById("carlPhotoCaption");
 const hiveWound = document.getElementById("hiveWound");
 const hiveCarlFile = document.getElementById("hiveCarlFile");
 const hiveClose = document.getElementById("hiveClose");
+const survivorChalk = document.getElementById("survivorChalk");
 
 let progress = 0;
 let state = "normal";
@@ -55,6 +56,15 @@ let engageTimer = null;
 let slashTimer = null;
 let profileCount = 0;
 let engageCount = 0;
+
+const hiveAssets = [
+  "MalePH1.PNG",
+  "male.PH.2.PNG",
+  "femalePH1.PNG",
+  "Female.PH2.PNG",
+  "female.PH.3.PNG",
+  "SilverFoxPH.PNG"
+];
 
 const normalAssets = [
   "Asset1.PNG",
@@ -367,11 +377,24 @@ function spawnProfile(side, delay = 0, opts = {}) {
 
 function revealHive(profile) {
   if (!profile || !profile.parentNode) return;
+  if (profile.classList.contains("wren")) return;
 
   profile.classList.add("mask-dropping");
 
   setTimeout(() => {
     if (!profile || !profile.parentNode) return;
+
+    if (!profile.dataset.originalSrc) {
+      const image = profile.querySelector("img");
+      if (image) profile.dataset.originalSrc = image.getAttribute("src") || "";
+    }
+
+    const image = profile.querySelector("img");
+    if (image) {
+      const asset = hiveAssets[profileCount % hiveAssets.length];
+      image.src = asset;
+    }
+
     profile.classList.add("hive-reveal");
 
     if (Math.random() > 0.45) {
@@ -589,6 +612,7 @@ if (carlPhotosButton) carlPhotosButton.addEventListener("click", openCarlPhotos)
 if (carlPhotoClose) carlPhotoClose.addEventListener("click", closeCarlPhotos);
 if (hiveWound) hiveWound.addEventListener("click", openHiveFile);
 if (hiveClose) hiveClose.addEventListener("click", closeHiveFile);
+if (survivorChalk) survivorChalk.addEventListener("click", event => { event.preventDefault(); survivorChalk.classList.add("found"); });
 
 document.querySelectorAll(".photo-thumb").forEach(button => {
   button.addEventListener("click", () => {
@@ -613,9 +637,13 @@ function spawnWren() {
 
   setTimeout(() => {
     if (!wren || !wren.parentNode) return;
-    wren.style.opacity = "0.98";
-    wren.style.filter = "drop-shadow(0 0 7px rgba(223,255,63,0.18))";
-  }, 1400);
+    wren.classList.add("wren-notice");
+  }, 1200);
+
+  setTimeout(() => {
+    if (!wren || !wren.parentNode) return;
+    wren.classList.add("wren-fade-home");
+  }, 2350);
 
   setTimeout(() => {
     if (!wren || !wren.parentNode) return;
@@ -624,15 +652,14 @@ function spawnWren() {
     pulse.style.left = wren.style.left;
     pulse.style.top = wren.style.top;
     impactField.appendChild(pulse);
-    setTimeout(() => pulse.remove(), 1800);
-  }, 2850);
+    setTimeout(() => pulse.remove(), 3200);
+  }, 3050);
 
   setTimeout(() => {
     if (wren && wren.parentNode) {
-      wren.classList.add("burying");
-      setTimeout(() => wren.remove(), 520);
+      wren.remove();
     }
-  }, 3000);
+  }, 3550);
 }
 
 function spawnFrank() {
