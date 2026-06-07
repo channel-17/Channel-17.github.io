@@ -66,6 +66,15 @@ const hiveAssets = [
   "SilverFoxPH.PNG"
 ];
 
+const hiveAssets = [
+  "MalePH1.PNG",
+  "male.PH.2.PNG",
+  "femalePH1.PNG",
+  "Female.PH2.PNG",
+  "female.PH.3.PNG",
+  "female.PH1.PNG"
+];
+
 const normalAssets = [
   "Asset1.PNG",
   "Asset2.PNG",
@@ -523,7 +532,7 @@ function triggerCarl(carl) {
     if (!carlOpened) {
       carl.classList.remove("carl-ready");
     }
-  }, 2800);
+  }, 1900);
 
   setTimeout(() => {
     if (!carl || !carl.parentNode) return;
@@ -536,7 +545,7 @@ function triggerCarl(carl) {
     }
 
     setTimeout(() => carl.remove(), 520);
-  }, 3350);
+  }, 2450);
 }
 
 function openCarlProfile() {
@@ -567,7 +576,7 @@ function startWoundPulse() {
     hiveWound.classList.add("pulse-open");
     setTimeout(() => {
       if (hiveWound) hiveWound.classList.remove("pulse-open");
-    }, 1700);
+    }, 1500);
   };
 
   setTimeout(pulse, 800);
