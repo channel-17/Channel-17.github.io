@@ -2317,3 +2317,140 @@ body {
     bottom: 25px;
   }
 }
+
+
+/* =========================================================
+   GOLD KIT CARL OVERRIDES — final locked humor pass
+========================================================= */
+.carl-online {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: rgba(255,255,255,0.95);
+  font-family: Arial, sans-serif;
+  font-weight: 900;
+}
+.carl-online span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #5dff9f;
+  box-shadow: 0 0 10px rgba(93,255,159,0.9), 0 0 24px rgba(93,255,159,0.35);
+}
+.carl-alias-card {
+  width: min(250px, 90%);
+  margin: 10px auto 0;
+  padding: 10px 13px;
+  border-radius: 18px;
+  background: rgba(255,255,255,0.17);
+  border: 1px solid rgba(255,255,255,0.24);
+  font-family: Arial, sans-serif;
+  text-align: left;
+}
+.carl-alias-card span {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 0.58rem;
+  font-weight: 900;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  opacity: 0.72;
+}
+.carl-alias-card ul { margin-left: 18px; }
+.carl-alias-card li { margin: 3px 0; font-size: 0.74rem; color: rgba(255,255,255,0.92); }
+.weakness-card { text-align: center; }
+.weakness-icons { display: flex; justify-content: center; gap: 18px; font-size: 1.5rem; }
+.metric-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 8px;
+  padding: 9px 11px;
+  border-radius: 14px;
+  background: rgba(255,255,255,0.15);
+  font-family: Arial, sans-serif;
+  font-size: 0.78rem;
+}
+.metric-row b { text-align: right; }
+.metric-row.alert b { color: #fff3a6; }
+.carl-photo-wrap {
+  background: #020202;
+  box-shadow: 0 16px 42px rgba(0,0,0,0.48), 0 0 0 9px rgba(255,255,255,0.13);
+}
+.profile.hive-reveal.has-hive-asset::after,
+.profile.hive-reveal.has-hive-asset::before { opacity: 0 !important; }
+.profile.hive-reveal.has-hive-asset img {
+  opacity: 1;
+  filter: none;
+  transform: scale(1.02);
+}
+.hive-wound {
+  position: absolute;
+  right: 22px;
+  top: 72px;
+  width: 46px;
+  height: 28px;
+  margin: 0;
+  opacity: 0.42;
+}
+.hive-wound::before,
+.hive-wound::after {
+  height: 5px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    #ff4fd8 14%,
+    #62f7ff 31%,
+    #e8ff4d 47%,
+    #62f7ff 62%,
+    #663cff 81%,
+    transparent 100%);
+  box-shadow: 0 0 5px rgba(98,247,255,0.35);
+  filter: saturate(1.5) contrast(1.1);
+}
+.hive-wound::before { width: 42px; transform: translate(-50%, -50%) rotate(-11deg); }
+.hive-wound::after { width: 24px; transform: translate(-40%, -42%) rotate(34deg); }
+.hive-wound.pulse-open {
+  animation: corruptionFlicker 1.5s steps(4) forwards;
+}
+@keyframes corruptionFlicker {
+  0%,100% { opacity: 0.46; transform: translateX(0) scale(1); filter: none; }
+  25% { opacity: 0.9; transform: translateX(-1px) scale(1.05); filter: drop-shadow(0 0 8px rgba(98,247,255,0.7)); }
+  50% { opacity: 1; transform: translateX(1px) scale(1.07); filter: drop-shadow(0 0 12px rgba(255,79,216,0.65)); }
+  75% { opacity: 0.76; transform: translateX(-1px) scale(1.03); filter: drop-shadow(0 0 7px rgba(232,255,77,0.55)); }
+}
+.real-hive-avatar {
+  display: grid;
+  place-items: center;
+  width: 132px;
+  height: 132px;
+  margin: 15px auto 9px;
+  border-radius: 50%;
+  filter: drop-shadow(0 12px 14px rgba(7,34,96,0.28));
+}
+.real-hive-avatar img {
+  width: 125px;
+  height: 125px;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+}
+.hive-match-log b {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 30px;
+}
+.hive-match-log b img {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.72);
+  object-fit: cover;
+  flex: 0 0 auto;
+}
+.hive-match-log b em {
+  margin-left: auto;
+  color: rgba(255,255,255,0.68);
+  font-size: 0.6rem;
+  font-style: normal;
+}
