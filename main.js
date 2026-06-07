@@ -63,15 +63,6 @@ const hiveAssets = [
   "femalePH1.PNG",
   "Female.PH2.PNG",
   "female.PH.3.PNG",
-  "SilverFoxPH.PNG"
-];
-
-const hiveAssets = [
-  "MalePH1.PNG",
-  "male.PH.2.PNG",
-  "femalePH1.PNG",
-  "Female.PH2.PNG",
-  "female.PH.3.PNG",
   "female.PH1.PNG"
 ];
 
