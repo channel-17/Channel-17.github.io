@@ -32,6 +32,9 @@ const carlProfilePortal = document.getElementById("carlProfilePortal");
 const hiveCarlFile = document.getElementById("hiveCarlFile");
 const hiveClose = document.getElementById("hiveClose");
 const survivorChalk = document.getElementById("survivorChalk");
+const campTestButton = document.getElementById("campTestButton");
+const campTestModal = document.getElementById("campTestModal");
+const campTestClose = document.getElementById("campTestClose");
 
 let progress = 0;
 let state = "normal";
@@ -50,6 +53,7 @@ let carlTriggered = false;
 let carlOpened = false;
 let hiveWaveStarted = false;
 let deadHeartReleased = false;
+let frankStackStarted = false;
 let woundPulseTimer = null;
 let hiveWoundUsed = false;
 
@@ -66,6 +70,15 @@ const hiveAssets = [
   "Female.PH2.PNG",
   "female.PH.3.PNG",
   "female.PH1.PNG"
+];
+
+const blueFrankFrames = [
+  "blue.frank1.PNG",
+  "blue.frank2.PNG",
+  "blue.frank3.PNG",
+  "blue.frank4.PNG",
+  "blue.frank5.PNG",
+  "blue.frank6.PNG"
 ];
 
 const normalAssets = [
@@ -96,22 +109,23 @@ const normalAssets = [
 ];
 
 const coverageTargets = [
-  { x: 50, y: 31, zone: "symbol" },
-  { x: 47, y: 31, zone: "symbol" },
-  { x: 53, y: 31, zone: "symbol" },
-  { x: 50, y: 38, zone: "symbol" },
-  { x: 44, y: 38, zone: "symbol" },
-  { x: 56, y: 38, zone: "symbol" },
-
-  { x: 42, y: 47, zone: "loader" },
+  /* Loader first: system attacks what exists, not the future symbol. */
   { x: 50, y: 47, zone: "loader" },
+  { x: 42, y: 47, zone: "loader" },
   { x: 58, y: 47, zone: "loader" },
-  { x: 37, y: 49, zone: "loader" },
-  { x: 63, y: 49, zone: "loader" },
+  { x: 46, y: 49, zone: "loader" },
+  { x: 54, y: 49, zone: "loader" },
 
-  { x: 44, y: 57, zone: "homie" },
-  { x: 50, y: 57, zone: "homie" },
-  { x: 56, y: 57, zone: "homie" },
+  { x: 47, y: 57, zone: "homie" },
+  { x: 52, y: 57, zone: "homie" },
+
+  /* Symbol second: once it appears, the fake profiles try and fail to bury it. */
+  { x: 50, y: 31, zone: "symbol" },
+  { x: 45, y: 32, zone: "symbol" },
+  { x: 55, y: 32, zone: "symbol" },
+  { x: 50, y: 38, zone: "symbol" },
+  { x: 43, y: 38, zone: "symbol" },
+  { x: 57, y: 38, zone: "symbol" },
 
   { x: 32, y: 42, zone: "miss" },
   { x: 68, y: 42, zone: "miss" },
@@ -182,14 +196,14 @@ const loading = setInterval(() => {
     deployGenerals();
   }
 
+  if (progress >= 28 && !frankStackStarted) {
+    frankStackStarted = true;
+    spawnFrankStack();
+  }
+
   if (progress >= 62 && !wrenSeen) {
     wrenSeen = true;
     spawnWren();
-  }
-
-  if (progress >= 68 && !frankSeen) {
-    frankSeen = true;
-    spawnFrank();
   }
 
   if (progress >= 100 && !completed) {
@@ -204,8 +218,8 @@ const loading = setInterval(() => {
 
 function startAttack() {
   spawnProfile("top", 0, { force: coverageTargets[0] });
-  setTimeout(() => spawnProfile("right", 0, { force: coverageTargets[1] }), 240);
-  setTimeout(() => spawnProfile("left", 0, { force: coverageTargets[2] }), 420);
+  setTimeout(() => spawnProfile("left", 0, { force: coverageTargets[1] }), 240);
+  setTimeout(() => spawnProfile("right", 0, { force: coverageTargets[2] }), 420);
   setTimeout(() => spawnProfile("top", 0, { force: coverageTargets[3] }), 610);
 
   profileTimer = setInterval(() => {
@@ -274,61 +288,39 @@ function spawnSlash(side) {
 
 function spawnEngagement() {
   const item = document.createElement("div");
-
   const kind = engageCount % 13;
   let text = "❤️";
   let cls = "heart";
 
-  if (kind === 3) {
-    text = "🩷";
-    cls = "heart pink";
-  }
+  if (kind === 3) { text = "🩷"; cls = "heart pink"; }
+  if (kind === 5) { text = "👍"; cls = "like"; }
+  if (kind === 8) { text = "🔔"; cls = "bell"; }
+  if (kind === 11) { text = "✔"; cls = "mark"; }
 
-  if (kind === 5) {
-    text = "👍";
-    cls = "like";
-  }
-
-  if (kind === 8) {
-    text = "🔔";
-    cls = "bell";
-  }
-
-  if (kind === 11) {
-    text = "✔";
-    cls = "mark";
-  }
-
-  if (progress > 42 && cls.includes("heart")) {
-    text = "🩶";
-    cls = "heart dead";
+  if (cls.includes("heart") && progress > 24) {
+    if (progress > 54) { text = ""; cls = "heart black"; }
+    else if (progress > 42) { text = "🩶"; cls = "heart dead"; }
+    else { text = "🩷"; cls = "heart pink"; }
   }
 
   item.className = "engage " + cls;
   item.textContent = text;
-  item.style.left = 70 + Math.random() * 23 + "%";
-  item.style.top = 77 + Math.random() * 15 + "%";
-  item.style.setProperty("--dur", 1.8 + Math.random() * 1.4 + "s");
-  item.style.setProperty("--drift", Math.round(-30 + Math.random() * 60) + "px");
+  item.style.left = 82 + Math.random() * 9 + "%";
+  item.style.top = 78 + Math.random() * 14 + "%";
+  item.style.setProperty("--dur", 2.3 + Math.random() * 1.2 + "s");
+  item.style.setProperty("--drift", Math.round(-84 - Math.random() * 36) + "px");
 
   engagementField.appendChild(item);
   engageCount++;
-
-  setTimeout(() => item.remove(), 3400);
+  setTimeout(() => item.remove(), 3600);
 }
 
 function pickTarget() {
   const count = profileCount;
-
-  if (count < 7) {
-    return coverageTargets[count % 6];
-  }
-
-  if (count < 14) {
-    return coverageTargets[6 + (count % 8)];
-  }
-
-  return coverageTargets[count % coverageTargets.length];
+  if (progress < 24) return coverageTargets[count % 7];
+  if (progress < 38) return coverageTargets[count % 7];
+  if (count % 4 === 0) return coverageTargets[13 + (count % 4)];
+  return coverageTargets[7 + (count % 6)];
 }
 
 function spawnProfile(side, delay = 0, opts = {}) {
@@ -339,14 +331,14 @@ function spawnProfile(side, delay = 0, opts = {}) {
     const target = opts.force || pickTarget();
 
     const profile = document.createElement("div");
-    profile.className = "profile";
+    profile.className = "profile target-" + target.zone;
 
     const asset = opts.asset || normalAssets[profileCount % normalAssets.length];
     const x = jitter(target.x, target.zone === "miss" ? 4.2 : 2.6);
     const y = jitter(target.y, target.zone === "miss" ? 4.6 : 2.8);
 
-    profile.style.left = `calc(${x}% - 48px)`;
-    profile.style.top = `calc(${y}% - 48px)`;
+    profile.style.left = `calc(${x}% - 40px)`;
+    profile.style.top = `calc(${y}% - 40px)`;
 
     let sx = "0px";
     let sy = "0px";
@@ -365,13 +357,14 @@ function spawnProfile(side, delay = 0, opts = {}) {
 
     spawnSlash(side);
 
-    if (progress > 38 && Math.random() > 0.42) {
-      setTimeout(() => revealHive(profile), 420 + Math.random() * 620);
+    if (target.zone === "symbol" && progress > 38 && Math.random() > 0.22) {
+      setTimeout(() => revealHive(profile), 360 + Math.random() * 420);
     }
 
     setTimeout(() => {
       if (profile && profile.parentNode && !profile.classList.contains("carl")) {
-        profile.remove();
+        profile.classList.add("dissolve-out");
+        setTimeout(() => profile.remove(), 420);
       }
     }, 4300);
   }, delay);
@@ -393,11 +386,11 @@ function revealHive(profile) {
 
     const image = profile.querySelector("img");
     if (image) {
-      const asset = hiveAssets[profileCount % hiveAssets.length];
+      const asset = profile.classList.contains("frank") ? blueFrankFrames[0] : hiveAssets[profileCount % hiveAssets.length];
       image.src = asset;
     }
 
-    profile.classList.add("hive-reveal");
+    profile.classList.add("hive-reveal", "has-hive-asset");
 
     if (Math.random() > 0.45) {
       profile.classList.add("angry");
@@ -406,8 +399,7 @@ function revealHive(profile) {
 }
 
 function beginHiveWave() {
-  const nearSignal = [...profileField.querySelectorAll(".profile")].slice(0, 8);
-
+  const nearSignal = [...profileField.querySelectorAll(".profile.target-symbol:not(.wren):not(.frank)")].slice(0, 8);
   nearSignal.forEach((profile, index) => {
     setTimeout(() => revealHive(profile), index * 90);
   });
@@ -639,8 +631,8 @@ function spawnWren() {
   const wren = document.createElement("div");
   wren.className = "profile wren stubborn";
 
-  wren.style.left = "calc(72% - 48px)";
-  wren.style.top = "calc(30% - 48px)";
+  wren.style.left = "calc(54% - 40px)";
+  wren.style.top = "calc(31% - 40px)";
   wren.style.setProperty("--sx", "80px");
   wren.style.setProperty("--sy", "-35px");
   wren.innerHTML = `<img src="AssetWREN.PNG" alt="">`;
@@ -661,8 +653,8 @@ function spawnWren() {
     if (!wren || !wren.parentNode) return;
     const pulse = document.createElement("div");
     pulse.className = "wren-exit-pulse";
-    pulse.style.left = wren.style.left;
-    pulse.style.top = wren.style.top;
+    pulse.style.left = "50%";
+    pulse.style.top = "31%";
     impactField.appendChild(pulse);
     setTimeout(() => pulse.remove(), 3200);
   }, 3050);
@@ -674,36 +666,48 @@ function spawnWren() {
   }, 3550);
 }
 
-function spawnFrank() {
-  const frank = document.createElement("div");
-  frank.className = "profile frank";
+function spawnFrankStack() {
+  const frankSpots = [
+    { x: 47, y: 59, sx: "-70px", sy: "35px" },
+    { x: 43, y: 60, sx: "-80px", sy: "42px" },
+    { x: 50, y: 60, sx: "-65px", sy: "36px" }
+  ];
 
-  frank.style.left = "calc(22% - 48px)";
-  frank.style.top = "calc(66% - 48px)";
-  frank.style.setProperty("--sx", "-60px");
-  frank.style.setProperty("--sy", "40px");
-  frank.innerHTML = `<img src="AssetFRANK.PNG" alt="">`;
+  frankSpots.forEach((spot, index) => {
+    setTimeout(() => {
+      const frank = document.createElement("div");
+      frank.className = "profile frank frank-stack";
+      frank.style.left = `calc(${spot.x}% - 40px)`;
+      frank.style.top = `calc(${spot.y}% - 40px)`;
+      frank.style.setProperty("--sx", spot.sx);
+      frank.style.setProperty("--sy", spot.sy);
+      frank.innerHTML = `<img src="AssetFRANK.PNG" alt="">`;
+      profileField.appendChild(frank);
+      if (index < 2) {
+        setTimeout(() => frank.classList.add("burying"), 4800 - index * 420);
+        setTimeout(() => frank.remove(), 5350 - index * 420);
+      } else {
+        setTimeout(() => runBlueFrankSequence(frank), 4200);
+      }
+    }, index * 720);
+  });
+}
 
-  profileField.appendChild(frank);
-
-  setTimeout(() => frank.classList.add("realize"), 620);
-
+function runBlueFrankSequence(frank) {
+  if (!frank || !frank.parentNode) return;
+  const image = frank.querySelector("img");
+  frank.classList.add("frank-realization", "hive-reveal", "has-hive-asset");
+  blueFrankFrames.forEach((frame, index) => {
+    setTimeout(() => {
+      if (image) image.src = frame;
+    }, index * 170);
+  });
   setTimeout(() => {
-    revealHive(frank);
-  }, 1100);
-
+    if (frank && frank.parentNode) frank.classList.add("dissolve-out");
+  }, blueFrankFrames.length * 170 + 240);
   setTimeout(() => {
-    for (let i = 0; i < 7; i++) {
-      setTimeout(() => spawnProfile(randomSide()), i * 70);
-    }
-  }, 1350);
-
-  setTimeout(() => {
-    if (frank && frank.parentNode) {
-      frank.classList.add("burying");
-      setTimeout(() => frank.remove(), 520);
-    }
-  }, 2600);
+    if (frank && frank.parentNode) frank.remove();
+  }, blueFrankFrames.length * 170 + 780);
 }
 
 function stopAttack() {
@@ -772,22 +776,21 @@ function openChannel() {
   if (!signalNode.classList.contains("ready")) return;
 
   signalNode.style.pointerEvents = "none";
+  if (navigator.vibrate) navigator.vibrate(33);
 
+  signalNode.classList.add("pressed");
   outerSymbol.classList.add("dissolve");
   innerSymbol.classList.add("alive");
-
   maze.classList.remove("active");
-  void maze.offsetWidth;
-  maze.classList.add("active");
 
   setTimeout(() => {
     signalNode.classList.add("fade-out");
-  }, 4700);
+  }, 1850);
 
   setTimeout(() => {
     home.classList.add("open");
     idleMaze.classList.add("active");
-  }, 5600);
+  }, 2450);
 }
 
 signalNode.addEventListener("click", openChannel);
