@@ -32,9 +32,12 @@ const carlProfilePortal = document.getElementById("carlProfilePortal");
 const hiveCarlFile = document.getElementById("hiveCarlFile");
 const hiveClose = document.getElementById("hiveClose");
 const survivorChalk = document.getElementById("survivorChalk");
-const campTestTrigger = document.getElementById("campTestTrigger");
+const takeCampTest = document.getElementById("takeCampTest");
 const campTestModal = document.getElementById("campTestModal");
 const campTestClose = document.getElementById("campTestClose");
+const campResult = document.getElementById("campResult");
+const expandTestimonials = document.getElementById("expandTestimonials");
+const testimonialMore = document.getElementById("testimonialMore");
 
 let progress = 0;
 let state = "normal";
@@ -53,10 +56,10 @@ let carlTriggered = false;
 let carlOpened = false;
 let hiveWaveStarted = false;
 let deadHeartReleased = false;
+let frankBlueStarted = false;
+let frankStack = [];
 let woundPulseTimer = null;
 let hiveWoundUsed = false;
-let frankTurtleStack = [];
-let frankBlueStarted = false;
 
 let profileTimer = null;
 let engageTimer = null;
@@ -101,30 +104,29 @@ const normalAssets = [
 ];
 
 const coverageTargets = [
-  // Loader first: percentage center, then left/right, then staggered overlaps.
-  { x: 50, y: 55, zone: "loader" },
-  { x: 41, y: 55, zone: "loader" },
-  { x: 59, y: 55, zone: "loader" },
-  { x: 36, y: 53.5, zone: "loader" },
-  { x: 63, y: 56.5, zone: "loader" },
-  { x: 45, y: 57, zone: "loader" },
-  { x: 55, y: 53.5, zone: "loader" },
+  // Loader first: center percentage, then left/right, then overlapping smother.
+  { x: 50, y: 48, zone: "loader" },
+  { x: 41, y: 48, zone: "loader" },
+  { x: 59, y: 48, zone: "loader" },
+  { x: 46, y: 46, zone: "loader" },
+  { x: 54, y: 50, zone: "loader" },
+  { x: 36, y: 47, zone: "loader" },
+  { x: 64, y: 49, zone: "loader" },
 
-  // Homie gets Frank, not the swarm.
-  { x: 50, y: 64, zone: "homie" },
+  // Homie is Frank-only. Generic avatars do not own turtle duty.
+  { x: 50, y: 59, zone: "homie" },
 
-  // Symbol attackers come only after the symbol exists; they hit around the mark, not all three points.
-  { x: 45, y: 24, zone: "symbol" },
-  { x: 55, y: 24, zone: "symbol" },
-  { x: 50, y: 31, zone: "symbol" },
-  { x: 42, y: 34, zone: "symbol" },
-  { x: 58, y: 34, zone: "symbol" },
-  { x: 50, y: 38, zone: "symbol" },
+  // Symbol later. These never fully bury all three points.
+  { x: 50, y: 30, zone: "symbol" },
+  { x: 44, y: 34, zone: "symbol" },
+  { x: 56, y: 34, zone: "symbol" },
+  { x: 50, y: 39, zone: "symbol" },
+  { x: 47, y: 28, zone: "symbol" },
 
-  { x: 30, y: 40, zone: "miss" },
-  { x: 70, y: 40, zone: "miss" },
-  { x: 34, y: 64, zone: "miss" },
-  { x: 66, y: 64, zone: "miss" }
+  { x: 29, y: 43, zone: "miss" },
+  { x: 71, y: 43, zone: "miss" },
+  { x: 33, y: 63, zone: "miss" },
+  { x: 67, y: 63, zone: "miss" }
 ];
 
 function setProgress(value) {
@@ -159,22 +161,17 @@ const loading = setInterval(() => {
     startAttack();
   }
 
-  if (progress >= 24 && !frankSeen) {
-    frankSeen = true;
-    spawnFrankTurtleDuty();
-  }
-
-  if (progress >= 36 && !ghosted) {
+  if (progress >= 24 && !ghosted) {
     ghosted = true;
     signalGhost.classList.add("waking");
   }
 
-  if (progress >= 41 && !hiveWaveStarted) {
+  if (progress >= 50 && !hiveWaveStarted) {
     hiveWaveStarted = true;
     beginHiveWave();
   }
 
-  if (progress >= 42 && !burning) {
+  if (progress >= 50 && !burning) {
     burning = true;
     signalGhost.classList.add("burning");
     startBurnPulse();
@@ -195,14 +192,19 @@ const loading = setInterval(() => {
     deployGenerals();
   }
 
-  if (progress >= 58 && !wrenSeen) {
+  if (progress >= 61 && !wrenSeen) {
     wrenSeen = true;
     spawnWren();
   }
 
-  if (progress >= 66 && !frankBlueStarted) {
+  if (progress >= 26 && !frankSeen) {
+    frankSeen = true;
+    spawnFrank();
+  }
+
+  if (progress >= 57 && frankSeen && !frankBlueStarted) {
     frankBlueStarted = true;
-    animateFrankBlueSequence();
+    startBlueFrankSequence();
   }
 
   if (progress >= 100 && !completed) {
@@ -216,27 +218,27 @@ const loading = setInterval(() => {
 }, 45);
 
 function startAttack() {
-  // System attacks what exists first: loader center, left, right.
-  spawnProfile("top", 0, { force: coverageTargets[0], noHive: true });
-  setTimeout(() => spawnProfile("left", 0, { force: coverageTargets[1], noHive: true }), 260);
-  setTimeout(() => spawnProfile("right", 0, { force: coverageTargets[2], noHive: true }), 520);
-  setTimeout(() => spawnProfile("top", 0, { force: coverageTargets[3], noHive: true }), 820);
-  setTimeout(() => spawnProfile("bottom", 0, { force: coverageTargets[4], noHive: true }), 1080);
+  // First strike hits what exists: the loader bar and percentage.
+  spawnProfile("top", 0, { force: coverageTargets[0] });
+  setTimeout(() => spawnProfile("left", 0, { force: coverageTargets[1] }), 260);
+  setTimeout(() => spawnProfile("right", 0, { force: coverageTargets[2] }), 520);
+  setTimeout(() => spawnProfile("left", 0, { force: coverageTargets[3] }), 820);
+  setTimeout(() => spawnProfile("right", 0, { force: coverageTargets[4] }), 1120);
 
   profileTimer = setInterval(() => {
     if (completed) return;
     spawnProfile(randomSide());
-  }, 650);
+  }, 520);
 
   engageTimer = setInterval(() => {
     if (completed) return;
     spawnEngagement();
-  }, 1050);
+  }, 820);
 
   slashTimer = setInterval(() => {
     if (completed) return;
     spawnSlash(randomSide());
-  }, 280);
+  }, 310);
 }
 function randomSide() {
   return ["top", "left", "right", "bottom"][Math.floor(Math.random() * 4)];
@@ -287,55 +289,57 @@ function spawnSlash(side) {
 }
 
 function spawnEngagement() {
+  // Hearts are the story: bottom-right red, then exposed by signal into pink/gray/black and gone.
   const item = document.createElement("div");
-
-  // Hearts tell one story: red until the signal appears; then each heart fades red→pink→gray→black→gone while traveling upward.
-  item.className = progress > 38 ? "engage heart life-heart exposed-heart" : "engage heart life-heart";
-  item.textContent = "♥";
-  item.style.left = 77 + Math.random() * 15 + "%";
-  item.style.top = 94 + Math.random() * 5 + "%";
-  item.style.setProperty("--dur", 5.4 + Math.random() * 2.2 + "s");
-  item.style.setProperty("--drift", Math.round(-48 + Math.random() * 58) + "px");
-
+  item.className = "engage heart";
+  item.textContent = "❤️";
+  item.style.left = 78 + Math.random() * 16 + "%";
+  item.style.top = 95 + Math.random() * 6 + "%";
+  item.style.setProperty("--dur", (progress < 38 ? 5.2 : 4.2) + Math.random() * 1.6 + "s");
+  item.style.setProperty("--drift", Math.round(-26 + Math.random() * 52) + "px");
+  if (progress >= 38) item.classList.add("exposed");
   engagementField.appendChild(item);
   engageCount++;
-
-  setTimeout(() => item.remove(), 8400);
+  setTimeout(() => item.remove(), 7200);
 }
 function pickTarget() {
   const count = profileCount;
 
-  // Before the symbol appears, the system only knows the loader exists.
-  if (!ghosted) {
+  if (progress < 38) {
+    // Smother the loading bar without creating one giant blob.
     return coverageTargets[count % 7];
   }
 
-  // After the symbol appears, throw profiles at the symbol in waves, with rare misses.
-  if (count % 7 === 0) {
-    return coverageTargets[14 + ((count / 7) % 4 | 0)];
+  if (progress < 50) {
+    return coverageTargets[count % 7];
   }
 
-  return coverageTargets[8 + (count % 6)];
+  // Once the symbol appears, the system throws masks at it.
+  // Keep the target pattern sparse enough that the emblem never fully disappears.
+  const symbolTargets = coverageTargets.filter(t => t.zone === "symbol");
+  const missTargets = coverageTargets.filter(t => t.zone === "miss");
+  return Math.random() < 0.76
+    ? symbolTargets[count % symbolTargets.length]
+    : missTargets[count % missTargets.length];
 }
 function spawnProfile(side, delay = 0, opts = {}) {
   setTimeout(() => {
     const old = profileField.querySelectorAll(".profile:not(.carl):not(.frank):not(.wren)");
-    if (old.length > 9) old[0].remove();
+    if (old.length > 13) old[0].remove();
 
     const target = opts.force || pickTarget();
 
     const profile = document.createElement("div");
     profile.className = "profile";
-    profile.dataset.zone = target.zone;
-    if (target.zone === "symbol") profile.classList.add("symbol-attacker");
-    if (target.zone === "loader") profile.classList.add("loader-attacker");
+    if (target.zone === "symbol") profile.classList.add("on-symbol");
+    if (target.zone === "loader") profile.classList.add("on-loader");
 
     const asset = opts.asset || normalAssets[profileCount % normalAssets.length];
-    const x = jitter(target.x, target.zone === "miss" ? 4.0 : target.zone === "symbol" ? 1.8 : 2.2);
-    const y = jitter(target.y, target.zone === "miss" ? 4.4 : target.zone === "symbol" ? 1.8 : 2.4);
+    const x = jitter(target.x, target.zone === "symbol" ? 1.8 : target.zone === "loader" ? 2.2 : 3.2);
+    const y = jitter(target.y, target.zone === "symbol" ? 1.8 : target.zone === "loader" ? 2.0 : 3.2);
 
-    profile.style.left = `calc(${x}% - 27px)`;
-    profile.style.top = `calc(${y}% - 27px)`;
+    profile.style.left = `calc(${x}% - 34px)`;
+    profile.style.top = `calc(${y}% - 34px)`;
 
     let sx = "0px";
     let sy = "0px";
@@ -354,27 +358,31 @@ function spawnProfile(side, delay = 0, opts = {}) {
 
     spawnSlash(side);
 
-    // Only profiles that actually attack the symbol get exposed as blue.
-    if (!opts.noHive && target.zone === "symbol" && progress > 41) {
-      setTimeout(() => revealHive(profile), 80 + Math.random() * 120);
+    if (target.zone === "symbol" && progress >= 50) {
+      setTimeout(() => revealHive(profile), 140 + Math.random() * 180);
     }
 
     setTimeout(() => {
       if (profile && profile.parentNode && !profile.classList.contains("carl")) {
-        profile.classList.add("fake-dissolve");
-        setTimeout(() => profile.remove(), 520);
+        profile.remove();
       }
-    }, target.zone === "symbol" ? 1650 : 5200);
+    }, target.zone === "symbol" ? 6200 : 5200);
   }, delay);
 }
 function revealHive(profile) {
   if (!profile || !profile.parentNode) return;
   if (profile.classList.contains("wren")) return;
+  if (profile.classList.contains("hive-reveal")) return;
 
   profile.classList.add("mask-dropping");
 
   setTimeout(() => {
     if (!profile || !profile.parentNode) return;
+
+    if (!profile.dataset.originalSrc) {
+      const image = profile.querySelector("img");
+      if (image) profile.dataset.originalSrc = image.getAttribute("src") || "";
+    }
 
     const image = profile.querySelector("img");
     if (image) {
@@ -382,34 +390,30 @@ function revealHive(profile) {
       image.src = asset;
     }
 
-    profile.classList.add("hive-reveal", "has-hive-asset");
+    profile.classList.add("hive-reveal");
 
     setTimeout(() => {
-      if (!profile || !profile.parentNode) return;
-      profile.classList.add("blue-peel-away");
-      setTimeout(() => { if (profile && profile.parentNode) profile.remove(); }, 720);
-    }, 650);
-  }, 120);
+      if (profile && profile.parentNode) profile.classList.add("hive-dissolve");
+    }, 1650);
+  }, 180);
 }
 function beginHiveWave() {
-  // No mass conversion. Only the profiles currently touching the symbol get exposed.
-  const nearSignal = [...profileField.querySelectorAll('.profile.symbol-attacker:not(.wren)')].slice(0, 6);
-
+  const nearSignal = [...profileField.querySelectorAll(".profile.on-symbol:not(.wren):not(.frank)")].slice(0, 5);
   nearSignal.forEach((profile, index) => {
-    setTimeout(() => revealHive(profile), index * 95);
+    setTimeout(() => revealHive(profile), index * 130);
   });
 }
 function startBurnPulse() {
-  // Tiny signal exposure pulse; not a weapon blast.
-  for (let i = 0; i < 3; i++) {
+  for (let i = 0; i < 5; i++) {
     setTimeout(() => {
       const ring = document.createElement("div");
-      ring.className = "burn-ring signal-reveal-ring";
+      ring.className = "burn-ring";
       impactField.appendChild(ring);
-      setTimeout(() => ring.remove(), 780);
-    }, i * 720);
+      setTimeout(() => ring.remove(), 950);
+    }, i * 650);
   }
 }
+
 function deployGenerals() {
   checkGenerals.classList.add("active");
 
@@ -441,8 +445,8 @@ function fireBlast(index) {
 
   setTimeout(() => blast.remove(), 430);
 
-  for (let i = 0; i < 2; i++) {
-    setTimeout(() => spawnProfile(["left", "right"][i]), i * 100);
+  for (let i = 0; i < 3; i++) {
+    setTimeout(() => spawnProfile(["left", "right", "top"][i]), i * 80);
   }
 }
 
@@ -452,8 +456,8 @@ function spawnCarl() {
   carl.type = "button";
   carl.setAttribute("aria-label", "Carl Gates");
 
-  carl.style.left = "calc(18% - 27px)";
-  carl.style.top = "calc(48% - 27px)";
+  carl.style.left = "calc(18% - 48px)";
+  carl.style.top = "calc(47% - 48px)";
   carl.style.setProperty("--sx", "-35px");
   carl.style.setProperty("--sy", "8px");
   carl.innerHTML = `<img src="AssetCARL.PNG" alt="">`;
@@ -534,7 +538,6 @@ function openCarlProfile() {
   startWoundPulse();
 }
 
-
 function closeCarlProfile() {
   carlProfile.classList.remove("open");
   carlProfile.setAttribute("aria-hidden", "true");
@@ -612,9 +615,30 @@ if (hiveWound) hiveWound.addEventListener("click", openHiveMindCarlFile);
 if (carlProfilePortal) carlProfilePortal.addEventListener("click", openHiveMindCarlFile);
 if (hiveClose) hiveClose.addEventListener("click", closeCarlProfile);
 if (survivorChalk) survivorChalk.addEventListener("click", event => { event.preventDefault(); survivorChalk.classList.add("found"); });
-if (campTestTrigger && campTestModal) campTestTrigger.addEventListener("click", () => { campTestModal.classList.add("open"); campTestModal.setAttribute("aria-hidden", "false"); });
-if (campTestClose && campTestModal) campTestClose.addEventListener("click", () => { campTestModal.classList.remove("open"); campTestModal.setAttribute("aria-hidden", "true"); });
-if (campTestModal) campTestModal.addEventListener("click", event => { if (event.target === campTestModal) { campTestModal.classList.remove("open"); campTestModal.setAttribute("aria-hidden", "true"); } });
+if (takeCampTest && campTestModal) {
+  takeCampTest.addEventListener("click", () => {
+    campTestModal.classList.add("open");
+    campTestModal.setAttribute("aria-hidden", "false");
+    if (campResult) campResult.textContent = "Awaiting human selection.";
+  });
+}
+if (campTestClose && campTestModal) {
+  campTestClose.addEventListener("click", () => {
+    campTestModal.classList.remove("open");
+    campTestModal.setAttribute("aria-hidden", "true");
+  });
+}
+document.querySelectorAll(".camp-answer").forEach(button => {
+  button.addEventListener("click", () => {
+    if (campResult) campResult.textContent = "Camp Compatibility: APPROVED. Human selected yes.";
+  });
+});
+if (expandTestimonials && testimonialMore) {
+  expandTestimonials.addEventListener("click", () => {
+    testimonialMore.classList.toggle("open");
+    expandTestimonials.textContent = testimonialMore.classList.contains("open") ? "COLLAPSE TESTIMONIALS" : "EXPAND TESTIMONIALS";
+  });
+}
 
 document.querySelectorAll(".photo-thumb").forEach(button => {
   button.addEventListener("click", () => {
@@ -628,12 +652,11 @@ document.querySelectorAll(".photo-thumb").forEach(button => {
 function spawnWren() {
   const wren = document.createElement("div");
   wren.className = "profile wren stubborn";
-  wren.dataset.zone = "symbol";
 
-  wren.style.left = "calc(51% - 27px)";
-  wren.style.top = "calc(28% - 27px)";
-  wren.style.setProperty("--sx", "70px");
-  wren.style.setProperty("--sy", "-30px");
+  wren.style.left = "calc(52% - 34px)";
+  wren.style.top = "calc(31% - 34px)";
+  wren.style.setProperty("--sx", "86px");
+  wren.style.setProperty("--sy", "-42px");
   wren.innerHTML = `<img src="AssetWREN.PNG" alt="">`;
 
   profileField.appendChild(wren);
@@ -641,58 +664,61 @@ function spawnWren() {
   setTimeout(() => {
     if (!wren || !wren.parentNode) return;
     wren.classList.add("wren-notice");
-  }, 900);
+  }, 1250);
 
   setTimeout(() => {
     if (!wren || !wren.parentNode) return;
     wren.classList.add("wren-fade-home");
-  }, 2200);
+  }, 2650);
 
   setTimeout(() => {
+    if (!wren || !wren.parentNode) return;
     const pulse = document.createElement("div");
     pulse.className = "wren-exit-pulse";
-    pulse.style.left = "50%";
-    pulse.style.top = "28%";
+    pulse.style.left = "52%";
+    pulse.style.top = "31%";
     impactField.appendChild(pulse);
     setTimeout(() => pulse.remove(), 3600);
-  }, 2880);
+  }, 3200);
 
   setTimeout(() => {
-    if (wren && wren.parentNode) wren.remove();
-  }, 3300);
+    if (wren && wren.parentNode) {
+      wren.remove();
+    }
+  }, 3800);
 }
-function spawnFrankTurtleDuty() {
-  // Frank is the only avatar assigned to Homie. Same poor bastard, stacked over turtle duty.
+function spawnFrank() {
   const spots = [
-    { x: 48.5, y: 65.5, sx: "-65px", sy: "22px" },
-    { x: 51.0, y: 64.5, sx: "-72px", sy: "18px" },
-    { x: 49.5, y: 66.5, sx: "-68px", sy: "26px" },
-    { x: 52.5, y: 65.2, sx: "-74px", sy: "20px" }
+    { x: 49, y: 59, dx: 0, dy: 0 },
+    { x: 47.5, y: 59.2, dx: -4, dy: 1 },
+    { x: 50.6, y: 58.8, dx: 4, dy: -1 },
+    { x: 48.8, y: 60.2, dx: -2, dy: 3 }
   ];
 
   spots.forEach((spot, index) => {
     setTimeout(() => {
       const frank = document.createElement("div");
-      frank.className = "profile frank frank-stack";
-      frank.dataset.frankFrame = "0";
-      frank.style.left = `calc(${spot.x}% - 27px)`;
-      frank.style.top = `calc(${spot.y}% - 27px)`;
-      frank.style.setProperty("--sx", spot.sx);
-      frank.style.setProperty("--sy", spot.sy);
-      frank.style.zIndex = String(26 + index);
+      frank.className = "profile frank turtle-duty";
+      frank.style.left = `calc(${spot.x}% - 36px)`;
+      frank.style.top = `calc(${spot.y}% - 36px)`;
+      frank.style.setProperty("--sx", `${-70 + index * 14}px`);
+      frank.style.setProperty("--sy", `${35 - index * 4}px`);
+      frank.style.setProperty("--overlapX", `${spot.dx}px`);
+      frank.style.setProperty("--overlapY", `${spot.dy}px`);
       frank.innerHTML = `<img src="AssetFRANK.PNG" alt="">`;
       profileField.appendChild(frank);
-      frankTurtleStack.push(frank);
-    }, index * 1120);
+      frankStack.push(frank);
+    }, index * 520);
   });
 }
 
-function animateFrankBlueSequence() {
-  const frank = frankTurtleStack.filter(f => f && f.parentNode).pop();
-  if (!frank) return;
+function startBlueFrankSequence() {
+  const liveFranks = frankStack.filter(f => f && f.parentNode);
+  if (!liveFranks.length) return;
 
-  frank.classList.add("frank-blue-sequence", "hive-reveal", "has-hive-asset");
-  const img = frank.querySelector("img");
+  const topFrank = liveFranks[liveFranks.length - 1];
+  topFrank.classList.add("blue-frank", "auth-field-hit");
+  const img = topFrank.querySelector("img");
   const frames = [
     "blue.frank1.PNG",
     "blue.frank2.PNG",
@@ -702,27 +728,24 @@ function animateFrankBlueSequence() {
     "blue.frank6.PNG"
   ];
 
-  frames.forEach((src, index) => {
-    setTimeout(() => { if (img) img.src = src; }, index * 210);
-  });
-
-  // Bury the older Franks first so the last one gets the actual WTF beat.
-  frankTurtleStack.forEach(f => {
-    if (f !== frank && f && f.parentNode) {
-      f.classList.add("burying");
-      setTimeout(() => { if (f && f.parentNode) f.remove(); }, 520);
-    }
+  frames.forEach((frame, index) => {
+    setTimeout(() => {
+      if (img) img.src = frame;
+    }, index * 330);
   });
 
   setTimeout(() => {
-    if (!frank || !frank.parentNode) return;
-    frank.classList.add("blue-peel-away");
-    setTimeout(() => { if (frank && frank.parentNode) frank.remove(); }, 760);
-  }, 1650);
-}
+    liveFranks.forEach(frank => {
+      if (frank && frank.parentNode) frank.classList.add("frank-dissolve");
+    });
+  }, frames.length * 330 + 900);
 
-function spawnFrank() {
-  spawnFrankTurtleDuty();
+  setTimeout(() => {
+    liveFranks.forEach(frank => {
+      if (frank && frank.parentNode) frank.remove();
+    });
+    frankStack = [];
+  }, frames.length * 330 + 1850);
 }
 function stopAttack() {
   clearInterval(profileTimer);
@@ -736,8 +759,7 @@ function stopAttack() {
   virusLayer.classList.add("retreat");
 
   setTimeout(() => {
-    frankTurtleStack = [];
-    profileField.innerHTML = "";
+    profileField.querySelectorAll(".profile:not(.wren)").forEach(node => node.remove());
     engagementField.innerHTML = "";
     motionField.innerHTML = "";
     impactField.innerHTML = "";
@@ -791,18 +813,17 @@ function openChannel() {
   if (!signalNode.classList.contains("ready")) return;
 
   signalNode.style.pointerEvents = "none";
-  if (navigator.vibrate) navigator.vibrate([17, 34, 17]);
+  if (navigator.vibrate) navigator.vibrate(17);
 
   signalNode.classList.add("pressed");
   outerSymbol.classList.add("dissolve");
   innerSymbol.classList.add("alive");
 
-  // No maze before station. The maze was only a design map.
   maze.classList.remove("active");
 
   setTimeout(() => {
     signalNode.classList.add("fade-out");
-  }, 1600);
+  }, 1900);
 
   setTimeout(() => {
     home.classList.add("open");
