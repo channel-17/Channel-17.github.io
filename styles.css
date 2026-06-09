@@ -2782,200 +2782,253 @@ body {
 .carl-card.dating-page-glitch::before { top: 44% !important; }
 .carl-card.dating-page-glitch::after { top: 58% !important; }
 
-
 /* =========================================================
-   BUILD 101D — locked intro + Frank 1358 surgical overrides
+   BUILD 101 REPAIR — Intro locks, Frank 1358, symbol clarity
+   Source of truth: loader first, turtle gets Frank, symbol never fully buried.
 ========================================================= */
 
+:root { --profile-size: 70px; --profile-half: 35px; }
+
+/* Smaller avatars again. Photos should not look lost inside fat rings. */
 .profile {
-  width: 80px !important;
-  height: 80px !important;
+  width: var(--profile-size) !important;
+  height: var(--profile-size) !important;
   border-width: 2px !important;
-}
-.profile img { object-fit: cover !important; }
-.profile.hive-reveal.has-hive-asset img {
-  opacity: 1 !important;
-  filter: saturate(1.25) contrast(1.08) brightness(1.08) !important;
-  transform: scale(1) !important;
-}
-.profile.hive-reveal.has-hive-asset::after,
-.profile.hive-reveal.has-hive-asset::before { opacity: 0 !important; }
-.profile.dissolve-out {
-  animation: avatarDissolveOut 0.45s steps(4) forwards !important;
-}
-@keyframes avatarDissolveOut {
-  0% { opacity: 1; filter: none; transform: translate(0,0) scale(1); }
-  45% { opacity: 0.72; filter: blur(1px) saturate(0.4); transform: translate(1px,-1px) scale(0.96); }
-  100% { opacity: 0; filter: blur(5px) saturate(0); transform: translate(5px, -8px) scale(0.72); }
-}
-
-/* The symbol can be attacked, but never fully buried. */
-.profile.target-symbol { z-index: 45 !important; mix-blend-mode: normal; opacity: 0.92; }
-.profile.target-symbol:nth-of-type(3n) { opacity: 0.78; }
-.signal-node.ready { z-index: 49 !important; }
-.signal-node.ready .outer-symbol,
-.signal-node.ready .inner-symbol { filter: drop-shadow(0 0 12px rgba(223,255,63,0.22)); }
-
-/* Homie's door is a close slit under the bar, not a mile-away doorway. */
-.loader-scene::after {
-  left: calc(50% + 48px) !important;
-  top: calc(100% - 10px) !important;
-  width: 4px !important;
-  max-height: 34px !important;
-}
-.loader-scene.portal-open::after { height: 34px !important; }
-.turtle.escape { animation-duration: 2.15s !important; }
-@keyframes homieCutThroughPortal {
-  0% { transform: translateX(0); opacity: 1; }
-  68% { transform: translateX(58px); opacity: 1; }
-  100% { transform: translateX(68px) scaleX(0.18); opacity: 0; }
-}
-
-/* Hearts travel up the right side and decay after the signal appears. */
-.engage { z-index: 11; }
-.engage.heart.black {
-  width: 11px;
-  height: 11px;
-  border-radius: 50%;
-  background: #080808;
-  color: transparent !important;
-  box-shadow: 0 0 5px rgba(0,0,0,0.75);
-}
-@keyframes engageRise {
-  0% { opacity: 0; transform: translateY(18px) translateX(0) scale(0.72); }
-  14% { opacity: 0.9; }
-  72% { opacity: 0.76; }
-  100% { opacity: 0; transform: translateY(-168px) translateX(var(--drift)) scale(0.84); }
-}
-
-/* Frank 1358: one janitor keeps getting the turtle job, then realizes he got dragged into it. */
-.profile.frank { z-index: 46 !important; }
-.profile.frank-stack { box-shadow: 0 0 12px rgba(0,0,0,0.9), 0 0 0 1px rgba(255,255,255,0.12); }
-.profile.frank-realization {
-  z-index: 50 !important;
-  animation: frankBluePanic 1.25s steps(6) forwards !important;
-}
-@keyframes frankBluePanic {
-  0% { transform: translate(0,0) scale(1); filter: none; }
-  50% { transform: translate(0,-3px) scale(1.05); filter: brightness(1.12); }
-  100% { transform: translate(0,-5px) scale(1.06); filter: drop-shadow(0 0 14px rgba(120,173,255,0.42)); }
-}
-
-/* Wren: not hive, not blue, not dissolved. She goes home. */
-.profile.wren { z-index: 48 !important; }
-.profile.wren.wren-fade-home {
-  animation: wrenGoHome 1.2s ease forwards !important;
-}
-@keyframes wrenGoHome {
-  0% { opacity: 1; transform: translate(0,0) scale(1); filter: drop-shadow(0 0 6px rgba(242,238,229,0.18)); }
-  72% { opacity: 0.72; transform: translate(-12px, 3px) scale(0.82); filter: drop-shadow(0 0 16px rgba(223,255,63,0.22)); }
-  100% { opacity: 0; transform: translate(-22px, 6px) scale(0.38); filter: blur(2px) drop-shadow(0 0 18px rgba(223,255,63,0.34)); }
-}
-.wren-exit-pulse { z-index: 52 !important; }
-@keyframes wrenPulseExit {
-  0% { opacity: 0; transform: translate(-50%, -50%) scale(0.6); }
-  22% { opacity: 0.92; }
-  100% { opacity: 0; transform: translate(105px, -24px) scale(0.33); }
-}
-
-/* Carl portal: super-thin red ring of death, not a wedding band. */
-.carl-photo-wrap.portal-open {
-  border-color: rgba(255,255,255,0.92) !important;
   box-shadow:
-    0 16px 42px rgba(0,0,0,0.52),
-    0 0 0 2px rgba(255,29,37,0.88),
-    0 0 9px rgba(255,29,37,0.50) !important;
-  animation: carlProfileRedDeathThin 0.74s steps(3) both !important;
+    0 0 12px rgba(0,0,0,0.86),
+    0 0 0 1px rgba(255,255,255,0.18),
+    0 0 16px rgba(242,238,229,0.05) !important;
 }
-@keyframes carlProfileRedDeathThin {
-  0%, 100% { filter: none; transform: translate(0,0) scale(1); }
-  22% { filter: contrast(1.22) saturate(1.22); transform: translate(1px,-1px) scale(1.003); }
-  45% { filter: contrast(1.38) hue-rotate(-8deg); transform: translate(-1px,1px) scale(0.997); }
-  70% { filter: contrast(1.15) saturate(1.35); transform: translate(1px,0) scale(1.006); }
+.profile::after { inset: 8px !important; }
+.profile.hive-reveal { border-color: rgba(170,215,255,0.92) !important; }
+.profile.hive-reveal.has-hive-asset img,
+.profile.frank-blue-sequence img {
+  opacity: 1 !important;
+  filter: saturate(1.22) contrast(1.12) brightness(1.14) !important;
+  transform: scale(1.02) !important;
+}
+.profile.hive-peel-away {
+  animation: hivePeelAway 0.82s steps(5) forwards !important;
+}
+@keyframes hivePeelAway {
+  0% { opacity: 1; filter: saturate(1.2) contrast(1.1); transform: translate(0,0) scale(1); }
+  35% { opacity: 0.82; filter: saturate(1.8) contrast(1.6) hue-rotate(8deg); transform: translate(1px,-1px) scale(1.02); }
+  65% { opacity: 0.36; filter: blur(1px) saturate(0.7); clip-path: polygon(0 0,100% 0,100% 22%,0 35%,0 55%,100% 40%,100% 100%,0 100%); }
+  100% { opacity: 0; filter: blur(5px) saturate(0); transform: translateY(-10px) scale(0.62); }
 }
 
-/* Camp Compatibility Test: fake dating robot interaction. */
+/* Symbol can be attacked, but never erased. The signal stays legible through noise. */
+.signal-ghost {
+  z-index: 43 !important;
+  width: 142px !important;
+  height: 142px !important;
+}
+.virus-layer { z-index: 40 !important; }
+.profile-field { z-index: 42 !important; }
+.engagement-field { z-index: 44 !important; }
+.impact-field { z-index: 45 !important; }
+.signal-ghost.waking { opacity: 0.34 !important; }
+.signal-ghost.burning {
+  opacity: 0.66 !important;
+  filter:
+    drop-shadow(0 0 14px rgba(223,255,63,0.40))
+    drop-shadow(0 0 36px rgba(223,255,63,0.18)) !important;
+}
+.signal-ghost.burning img {
+  filter: drop-shadow(0 0 12px rgba(223,255,63,0.28));
+}
+
+/* Heart lane: right-side upward drift, with death after signal exposure. */
+.engage.heart,
+.engage.heart.pink,
+.engage.heart.dead,
+.engage.heart.black {
+  animation: heartUpRight var(--dur) ease-out forwards !important;
+}
+@keyframes heartUpRight {
+  0% { opacity: 0; transform: translate(0, 34px) scale(0.82) rotate(-8deg); }
+  16% { opacity: 1; }
+  72% { opacity: 0.82; }
+  100% { opacity: 0; transform: translate(var(--drift), -128px) scale(0.44) rotate(14deg); }
+}
+.engage.heart.black { filter: grayscale(1) brightness(0.42); opacity: 0.58; }
+
+/* Homie door: closer, under the bar, shredder/crack feeling instead of miles away. */
+.loader-scene::after {
+  left: calc(50% + 54px) !important;
+  top: calc(100% - 8px) !important;
+  width: 4px !important;
+  border-radius: 999px !important;
+  transform: translateY(-100%) !important;
+}
+.loader-scene.portal-open::after { height: 38px !important; opacity: 1 !important; }
+
+/* Homie head visible enough to read as turtle before he hides. */
+.turtle { transform: scale(0.78) !important; opacity: 1 !important; }
+.turtle .head {
+  width: 14px !important;
+  height: 14px !important;
+  left: 39px !important;
+  top: 7px !important;
+  box-shadow: 0 0 3px rgba(242,238,229,0.28);
+}
+.turtle .neck { width: 9px !important; left: 33px !important; }
+.turtle.hide .shell::before { opacity: 0.78 !important; }
+.turtle.peek .head { left: 42px !important; top: 6px !important; opacity: 1 !important; }
+
+/* Frank is turtle duty. Same guy, then 1358 goes blue and realizes. */
+.profile.frank {
+  z-index: 46 !important;
+  box-shadow:
+    0 0 14px rgba(0,0,0,0.88),
+    0 0 0 1px rgba(255,255,255,0.2) !important;
+}
+.profile.frank-duty:nth-last-of-type(1) { transform: translate(var(--sx), var(--sy)) scale(0.94); }
+.profile.frank-blue-sequence {
+  border-color: rgba(196,228,255,0.95) !important;
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.55),
+    0 0 18px rgba(67,163,255,0.42),
+    0 0 28px rgba(0,0,0,0.85) !important;
+  animation: frankBluePop 0.16s steps(2) infinite alternate !important;
+}
+@keyframes frankBluePop {
+  from { filter: brightness(1) saturate(1.15); }
+  to { filter: brightness(1.16) saturate(1.55); }
+}
+
+/* Carl / Hive Mind Carl portal: thinner anomaly, not wedding band. */
+.carl-photo-wrap.portal-open {
+  box-shadow:
+    0 16px 42px rgba(0,0,0,0.42),
+    0 0 0 2px rgba(255,25,36,0.88),
+    0 0 12px rgba(255,25,36,0.34) !important;
+  animation: carlPortalThinGlitch 0.74s steps(3) forwards !important;
+}
+@keyframes carlPortalThinGlitch {
+  0%,100% { filter: none; transform: translateZ(0); }
+  25% { filter: hue-rotate(12deg) saturate(1.5); transform: translateX(-1px); }
+  50% { filter: contrast(1.25) saturate(1.8); transform: translateX(1px); }
+  75% { filter: hue-rotate(-8deg) saturate(1.35); transform: translateX(-1px); }
+}
+.hive-wound { display: none !important; }
+
+/* Symbol press: a small phone-feel pulse, then the outer walls dissolve. */
+.signal-node.pressed::before {
+  animation: symbolPressPulse 0.54s ease-out forwards !important;
+}
+@keyframes symbolPressPulse {
+  0% { opacity: 0.25; transform: scale(0.88); }
+  45% { opacity: 0.78; transform: scale(1.12); }
+  100% { opacity: 0; transform: scale(1.28); }
+}
+
+/* Station: no maze rave. Sparse life pulses only after the station is found. */
+.maze,
+.idle-maze { display: none !important; }
+.home.open::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 52%;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: rgba(223,255,63,0.82);
+  opacity: 0;
+  box-shadow: 0 0 12px rgba(223,255,63,0.55), 0 0 28px rgba(223,255,63,0.2);
+  animation: sparseStationPulse 9.5s ease-in-out 2.1s infinite;
+}
+@keyframes sparseStationPulse {
+  0%, 68%, 100% { opacity: 0; transform: translate(-50%, -50%) scale(0.6); }
+  72% { opacity: 0.7; transform: translate(-120px, -34px) scale(0.75); }
+  78% { opacity: 1; transform: translate(-65px, 52px) scale(1); }
+  86% { opacity: 0.35; transform: translate(0, 84px) scale(0.82); }
+}
+
+@media (max-width: 430px) {
+  :root { --profile-size: 66px; --profile-half: 33px; }
+  .profile { width: 66px !important; height: 66px !important; }
+  .signal-ghost { width: 136px !important; height: 136px !important; }
+}
+
+/* Carl's fake-human interaction: camp test with only yes answers. */
 .camp-test-card { position: relative; }
+.camp-test-card p { padding-right: 10px; }
 .camp-test-button {
   display: block;
   margin: 12px 0 0 auto;
-  padding: 8px 12px;
-  border: 1px solid rgba(255,255,255,0.55);
+  border: 0;
   border-radius: 999px;
-  background: rgba(255,255,255,0.18);
-  color: #fff;
-  font-family: Arial, sans-serif;
-  font-size: 0.66rem;
+  padding: 9px 13px;
+  background: linear-gradient(135deg, #ff4eab, #ff83c6);
+  color: white;
   font-weight: 900;
   letter-spacing: 1px;
-  animation: campTestPulse 2.2s ease-in-out infinite;
+  font-size: 0.72rem;
+  box-shadow: 0 8px 18px rgba(196,36,110,0.24);
+  animation: campPulse 2.8s ease-in-out infinite;
 }
-@keyframes campTestPulse {
-  50% { box-shadow: 0 0 0 5px rgba(255,255,255,0.07), 0 0 18px rgba(255,111,174,0.20); }
+@keyframes campPulse {
+  0%,100% { transform: scale(1); filter: saturate(1); }
+  50% { transform: scale(1.035); filter: saturate(1.25); }
 }
 .camp-test-modal {
   position: fixed;
-  inset: 0;
-  z-index: 220;
-  display: grid;
-  place-items: center;
-  padding: 22px;
-  background: rgba(18, 2, 14, 0.38);
+  left: 50%;
+  top: 50%;
+  width: min(330px, 88vw);
+  transform: translate(-50%, -50%) scale(0.94);
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-  transition: opacity 0.18s ease, visibility 0.18s ease;
+  z-index: 1200;
+  transition: opacity 0.22s ease, transform 0.22s ease, visibility 0.22s ease;
 }
-.camp-test-modal.open { opacity: 1; visibility: visible; pointer-events: auto; }
+.camp-test-modal.open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translate(-50%, -50%) scale(1);
+}
 .camp-test-window {
   position: relative;
-  width: min(82vw, 280px);
-  padding: 20px 16px 16px;
-  border: 1px solid rgba(255,255,255,0.72);
-  border-radius: 24px;
-  background: linear-gradient(180deg, rgba(255,202,226,0.98), rgba(255,112,174,0.96));
-  color: #651238;
-  box-shadow: 0 24px 70px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.52);
-  font-family: Arial, sans-serif;
-  text-align: left;
+  padding: 24px 20px 18px;
+  border-radius: 22px;
+  background: linear-gradient(180deg, #fff8fd, #ffd5ea);
+  color: #6e234b;
+  box-shadow: 0 24px 70px rgba(80,20,52,0.42), inset 0 0 0 1px rgba(255,255,255,0.7);
+  text-align: center;
 }
-.camp-test-window h3 { margin: 8px 28px 12px 0; font-size: 0.95rem; line-height: 1.15; }
-.camp-test-kicker { font-size: 0.55rem; font-weight: 900; letter-spacing: 1.2px; opacity: 0.7; }
+.camp-test-window span {
+  display: block;
+  color: #b05083;
+  font-size: 0.62rem;
+  letter-spacing: 1.4px;
+  font-weight: 900;
+}
+.camp-test-window h3 {
+  margin: 10px 0 16px;
+  font-family: Arial, sans-serif;
+  font-size: 1.1rem;
+}
 .camp-test-window button:not(.modal-close) {
   display: block;
   width: 100%;
-  margin-top: 7px;
-  padding: 9px 10px;
-  border: 1px solid rgba(101,18,56,0.22);
-  border-radius: 14px;
-  background: rgba(255,255,255,0.42);
-  color: #651238;
+  margin: 8px 0;
+  border: 0;
+  border-radius: 16px;
+  padding: 11px 10px;
+  background: rgba(255,255,255,0.74);
+  color: #7b2854;
   font-weight: 900;
-  text-align: left;
+  box-shadow: inset 0 0 0 1px rgba(255,105,180,0.15);
 }
-.camp-test-window small { display: block; margin-top: 10px; opacity: 0.72; font-size: 0.62rem; line-height: 1.25; }
-
-/* Symbol press: phone-feel pulse, outer walls dissolve, no maze before station. */
-.signal-node.pressed { animation: symbolPressPulse 0.55s ease forwards !important; }
-@keyframes symbolPressPulse {
-  0% { transform: translate(-50%, -50%) scale(1); filter: drop-shadow(0 0 12px rgba(223,255,63,0.2)); }
-  45% { transform: translate(-50%, -50%) scale(1.055); filter: drop-shadow(0 0 28px rgba(223,255,63,0.48)); }
-  100% { transform: translate(-50%, -50%) scale(1); }
+.camp-test-window small {
+  display: block;
+  margin-top: 12px;
+  font-size: 0.63rem;
+  color: #a33d73;
+  font-weight: 900;
+  letter-spacing: 1px;
 }
-.outer-symbol.dissolve { animation: outerWallGone 1.25s ease forwards !important; }
-@keyframes outerWallGone {
-  0% { opacity: 0.58; filter: none; transform: scale(1); }
-  100% { opacity: 0; filter: blur(5px); transform: scale(1.08); }
-}
-.inner-symbol.alive { animation: innerChannelFound 1.8s ease forwards !important; }
-@keyframes innerChannelFound {
-  0% { opacity: 0.72; filter: drop-shadow(0 0 12px rgba(223,255,63,0.18)); }
-  45% { opacity: 1; filter: drop-shadow(0 0 32px rgba(223,255,63,0.56)); }
-  100% { opacity: 0.88; filter: drop-shadow(0 0 18px rgba(223,255,63,0.28)); }
-}
-.maze.active { opacity: 0 !important; }
-
-/* Station pulses: scarce authenticity, not a rave maze. */
-.idle-maze.active .idle-pipe { opacity: 0.10 !important; animation-duration: 9s !important; }
-.idle-pipe::before { width: 6px !important; height: 6px !important; opacity: 0; }
-.idle-maze.active .idle-pipe::before { animation-duration: 8.5s !important; }
