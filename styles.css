@@ -2781,3 +2781,201 @@ body {
 }
 .carl-card.dating-page-glitch::before { top: 44% !important; }
 .carl-card.dating-page-glitch::after { top: 58% !important; }
+
+
+/* =========================================================
+   BUILD 101D — locked intro + Frank 1358 surgical overrides
+========================================================= */
+
+.profile {
+  width: 80px !important;
+  height: 80px !important;
+  border-width: 2px !important;
+}
+.profile img { object-fit: cover !important; }
+.profile.hive-reveal.has-hive-asset img {
+  opacity: 1 !important;
+  filter: saturate(1.25) contrast(1.08) brightness(1.08) !important;
+  transform: scale(1) !important;
+}
+.profile.hive-reveal.has-hive-asset::after,
+.profile.hive-reveal.has-hive-asset::before { opacity: 0 !important; }
+.profile.dissolve-out {
+  animation: avatarDissolveOut 0.45s steps(4) forwards !important;
+}
+@keyframes avatarDissolveOut {
+  0% { opacity: 1; filter: none; transform: translate(0,0) scale(1); }
+  45% { opacity: 0.72; filter: blur(1px) saturate(0.4); transform: translate(1px,-1px) scale(0.96); }
+  100% { opacity: 0; filter: blur(5px) saturate(0); transform: translate(5px, -8px) scale(0.72); }
+}
+
+/* The symbol can be attacked, but never fully buried. */
+.profile.target-symbol { z-index: 45 !important; mix-blend-mode: normal; opacity: 0.92; }
+.profile.target-symbol:nth-of-type(3n) { opacity: 0.78; }
+.signal-node.ready { z-index: 49 !important; }
+.signal-node.ready .outer-symbol,
+.signal-node.ready .inner-symbol { filter: drop-shadow(0 0 12px rgba(223,255,63,0.22)); }
+
+/* Homie's door is a close slit under the bar, not a mile-away doorway. */
+.loader-scene::after {
+  left: calc(50% + 48px) !important;
+  top: calc(100% - 10px) !important;
+  width: 4px !important;
+  max-height: 34px !important;
+}
+.loader-scene.portal-open::after { height: 34px !important; }
+.turtle.escape { animation-duration: 2.15s !important; }
+@keyframes homieCutThroughPortal {
+  0% { transform: translateX(0); opacity: 1; }
+  68% { transform: translateX(58px); opacity: 1; }
+  100% { transform: translateX(68px) scaleX(0.18); opacity: 0; }
+}
+
+/* Hearts travel up the right side and decay after the signal appears. */
+.engage { z-index: 11; }
+.engage.heart.black {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: #080808;
+  color: transparent !important;
+  box-shadow: 0 0 5px rgba(0,0,0,0.75);
+}
+@keyframes engageRise {
+  0% { opacity: 0; transform: translateY(18px) translateX(0) scale(0.72); }
+  14% { opacity: 0.9; }
+  72% { opacity: 0.76; }
+  100% { opacity: 0; transform: translateY(-168px) translateX(var(--drift)) scale(0.84); }
+}
+
+/* Frank 1358: one janitor keeps getting the turtle job, then realizes he got dragged into it. */
+.profile.frank { z-index: 46 !important; }
+.profile.frank-stack { box-shadow: 0 0 12px rgba(0,0,0,0.9), 0 0 0 1px rgba(255,255,255,0.12); }
+.profile.frank-realization {
+  z-index: 50 !important;
+  animation: frankBluePanic 1.25s steps(6) forwards !important;
+}
+@keyframes frankBluePanic {
+  0% { transform: translate(0,0) scale(1); filter: none; }
+  50% { transform: translate(0,-3px) scale(1.05); filter: brightness(1.12); }
+  100% { transform: translate(0,-5px) scale(1.06); filter: drop-shadow(0 0 14px rgba(120,173,255,0.42)); }
+}
+
+/* Wren: not hive, not blue, not dissolved. She goes home. */
+.profile.wren { z-index: 48 !important; }
+.profile.wren.wren-fade-home {
+  animation: wrenGoHome 1.2s ease forwards !important;
+}
+@keyframes wrenGoHome {
+  0% { opacity: 1; transform: translate(0,0) scale(1); filter: drop-shadow(0 0 6px rgba(242,238,229,0.18)); }
+  72% { opacity: 0.72; transform: translate(-12px, 3px) scale(0.82); filter: drop-shadow(0 0 16px rgba(223,255,63,0.22)); }
+  100% { opacity: 0; transform: translate(-22px, 6px) scale(0.38); filter: blur(2px) drop-shadow(0 0 18px rgba(223,255,63,0.34)); }
+}
+.wren-exit-pulse { z-index: 52 !important; }
+@keyframes wrenPulseExit {
+  0% { opacity: 0; transform: translate(-50%, -50%) scale(0.6); }
+  22% { opacity: 0.92; }
+  100% { opacity: 0; transform: translate(105px, -24px) scale(0.33); }
+}
+
+/* Carl portal: super-thin red ring of death, not a wedding band. */
+.carl-photo-wrap.portal-open {
+  border-color: rgba(255,255,255,0.92) !important;
+  box-shadow:
+    0 16px 42px rgba(0,0,0,0.52),
+    0 0 0 2px rgba(255,29,37,0.88),
+    0 0 9px rgba(255,29,37,0.50) !important;
+  animation: carlProfileRedDeathThin 0.74s steps(3) both !important;
+}
+@keyframes carlProfileRedDeathThin {
+  0%, 100% { filter: none; transform: translate(0,0) scale(1); }
+  22% { filter: contrast(1.22) saturate(1.22); transform: translate(1px,-1px) scale(1.003); }
+  45% { filter: contrast(1.38) hue-rotate(-8deg); transform: translate(-1px,1px) scale(0.997); }
+  70% { filter: contrast(1.15) saturate(1.35); transform: translate(1px,0) scale(1.006); }
+}
+
+/* Camp Compatibility Test: fake dating robot interaction. */
+.camp-test-card { position: relative; }
+.camp-test-button {
+  display: block;
+  margin: 12px 0 0 auto;
+  padding: 8px 12px;
+  border: 1px solid rgba(255,255,255,0.55);
+  border-radius: 999px;
+  background: rgba(255,255,255,0.18);
+  color: #fff;
+  font-family: Arial, sans-serif;
+  font-size: 0.66rem;
+  font-weight: 900;
+  letter-spacing: 1px;
+  animation: campTestPulse 2.2s ease-in-out infinite;
+}
+@keyframes campTestPulse {
+  50% { box-shadow: 0 0 0 5px rgba(255,255,255,0.07), 0 0 18px rgba(255,111,174,0.20); }
+}
+.camp-test-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 220;
+  display: grid;
+  place-items: center;
+  padding: 22px;
+  background: rgba(18, 2, 14, 0.38);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.18s ease, visibility 0.18s ease;
+}
+.camp-test-modal.open { opacity: 1; visibility: visible; pointer-events: auto; }
+.camp-test-window {
+  position: relative;
+  width: min(82vw, 280px);
+  padding: 20px 16px 16px;
+  border: 1px solid rgba(255,255,255,0.72);
+  border-radius: 24px;
+  background: linear-gradient(180deg, rgba(255,202,226,0.98), rgba(255,112,174,0.96));
+  color: #651238;
+  box-shadow: 0 24px 70px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.52);
+  font-family: Arial, sans-serif;
+  text-align: left;
+}
+.camp-test-window h3 { margin: 8px 28px 12px 0; font-size: 0.95rem; line-height: 1.15; }
+.camp-test-kicker { font-size: 0.55rem; font-weight: 900; letter-spacing: 1.2px; opacity: 0.7; }
+.camp-test-window button:not(.modal-close) {
+  display: block;
+  width: 100%;
+  margin-top: 7px;
+  padding: 9px 10px;
+  border: 1px solid rgba(101,18,56,0.22);
+  border-radius: 14px;
+  background: rgba(255,255,255,0.42);
+  color: #651238;
+  font-weight: 900;
+  text-align: left;
+}
+.camp-test-window small { display: block; margin-top: 10px; opacity: 0.72; font-size: 0.62rem; line-height: 1.25; }
+
+/* Symbol press: phone-feel pulse, outer walls dissolve, no maze before station. */
+.signal-node.pressed { animation: symbolPressPulse 0.55s ease forwards !important; }
+@keyframes symbolPressPulse {
+  0% { transform: translate(-50%, -50%) scale(1); filter: drop-shadow(0 0 12px rgba(223,255,63,0.2)); }
+  45% { transform: translate(-50%, -50%) scale(1.055); filter: drop-shadow(0 0 28px rgba(223,255,63,0.48)); }
+  100% { transform: translate(-50%, -50%) scale(1); }
+}
+.outer-symbol.dissolve { animation: outerWallGone 1.25s ease forwards !important; }
+@keyframes outerWallGone {
+  0% { opacity: 0.58; filter: none; transform: scale(1); }
+  100% { opacity: 0; filter: blur(5px); transform: scale(1.08); }
+}
+.inner-symbol.alive { animation: innerChannelFound 1.8s ease forwards !important; }
+@keyframes innerChannelFound {
+  0% { opacity: 0.72; filter: drop-shadow(0 0 12px rgba(223,255,63,0.18)); }
+  45% { opacity: 1; filter: drop-shadow(0 0 32px rgba(223,255,63,0.56)); }
+  100% { opacity: 0.88; filter: drop-shadow(0 0 18px rgba(223,255,63,0.28)); }
+}
+.maze.active { opacity: 0 !important; }
+
+/* Station pulses: scarce authenticity, not a rave maze. */
+.idle-maze.active .idle-pipe { opacity: 0.10 !important; animation-duration: 9s !important; }
+.idle-pipe::before { width: 6px !important; height: 6px !important; opacity: 0; }
+.idle-maze.active .idle-pipe::before { animation-duration: 8.5s !important; }
