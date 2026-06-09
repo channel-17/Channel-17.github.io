@@ -158,10 +158,10 @@
           </div>
         </section>
 
-        <section class="carl-block quiz">
-          <h2>Compatibility Quiz</h2>
-          <p>Do you value communication?</p>
-          <div class="quiz-options"><span>Yes</span><span>Absolutely</span><span>Communication is essential</span></div>
+        <section class="carl-block quiz camp-test-card">
+          <h2>Camp Compatibility Test</h2>
+          <p>Would you enjoy sitting near a campfire in a low-pressure outdoor environment?</p>
+          <button class="camp-test-button" id="campTestButton" type="button">TAKE THE TEST</button>
         </section>
 
 
@@ -242,6 +242,18 @@
         </section>
 
       </article>
+
+      <div class="camp-test-modal" id="campTestModal" aria-hidden="true">
+        <div class="camp-test-window">
+          <button class="modal-close camp-test-close" id="campTestClose" aria-label="close camp compatibility test">×</button>
+          <span class="camp-test-kicker">QUESTION 1 OF 1</span>
+          <h3>Would you enjoy sitting near a campfire?</h3>
+          <button type="button">Yes</button>
+          <button type="button">Yes</button>
+          <button type="button">Yes</button>
+          <small>RESULT PENDING: All responses indicate strong human compatibility.</small>
+        </div>
+      </div>
 
       <div class="carl-photo-modal" id="carlPhotoModal" aria-hidden="true">
         <div class="carl-photo-viewer">
