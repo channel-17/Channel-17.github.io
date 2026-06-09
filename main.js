@@ -20,6 +20,7 @@ const profileField = document.getElementById("profileField");
 const impactField = document.getElementById("impactField");
 const checkGenerals = document.getElementById("checkGenerals");
 const carlProfile = document.getElementById("carlProfile");
+const carlCard = document.getElementById("carlCard");
 const carlClose = document.getElementById("carlClose");
 const carlPhotosButton = document.getElementById("carlPhotosButton");
 const carlPhotoModal = document.getElementById("carlPhotoModal");
@@ -27,6 +28,7 @@ const carlPhotoClose = document.getElementById("carlPhotoClose");
 const carlPhotoLarge = document.getElementById("carlPhotoLarge");
 const carlPhotoCaption = document.getElementById("carlPhotoCaption");
 const hiveWound = document.getElementById("hiveWound");
+const carlProfilePortal = document.getElementById("carlProfilePortal");
 const hiveCarlFile = document.getElementById("hiveCarlFile");
 const hiveClose = document.getElementById("hiveClose");
 const survivorChalk = document.getElementById("survivorChalk");
@@ -559,18 +561,21 @@ function closeCarlProfile() {
 }
 
 function startWoundPulse() {
-  if (!hiveWound || hiveWoundUsed) return;
+  if (!carlProfilePortal || hiveWoundUsed) return;
   stopWoundPulse();
 
   const pulse = () => {
     if (!carlProfile.classList.contains("open") || hiveWoundUsed) return;
-    hiveWound.classList.add("pulse-open");
+    if (carlCard) carlCard.classList.add("dating-page-glitch");
+    if (hiveWound) hiveWound.classList.add("pulse-open");
+    carlProfilePortal.classList.add("portal-open");
     setTimeout(() => {
+      if (carlCard) carlCard.classList.remove("dating-page-glitch");
       if (hiveWound) hiveWound.classList.remove("pulse-open");
-    }, 1500);
+      if (carlProfilePortal) carlProfilePortal.classList.remove("portal-open");
+    }, 920);
   };
 
-  setTimeout(pulse, 800);
   woundPulseTimer = setInterval(pulse, 17000);
 }
 
@@ -578,6 +583,8 @@ function stopWoundPulse() {
   clearInterval(woundPulseTimer);
   woundPulseTimer = null;
   if (hiveWound) hiveWound.classList.remove("pulse-open");
+  if (carlProfilePortal) carlProfilePortal.classList.remove("portal-open");
+  if (carlCard) carlCard.classList.remove("dating-page-glitch");
 }
 
 function openCarlPhotos() {
@@ -592,13 +599,17 @@ function closeCarlPhotos() {
   carlPhotoModal.setAttribute("aria-hidden", "true");
 }
 
-function openHiveFile() {
-  if (!hiveWound || !hiveWound.classList.contains("pulse-open") || hiveWoundUsed) return;
+function openHiveMindCarlFile() {
+  if (!carlProfilePortal || !carlProfilePortal.classList.contains("portal-open") || hiveWoundUsed) return;
   hiveCarlFile.classList.add("open");
   hiveCarlFile.setAttribute("aria-hidden", "false");
   hiveWoundUsed = true;
-  hiveWound.classList.add("used");
+  if (hiveWound) hiveWound.classList.add("used");
   stopWoundPulse();
+}
+
+function openHiveFile() {
+  openHiveMindCarlFile();
 }
 
 function closeHiveFile() {
@@ -610,8 +621,9 @@ function closeHiveFile() {
 carlClose.addEventListener("click", closeCarlProfile);
 if (carlPhotosButton) carlPhotosButton.addEventListener("click", openCarlPhotos);
 if (carlPhotoClose) carlPhotoClose.addEventListener("click", closeCarlPhotos);
-if (hiveWound) hiveWound.addEventListener("click", openHiveFile);
-if (hiveClose) hiveClose.addEventListener("click", closeHiveFile);
+if (hiveWound) hiveWound.addEventListener("click", openHiveMindCarlFile);
+if (carlProfilePortal) carlProfilePortal.addEventListener("click", openHiveMindCarlFile);
+if (hiveClose) hiveClose.addEventListener("click", closeCarlProfile);
 if (survivorChalk) survivorChalk.addEventListener("click", event => { event.preventDefault(); survivorChalk.classList.add("found"); });
 
 document.querySelectorAll(".photo-thumb").forEach(button => {
