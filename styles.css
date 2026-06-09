@@ -3011,3 +3011,116 @@ body {
   font-weight: 900;
   text-align: left;
 }
+
+
+/* =========================================================
+   REAL LOCK PASS — intro geometry, hearts, symbol, profiles
+========================================================= */
+/* Widen the vertical gap: symbol above, loader/turtle below. */
+.loader-scene { top: 56% !important; width: min(58vw, 318px) !important; }
+.signal-ghost,
+.signal-node { top: 24% !important; width: 150px !important; height: 150px !important; }
+.signal-ghost { z-index: 45 !important; }
+.signal-ghost img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
+.signal-ghost .ghost-outer { opacity: 0.68; z-index: 2; }
+.signal-ghost .ghost-inner { opacity: 1; z-index: 1; }
+.signal-ghost.waking { opacity: 0.42 !important; }
+.signal-ghost.burning { opacity: 0.84 !important; }
+
+/* On the actual Channel page the wall is gone: inner symbol only. */
+.home-outer { display: none !important; }
+.home-symbol-stack { width: 118px !important; height: 118px !important; }
+.home-inner { opacity: 0.92 !important; }
+
+/* Smaller avatar profiles. Stop letting the swarm become the whole screen. */
+.profile {
+  width: 54px !important;
+  height: 54px !important;
+  border-width: 1.5px !important;
+  box-shadow:
+    0 0 9px rgba(0,0,0,0.86),
+    0 0 0 1px rgba(255,255,255,0.09) !important;
+}
+.profile img { transform: scale(1.16) !important; }
+.profile.hive-reveal img { transform: scale(1.18) !important; }
+.profile.loader-attacker { z-index: 32 !important; }
+.profile.symbol-attacker { z-index: 22 !important; opacity: 0.82 !important; }
+.profile.frank-stack { z-index: 34 !important; }
+.profile.carl { width: 58px !important; height: 58px !important; }
+@media (max-width: 430px) {
+  .profile { width: 52px !important; height: 52px !important; border-width: 1.5px !important; }
+  .profile.carl { width: 56px !important; height: 56px !important; }
+}
+
+/* Symbol is attacked, not erased. The three-point identity must survive. */
+.signal-ghost::before {
+  content: "";
+  position: absolute;
+  inset: -16px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(223,255,63,0.14), transparent 68%);
+  filter: blur(13px);
+  z-index: -1;
+}
+.profile.symbol-attacker.hive-reveal.has-hive-asset img {
+  filter: saturate(2.45) contrast(1.35) brightness(1.24) drop-shadow(0 0 12px rgba(0,154,255,0.78)) !important;
+}
+.profile.symbol-attacker.blue-peel-away { animation-duration: 0.58s !important; }
+
+/* Hearts: rare, right-side, bottom-to-top. Red until the symbol appears; then each heart dies in one clean life cycle. */
+.engage.life-heart {
+  font-size: 21px !important;
+  z-index: 3 !important;
+  color: #ff123f !important;
+  animation: heartRiseRed var(--dur) linear forwards !important;
+  text-shadow: 0 0 9px rgba(255,18,63,0.25), 0 0 12px rgba(0,0,0,0.7);
+}
+.engage.life-heart.exposed-heart {
+  animation: heartRiseExposed var(--dur) linear forwards !important;
+}
+@keyframes heartRiseRed {
+  0% { opacity: 0; color: #ff123f; transform: translateY(12px) translateX(0) scale(0.66); }
+  10% { opacity: 0.9; }
+  85% { opacity: 0.86; color: #ff123f; }
+  100% { opacity: 0; color: #ff123f; transform: translateY(-102vh) translateX(var(--drift)) scale(0.82); }
+}
+@keyframes heartRiseExposed {
+  0% { opacity: 0; color: #ff123f; transform: translateY(12px) translateX(0) scale(0.66); }
+  8% { opacity: 0.94; color: #ff123f; }
+  24% { color: #ff6fae; text-shadow: 0 0 10px rgba(255,111,174,0.38); }
+  52% { color: #8d8d92; filter: grayscale(1) saturate(0.2); }
+  78% { opacity: 0.86; color: #050505; filter: grayscale(1) brightness(0.45); text-shadow: 0 0 7px rgba(0,0,0,0.95); }
+  100% { opacity: 0; color: #000; filter: blur(1px) brightness(0); transform: translateY(-105vh) translateX(var(--drift)) scale(0.72); }
+}
+
+/* Homie door: close shredder slit under the bar, still near the turtle. */
+.loader-scene::after {
+  left: calc(50% + 38px) !important;
+  top: calc(100% - 10px) !important;
+  width: 3px !important;
+}
+.loader-scene.portal-open::after { height: 30px !important; }
+@keyframes homieCutThroughPortal {
+  0% { left: 50%; opacity: 0.94; transform: scale(0.76) translateY(0); clip-path: inset(0 0 0 0); }
+  42% { left: 52.5%; opacity: 0.94; clip-path: inset(0 0 0 0); }
+  76% { left: 55%; opacity: 0.94; clip-path: inset(0 0 0 0); }
+  88% { left: 56%; opacity: 0.92; clip-path: inset(0 24% 0 0); }
+  96% { left: 56.6%; opacity: 0.72; clip-path: inset(0 75% 0 0); }
+  100% { left: 57%; opacity: 0; clip-path: inset(0 100% 0 0); }
+}
+
+/* Frank stack must read as turtle-duty, not random profile noise. */
+.profile.frank-stack {
+  border-color: rgba(242,238,229,0.98) !important;
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.14),
+    0 0 10px rgba(0,0,0,0.9) !important;
+}
+.profile.frank-stack img { transform: scale(1.2) !important; }
+.profile.frank-blue-sequence img {
+  filter: saturate(2.35) contrast(1.25) brightness(1.18) drop-shadow(0 0 12px rgba(0,154,255,0.72)) !important;
+}
+
+/* Final Channel 17 press: outer wall dissolves; inner trust remains. */
+.outer-symbol.dissolve { animation: outerDissolve 1.4s ease forwards !important; }
+.inner-symbol.alive { animation: innerWake 2.2s ease forwards !important; }
