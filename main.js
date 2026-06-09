@@ -101,28 +101,30 @@ const normalAssets = [
 ];
 
 const coverageTargets = [
-  // Loader first: center percentage, left, right, then overlap.
-  { x: 50, y: 47, zone: "loader" },
-  { x: 42, y: 47, zone: "loader" },
-  { x: 58, y: 47, zone: "loader" },
-  { x: 46, y: 49, zone: "loader" },
-  { x: 54, y: 49, zone: "loader" },
+  // Loader first: percentage center, then left/right, then staggered overlaps.
+  { x: 50, y: 55, zone: "loader" },
+  { x: 41, y: 55, zone: "loader" },
+  { x: 59, y: 55, zone: "loader" },
+  { x: 36, y: 53.5, zone: "loader" },
+  { x: 63, y: 56.5, zone: "loader" },
+  { x: 45, y: 57, zone: "loader" },
+  { x: 55, y: 53.5, zone: "loader" },
 
-  // Homie gets Frank, not a random swarm.
-  { x: 48, y: 58, zone: "homie" },
+  // Homie gets Frank, not the swarm.
+  { x: 50, y: 64, zone: "homie" },
 
-  // Symbol attackers come only after the symbol exists. Keep off the three points.
-  { x: 50, y: 35, zone: "symbol" },
-  { x: 45, y: 38, zone: "symbol" },
-  { x: 55, y: 38, zone: "symbol" },
-  { x: 41, y: 42, zone: "symbol" },
-  { x: 59, y: 42, zone: "symbol" },
-  { x: 50, y: 42, zone: "symbol" },
+  // Symbol attackers come only after the symbol exists; they hit around the mark, not all three points.
+  { x: 45, y: 24, zone: "symbol" },
+  { x: 55, y: 24, zone: "symbol" },
+  { x: 50, y: 31, zone: "symbol" },
+  { x: 42, y: 34, zone: "symbol" },
+  { x: 58, y: 34, zone: "symbol" },
+  { x: 50, y: 38, zone: "symbol" },
 
-  { x: 31, y: 42, zone: "miss" },
-  { x: 69, y: 42, zone: "miss" },
-  { x: 34, y: 62, zone: "miss" },
-  { x: 66, y: 62, zone: "miss" }
+  { x: 30, y: 40, zone: "miss" },
+  { x: 70, y: 40, zone: "miss" },
+  { x: 34, y: 64, zone: "miss" },
+  { x: 66, y: 64, zone: "miss" }
 ];
 
 function setProgress(value) {
@@ -224,12 +226,12 @@ function startAttack() {
   profileTimer = setInterval(() => {
     if (completed) return;
     spawnProfile(randomSide());
-  }, 430);
+  }, 650);
 
   engageTimer = setInterval(() => {
     if (completed) return;
     spawnEngagement();
-  }, 260);
+  }, 1050);
 
   slashTimer = setInterval(() => {
     if (completed) return;
@@ -287,57 +289,38 @@ function spawnSlash(side) {
 function spawnEngagement() {
   const item = document.createElement("div");
 
-  const kind = engageCount % 12;
-  let text = "❤️";
-  let cls = "heart";
-
-  if (kind === 2 || kind === 6) {
-    text = "🩷";
-    cls = "heart pink";
-  }
-
-  if (kind === 5) { text = "👍"; cls = "like"; }
-  if (kind === 8) { text = "🔔"; cls = "bell"; }
-  if (kind === 10) { text = "✔"; cls = "mark"; }
-
-  // Once the symbol appears, authenticity exposure starts eating the hearts.
-  if (progress > 38 && cls.includes("heart")) {
-    if (engageCount % 3 === 0) { text = "🩶"; cls = "heart dead"; }
-    if (engageCount % 9 === 0) { text = "♥"; cls = "heart black"; }
-  }
-
-  item.className = "engage " + cls;
-  item.textContent = text;
-  // Right-side home zone, traveling up the screen.
-  item.style.left = 78 + Math.random() * 16 + "%";
-  item.style.top = 73 + Math.random() * 18 + "%";
-  item.style.setProperty("--dur", 2.4 + Math.random() * 1.5 + "s");
-  item.style.setProperty("--drift", Math.round(-34 + Math.random() * 32) + "px");
+  // Hearts tell one story: red until the signal appears; then each heart fades red→pink→gray→black→gone while traveling upward.
+  item.className = progress > 38 ? "engage heart life-heart exposed-heart" : "engage heart life-heart";
+  item.textContent = "♥";
+  item.style.left = 77 + Math.random() * 15 + "%";
+  item.style.top = 94 + Math.random() * 5 + "%";
+  item.style.setProperty("--dur", 5.4 + Math.random() * 2.2 + "s");
+  item.style.setProperty("--drift", Math.round(-48 + Math.random() * 58) + "px");
 
   engagementField.appendChild(item);
   engageCount++;
 
-  setTimeout(() => item.remove(), 4300);
+  setTimeout(() => item.remove(), 8400);
 }
 function pickTarget() {
   const count = profileCount;
 
-  // Before the signal appears, nobody attacks the symbol.
+  // Before the symbol appears, the system only knows the loader exists.
   if (!ghosted) {
-    return coverageTargets[count % 5];
+    return coverageTargets[count % 7];
   }
 
-  // After the signal appears, profiles redirect to the symbol but never fully bury its points.
-  if (count % 5 !== 0) {
-    return coverageTargets[6 + (count % 6)];
+  // After the symbol appears, throw profiles at the symbol in waves, with rare misses.
+  if (count % 7 === 0) {
+    return coverageTargets[14 + ((count / 7) % 4 | 0)];
   }
 
-  return coverageTargets[12 + (count % 4)];
+  return coverageTargets[8 + (count % 6)];
 }
 function spawnProfile(side, delay = 0, opts = {}) {
   setTimeout(() => {
     const old = profileField.querySelectorAll(".profile:not(.carl):not(.frank):not(.wren)");
-    if (old.length > 16) old[0].remove();
+    if (old.length > 9) old[0].remove();
 
     const target = opts.force || pickTarget();
 
@@ -351,8 +334,8 @@ function spawnProfile(side, delay = 0, opts = {}) {
     const x = jitter(target.x, target.zone === "miss" ? 4.0 : target.zone === "symbol" ? 1.8 : 2.2);
     const y = jitter(target.y, target.zone === "miss" ? 4.4 : target.zone === "symbol" ? 1.8 : 2.4);
 
-    profile.style.left = `calc(${x}% - 36px)`;
-    profile.style.top = `calc(${y}% - 36px)`;
+    profile.style.left = `calc(${x}% - 27px)`;
+    profile.style.top = `calc(${y}% - 27px)`;
 
     let sx = "0px";
     let sy = "0px";
@@ -373,7 +356,7 @@ function spawnProfile(side, delay = 0, opts = {}) {
 
     // Only profiles that actually attack the symbol get exposed as blue.
     if (!opts.noHive && target.zone === "symbol" && progress > 41) {
-      setTimeout(() => revealHive(profile), 430 + Math.random() * 420);
+      setTimeout(() => revealHive(profile), 80 + Math.random() * 120);
     }
 
     setTimeout(() => {
@@ -381,7 +364,7 @@ function spawnProfile(side, delay = 0, opts = {}) {
         profile.classList.add("fake-dissolve");
         setTimeout(() => profile.remove(), 520);
       }
-    }, target.zone === "symbol" ? 3600 : 4300);
+    }, target.zone === "symbol" ? 1650 : 5200);
   }, delay);
 }
 function revealHive(profile) {
@@ -405,8 +388,8 @@ function revealHive(profile) {
       if (!profile || !profile.parentNode) return;
       profile.classList.add("blue-peel-away");
       setTimeout(() => { if (profile && profile.parentNode) profile.remove(); }, 720);
-    }, 900);
-  }, 240);
+    }, 650);
+  }, 120);
 }
 function beginHiveWave() {
   // No mass conversion. Only the profiles currently touching the symbol get exposed.
@@ -469,8 +452,8 @@ function spawnCarl() {
   carl.type = "button";
   carl.setAttribute("aria-label", "Carl Gates");
 
-  carl.style.left = "calc(18% - 48px)";
-  carl.style.top = "calc(47% - 48px)";
+  carl.style.left = "calc(18% - 27px)";
+  carl.style.top = "calc(48% - 27px)";
   carl.style.setProperty("--sx", "-35px");
   carl.style.setProperty("--sy", "8px");
   carl.innerHTML = `<img src="AssetCARL.PNG" alt="">`;
@@ -647,8 +630,8 @@ function spawnWren() {
   wren.className = "profile wren stubborn";
   wren.dataset.zone = "symbol";
 
-  wren.style.left = "calc(51% - 36px)";
-  wren.style.top = "calc(36% - 36px)";
+  wren.style.left = "calc(51% - 27px)";
+  wren.style.top = "calc(28% - 27px)";
   wren.style.setProperty("--sx", "70px");
   wren.style.setProperty("--sy", "-30px");
   wren.innerHTML = `<img src="AssetWREN.PNG" alt="">`;
@@ -669,7 +652,7 @@ function spawnWren() {
     const pulse = document.createElement("div");
     pulse.className = "wren-exit-pulse";
     pulse.style.left = "50%";
-    pulse.style.top = "36%";
+    pulse.style.top = "28%";
     impactField.appendChild(pulse);
     setTimeout(() => pulse.remove(), 3600);
   }, 2880);
@@ -679,11 +662,12 @@ function spawnWren() {
   }, 3300);
 }
 function spawnFrankTurtleDuty() {
-  // Frank is the only avatar assigned to Homie. One poor bastard, repeated.
+  // Frank is the only avatar assigned to Homie. Same poor bastard, stacked over turtle duty.
   const spots = [
-    { x: 48, y: 58, sx: "-70px", sy: "24px" },
-    { x: 45, y: 58, sx: "-84px", sy: "18px" },
-    { x: 51, y: 59, sx: "-72px", sy: "30px" }
+    { x: 48.5, y: 65.5, sx: "-65px", sy: "22px" },
+    { x: 51.0, y: 64.5, sx: "-72px", sy: "18px" },
+    { x: 49.5, y: 66.5, sx: "-68px", sy: "26px" },
+    { x: 52.5, y: 65.2, sx: "-74px", sy: "20px" }
   ];
 
   spots.forEach((spot, index) => {
@@ -691,15 +675,15 @@ function spawnFrankTurtleDuty() {
       const frank = document.createElement("div");
       frank.className = "profile frank frank-stack";
       frank.dataset.frankFrame = "0";
-      frank.style.left = `calc(${spot.x}% - 36px)`;
-      frank.style.top = `calc(${spot.y}% - 36px)`;
+      frank.style.left = `calc(${spot.x}% - 27px)`;
+      frank.style.top = `calc(${spot.y}% - 27px)`;
       frank.style.setProperty("--sx", spot.sx);
       frank.style.setProperty("--sy", spot.sy);
-      frank.style.zIndex = String(18 + index);
+      frank.style.zIndex = String(26 + index);
       frank.innerHTML = `<img src="AssetFRANK.PNG" alt="">`;
       profileField.appendChild(frank);
       frankTurtleStack.push(frank);
-    }, index * 1450);
+    }, index * 1120);
   });
 }
 
