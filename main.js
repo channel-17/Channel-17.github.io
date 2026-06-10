@@ -104,29 +104,29 @@ const normalAssets = [
 ];
 
 const coverageTargets = [
-  // Loader first: center percentage, then left/right, then overlapping smother.
-  { x: 50, y: 48, zone: "loader" },
-  { x: 41, y: 48, zone: "loader" },
-  { x: 59, y: 48, zone: "loader" },
-  { x: 46, y: 46, zone: "loader" },
-  { x: 54, y: 50, zone: "loader" },
-  { x: 36, y: 47, zone: "loader" },
-  { x: 64, y: 49, zone: "loader" },
+  // Loader first: center percentage, then left/right, then overlap the pill without making one blob.
+  { x: 50, y: 60, zone: "loader" },
+  { x: 40, y: 60, zone: "loader" },
+  { x: 60, y: 60, zone: "loader" },
+  { x: 45, y: 58.7, zone: "loader" },
+  { x: 55, y: 61.2, zone: "loader" },
+  { x: 35, y: 59.4, zone: "loader" },
+  { x: 65, y: 60.8, zone: "loader" },
 
-  // Homie is Frank-only. Generic avatars do not own turtle duty.
-  { x: 50, y: 59, zone: "homie" },
+  // Homie is Frank-only. Generic avatars do not get turtle duty.
+  { x: 50, y: 68, zone: "homie" },
 
-  // Symbol later. These never fully bury all three points.
+  // Symbol later. They attack it, but never fully erase the three pyramid points.
+  { x: 50, y: 18, zone: "symbol" },
+  { x: 43.5, y: 26, zone: "symbol" },
+  { x: 56.5, y: 26, zone: "symbol" },
   { x: 50, y: 30, zone: "symbol" },
-  { x: 44, y: 34, zone: "symbol" },
-  { x: 56, y: 34, zone: "symbol" },
-  { x: 50, y: 39, zone: "symbol" },
-  { x: 47, y: 28, zone: "symbol" },
+  { x: 47, y: 22, zone: "symbol" },
 
-  { x: 29, y: 43, zone: "miss" },
-  { x: 71, y: 43, zone: "miss" },
-  { x: 33, y: 63, zone: "miss" },
-  { x: 67, y: 63, zone: "miss" }
+  { x: 28, y: 43, zone: "miss" },
+  { x: 72, y: 43, zone: "miss" },
+  { x: 31, y: 68, zone: "miss" },
+  { x: 69, y: 68, zone: "miss" }
 ];
 
 function setProgress(value) {
@@ -202,7 +202,7 @@ const loading = setInterval(() => {
     spawnFrank();
   }
 
-  if (progress >= 57 && frankSeen && !frankBlueStarted) {
+  if (progress >= 61 && frankSeen && !frankBlueStarted) {
     frankBlueStarted = true;
     startBlueFrankSequence();
   }
@@ -228,12 +228,12 @@ function startAttack() {
   profileTimer = setInterval(() => {
     if (completed) return;
     spawnProfile(randomSide());
-  }, 520);
+  }, 640);
 
   engageTimer = setInterval(() => {
     if (completed) return;
     spawnEngagement();
-  }, 820);
+  }, 1500);
 
   slashTimer = setInterval(() => {
     if (completed) return;
@@ -289,18 +289,19 @@ function spawnSlash(side) {
 }
 
 function spawnEngagement() {
-  // Hearts are the story: bottom-right red, then exposed by signal into pink/gray/black and gone.
+  // Hearts: clean emoji hearts climb the right side. Before the signal they stay red.
+  // Once the symbol appears, new hearts tell the whole exposed story: red -> pink -> gray -> black -> gone.
   const item = document.createElement("div");
   item.className = "engage heart";
   item.textContent = "❤️";
-  item.style.left = 78 + Math.random() * 16 + "%";
-  item.style.top = 95 + Math.random() * 6 + "%";
-  item.style.setProperty("--dur", (progress < 38 ? 5.2 : 4.2) + Math.random() * 1.6 + "s");
-  item.style.setProperty("--drift", Math.round(-26 + Math.random() * 52) + "px");
-  if (progress >= 38) item.classList.add("exposed");
+  item.style.left = 82 + Math.random() * 12 + "%";
+  item.style.top = 106 + Math.random() * 9 + "%";
+  item.style.setProperty("--dur", (progress < 50 ? 8.4 : 7.2) + Math.random() * 1.9 + "s");
+  item.style.setProperty("--drift", Math.round(-18 + Math.random() * 36) + "px");
+  if (progress >= 50) item.classList.add("exposed");
   engagementField.appendChild(item);
   engageCount++;
-  setTimeout(() => item.remove(), 7200);
+  setTimeout(() => item.remove(), 10500);
 }
 function pickTarget() {
   const count = profileCount;
@@ -325,7 +326,7 @@ function pickTarget() {
 function spawnProfile(side, delay = 0, opts = {}) {
   setTimeout(() => {
     const old = profileField.querySelectorAll(".profile:not(.carl):not(.frank):not(.wren)");
-    if (old.length > 13) old[0].remove();
+    if (old.length > 10) old[0].remove();
 
     const target = opts.force || pickTarget();
 
@@ -338,8 +339,8 @@ function spawnProfile(side, delay = 0, opts = {}) {
     const x = jitter(target.x, target.zone === "symbol" ? 1.8 : target.zone === "loader" ? 2.2 : 3.2);
     const y = jitter(target.y, target.zone === "symbol" ? 1.8 : target.zone === "loader" ? 2.0 : 3.2);
 
-    profile.style.left = `calc(${x}% - 34px)`;
-    profile.style.top = `calc(${y}% - 34px)`;
+    profile.style.left = `calc(${x}% - 27px)`;
+    profile.style.top = `calc(${y}% - 27px)`;
 
     let sx = "0px";
     let sy = "0px";
@@ -359,14 +360,14 @@ function spawnProfile(side, delay = 0, opts = {}) {
     spawnSlash(side);
 
     if (target.zone === "symbol" && progress >= 50) {
-      setTimeout(() => revealHive(profile), 140 + Math.random() * 180);
+      setTimeout(() => revealHive(profile), 80 + Math.random() * 120);
     }
 
     setTimeout(() => {
       if (profile && profile.parentNode && !profile.classList.contains("carl")) {
         profile.remove();
       }
-    }, target.zone === "symbol" ? 6200 : 5200);
+    }, target.zone === "symbol" ? 9200 : 5600);
   }, delay);
 }
 function revealHive(profile) {
@@ -394,7 +395,7 @@ function revealHive(profile) {
 
     setTimeout(() => {
       if (profile && profile.parentNode) profile.classList.add("hive-dissolve");
-    }, 1650);
+    }, 3100);
   }, 180);
 }
 function beginHiveWave() {
@@ -653,8 +654,8 @@ function spawnWren() {
   const wren = document.createElement("div");
   wren.className = "profile wren stubborn";
 
-  wren.style.left = "calc(52% - 34px)";
-  wren.style.top = "calc(31% - 34px)";
+  wren.style.left = "calc(52% - 27px)";
+  wren.style.top = "calc(24% - 27px)";
   wren.style.setProperty("--sx", "86px");
   wren.style.setProperty("--sy", "-42px");
   wren.innerHTML = `<img src="AssetWREN.PNG" alt="">`;
@@ -689,26 +690,26 @@ function spawnWren() {
 }
 function spawnFrank() {
   const spots = [
-    { x: 49, y: 59, dx: 0, dy: 0 },
-    { x: 47.5, y: 59.2, dx: -4, dy: 1 },
-    { x: 50.6, y: 58.8, dx: 4, dy: -1 },
-    { x: 48.8, y: 60.2, dx: -2, dy: 3 }
+    { x: 50.0, y: 67.0, dx: 0, dy: 0 },
+    { x: 48.7, y: 67.2, dx: -4, dy: 1 },
+    { x: 51.0, y: 66.8, dx: 4, dy: -1 },
+    { x: 49.6, y: 67.7, dx: -1, dy: 3 }
   ];
 
   spots.forEach((spot, index) => {
     setTimeout(() => {
       const frank = document.createElement("div");
       frank.className = "profile frank turtle-duty";
-      frank.style.left = `calc(${spot.x}% - 36px)`;
-      frank.style.top = `calc(${spot.y}% - 36px)`;
-      frank.style.setProperty("--sx", `${-70 + index * 14}px`);
-      frank.style.setProperty("--sy", `${35 - index * 4}px`);
+      frank.style.left = `calc(${spot.x}% - 34px)`;
+      frank.style.top = `calc(${spot.y}% - 34px)`;
+      frank.style.setProperty("--sx", `${-48 + index * 8}px`);
+      frank.style.setProperty("--sy", `${32 - index * 3}px`);
       frank.style.setProperty("--overlapX", `${spot.dx}px`);
       frank.style.setProperty("--overlapY", `${spot.dy}px`);
       frank.innerHTML = `<img src="AssetFRANK.PNG" alt="">`;
       profileField.appendChild(frank);
       frankStack.push(frank);
-    }, index * 520);
+    }, index * 560);
   });
 }
 
@@ -731,21 +732,21 @@ function startBlueFrankSequence() {
   frames.forEach((frame, index) => {
     setTimeout(() => {
       if (img) img.src = frame;
-    }, index * 330);
+    }, index * 560);
   });
 
   setTimeout(() => {
     liveFranks.forEach(frank => {
       if (frank && frank.parentNode) frank.classList.add("frank-dissolve");
     });
-  }, frames.length * 330 + 900);
+  }, frames.length * 560 + 1450);
 
   setTimeout(() => {
     liveFranks.forEach(frank => {
       if (frank && frank.parentNode) frank.remove();
     });
     frankStack = [];
-  }, frames.length * 330 + 1850);
+  }, frames.length * 560 + 2850);
 }
 function stopAttack() {
   clearInterval(profileTimer);
@@ -759,7 +760,7 @@ function stopAttack() {
   virusLayer.classList.add("retreat");
 
   setTimeout(() => {
-    profileField.querySelectorAll(".profile:not(.wren)").forEach(node => node.remove());
+    profileField.querySelectorAll(".profile:not(.wren):not(.frank)").forEach(node => node.remove());
     engagementField.innerHTML = "";
     motionField.innerHTML = "";
     impactField.innerHTML = "";
@@ -785,28 +786,28 @@ function completeSequence() {
   setTimeout(() => {
     turtle.classList.remove("hide");
     turtle.classList.add("peek");
-  }, 1500);
+  }, 1850);
 
   setTimeout(() => {
     loaderScene.classList.add("portal-open");
-  }, 2500);
+  }, 2950);
 
   setTimeout(() => {
     turtle.classList.remove("peek");
     turtle.classList.add("escape");
-  }, 3150);
+  }, 3650);
 
   setTimeout(() => {
     loaderScene.classList.add("portal-close");
-  }, 7650);
+  }, 6700);
 
   setTimeout(() => {
     loader.classList.add("homie-cut-out");
-  }, 7900);
+  }, 7050);
 
   setTimeout(() => {
     loaderScene.classList.add("fade-out");
-  }, 8700);
+  }, 7700);
 }
 
 function openChannel() {
