@@ -2995,3 +2995,162 @@ body {
 .testimonial-chart i { height:8px; border-radius:99px; background:rgba(255,255,255,.18); overflow:hidden; position:relative; }
 .testimonial-chart i::before { content:""; display:block; width:var(--p); height:100%; border-radius:99px; background:rgba(255,255,255,.82); }
 .testimonial-chart em { font-style:normal; font-size:.65rem; opacity:.82; text-align:right; }
+
+
+/* =========================================================
+   CHANNEL 17 LOCKED PASS — actual visual correction pass
+   Purpose: smaller masks, wider spacing, readable hearts, Frank turtle duty,
+   visible blue exposure, Homie paper-shredder exit, two-piece symbol until click.
+========================================================= */
+:root { --profile-size-real: 54px; }
+
+/* Wider separation: symbol / loader / Homie no longer bunch together. */
+.loader-scene { top: 60% !important; width: min(64vw, 334px) !important; }
+.signal-ghost,
+.signal-node { top: 22% !important; }
+.signal-ghost { width: 178px !important; height: 178px !important; z-index: 43 !important; }
+.signal-ghost img { position:absolute; inset:0; width:100%; height:100%; object-fit:contain; }
+.signal-ghost .ghost-outer { opacity:.66; z-index:2; }
+.signal-ghost .ghost-inner { opacity:.9; z-index:1; }
+.signal-ghost.waking { opacity:.38 !important; }
+.signal-ghost.burning { opacity:.8 !important; filter: drop-shadow(0 0 35px rgba(223,255,63,.50)) !important; }
+.signal-node.ready { opacity:.72 !important; }
+.outer-symbol { opacity:.72 !important; }
+
+/* Smaller avatars. Generic masks are noise, not giant poker chips. */
+.profile {
+  width: var(--profile-size-real) !important;
+  height: var(--profile-size-real) !important;
+  border-width: 2px !important;
+  box-shadow:
+    0 0 10px rgba(0,0,0,.88),
+    0 0 0 1px rgba(255,255,255,.15) !important;
+}
+.profile::after { inset: 6px !important; }
+.profile img { object-fit: cover !important; }
+.profile.on-loader { z-index: 18 !important; }
+.profile.on-symbol { z-index: 17 !important; }
+.profile.on-symbol.hive-reveal { z-index: 22 !important; }
+
+/* Blue forms need to read BLUE and stay on screen long enough to be seen. */
+.profile.hive-reveal::after { display: none !important; }
+.profile.hive-reveal {
+  width: 58px !important;
+  height: 58px !important;
+  border-color: rgba(238,250,255,.98) !important;
+  background:#061633 !important;
+  box-shadow:
+    0 0 14px rgba(0,0,0,.86),
+    0 0 0 1px rgba(235,248,255,.42),
+    0 0 30px rgba(0,158,255,.58) !important;
+}
+.profile.hive-reveal img {
+  opacity: 1 !important;
+  filter: saturate(1.9) brightness(1.38) contrast(1.12) drop-shadow(0 0 10px rgba(0,171,255,.55)) !important;
+  transform: scale(1.05) !important;
+}
+.profile.hive-dissolve { animation: bluePeelAwayLong 2.05s ease forwards !important; }
+@keyframes bluePeelAwayLong {
+  0%, 36% { opacity:1; filter:brightness(1.25) saturate(1.6); clip-path: inset(0 0 0 0); }
+  68% { opacity:.72; transform: translate(2px,-3px) scale(.96); clip-path: inset(0 0 26% 0); }
+  100% { opacity:0; transform: translate(8px,-10px) scale(.75); filter: blur(4px) saturate(.08); clip-path: inset(0 0 100% 0); }
+}
+
+/* Emoji hearts: right-side climb, small, clean, and full bottom-to-top story. */
+.engage.heart {
+  font-size: 13px !important;
+  line-height: 1 !important;
+  color: initial !important;
+  text-shadow: none !important;
+  filter: drop-shadow(0 0 4px rgba(0,0,0,.72)) !important;
+  animation: heartClimbEmojiFinal var(--dur) linear forwards !important;
+}
+.engage.heart.exposed { color: transparent !important; animation-name: heartExposedClimbFinal !important; }
+.engage.heart.exposed::before {
+  content: "❤️";
+  color: initial;
+  animation: exposedHeartStepsFinal var(--dur) steps(1,end) forwards;
+}
+@keyframes heartClimbEmojiFinal {
+  0% { opacity:0; transform: translate(0,0) scale(.68); }
+  10% { opacity:.94; }
+  88% { opacity:.86; }
+  100% { opacity:0; transform: translate(var(--drift), -128svh) scale(.98); }
+}
+@keyframes heartExposedClimbFinal {
+  0% { opacity:0; transform: translate(0,0) scale(.68); }
+  8% { opacity:1; }
+  100% { opacity:0; transform: translate(var(--drift), -130svh) scale(.98); }
+}
+@keyframes exposedHeartStepsFinal {
+  0%, 18% { content:"❤️"; }
+  30%, 44% { content:"🩷"; }
+  58%, 74% { content:"🩶"; }
+  86%, 100% { content:"🖤"; }
+}
+
+/* Frank: turtle duty only. He stacks over Homie and never wanders away. */
+.profile.frank.turtle-duty {
+  width: 68px !important;
+  height: 68px !important;
+  z-index: 36 !important;
+  transform: translate(var(--sx), var(--sy)) scale(.95) !important;
+  box-shadow:
+    0 0 14px rgba(0,0,0,.92),
+    0 0 0 1px rgba(255,255,255,.18) !important;
+}
+.profile.frank.turtle-duty img { object-fit: cover !important; }
+.profile.frank.turtle-duty.auth-field-hit {
+  z-index: 39 !important;
+  border-color: rgba(239,251,255,.98) !important;
+  box-shadow:
+    0 0 16px rgba(0,0,0,.92),
+    0 0 0 1px rgba(235,248,255,.55),
+    0 0 32px rgba(0,171,255,.64) !important;
+}
+.profile.frank.turtle-duty.auth-field-hit img {
+  opacity:1 !important;
+  filter: saturate(1.85) brightness(1.32) contrast(1.1) drop-shadow(0 0 9px rgba(0,171,255,.45)) !important;
+}
+.profile.frank.turtle-duty.frank-dissolve { animation: frankCalledBackFinal 1.25s ease forwards !important; }
+@keyframes frankCalledBackFinal {
+  0%, 28% { opacity:1; transform: translate(var(--overlapX), var(--overlapY)) scale(.98); }
+  62% { opacity:.72; filter: brightness(1.3) saturate(1.55); }
+  100% { opacity:0; transform: translate(var(--overlapX), calc(var(--overlapY) - 18px)) scale(.72); filter: blur(5px) saturate(.05); }
+}
+
+/* Homie: readable coast-clear peek, then nose-first paper-shredder doorway. */
+.turtle.peek .neck,
+.turtle.peek .head,
+.turtle.peek .eye { opacity: 1 !important; }
+.turtle.peek .head { left:43px !important; top:5px !important; filter: drop-shadow(0 0 4px rgba(242,238,229,.34)); }
+.turtle.peek .neck { opacity: 1 !important; }
+.loader-scene::after { left: calc(50% + 44px) !important; top: calc(100% - 12px) !important; width:3px !important; }
+.loader-scene.portal-open::after { height: 38px !important; opacity: 1 !important; }
+.turtle.escape { animation: homiePaperShredderFinal 3.05s linear forwards !important; }
+@keyframes homiePaperShredderFinal {
+  0% { left:50%; opacity:.96; transform:scale(.68); clip-path: inset(0 0 0 0); }
+  32% { left:56%; opacity:.96; clip-path: inset(0 0 0 0); }
+  43% { left:58%; opacity:.96; clip-path: inset(0 9% 0 0); }
+  55% { left:59.4%; opacity:.95; clip-path: inset(0 27% 0 0); }
+  68% { left:60.6%; opacity:.92; clip-path: inset(0 51% 0 0); }
+  82% { left:61.5%; opacity:.88; clip-path: inset(0 78% 0 0); }
+  100% { left:62.2%; opacity:0; clip-path: inset(0 100% 0 0); }
+}
+
+/* Wren: slightly more readable, still not spotlighted; no blue, she goes home. */
+.profile.wren.stubborn { z-index: 30 !important; width:58px !important; height:58px !important; }
+.profile.wren.wren-fade-home { animation: wrenIntoSymbolFinal 1.25s ease forwards !important; }
+@keyframes wrenIntoSymbolFinal {
+  0% { opacity:1; transform: translate(0,0) scale(1); filter: none; }
+  55% { opacity:.9; transform: translate(-3px,-5px) scale(.84); filter: drop-shadow(0 0 10px rgba(223,255,63,.24)); }
+  100% { opacity:0; transform: translate(-8px,-10px) scale(.42); filter: blur(3px); }
+}
+.wren-exit-pulse { z-index: 55 !important; }
+
+/* Intro click: two-piece mark survives until click. Station uses inner trust mark only. */
+.signal-node.ready .outer-symbol { display:block !important; opacity:.72 !important; }
+.signal-node.pressed { animation: signalPressPulse .42s ease both !important; }
+.home-outer { opacity:0 !important; display:none !important; }
+.home-symbol-stack { width:138px !important; height:138px !important; margin-bottom:54px !important; }
+.home-inner { width:102px !important; height:102px !important; }
