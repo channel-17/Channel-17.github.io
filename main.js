@@ -37,7 +37,6 @@ const campTestModal = document.getElementById("campTestModal");
 const campTestClose = document.getElementById("campTestClose");
 const campResult = document.getElementById("campResult");
 const expandTestimonials = document.getElementById("expandTestimonials");
-const testimonialMore = document.getElementById("testimonialMore");
 
 let progress = 0;
 let state = "normal";
@@ -56,8 +55,8 @@ let carlTriggered = false;
 let carlOpened = false;
 let hiveWaveStarted = false;
 let deadHeartReleased = false;
-let frankBlueStarted = false;
-let frankStack = [];
+let frankDutyStarted = false;
+let frankDutyFramesPlayed = false;
 let woundPulseTimer = null;
 let hiveWoundUsed = false;
 
@@ -66,6 +65,18 @@ let engageTimer = null;
 let slashTimer = null;
 let profileCount = 0;
 let engageCount = 0;
+const AVATAR_SIZE = 72;
+const AVATAR_HALF = AVATAR_SIZE / 2;
+const frankFrames = [
+  "blue.frank1.PNG",
+  "blue.frank2.PNG",
+  "blue.frank3.PNG",
+  "blue.frank4.PNG",
+  "blue.frank5.PNG",
+  "blue.frank6.PNG"
+];
+let activeFrankStack = [];
+
 
 const hiveAssets = [
   "MalePH1.PNG",
@@ -103,31 +114,31 @@ const normalAssets = [
   "Asset24.PNG"
 ];
 
-const coverageTargets = [
-  // Loader first: center percentage, then left/right, then overlap the pill without making one blob.
-  { x: 50, y: 60, zone: "loader" },
-  { x: 40, y: 60, zone: "loader" },
-  { x: 60, y: 60, zone: "loader" },
-  { x: 45, y: 58.7, zone: "loader" },
-  { x: 55, y: 61.2, zone: "loader" },
-  { x: 35, y: 59.4, zone: "loader" },
-  { x: 65, y: 60.8, zone: "loader" },
-
-  // Homie is Frank-only. Generic avatars do not get turtle duty.
-  { x: 50, y: 68, zone: "homie" },
-
-  // Symbol later. They attack it, but never fully erase the three pyramid points.
-  { x: 50, y: 18, zone: "symbol" },
-  { x: 43.5, y: 26, zone: "symbol" },
-  { x: 56.5, y: 26, zone: "symbol" },
-  { x: 50, y: 30, zone: "symbol" },
-  { x: 47, y: 22, zone: "symbol" },
-
-  { x: 28, y: 43, zone: "miss" },
-  { x: 72, y: 43, zone: "miss" },
-  { x: 31, y: 68, zone: "miss" },
-  { x: 69, y: 68, zone: "miss" }
+const loaderTargets = [
+  { x: 50, y: 44, zone: "loader" },
+  { x: 43, y: 44, zone: "loader" },
+  { x: 57, y: 44, zone: "loader" },
+  { x: 39, y: 46, zone: "loader" },
+  { x: 61, y: 46, zone: "loader" },
+  { x: 48, y: 45.5, zone: "loader" }
 ];
+
+const symbolTargets = [
+  { x: 48, y: 30, zone: "symbol" },
+  { x: 52, y: 30, zone: "symbol" },
+  { x: 45, y: 34, zone: "symbol" },
+  { x: 55, y: 34, zone: "symbol" },
+  { x: 50, y: 37, zone: "symbol" }
+];
+
+const missTargets = [
+  { x: 32, y: 42, zone: "miss" },
+  { x: 68, y: 42, zone: "miss" },
+  { x: 35, y: 62, zone: "miss" },
+  { x: 65, y: 62, zone: "miss" }
+];
+
+const coverageTargets = [...loaderTargets, ...symbolTargets, ...missTargets];
 
 function setProgress(value) {
   progress = Math.max(0, Math.min(100, value));
@@ -166,12 +177,12 @@ const loading = setInterval(() => {
     signalGhost.classList.add("waking");
   }
 
-  if (progress >= 50 && !hiveWaveStarted) {
+  if (progress >= 38 && !hiveWaveStarted) {
     hiveWaveStarted = true;
     beginHiveWave();
   }
 
-  if (progress >= 50 && !burning) {
+  if (progress >= 42 && !burning) {
     burning = true;
     signalGhost.classList.add("burning");
     startBurnPulse();
@@ -192,19 +203,14 @@ const loading = setInterval(() => {
     deployGenerals();
   }
 
-  if (progress >= 61 && !wrenSeen) {
+  if (progress >= 62 && !wrenSeen) {
     wrenSeen = true;
     spawnWren();
   }
 
-  if (progress >= 26 && !frankSeen) {
+  if (progress >= 24 && !frankSeen) {
     frankSeen = true;
     spawnFrank();
-  }
-
-  if (progress >= 61 && frankSeen && !frankBlueStarted) {
-    frankBlueStarted = true;
-    startBlueFrankSequence();
   }
 
   if (progress >= 100 && !completed) {
@@ -218,28 +224,29 @@ const loading = setInterval(() => {
 }, 45);
 
 function startAttack() {
-  // First strike hits what exists: the loader bar and percentage.
-  spawnProfile("top", 0, { force: coverageTargets[0] });
-  setTimeout(() => spawnProfile("left", 0, { force: coverageTargets[1] }), 260);
-  setTimeout(() => spawnProfile("right", 0, { force: coverageTargets[2] }), 520);
-  setTimeout(() => spawnProfile("left", 0, { force: coverageTargets[3] }), 820);
-  setTimeout(() => spawnProfile("right", 0, { force: coverageTargets[4] }), 1120);
+  // The system attacks what exists first: loader center, then loader sides, then Homie.
+  spawnProfile("top", 0, { force: loaderTargets[0] });
+  setTimeout(() => spawnProfile("left", 0, { force: loaderTargets[1] }), 260);
+  setTimeout(() => spawnProfile("right", 0, { force: loaderTargets[2] }), 520);
+  setTimeout(() => spawnProfile("left", 0, { force: loaderTargets[3] }), 860);
+  setTimeout(() => spawnProfile("right", 0, { force: loaderTargets[4] }), 1180);
 
   profileTimer = setInterval(() => {
     if (completed) return;
     spawnProfile(randomSide());
-  }, 640);
+  }, 430);
 
   engageTimer = setInterval(() => {
     if (completed) return;
     spawnEngagement();
-  }, 1500);
+  }, 760);
 
   slashTimer = setInterval(() => {
     if (completed) return;
     spawnSlash(randomSide());
-  }, 310);
+  }, 330);
 }
+
 function randomSide() {
   return ["top", "left", "right", "bottom"][Math.floor(Math.random() * 4)];
 }
@@ -289,58 +296,63 @@ function spawnSlash(side) {
 }
 
 function spawnEngagement() {
-  // Hearts: clean emoji hearts climb the right side. Before the signal they stay red.
-  // Once the symbol appears, new hearts tell the whole exposed story: red -> pink -> gray -> black -> gone.
+  // Sparse emoji-heart story: red until the signal appears, then each heart decays as it climbs.
+  if (Math.random() < 0.36) return;
+
   const item = document.createElement("div");
-  item.className = "engage heart";
+  item.className = "engage heart heart-story";
   item.textContent = "❤️";
-  item.style.left = 82 + Math.random() * 12 + "%";
-  item.style.top = 106 + Math.random() * 9 + "%";
-  item.style.setProperty("--dur", (progress < 50 ? 8.4 : 7.2) + Math.random() * 1.9 + "s");
-  item.style.setProperty("--drift", Math.round(-18 + Math.random() * 36) + "px");
-  if (progress >= 50) item.classList.add("exposed");
+  item.style.left = (82 + Math.random() * 12) + "%";
+  item.style.top = (92 + Math.random() * 7) + "%";
+  item.style.setProperty("--dur", (6.4 + Math.random() * 1.4) + "s");
+  item.style.setProperty("--drift", Math.round(-22 + Math.random() * 44) + "px");
+
   engagementField.appendChild(item);
   engageCount++;
-  setTimeout(() => item.remove(), 10500);
+
+  if (progress >= 38) {
+    setTimeout(() => { if (item.parentNode) item.textContent = "🩷"; }, 1050);
+    setTimeout(() => { if (item.parentNode) item.textContent = "🩶"; }, 2300);
+    setTimeout(() => { if (item.parentNode) item.textContent = "🖤"; }, 3800);
+  }
+
+  setTimeout(() => item.remove(), 8400);
 }
+
 function pickTarget() {
   const count = profileCount;
 
   if (progress < 38) {
-    // Smother the loading bar without creating one giant blob.
-    return coverageTargets[count % 7];
+    return loaderTargets[count % loaderTargets.length];
   }
 
-  if (progress < 50) {
-    return coverageTargets[count % 7];
+  // After the symbol appears, the system throws only a handful at the symbol at a time.
+  if (count % 7 < 5) {
+    return symbolTargets[count % symbolTargets.length];
   }
 
-  // Once the symbol appears, the system throws masks at it.
-  // Keep the target pattern sparse enough that the emblem never fully disappears.
-  const symbolTargets = coverageTargets.filter(t => t.zone === "symbol");
-  const missTargets = coverageTargets.filter(t => t.zone === "miss");
-  return Math.random() < 0.76
-    ? symbolTargets[count % symbolTargets.length]
-    : missTargets[count % missTargets.length];
+  return loaderTargets[count % loaderTargets.length];
 }
+
 function spawnProfile(side, delay = 0, opts = {}) {
   setTimeout(() => {
     const old = profileField.querySelectorAll(".profile:not(.carl):not(.frank):not(.wren)");
-    if (old.length > 10) old[0].remove();
+    if (old.length > 20) old[0].remove();
 
     const target = opts.force || pickTarget();
 
     const profile = document.createElement("div");
     profile.className = "profile";
-    if (target.zone === "symbol") profile.classList.add("on-symbol");
-    if (target.zone === "loader") profile.classList.add("on-loader");
 
     const asset = opts.asset || normalAssets[profileCount % normalAssets.length];
-    const x = jitter(target.x, target.zone === "symbol" ? 1.8 : target.zone === "loader" ? 2.2 : 3.2);
-    const y = jitter(target.y, target.zone === "symbol" ? 1.8 : target.zone === "loader" ? 2.0 : 3.2);
+    const x = jitter(target.x, target.zone === "miss" ? 4.2 : 2.6);
+    const y = jitter(target.y, target.zone === "miss" ? 4.6 : 2.8);
 
-    profile.style.left = `calc(${x}% - 27px)`;
-    profile.style.top = `calc(${y}% - 27px)`;
+    profile.style.left = `calc(${x}% - ${AVATAR_HALF}px)`;
+    profile.style.top = `calc(${y}% - ${AVATAR_HALF}px)`;
+    profile.dataset.zone = target.zone;
+    if (target.zone === "symbol") profile.classList.add("symbol-touch");
+    if (target.zone === "loader") profile.classList.add("loader-cover");
 
     let sx = "0px";
     let sy = "0px";
@@ -359,31 +371,28 @@ function spawnProfile(side, delay = 0, opts = {}) {
 
     spawnSlash(side);
 
-    if (target.zone === "symbol" && progress >= 50) {
-      setTimeout(() => revealHive(profile), 80 + Math.random() * 120);
+    if (target.zone === "symbol" && progress >= 38) {
+      setTimeout(() => revealHive(profile), 260 + Math.random() * 260);
     }
 
     setTimeout(() => {
-      if (profile && profile.parentNode && !profile.classList.contains("carl")) {
+      if (profile && profile.parentNode && !profile.classList.contains("carl") && !profile.classList.contains("frank")) {
         profile.remove();
       }
-    }, target.zone === "symbol" ? 9200 : 5600);
+    }, target.zone === "symbol" ? 7600 : 5200);
   }, delay);
 }
+
 function revealHive(profile) {
   if (!profile || !profile.parentNode) return;
   if (profile.classList.contains("wren")) return;
-  if (profile.classList.contains("hive-reveal")) return;
+  if (profile.classList.contains("frank")) return;
+  if (profile.dataset.zone !== "symbol") return;
 
   profile.classList.add("mask-dropping");
 
   setTimeout(() => {
     if (!profile || !profile.parentNode) return;
-
-    if (!profile.dataset.originalSrc) {
-      const image = profile.querySelector("img");
-      if (image) profile.dataset.originalSrc = image.getAttribute("src") || "";
-    }
 
     const image = profile.querySelector("img");
     if (image) {
@@ -391,19 +400,26 @@ function revealHive(profile) {
       image.src = asset;
     }
 
-    profile.classList.add("hive-reveal");
+    profile.classList.add("hive-reveal", "has-hive-asset");
 
     setTimeout(() => {
       if (profile && profile.parentNode) profile.classList.add("hive-dissolve");
-    }, 3100);
-  }, 180);
+    }, 3000);
+
+    setTimeout(() => {
+      if (profile && profile.parentNode) profile.remove();
+    }, 4700);
+  }, 230);
 }
+
 function beginHiveWave() {
-  const nearSignal = [...profileField.querySelectorAll(".profile.on-symbol:not(.wren):not(.frank)")].slice(0, 5);
+  const nearSignal = [...profileField.querySelectorAll(".profile.symbol-touch")].slice(0, 5);
+
   nearSignal.forEach((profile, index) => {
-    setTimeout(() => revealHive(profile), index * 130);
+    setTimeout(() => revealHive(profile), index * 180);
   });
 }
+
 function startBurnPulse() {
   for (let i = 0; i < 5; i++) {
     setTimeout(() => {
@@ -631,15 +647,18 @@ if (campTestClose && campTestModal) {
 }
 document.querySelectorAll(".camp-answer").forEach(button => {
   button.addEventListener("click", () => {
-    if (campResult) campResult.textContent = "Camp Compatibility: APPROVED. Human selected yes.";
+    if (campResult) campResult.textContent = "Result: HIGHLY COMPATIBLE. Human campfire preference confirmed.";
   });
 });
-if (expandTestimonials && testimonialMore) {
+if (expandTestimonials) {
   expandTestimonials.addEventListener("click", () => {
-    testimonialMore.classList.toggle("open");
-    expandTestimonials.textContent = testimonialMore.classList.contains("open") ? "COLLAPSE TESTIMONIALS" : "EXPAND TESTIMONIALS";
+    const block = expandTestimonials.closest(".testimonials");
+    if (!block) return;
+    block.classList.toggle("expanded");
+    expandTestimonials.textContent = block.classList.contains("expanded") ? "COLLAPSE TESTIMONIALS" : "EXPAND TESTIMONIALS";
   });
 }
+
 
 document.querySelectorAll(".photo-thumb").forEach(button => {
   button.addEventListener("click", () => {
@@ -654,10 +673,10 @@ function spawnWren() {
   const wren = document.createElement("div");
   wren.className = "profile wren stubborn";
 
-  wren.style.left = "calc(52% - 27px)";
-  wren.style.top = "calc(24% - 27px)";
-  wren.style.setProperty("--sx", "86px");
-  wren.style.setProperty("--sy", "-42px");
+  wren.style.left = `calc(50% - ${AVATAR_HALF}px)`;
+  wren.style.top = `calc(31% - ${AVATAR_HALF}px)`;
+  wren.style.setProperty("--sx", "70px");
+  wren.style.setProperty("--sy", "-38px");
   wren.innerHTML = `<img src="AssetWREN.PNG" alt="">`;
 
   profileField.appendChild(wren);
@@ -665,89 +684,96 @@ function spawnWren() {
   setTimeout(() => {
     if (!wren || !wren.parentNode) return;
     wren.classList.add("wren-notice");
-  }, 1250);
+  }, 1500);
 
   setTimeout(() => {
     if (!wren || !wren.parentNode) return;
     wren.classList.add("wren-fade-home");
-  }, 2650);
+  }, 2800);
 
   setTimeout(() => {
-    if (!wren || !wren.parentNode) return;
     const pulse = document.createElement("div");
     pulse.className = "wren-exit-pulse";
-    pulse.style.left = "52%";
+    pulse.style.left = "50%";
     pulse.style.top = "31%";
     impactField.appendChild(pulse);
     setTimeout(() => pulse.remove(), 3600);
-  }, 3200);
+  }, 3500);
 
   setTimeout(() => {
-    if (wren && wren.parentNode) {
-      wren.remove();
-    }
-  }, 3800);
+    if (wren && wren.parentNode) wren.remove();
+  }, 4300);
 }
+
 function spawnFrank() {
-  const spots = [
-    { x: 50.0, y: 67.0, dx: 0, dy: 0 },
-    { x: 48.7, y: 67.2, dx: -4, dy: 1 },
-    { x: 51.0, y: 66.8, dx: 4, dy: -1 },
-    { x: 49.6, y: 67.7, dx: -1, dy: 3 }
+  if (frankDutyStarted) return;
+  frankDutyStarted = true;
+  turtle.classList.add("covered-by-frank");
+
+  const frankPositions = [
+    { x: 47.0, y: 53.2, sx: "-55px", sy: "35px" },
+    { x: 49.2, y: 52.4, sx: "-35px", sy: "28px" },
+    { x: 45.8, y: 52.7, sx: "-65px", sy: "18px" },
+    { x: 48.4, y: 51.8, sx: "-45px", sy: "22px" }
   ];
 
-  spots.forEach((spot, index) => {
+  frankPositions.forEach((pos, index) => {
     setTimeout(() => {
       const frank = document.createElement("div");
-      frank.className = "profile frank turtle-duty";
-      frank.style.left = `calc(${spot.x}% - 34px)`;
-      frank.style.top = `calc(${spot.y}% - 34px)`;
-      frank.style.setProperty("--sx", `${-48 + index * 8}px`);
-      frank.style.setProperty("--sy", `${32 - index * 3}px`);
-      frank.style.setProperty("--overlapX", `${spot.dx}px`);
-      frank.style.setProperty("--overlapY", `${spot.dy}px`);
+      frank.className = "profile frank frank-stack";
+      frank.style.left = `calc(${pos.x}% - ${AVATAR_HALF}px)`;
+      frank.style.top = `calc(${pos.y}% - ${AVATAR_HALF}px)`;
+      frank.style.setProperty("--sx", pos.sx);
+      frank.style.setProperty("--sy", pos.sy);
+      frank.style.zIndex = String(22 + index);
       frank.innerHTML = `<img src="AssetFRANK.PNG" alt="">`;
       profileField.appendChild(frank);
-      frankStack.push(frank);
-    }, index * 560);
+      activeFrankStack.push(frank);
+    }, index * 620);
   });
+
+  setTimeout(playBlueFrankSequence, 7200);
 }
 
-function startBlueFrankSequence() {
-  const liveFranks = frankStack.filter(f => f && f.parentNode);
-  if (!liveFranks.length) return;
+function playBlueFrankSequence() {
+  if (frankDutyFramesPlayed) return;
+  frankDutyFramesPlayed = true;
 
-  const topFrank = liveFranks[liveFranks.length - 1];
-  topFrank.classList.add("blue-frank", "auth-field-hit");
-  const img = topFrank.querySelector("img");
-  const frames = [
-    "blue.frank1.PNG",
-    "blue.frank2.PNG",
-    "blue.frank3.PNG",
-    "blue.frank4.PNG",
-    "blue.frank5.PNG",
-    "blue.frank6.PNG"
-  ];
+  activeFrankStack = activeFrankStack.filter(node => node && node.parentNode);
+  const lead = activeFrankStack[activeFrankStack.length - 1];
+  activeFrankStack.slice(0, -1).forEach((node, index) => {
+    setTimeout(() => { if (node && node.parentNode) node.classList.add("frank-fade-under"); }, index * 130);
+  });
 
-  frames.forEach((frame, index) => {
+  if (!lead || !lead.parentNode) {
+    turtle.classList.remove("covered-by-frank");
+    return;
+  }
+
+  lead.classList.add("blue-frank", "frank-processing");
+  const img = lead.querySelector("img");
+  const frameTimes = [0, 620, 1240, 1900, 2580, 3300];
+  frameTimes.forEach((time, index) => {
     setTimeout(() => {
-      if (img) img.src = frame;
-    }, index * 560);
+      if (img && lead.parentNode) img.src = frankFrames[index];
+    }, time);
   });
 
   setTimeout(() => {
-    liveFranks.forEach(frank => {
-      if (frank && frank.parentNode) frank.classList.add("frank-dissolve");
-    });
-  }, frames.length * 560 + 1450);
+    if (lead && lead.parentNode) lead.classList.add("frank-final-hold");
+  }, 3300);
 
   setTimeout(() => {
-    liveFranks.forEach(frank => {
-      if (frank && frank.parentNode) frank.remove();
-    });
-    frankStack = [];
-  }, frames.length * 560 + 2850);
+    if (lead && lead.parentNode) lead.classList.add("hive-dissolve");
+    activeFrankStack.forEach(node => { if (node && node.parentNode && node !== lead) node.remove(); });
+    turtle.classList.remove("covered-by-frank");
+  }, 5100);
+
+  setTimeout(() => {
+    if (lead && lead.parentNode) lead.remove();
+  }, 6500);
 }
+
 function stopAttack() {
   clearInterval(profileTimer);
   clearInterval(engageTimer);
@@ -760,7 +786,7 @@ function stopAttack() {
   virusLayer.classList.add("retreat");
 
   setTimeout(() => {
-    profileField.querySelectorAll(".profile:not(.wren):not(.frank)").forEach(node => node.remove());
+    profileField.innerHTML = "";
     engagementField.innerHTML = "";
     motionField.innerHTML = "";
     impactField.innerHTML = "";
@@ -786,51 +812,53 @@ function completeSequence() {
   setTimeout(() => {
     turtle.classList.remove("hide");
     turtle.classList.add("peek");
-  }, 1850);
+  }, 1500);
 
   setTimeout(() => {
     loaderScene.classList.add("portal-open");
-  }, 2950);
+  }, 2500);
 
   setTimeout(() => {
     turtle.classList.remove("peek");
     turtle.classList.add("escape");
-  }, 3650);
+  }, 3150);
 
   setTimeout(() => {
     loaderScene.classList.add("portal-close");
-  }, 6700);
+  }, 7650);
 
   setTimeout(() => {
     loader.classList.add("homie-cut-out");
-  }, 7050);
+  }, 7900);
 
   setTimeout(() => {
     loaderScene.classList.add("fade-out");
-  }, 7700);
+  }, 8700);
 }
 
 function openChannel() {
   if (!signalNode.classList.contains("ready")) return;
 
   signalNode.style.pointerEvents = "none";
-  if (navigator.vibrate) navigator.vibrate(17);
+  if (navigator.vibrate) navigator.vibrate(34);
 
   signalNode.classList.add("pressed");
   outerSymbol.classList.add("dissolve");
   innerSymbol.classList.add("alive");
 
+  // No visible maze before Station. The click is the wall breaking.
   maze.classList.remove("active");
 
   setTimeout(() => {
     signalNode.classList.add("fade-out");
-  }, 1900);
+  }, 1500);
 
   setTimeout(() => {
     home.classList.add("open");
     idleMaze.classList.add("active");
-  }, 2300);
+  }, 2200);
 }
+
 signalNode.addEventListener("click", openChannel);
 
 signalNode.addEventListener("touchend", event => {
