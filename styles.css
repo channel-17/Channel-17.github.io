@@ -3002,3 +3002,156 @@ body {
 .camp-result { margin: 12px 0 0; font-size: 0.74rem; font-weight: 800; }
 .testimonials blockquote:nth-of-type(n+6) { display: none; }
 .testimonials.expanded blockquote { display: block; }
+
+/* =========================================================
+   YELLOW BRICK REBUILD 1 — SURGICAL LOCK-IN OVERRIDES
+   Uses repo assets exactly: heart.pink.PNG / heart.grey.PNG
+========================================================= */
+
+/* Heart clue becomes its own PNG asset, above every sheet of paper. */
+.engagement-field { z-index: 120 !important; pointer-events: none; }
+.asset-heart.carl-trigger-heart {
+  position: absolute;
+  display: block;
+  width: 34px;
+  height: 34px;
+  object-fit: contain;
+  opacity: 0;
+  z-index: 999 !important;
+  pointer-events: none;
+  filter: drop-shadow(0 0 8px rgba(0,0,0,0.78));
+  animation: carlHeartRoute 3.05s cubic-bezier(0.24, 0.02, 0.12, 1) forwards !important;
+}
+.asset-heart.carl-trigger-heart.draining {
+  filter: grayscale(0.42) saturate(0.62) brightness(0.92) drop-shadow(0 0 8px rgba(0,0,0,0.8));
+}
+.asset-heart.carl-trigger-heart.dead-stage {
+  filter: saturate(0.7) contrast(1.05) brightness(0.86) drop-shadow(0 0 9px rgba(0,0,0,0.86));
+}
+@keyframes carlHeartRoute {
+  0%   { opacity: 0; transform: translate(0, 24px) scale(0.48) rotate(3deg); }
+  9%   { opacity: 0.96; transform: translate(-1vw, -3vh) scale(0.52) rotate(1deg); }
+  28%  { opacity: 0.94; transform: translate(-10vw, -19vh) scale(0.56) rotate(-4deg); }
+  49%  { opacity: 0.94; transform: translate(-30vw, -32vh) scale(0.60) rotate(4deg); }
+  71%  { opacity: 0.94; transform: translate(-55vw, -36vh) scale(0.62) rotate(-5deg); }
+  84%  { opacity: 0.92; transform: translate(-67vw, -37vh) scale(0.58) rotate(2deg); }
+  100% { opacity: 0; transform: translate(-72vw, -38vh) scale(0.42) rotate(-8deg); }
+}
+
+/* Carl: red ring is a blink, then he is buried. */
+.profile.carl.carl-ring-death {
+  z-index: 94 !important;
+  animation:
+    profileSlam 0.42s cubic-bezier(0.08, 0.78, 0.12, 1) forwards,
+    carlRingDeathHardBlink 0.18s steps(2) infinite !important;
+}
+@keyframes carlRingDeathHardBlink {
+  0%, 100% {
+    border-color: rgba(255, 29, 37, 1);
+    box-shadow:
+      0 0 0 4px rgba(255,29,37,0.92),
+      0 0 18px rgba(255,29,37,0.82),
+      0 0 42px rgba(255,29,37,0.42);
+    filter: contrast(1.18) saturate(1.2);
+  }
+  50% {
+    border-color: rgba(242,238,229,0.86);
+    box-shadow:
+      0 0 0 2px rgba(255,255,255,0.22),
+      0 0 12px rgba(0,0,0,0.9);
+    filter: grayscale(0.2) contrast(0.95);
+  }
+}
+
+/* Blue avatars hold long enough to be understood, then die like bad data. */
+.profile.hive-reveal.has-hive-asset img {
+  opacity: 1 !important;
+  filter: brightness(1.42) saturate(1.72) contrast(1.1) drop-shadow(0 0 12px rgba(88,170,255,0.64)) !important;
+}
+.profile.pixel-deteriorate {
+  animation: avatarPixelDeterioration 1.15s steps(7) forwards !important;
+}
+@keyframes avatarPixelDeterioration {
+  0%   { opacity: 1; clip-path: polygon(0 0,100% 0,100% 100%,0 100%); filter: brightness(1.45) saturate(1.7); }
+  18%  { opacity: .96; clip-path: polygon(0 0,94% 0,94% 18%,100% 18%,100% 100%,0 100%); }
+  35%  { opacity: .82; clip-path: polygon(5% 0,100% 0,100% 78%,91% 78%,91% 100%,0 100%,0 24%,5% 24%); }
+  54%  { opacity: .62; clip-path: polygon(0 0,80% 0,80% 16%,100% 16%,100% 62%,84% 62%,84% 100%,12% 100%,12% 82%,0 82%); filter: blur(.6px) saturate(1.1); }
+  73%  { opacity: .38; clip-path: polygon(18% 0,100% 0,100% 38%,76% 38%,76% 74%,54% 74%,54% 100%,0 100%,0 58%,18% 58%); filter: blur(1.4px) saturate(.55); }
+  100% { opacity: 0; clip-path: polygon(46% 0,100% 0,100% 14%,72% 14%,72% 42%,54% 42%,54% 100%,46% 100%); transform: translate(2px,-7px) scale(.82); filter: blur(3px) saturate(.1); }
+}
+.profile.hive-dissolve { animation: blueAvatarPeelAway 1.35s steps(5) forwards !important; }
+
+/* Spacing: bar stays; symbol gets a hair higher; Homie gets a hair lower. */
+.signal-ghost,
+.signal-node { top: 26.6% !important; }
+.turtle { top: 16px !important; }
+
+/* Frank: janitor stays on turtle duty longer. */
+.profile.frank { z-index: 96 !important; }
+.turtle.covered-by-frank { opacity: 0.03 !important; }
+.profile.frank-processing { animation: frankComputerProcess 5.8s steps(6) forwards !important; }
+.profile.frank.hive-dissolve { animation: avatarPixelDeterioration 1.45s steps(7) forwards !important; }
+
+/* Wren: findable if you're hunting, still not a spotlight. */
+.profile.wren {
+  z-index: 88 !important;
+  width: 78px !important;
+  height: 78px !important;
+  border-width: 2px !important;
+  opacity: .88;
+}
+.profile.wren.wren-notice { opacity: .96 !important; }
+.wren-exit-pulse {
+  width: 9px !important;
+  height: 9px !important;
+  background: rgba(223,255,63,0.88) !important;
+  box-shadow:
+    0 0 10px rgba(223,255,63,0.72),
+    0 0 28px rgba(223,255,63,0.28) !important;
+}
+
+/* Homie: no headless escape, no lizard crawl. Panic turtle flop. */
+.turtle.escape .neck,
+.turtle.escape .head,
+.turtle.escape .eye,
+.turtle.escape .tail,
+.turtle.escape .leg {
+  opacity: 1 !important;
+}
+.turtle.escape .shell { animation: homiePanicShellBob 0.18s steps(2) infinite !important; }
+.turtle.escape .l1 { animation: turtlePanicFlopA 0.22s steps(2) infinite !important; }
+.turtle.escape .l2 { animation: turtlePanicFlopB 0.22s steps(2) infinite !important; }
+@keyframes homiePanicShellBob {
+  0%,100% { transform: translateY(0) rotate(-2deg); }
+  50% { transform: translateY(1.6px) rotate(2deg); }
+}
+@keyframes turtlePanicFlopA {
+  0%,100% { transform: translate(1px,1px) rotate(23deg) scaleX(1.18); }
+  50% { transform: translate(-2px,-1px) rotate(-28deg) scaleX(.86); }
+}
+@keyframes turtlePanicFlopB {
+  0%,100% { transform: translate(-2px,-1px) rotate(-28deg) scaleX(.86); }
+  50% { transform: translate(1px,1px) rotate(23deg) scaleX(1.18); }
+}
+.loader-scene::after {
+  left: calc(50% + 74px) !important;
+  top: calc(100% - 14px) !important;
+  width: 2px !important;
+  border-radius: 8px !important;
+  background: rgba(242,238,229,0.96) !important;
+  box-shadow:
+    0 0 6px rgba(242,238,229,0.86),
+    0 0 16px rgba(242,238,229,0.34),
+    -1px 0 0 rgba(223,255,63,0.22) !important;
+}
+.loader-scene.portal-open::after { height: 32px !important; }
+.turtle.escape { animation: homiePanicDoorDive 3.35s cubic-bezier(.38,0,.12,1) forwards !important; }
+@keyframes homiePanicDoorDive {
+  0% { left: 50%; opacity: .96; transform: scale(.68) translateY(0); clip-path: inset(0 0 0 0); }
+  18% { left: 55%; transform: scale(.68) translateY(2px); clip-path: inset(0 0 0 0); }
+  36% { left: 60%; transform: scale(.68) translateY(-1px); clip-path: inset(0 0 0 0); }
+  52% { left: 63%; opacity: .96; clip-path: inset(0 11% 0 0); }
+  68% { left: 65%; opacity: .90; clip-path: inset(0 42% 0 0); }
+  84% { left: 66%; opacity: .68; clip-path: inset(0 74% 0 0); }
+  100% { left: 66.5%; opacity: 0; clip-path: inset(0 100% 0 0); }
+}
