@@ -1,5 +1,5 @@
-// CHANNEL 17 — Build Pass 1C
-// CPR active. Ground Zero continuation. No redesign.
+// CHANNEL 17 — Yellow Brick Rebuild 1
+// CPR active. Ground Zero continuation. No redesign. Surgical timing + heart asset wiring.
 
 const fill = document.getElementById("fill");
 const percent = document.getElementById("percent");
@@ -66,6 +66,8 @@ let slashTimer = null;
 let profileCount = 0;
 let engageCount = 0;
 const AVATAR_SIZE = 72;
+const HEART_PINK = "heart.pink.PNG";
+const HEART_GREY = "heart.grey.PNG";
 const AVATAR_HALF = AVATAR_SIZE / 2;
 const frankFrames = [
   "blue.frank1.PNG",
@@ -296,27 +298,27 @@ function spawnSlash(side) {
 }
 
 function spawnEngagement() {
-  // Sparse emoji-heart story: red until the signal appears, then each heart decays as it climbs.
-  if (Math.random() < 0.36) return;
+  // Background validation hearts stay sparse. The Carl clue heart is handled separately.
+  if (Math.random() < 0.42) return;
 
   const item = document.createElement("div");
   item.className = "engage heart heart-story";
   item.textContent = "❤️";
   item.style.left = (82 + Math.random() * 12) + "%";
   item.style.top = (92 + Math.random() * 7) + "%";
-  item.style.setProperty("--dur", (6.4 + Math.random() * 1.4) + "s");
-  item.style.setProperty("--drift", Math.round(-22 + Math.random() * 44) + "px");
+  item.style.setProperty("--dur", (6.9 + Math.random() * 1.2) + "s");
+  item.style.setProperty("--drift", Math.round(-18 + Math.random() * 36) + "px");
 
   engagementField.appendChild(item);
   engageCount++;
 
   if (progress >= 38) {
-    setTimeout(() => { if (item.parentNode) item.textContent = "🩷"; }, 1050);
-    setTimeout(() => { if (item.parentNode) item.textContent = "🩶"; }, 2300);
-    setTimeout(() => { if (item.parentNode) item.textContent = "🖤"; }, 3800);
+    setTimeout(() => { if (item.parentNode) item.textContent = "🩷"; }, 1150);
+    setTimeout(() => { if (item.parentNode) item.textContent = "🩶"; }, 2650);
+    setTimeout(() => { if (item.parentNode) item.textContent = "🖤"; }, 4400);
   }
 
-  setTimeout(() => item.remove(), 8400);
+  setTimeout(() => item.remove(), 8900);
 }
 
 function pickTarget() {
@@ -403,12 +405,16 @@ function revealHive(profile) {
     profile.classList.add("hive-reveal", "has-hive-asset");
 
     setTimeout(() => {
+      if (profile && profile.parentNode) profile.classList.add("pixel-deteriorate");
+    }, 4300);
+
+    setTimeout(() => {
       if (profile && profile.parentNode) profile.classList.add("hive-dissolve");
-    }, 3000);
+    }, 5100);
 
     setTimeout(() => {
       if (profile && profile.parentNode) profile.remove();
-    }, 4700);
+    }, 6900);
   }, 230);
 }
 
@@ -504,21 +510,35 @@ function releaseDeadHeartTowardCarl() {
   const carl = profileField.querySelector(".profile.carl");
   if (!carl) return;
 
-  const heart = document.createElement("div");
-  heart.className = "engage heart dead carl-trigger-heart";
-  heart.textContent = "🩶";
-  heart.style.left = "12%";
-  heart.style.top = "50%";
-  heart.style.setProperty("--dur", "2.1s");
-  heart.style.setProperty("--drift", "0px");
+  const heart = document.createElement("img");
+  heart.className = "engage carl-trigger-heart asset-heart pink-stage";
+  heart.src = HEART_PINK;
+  heart.alt = "";
+  heart.style.left = "88%";
+  heart.style.top = "86%";
 
   engagementField.appendChild(heart);
 
+  // First X: meaning starts draining.
+  setTimeout(() => {
+    if (!heart.parentNode) return;
+    heart.classList.add("draining");
+  }, 760);
+
+  // Second X: fully gray/broken, using Jinx's repo asset.
+  setTimeout(() => {
+    if (!heart.parentNode) return;
+    heart.src = HEART_GREY;
+    heart.classList.remove("pink-stage", "draining");
+    heart.classList.add("dead-stage");
+  }, 1480);
+
+  // Carl hit: very brief ring of death. Miss it and fuck off.
   setTimeout(() => {
     triggerCarl(carl);
-  }, 980);
+  }, 2150);
 
-  setTimeout(() => heart.remove(), 2200);
+  setTimeout(() => heart.remove(), 3200);
 }
 
 function triggerCarl(carl) {
@@ -532,7 +552,7 @@ function triggerCarl(carl) {
     if (!carlOpened) {
       carl.classList.remove("carl-ready");
     }
-  }, 1900);
+  }, 820);
 
   setTimeout(() => {
     if (!carl || !carl.parentNode) return;
@@ -540,12 +560,12 @@ function triggerCarl(carl) {
     carl.classList.remove("carl-ring-death", "carl-ready");
     carl.classList.add("burying");
 
-    for (let i = 0; i < 6; i++) {
-      setTimeout(() => spawnProfile("left"), i * 60);
+    for (let i = 0; i < 8; i++) {
+      setTimeout(() => spawnProfile("left"), i * 48);
     }
 
-    setTimeout(() => carl.remove(), 520);
-  }, 2450);
+    setTimeout(() => carl.remove(), 430);
+  }, 1120);
 }
 
 function openCarlProfile() {
@@ -711,10 +731,12 @@ function spawnFrank() {
   turtle.classList.add("covered-by-frank");
 
   const frankPositions = [
-    { x: 47.0, y: 53.2, sx: "-55px", sy: "35px" },
-    { x: 49.2, y: 52.4, sx: "-35px", sy: "28px" },
-    { x: 45.8, y: 52.7, sx: "-65px", sy: "18px" },
-    { x: 48.4, y: 51.8, sx: "-45px", sy: "22px" }
+    { x: 47.0, y: 54.0, sx: "-55px", sy: "35px" },
+    { x: 49.2, y: 53.0, sx: "-35px", sy: "28px" },
+    { x: 45.8, y: 53.4, sx: "-65px", sy: "18px" },
+    { x: 48.4, y: 52.6, sx: "-45px", sy: "22px" },
+    { x: 46.6, y: 54.2, sx: "-74px", sy: "26px" },
+    { x: 49.8, y: 53.6, sx: "-42px", sy: "34px" }
   ];
 
   frankPositions.forEach((pos, index) => {
@@ -729,10 +751,10 @@ function spawnFrank() {
       frank.innerHTML = `<img src="AssetFRANK.PNG" alt="">`;
       profileField.appendChild(frank);
       activeFrankStack.push(frank);
-    }, index * 620);
+    }, index * 820);
   });
 
-  setTimeout(playBlueFrankSequence, 7200);
+  setTimeout(playBlueFrankSequence, 9300);
 }
 
 function playBlueFrankSequence() {
@@ -767,11 +789,11 @@ function playBlueFrankSequence() {
     if (lead && lead.parentNode) lead.classList.add("hive-dissolve");
     activeFrankStack.forEach(node => { if (node && node.parentNode && node !== lead) node.remove(); });
     turtle.classList.remove("covered-by-frank");
-  }, 5100);
+  }, 6100);
 
   setTimeout(() => {
     if (lead && lead.parentNode) lead.remove();
-  }, 6500);
+  }, 7600);
 }
 
 function stopAttack() {
@@ -816,12 +838,12 @@ function completeSequence() {
 
   setTimeout(() => {
     loaderScene.classList.add("portal-open");
-  }, 2500);
+  }, 2650);
 
   setTimeout(() => {
     turtle.classList.remove("peek");
     turtle.classList.add("escape");
-  }, 3150);
+  }, 3400);
 
   setTimeout(() => {
     loaderScene.classList.add("portal-close");
