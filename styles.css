@@ -4263,3 +4263,386 @@ body {
   height: 0 !important;
   animation: none !important;
 }
+
+
+/* =========================================================
+   YELLOW BRICK #1 — HOMIE PASS 5 / FIRE BUILD
+   CPR: actual CSS, not placeholder.
+   Fixes from Jinx sketch:
+   - shell lips overlap neck top/bottom
+   - neck + head read as one long turtle fuselage
+   - head/nose points forward, no ball-on-stick
+   - peek is a missile/periscope extension
+   - door opens bottom→top and closes top→bottom
+========================================================= */
+
+/* Keep Homie tiny but fix silhouette. */
+.turtle {
+  top: 18px !important;
+  width: 50px !important;
+  height: 26px !important;
+  margin-left: -31px !important;
+  transform: scale(0.66) !important;
+  transform-origin: 24px 18px !important;
+}
+
+/* Shell becomes the thing the neck emerges from. */
+.shell {
+  left: 9px !important;
+  top: 4px !important;
+  width: 31px !important;
+  height: 18px !important;
+  border-radius: 56% 48% 42% 45% !important;
+  background: var(--cream) !important;
+  z-index: 3 !important;
+}
+
+/* Top/bottom shell lips: shell comes down/up around the neck. */
+.shell::before {
+  content: "";
+  position: absolute;
+  right: -5px;
+  top: 0px;
+  width: 13px;
+  height: 7px;
+  border-radius: 0 999px 999px 0;
+  background: var(--cream);
+  transform: rotate(8deg);
+  z-index: 4;
+}
+
+.shell::after {
+  content: "";
+  position: absolute;
+  right: -4px;
+  bottom: 0px;
+  width: 12px;
+  height: 6px;
+  border-radius: 0 999px 999px 0;
+  background: var(--cream);
+  transform: rotate(-7deg);
+  z-index: 4;
+}
+
+/* Neck is now the main long piece: dick/fuselage/turtle-missile shape. */
+.neck {
+  left: 31px !important;
+  top: 8.8px !important;
+  width: 18px !important;
+  height: 8.8px !important;
+  border-radius: 999px 74% 70% 999px !important;
+  background: var(--cream) !important;
+  transform-origin: left center !important;
+  z-index: 2 !important;
+}
+
+/* Head is no longer a separate ball. It is the nose/front cap of the same piece. */
+.head {
+  left: 45.5px !important;
+  top: 8.35px !important;
+  width: 9.8px !important;
+  height: 8.2px !important;
+  border-radius: 42% 28% 36% 48% !important;
+  background: var(--cream) !important;
+  z-index: 3 !important;
+}
+
+/* Snout/nose points forward. */
+.head::after {
+  content: "";
+  position: absolute;
+  right: -5.2px !important;
+  top: 2.2px !important;
+  width: 7px !important;
+  height: 3.8px !important;
+  border-radius: 45% 25% 38% 45% !important;
+  background: var(--cream) !important;
+  transform: rotate(-2deg);
+}
+
+/* Eye sits on the connected head piece. */
+.eye {
+  right: -0.2px !important;
+  top: 2.1px !important;
+  width: 2.15px !important;
+  height: 2.15px !important;
+  z-index: 5 !important;
+}
+
+/* Legs stay underneath; front leg is paddle, back leg support. */
+.leg {
+  top: 19px !important;
+  height: 5.2px !important;
+  background: var(--cream) !important;
+  z-index: 1 !important;
+}
+
+.l1 {
+  left: 15px !important;
+  width: 8.2px !important;
+  border-radius: 78% 70% 60% 58% !important;
+  transform-origin: 62% 50% !important;
+}
+
+.l2 {
+  left: 28px !important;
+  width: 11.5px !important;
+  height: 5.8px !important;
+  border-radius: 88% 70% 58% 58% !important;
+  transform-origin: 6% 52% !important;
+}
+
+/* Notice: the whole front assembly starts coming out. */
+.turtle.notice .neck {
+  left: 30.5px !important;
+  top: 7.2px !important;
+  width: 20px !important;
+  height: 8.5px !important;
+  transform: rotate(-20deg) !important;
+}
+
+.turtle.notice .head {
+  left: 47px !important;
+  top: 3.1px !important;
+  width: 9.8px !important;
+  height: 8.2px !important;
+}
+
+.turtle.notice .eye {
+  right: -0.2px !important;
+  top: 1.7px !important;
+  transform: translateY(-0.5px) scale(1.08) !important;
+}
+
+/* Peek: missile/periscope extension. One attached piece, not head-on-stick. */
+.turtle.peek .neck {
+  left: 29.5px !important;
+  top: 8.1px !important;
+  width: 25px !important;
+  height: 8.8px !important;
+  opacity: 1 !important;
+  transform: rotate(-3deg) !important;
+  animation: homiePass5PeekFuselage 0.72s ease-out both !important;
+}
+
+.turtle.peek .head {
+  left: 51px !important;
+  top: 7.4px !important;
+  width: 9.8px !important;
+  height: 8.2px !important;
+  opacity: 1 !important;
+  animation: homiePass5PeekNose 0.72s ease-out both !important;
+}
+
+.turtle.peek .tail,
+.turtle.peek .leg {
+  opacity: 0 !important;
+}
+
+@keyframes homiePass5PeekFuselage {
+  0% { transform: translateX(-9px) scaleX(0.22) rotate(-3deg); opacity: 0; }
+  38% { transform: translateX(1.8px) scaleX(1.08) rotate(-3deg); opacity: 1; }
+  100% { transform: translateX(0) scaleX(1) rotate(-3deg); opacity: 1; }
+}
+
+@keyframes homiePass5PeekNose {
+  0% { transform: translateX(-10px) scale(0.65); opacity: 0; }
+  38% { transform: translateX(1.8px) scale(1.03); opacity: 1; }
+  100% { transform: translateX(0) scale(1); opacity: 1; }
+}
+
+/* Before coast-clear: still lazy turtle. */
+.turtle.walk {
+  animation: homiePass5LazyBody 2.35s ease-in-out infinite !important;
+  transform-origin: 24px 18px !important;
+}
+
+.turtle.walk .head,
+.turtle.walk .neck {
+  animation: homiePass5LazyFuselage 2.35s ease-in-out infinite !important;
+}
+
+.turtle.walk .shell {
+  animation: homiePass5LazyShell 2.35s ease-in-out infinite !important;
+}
+
+.turtle.walk .l1 {
+  animation: homiePass5LazyBack 2.35s ease-in-out infinite !important;
+}
+
+.turtle.walk .l2 {
+  animation: homiePass5LazyFront 2.35s ease-in-out infinite !important;
+}
+
+@keyframes homiePass5LazyBody {
+  0%,100% { transform: scale(.66) translate(0,0) rotate(0deg); }
+  32% { transform: scale(.66) translate(.12px,-.05px) rotate(-.12deg); }
+  62% { transform: scale(.66) translate(.48px,.32px) rotate(.25deg); }
+  82% { transform: scale(.66) translate(.12px,.08px) rotate(-.08deg); }
+}
+
+@keyframes homiePass5LazyFuselage {
+  0%,100% { transform: translate(0,0) rotate(0deg); }
+  32% { transform: translate(.34px,-.08px) rotate(-.18deg); }
+  62% { transform: translate(.72px,.08px) rotate(.12deg); }
+  82% { transform: translate(.18px,.08px) rotate(0deg); }
+}
+
+@keyframes homiePass5LazyShell {
+  0%,100% { transform: translate(0,0) rotate(0deg); }
+  32% { transform: translate(.04px,0) rotate(-.08deg); }
+  62% { transform: translate(.42px,.26px) rotate(.22deg); }
+  82% { transform: translate(.1px,.04px) rotate(-.06deg); }
+}
+
+@keyframes homiePass5LazyBack {
+  0%,100% { transform: translate(-.32px,.18px) rotate(-4deg) scaleX(1.02); }
+  42% { transform: translate(-.9px,.55px) rotate(-9deg) scaleX(.96); }
+  66% { transform: translate(.38px,-.06px) rotate(5deg) scaleX(1.05); }
+}
+
+@keyframes homiePass5LazyFront {
+  0%,100% { transform: translate(.08px,.22px) rotate(6deg) scaleX(1.06); }
+  24% { transform: translate(2.3px,-.45px) rotate(19deg) scaleX(1.22); }
+  54% { transform: translate(-.95px,.72px) rotate(-18deg) scaleX(.92); }
+  80% { transform: translate(.45px,.24px) rotate(4deg) scaleX(1.02); }
+}
+
+/* Door: no toothpick. Actual slit ahead of Homie. Opens bottom→top 4→3→2→1. */
+.loader-scene::after {
+  content: "";
+  position: absolute;
+  left: calc(50% + 116px) !important;
+  top: calc(100% + 28px) !important;
+  width: 12px !important;
+  height: 0;
+  border-radius: 999px 999px 5px 5px !important;
+  opacity: 0;
+  transform: translateY(-100%) scaleX(0.35) !important;
+  background:
+    linear-gradient(90deg,
+      rgba(0,0,0,0.92) 0 20%,
+      rgba(242,238,229,0.98) 42% 58%,
+      rgba(0,0,0,0.92) 80% 100%) !important;
+  box-shadow:
+    0 0 9px rgba(242,238,229,0.92),
+    0 0 24px rgba(242,238,229,0.44),
+    0 0 46px rgba(223,255,63,0.13),
+    -5px 0 0 rgba(0,0,0,0.72),
+    5px 0 0 rgba(0,0,0,0.72) !important;
+  z-index: 95 !important;
+  pointer-events: none;
+  transition: none !important;
+}
+
+.loader-scene.portal-open::after {
+  animation: homiePass5DoorOpenUp 0.28s steps(4, end) forwards !important;
+}
+
+.loader-scene.portal-close::after {
+  animation: homiePass5DoorCloseDown 0.32s steps(4, end) forwards !important;
+}
+
+@keyframes homiePass5DoorOpenUp {
+  0% { height: 0; opacity: 0; transform: translateY(-100%) scaleX(.28); }
+  25% { height: 16px; opacity: 1; transform: translateY(-100%) scaleX(.55); }
+  50% { height: 32px; opacity: 1; transform: translateY(-100%) scaleX(.82); }
+  75% { height: 49px; opacity: 1; transform: translateY(-100%) scaleX(1); }
+  100% { height: 64px; opacity: 1; transform: translateY(-100%) scaleX(1); }
+}
+
+@keyframes homiePass5DoorCloseDown {
+  0% { height: 64px; opacity: 1; transform: translateY(-100%) scaleX(1); }
+  25% { height: 48px; opacity: 1; transform: translateY(-100%) scaleX(.92); }
+  50% { height: 31px; opacity: .82; transform: translateY(-100%) scaleX(.7); }
+  75% { height: 14px; opacity: .42; transform: translateY(-100%) scaleX(.48); }
+  100% { height: 0; opacity: 0; transform: translateY(-100%) scaleX(.25); }
+}
+
+/* After door/coast-clear: maximum turtle effort. Still turtle. */
+.turtle.escape {
+  animation: homiePass5DoorEntry 5.1s cubic-bezier(.35,0,.14,1) forwards !important;
+  clip-path: inset(0 0 0 0) !important;
+}
+
+.turtle.escape .neck,
+.turtle.escape .head,
+.turtle.escape .eye,
+.turtle.escape .tail,
+.turtle.escape .leg {
+  opacity: 1 !important;
+}
+
+.turtle.escape .head,
+.turtle.escape .neck {
+  animation: homiePass5DashFuselage 0.47s ease-in-out infinite !important;
+}
+
+.turtle.escape .shell {
+  animation: homiePass5DashShell 0.47s ease-in-out infinite !important;
+}
+
+.turtle.escape .l1 {
+  animation: homiePass5DashBack 0.47s ease-in-out infinite !important;
+}
+
+.turtle.escape .l2 {
+  animation: homiePass5DashFront 0.47s ease-in-out infinite !important;
+}
+
+@keyframes homiePass5DashFuselage {
+  0%,100% { transform: translate(0,0) rotate(0deg); }
+  22% { transform: translate(2.0px,-.5px) rotate(-1deg); }
+  50% { transform: translate(3.2px,.16px) rotate(.55deg); }
+  76% { transform: translate(.75px,.38px) rotate(0deg); }
+}
+
+@keyframes homiePass5DashShell {
+  0%,100% { transform: translate(0,0) rotate(-.45deg); }
+  22% { transform: translate(.18px,0) rotate(-.8deg); }
+  50% { transform: translate(1.1px,.72px) rotate(1deg); }
+  76% { transform: translate(.28px,.1px) rotate(-.32deg); }
+}
+
+@keyframes homiePass5DashBack {
+  0%,100% { transform: translate(-.5px,.42px) rotate(-6deg) scaleX(1.02); }
+  36% { transform: translate(-1.05px,.8px) rotate(-12deg) scaleX(.92); }
+  60% { transform: translate(.68px,-.16px) rotate(8deg) scaleX(1.08); }
+}
+
+@keyframes homiePass5DashFront {
+  0%,100% { transform: translate(.1px,.25px) rotate(8deg) scaleX(1.08); }
+  19% { transform: translate(4.2px,-.92px) rotate(28deg) scaleX(1.34); }
+  49% { transform: translate(-1.5px,1.1px) rotate(-27deg) scaleX(.83); }
+  76% { transform: translate(.78px,.35px) rotate(6deg) scaleX(1.06); }
+}
+
+/* Door entry: Homie reaches slit before clipping. Door eats nose/body in pixel chunks. */
+@keyframes homiePass5DoorEntry {
+  0% {
+    left: 50%;
+    opacity: .96;
+    transform: scale(.66) translate(0,0) rotate(0deg);
+    clip-path: inset(0 0 0 0);
+    filter: none;
+  }
+  14% { left: 55%; opacity: .96; transform: scale(.66) translate(1px,-.4px) rotate(-.75deg); clip-path: inset(0 0 0 0); }
+  30% { left: 62%; opacity: .96; transform: scale(.66) translate(1.6px,.85px) rotate(.85deg); clip-path: inset(0 0 0 0); }
+  48% { left: 70%; opacity: .96; transform: scale(.66) translate(.8px,-.28px) rotate(-.5deg); clip-path: inset(0 0 0 0); }
+  64% { left: 78%; opacity: .96; transform: scale(.66) translate(1.45px,.75px) rotate(.75deg); clip-path: inset(0 0 0 0); }
+  76% { left: 85%; opacity: .96; transform: scale(.66) translate(.8px,-.18px) rotate(-.35deg); clip-path: inset(0 0 0 0); }
+  84% { left: 89.5%; opacity: .95; transform: scale(.66) translate(1px,.25px) rotate(0deg); clip-path: inset(0 0 0 0); filter: none; }
+  89% { left: 91.2%; opacity: .92; clip-path: polygon(0 0, 86% 0, 86% 18%, 100% 18%, 100% 100%, 0 100%); filter: brightness(1.1); }
+  93% { left: 92.1%; opacity: .72; clip-path: polygon(0 0, 62% 0, 62% 22%, 78% 22%, 78% 70%, 100% 70%, 100% 100%, 0 100%); filter: blur(.4px) brightness(1.05); }
+  97% { left: 92.9%; opacity: .40; clip-path: polygon(0 0, 38% 0, 38% 28%, 54% 28%, 54% 100%, 0 100%); filter: blur(1.2px) saturate(.55); }
+  100% { left: 93.5%; opacity: 0; clip-path: polygon(0 0, 10% 0, 10% 100%, 0 100%); filter: blur(3px) saturate(.1); }
+}
+
+/* No lingering door. */
+.loader-scene.fade-out::after,
+.loader-scene.portal-close.fade-out::after {
+  opacity: 0 !important;
+  height: 0 !important;
+  animation: none !important;
+}
+
