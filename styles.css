@@ -3922,3 +3922,344 @@ body {
   50% { transform: translate(-2px,-1px); opacity: .45; }
   100% { transform: translate(-5px,1px); opacity: .03; }
 }
+
+/* =========================================================
+   YELLOW BRICK #1 — HOMIE PASS 4 / FIRE BUILD
+   CPR: construction only.
+   Fixes:
+   - turtle head/neck become one connected missile/periscope piece
+   - head smaller, flatter, closer to shell
+   - slow pre-peek crawl stays turtle-lazy
+   - door becomes real system slit, not toothpick
+   - door opens upward 4→3→2→1
+   - door closes downward 1→2→3→4 after Homie enters
+   - Homie reaches slit before pixel/shredder consumption
+========================================================= */
+
+/* --- HOMIE SILHOUETTE: no more ball-on-stick. --- */
+.turtle {
+  top: 18px !important;
+  width: 45px !important;
+  height: 25px !important;
+  transform: scale(0.66) !important;
+  transform-origin: 24px 18px !important;
+}
+
+.shell {
+  left: 10px !important;
+  top: 4px !important;
+  width: 30px !important;
+  height: 18px !important;
+  border-radius: 53% 50% 43% 42% !important;
+}
+
+.neck {
+  left: 32px !important;
+  top: 9.4px !important;
+  width: 13px !important;
+  height: 7.6px !important;
+  border-radius: 999px 70% 70% 999px !important;
+  background: var(--cream) !important;
+  transform-origin: left center !important;
+}
+
+.head {
+  left: 41.5px !important;
+  top: 8px !important;
+  width: 8.8px !important;
+  height: 7.8px !important;
+  border-radius: 48% 35% 40% 52% !important;
+  background: var(--cream) !important;
+}
+
+.head::after {
+  content: "";
+  position: absolute;
+  right: -3.6px;
+  top: 2.1px;
+  width: 5.2px;
+  height: 3.5px;
+  border-radius: 45% 38% 42% 48%;
+  background: var(--cream);
+}
+
+.eye {
+  right: 0.7px !important;
+  top: 2.2px !important;
+  width: 2px !important;
+  height: 2px !important;
+}
+
+.leg {
+  top: 19px !important;
+  width: 8.4px !important;
+  height: 5.2px !important;
+  border-radius: 80% 70% 62% 58% !important;
+}
+
+.l1 { left: 15px !important; }
+.l2 { left: 27px !important; }
+
+/* Notice/peek: whole front fuselage extends, not separate neck + head. */
+.turtle.notice .neck {
+  left: 32px !important;
+  top: 8px !important;
+  width: 15px !important;
+  height: 7.5px !important;
+  transform: rotate(-22deg) !important;
+}
+
+.turtle.notice .head {
+  left: 44px !important;
+  top: 3.7px !important;
+  width: 8.8px !important;
+  height: 7.8px !important;
+}
+
+.turtle.notice .eye {
+  right: 0.7px !important;
+  top: 1.7px !important;
+  transform: translateY(-0.6px) scale(1.08) !important;
+}
+
+.turtle.peek .neck {
+  left: 31px !important;
+  top: 9px !important;
+  width: 18px !important;
+  height: 7.8px !important;
+  opacity: 1 !important;
+  transform: rotate(-4deg) !important;
+  animation: homiePeekMissileNeck 0.78s ease-out both !important;
+}
+
+.turtle.peek .head {
+  left: 46px !important;
+  top: 7.4px !important;
+  width: 8.8px !important;
+  height: 7.8px !important;
+  opacity: 1 !important;
+  animation: homiePeekMissileHead 0.78s ease-out both !important;
+}
+
+.turtle.peek .tail,
+.turtle.peek .leg {
+  opacity: 0 !important;
+}
+
+@keyframes homiePeekMissileNeck {
+  0% { transform: translateX(-5px) scaleX(0.42) rotate(-4deg); opacity: 0; }
+  45% { transform: translateX(1px) scaleX(1.08) rotate(-4deg); opacity: 1; }
+  100% { transform: translateX(0) scaleX(1) rotate(-4deg); opacity: 1; }
+}
+
+@keyframes homiePeekMissileHead {
+  0% { transform: translateX(-6px) scale(0.78); opacity: 0; }
+  45% { transform: translateX(1.4px) scale(1.04); opacity: 1; }
+  100% { transform: translateX(0) scale(1); opacity: 1; }
+}
+
+/* Pre-peek movement: lazy turtle. He does not care yet. */
+.turtle.walk {
+  animation: homieLazyPrePeekBody 2.22s ease-in-out infinite !important;
+  transform-origin: 24px 18px !important;
+}
+
+.turtle.walk .head,
+.turtle.walk .neck {
+  animation: homieLazyPrePeekProbe 2.22s ease-in-out infinite !important;
+}
+
+.turtle.walk .shell {
+  animation: homieLazyPrePeekShell 2.22s ease-in-out infinite !important;
+}
+
+.turtle.walk .l1 {
+  animation: homieLazyBackSupport 2.22s ease-in-out infinite !important;
+}
+
+.turtle.walk .l2 {
+  width: 10px !important;
+  height: 5.6px !important;
+  transform-origin: 8% 52% !important;
+  animation: homieLazyFrontPaddle 2.22s ease-in-out infinite !important;
+}
+
+@keyframes homieLazyPrePeekBody {
+  0%,100% { transform: scale(0.66) translate(0,0) rotate(0deg); }
+  30% { transform: scale(0.66) translate(0.12px,-0.05px) rotate(-0.18deg); }
+  58% { transform: scale(0.66) translate(0.55px,0.38px) rotate(0.34deg); }
+  80% { transform: scale(0.66) translate(0.14px,0.08px) rotate(-0.12deg); }
+}
+
+@keyframes homieLazyPrePeekProbe {
+  0%,100% { transform: translate(0,0) rotate(0deg); }
+  30% { transform: translate(0.42px,-0.08px) rotate(-0.28deg); }
+  58% { transform: translate(0.95px,0.08px) rotate(0.18deg); }
+  80% { transform: translate(0.25px,0.08px) rotate(0deg); }
+}
+
+@keyframes homieLazyPrePeekShell {
+  0%,100% { transform: translate(0,0) rotate(0deg); }
+  30% { transform: translate(0.05px,0) rotate(-0.12deg); }
+  58% { transform: translate(0.52px,0.3px) rotate(0.28deg); }
+  80% { transform: translate(0.14px,0.04px) rotate(-0.08deg); }
+}
+
+@keyframes homieLazyBackSupport {
+  0%,100% { transform: translate(-0.3px,0.18px) rotate(-4deg) scaleX(1.02); }
+  42% { transform: translate(-0.95px,0.55px) rotate(-9deg) scaleX(0.96); }
+  66% { transform: translate(0.42px,-0.06px) rotate(5deg) scaleX(1.06); }
+}
+
+@keyframes homieLazyFrontPaddle {
+  0%,100% { transform: translate(0.1px,0.22px) rotate(6deg) scaleX(1.06); }
+  24% { transform: translate(2.2px,-0.45px) rotate(20deg) scaleX(1.2); }
+  54% { transform: translate(-0.95px,0.75px) rotate(-18deg) scaleX(0.94); }
+  80% { transform: translate(0.48px,0.25px) rotate(4deg) scaleX(1.02); }
+}
+
+/* Door: real system slit ahead of Homie, off the bar, opens upward 4→3→2→1. */
+.loader-scene::after {
+  content: "";
+  position: absolute;
+  left: calc(50% + 112px) !important;
+  top: calc(100% + 26px) !important;
+  width: 9px !important;
+  height: 0;
+  border-radius: 999px 999px 4px 4px !important;
+  opacity: 0;
+  transform: translateY(-100%) scaleX(0.45) !important;
+  background:
+    linear-gradient(90deg,
+      rgba(0,0,0,0.88) 0 18%,
+      rgba(242,238,229,0.98) 42% 58%,
+      rgba(0,0,0,0.88) 82% 100%) !important;
+  box-shadow:
+    0 0 8px rgba(242,238,229,0.9),
+    0 0 22px rgba(242,238,229,0.44),
+    0 0 42px rgba(223,255,63,0.14),
+    -4px 0 0 rgba(0,0,0,0.72),
+    4px 0 0 rgba(0,0,0,0.72) !important;
+  z-index: 95 !important;
+  pointer-events: none;
+  transition: none !important;
+}
+
+.loader-scene.portal-open::after {
+  animation: homieDoorOpenUp 0.32s steps(4, end) forwards !important;
+}
+
+.loader-scene.portal-close::after {
+  animation: homieDoorCloseDown 0.34s steps(4, end) forwards !important;
+}
+
+@keyframes homieDoorOpenUp {
+  0% { height: 0; opacity: 0; transform: translateY(-100%) scaleX(0.35); }
+  25% { height: 14px; opacity: 1; transform: translateY(-100%) scaleX(0.6); }
+  50% { height: 29px; opacity: 1; transform: translateY(-100%) scaleX(0.82); }
+  75% { height: 43px; opacity: 1; transform: translateY(-100%) scaleX(1); }
+  100% { height: 56px; opacity: 1; transform: translateY(-100%) scaleX(1); }
+}
+
+@keyframes homieDoorCloseDown {
+  0% { height: 56px; opacity: 1; transform: translateY(-100%) scaleX(1); }
+  25% { height: 42px; opacity: 1; transform: translateY(-100%) scaleX(0.92); }
+  50% { height: 28px; opacity: 0.86; transform: translateY(-100%) scaleX(0.75); }
+  75% { height: 13px; opacity: 0.46; transform: translateY(-100%) scaleX(0.55); }
+  100% { height: 0; opacity: 0; transform: translateY(-100%) scaleX(0.35); }
+}
+
+/* Escape: maximum turtle effort, not fast animal. */
+.turtle.escape {
+  animation: homiePass4DoorDive 4.9s cubic-bezier(.35,0,.14,1) forwards !important;
+  clip-path: inset(0 0 0 0) !important;
+}
+
+.turtle.escape .neck,
+.turtle.escape .head,
+.turtle.escape .eye,
+.turtle.escape .tail,
+.turtle.escape .leg {
+  opacity: 1 !important;
+}
+
+.turtle.escape .head,
+.turtle.escape .neck {
+  animation: homiePass4DashFuselage 0.48s ease-in-out infinite !important;
+}
+
+.turtle.escape .shell {
+  animation: homiePass4DashShellLag 0.48s ease-in-out infinite !important;
+}
+
+.turtle.escape .l1 {
+  animation: homiePass4BackSupport 0.48s ease-in-out infinite !important;
+}
+
+.turtle.escape .l2 {
+  width: 10.4px !important;
+  height: 5.7px !important;
+  transform-origin: 6% 52% !important;
+  animation: homiePass4FrontHaul 0.48s ease-in-out infinite !important;
+}
+
+.turtle.escape::before {
+  opacity: 0.22 !important;
+  animation: homiePortalEffortFinal 0.2s steps(2) infinite !important;
+}
+
+@keyframes homiePass4DashFuselage {
+  0%,100% { transform: translate(0,0) rotate(0deg); }
+  22% { transform: translate(2.2px,-0.55px) rotate(-1.2deg); }
+  50% { transform: translate(3.4px,0.18px) rotate(0.7deg); }
+  76% { transform: translate(0.8px,0.42px) rotate(0deg); }
+}
+
+@keyframes homiePass4DashShellLag {
+  0%,100% { transform: translate(0,0) rotate(-0.5deg); }
+  22% { transform: translate(0.2px,0) rotate(-1deg); }
+  50% { transform: translate(1.25px,0.8px) rotate(1.2deg); }
+  76% { transform: translate(0.3px,0.1px) rotate(-0.4deg); }
+}
+
+@keyframes homiePass4BackSupport {
+  0%,100% { transform: translate(-0.5px,0.42px) rotate(-6deg) scaleX(1.02); }
+  36% { transform: translate(-1.1px,0.85px) rotate(-13deg) scaleX(0.92); }
+  60% { transform: translate(0.72px,-0.18px) rotate(9deg) scaleX(1.10); }
+}
+
+@keyframes homiePass4FrontHaul {
+  0%,100% { transform: translate(0.1px,0.25px) rotate(8deg) scaleX(1.08); }
+  19% { transform: translate(4.1px,-0.95px) rotate(28deg) scaleX(1.34); }
+  49% { transform: translate(-1.45px,1.15px) rotate(-27deg) scaleX(0.84); }
+  76% { transform: translate(0.82px,0.36px) rotate(6deg) scaleX(1.06); }
+}
+
+/* Homie reaches the slit, then the system eats him from nose/body into pixels. */
+@keyframes homiePass4DoorDive {
+  0% {
+    left: 50%;
+    opacity: .96;
+    transform: scale(.66) translate(0,0) rotate(0deg);
+    clip-path: inset(0 0 0 0);
+    filter: none;
+  }
+  14% { left: 55%; opacity: .96; transform: scale(.66) translate(1px,-0.4px) rotate(-0.8deg); clip-path: inset(0 0 0 0); }
+  30% { left: 61.5%; opacity: .96; transform: scale(.66) translate(1.6px,0.9px) rotate(0.9deg); clip-path: inset(0 0 0 0); }
+  48% { left: 69%; opacity: .96; transform: scale(.66) translate(0.8px,-0.3px) rotate(-0.5deg); clip-path: inset(0 0 0 0); }
+  64% { left: 77%; opacity: .96; transform: scale(.66) translate(1.5px,0.8px) rotate(0.8deg); clip-path: inset(0 0 0 0); }
+  76% { left: 84%; opacity: .96; transform: scale(.66) translate(0.8px,-0.2px) rotate(-0.4deg); clip-path: inset(0 0 0 0); }
+  84% { left: 88.5%; opacity: .95; transform: scale(.66) translate(1px,0.3px) rotate(0deg); clip-path: inset(0 0 0 0); filter: none; }
+  89% { left: 90.5%; opacity: .92; clip-path: polygon(0 0, 84% 0, 84% 18%, 100% 18%, 100% 100%, 0 100%); filter: brightness(1.1); }
+  93% { left: 91.5%; opacity: .74; clip-path: polygon(0 0, 61% 0, 61% 22%, 76% 22%, 76% 70%, 100% 70%, 100% 100%, 0 100%); filter: blur(.4px) brightness(1.05); }
+  97% { left: 92.2%; opacity: .42; clip-path: polygon(0 0, 38% 0, 38% 28%, 54% 28%, 54% 100%, 0 100%); filter: blur(1.2px) saturate(.55); }
+  100% { left: 92.8%; opacity: 0; clip-path: polygon(0 0, 12% 0, 12% 100%, 0 100%); filter: blur(3px) saturate(.1); }
+}
+
+/* When the loader cuts away, do not leave the door/toothpick hanging. */
+.loader-scene.fade-out::after,
+.loader-scene.portal-close.fade-out::after {
+  opacity: 0 !important;
+  height: 0 !important;
+  animation: none !important;
+}
