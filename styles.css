@@ -2,25 +2,23 @@
    CHANNEL 17 — GROUND ZERO
    CPR ACTIVE
 
-   BUILD: HOMIE PASS 10
-   VERSION: C17-HOMIE-010
+   BUILD: HOMIE PASS 11
+   VERSION: C17-HOMIE-011
 
    SOURCE:
-   channel-17.github.io-main 11.zip / styles.css
+   C17-HOMIE-010 + agreed black silhouette turtle reference
 
    PREVIOUS:
-   C17-HOMIE-009
+   C17-HOMIE-010
 
    CHANGES:
-   - Real source CSS opened from uploaded zip
-   - Homie anatomy rebuilt from black silhouette turtle reference
-   - Shell becomes dominant visual shape
-   - Head becomes tiny turtle head, not circle / tank / doodle
-   - Neck emerges from shell opening as a small connected turtle extension
-   - Legs sit underneath shell
-   - Tiny tail restored
-   - Adds subtle shell plate differentiation
-   - Keeps Homie cream color and story behavior
+   - FIRST ACTUAL BRICK: agreed turtle anatomy reference applied
+   - Rebuilds Homie as shell-first turtle, not white grenade/icon
+   - Shell becomes dominant, lower, heavier silhouette
+   - Adds visible shell plate differentiation inside cream shape
+   - Tiny head / tiny neck / tiny tail hierarchy restored
+   - Legs sit underneath shell instead of body-with-accessories
+   - Keeps story timing, FIRE workflow, and existing door behavior intact
 
    STATUS:
    REVIEW PENDING
@@ -4848,5 +4846,355 @@ body {
   opacity: 0 !important;
   height: 0 !important;
   animation: none !important;
+}
+
+
+/* =========================================================
+   YELLOW BRICK #1 — HOMIE PASS 11 / FIRST ACTUAL BRICK
+   VERSION: C17-HOMIE-011
+
+   AGREED TARGET:
+   The black-and-white silhouette turtle is Homie's anatomy reference.
+
+   CPR LOCK:
+   - This is NOT a doodle import.
+   - This is NOT a mascot redesign.
+   - This is a turtle anatomy rebuild using CSS only.
+   - Shell first. Head tiny. Neck tiny. Legs underneath. Tail tiny.
+   - Shell differentiation must be visible so Homie is not a white grenade.
+========================================================= */
+
+/* Whole animal: shorter and shell-dominant like the black silhouette reference. */
+.turtle {
+  top: 17px !important;
+  left: 50% !important;
+  width: 46px !important;
+  height: 25px !important;
+  margin-left: -33px !important;
+  opacity: 0.94 !important;
+  transform: scale(0.68) !important;
+  transform-origin: 24px 18px !important;
+}
+
+/* SHELL IS HOMIE. Not a white grenade: shell plates are baked into the cream shape. */
+.shell {
+  left: 8px !important;
+  top: 3.5px !important;
+  width: 33px !important;
+  height: 18.5px !important;
+  border-radius: 56% 54% 44% 46% / 66% 67% 36% 38% !important;
+  overflow: visible !important;
+  z-index: 4 !important;
+  background:
+    /* center shell plate */
+    radial-gradient(ellipse at 52% 46%, rgba(0,0,0,0.11) 0 1.2px, transparent 1.35px 100%),
+    /* top plate groove */
+    linear-gradient(112deg, transparent 0 29%, rgba(0,0,0,0.13) 30% 32%, transparent 33% 100%),
+    /* rear plate groove */
+    linear-gradient(72deg, transparent 0 53%, rgba(0,0,0,0.12) 54% 56%, transparent 57% 100%),
+    /* lower shell belly shadow */
+    linear-gradient(180deg, var(--cream) 0 67%, rgba(216,210,200,0.96) 68% 100%) !important;
+  box-shadow:
+    inset -2px -1px 0 rgba(0,0,0,0.10),
+    inset 1px 1px 0 rgba(255,255,255,0.12),
+    0 0 5px rgba(242,238,229,0.06) !important;
+}
+
+/* Shell opening/lip: covers ONLY the neck root. It does not become a tank nose. */
+.turtle:not(.hide) .shell::before {
+  content: "";
+  position: absolute;
+  right: -2.8px !important;
+  top: 4.7px !important;
+  width: 5.6px !important;
+  height: 4.2px !important;
+  border-radius: 0 72% 60% 0 !important;
+  background: var(--cream) !important;
+  z-index: 8 !important;
+  box-shadow: inset -1px 0 0 rgba(0,0,0,0.05) !important;
+}
+
+.turtle:not(.hide) .shell::after {
+  content: "";
+  position: absolute;
+  right: -2.2px !important;
+  bottom: 4.2px !important;
+  width: 4.8px !important;
+  height: 3.8px !important;
+  border-radius: 0 58% 72% 0 !important;
+  background: rgba(216,210,200,0.98) !important;
+  z-index: 8 !important;
+}
+
+/* Tiny tail. The reference turtle has a tiny rear point, not a big arrow. */
+.tail {
+  left: 4.6px !important;
+  top: 10.7px !important;
+  border-top: 2.5px solid transparent !important;
+  border-bottom: 2.5px solid transparent !important;
+  border-right: 6.5px solid var(--cream) !important;
+  transform: rotate(2deg) !important;
+  opacity: 0.92 !important;
+  z-index: 3 !important;
+}
+
+/* Legs live UNDER the shell. They are support flippers, not the main character. */
+.leg {
+  top: 18.7px !important;
+  height: 4.8px !important;
+  background: rgba(242,238,229,0.96) !important;
+  border-radius: 80% 72% 58% 56% !important;
+  z-index: 2 !important;
+}
+
+.l1 {
+  left: 14.2px !important;
+  width: 7.8px !important;
+  transform-origin: 62% 48% !important;
+}
+
+.l2 {
+  left: 29.2px !important;
+  width: 8.4px !important;
+  transform-origin: 16% 52% !important;
+}
+
+/* Front section: small neck/head emerging through shell opening. */
+.neck {
+  position: absolute !important;
+  left: 36.8px !important;
+  top: 10.1px !important;
+  width: 6.9px !important;
+  height: 4.9px !important;
+  border-radius: 999px 70% 70% 999px !important;
+  background: var(--cream) !important;
+  transform-origin: left center !important;
+  transition: 0.72s ease !important;
+  z-index: 6 !important;
+}
+
+.head {
+  position: absolute !important;
+  left: 42.0px !important;
+  top: 9.55px !important;
+  width: 5.2px !important;
+  height: 4.95px !important;
+  border-radius: 58% 42% 48% 54% !important;
+  background: var(--cream) !important;
+  transition: 0.72s ease !important;
+  z-index: 7 !important;
+}
+
+.head::after {
+  content: "";
+  position: absolute;
+  right: -1.45px !important;
+  top: 1.62px !important;
+  width: 1.95px !important;
+  height: 1.55px !important;
+  border-radius: 60% 30% 45% 52% !important;
+  background: var(--cream) !important;
+}
+
+.eye {
+  position: absolute !important;
+  right: 0.18px !important;
+  top: 1.02px !important;
+  width: 1.35px !important;
+  height: 1.35px !important;
+  border-radius: 50% !important;
+  background: #000 !important;
+  z-index: 10 !important;
+}
+
+/* 17% notice: small survivor raises the front piece, shell still dominates. */
+.turtle.notice .neck {
+  left: 36.5px !important;
+  top: 8.7px !important;
+  width: 7.8px !important;
+  height: 4.9px !important;
+  transform: rotate(-21deg) !important;
+}
+
+.turtle.notice .head {
+  left: 42.7px !important;
+  top: 5.85px !important;
+  width: 5.2px !important;
+  height: 4.95px !important;
+}
+
+.turtle.notice .eye {
+  right: 0.15px !important;
+  top: 0.9px !important;
+  transform: translateY(-0.22px) scale(1.05) !important;
+}
+
+/* Hide: shell-only Homie stays a shell, with faint shell identity intact. */
+.turtle.hide .shell {
+  left: 9px !important;
+  top: 4px !important;
+  width: 31px !important;
+  height: 18px !important;
+  border-radius: 56% 54% 44% 46% / 66% 67% 36% 38% !important;
+  background:
+    radial-gradient(ellipse at 52% 46%, rgba(0,0,0,0.11) 0 1.2px, transparent 1.35px 100%),
+    linear-gradient(112deg, transparent 0 29%, rgba(0,0,0,0.13) 30% 32%, transparent 33% 100%),
+    linear-gradient(72deg, transparent 0 53%, rgba(0,0,0,0.12) 54% 56%, transparent 57% 100%),
+    linear-gradient(180deg, var(--cream) 0 67%, rgba(216,210,200,0.96) 68% 100%) !important;
+}
+
+/* Peek: turtle emergence. Small increments, not full head teleport. */
+.turtle.peek .tail,
+.turtle.peek .leg {
+  opacity: 0 !important;
+}
+
+.turtle.peek .neck {
+  left: 36.8px !important;
+  top: 9.85px !important;
+  width: 10.2px !important;
+  height: 4.9px !important;
+  opacity: 1 !important;
+  z-index: 6 !important;
+  animation: homiePass11ReferencePeekNeck 1.25s cubic-bezier(.18,.72,.18,1) both !important;
+}
+
+.turtle.peek .head {
+  left: 45.4px !important;
+  top: 9.2px !important;
+  width: 5.2px !important;
+  height: 4.95px !important;
+  opacity: 1 !important;
+  z-index: 7 !important;
+  animation: homiePass11ReferencePeekHead 1.25s cubic-bezier(.18,.72,.18,1) both !important;
+}
+
+.turtle.peek .eye {
+  animation: homiePass11ReferenceEyeCheck 1.25s cubic-bezier(.18,.72,.18,1) both !important;
+}
+
+@keyframes homiePass11ReferencePeekNeck {
+  0%   { opacity: 0; transform: translateX(-5.1px) scaleX(0.18) rotate(-1deg); }
+  22%  { opacity: 1; transform: translateX(-3.4px) scaleX(0.36) rotate(-1deg); }
+  46%  { opacity: 1; transform: translateX(-1.7px) scaleX(0.60) rotate(-1deg); }
+  69%  { opacity: 1; transform: translateX(-0.2px) scaleX(0.92) rotate(-1deg); }
+  86%  { opacity: 1; transform: translateX(0.1px) translateY(-0.38px) scaleX(1) rotate(-7deg); }
+  100% { opacity: 1; transform: translateX(0) translateY(-0.52px) scaleX(1) rotate(-9deg); }
+}
+
+@keyframes homiePass11ReferencePeekHead {
+  0%   { opacity: 0; transform: translateX(-5.5px) scale(0.72) rotate(0deg); }
+  22%  { opacity: 1; transform: translateX(-3.7px) scale(0.80) rotate(0deg); }
+  46%  { opacity: 1; transform: translateX(-2px) scale(0.9) rotate(0deg); }
+  69%  { opacity: 1; transform: translateX(-0.35px) scale(1) rotate(0deg); }
+  86%  { opacity: 1; transform: translateX(0.24px) translateY(-0.68px) scale(1) rotate(-8deg); }
+  100% { opacity: 1; transform: translateX(0.05px) translateY(-0.88px) scale(1) rotate(-9deg); }
+}
+
+@keyframes homiePass11ReferenceEyeCheck {
+  0%, 72% { transform: none; }
+  88% { transform: translateY(-0.22px) scale(1.08); }
+  100% { transform: translateY(-0.28px) scale(1.1); }
+}
+
+/* Treadmill turtle logic: legs work hard, shell barely advances. */
+.turtle.walk {
+  animation: homiePass11ShellHeavyCrawl 2.7s ease-in-out infinite !important;
+}
+
+.turtle.walk .shell {
+  animation: homiePass11ShellWeightShift 2.7s ease-in-out infinite !important;
+}
+
+.turtle.walk .head,
+.turtle.walk .neck {
+  animation: homiePass11TinyFrontProbe 2.7s ease-in-out infinite !important;
+}
+
+.turtle.walk .l1 {
+  animation: homiePass11RearSupport 2.7s ease-in-out infinite !important;
+}
+
+.turtle.walk .l2 {
+  animation: homiePass11FrontPaddle 2.7s ease-in-out infinite !important;
+}
+
+@keyframes homiePass11ShellHeavyCrawl {
+  0%,100% { transform: scale(.68) translate(0,0) rotate(0deg); }
+  35% { transform: scale(.68) translate(.08px,-.03px) rotate(-.08deg); }
+  64% { transform: scale(.68) translate(.34px,.24px) rotate(.16deg); }
+  84% { transform: scale(.68) translate(.1px,.05px) rotate(-.06deg); }
+}
+
+@keyframes homiePass11ShellWeightShift {
+  0%,100% { transform: translate(0,0) rotate(0deg); }
+  35% { transform: translate(.02px,0) rotate(-.05deg); }
+  64% { transform: translate(.25px,.18px) rotate(.12deg); }
+  84% { transform: translate(.07px,.03px) rotate(-.04deg); }
+}
+
+@keyframes homiePass11TinyFrontProbe {
+  0%,100% { transform: translate(0,0) rotate(0deg); }
+  35% { transform: translate(.12px,-.02px) rotate(-.05deg); }
+  64% { transform: translate(.26px,.03px) rotate(.04deg); }
+  84% { transform: translate(.06px,.02px) rotate(0deg); }
+}
+
+@keyframes homiePass11RearSupport {
+  0%,100% { transform: translate(-.18px,.18px) rotate(-4deg) scaleX(1.01); }
+  42% { transform: translate(-.72px,.5px) rotate(-8deg) scaleX(.96); }
+  66% { transform: translate(.32px,-.04px) rotate(5deg) scaleX(1.04); }
+}
+
+@keyframes homiePass11FrontPaddle {
+  0%,100% { transform: translate(.08px,.22px) rotate(5deg) scaleX(1.04); }
+  24% { transform: translate(1.95px,-.4px) rotate(18deg) scaleX(1.16); }
+  54% { transform: translate(-.78px,.7px) rotate(-16deg) scaleX(.94); }
+  80% { transform: translate(.34px,.23px) rotate(4deg) scaleX(1.02); }
+}
+
+/* Escape keeps maximum turtle effort, but body remains shell-dominant. */
+.turtle.escape .head,
+.turtle.escape .neck {
+  animation: homiePass11MaxEffortTinyFront 0.48s ease-in-out infinite !important;
+}
+
+.turtle.escape .shell {
+  animation: homiePass11MaxEffortShellLag 0.48s ease-in-out infinite !important;
+}
+
+.turtle.escape .l1 {
+  animation: homiePass11MaxRearSupport 0.48s ease-in-out infinite !important;
+}
+
+.turtle.escape .l2 {
+  animation: homiePass11MaxFrontHaul 0.48s ease-in-out infinite !important;
+}
+
+@keyframes homiePass11MaxEffortTinyFront {
+  0%,100% { transform: translate(0,0) rotate(0deg); }
+  22% { transform: translate(1.05px,-0.25px) rotate(-0.5deg); }
+  50% { transform: translate(1.7px,0.08px) rotate(0.3deg); }
+  76% { transform: translate(0.38px,0.2px) rotate(0deg); }
+}
+
+@keyframes homiePass11MaxEffortShellLag {
+  0%,100% { transform: translate(0,0) rotate(-0.25deg); }
+  22% { transform: translate(0.12px,0) rotate(-0.5deg); }
+  50% { transform: translate(.9px,.62px) rotate(.8deg); }
+  76% { transform: translate(.22px,.08px) rotate(-.2deg); }
+}
+
+@keyframes homiePass11MaxRearSupport {
+  0%,100% { transform: translate(-.38px,.32px) rotate(-6deg) scaleX(1.02); }
+  36% { transform: translate(-1px,.72px) rotate(-12deg) scaleX(.92); }
+  60% { transform: translate(.62px,-.14px) rotate(8deg) scaleX(1.08); }
+}
+
+@keyframes homiePass11MaxFrontHaul {
+  0%,100% { transform: translate(.08px,.22px) rotate(7deg) scaleX(1.06); }
+  19% { transform: translate(3.5px,-.78px) rotate(26deg) scaleX(1.28); }
+  49% { transform: translate(-1.15px,1px) rotate(-25deg) scaleX(.86); }
+  76% { transform: translate(.65px,.3px) rotate(6deg) scaleX(1.04); }
 }
 
