@@ -2,18 +2,19 @@
    CHANNEL 17 — GROUND ZERO
    CPR ACTIVE
 
-   BUILD: HOMIE PASS 8
-   VERSION: C17-HOMIE-008
+   BUILD: HOMIE PASS 9
+   VERSION: C17-HOMIE-009
 
    PREVIOUS:
-   C17-HOMIE-007 / C17-HOMIE-006 ZIP STATE
+   C17-HOMIE-008
 
    CHANGES:
-   - Restored Homie body/shell/legs/tail away from doodle/tank logic
-   - Fixed ONLY the front 15%: neck, head, nose, eye
-   - Removed sci-fi/dickhead/tank silhouette
-   - Neck and head read as one small turtle front piece
-   - Shell mouth overlaps the neck without becoming a jagged symbol
+   - Reference drawings used as motion reference ONLY
+   - Restores/keeps Homie body, shell, tail, and legs
+   - Fixes ONLY neck/head/nose/eye front section
+   - Adds staged turtle peek: barely out → more out → fully out → look up
+   - Keeps head/neck as one connected turtle front piece
+   - Removes doodle/tank/sci-fi face interpretation
    - Door/timing preserved from current build
 
    STATUS:
@@ -4703,3 +4704,285 @@ body {
   height: 0 !important;
   animation: none !important;
 }
+
+
+/* =========================================================
+   YELLOW BRICK #1 — HOMIE PASS 9 / FIRE BUILD
+   VERSION: C17-HOMIE-009
+
+   CPR LOCK:
+   - The pink drawings are REFERENCE ONLY.
+   - Do NOT use the drawing as the body/shell/tail/legs.
+   - Keep Homie as the existing turtle.
+   - Fix ONLY the front: shell opening, neck, head, nose, eye.
+   - Peek sequence: barely out -> more out -> fully out -> looks up.
+========================================================= */
+
+/* Reset Homie away from any doodle/tank interpretation. */
+.turtle {
+  top: 17px !important;
+  width: 42px !important;
+  height: 24px !important;
+  margin-left: -32px !important;
+  transform: scale(0.68) !important;
+  transform-origin: 24px 18px !important;
+}
+
+.shell {
+  left: 10px !important;
+  top: 4px !important;
+  width: 29px !important;
+  height: 18px !important;
+  border-radius: 50% 50% 42% 42% !important;
+  background: var(--cream) !important;
+  overflow: visible !important;
+}
+
+/* Soft shell lip only hides the joint. It is not a new shell shape. */
+.shell::after {
+  content: "";
+  position: absolute;
+  right: -1.6px !important;
+  top: 5.4px !important;
+  width: 5.4px !important;
+  height: 7.4px !important;
+  border-radius: 54% 46% 48% 52% !important;
+  background: var(--cream) !important;
+  z-index: 2 !important;
+}
+
+.tail {
+  left: 5px !important;
+  top: 10px !important;
+  border-top-width: 3.5px !important;
+  border-bottom-width: 3.5px !important;
+  border-right-width: 8px !important;
+  transform: rotate(4deg) !important;
+}
+
+.leg {
+  top: 19px !important;
+  width: 8px !important;
+  height: 5px !important;
+  border-radius: 75% 75% 55% 55% !important;
+  background: var(--cream) !important;
+}
+
+.l1 { left: 16px !important; }
+.l2 { left: 27px !important; }
+
+/* Turtle front piece: neck/head/nose read as one connected organic shape. */
+.neck {
+  left: 33.2px !important;
+  top: 9.5px !important;
+  width: 9.7px !important;
+  height: 7.1px !important;
+  border-radius: 999px 68% 68% 999px !important;
+  background: var(--cream) !important;
+  transform-origin: left center !important;
+  z-index: 3 !important;
+  transition: 0.72s ease !important;
+}
+
+.head {
+  left: 41.0px !important;
+  top: 9.0px !important;
+  width: 6.5px !important;
+  height: 6.2px !important;
+  border-radius: 58% 42% 46% 54% !important;
+  background: var(--cream) !important;
+  z-index: 4 !important;
+  transition: 0.72s ease !important;
+}
+
+/* Nose is a tiny forward tip, not a second head. */
+.head::after {
+  content: "";
+  position: absolute;
+  right: -2.0px !important;
+  top: 2.05px !important;
+  width: 2.8px !important;
+  height: 2.15px !important;
+  border-radius: 58% 34% 44% 50% !important;
+  background: var(--cream) !important;
+}
+
+.eye {
+  right: 0.45px !important;
+  top: 1.45px !important;
+  width: 1.85px !important;
+  height: 1.85px !important;
+  border-radius: 50% !important;
+  background: #000 !important;
+  z-index: 5 !important;
+}
+
+/* Notice: first cautious pop. It is the connected front piece, not a separate circle. */
+.turtle.notice .neck {
+  left: 32.8px !important;
+  top: 8.4px !important;
+  width: 11.2px !important;
+  height: 7.1px !important;
+  transform: rotate(-22deg) !important;
+}
+
+.turtle.notice .head {
+  left: 42.1px !important;
+  top: 4.25px !important;
+  width: 6.5px !important;
+  height: 6.2px !important;
+}
+
+.turtle.notice .eye {
+  right: 0.4px !important;
+  top: 1.3px !important;
+  transform: translateY(-0.35px) scale(1.06) !important;
+}
+
+/* Peek: one staged animation. Barely out -> more out -> fully extended -> looks up. */
+.turtle.peek {
+  opacity: 0.96 !important;
+  filter: drop-shadow(0 0 7px rgba(242,238,229,0.28)) !important;
+}
+
+.turtle.peek .tail,
+.turtle.peek .leg {
+  opacity: 0 !important;
+}
+
+.turtle.peek .neck {
+  left: 32.4px !important;
+  top: 9.25px !important;
+  width: 14.1px !important;
+  height: 7.1px !important;
+  opacity: 1 !important;
+  z-index: 3 !important;
+  animation: homiePass9StagedPeekNeck 1.18s cubic-bezier(.18,.72,.18,1) both !important;
+}
+
+.turtle.peek .head {
+  left: 44.2px !important;
+  top: 8.3px !important;
+  width: 6.5px !important;
+  height: 6.2px !important;
+  opacity: 1 !important;
+  z-index: 4 !important;
+  animation: homiePass9StagedPeekHead 1.18s cubic-bezier(.18,.72,.18,1) both !important;
+}
+
+.turtle.peek .eye {
+  animation: homiePass9EyeCheck 1.18s cubic-bezier(.18,.72,.18,1) both !important;
+}
+
+@keyframes homiePass9StagedPeekNeck {
+  0% {
+    opacity: 0;
+    transform: translateX(-5.8px) scaleX(0.22) rotate(-2deg);
+  }
+
+  24% {
+    opacity: 1;
+    transform: translateX(-3.3px) scaleX(0.42) rotate(-2deg);
+  }
+
+  48% {
+    opacity: 1;
+    transform: translateX(-1.35px) scaleX(0.70) rotate(-2deg);
+  }
+
+  72% {
+    opacity: 1;
+    transform: translateX(0) scaleX(1) rotate(-2deg);
+  }
+
+  88% {
+    opacity: 1;
+    transform: translateX(0.2px) translateY(-0.65px) scaleX(1.02) rotate(-10deg);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(0) translateY(-0.8px) scaleX(1) rotate(-12deg);
+  }
+}
+
+@keyframes homiePass9StagedPeekHead {
+  0% {
+    opacity: 0;
+    transform: translateX(-6px) scale(0.76) rotate(0deg);
+  }
+
+  24% {
+    opacity: 1;
+    transform: translateX(-3.7px) scale(0.84) rotate(0deg);
+  }
+
+  48% {
+    opacity: 1;
+    transform: translateX(-1.6px) scale(0.92) rotate(0deg);
+  }
+
+  72% {
+    opacity: 1;
+    transform: translateX(0) scale(1) rotate(0deg);
+  }
+
+  88% {
+    opacity: 1;
+    transform: translateX(0.35px) translateY(-1.0px) scale(1) rotate(-11deg);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(0.1px) translateY(-1.2px) scale(1) rotate(-13deg);
+  }
+}
+
+@keyframes homiePass9EyeCheck {
+  0%, 70% {
+    transform: none;
+  }
+
+  86% {
+    transform: translateY(-0.35px) scale(1.08);
+  }
+
+  100% {
+    transform: translateY(-0.45px) scale(1.10);
+  }
+}
+
+/* Walking before peek stays lazy. Head does not sprint before the coast-clear beat. */
+.turtle.walk .head,
+.turtle.walk .neck {
+  animation: homiePass9LazyFrontProbe 2.45s ease-in-out infinite !important;
+}
+
+@keyframes homiePass9LazyFrontProbe {
+  0%,100% { transform: translate(0,0) rotate(0deg); }
+  32% { transform: translate(0.22px,-0.05px) rotate(-0.12deg); }
+  60% { transform: translate(0.52px,0.03px) rotate(0.08deg); }
+  82% { transform: translate(0.12px,0.05px) rotate(0deg); }
+}
+
+/* Escape still uses maximum turtle effort, with corrected front piece. */
+.turtle.escape .head,
+.turtle.escape .neck {
+  animation: homiePass9MaxTurtleFrontReach 0.48s ease-in-out infinite !important;
+}
+
+@keyframes homiePass9MaxTurtleFrontReach {
+  0%,100% { transform: translate(0,0) rotate(0deg); }
+  22% { transform: translate(1.35px,-0.32px) rotate(-0.6deg); }
+  50% { transform: translate(2.1px,0.1px) rotate(0.38deg); }
+  76% { transform: translate(0.5px,0.25px) rotate(0deg); }
+}
+
+/* Door remains from the current build. Do not leave any toothpick after fade. */
+.loader-scene.fade-out::after,
+.loader-scene.portal-close.fade-out::after {
+  opacity: 0 !important;
+  height: 0 !important;
+  animation: none !important;
+}
+
