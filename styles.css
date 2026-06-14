@@ -5609,302 +5609,235 @@ body {
 
 
 /* =========================================================
-   YELLOWBRICK2 — SEPARATED-ASSET HOMIE RIG / R2 SURGERY
-   This final override retires the CSS blob turtle and uses the
-   uploaded littlehomie PNG pieces as a puppet rig.
+   YELLOWBRICK2 REAL HOMIE RIG — actual separated PNG puppet
+   This override replaces the old CSS blob turtle visually.
+   It uses repo-local transparent PNG parts so mobile Safari does
+   not show broken-image question marks.
 ========================================================= */
-
 .turtle.homie-rig,
-.turtle.homie-rig.walk,
-.turtle.homie-rig.notice,
-.turtle.homie-rig.hide,
-.turtle.homie-rig.peek,
-.turtle.homie-rig.escape {
-  position: absolute !important;
-  left: 50% !important;
-  top: 15px !important;
-  width: 72px !important;
-  height: 38px !important;
-  margin-left: -42px !important;
-  opacity: .96 !important;
-  transform-origin: 33px 27px !important;
-  filter: drop-shadow(0 0 4px rgba(242,238,229,.22)) !important;
-  transition: opacity .5s ease !important;
-  clip-path: inset(0 0 0 0) !important;
+.turtle.homie-rig * {
+  box-sizing: border-box;
 }
 
-.turtle.homie-rig .homie-piece,
-.turtle.homie-rig .shell,
-.turtle.homie-rig .head,
-.turtle.homie-rig .tail,
-.turtle.homie-rig .leg {
-  display: block !important;
+.turtle.homie-rig {
+  left: 50% !important;
+  top: 18px !important;
+  width: 72px !important;
+  height: 40px !important;
+  margin-left: -42px !important;
+  opacity: 0.96 !important;
+  transform: translate3d(0,0,0) scale(0.74) !important;
+  transform-origin: 50% 80% !important;
+  filter: drop-shadow(0 0 5px rgba(242,238,229,0.22));
+  overflow: visible !important;
+  contain: layout style;
+}
+
+.turtle.homie-rig .homie-part {
   position: absolute !important;
+  display: block !important;
+  object-fit: contain !important;
+  pointer-events: none !important;
+  user-select: none !important;
+  max-width: none !important;
+  height: auto !important;
+  opacity: 1 !important;
   background: transparent !important;
   border: 0 !important;
-  max-width: none !important;
-  max-height: none !important;
-  object-fit: contain !important;
-  object-position: center center !important;
-  opacity: 1 !important;
-  pointer-events: none !important;
-  transform-origin: center center !important;
-  transition: none !important;
 }
 
-.turtle.homie-rig .shell::before,
-.turtle.homie-rig .shell::after,
-.turtle.homie-rig .head::before,
-.turtle.homie-rig .head::after,
-.turtle.homie-rig::before {
-  content: none !important;
+/* kill the old blob children if an old cached DOM ever has them */
+.turtle.homie-rig .shell,
+.turtle.homie-rig .neck,
+.turtle.homie-rig .head,
+.turtle.homie-rig .eye,
+.turtle.homie-rig .leg,
+.turtle.homie-rig .tail {
   display: none !important;
 }
 
-/* anatomy: shell dominates, tiny tail, head/neck is cautious, front paddle pulls */
-.turtle.homie-rig .tail {
-  left: 1px !important;
-  top: 18px !important;
-  width: 13px !important;
-  height: 4px !important;
-  z-index: 1 !important;
+.turtle.homie-rig .homie-shell {
+  left: 10px !important;
+  top: 2px !important;
+  width: 43px !important;
+  z-index: 4 !important;
+  transform-origin: 48% 72% !important;
+}
+
+.turtle.homie-rig .homie-head {
+  left: 45px !important;
+  top: 10px !important;
+  width: 16px !important;
+  z-index: 5 !important;
+  transform-origin: 4px 23px !important;
+}
+
+.turtle.homie-rig .homie-tail {
+  left: 5px !important;
+  top: 23px !important;
+  width: 12px !important;
+  z-index: 2 !important;
   transform-origin: right center !important;
 }
 
-.turtle.homie-rig .bleg {
-  left: 17px !important;
+.turtle.homie-rig .homie-rear {
+  left: 15px !important;
   top: 24px !important;
-  width: 17px !important;
-  height: 11px !important;
-  z-index: 2 !important;
-  transform-origin: 62% 20% !important;
+  width: 15px !important;
+  z-index: 1 !important;
+  transform-origin: 80% 18% !important;
 }
 
-.turtle.homie-rig .fleg2 {
-  left: 46px !important;
-  top: 20px !important;
-  width: 13px !important;
-  height: 15px !important;
-  z-index: 2 !important;
-  transform-origin: 30% 20% !important;
-}
-
-.turtle.homie-rig .shell {
-  left: 10px !important;
-  top: 1px !important;
-  width: 48px !important;
-  height: 28px !important;
-  z-index: 5 !important;
-  transform-origin: 43% 72% !important;
-}
-
-.turtle.homie-rig .head {
+.turtle.homie-rig .homie-front {
   left: 43px !important;
-  top: 4px !important;
-  width: 24px !important;
-  height: 21px !important;
-  z-index: 4 !important;
-  transform-origin: 6% 70% !important;
-}
-
-.turtle.homie-rig .fleg {
-  left: 45px !important;
-  top: 24px !important;
-  width: 17px !important;
-  height: 18px !important;
-  z-index: 6 !important;
+  top: 25px !important;
+  width: 13px !important;
+  z-index: 2 !important;
   transform-origin: 22% 12% !important;
 }
 
-/* pre-peek: centered, slug-turtle effort; the bar can outrun him */
+.turtle.homie-rig .homie-front2 {
+  left: 49px !important;
+  top: 23px !important;
+  width: 13px !important;
+  z-index: 2 !important;
+  transform-origin: 18% 18% !important;
+  opacity: 0.88 !important;
+}
+
 .turtle.homie-rig.walk {
-  animation: yb2RigIdleBody 2.45s ease-in-out infinite !important;
+  animation: yb2StationaryTurtleBody 1.9s ease-in-out infinite !important;
 }
-.turtle.homie-rig.walk .shell { animation: yb2RigIdleShell 2.45s ease-in-out infinite !important; }
-.turtle.homie-rig.walk .head { animation: yb2RigIdleHead 2.45s ease-in-out infinite !important; }
-.turtle.homie-rig.walk .tail { animation: yb2RigIdleTail 2.45s ease-in-out infinite !important; }
-.turtle.homie-rig.walk .bleg { animation: yb2RigIdleBackLeg 2.45s ease-in-out infinite !important; }
-.turtle.homie-rig.walk .fleg,
-.turtle.homie-rig.walk .fleg2 { animation: yb2RigIdleFrontPaddle 2.45s ease-in-out infinite !important; }
+.turtle.homie-rig.walk .homie-shell { animation: yb2ShellBreathe 1.9s ease-in-out infinite !important; }
+.turtle.homie-rig.walk .homie-head { animation: yb2HeadBarelyAlive 1.9s ease-in-out infinite !important; }
+.turtle.homie-rig.walk .homie-front { animation: yb2FrontPaddlePull 1.9s ease-in-out infinite !important; }
+.turtle.homie-rig.walk .homie-front2 { animation: yb2FrontPaddleAlt 1.9s ease-in-out infinite !important; }
+.turtle.homie-rig.walk .homie-rear { animation: yb2RearAnchor 1.9s ease-in-out infinite !important; }
+.turtle.homie-rig.walk .homie-tail { animation: yb2TailTiny 1.9s ease-in-out infinite !important; }
 
-@keyframes yb2RigIdleBody {
-  0%,100% { transform: scale(.60) translate(0,0) rotate(0deg); }
-  38% { transform: scale(.60) translate(.18px,-.08px) rotate(-.18deg); }
-  64% { transform: scale(.60) translate(.55px,.32px) rotate(.28deg); }
+@keyframes yb2StationaryTurtleBody {
+  0%,100% { transform: translate3d(0,0,0) scale(0.74) !important; }
+  45% { transform: translate3d(0.8px,0.4px,0) scale(0.74) !important; }
 }
-@keyframes yb2RigIdleShell {
-  0%,100% { transform: translate(0,0) rotate(0deg); }
-  45% { transform: translate(.25px,.08px) rotate(-.16deg); }
-  70% { transform: translate(.75px,.28px) rotate(.28deg); }
+@keyframes yb2ShellBreathe {
+  0%,100% { transform: translate3d(0,0,0) rotate(0deg); }
+  45% { transform: translate3d(0.4px,0.4px,0) rotate(-1.2deg); }
 }
-@keyframes yb2RigIdleHead {
-  0%,100% { transform: translate(-1px,.3px) scale(.92) rotate(-3deg); opacity: .9; }
-  42% { transform: translate(.4px,-.08px) scale(.96) rotate(-1deg); opacity: .96; }
-  68% { transform: translate(1.4px,.18px) scale(.98) rotate(.8deg); opacity: .98; }
+@keyframes yb2HeadBarelyAlive {
+  0%,100% { transform: translate3d(-3px,1px,0) rotate(2deg) scale(0.86); opacity: .92; }
+  45% { transform: translate3d(-1px,0,0) rotate(-1deg) scale(0.88); opacity: .96; }
 }
-@keyframes yb2RigIdleTail {
-  0%,100% { transform: translate(0,.2px) rotate(2deg) scaleX(.9); }
-  52% { transform: translate(-.4px,.4px) rotate(-5deg) scaleX(.82); }
+@keyframes yb2FrontPaddlePull {
+  0%,100% { transform: rotate(18deg) translate3d(0,0,0); }
+  45% { transform: rotate(-18deg) translate3d(-2px,1px,0); }
 }
-@keyframes yb2RigIdleBackLeg {
-  0%,100% { transform: translate(-.3px,.2px) rotate(-6deg) scaleX(1); }
-  42% { transform: translate(-1px,.7px) rotate(-14deg) scaleX(.92); }
-  68% { transform: translate(.45px,-.1px) rotate(5deg) scaleX(1.04); }
+@keyframes yb2FrontPaddleAlt {
+  0%,100% { transform: rotate(-12deg) translate3d(0,0,0); }
+  45% { transform: rotate(16deg) translate3d(-1px,2px,0); }
 }
-@keyframes yb2RigIdleFrontPaddle {
-  0%,100% { transform: translate(.1px,.25px) rotate(8deg) scaleX(1.02); }
-  27% { transform: translate(2.6px,-.55px) rotate(24deg) scaleX(1.18); }
-  58% { transform: translate(-1.1px,.85px) rotate(-23deg) scaleX(.9); }
-  82% { transform: translate(.5px,.3px) rotate(5deg) scaleX(1.02); }
+@keyframes yb2RearAnchor {
+  0%,100% { transform: rotate(-4deg) translate3d(0,0,0); }
+  45% { transform: rotate(10deg) translate3d(-1px,1px,0); }
+}
+@keyframes yb2TailTiny {
+  0%,100% { transform: rotate(1deg); }
+  45% { transform: rotate(-8deg); }
 }
 
-/* 17/18/19: notice, look up, hide */
 .turtle.homie-rig.notice {
-  animation: yb2RigNoticeBody .72s ease-out both !important;
+  animation: yb2NoticeBody 0.76s ease-out forwards !important;
 }
-.turtle.homie-rig.notice .head {
-  animation: yb2RigNoticeHead .72s ease-out both !important;
+.turtle.homie-rig.notice .homie-head {
+  animation: yb2NoticeHead 0.76s ease-out forwards !important;
 }
-.turtle.homie-rig.notice .shell {
-  animation: yb2RigNoticeShell .72s ease-out both !important;
+.turtle.homie-rig.notice .homie-shell {
+  animation: yb2NoticeShell 0.76s ease-out forwards !important;
 }
+.turtle.homie-rig.notice .homie-front,
+.turtle.homie-rig.notice .homie-front2,
+.turtle.homie-rig.notice .homie-rear,
+.turtle.homie-rig.notice .homie-tail {
+  animation: yb2FreezeTiny 0.76s ease-out forwards !important;
+}
+@keyframes yb2NoticeBody { to { transform: translate3d(0,-1px,0) scale(0.74) !important; } }
+@keyframes yb2NoticeShell { to { transform: rotate(-1deg); } }
+@keyframes yb2NoticeHead { to { transform: translate3d(1px,-4px,0) rotate(-12deg) scale(0.88); } }
+@keyframes yb2FreezeTiny { to { transform: translate3d(0,0,0) rotate(0deg); opacity: .9; } }
 
-@keyframes yb2RigNoticeBody {
-  0% { transform: scale(.60) translate(0,0); }
-  100% { transform: scale(.60) translate(.3px,-.2px) rotate(-.5deg); }
-}
-@keyframes yb2RigNoticeHead {
-  0% { transform: translate(-1px,.3px) scale(.9) rotate(-3deg); }
-  100% { transform: translate(3px,-4px) scale(1) rotate(-19deg); }
-}
-@keyframes yb2RigNoticeShell {
-  0% { transform: translate(0,0); }
-  100% { transform: translate(.2px,.1px) rotate(-.25deg); }
-}
-
-.turtle.homie-rig.hide {
-  animation: yb2RigHideShell .08s steps(2) infinite !important;
-}
-.turtle.homie-rig.hide .head,
-.turtle.homie-rig.hide .tail,
-.turtle.homie-rig.hide .leg {
+.turtle.homie-rig.hide .homie-head,
+.turtle.homie-rig.hide .homie-front,
+.turtle.homie-rig.hide .homie-front2,
+.turtle.homie-rig.hide .homie-rear,
+.turtle.homie-rig.hide .homie-tail {
   opacity: 0 !important;
-  animation: none !important;
+  transform: translate3d(-12px,4px,0) scale(0.35) !important;
+  transition: opacity .22s ease, transform .22s ease !important;
 }
-.turtle.homie-rig.hide .shell {
-  left: 14px !important;
-  top: 5px !important;
-  width: 38px !important;
-  height: 22px !important;
-  opacity: .98 !important;
-  animation: none !important;
+.turtle.homie-rig.hide .homie-shell {
+  animation: yb2HideShellTremble 0.1s steps(2) infinite !important;
 }
-@keyframes yb2RigHideShell {
-  0%,100% { transform: scale(.60) translate(0,0); }
-  50% { transform: scale(.60) translate(.8px,.1px); }
+@keyframes yb2HideShellTremble {
+  0%,100% { transform: translate3d(0,0,0) rotate(.6deg); }
+  50% { transform: translate3d(.7px,0,0) rotate(-.7deg); }
 }
 
-/* after coast-clear: head peeks out before the door opens */
-.turtle.homie-rig.peek {
-  animation: yb2RigPeekBody 1.05s ease-out both !important;
-}
-.turtle.homie-rig.peek .shell {
-  animation: yb2RigPeekShell 1.05s ease-out both !important;
-}
-.turtle.homie-rig.peek .head {
+.turtle.homie-rig.peek .homie-head {
   opacity: 1 !important;
-  animation: yb2RigPeekHead 1.05s ease-out both !important;
+  animation: yb2PeekHead 1.05s ease-out forwards !important;
 }
-.turtle.homie-rig.peek .tail,
-.turtle.homie-rig.peek .leg {
-  opacity: 0 !important;
-  animation: none !important;
+.turtle.homie-rig.peek .homie-shell { animation: yb2PeekShell 1.05s ease-out forwards !important; }
+.turtle.homie-rig.peek .homie-front,
+.turtle.homie-rig.peek .homie-front2,
+.turtle.homie-rig.peek .homie-rear,
+.turtle.homie-rig.peek .homie-tail {
+  opacity: .55 !important;
+  transform: scale(.55) !important;
 }
-@keyframes yb2RigPeekBody {
-  0% { transform: scale(.60) translate(0,0); }
-  100% { transform: scale(.60) translate(.5px,-.2px); }
+@keyframes yb2PeekHead {
+  0% { transform: translate3d(-13px,5px,0) rotate(7deg) scale(.44); opacity: 0; }
+  45% { transform: translate3d(-6px,1px,0) rotate(-4deg) scale(.66); opacity: .7; }
+  100% { transform: translate3d(2px,-7px,0) rotate(-20deg) scale(.9); opacity: 1; }
 }
-@keyframes yb2RigPeekShell {
-  0% { transform: translate(0,0); }
-  100% { transform: translate(.2px,.05px) rotate(-.18deg); }
-}
-@keyframes yb2RigPeekHead {
-  0% { transform: translate(-10px,3px) scale(.62) rotate(-4deg); opacity: 0; }
-  42% { transform: translate(2px,-2px) scale(.92) rotate(-10deg); opacity: 1; }
-  72% { transform: translate(6px,-6px) scale(1.02) rotate(-18deg); opacity: 1; }
-  100% { transform: translate(5px,-5px) scale(1) rotate(-16deg); opacity: 1; }
-}
+@keyframes yb2PeekShell { to { transform: translate3d(-.8px,.3px,0) rotate(-1.2deg); } }
 
-/* door is on the ground ahead of Homie, not under him, and opens like a slit cut upward */
-.loader-scene::after {
-  left: calc(50% + 118px) !important;
-  top: calc(100% + 30px) !important;
-  width: 10px !important;
-  transform-origin: bottom center !important;
-  z-index: 95 !important;
-}
-
-/* escape only after peek/coast-clear: booking-ass turtle, still turtle */
 .turtle.homie-rig.escape {
-  animation: yb2RigDoorDash 4.9s cubic-bezier(.34,0,.12,1) forwards !important;
-}
-.turtle.homie-rig.escape .head,
-.turtle.homie-rig.escape .tail,
-.turtle.homie-rig.escape .leg,
-.turtle.homie-rig.escape .shell {
   opacity: 1 !important;
+  animation: yb2HomieDoorRun 5.05s cubic-bezier(.30,0,.10,1) forwards !important;
 }
-.turtle.homie-rig.escape .head { animation: yb2RigDashHead 0.44s ease-in-out infinite !important; }
-.turtle.homie-rig.escape .shell { animation: yb2RigDashShell 0.44s ease-in-out infinite !important; }
-.turtle.homie-rig.escape .tail { animation: yb2RigDashTail 0.44s ease-in-out infinite !important; }
-.turtle.homie-rig.escape .bleg { animation: yb2RigDashBackLeg 0.44s ease-in-out infinite !important; }
-.turtle.homie-rig.escape .fleg,
-.turtle.homie-rig.escape .fleg2 { animation: yb2RigDashFrontPaddle 0.44s ease-in-out infinite !important; }
-
-@keyframes yb2RigDashHead {
-  0%,100% { transform: translate(2px,-2px) rotate(-8deg) scale(.98); }
-  22% { transform: translate(6px,-3px) rotate(-11deg) scale(1.03); }
-  50% { transform: translate(8px,-1px) rotate(-3deg) scale(1.02); }
-  76% { transform: translate(3px,0) rotate(1deg) scale(.98); }
+.turtle.homie-rig.escape .homie-head { animation: yb2EscapeHead 0.46s ease-in-out infinite !important; opacity: 1 !important; }
+.turtle.homie-rig.escape .homie-shell { animation: yb2EscapeShell 0.46s ease-in-out infinite !important; }
+.turtle.homie-rig.escape .homie-front { animation: yb2EscapeFrontA 0.46s ease-in-out infinite !important; opacity: 1 !important; }
+.turtle.homie-rig.escape .homie-front2 { animation: yb2EscapeFrontB 0.46s ease-in-out infinite !important; opacity: .95 !important; }
+.turtle.homie-rig.escape .homie-rear { animation: yb2EscapeRear 0.46s ease-in-out infinite !important; opacity: .9 !important; }
+.turtle.homie-rig.escape .homie-tail { animation: yb2EscapeTail 0.46s ease-in-out infinite !important; opacity: .85 !important; }
+@keyframes yb2HomieDoorRun {
+  0% { transform: translate3d(0,0,0) scale(0.74) !important; opacity: 1; }
+  68% { transform: translate3d(184px,0,0) scale(0.74) !important; opacity: 1; }
+  78% { transform: translate3d(208px,0,0) scale(0.70) !important; opacity: .94; clip-path: inset(0 0 0 0); }
+  91% { transform: translate3d(234px,0,0) scale(0.62) !important; opacity: .58; clip-path: inset(0 0 0 62%); }
+  100% { transform: translate3d(250px,0,0) scale(0.50) !important; opacity: 0; clip-path: inset(0 0 0 100%); }
 }
-@keyframes yb2RigDashShell {
-  0%,100% { transform: translate(0,0) rotate(-.5deg); }
-  28% { transform: translate(.4px,-.1px) rotate(-1.2deg); }
-  56% { transform: translate(1.6px,.75px) rotate(1.3deg); }
-  82% { transform: translate(.4px,.1px) rotate(-.4deg); }
+@keyframes yb2EscapeHead {
+  0%,100% { transform: translate3d(2px,-6px,0) rotate(-18deg) scale(.9); }
+  45% { transform: translate3d(6px,-7px,0) rotate(-12deg) scale(.92); }
 }
-@keyframes yb2RigDashTail {
-  0%,100% { transform: translate(0,.2px) rotate(5deg) scaleX(.96); }
-  50% { transform: translate(-1px,.55px) rotate(-12deg) scaleX(.78); }
+@keyframes yb2EscapeShell {
+  0%,100% { transform: translate3d(0,0,0) rotate(-1deg); }
+  45% { transform: translate3d(-2px,.8px,0) rotate(1deg); }
 }
-@keyframes yb2RigDashBackLeg {
-  0%,100% { transform: translate(-.4px,.3px) rotate(-8deg) scaleX(1.02); }
-  38% { transform: translate(-1.4px,.95px) rotate(-19deg) scaleX(.9); }
-  62% { transform: translate(.9px,-.2px) rotate(10deg) scaleX(1.08); }
+@keyframes yb2EscapeFrontA {
+  0%,100% { transform: rotate(28deg) translate3d(1px,0,0); }
+  45% { transform: rotate(-34deg) translate3d(-4px,2px,0); }
 }
-@keyframes yb2RigDashFrontPaddle {
-  0%,100% { transform: translate(.1px,.22px) rotate(9deg) scaleX(1.06); }
-  18% { transform: translate(4.8px,-1.1px) rotate(31deg) scaleX(1.32); }
-  48% { transform: translate(-1.7px,1.25px) rotate(-31deg) scaleX(.82); }
-  76% { transform: translate(.8px,.36px) rotate(6deg) scaleX(1.06); }
+@keyframes yb2EscapeFrontB {
+  0%,100% { transform: rotate(-22deg) translate3d(0,1px,0); }
+  45% { transform: rotate(26deg) translate3d(-3px,3px,0); }
 }
-
-@keyframes yb2RigDoorDash {
-  0% { left: 50% !important; opacity: .96; transform: scale(.60) translate(0,0) rotate(0deg); clip-path: inset(0 0 0 0); filter: drop-shadow(0 0 4px rgba(242,238,229,.22)); }
-  14% { left: 55% !important; opacity: .96; transform: scale(.60) translate(1px,-.35px) rotate(-.7deg); clip-path: inset(0 0 0 0); }
-  30% { left: 62% !important; opacity: .96; transform: scale(.60) translate(1.7px,.75px) rotate(.85deg); clip-path: inset(0 0 0 0); }
-  48% { left: 70% !important; opacity: .96; transform: scale(.60) translate(.8px,-.25px) rotate(-.45deg); clip-path: inset(0 0 0 0); }
-  64% { left: 78% !important; opacity: .96; transform: scale(.60) translate(1.5px,.7px) rotate(.7deg); clip-path: inset(0 0 0 0); }
-  76% { left: 84.5% !important; opacity: .96; transform: scale(.60) translate(.8px,-.18px) rotate(-.3deg); clip-path: inset(0 0 0 0); }
-  84% { left: 88.5% !important; opacity: .95; transform: scale(.60) translate(.8px,.2px) rotate(0deg); clip-path: inset(0 0 0 0); filter: none; }
-  89% { left: 90.5% !important; opacity: .92; clip-path: polygon(0 0, 84% 0, 84% 18%, 100% 18%, 100% 100%, 0 100%); filter: brightness(1.1); }
-  93% { left: 91.5% !important; opacity: .74; clip-path: polygon(0 0, 61% 0, 61% 22%, 76% 22%, 76% 70%, 100% 70%, 100% 100%, 0 100%); filter: blur(.4px) brightness(1.05); }
-  97% { left: 92.2% !important; opacity: .42; clip-path: polygon(0 0, 38% 0, 38% 28%, 54% 28%, 54% 100%, 0 100%); filter: blur(1.2px) saturate(.55); }
-  100% { left: 92.8% !important; opacity: 0; clip-path: polygon(0 0, 12% 0, 12% 100%, 0 100%); filter: blur(3px) saturate(.1); }
+@keyframes yb2EscapeRear {
+  0%,100% { transform: rotate(-10deg) translate3d(0,0,0); }
+  45% { transform: rotate(20deg) translate3d(-2px,2px,0); }
 }
-
-/* hard-kill the old blob anatomy if any old child survives */
-.turtle.homie-rig .neck,
-.turtle.homie-rig .eye {
-  display: none !important;
+@keyframes yb2EscapeTail {
+  0%,100% { transform: rotate(6deg); }
+  45% { transform: rotate(-12deg); }
 }
