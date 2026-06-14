@@ -2,27 +2,22 @@
    CHANNEL 17 — GROUND ZERO
    CPR ACTIVE
 
-   BUILD: HOMIE PASS 11
-   VERSION: C17-HOMIE-011
+   BUILD: HOMIE PASS 13
+   VERSION: C17-HOMIE-013
 
    SOURCE:
-   C17-HOMIE-010 + agreed black silhouette turtle reference
+   channel-17.github.io-main 12.zip
 
-   PREVIOUS:
-   C17-HOMIE-010
-
-   CHANGES:
-   - FIRST ACTUAL BRICK: agreed turtle anatomy reference applied
-   - Rebuilds Homie as shell-first turtle, not white grenade/icon
-   - Shell becomes dominant, lower, heavier silhouette
-   - Adds visible shell plate differentiation inside cream shape
-   - Tiny head / tiny neck / tiny tail hierarchy restored
-   - Legs sit underneath shell instead of body-with-accessories
-   - Keeps story timing, FIRE workflow, and existing door behavior intact
+   MISSION:
+   Full styles.css replacement.
+   Replace blob turtle with reference-turtle architecture.
+   Same Homie. Same story. Same timing.
+   New anatomy only.
 
    STATUS:
    REVIEW PENDING
 ======================================================= */
+
 /* =========================================================
    RESET / ROOT
 ========================================================= */
@@ -5197,4 +5192,418 @@ body {
   49% { transform: translate(-1.15px,1px) rotate(-25deg) scaleX(.86); }
   76% { transform: translate(.65px,.3px) rotate(6deg) scaleX(1.04); }
 }
+
+
+/* =========================================================
+   YELLOW BRICK #1 — HOMIE PASS 13 / FULL CSS OVERRIDE
+   VERSION: C17-HOMIE-013
+
+   REFERENCE TURTLE ARCHITECTURE
+   - Shell is the character.
+   - Tiny head.
+   - Tiny neck.
+   - Front paddle.
+   - Rear support.
+   - Tiny tail.
+   - Pre-peek stays centered under the bar.
+   - Desperate turtle only after peek/coast-clear.
+========================================================= */
+
+/* Keep turtle centered/grounded under the loader before escape. */
+.turtle {
+  position: absolute !important;
+  left: 50% !important;
+  top: 14px !important;
+  width: 64px !important;
+  height: 36px !important;
+  margin-left: -40px !important;
+  opacity: 0.92 !important;
+  transform: scale(0.58) !important;
+  transform-origin: 32px 25px !important;
+  transition: opacity 0.5s ease !important;
+}
+
+/* Big reference shell. No white grenade, no tank. */
+.shell {
+  position: absolute !important;
+  left: 10px !important;
+  top: 4px !important;
+  width: 42px !important;
+  height: 25px !important;
+  border-radius: 57% 53% 44% 44% / 64% 62% 38% 38% !important;
+  background:
+    linear-gradient(86deg, transparent 0 47%, rgba(0,0,0,0.13) 48% 51%, transparent 52% 100%),
+    radial-gradient(ellipse at 30% 54%, transparent 0 46%, rgba(0,0,0,0.10) 47% 50%, transparent 51%),
+    radial-gradient(ellipse at 69% 54%, transparent 0 46%, rgba(0,0,0,0.10) 47% 50%, transparent 51%),
+    linear-gradient(180deg, transparent 0 68%, rgba(0,0,0,0.10) 69% 73%, transparent 74% 100%),
+    var(--cream) !important;
+  box-shadow:
+    inset 0 -3px 0 rgba(0,0,0,0.10),
+    inset 0 1px 0 rgba(255,255,255,0.11) !important;
+  overflow: visible !important;
+  z-index: 3 !important;
+}
+
+/* Soft shell plates, visible enough to read as shell, subtle enough to stay Homie. */
+.shell::before {
+  content: "" !important;
+  position: absolute !important;
+  left: 5px !important;
+  top: 4px !important;
+  width: 31px !important;
+  height: 14px !important;
+  border-radius: 54% 50% 42% 42% !important;
+  background:
+    linear-gradient(90deg, transparent 0 26%, rgba(0,0,0,0.12) 27% 30%, transparent 31% 61%, rgba(0,0,0,0.10) 62% 65%, transparent 66% 100%),
+    linear-gradient(180deg, transparent 0 49%, rgba(0,0,0,0.08) 50% 54%, transparent 55% 100%) !important;
+  opacity: 0.75 !important;
+  pointer-events: none !important;
+  z-index: 4 !important;
+}
+
+/* Shell lip wraps the neck opening. */
+.shell::after {
+  content: "" !important;
+  position: absolute !important;
+  right: -2px !important;
+  top: 8px !important;
+  width: 7px !important;
+  height: 8px !important;
+  border-radius: 45% 58% 58% 45% !important;
+  background: var(--cream) !important;
+  box-shadow: inset -1px 0 0 rgba(0,0,0,0.08) !important;
+  pointer-events: none !important;
+  z-index: 6 !important;
+}
+
+/* Tiny tail from reference. */
+.tail {
+  position: absolute !important;
+  left: 2px !important;
+  top: 14px !important;
+  width: 0 !important;
+  height: 0 !important;
+  border-top: 3.2px solid transparent !important;
+  border-bottom: 3.2px solid transparent !important;
+  border-right: 9px solid var(--cream) !important;
+  transform: rotate(2deg) !important;
+  z-index: 2 !important;
+}
+
+/* Legs underneath shell: rear support + front paddle. */
+.leg {
+  position: absolute !important;
+  top: 25px !important;
+  height: 7px !important;
+  background: var(--cream) !important;
+  border-radius: 65% 70% 48% 54% !important;
+  transform-origin: 50% 20% !important;
+  z-index: 2 !important;
+}
+
+.l1 {
+  left: 13px !important;
+  width: 12px !important;
+  transform: rotate(-8deg) !important;
+}
+
+.l2 {
+  left: 39px !important;
+  top: 23px !important;
+  width: 14px !important;
+  height: 8px !important;
+  border-radius: 70% 62% 52% 60% !important;
+  transform: rotate(-24deg) !important;
+  transform-origin: 18% 28% !important;
+}
+
+/* Tiny neck/head: not rectangle + circle. */
+.neck {
+  position: absolute !important;
+  left: 47px !important;
+  top: 12px !important;
+  width: 8px !important;
+  height: 5.5px !important;
+  border-radius: 999px 62% 62% 999px !important;
+  background: var(--cream) !important;
+  transform-origin: left center !important;
+  z-index: 5 !important;
+  transition: 0.72s ease !important;
+}
+
+.head {
+  position: absolute !important;
+  left: 53.5px !important;
+  top: 9.6px !important;
+  width: 8.2px !important;
+  height: 7.8px !important;
+  border-radius: 52% 38% 42% 55% / 50% 46% 52% 52% !important;
+  background: var(--cream) !important;
+  transform-origin: left center !important;
+  z-index: 5 !important;
+  transition: 0.72s ease !important;
+}
+
+.head::after {
+  content: "" !important;
+  position: absolute !important;
+  right: -2.2px !important;
+  top: 2.6px !important;
+  width: 3px !important;
+  height: 2.25px !important;
+  border-radius: 55% 35% 42% 48% !important;
+  background: var(--cream) !important;
+}
+
+/* Eye forward like the reference. */
+.eye {
+  position: absolute !important;
+  right: 1px !important;
+  top: 2px !important;
+  width: 2px !important;
+  height: 2px !important;
+  border-radius: 50% !important;
+  background: #000 !important;
+  z-index: 7 !important;
+  transition: 0.35s ease !important;
+}
+
+/* Pre-peek: stationary slug turtle under the loading bar. Alive, but going nowhere. */
+.turtle.walk {
+  animation: homie13StationaryLife 2.35s ease-in-out infinite !important;
+  transform-origin: 32px 25px !important;
+}
+
+.turtle.walk .shell {
+  animation: homie13ShellBreath 2.35s ease-in-out infinite !important;
+}
+
+.turtle.walk .head,
+.turtle.walk .neck {
+  animation: homie13TinyProbe 2.35s ease-in-out infinite !important;
+}
+
+.turtle.walk .l1 {
+  animation: homie13RearSupportIdle 2.35s ease-in-out infinite !important;
+}
+
+.turtle.walk .l2 {
+  animation: homie13FrontPaddleIdle 2.35s ease-in-out infinite !important;
+}
+
+@keyframes homie13StationaryLife {
+  0%,100% { transform: scale(0.58) translate(0,0) rotate(0deg); }
+  34% { transform: scale(0.58) translate(0.06px,-0.04px) rotate(-0.08deg); }
+  62% { transform: scale(0.58) translate(0.14px,0.12px) rotate(0.10deg); }
+}
+
+@keyframes homie13ShellBreath {
+  0%,100% { transform: translate(0,0) rotate(0deg); }
+  50% { transform: translate(0.12px,0.08px) rotate(0.08deg); }
+}
+
+@keyframes homie13TinyProbe {
+  0%,100% { transform: translate(0,0) rotate(0deg); }
+  44% { transform: translate(0.22px,-0.04px) rotate(-0.08deg); }
+  72% { transform: translate(0.06px,0.04px) rotate(0deg); }
+}
+
+@keyframes homie13RearSupportIdle {
+  0%,100% { transform: translate(0,0) rotate(-8deg) scaleX(1); }
+  50% { transform: translate(-0.35px,0.24px) rotate(-12deg) scaleX(0.96); }
+}
+
+@keyframes homie13FrontPaddleIdle {
+  0%,100% { transform: translate(0,0) rotate(-24deg) scaleX(1); }
+  34% { transform: translate(0.65px,-0.18px) rotate(-14deg) scaleX(1.08); }
+  68% { transform: translate(-0.45px,0.32px) rotate(-34deg) scaleX(0.92); }
+}
+
+/* 17% notice / 18% look up: small turtle lift, not alien head. */
+.turtle.notice .neck {
+  left: 47px !important;
+  top: 10.4px !important;
+  width: 9.2px !important;
+  height: 5.5px !important;
+  transform: rotate(-20deg) !important;
+}
+
+.turtle.notice .head {
+  left: 54.7px !important;
+  top: 6.4px !important;
+  width: 8.2px !important;
+  height: 7.8px !important;
+  transform: rotate(-4deg) !important;
+}
+
+.turtle.notice .eye {
+  right: 1px !important;
+  top: 1.75px !important;
+  transform: translateY(-0.25px) scale(1.06) !important;
+}
+
+/* 19% hide: shell alone survives. */
+.turtle.hide .neck,
+.turtle.hide .head,
+.turtle.hide .tail,
+.turtle.hide .leg {
+  opacity: 0 !important;
+}
+
+.turtle.hide .shell {
+  left: 11px !important;
+  top: 5px !important;
+  width: 39px !important;
+  height: 23px !important;
+  overflow: visible !important;
+  filter: drop-shadow(0 0 5px rgba(242,238,229,0.18)) !important;
+  animation: homieShellShake 0.07s steps(2) infinite !important;
+}
+
+/* Peek sequence: barely out -> more out -> fully out -> look up. */
+.turtle.peek {
+  opacity: 0.96 !important;
+  filter: drop-shadow(0 0 7px rgba(242,238,229,0.28)) !important;
+}
+
+.turtle.peek .tail,
+.turtle.peek .leg {
+  opacity: 0 !important;
+}
+
+.turtle.peek .neck {
+  left: 47px !important;
+  top: 11px !important;
+  width: 12px !important;
+  height: 5.5px !important;
+  opacity: 1 !important;
+  animation: homie13PeekNeck 1.25s cubic-bezier(.18,.72,.18,1) both !important;
+}
+
+.turtle.peek .head {
+  left: 57px !important;
+  top: 8.5px !important;
+  width: 8.2px !important;
+  height: 7.8px !important;
+  opacity: 1 !important;
+  animation: homie13PeekHead 1.25s cubic-bezier(.18,.72,.18,1) both !important;
+}
+
+.turtle.peek .eye {
+  animation: homie13EyeLook 1.25s cubic-bezier(.18,.72,.18,1) both !important;
+}
+
+@keyframes homie13PeekNeck {
+  0%   { opacity: 0; transform: translateX(-7px) scaleX(0.18) rotate(-3deg); }
+  22%  { opacity: 1; transform: translateX(-4.7px) scaleX(0.38) rotate(-3deg); }
+  48%  { opacity: 1; transform: translateX(-2.2px) scaleX(0.68) rotate(-3deg); }
+  72%  { opacity: 1; transform: translateX(0) scaleX(1) rotate(-3deg); }
+  88%  { opacity: 1; transform: translateX(0.2px) translateY(-0.8px) scaleX(1.02) rotate(-13deg); }
+  100% { opacity: 1; transform: translateX(0) translateY(-1px) scaleX(1) rotate(-15deg); }
+}
+
+@keyframes homie13PeekHead {
+  0%   { opacity: 0; transform: translateX(-7.2px) scale(0.68) rotate(0deg); }
+  22%  { opacity: 1; transform: translateX(-5.2px) scale(0.78) rotate(0deg); }
+  48%  { opacity: 1; transform: translateX(-2.6px) scale(0.90) rotate(0deg); }
+  72%  { opacity: 1; transform: translateX(0) scale(1) rotate(0deg); }
+  88%  { opacity: 1; transform: translateX(0.2px) translateY(-1.25px) scale(1) rotate(-13deg); }
+  100% { opacity: 1; transform: translateX(0) translateY(-1.45px) scale(1) rotate(-15deg); }
+}
+
+@keyframes homie13EyeLook {
+  0%, 72% { transform: none; }
+  88% { transform: translateY(-0.35px) scale(1.08); }
+  100% { transform: translateY(-0.48px) scale(1.10); }
+}
+
+/* Post-peek escape: maximum turtle effort only now. */
+.turtle.escape {
+  animation: homie13DoorEntry 4.85s cubic-bezier(.35,0,.14,1) forwards !important;
+  clip-path: inset(0 0 0 0) !important;
+}
+
+.turtle.escape .neck,
+.turtle.escape .head,
+.turtle.escape .eye,
+.turtle.escape .tail,
+.turtle.escape .leg {
+  opacity: 1 !important;
+}
+
+.turtle.escape .head,
+.turtle.escape .neck {
+  animation: homie13MaxFront 0.48s ease-in-out infinite !important;
+}
+
+.turtle.escape .shell {
+  animation: homie13MaxShell 0.48s ease-in-out infinite !important;
+}
+
+.turtle.escape .l1 {
+  animation: homie13MaxBackSupport 0.48s ease-in-out infinite !important;
+}
+
+.turtle.escape .l2 {
+  animation: homie13MaxFrontPaddle 0.48s ease-in-out infinite !important;
+}
+
+@keyframes homie13MaxFront {
+  0%,100% { transform: translate(0,0) rotate(0deg); }
+  22% { transform: translate(1.2px,-0.25px) rotate(-0.5deg); }
+  50% { transform: translate(1.9px,0.08px) rotate(0.3deg); }
+  76% { transform: translate(0.44px,0.18px) rotate(0deg); }
+}
+
+@keyframes homie13MaxShell {
+  0%,100% { transform: translate(0,0) rotate(-0.4deg); }
+  22% { transform: translate(0.18px,0) rotate(-0.8deg); }
+  50% { transform: translate(1px,0.66px) rotate(1deg); }
+  76% { transform: translate(0.28px,0.08px) rotate(-0.3deg); }
+}
+
+@keyframes homie13MaxBackSupport {
+  0%,100% { transform: translate(-0.4px,0.34px) rotate(-9deg) scaleX(1.02); }
+  36% { transform: translate(-1px,0.76px) rotate(-17deg) scaleX(0.92); }
+  60% { transform: translate(0.65px,-0.16px) rotate(8deg) scaleX(1.10); }
+}
+
+@keyframes homie13MaxFrontPaddle {
+  0%,100% { transform: translate(0.1px,0.22px) rotate(-24deg) scaleX(1.06); }
+  19% { transform: translate(3.8px,-0.9px) rotate(10deg) scaleX(1.30); }
+  49% { transform: translate(-1.35px,1.0px) rotate(-42deg) scaleX(0.84); }
+  76% { transform: translate(0.72px,0.30px) rotate(-20deg) scaleX(1.04); }
+}
+
+@keyframes homie13DoorEntry {
+  0% {
+    left: 50%;
+    opacity: .96;
+    transform: scale(.58) translate(0,0) rotate(0deg);
+    clip-path: inset(0 0 0 0);
+    filter: none;
+  }
+  14% { left: 55%; opacity: .96; transform: scale(.58) translate(1px,-0.35px) rotate(-0.6deg); clip-path: inset(0 0 0 0); }
+  30% { left: 61.5%; opacity: .96; transform: scale(.58) translate(1.45px,0.78px) rotate(0.75deg); clip-path: inset(0 0 0 0); }
+  48% { left: 69%; opacity: .96; transform: scale(.58) translate(0.7px,-0.25px) rotate(-0.45deg); clip-path: inset(0 0 0 0); }
+  64% { left: 77%; opacity: .96; transform: scale(.58) translate(1.3px,0.68px) rotate(0.65deg); clip-path: inset(0 0 0 0); }
+  76% { left: 84%; opacity: .96; transform: scale(.58) translate(0.7px,-0.18px) rotate(-0.3deg); clip-path: inset(0 0 0 0); }
+  84% { left: 88.5%; opacity: .95; transform: scale(.58) translate(0.8px,0.2px) rotate(0deg); clip-path: inset(0 0 0 0); filter: none; }
+  89% { left: 90.5%; opacity: .92; clip-path: polygon(0 0, 84% 0, 84% 18%, 100% 18%, 100% 100%, 0 100%); filter: brightness(1.1); }
+  93% { left: 91.5%; opacity: .74; clip-path: polygon(0 0, 61% 0, 61% 22%, 76% 22%, 76% 70%, 100% 70%, 100% 100%, 0 100%); filter: blur(.4px) brightness(1.05); }
+  97% { left: 92.2%; opacity: .42; clip-path: polygon(0 0, 38% 0, 38% 28%, 54% 28%, 54% 100%, 0 100%); filter: blur(1.2px) saturate(.55); }
+  100% { left: 92.8%; opacity: 0; clip-path: polygon(0 0, 12% 0, 12% 100%, 0 100%); filter: blur(3px) saturate(.1); }
+}
+
+/* Door cleanup remains locked. */
+.loader-scene.fade-out::after,
+.loader-scene.portal-close.fade-out::after {
+  opacity: 0 !important;
+  height: 0 !important;
+  animation: none !important;
+}
+
+/* =========================================================
+   END C17-HOMIE-013
+========================================================= */
 
