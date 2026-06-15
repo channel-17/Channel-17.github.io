@@ -218,15 +218,15 @@ body {
 }
 
 /* =========================================================
-   HOMIE — YELLOWBRICK2 CLEAN TURTLEZORD RIG
-   Single source of truth. Old CSS blob turtle removed.
-   Uses cropped local PNG parts: shell/head/front/rear/tail.
+   HOMIE — YELLOWBRICK2 MEGAZORD CLEAN RIG
+   Single source of truth. Cropped transparent PNG pieces.
+   Shell stays centered under the percent; pieces attach to shell.
 ========================================================= */
 
 .turtle-track {
   position: relative;
   width: 100%;
-  height: 78px;
+  height: 82px;
   pointer-events: none;
 }
 
@@ -238,14 +238,14 @@ body {
 .turtle.homie-rig {
   position: absolute !important;
   left: 50% !important;
-  top: 8px !important;
-  width: 220px !important;
-  height: 120px !important;
-  margin-left: -110px !important;
+  top: 9px !important;
+  width: 150px !important;
+  height: 82px !important;
+  margin-left: -75px !important;
   opacity: 0.98 !important;
   overflow: visible !important;
   contain: none !important;
-  transform: translate3d(0,0,0) scale(0.64) !important;
+  transform: translate3d(0,0,0) scale(0.76) !important;
   transform-origin: 50% 62% !important;
   filter: drop-shadow(0 0 7px rgba(242,238,229,0.24));
   transition: opacity 0.5s ease;
@@ -273,93 +273,72 @@ body {
   user-select: none !important;
 }
 
-/* Shell is the anchor. Everything else attaches to it. */
+/* SHELL ANCHOR: center this under the loader number. */
 .turtle.homie-rig .homie-shell {
-  left: 32px !important;
-  top: 15px !important;
-  width: 105px !important;
+  left: 31px !important;
+  top: 13px !important;
+  width: 88px !important;
   z-index: 5 !important;
   transform-origin: 50% 72% !important;
 }
 
+/* Head/neck attaches to shell's front edge; no floating satellite. */
 .turtle.homie-rig .homie-head {
-  left: 118px !important;
-  top: 20px !important;
-  width: 36px !important;
+  left: 104px !important;
+  top: 18px !important;
+  width: 31px !important;
   z-index: 6 !important;
-  transform-origin: 10% 72% !important;
+  transform-origin: 0% 68% !important;
 }
 
 .turtle.homie-rig .homie-tail {
-  left: 12px !important;
-  top: 45px !important;
+  left: 14px !important;
+  top: 40px !important;
   width: 18px !important;
-  z-index: 1 !important;
-  transform-origin: 90% 50% !important;
+  z-index: 2 !important;
+  transform-origin: 92% 50% !important;
 }
 
 .turtle.homie-rig .homie-rear {
-  left: 33px !important;
-  top: 58px !important;
-  width: 31px !important;
+  left: 37px !important;
+  top: 48px !important;
+  width: 28px !important;
   z-index: 3 !important;
-  transform-origin: 74% 18% !important;
+  transform-origin: 75% 18% !important;
 }
 
-/* fleg.png is currently too dirty/large for silhouette. fleg2 is the readable front paddle. */
-.turtle.homie-rig .homie-front {
-  display: none !important;
-}
+/* fleg.png stays hidden. fleg2 is the readable front paddle. */
+.turtle.homie-rig .homie-front { display: none !important; }
 
 .turtle.homie-rig .homie-front2 {
-  left: 113px !important;
-  top: 52px !important;
-  width: 31px !important;
+  left: 97px !important;
+  top: 45px !important;
+  width: 26px !important;
   z-index: 4 !important;
-  transform-origin: 18% 16% !important;
+  transform-origin: 15% 16% !important;
 }
 
 .turtle.homie-rig.walk {
-  animation: yb2CleanBody 2.05s ease-in-out infinite !important;
+  animation: yb2MegaBody 2.15s ease-in-out infinite !important;
 }
-.turtle.homie-rig.walk .homie-shell { animation: yb2CleanShell 2.05s ease-in-out infinite !important; }
-.turtle.homie-rig.walk .homie-head { animation: yb2CleanHead 2.05s ease-in-out infinite !important; }
-.turtle.homie-rig.walk .homie-front2 { animation: yb2CleanFrontPull 2.05s ease-in-out infinite !important; }
-.turtle.homie-rig.walk .homie-rear { animation: yb2CleanRearSupport 2.05s ease-in-out infinite !important; }
-.turtle.homie-rig.walk .homie-tail { animation: yb2CleanTail 2.05s ease-in-out infinite !important; }
+.turtle.homie-rig.walk .homie-shell { animation: yb2MegaShell 2.15s ease-in-out infinite !important; }
+.turtle.homie-rig.walk .homie-head { animation: yb2MegaHead 2.15s ease-in-out infinite !important; }
+.turtle.homie-rig.walk .homie-front2 { animation: yb2MegaFrontPull 2.15s ease-in-out infinite !important; }
+.turtle.homie-rig.walk .homie-rear { animation: yb2MegaRearSupport 2.15s ease-in-out infinite !important; }
+.turtle.homie-rig.walk .homie-tail { animation: yb2MegaTail 2.15s ease-in-out infinite !important; }
 
-@keyframes yb2CleanBody {
-  0%,100% { transform: translate3d(0,0,0) scale(0.64) rotate(0deg) !important; }
-  48% { transform: translate3d(0.6px,0.4px,0) scale(0.64) rotate(0.35deg) !important; }
+@keyframes yb2MegaBody {
+  0%,100% { transform: translate3d(0,0,0) scale(0.76) rotate(0deg) !important; }
+  48% { transform: translate3d(0.6px,0.4px,0) scale(0.76) rotate(0.28deg) !important; }
 }
-@keyframes yb2CleanShell {
-  0%,100% { transform: translate3d(0,0,0) rotate(0deg); }
-  48% { transform: translate3d(0.8px,0.4px,0) rotate(0.5deg); }
-}
-@keyframes yb2CleanHead {
-  0%,100% { transform: translate3d(0,0,0) rotate(0deg); }
-  42% { transform: translate3d(1.8px,-0.6px,0) rotate(-3deg); }
-  70% { transform: translate3d(0.5px,0.2px,0) rotate(1deg); }
-}
-@keyframes yb2CleanFrontPull {
-  0%,100% { transform: translate3d(0,0,0) rotate(0deg) scale(1); }
-  28% { transform: translate3d(3px,-1px,0) rotate(13deg) scale(1.04); }
-  58% { transform: translate3d(-1px,1px,0) rotate(-12deg) scale(0.96); }
-}
-@keyframes yb2CleanRearSupport {
-  0%,100% { transform: translate3d(0,0,0) rotate(0deg); }
-  48% { transform: translate3d(-0.9px,0.7px,0) rotate(-7deg); }
-}
-@keyframes yb2CleanTail {
-  0%,100% { transform: translate3d(0,0,0) rotate(0deg); opacity: .85; }
-  50% { transform: translate3d(-0.7px,0.2px,0) rotate(-3deg); opacity: .72; }
-}
+@keyframes yb2MegaShell { 0%,100% { transform: translate3d(0,0,0) rotate(0deg); } 48% { transform: translate3d(0.6px,0.4px,0) rotate(0.35deg); } }
+@keyframes yb2MegaHead { 0%,100% { transform: translate3d(0,0,0) rotate(0deg); } 48% { transform: translate3d(0.9px,-0.2px,0) rotate(-1.2deg); } }
+@keyframes yb2MegaFrontPull { 0%,100% { transform: translate3d(0,0,0) rotate(0deg) scaleX(1); } 28% { transform: translate3d(2.4px,-1.0px,0) rotate(13deg) scaleX(1.06); } 58% { transform: translate3d(-1.0px,1.0px,0) rotate(-13deg) scaleX(.96); } }
+@keyframes yb2MegaRearSupport { 0%,100% { transform: translate3d(0,0,0) rotate(0deg); } 45% { transform: translate3d(-0.8px,0.8px,0) rotate(-6deg); } }
+@keyframes yb2MegaTail { 0%,100% { transform: rotate(0deg); } 52% { transform: rotate(-5deg); } }
 
 .turtle.homie-rig.notice .homie-head {
-  animation: yb2CleanNoticeHead .72s ease-out forwards !important;
-}
-@keyframes yb2CleanNoticeHead {
-  to { transform: translate3d(3px,-8px,0) rotate(-18deg) scale(1.02); }
+  transform: translate3d(3px,-4px,0) rotate(-18deg) scale(1.04) !important;
 }
 
 .turtle.homie-rig.hide .homie-head,
@@ -370,92 +349,75 @@ body {
   opacity: 0 !important;
 }
 .turtle.homie-rig.hide .homie-shell {
-  animation: yb2CleanHideShell .09s steps(2) infinite !important;
+  opacity: 1 !important;
+  animation: yb2MegaHideShell .08s steps(2) infinite !important;
 }
-@keyframes yb2CleanHideShell {
-  50% { transform: translate3d(1px,-.5px,0) rotate(0.8deg); }
-}
+@keyframes yb2MegaHideShell { 50% { transform: translate3d(1px,-.5px,0); } }
 
 .turtle.homie-rig.peek .homie-head {
   opacity: 1 !important;
-  animation: yb2CleanPeekHead 1.05s ease-out forwards !important;
+  animation: yb2MegaPeekHead 1.05s ease-out forwards !important;
 }
-.turtle.homie-rig.peek .homie-shell { animation: yb2CleanPeekShell 1.05s ease-out forwards !important; }
+.turtle.homie-rig.peek .homie-shell { animation: yb2MegaPeekShell 1.05s ease-out forwards !important; }
 .turtle.homie-rig.peek .homie-front2,
 .turtle.homie-rig.peek .homie-rear,
 .turtle.homie-rig.peek .homie-tail { opacity: .38 !important; }
-@keyframes yb2CleanPeekHead {
-  0% { transform: translate3d(-10px,4px,0) rotate(5deg) scale(.5); opacity: 0; }
-  45% { transform: translate3d(-4px,1px,0) rotate(-4deg) scale(.72); opacity: .75; }
-  100% { transform: translate3d(5px,-9px,0) rotate(-19deg) scale(1); opacity: 1; }
+@keyframes yb2MegaPeekHead {
+  0% { transform: translate3d(-14px,4px,0) rotate(5deg) scale(.45); opacity: 0; }
+  45% { transform: translate3d(-7px,1px,0) rotate(-4deg) scale(.68); opacity: .75; }
+  100% { transform: translate3d(3px,-6px,0) rotate(-19deg) scale(.95); opacity: 1; }
 }
-@keyframes yb2CleanPeekShell { to { transform: translate3d(-.8px,.3px,0) rotate(-1deg); } }
+@keyframes yb2MegaPeekShell { to { transform: translate3d(-.8px,.3px,0) rotate(-1deg); } }
 
-/* Door is ahead and lower. */
+/* Door stays ahead, grounded, and separate from the bar. */
 .loader-scene::after {
   content: "";
   position: absolute;
-  left: calc(50% + 108px) !important;
-  top: calc(100% + 31px) !important;
-  width: 8px !important;
+  left: calc(50% + 102px) !important;
+  top: calc(100% + 30px) !important;
+  width: 7px !important;
   height: 0;
   border-radius: 999px 999px 4px 4px !important;
   opacity: 0;
-  transform: translateY(-100%) scaleX(0.5) !important;
-  background: linear-gradient(90deg, rgba(0,0,0,0.85) 0 18%, rgba(242,238,229,0.98) 42% 58%, rgba(0,0,0,0.85) 82% 100%) !important;
+  transform: translateY(-100%) scaleX(0.45) !important;
+  background: linear-gradient(90deg, rgba(0,0,0,0.88) 0 18%, rgba(242,238,229,0.98) 42% 58%, rgba(0,0,0,0.88) 82% 100%) !important;
+  box-shadow: 0 0 8px rgba(242,238,229,.9), 0 0 22px rgba(242,238,229,.38), 0 0 42px rgba(223,255,63,.14) !important;
   z-index: 95 !important;
   pointer-events: none;
-  box-shadow: 0 0 8px rgba(242,238,229,0.9), 0 0 22px rgba(242,238,229,0.38) !important;
   transition: none !important;
 }
-.loader-scene.portal-open::after { animation: yb2CleanDoorOpen .32s steps(4,end) forwards !important; }
-.loader-scene.portal-close::after { animation: yb2CleanDoorClose .32s steps(4,end) forwards !important; }
-@keyframes yb2CleanDoorOpen {
-  0% { height:0; opacity:0; transform:translateY(-100%) scaleX(.35); }
-  100% { height:54px; opacity:1; transform:translateY(-100%) scaleX(1); }
-}
-@keyframes yb2CleanDoorClose {
-  0% { height:54px; opacity:1; transform:translateY(-100%) scaleX(1); }
-  100% { height:0; opacity:0; transform:translateY(-100%) scaleX(.35); }
-}
-.loader-scene.fade-out::after,
-.loader-scene.portal-close.fade-out::after { opacity:0 !important; height:0 !important; animation:none !important; }
+.loader-scene.portal-open::after { animation: yb2MegaDoorOpen .32s steps(4,end) forwards !important; }
+.loader-scene.portal-close::after { animation: yb2MegaDoorClose .34s steps(4,end) forwards !important; }
+@keyframes yb2MegaDoorOpen { 0% { height:0; opacity:0; } 25% { height:14px; opacity:1; } 50% { height:28px; opacity:1; } 75% { height:42px; opacity:1; } 100% { height:54px; opacity:1; } }
+@keyframes yb2MegaDoorClose { 0% { height:54px; opacity:1; } 25% { height:40px; opacity:1; } 50% { height:26px; opacity:.78; } 75% { height:12px; opacity:.42; } 100% { height:0; opacity:0; } }
 
 .turtle.homie-rig.escape {
   opacity: 1 !important;
-  animation: yb2CleanDoorRun 5.05s cubic-bezier(.30,0,.10,1) forwards !important;
+  animation: yb2MegaDoorRun 5.05s cubic-bezier(.30,0,.10,1) forwards !important;
 }
-.turtle.homie-rig.escape .homie-head { animation: yb2CleanEscapeHead .46s ease-in-out infinite !important; opacity:1 !important; }
-.turtle.homie-rig.escape .homie-shell { animation: yb2CleanEscapeShell .46s ease-in-out infinite !important; }
-.turtle.homie-rig.escape .homie-front2 { animation: yb2CleanEscapeFront .46s ease-in-out infinite !important; opacity:1 !important; }
-.turtle.homie-rig.escape .homie-rear { animation: yb2CleanEscapeRear .46s ease-in-out infinite !important; opacity:.9 !important; }
-.turtle.homie-rig.escape .homie-tail { animation: yb2CleanEscapeTail .46s ease-in-out infinite !important; opacity:.85 !important; }
-@keyframes yb2CleanDoorRun {
-  0% { transform: translate3d(0,0,0) scale(0.64) !important; opacity:1; }
-  70% { transform: translate3d(178px,0,0) scale(0.64) !important; opacity:1; clip-path: inset(0 0 0 0); }
-  84% { transform: translate3d(212px,0,0) scale(0.61) !important; opacity:.9; clip-path: inset(0 0 0 0); }
-  93% { transform: translate3d(238px,0,0) scale(0.56) !important; opacity:.55; clip-path: inset(0 0 0 62%); }
-  100% { transform: translate3d(252px,0,0) scale(0.50) !important; opacity:0; clip-path: inset(0 0 0 100%); }
+.turtle.homie-rig.escape .homie-head { animation: yb2MegaEscapeHead .46s ease-in-out infinite !important; opacity:1 !important; }
+.turtle.homie-rig.escape .homie-shell { animation: yb2MegaEscapeShell .46s ease-in-out infinite !important; }
+.turtle.homie-rig.escape .homie-front2 { animation: yb2MegaEscapeFront .46s ease-in-out infinite !important; opacity:1 !important; }
+.turtle.homie-rig.escape .homie-rear { animation: yb2MegaEscapeRear .46s ease-in-out infinite !important; opacity:.9 !important; }
+.turtle.homie-rig.escape .homie-tail { animation: yb2MegaEscapeTail .46s ease-in-out infinite !important; opacity:.85 !important; }
+@keyframes yb2MegaDoorRun {
+  0% { transform: translate3d(0,0,0) scale(.76) !important; opacity:1; }
+  68% { transform: translate3d(170px,0,0) scale(.76) !important; opacity:1; }
+  78% { transform: translate3d(194px,0,0) scale(.72) !important; opacity:.94; clip-path: inset(0 0 0 0); }
+  91% { transform: translate3d(220px,0,0) scale(.64) !important; opacity:.58; clip-path: inset(0 0 0 62%); }
+  100% { transform: translate3d(235px,0,0) scale(.58) !important; opacity:0; clip-path: inset(0 0 0 100%); }
 }
-@keyframes yb2CleanEscapeHead {
-  0%,100% { transform: translate3d(0,0,0) rotate(0deg); }
-  50% { transform: translate3d(5px,-1px,0) rotate(-6deg); }
-}
-@keyframes yb2CleanEscapeShell {
-  0%,100% { transform: translate3d(0,0,0) rotate(0deg); }
-  50% { transform: translate3d(2px,1px,0) rotate(1.2deg); }
-}
-@keyframes yb2CleanEscapeFront {
-  0%,100% { transform: translate3d(0,0,0) rotate(0deg) scale(1); }
-  35% { transform: translate3d(6px,-2px,0) rotate(18deg) scale(1.08); }
-  65% { transform: translate3d(-2px,2px,0) rotate(-18deg) scale(.92); }
-}
-@keyframes yb2CleanEscapeRear {
-  0%,100% { transform: translate3d(0,0,0) rotate(0deg); }
-  50% { transform: translate3d(-1.5px,1px,0) rotate(-9deg); }
-}
-@keyframes yb2CleanEscapeTail {
-  50% { transform: translate3d(-1px,.4px,0) rotate(-5deg); opacity:.7; }
+@keyframes yb2MegaEscapeHead { 0%,100% { transform: translate3d(0,0,0) rotate(0); } 44% { transform: translate3d(3px,-1px,0) rotate(-8deg); } }
+@keyframes yb2MegaEscapeShell { 0%,100% { transform: translate3d(0,0,0) rotate(0); } 50% { transform: translate3d(1px,.8px,0) rotate(1deg); } }
+@keyframes yb2MegaEscapeFront { 0%,100% { transform: translate3d(0,0,0) rotate(0) scaleX(1); } 25% { transform: translate3d(4px,-1px,0) rotate(19deg) scaleX(1.12); } 55% { transform: translate3d(-2px,1px,0) rotate(-18deg) scaleX(.9); } }
+@keyframes yb2MegaEscapeRear { 0%,100% { transform: translate3d(0,0,0) rotate(0); } 50% { transform: translate3d(-1px,1px,0) rotate(-8deg); } }
+@keyframes yb2MegaEscapeTail { 0%,100% { transform: rotate(0); } 50% { transform: rotate(-8deg); } }
+
+.loader-scene.fade-out::after,
+.loader-scene.portal-close.fade-out::after {
+  opacity: 0 !important;
+  height: 0 !important;
+  animation: none !important;
 }
 
 /* =========================================================
