@@ -5968,20 +5968,19 @@ body {
 @keyframes yb2FireEscapeTail { 0%,100%{transform:rotate(6deg)} 45%{transform:rotate(-12deg)} }
 
 /* =========================================================
-   YELLOWBRICK2 — TURTLEZORD ASSEMBLY PASS 1.0
-   Full-file replacement patch: assemble Little Homie as ONE turtle.
-   Assets stay Jinx's littlehomie.* filenames. No PNG edits.
+   CHANNEL 17 — TURTLEZORD TRUE ASSEMBLY PASS
+   Real fix: cropped PNG canvases + tight reference placement.
+   Shell is anchor. Head/legs/tail attach to shell.
 ========================================================= */
 .turtle.homie-rig {
-  left: 50% !important;
-  top: 22px !important;
-  width: 108px !important;
-  height: 62px !important;
-  margin-left: -54px !important;
-  opacity: 0.98 !important;
+  top: 10px !important;
+  width: 160px !important;
+  height: 88px !important;
+  margin-left: -80px !important;
+  opacity: 1 !important;
   transform: translate3d(0,0,0) scale(1) !important;
-  transform-origin: 50% 72% !important;
-  filter: drop-shadow(0 0 8px rgba(242,238,229,0.24)) !important;
+  transform-origin: 50% 70% !important;
+  filter: drop-shadow(0 0 7px rgba(242,238,229,0.30)) !important;
   overflow: visible !important;
 }
 .turtle.homie-rig .homie-part {
@@ -5995,49 +5994,50 @@ body {
   border: 0 !important;
   pointer-events: none !important;
 }
-.turtle.homie-rig .homie-shell {
-  left: 22px !important;
-  top: 6px !important;
-  width: 56px !important;
-  z-index: 5 !important;
-  transform-origin: 50% 72% !important;
-}
-.turtle.homie-rig .homie-head {
-  left: 69px !important;
-  top: 14px !important;
-  width: 22px !important;
-  z-index: 6 !important;
-  transform-origin: 8% 62% !important;
-}
 .turtle.homie-rig .homie-tail {
-  left: 14px !important;
-  top: 28px !important;
-  width: 15px !important;
-  z-index: 2 !important;
+  left: 12px !important;
+  top: 42px !important;
+  width: 19px !important;
+  z-index: 1 !important;
   transform-origin: 92% 50% !important;
 }
 .turtle.homie-rig .homie-rear {
   left: 25px !important;
-  top: 35px !important;
-  width: 22px !important;
+  top: 50px !important;
+  width: 35px !important;
   z-index: 3 !important;
-  transform-origin: 80% 22% !important;
+  transform-origin: 76% 20% !important;
 }
 .turtle.homie-rig .homie-front {
-  left: 60px !important;
-  top: 34px !important;
-  width: 22px !important;
-  z-index: 4 !important;
+  left: 93px !important;
+  top: 47px !important;
+  width: 32px !important;
+  z-index: 3 !important;
   transform-origin: 14% 18% !important;
 }
 .turtle.homie-rig .homie-front2 {
-  left: 65px !important;
-  top: 32px !important;
-  width: 20px !important;
+  left: 108px !important;
+  top: 37px !important;
+  width: 27px !important;
   z-index: 4 !important;
-  transform-origin: 18% 20% !important;
-  opacity: .92 !important;
+  transform-origin: 16% 19% !important;
+  opacity: .94 !important;
 }
+.turtle.homie-rig .homie-shell {
+  left: 25px !important;
+  top: 10px !important;
+  width: 95px !important;
+  z-index: 5 !important;
+  transform-origin: 50% 72% !important;
+}
+.turtle.homie-rig .homie-head {
+  left: 95px !important;
+  top: 16px !important;
+  width: 35px !important;
+  z-index: 6 !important;
+  transform-origin: 4% 76% !important;
+}
+
 .turtle.homie-rig.walk { animation: yb2ZordBody 1.9s ease-in-out infinite !important; }
 .turtle.homie-rig.walk .homie-shell { animation: yb2ZordShell 1.9s ease-in-out infinite !important; }
 .turtle.homie-rig.walk .homie-head { animation: yb2ZordHead 1.9s ease-in-out infinite !important; }
@@ -6045,38 +6045,43 @@ body {
 .turtle.homie-rig.walk .homie-front2 { animation: yb2ZordFrontB 1.9s ease-in-out infinite !important; }
 .turtle.homie-rig.walk .homie-rear { animation: yb2ZordRear 1.9s ease-in-out infinite !important; }
 .turtle.homie-rig.walk .homie-tail { animation: yb2ZordTail 1.9s ease-in-out infinite !important; }
+
 @keyframes yb2ZordBody { 0%,100%{transform:translate3d(0,0,0) scale(1)} 48%{transform:translate3d(.8px,.4px,0) scale(1)} }
-@keyframes yb2ZordShell { 0%,100%{transform:translate3d(0,0,0) rotate(0)} 48%{transform:translate3d(.4px,.3px,0) rotate(-.8deg)} }
-@keyframes yb2ZordHead { 0%,100%{transform:translate3d(-2px,1px,0) rotate(3deg) scale(.9)} 48%{transform:translate3d(0,0,0) rotate(-2deg) scale(.94)} }
+@keyframes yb2ZordShell { 0%,100%{transform:translate3d(0,0,0) rotate(0)} 48%{transform:translate3d(.3px,.2px,0) rotate(-.6deg)} }
+@keyframes yb2ZordHead { 0%,100%{transform:translate3d(-3px,1px,0) rotate(3deg) scale(.92)} 48%{transform:translate3d(0,0,0) rotate(-2deg) scale(.96)} }
 @keyframes yb2ZordFrontA { 0%,100%{transform:rotate(12deg) translate3d(0,0,0)} 48%{transform:rotate(-18deg) translate3d(-3px,2px,0)} }
-@keyframes yb2ZordFrontB { 0%,100%{transform:rotate(-10deg) translate3d(0,0,0)} 48%{transform:rotate(14deg) translate3d(-2px,2px,0)} }
+@keyframes yb2ZordFrontB { 0%,100%{transform:rotate(-12deg) translate3d(0,0,0)} 48%{transform:rotate(16deg) translate3d(-2px,2px,0)} }
 @keyframes yb2ZordRear { 0%,100%{transform:rotate(-4deg) translate3d(0,0,0)} 48%{transform:rotate(8deg) translate3d(-1px,1px,0)} }
-@keyframes yb2ZordTail { 0%,100%{transform:rotate(2deg)} 48%{transform:rotate(-6deg)} }
+@keyframes yb2ZordTail { 0%,100%{transform:rotate(2deg)} 48%{transform:rotate(-7deg)} }
+
 .turtle.homie-rig.notice { animation: yb2ZordNoticeBody .76s ease-out forwards !important; }
 .turtle.homie-rig.notice .homie-head { animation: yb2ZordNoticeHead .76s ease-out forwards !important; }
 .turtle.homie-rig.notice .homie-shell { animation: yb2ZordNoticeShell .76s ease-out forwards !important; }
 @keyframes yb2ZordNoticeBody { to{transform:translate3d(0,-2px,0) scale(1)} }
 @keyframes yb2ZordNoticeShell { to{transform:rotate(-1deg)} }
-@keyframes yb2ZordNoticeHead { to{transform:translate3d(2px,-7px,0) rotate(-15deg) scale(.96)} }
+@keyframes yb2ZordNoticeHead { to{transform:translate3d(2px,-7px,0) rotate(-14deg) scale(.98)} }
+
 .turtle.homie-rig.hide .homie-head,
 .turtle.homie-rig.hide .homie-front,
 .turtle.homie-rig.hide .homie-front2,
 .turtle.homie-rig.hide .homie-rear,
 .turtle.homie-rig.hide .homie-tail {
   opacity: 0 !important;
-  transform: translate3d(-12px,6px,0) scale(.35) !important;
+  transform: translate3d(-14px,7px,0) scale(.30) !important;
   transition: opacity .2s ease, transform .2s ease !important;
 }
 .turtle.homie-rig.hide .homie-shell { animation: yb2ZordHideShell .1s steps(2) infinite !important; }
 @keyframes yb2ZordHideShell { 0%,100%{transform:translate3d(0,0,0) rotate(.4deg)} 50%{transform:translate3d(.8px,0,0) rotate(-.6deg)} }
+
 .turtle.homie-rig.peek .homie-head { opacity:1!important; animation: yb2ZordPeekHead 1.05s ease-out forwards !important; }
 .turtle.homie-rig.peek .homie-shell { animation: yb2ZordPeekShell 1.05s ease-out forwards !important; }
 .turtle.homie-rig.peek .homie-front,
 .turtle.homie-rig.peek .homie-front2,
 .turtle.homie-rig.peek .homie-rear,
-.turtle.homie-rig.peek .homie-tail { opacity:.35!important; transform:scale(.55)!important; }
-@keyframes yb2ZordPeekHead { 0%{transform:translate3d(-14px,6px,0) rotate(7deg) scale(.38);opacity:0} 48%{transform:translate3d(-6px,2px,0) rotate(-4deg) scale(.72);opacity:.75} 100%{transform:translate3d(5px,-9px,0) rotate(-20deg) scale(.98);opacity:1} }
+.turtle.homie-rig.peek .homie-tail { opacity:.34!important; transform:scale(.55)!important; }
+@keyframes yb2ZordPeekHead { 0%{transform:translate3d(-17px,7px,0) rotate(7deg) scale(.34);opacity:0} 48%{transform:translate3d(-7px,2px,0) rotate(-4deg) scale(.70);opacity:.75} 100%{transform:translate3d(6px,-9px,0) rotate(-19deg) scale(1);opacity:1} }
 @keyframes yb2ZordPeekShell { to{transform:translate3d(-1px,.3px,0) rotate(-1deg)} }
+
 .turtle.homie-rig.escape { opacity:1!important; animation: yb2ZordDoorRun 5.05s cubic-bezier(.30,0,.10,1) forwards !important; }
 .turtle.homie-rig.escape .homie-head { animation: yb2ZordEscapeHead .46s ease-in-out infinite!important; opacity:1!important; }
 .turtle.homie-rig.escape .homie-shell { animation: yb2ZordEscapeShell .46s ease-in-out infinite!important; }
@@ -6084,10 +6089,10 @@ body {
 .turtle.homie-rig.escape .homie-front2 { animation: yb2ZordEscapeFrontB .46s ease-in-out infinite!important; opacity:.95!important; }
 .turtle.homie-rig.escape .homie-rear { animation: yb2ZordEscapeRear .46s ease-in-out infinite!important; opacity:.9!important; }
 .turtle.homie-rig.escape .homie-tail { animation: yb2ZordEscapeTail .46s ease-in-out infinite!important; opacity:.85!important; }
-@keyframes yb2ZordDoorRun { 0%{transform:translate3d(0,0,0) scale(1);opacity:1} 68%{transform:translate3d(176px,0,0) scale(1);opacity:1} 78%{transform:translate3d(202px,0,0) scale(.92);opacity:.94;clip-path:inset(0 0 0 0)} 91%{transform:translate3d(230px,0,0) scale(.78);opacity:.58;clip-path:inset(0 0 0 62%)} 100%{transform:translate3d(250px,0,0) scale(.6);opacity:0;clip-path:inset(0 0 0 100%)} }
-@keyframes yb2ZordEscapeHead { 0%,100%{transform:translate3d(4px,-8px,0) rotate(-18deg) scale(.98)} 45%{transform:translate3d(8px,-9px,0) rotate(-12deg) scale(1.02)} }
+@keyframes yb2ZordDoorRun { 0%{transform:translate3d(0,0,0) scale(1);opacity:1} 68%{transform:translate3d(176px,0,0) scale(1);opacity:1} 78%{transform:translate3d(202px,0,0) scale(.94);opacity:.94;clip-path:inset(0 0 0 0)} 91%{transform:translate3d(230px,0,0) scale(.80);opacity:.58;clip-path:inset(0 0 0 62%)} 100%{transform:translate3d(250px,0,0) scale(.62);opacity:0;clip-path:inset(0 0 0 100%)} }
+@keyframes yb2ZordEscapeHead { 0%,100%{transform:translate3d(4px,-8px,0) rotate(-18deg) scale(1)} 45%{transform:translate3d(8px,-9px,0) rotate(-12deg) scale(1.04)} }
 @keyframes yb2ZordEscapeShell { 0%,100%{transform:translate3d(0,0,0) rotate(-1deg)} 45%{transform:translate3d(-2px,.8px,0) rotate(1deg)} }
 @keyframes yb2ZordEscapeFrontA { 0%,100%{transform:rotate(24deg) translate3d(1px,0,0)} 45%{transform:rotate(-30deg) translate3d(-4px,3px,0)} }
 @keyframes yb2ZordEscapeFrontB { 0%,100%{transform:rotate(-20deg) translate3d(0,1px,0)} 45%{transform:rotate(24deg) translate3d(-3px,3px,0)} }
-@keyframes yb2ZordEscapeRear { 0%,100%{transform:rotate(-8deg) translate3d(0,0,0)} 45%{transform:rotate(16deg) translate3d(-2px,2px,0)} }
+@keyframes yb2ZordEscapeRear { 0%,100%{transform:rotate(-9deg) translate3d(0,0,0)} 45%{transform:rotate(16deg) translate3d(-2px,2px,0)} }
 @keyframes yb2ZordEscapeTail { 0%,100%{transform:rotate(6deg)} 45%{transform:rotate(-12deg)} }
