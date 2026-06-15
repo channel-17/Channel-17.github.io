@@ -5841,3 +5841,128 @@ body {
   0%,100% { transform: rotate(6deg); }
   45% { transform: rotate(-12deg); }
 }
+
+/* =========================================================
+   YELLOWBRICK2 — FIRE SCALE/RIG PLACEMENT FIX
+   - Uses Jinx's real littlehomie.* PNG filenames.
+   - Fixes: too tiny + disconnected floating parts.
+   - Cropped/cleaned PNGs are included in this ZIP under same names.
+========================================================= */
+.turtle.homie-rig {
+  top: 9px !important;
+  width: 150px !important;
+  height: 88px !important;
+  margin-left: -75px !important;
+  opacity: 1 !important;
+  transform: translate3d(0,0,0) scale(0.92) !important;
+  transform-origin: 50% 72% !important;
+  filter: drop-shadow(0 0 8px rgba(242,238,229,0.28)) !important;
+  overflow: visible !important;
+}
+.turtle.homie-rig .homie-part {
+  position: absolute !important;
+  display: block !important;
+  object-fit: contain !important;
+  max-width: none !important;
+  height: auto !important;
+  opacity: 1 !important;
+  background: transparent !important;
+  border: 0 !important;
+  pointer-events: none !important;
+}
+.turtle.homie-rig .homie-shell {
+  left: 28px !important;
+  top: 8px !important;
+  width: 86px !important;
+  z-index: 5 !important;
+  transform-origin: 50% 72% !important;
+}
+.turtle.homie-rig .homie-head {
+  left: 104px !important;
+  top: 23px !important;
+  width: 32px !important;
+  z-index: 6 !important;
+  transform-origin: 9% 62% !important;
+}
+.turtle.homie-rig .homie-tail {
+  left: 12px !important;
+  top: 42px !important;
+  width: 27px !important;
+  z-index: 2 !important;
+  transform-origin: 92% 50% !important;
+}
+.turtle.homie-rig .homie-rear {
+  left: 36px !important;
+  top: 53px !important;
+  width: 28px !important;
+  z-index: 3 !important;
+  transform-origin: 80% 22% !important;
+}
+.turtle.homie-rig .homie-front {
+  left: 93px !important;
+  top: 51px !important;
+  width: 31px !important;
+  z-index: 4 !important;
+  transform-origin: 14% 18% !important;
+}
+.turtle.homie-rig .homie-front2 {
+  left: 102px !important;
+  top: 47px !important;
+  width: 28px !important;
+  z-index: 4 !important;
+  transform-origin: 18% 20% !important;
+  opacity: .92 !important;
+}
+.turtle.homie-rig.walk { animation: yb2FireBody 1.9s ease-in-out infinite !important; }
+.turtle.homie-rig.walk .homie-shell { animation: yb2FireShell 1.9s ease-in-out infinite !important; }
+.turtle.homie-rig.walk .homie-head { animation: yb2FireHead 1.9s ease-in-out infinite !important; }
+.turtle.homie-rig.walk .homie-front { animation: yb2FireFrontA 1.9s ease-in-out infinite !important; }
+.turtle.homie-rig.walk .homie-front2 { animation: yb2FireFrontB 1.9s ease-in-out infinite !important; }
+.turtle.homie-rig.walk .homie-rear { animation: yb2FireRear 1.9s ease-in-out infinite !important; }
+.turtle.homie-rig.walk .homie-tail { animation: yb2FireTail 1.9s ease-in-out infinite !important; }
+@keyframes yb2FireBody { 0%,100%{transform:translate3d(0,0,0) scale(.92)} 48%{transform:translate3d(.8px,.4px,0) scale(.92)} }
+@keyframes yb2FireShell { 0%,100%{transform:translate3d(0,0,0) rotate(0)} 48%{transform:translate3d(.4px,.3px,0) rotate(-.8deg)} }
+@keyframes yb2FireHead { 0%,100%{transform:translate3d(-4px,1px,0) rotate(3deg) scale(.88)} 48%{transform:translate3d(-1px,0,0) rotate(-2deg) scale(.92)} }
+@keyframes yb2FireFrontA { 0%,100%{transform:rotate(16deg) translate3d(0,0,0)} 48%{transform:rotate(-22deg) translate3d(-4px,2px,0)} }
+@keyframes yb2FireFrontB { 0%,100%{transform:rotate(-14deg) translate3d(0,0,0)} 48%{transform:rotate(18deg) translate3d(-2px,3px,0)} }
+@keyframes yb2FireRear { 0%,100%{transform:rotate(-5deg) translate3d(0,0,0)} 48%{transform:rotate(9deg) translate3d(-1px,1px,0)} }
+@keyframes yb2FireTail { 0%,100%{transform:rotate(2deg)} 48%{transform:rotate(-7deg)} }
+.turtle.homie-rig.notice { animation: yb2FireNoticeBody .76s ease-out forwards !important; }
+.turtle.homie-rig.notice .homie-head { animation: yb2FireNoticeHead .76s ease-out forwards !important; }
+.turtle.homie-rig.notice .homie-shell { animation: yb2FireNoticeShell .76s ease-out forwards !important; }
+@keyframes yb2FireNoticeBody { to{transform:translate3d(0,-2px,0) scale(.92)} }
+@keyframes yb2FireNoticeShell { to{transform:rotate(-1deg)} }
+@keyframes yb2FireNoticeHead { to{transform:translate3d(2px,-8px,0) rotate(-15deg) scale(.94)} }
+.turtle.homie-rig.hide .homie-head,
+.turtle.homie-rig.hide .homie-front,
+.turtle.homie-rig.hide .homie-front2,
+.turtle.homie-rig.hide .homie-rear,
+.turtle.homie-rig.hide .homie-tail {
+  opacity: 0 !important;
+  transform: translate3d(-18px,8px,0) scale(.35) !important;
+  transition: opacity .2s ease, transform .2s ease !important;
+}
+.turtle.homie-rig.hide .homie-shell { animation: yb2FireHideShell .1s steps(2) infinite !important; }
+@keyframes yb2FireHideShell { 0%,100%{transform:translate3d(0,0,0) rotate(.4deg)} 50%{transform:translate3d(.8px,0,0) rotate(-.6deg)} }
+.turtle.homie-rig.peek .homie-head { opacity:1!important; animation: yb2FirePeekHead 1.05s ease-out forwards !important; }
+.turtle.homie-rig.peek .homie-shell { animation: yb2FirePeekShell 1.05s ease-out forwards !important; }
+.turtle.homie-rig.peek .homie-front,
+.turtle.homie-rig.peek .homie-front2,
+.turtle.homie-rig.peek .homie-rear,
+.turtle.homie-rig.peek .homie-tail { opacity:.35!important; transform:scale(.55)!important; }
+@keyframes yb2FirePeekHead { 0%{transform:translate3d(-20px,8px,0) rotate(7deg) scale(.38);opacity:0} 48%{transform:translate3d(-8px,2px,0) rotate(-4deg) scale(.70);opacity:.75} 100%{transform:translate3d(5px,-10px,0) rotate(-20deg) scale(.96);opacity:1} }
+@keyframes yb2FirePeekShell { to{transform:translate3d(-1px,.3px,0) rotate(-1deg)} }
+.turtle.homie-rig.escape { opacity:1!important; animation: yb2FireDoorRun 5.05s cubic-bezier(.30,0,.10,1) forwards !important; }
+.turtle.homie-rig.escape .homie-head { animation: yb2FireEscapeHead .46s ease-in-out infinite!important; opacity:1!important; }
+.turtle.homie-rig.escape .homie-shell { animation: yb2FireEscapeShell .46s ease-in-out infinite!important; }
+.turtle.homie-rig.escape .homie-front { animation: yb2FireEscapeFrontA .46s ease-in-out infinite!important; opacity:1!important; }
+.turtle.homie-rig.escape .homie-front2 { animation: yb2FireEscapeFrontB .46s ease-in-out infinite!important; opacity:.95!important; }
+.turtle.homie-rig.escape .homie-rear { animation: yb2FireEscapeRear .46s ease-in-out infinite!important; opacity:.9!important; }
+.turtle.homie-rig.escape .homie-tail { animation: yb2FireEscapeTail .46s ease-in-out infinite!important; opacity:.85!important; }
+@keyframes yb2FireDoorRun { 0%{transform:translate3d(0,0,0) scale(.92);opacity:1} 68%{transform:translate3d(176px,0,0) scale(.92);opacity:1} 78%{transform:translate3d(202px,0,0) scale(.86);opacity:.94;clip-path:inset(0 0 0 0)} 91%{transform:translate3d(230px,0,0) scale(.74);opacity:.58;clip-path:inset(0 0 0 62%)} 100%{transform:translate3d(250px,0,0) scale(.58);opacity:0;clip-path:inset(0 0 0 100%)} }
+@keyframes yb2FireEscapeHead { 0%,100%{transform:translate3d(4px,-9px,0) rotate(-18deg) scale(.96)} 45%{transform:translate3d(9px,-10px,0) rotate(-12deg) scale(1)} }
+@keyframes yb2FireEscapeShell { 0%,100%{transform:translate3d(0,0,0) rotate(-1deg)} 45%{transform:translate3d(-2px,.8px,0) rotate(1deg)} }
+@keyframes yb2FireEscapeFrontA { 0%,100%{transform:rotate(26deg) translate3d(1px,0,0)} 45%{transform:rotate(-34deg) translate3d(-5px,3px,0)} }
+@keyframes yb2FireEscapeFrontB { 0%,100%{transform:rotate(-22deg) translate3d(0,1px,0)} 45%{transform:rotate(26deg) translate3d(-3px,4px,0)} }
+@keyframes yb2FireEscapeRear { 0%,100%{transform:rotate(-10deg) translate3d(0,0,0)} 45%{transform:rotate(18deg) translate3d(-2px,2px,0)} }
+@keyframes yb2FireEscapeTail { 0%,100%{transform:rotate(6deg)} 45%{transform:rotate(-12deg)} }
