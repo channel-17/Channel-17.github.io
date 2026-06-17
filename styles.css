@@ -4396,3 +4396,256 @@ body {
     100% { transform: translate3d(212px,0,0) scale(.58) rotate(0deg) !important; opacity: 0; clip-path: inset(0 0 0 100%); }
   }
 }
+
+
+/* =========================================================
+   HOMIE RESET V3 — TRUE SILHOUETTE TURTLE
+   Old PNG Megazord retired. This is one SVG puppet:
+   shell / head / neck / front flipper / rear leg / tail.
+========================================================= */
+.loader-scene .turtle-track {
+  position: relative !important;
+  width: 100% !important;
+  height: 92px !important;
+  overflow: visible !important;
+  pointer-events: none !important;
+}
+
+#turtle.homie-silhouette,
+.loader-scene .turtle-track #turtle.homie-silhouette {
+  position: absolute !important;
+  left: 50% !important;
+  top: 30px !important;
+  width: 132px !important;
+  height: 74px !important;
+  margin-left: -66px !important;
+  opacity: .98 !important;
+  overflow: visible !important;
+  contain: none !important;
+  background: transparent !important;
+  border: 0 !important;
+  filter: drop-shadow(0 0 6px rgba(242,238,229,.30)) !important;
+  transform: translate3d(0,0,0) scale(.78) rotate(0deg) !important;
+  transform-origin: 50% 68% !important;
+  clip-path: none !important;
+  z-index: 6 !important;
+}
+
+#turtle.homie-silhouette,
+#turtle.homie-silhouette * {
+  box-sizing: border-box !important;
+  pointer-events: none !important;
+}
+
+#turtle.homie-silhouette .homie-sil-svg {
+  position: relative !important;
+  display: block !important;
+  width: 132px !important;
+  height: 74px !important;
+  overflow: visible !important;
+  background: transparent !important;
+}
+
+#turtle.homie-silhouette svg,
+#turtle.homie-silhouette svg *,
+#turtle.homie-silhouette .homie-sil-svg *,
+#turtle.homie-silhouette path,
+#turtle.homie-silhouette circle,
+#turtle.homie-silhouette ellipse,
+#turtle.homie-silhouette g {
+  position: static !important;
+  transform-box: fill-box !important;
+  transform-origin: center center !important;
+}
+
+#turtle.homie-silhouette path,
+#turtle.homie-silhouette circle {
+  fill: #000 !important;
+  stroke: rgba(242,238,229,.98) !important;
+  stroke-width: 3.2 !important;
+  stroke-linecap: round !important;
+  stroke-linejoin: round !important;
+  vector-effect: non-scaling-stroke !important;
+}
+
+#turtle.homie-silhouette .homie-sil-shadow {
+  fill: rgba(242,238,229,.15) !important;
+  stroke: none !important;
+  filter: blur(1px) !important;
+}
+
+#turtle.homie-silhouette .homie-shell-main {
+  fill: rgba(0,0,0,.22) !important;
+  stroke-width: 3.8 !important;
+}
+
+#turtle.homie-silhouette .homie-shell-line,
+#turtle.homie-silhouette .homie-shell-scar,
+#turtle.homie-silhouette .homie-mouth {
+  fill: none !important;
+  stroke: rgba(242,238,229,.56) !important;
+  stroke-width: 2.1 !important;
+}
+
+#turtle.homie-silhouette .homie-shell-scar {
+  opacity: .34 !important;
+}
+
+#turtle.homie-silhouette .homie-eye {
+  fill: rgba(242,238,229,.98) !important;
+  stroke: none !important;
+  filter: drop-shadow(0 0 4px rgba(242,238,229,.7)) !important;
+}
+
+#turtle.homie-silhouette .homie-sil-head { transform-origin: 6% 72% !important; }
+#turtle.homie-silhouette .homie-sil-neck { transform-origin: 0% 55% !important; }
+#turtle.homie-silhouette .homie-sil-front { transform-origin: 18% 12% !important; }
+#turtle.homie-silhouette .homie-sil-rear { transform-origin: 78% 14% !important; }
+#turtle.homie-silhouette .homie-sil-tail { transform-origin: 92% 50% !important; }
+#turtle.homie-silhouette .homie-sil-shell { transform-origin: 52% 70% !important; }
+
+/* Loader idle: living silhouette, not random div shapes. */
+#turtle.homie-silhouette.walk {
+  animation: homieSilBodyIdle 1.7s steps(2,end) infinite !important;
+}
+#turtle.homie-silhouette.walk .homie-sil-shell { animation: homieSilShellIdle 1.7s steps(2,end) infinite !important; }
+#turtle.homie-silhouette.walk .homie-sil-head,
+#turtle.homie-silhouette.walk .homie-sil-neck { animation: homieSilHeadIdle 1.7s steps(2,end) infinite !important; }
+#turtle.homie-silhouette.walk .homie-sil-front { animation: homieSilFrontMotor .72s steps(2,end) infinite !important; }
+#turtle.homie-silhouette.walk .homie-sil-rear { animation: homieSilRearBrace .72s steps(2,end) infinite reverse !important; }
+#turtle.homie-silhouette.walk .homie-sil-tail { animation: homieSilTailIdle 1.7s steps(2,end) infinite !important; }
+
+@keyframes homieSilBodyIdle {
+  0%,100% { transform: translate3d(0,0,0) scale(.78) rotate(0deg) !important; }
+  50% { transform: translate3d(.7px,.45px,0) scale(.78) rotate(.25deg) !important; }
+}
+@keyframes homieSilShellIdle { 50% { transform: translate3d(.5px,.35px,0) rotate(.6deg); } }
+@keyframes homieSilHeadIdle { 50% { transform: translate3d(1px,-.6px,0) rotate(-1.8deg); } }
+@keyframes homieSilFrontMotor {
+  0%,100% { transform: translate3d(0,0,0) rotate(-10deg) scaleX(1); }
+  50% { transform: translate3d(4px,-1px,0) rotate(21deg) scaleX(1.14); }
+}
+@keyframes homieSilRearBrace {
+  0%,100% { transform: translate3d(0,0,0) rotate(4deg); }
+  50% { transform: translate3d(-2px,1px,0) rotate(-13deg); }
+}
+@keyframes homieSilTailIdle { 50% { transform: rotate(-8deg); opacity: .70; } }
+
+/* 17% notice: neck/head extend, eye wakes. */
+#turtle.homie-silhouette.notice {
+  animation: homieSilNoticeBody .68s steps(3,end) infinite !important;
+}
+#turtle.homie-silhouette.notice .homie-sil-neck { transform: translate3d(4px,-2px,0) scaleX(1.12) rotate(-4deg) !important; }
+#turtle.homie-silhouette.notice .homie-sil-head { transform: translate3d(8px,-5px,0) rotate(-12deg) scale(1.03) !important; }
+#turtle.homie-silhouette.notice .homie-eye { filter: drop-shadow(0 0 8px rgba(242,238,229,.95)) !important; }
+@keyframes homieSilNoticeBody {
+  0%,100% { transform: translate3d(0,0,0) scale(.78) rotate(0deg) !important; }
+  50% { transform: translate3d(-.6px,.2px,0) scale(.78) rotate(-.35deg) !important; }
+}
+
+/* 19% hide: turtle instinct. */
+#turtle.homie-silhouette.hide .homie-sil-neck,
+#turtle.homie-silhouette.hide .homie-sil-head,
+#turtle.homie-silhouette.hide .homie-sil-front,
+#turtle.homie-silhouette.hide .homie-sil-rear,
+#turtle.homie-silhouette.hide .homie-sil-tail {
+  opacity: 0 !important;
+}
+#turtle.homie-silhouette.hide .homie-sil-shell {
+  animation: homieSilHideShell .09s steps(2,end) infinite !important;
+}
+@keyframes homieSilHideShell { 50% { transform: translate3d(1px,-.5px,0) rotate(.8deg); } }
+
+/* Complete: cautious peek out of the shell. */
+#turtle.homie-silhouette.peek .homie-sil-front,
+#turtle.homie-silhouette.peek .homie-sil-rear,
+#turtle.homie-silhouette.peek .homie-sil-tail { opacity: .36 !important; }
+#turtle.homie-silhouette.peek .homie-sil-neck {
+  opacity: 1 !important;
+  animation: homieSilPeekNeck 1.08s steps(4,end) forwards !important;
+}
+#turtle.homie-silhouette.peek .homie-sil-head {
+  opacity: 1 !important;
+  animation: homieSilPeekHead 1.08s steps(4,end) forwards !important;
+}
+@keyframes homieSilPeekNeck {
+  0% { transform: translate3d(-9px,3px,0) scaleX(.18); opacity: 0; }
+  35% { transform: translate3d(-4px,1px,0) scaleX(.56); opacity: .55; }
+  70% { transform: translate3d(2px,-1px,0) scaleX(.94); opacity: .86; }
+  100% { transform: translate3d(5px,-2px,0) scaleX(1.12) rotate(-4deg); opacity: 1; }
+}
+@keyframes homieSilPeekHead {
+  0% { transform: translate3d(-18px,5px,0) scale(.40) rotate(6deg); opacity: 0; }
+  35% { transform: translate3d(-8px,2px,0) scale(.64) rotate(0deg); opacity: .62; }
+  70% { transform: translate3d(2px,-3px,0) scale(.88) rotate(-8deg); opacity: .9; }
+  100% { transform: translate3d(9px,-7px,0) scale(1.03) rotate(-16deg); opacity: 1; }
+}
+
+/* Escape: alive and booking it. */
+#turtle.homie-silhouette.escape {
+  opacity: 1 !important;
+  animation: homieSilEscapeRun 4.35s cubic-bezier(.28,0,.12,1) forwards !important;
+  clip-path: inset(0 0 0 0) !important;
+}
+#turtle.homie-silhouette.escape .homie-sil-neck,
+#turtle.homie-silhouette.escape .homie-sil-head,
+#turtle.homie-silhouette.escape .homie-sil-front,
+#turtle.homie-silhouette.escape .homie-sil-rear,
+#turtle.homie-silhouette.escape .homie-sil-tail { opacity: 1 !important; }
+#turtle.homie-silhouette.escape .homie-sil-shell { animation: homieSilEscapeShell .40s steps(2,end) infinite !important; }
+#turtle.homie-silhouette.escape .homie-sil-head,
+#turtle.homie-silhouette.escape .homie-sil-neck { animation: homieSilEscapeHead .40s steps(2,end) infinite !important; }
+#turtle.homie-silhouette.escape .homie-sil-front { animation: homieSilEscapeFront .40s steps(2,end) infinite !important; }
+#turtle.homie-silhouette.escape .homie-sil-rear { animation: homieSilEscapeRear .40s steps(2,end) infinite reverse !important; }
+#turtle.homie-silhouette.escape .homie-sil-tail { animation: homieSilEscapeTail .40s steps(2,end) infinite !important; }
+@keyframes homieSilEscapeRun {
+  0% { transform: translate3d(0,0,0) scale(.78) rotate(0deg) !important; opacity: 1; clip-path: inset(0 0 0 0); }
+  66% { transform: translate3d(156px,0,0) scale(.78) rotate(0deg) !important; opacity: 1; clip-path: inset(0 0 0 0); }
+  80% { transform: translate3d(188px,0,0) scale(.74) rotate(-1deg) !important; opacity: .9; clip-path: inset(0 0 0 0); }
+  91% { transform: translate3d(207px,0,0) scale(.68) rotate(0deg) !important; opacity: .55; clip-path: inset(0 0 0 58%); }
+  100% { transform: translate3d(222px,0,0) scale(.60) rotate(0deg) !important; opacity: 0; clip-path: inset(0 0 0 100%); }
+}
+@keyframes homieSilEscapeShell { 50% { transform: translate3d(1px,.8px,0) rotate(1deg); } }
+@keyframes homieSilEscapeHead { 50% { transform: translate3d(6px,-2px,0) rotate(-7deg) scale(1.02); } }
+@keyframes homieSilEscapeFront { 0%,100% { transform: translate3d(0,0,0) rotate(-14deg) scaleX(1); } 50% { transform: translate3d(5px,-1px,0) rotate(24deg) scaleX(1.22); } }
+@keyframes homieSilEscapeRear { 0%,100% { transform: translate3d(0,0,0) rotate(4deg); } 50% { transform: translate3d(-3px,1px,0) rotate(-16deg); } }
+@keyframes homieSilEscapeTail { 50% { transform: rotate(-16deg); opacity: .68; } }
+
+.loader-scene::after {
+  left: calc(50% + 102px) !important;
+  top: calc(100% + 22px) !important;
+  width: 5px !important;
+  height: 0 !important;
+  border-radius: 999px 999px 4px 4px !important;
+  background: linear-gradient(90deg, rgba(0,0,0,.9), rgba(242,238,229,.98), rgba(0,0,0,.9)) !important;
+  box-shadow: 0 0 8px rgba(242,238,229,.82), 0 0 22px rgba(223,255,63,.16) !important;
+  z-index: 95 !important;
+  opacity: 0 !important;
+}
+.loader-scene.portal-open::after { animation: homieSilDoorOpen .32s steps(4,end) forwards !important; }
+.loader-scene.portal-close::after { animation: homieSilDoorClose .34s steps(4,end) forwards !important; }
+@keyframes homieSilDoorOpen { 0% { height:0; opacity:0; } 25% { height:12px; opacity:1; } 50% { height:25px; opacity:1; } 75% { height:38px; opacity:1; } 100% { height:50px; opacity:1; } }
+@keyframes homieSilDoorClose { 0% { height:50px; opacity:1; } 25% { height:37px; opacity:1; } 50% { height:24px; opacity:.78; } 75% { height:11px; opacity:.42; } 100% { height:0; opacity:0; } }
+
+@media (max-width: 430px) {
+  #turtle.homie-silhouette,
+  .loader-scene .turtle-track #turtle.homie-silhouette {
+    top: 31px !important;
+    transform: translate3d(0,0,0) scale(.74) rotate(0deg) !important;
+  }
+  @keyframes homieSilBodyIdle {
+    0%,100% { transform: translate3d(0,0,0) scale(.74) rotate(0deg) !important; }
+    50% { transform: translate3d(.7px,.45px,0) scale(.74) rotate(.25deg) !important; }
+  }
+  @keyframes homieSilNoticeBody {
+    0%,100% { transform: translate3d(0,0,0) scale(.74) rotate(0deg) !important; }
+    50% { transform: translate3d(-.6px,.2px,0) scale(.74) rotate(-.35deg) !important; }
+  }
+  @keyframes homieSilEscapeRun {
+    0% { transform: translate3d(0,0,0) scale(.74) rotate(0deg) !important; opacity: 1; clip-path: inset(0 0 0 0); }
+    66% { transform: translate3d(148px,0,0) scale(.74) rotate(0deg) !important; opacity: 1; clip-path: inset(0 0 0 0); }
+    80% { transform: translate3d(180px,0,0) scale(.70) rotate(-1deg) !important; opacity: .9; clip-path: inset(0 0 0 0); }
+    91% { transform: translate3d(198px,0,0) scale(.64) rotate(0deg) !important; opacity: .55; clip-path: inset(0 0 0 58%); }
+    100% { transform: translate3d(211px,0,0) scale(.58) rotate(0deg) !important; opacity: 0; clip-path: inset(0 0 0 100%); }
+  }
+}
