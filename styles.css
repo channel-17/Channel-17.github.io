@@ -3842,3 +3842,184 @@ body {
   object-position: center center !important;
   background: transparent !important;
 }
+
+/* =========================================================
+   YB2 WET CEMENT PASS — KEEP GOOD PROGRESS, ASSEMBLE ANIMAL
+   Source: user video Wetcement.mp4 + channel-17 main 23.
+   Do NOT swap back to raw littlehomie.* positioning.
+   This only tightens the cropped/data-URI Homie pieces.
+========================================================= */
+.loader-scene .turtle-track {
+  height: 96px !important;
+}
+
+#turtle.turtle.homie-rig {
+  top: 30px !important;
+  width: 140px !important;
+  height: 76px !important;
+  margin-left: -70px !important;
+  transform: translate3d(0,0,0) scale(.90) rotate(0deg) !important;
+  transform-origin: 50% 66% !important;
+  filter: drop-shadow(0 0 5px rgba(242,238,229,.24)) !important;
+}
+
+#turtle.turtle.homie-rig .homie-part {
+  position: absolute !important;
+  height: auto !important;
+  max-width: none !important;
+  object-fit: contain !important;
+  object-position: center center !important;
+  background: transparent !important;
+  border: 0 !important;
+  pointer-events: none !important;
+  user-select: none !important;
+  clip-path: none !important;
+}
+
+/* Shell remains the anchor. Do not chase parts by moving the shell. */
+#turtle.turtle.homie-rig .homie-shell {
+  left: 30px !important;
+  top: 15px !important;
+  width: 84px !important;
+  z-index: 5 !important;
+  transform-origin: 50% 72% !important;
+}
+
+/* Head/neck gets tucked into the shell opening: smaller, left, slightly up. */
+#turtle.turtle.homie-rig .homie-head {
+  left: 96px !important;
+  top: 14px !important;
+  width: 27px !important;
+  z-index: 6 !important;
+  transform-origin: 8% 72% !important;
+}
+
+/* Hide the extra front fragment for now. It was creating the big stray blob. */
+#turtle.turtle.homie-rig .homie-front {
+  display: none !important;
+  opacity: 0 !important;
+}
+
+/* One readable front paddle: under neck/front third, not hanging in space. */
+#turtle.turtle.homie-rig .homie-front2 {
+  left: 90px !important;
+  top: 41px !important;
+  width: 22px !important;
+  z-index: 4 !important;
+  transform-origin: 18% 18% !important;
+}
+
+/* Rear/support leg: closer under the left-rear shell. */
+#turtle.turtle.homie-rig .homie-rear {
+  left: 35px !important;
+  top: 49px !important;
+  width: 22px !important;
+  z-index: 2 !important;
+  transform-origin: 78% 18% !important;
+}
+
+/* Tail: tiny, attached, nearly an afterthought. */
+#turtle.turtle.homie-rig .homie-tail {
+  left: 17px !important;
+  top: 42px !important;
+  width: 13px !important;
+  z-index: 1 !important;
+  transform-origin: 92% 52% !important;
+}
+
+/* Stationary treadmill effort: alive, but not traveling before coast-clear. */
+#turtle.turtle.homie-rig.walk {
+  animation: yb2WetBody 1.95s ease-in-out infinite !important;
+}
+#turtle.turtle.homie-rig.walk .homie-shell { animation: yb2WetShell 1.95s ease-in-out infinite !important; }
+#turtle.turtle.homie-rig.walk .homie-head { animation: yb2WetHead 1.95s ease-in-out infinite !important; }
+#turtle.turtle.homie-rig.walk .homie-front2 { animation: yb2WetFrontMotor 1.95s ease-in-out infinite !important; }
+#turtle.turtle.homie-rig.walk .homie-rear { animation: yb2WetRearBrace 1.95s ease-in-out infinite !important; }
+#turtle.turtle.homie-rig.walk .homie-tail { animation: yb2WetTail 1.95s ease-in-out infinite !important; }
+
+@keyframes yb2WetBody {
+  0%,100% { transform: translate3d(0,0,0) scale(.90) rotate(0deg) !important; }
+  46% { transform: translate3d(.30px,.22px,0) scale(.90) rotate(.14deg) !important; }
+}
+@keyframes yb2WetShell {
+  0%,100% { transform: translate3d(0,0,0) rotate(0deg); }
+  46% { transform: translate3d(.22px,.16px,0) rotate(.18deg); }
+}
+@keyframes yb2WetHead {
+  0%,100% { transform: translate3d(0,0,0) rotate(0deg) scale(1); }
+  46% { transform: translate3d(.65px,-.32px,0) rotate(-1deg) scale(1.01); }
+}
+@keyframes yb2WetFrontMotor {
+  0%,100% { transform: translate3d(0,0,0) rotate(0deg) scale(1); }
+  24% { transform: translate3d(2.1px,-.75px,0) rotate(9deg) scale(1.04); }
+  57% { transform: translate3d(-1.4px,.95px,0) rotate(-9deg) scale(.97); }
+}
+@keyframes yb2WetRearBrace {
+  0%,100% { transform: translate3d(0,0,0) rotate(0deg); }
+  44% { transform: translate3d(-.7px,.58px,0) rotate(-3deg); }
+  70% { transform: translate3d(.38px,-.18px,0) rotate(1.4deg); }
+}
+@keyframes yb2WetTail {
+  0%,100% { transform: translate3d(0,0,0) rotate(0deg); opacity: .84; }
+  52% { transform: translate3d(-.30px,.12px,0) rotate(-4deg); opacity: .74; }
+}
+
+#turtle.turtle.homie-rig.notice .homie-head {
+  transform: translate3d(2.4px,-3.2px,0) rotate(-12deg) scale(1.04) !important;
+}
+
+#turtle.turtle.homie-rig.hide .homie-head,
+#turtle.turtle.homie-rig.hide .homie-front,
+#turtle.turtle.homie-rig.hide .homie-front2,
+#turtle.turtle.homie-rig.hide .homie-rear,
+#turtle.turtle.homie-rig.hide .homie-tail {
+  opacity: 0 !important;
+}
+#turtle.turtle.homie-rig.hide .homie-shell {
+  opacity: 1 !important;
+  animation: yb2WetShellHide .08s steps(2) infinite !important;
+}
+@keyframes yb2WetShellHide { 50% { transform: translate3d(1px,-.4px,0) rotate(.5deg); } }
+
+#turtle.turtle.homie-rig.peek .homie-head {
+  opacity: 1 !important;
+  animation: yb2WetPeekHead 1.05s ease-out forwards !important;
+}
+#turtle.turtle.homie-rig.peek .homie-front2,
+#turtle.turtle.homie-rig.peek .homie-rear,
+#turtle.turtle.homie-rig.peek .homie-tail { opacity: .42 !important; }
+@keyframes yb2WetPeekHead {
+  0% { transform: translate3d(-7px,3px,0) scale(.58) rotate(5deg); opacity: 0; }
+  45% { transform: translate3d(-2.5px,1px,0) scale(.78) rotate(-3deg); opacity: .76; }
+  100% { transform: translate3d(4px,-5px,0) scale(1.06) rotate(-13deg); opacity: 1; }
+}
+
+#turtle.turtle.homie-rig.escape {
+  opacity: 1 !important;
+  animation: yb2WetDoorRun 4.7s cubic-bezier(.30,0,.12,1) forwards !important;
+  clip-path: inset(0 0 0 0) !important;
+}
+#turtle.turtle.homie-rig.escape .homie-head { animation: yb2WetEscapeHead .44s ease-in-out infinite !important; opacity: 1 !important; }
+#turtle.turtle.homie-rig.escape .homie-front { display: none !important; opacity: 0 !important; }
+#turtle.turtle.homie-rig.escape .homie-front2 { animation: yb2WetEscapeFront .44s ease-in-out infinite !important; opacity: 1 !important; }
+#turtle.turtle.homie-rig.escape .homie-rear { animation: yb2WetEscapeRear .44s ease-in-out infinite !important; opacity: .92 !important; }
+#turtle.turtle.homie-rig.escape .homie-tail { animation: yb2WetEscapeTail .44s ease-in-out infinite !important; opacity: .84 !important; }
+@keyframes yb2WetDoorRun {
+  0% { transform: translate3d(0,0,0) scale(.90) !important; opacity: 1; clip-path: inset(0 0 0 0); }
+  72% { transform: translate3d(158px,0,0) scale(.90) !important; opacity: 1; clip-path: inset(0 0 0 0); }
+  86% { transform: translate3d(192px,0,0) scale(.86) !important; opacity: .88; clip-path: inset(0 0 0 0); }
+  94% { transform: translate3d(209px,0,0) scale(.80) !important; opacity: .55; clip-path: inset(0 0 0 55%); }
+  100% { transform: translate3d(222px,0,0) scale(.74) !important; opacity: 0; clip-path: inset(0 0 0 100%); }
+}
+@keyframes yb2WetEscapeHead { 50% { transform: translate3d(3px,-1px,0) rotate(-5deg) scale(1.02); } }
+@keyframes yb2WetEscapeFront { 25% { transform: translate3d(3.2px,-1px,0) rotate(10deg) scale(1.04); } 55% { transform: translate3d(-1.8px,1.2px,0) rotate(-10deg) scale(.97); } }
+@keyframes yb2WetEscapeRear { 45% { transform: translate3d(-1.4px,.85px,0) rotate(-5deg); } 70% { transform: translate3d(.85px,-.28px,0) rotate(3deg); } }
+@keyframes yb2WetEscapeTail { 50% { transform: translate3d(-.65px,.2px,0) rotate(-5deg); opacity:.72; } }
+
+.loader-scene::after {
+  left: calc(50% + 101px) !important;
+  top: calc(100% + 29px) !important;
+  width: 6px !important;
+}
+.loader-scene.portal-open::after { height: 48px !important; opacity: 1 !important; }
+.loader-scene.portal-close::after { height: 0 !important; opacity: 0 !important; }
