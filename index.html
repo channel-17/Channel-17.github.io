@@ -33,48 +33,44 @@
         <div class="percent" id="percent">0%</div>
       </div>
       <div class="turtle-track" id="turtleTrack">
-        <div class="turtle walk homie-silhouette homie-drawn" id="turtle" aria-hidden="true">
-          <svg class="homie-drawn-svg" viewBox="0 0 200 100" role="img" aria-label="Little Homie loader silhouette">
-            <ellipse class="homie-ground" cx="95" cy="86" rx="61" ry="5" />
+        <div class="turtle walk homie-silhouette homie-drawn homie-final" id="turtle" aria-hidden="true">
+          <svg class="homie-drawn-svg homie-final-svg" viewBox="0 0 220 110" role="img" aria-label="Little Homie loader icon">
+            <ellipse class="homie-ground" cx="101" cy="88" rx="73" ry="4" />
 
-            <g class="homie-drawn-tail">
-              <path class="homie-tail-shape" d="M42 58 C30 52 21 53 14 58 C23 61 32 64 43 64 Z" />
+            <g class="homie-drawn-tail homie-final-tail">
+              <path class="homie-tail-shape" d="M46 63 C34 59 25 62 17 68 C30 69 39 67 49 64 Z" />
             </g>
 
-            <g class="homie-drawn-rear-leg">
-              <path class="homie-leg rear-main" d="M58 64 C47 65 39 72 42 79 C47 85 62 78 67 66 Z" />
-              <path class="homie-toes rear-toes" d="M45 79 C48 76 51 76 54 80 M53 79 C56 76 59 76 62 79" />
+            <g class="homie-drawn-rear-leg homie-final-rear-leg">
+              <path class="homie-leg rear-main" d="M67 68 C57 70 52 77 55 84 C62 88 73 82 76 70 Z" />
+              <path class="homie-toes rear-toes" d="M57 84 C60 81 63 81 65 84 M65 84 C68 81 71 82 73 84" />
             </g>
 
-            <g class="homie-drawn-front-leg">
-              <path class="homie-leg front-main" d="M132 63 C120 66 114 75 119 82 C130 85 141 75 143 64 Z" />
-              <path class="homie-toes front-toes" d="M121 80 C124 76 127 76 130 81 M130 80 C133 76 136 76 139 79" />
+            <g class="homie-drawn-front-leg homie-final-front-leg">
+              <path class="homie-leg front-main" d="M143 68 C133 70 127 78 131 85 C139 88 151 82 154 70 Z" />
+              <path class="homie-toes front-toes" d="M133 84 C136 81 139 81 141 84 M142 84 C145 81 148 82 150 84" />
             </g>
 
-            <g class="homie-drawn-shell">
-              <path class="homie-shell-body" d="M40 58 C45 29 72 16 101 19 C130 22 150 40 154 62 C133 76 68 78 40 58 Z" />
-              <path class="homie-shell-rim" d="M42 58 C67 70 123 71 154 62" />
-              <path class="homie-shell-plate p1" d="M59 53 C65 38 76 28 90 20" />
-              <path class="homie-shell-plate p2" d="M94 72 C93 51 95 34 101 19" />
-              <path class="homie-shell-plate p3" d="M127 55 C121 39 111 28 101 19" />
-              <path class="homie-shell-plate p4" d="M57 38 C78 43 112 43 138 36" />
-              <path class="homie-shell-plate p5" d="M50 62 C66 57 84 56 100 58 C119 59 136 58 151 61" />
-              <path class="homie-subtle-seventeen" d="M82 43 L88 34 L88 57 M98 36 C106 36 111 38 112 42 C112 47 105 52 99 58" />
+            <g class="homie-drawn-neck homie-final-neck">
+              <path class="homie-neck-shape" d="M151 55 C162 44 171 36 181 36 C187 38 190 43 188 50 C182 61 166 66 156 72 C151 69 148 63 151 55 Z" />
             </g>
 
-            <g class="homie-drawn-neck">
-              <path class="homie-neck-shape" d="M146 48 C155 35 162 29 171 30 C176 33 177 40 173 47 C166 55 157 57 151 65 C146 62 144 56 146 48 Z" />
+            <g class="homie-drawn-head homie-final-head">
+              <path class="homie-head-shape" d="M181 32 C193 30 204 36 207 46 C209 56 202 65 190 67 C178 69 168 64 165 55 C162 45 169 35 181 32 Z" />
+              <path class="homie-nose-shape" d="M196 43 C203 43 208 47 207 52 C205 57 199 58 194 54" />
+              <circle class="homie-eye-white" cx="190" cy="42" r="6" />
+              <circle class="homie-eye-black" cx="191.5" cy="42.6" r="2.6" />
+              <circle class="homie-nostril n1" cx="201" cy="49" r="1.35" />
+              <path class="homie-smile" d="M187 58 C191 60 197 59 201 56" />
             </g>
 
-            <g class="homie-drawn-head">
-              <path class="homie-head-shape" d="M169 27 C183 24 195 32 195 45 C195 58 184 66 170 62 C158 59 153 48 156 38 C158 32 163 29 169 27 Z" />
-              <path class="homie-nose-shape" d="M184 38 C193 38 199 42 198 48 C196 53 189 53 184 49" />
-              <circle class="homie-eye-white" cx="179" cy="37" r="4.8" />
-              <circle class="homie-eye-black" cx="180.2" cy="37.6" r="2.2" />
-              <circle class="homie-nostril n1" cx="190" cy="43" r="1.3" />
-              <path class="homie-smile" d="M180 53 C184 56 189 55 193 52" />
-              <path class="homie-wrinkle w1" d="M164 42 C167 40 170 40 172 43" />
-              <path class="homie-wrinkle w2" d="M166 51 C170 50 173 51 176 54" />
+            <g class="homie-drawn-shell homie-final-shell">
+              <path class="homie-shell-body" d="M43 62 C49 37 74 24 104 24 C135 24 157 42 163 65 C143 78 70 78 43 62 Z" />
+              <path class="homie-shell-rim" d="M45 62 C69 72 133 73 162 65" />
+              <path class="homie-shell-plate p1" d="M61 57 C68 42 80 32 94 25" />
+              <path class="homie-shell-plate p2" d="M103 73 C101 54 103 38 108 25" />
+              <path class="homie-shell-plate p3" d="M136 58 C129 42 119 32 108 25" />
+              <path class="homie-shell-plate p4" d="M59 44 C82 47 119 47 145 42" />
             </g>
           </svg>
         </div>
