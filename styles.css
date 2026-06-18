@@ -4912,3 +4912,261 @@ body {
     100% { transform: translate3d(211px,0,0) scale(.58) rotate(0deg) !important; opacity:0; clip-path: inset(0 0 0 100%); }
   }
 }
+
+/* =========================================================
+   HOMIE FINAL WALK TEST — locked simple side-profile turtle
+   Black fill / white outline / shell detail / moving parts.
+   This block intentionally overrides all previous turtle rigs.
+   ========================================================= */
+.loader-scene .turtle-track {
+  height: 92px !important;
+  overflow: visible !important;
+}
+
+#turtle.homie-final,
+.loader-scene .turtle-track #turtle.homie-final {
+  position: absolute !important;
+  left: 50% !important;
+  top: 24px !important;
+  width: 136px !important;
+  height: 68px !important;
+  margin-left: -68px !important;
+  opacity: .98 !important;
+  background: transparent !important;
+  border: 0 !important;
+  overflow: visible !important;
+  z-index: 9 !important;
+  filter: drop-shadow(0 0 6px rgba(245,242,233,.32)) !important;
+  transform: translate3d(0,0,0) scale(.82) rotate(0deg) !important;
+  transform-origin: 48% 76% !important;
+  clip-path: none !important;
+}
+
+#turtle.homie-final .homie-final-svg {
+  display: block !important;
+  width: 136px !important;
+  height: 68px !important;
+  overflow: visible !important;
+  background: transparent !important;
+}
+
+#turtle.homie-final svg,
+#turtle.homie-final svg *,
+#turtle.homie-final g,
+#turtle.homie-final path,
+#turtle.homie-final circle,
+#turtle.homie-final ellipse {
+  position: static !important;
+  transform-box: fill-box !important;
+  transform-origin: center center !important;
+  vector-effect: non-scaling-stroke !important;
+  pointer-events: none !important;
+}
+
+#turtle.homie-final path,
+#turtle.homie-final circle {
+  fill: #020202 !important;
+  stroke: rgba(248,246,238,.98) !important;
+  stroke-width: 4.25 !important;
+  stroke-linecap: round !important;
+  stroke-linejoin: round !important;
+}
+
+#turtle.homie-final .homie-ground {
+  fill: rgba(248,246,238,.10) !important;
+  stroke: none !important;
+  filter: blur(1px) !important;
+}
+
+#turtle.homie-final .homie-shell-body {
+  fill: #020202 !important;
+  stroke-width: 5 !important;
+}
+
+#turtle.homie-final .homie-shell-rim,
+#turtle.homie-final .homie-shell-plate,
+#turtle.homie-final .homie-toes,
+#turtle.homie-final .homie-smile {
+  fill: none !important;
+  stroke: rgba(248,246,238,.78) !important;
+  stroke-width: 2.15 !important;
+}
+
+#turtle.homie-final .homie-eye-white {
+  fill: rgba(248,246,238,.98) !important;
+  stroke: rgba(248,246,238,.98) !important;
+  stroke-width: .9 !important;
+  filter: drop-shadow(0 0 4px rgba(248,246,238,.68)) !important;
+}
+
+#turtle.homie-final .homie-eye-black,
+#turtle.homie-final .homie-nostril {
+  fill: #020202 !important;
+  stroke: none !important;
+}
+
+#turtle.homie-final .homie-final-shell { transform-origin: 50% 77% !important; }
+#turtle.homie-final .homie-final-head { transform-origin: 6% 64% !important; }
+#turtle.homie-final .homie-final-neck { transform-origin: 0% 64% !important; }
+#turtle.homie-final .homie-final-front-leg { transform-origin: 50% 12% !important; }
+#turtle.homie-final .homie-final-rear-leg { transform-origin: 62% 12% !important; }
+#turtle.homie-final .homie-final-tail { transform-origin: 88% 50% !important; }
+
+/* Default: treadmill walk under the loader. Shell stays Homie; only feet/neck breathe. */
+#turtle.homie-final.walk {
+  animation: homieFinalBodyIdle 1.08s steps(2,end) infinite !important;
+}
+#turtle.homie-final.walk .homie-final-shell {
+  animation: homieFinalShellBob 1.08s steps(2,end) infinite !important;
+}
+#turtle.homie-final.walk .homie-final-head,
+#turtle.homie-final.walk .homie-final-neck {
+  animation: homieFinalHeadBreathe 1.08s steps(2,end) infinite !important;
+}
+#turtle.homie-final.walk .homie-final-front-leg {
+  animation: homieFinalFrontStep .54s steps(2,end) infinite !important;
+}
+#turtle.homie-final.walk .homie-final-rear-leg {
+  animation: homieFinalRearStep .54s steps(2,end) infinite reverse !important;
+}
+#turtle.homie-final.walk .homie-final-tail {
+  animation: homieFinalTailTick 1.08s steps(2,end) infinite !important;
+}
+
+@keyframes homieFinalBodyIdle {
+  0%,100% { transform: translate3d(0,0,0) scale(.82) rotate(0deg) !important; }
+  50% { transform: translate3d(.5px,.45px,0) scale(.82) rotate(.22deg) !important; }
+}
+@keyframes homieFinalShellBob { 50% { transform: translate3d(0,.45px,0) rotate(.25deg); } }
+@keyframes homieFinalHeadBreathe { 50% { transform: translate3d(1.1px,-.6px,0) rotate(-1.6deg); } }
+@keyframes homieFinalFrontStep {
+  0%,100% { transform: translate3d(-2px,0,0) rotate(-7deg) scaleX(1); }
+  50% { transform: translate3d(4px,-1px,0) rotate(14deg) scaleX(1.08); }
+}
+@keyframes homieFinalRearStep {
+  0%,100% { transform: translate3d(1px,0,0) rotate(5deg); }
+  50% { transform: translate3d(-4px,1.5px,0) rotate(-12deg); }
+}
+@keyframes homieFinalTailTick { 50% { transform: translate3d(-1px,0,0) rotate(-7deg); opacity:.76; } }
+
+/* 17%: stop walking, notice. */
+#turtle.homie-final.notice {
+  animation: homieFinalNoticeBody .8s steps(3,end) infinite !important;
+}
+#turtle.homie-final.notice .homie-final-neck {
+  transform: translate3d(5px,-2px,0) scaleX(1.09) rotate(-3deg) !important;
+}
+#turtle.homie-final.notice .homie-final-head {
+  transform: translate3d(8px,-6px,0) rotate(-8deg) scale(1.02) !important;
+}
+#turtle.homie-final.notice .homie-final-front-leg,
+#turtle.homie-final.notice .homie-final-rear-leg,
+#turtle.homie-final.notice .homie-final-tail {
+  animation: none !important;
+}
+@keyframes homieFinalNoticeBody {
+  0%,100% { transform: translate3d(0,0,0) scale(.82) rotate(0deg) !important; }
+  50% { transform: translate3d(-.45px,.1px,0) scale(.82) rotate(-.2deg) !important; }
+}
+
+/* 19%: turtle tuck, not a blob. Shell remains readable. */
+#turtle.homie-final.hide .homie-final-neck,
+#turtle.homie-final.hide .homie-final-head {
+  opacity: .2 !important;
+  transform: translate3d(-31px,11px,0) scale(.22) rotate(3deg) !important;
+}
+#turtle.homie-final.hide .homie-final-front-leg,
+#turtle.homie-final.hide .homie-final-rear-leg,
+#turtle.homie-final.hide .homie-final-tail {
+  opacity: .22 !important;
+  transform: translate3d(0,-6px,0) scale(.38) !important;
+}
+#turtle.homie-final.hide .homie-final-shell {
+  animation: homieFinalHideShell .12s steps(2,end) infinite !important;
+}
+@keyframes homieFinalHideShell { 50% { transform: translate3d(.8px,-.35px,0) rotate(.35deg); } }
+
+/* Complete: cautious peek out again. */
+#turtle.homie-final.peek .homie-final-front-leg,
+#turtle.homie-final.peek .homie-final-rear-leg,
+#turtle.homie-final.peek .homie-final-tail { opacity: .42 !important; }
+#turtle.homie-final.peek .homie-final-neck {
+  opacity: 1 !important;
+  animation: homieFinalPeekNeck 1.12s steps(4,end) forwards !important;
+}
+#turtle.homie-final.peek .homie-final-head {
+  opacity: 1 !important;
+  animation: homieFinalPeekHead 1.12s steps(4,end) forwards !important;
+}
+@keyframes homieFinalPeekNeck {
+  0% { transform: translate3d(-29px,10px,0) scaleX(.15); opacity:.04; }
+  35% { transform: translate3d(-15px,5px,0) scaleX(.42); opacity:.45; }
+  70% { transform: translate3d(-3px,-1px,0) scaleX(.82); opacity:.82; }
+  100% { transform: translate3d(5px,-2px,0) scaleX(1.10) rotate(-3deg); opacity:1; }
+}
+@keyframes homieFinalPeekHead {
+  0% { transform: translate3d(-39px,11px,0) scale(.28) rotate(5deg); opacity:.04; }
+  35% { transform: translate3d(-23px,6px,0) scale(.52) rotate(1deg); opacity:.50; }
+  70% { transform: translate3d(-6px,-4px,0) scale(.78) rotate(-4deg); opacity:.85; }
+  100% { transform: translate3d(9px,-7px,0) scale(1.02) rotate(-9deg); opacity:1; }
+}
+
+/* Escape: same turtle, faster feet, shell intact. */
+#turtle.homie-final.escape {
+  opacity: 1 !important;
+  animation: homieFinalRunAway 4.35s cubic-bezier(.28,0,.12,1) forwards !important;
+  clip-path: inset(0 0 0 0) !important;
+}
+#turtle.homie-final.escape .homie-final-neck,
+#turtle.homie-final.escape .homie-final-head,
+#turtle.homie-final.escape .homie-final-front-leg,
+#turtle.homie-final.escape .homie-final-rear-leg,
+#turtle.homie-final.escape .homie-final-tail { opacity: 1 !important; }
+#turtle.homie-final.escape .homie-final-shell { animation: homieFinalRunShell .34s steps(2,end) infinite !important; }
+#turtle.homie-final.escape .homie-final-head,
+#turtle.homie-final.escape .homie-final-neck { animation: homieFinalRunHead .34s steps(2,end) infinite !important; }
+#turtle.homie-final.escape .homie-final-front-leg { animation: homieFinalRunFront .34s steps(2,end) infinite !important; }
+#turtle.homie-final.escape .homie-final-rear-leg { animation: homieFinalRunRear .34s steps(2,end) infinite reverse !important; }
+#turtle.homie-final.escape .homie-final-tail { animation: homieFinalRunTail .34s steps(2,end) infinite !important; }
+@keyframes homieFinalRunAway {
+  0% { transform: translate3d(0,0,0) scale(.82) rotate(0deg) !important; opacity:1; clip-path: inset(0 0 0 0); }
+  66% { transform: translate3d(156px,0,0) scale(.82) rotate(0deg) !important; opacity:1; clip-path: inset(0 0 0 0); }
+  80% { transform: translate3d(188px,0,0) scale(.78) rotate(-.8deg) !important; opacity:.9; clip-path: inset(0 0 0 0); }
+  91% { transform: translate3d(207px,0,0) scale(.70) rotate(0deg) !important; opacity:.55; clip-path: inset(0 0 0 58%); }
+  100% { transform: translate3d(222px,0,0) scale(.62) rotate(0deg) !important; opacity:0; clip-path: inset(0 0 0 100%); }
+}
+@keyframes homieFinalRunShell { 50% { transform: translate3d(1px,.75px,0) rotate(.65deg); } }
+@keyframes homieFinalRunHead { 50% { transform: translate3d(7px,-2px,0) rotate(-5deg) scale(1.02); } }
+@keyframes homieFinalRunFront { 0%,100% { transform: translate3d(-2px,0,0) rotate(-11deg) scaleX(1); } 50% { transform: translate3d(7px,-2px,0) rotate(23deg) scaleX(1.14); } }
+@keyframes homieFinalRunRear { 0%,100% { transform: translate3d(1px,0,0) rotate(5deg); } 50% { transform: translate3d(-5px,2px,0) rotate(-14deg); } }
+@keyframes homieFinalRunTail { 50% { transform: rotate(-14deg); opacity:.72; } }
+
+@media (max-width: 430px) {
+  #turtle.homie-final,
+  .loader-scene .turtle-track #turtle.homie-final {
+    top: 27px !important;
+    width: 124px !important;
+    height: 62px !important;
+    margin-left: -62px !important;
+    transform: translate3d(0,0,0) scale(.80) rotate(0deg) !important;
+  }
+  #turtle.homie-final .homie-final-svg {
+    width: 124px !important;
+    height: 62px !important;
+  }
+  @keyframes homieFinalBodyIdle {
+    0%,100% { transform: translate3d(0,0,0) scale(.80) rotate(0deg) !important; }
+    50% { transform: translate3d(.5px,.45px,0) scale(.80) rotate(.22deg) !important; }
+  }
+  @keyframes homieFinalNoticeBody {
+    0%,100% { transform: translate3d(0,0,0) scale(.80) rotate(0deg) !important; }
+    50% { transform: translate3d(-.45px,.1px,0) scale(.80) rotate(-.2deg) !important; }
+  }
+  @keyframes homieFinalRunAway {
+    0% { transform: translate3d(0,0,0) scale(.80) rotate(0deg) !important; opacity:1; clip-path: inset(0 0 0 0); }
+    66% { transform: translate3d(138px,0,0) scale(.80) rotate(0deg) !important; opacity:1; clip-path: inset(0 0 0 0); }
+    80% { transform: translate3d(166px,0,0) scale(.76) rotate(-.8deg) !important; opacity:.9; clip-path: inset(0 0 0 0); }
+    91% { transform: translate3d(184px,0,0) scale(.68) rotate(0deg) !important; opacity:.55; clip-path: inset(0 0 0 58%); }
+    100% { transform: translate3d(199px,0,0) scale(.60) rotate(0deg) !important; opacity:0; clip-path: inset(0 0 0 100%); }
+  }
+}
