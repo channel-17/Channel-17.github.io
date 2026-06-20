@@ -5580,51 +5580,75 @@ body {
   }
 }
 
-
 /* =========================================================
-   TRUE FINAL LOCK — PIXEL HOMIE B ACTUAL
-   Fixes the drift: use the circled B scale, not giant mascot, not ant.
-   Bar #8 remains the star. Story classes remain untouched.
+   R2 HOTFIX — PIXEL HOMIE B + LOADER BAR #8 REAL SCREEN FIX
+   Purpose: make the bar the hero, restore segmented #8 bar,
+   and keep Homie B small/readable underneath. Story classes unchanged.
 ========================================================= */
 .loader-scene {
-  width: min(72vw, 326px) !important;
+  width: min(72vw, 380px) !important;
+  max-width: 380px !important;
+  overflow: visible !important;
 }
 .loader {
-  height: 30px !important;
-  border-radius: 0 !important;
-  border: 2px solid #f2eee5 !important;
-  background: #000 !important;
+  position: relative !important;
+  height: 34px !important;
   padding: 5px !important;
-  box-shadow: 0 0 0 1px #000, 0 0 12px rgba(242,238,229,.08) !important;
+  border-radius: 0 !important;
+  border: 2px solid rgba(242,238,229,.96) !important;
+  background:
+    repeating-linear-gradient(90deg,
+      transparent 0 21px,
+      rgba(242,238,229,.18) 21px 23px,
+      transparent 23px 42px),
+    #000 !important;
+  box-shadow:
+    0 0 0 1px rgba(0,0,0,1),
+    0 0 18px rgba(242,238,229,.10) !important;
 }
 .fill {
+  position: absolute !important;
   left: 5px !important;
   top: 5px !important;
   bottom: 5px !important;
+  height: auto !important;
   max-width: calc(100% - 10px) !important;
   border-radius: 0 !important;
-  background: repeating-linear-gradient(90deg, #f2eee5 0 10px, transparent 10px 14px) !important;
+  background: repeating-linear-gradient(90deg,
+    #f2eee5 0 20px,
+    transparent 20px 24px) !important;
   box-shadow: none !important;
   image-rendering: pixelated !important;
   transition: width .08s steps(1,end) !important;
 }
-.fill::before { display: none !important; }
+.fill::before,
+.fill::after { display: none !important; content: none !important; }
 .percent {
+  position: absolute !important;
+  left: 50% !important;
+  top: -35px !important;
+  transform: translateX(-50%) !important;
+  width: auto !important;
+  height: auto !important;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace !important;
+  font-size: 1.08rem !important;
+  line-height: 1 !important;
+  letter-spacing: 2px !important;
   color: #f2eee5 !important;
-  font-size: .68rem !important;
-  letter-spacing: 3px !important;
-  text-shadow: none !important;
-  mix-blend-mode: difference !important;
+  mix-blend-mode: normal !important;
+  text-shadow: 0 0 8px rgba(242,238,229,.18) !important;
+  pointer-events: none !important;
 }
 .loader-scene .turtle-track {
-  height: 78px !important;
+  position: relative !important;
+  height: 72px !important;
   overflow: visible !important;
 }
 #turtle.homie-pixel.pixel-b,
 .loader-scene .turtle-track #turtle.homie-pixel.pixel-b {
   position: absolute !important;
   left: 50% !important;
-  top: 33px !important;
+  top: 28px !important;
   width: 58px !important;
   height: 26px !important;
   margin-left: -29px !important;
@@ -5635,7 +5659,7 @@ body {
   contain: none !important;
   background: transparent !important;
   border: 0 !important;
-  filter: drop-shadow(0 0 3px rgba(242,238,229,.20)) !important;
+  filter: drop-shadow(0 0 3px rgba(242,238,229,.24)) !important;
   image-rendering: pixelated !important;
   clip-path: none !important;
 }
@@ -5653,46 +5677,33 @@ body {
 #turtle.homie-pixel.pixel-b .shell-line { fill: #f2eee5 !important; }
 #turtle.homie-pixel.pixel-b .shell-fill,
 #turtle.homie-pixel.pixel-b .face { fill: #000 !important; }
-#turtle.homie-pixel.pixel-b .pixel-shadow rect { fill: rgba(242,238,229,.14) !important; }
+#turtle.homie-pixel.pixel-b .shell-line { opacity: .9 !important; }
+#turtle.homie-pixel.pixel-b .pixel-shadow rect { fill: rgba(242,238,229,.13) !important; }
 
-/* same story, smaller actor */
-#turtle.homie-pixel.pixel-b.walk { animation: pixelBActualBody 1.1s steps(2,end) infinite !important; }
-#turtle.homie-pixel.pixel-b.walk .pixel-shell { animation: pixelBActualShell 1.1s steps(2,end) infinite !important; }
-#turtle.homie-pixel.pixel-b.walk .pixel-head,
-#turtle.homie-pixel.pixel-b.walk .pixel-neck { animation: pixelBActualHead 1.1s steps(2,end) infinite !important; }
-#turtle.homie-pixel.pixel-b.walk .pixel-front-leg-a,
-#turtle.homie-pixel.pixel-b.walk .pixel-rear-leg-b { animation: pixelBActualLegA .55s steps(2,end) infinite !important; }
-#turtle.homie-pixel.pixel-b.walk .pixel-front-leg-b,
-#turtle.homie-pixel.pixel-b.walk .pixel-rear-leg-a { animation: pixelBActualLegB .55s steps(2,end) infinite !important; }
-#turtle.homie-pixel.pixel-b.walk .pixel-tail { animation: pixelBActualTail .55s steps(2,end) infinite !important; }
-@keyframes pixelBActualBody { 50% { transform: translate3d(.7px,.6px,0) scale(1) !important; } }
-@keyframes pixelBActualShell { 50% { transform: translateY(.6px); } }
-@keyframes pixelBActualHead { 50% { transform: translate(1px,-1px); } }
-@keyframes pixelBActualLegA { 50% { transform: translate(2px,-1px); } }
-@keyframes pixelBActualLegB { 50% { transform: translate(-2px,1px); } }
-@keyframes pixelBActualTail { 50% { transform: translate(-1px,0); opacity: .78; } }
-
-#turtle.homie-pixel.pixel-b.notice .pixel-neck { transform: translate(2px,-1px) scaleX(1.15) !important; }
-#turtle.homie-pixel.pixel-b.notice .pixel-head { transform: translate(4px,-3px) rotate(-6deg) !important; }
-#turtle.homie-pixel.pixel-b.hide .pixel-neck,
-#turtle.homie-pixel.pixel-b.hide .pixel-head,
-#turtle.homie-pixel.pixel-b.hide .pixel-front-leg-a,
-#turtle.homie-pixel.pixel-b.hide .pixel-front-leg-b,
-#turtle.homie-pixel.pixel-b.hide .pixel-rear-leg-a,
-#turtle.homie-pixel.pixel-b.hide .pixel-rear-leg-b,
-#turtle.homie-pixel.pixel-b.hide .pixel-tail { opacity: 0 !important; }
-#turtle.homie-pixel.pixel-b.peek .pixel-front-leg-a,
-#turtle.homie-pixel.pixel-b.peek .pixel-front-leg-b,
-#turtle.homie-pixel.pixel-b.peek .pixel-rear-leg-a,
-#turtle.homie-pixel.pixel-b.peek .pixel-rear-leg-b,
-#turtle.homie-pixel.pixel-b.peek .pixel-tail { opacity: .34 !important; }
 @media (max-width: 430px) {
-  .loader-scene { width: 60vw !important; }
+  .loader-scene {
+    width: 72vw !important;
+    max-width: 380px !important;
+  }
+  .loader {
+    height: 34px !important;
+    background:
+      repeating-linear-gradient(90deg,
+        transparent 0 18px,
+        rgba(242,238,229,.18) 18px 20px,
+        transparent 20px 36px),
+      #000 !important;
+  }
+  .fill {
+    background: repeating-linear-gradient(90deg,
+      #f2eee5 0 18px,
+      transparent 18px 22px) !important;
+  }
   #turtle.homie-pixel.pixel-b,
   .loader-scene .turtle-track #turtle.homie-pixel.pixel-b {
-    width: 54px !important;
-    height: 24px !important;
-    margin-left: -27px !important;
-    top: 34px !important;
+    width: 56px !important;
+    height: 25px !important;
+    margin-left: -28px !important;
+    top: 29px !important;
   }
 }
