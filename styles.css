@@ -5580,39 +5580,45 @@ body {
   }
 }
 
+
 /* =========================================================
-   R2 HOTFIX — PIXEL HOMIE B + LOADER BAR #8 REAL SCREEN FIX
-   Purpose: make the bar the hero, restore segmented #8 bar,
-   and keep Homie B small/readable underneath. Story classes unchanged.
+   R2 FINAL CLEAN FIX — Loader #8 + Little Homie B
+   This block intentionally overrides every older loader/turtle rule above it.
+   Do not edit the old blocks; this wins by order + specificity.
 ========================================================= */
-.loader-scene {
+#loaderScene.loader-scene {
   width: min(72vw, 380px) !important;
   max-width: 380px !important;
   overflow: visible !important;
+  top: 48% !important;
 }
-.loader {
+
+#loaderScene .loader {
   position: relative !important;
   height: 34px !important;
   padding: 5px !important;
-  border-radius: 0 !important;
+  overflow: visible !important;
   border: 2px solid rgba(242,238,229,.96) !important;
+  border-radius: 0 !important;
   background:
     repeating-linear-gradient(90deg,
-      transparent 0 21px,
-      rgba(242,238,229,.18) 21px 23px,
-      transparent 23px 42px),
+      transparent 0 22px,
+      rgba(242,238,229,.20) 22px 24px,
+      transparent 24px 44px),
     #000 !important;
   box-shadow:
     0 0 0 1px rgba(0,0,0,1),
-    0 0 18px rgba(242,238,229,.10) !important;
+    0 0 18px rgba(242,238,229,.09) !important;
 }
-.fill {
+
+#loaderScene .fill {
   position: absolute !important;
   left: 5px !important;
   top: 5px !important;
   bottom: 5px !important;
   height: auto !important;
   max-width: calc(100% - 10px) !important;
+  overflow: hidden !important;
   border-radius: 0 !important;
   background: repeating-linear-gradient(90deg,
     #f2eee5 0 20px,
@@ -5621,37 +5627,50 @@ body {
   image-rendering: pixelated !important;
   transition: width .08s steps(1,end) !important;
 }
-.fill::before,
-.fill::after { display: none !important; content: none !important; }
-.percent {
+
+#loaderScene .fill::before,
+#loaderScene .fill::after {
+  display: none !important;
+  content: none !important;
+}
+
+#loaderScene .percent {
   position: absolute !important;
   left: 50% !important;
   top: -35px !important;
+  right: auto !important;
+  bottom: auto !important;
   transform: translateX(-50%) !important;
+  z-index: 12 !important;
   width: auto !important;
   height: auto !important;
+  display: block !important;
+  place-items: unset !important;
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace !important;
   font-size: 1.08rem !important;
   line-height: 1 !important;
   letter-spacing: 2px !important;
   color: #f2eee5 !important;
+  opacity: .92 !important;
   mix-blend-mode: normal !important;
   text-shadow: 0 0 8px rgba(242,238,229,.18) !important;
   pointer-events: none !important;
 }
-.loader-scene .turtle-track {
+
+#loaderScene .turtle-track {
   position: relative !important;
-  height: 72px !important;
+  height: 58px !important;
   overflow: visible !important;
 }
-#turtle.homie-pixel.pixel-b,
-.loader-scene .turtle-track #turtle.homie-pixel.pixel-b {
+
+#loaderScene #turtle.homie-pixel.pixel-b,
+#loaderScene .turtle-track #turtle.turtle.homie-pixel.pixel-b {
   position: absolute !important;
   left: 50% !important;
-  top: 28px !important;
-  width: 58px !important;
-  height: 26px !important;
-  margin-left: -29px !important;
+  top: 24px !important;
+  width: 52px !important;
+  height: 25px !important;
+  margin-left: -26px !important;
   opacity: .98 !important;
   transform: translate3d(0,0,0) scale(1) !important;
   transform-origin: 50% 70% !important;
@@ -5659,11 +5678,12 @@ body {
   contain: none !important;
   background: transparent !important;
   border: 0 !important;
-  filter: drop-shadow(0 0 3px rgba(242,238,229,.24)) !important;
+  filter: drop-shadow(0 0 3px rgba(242,238,229,.22)) !important;
   image-rendering: pixelated !important;
   clip-path: none !important;
 }
-#turtle.homie-pixel.pixel-b .homie-pixel-svg {
+
+#loaderScene #turtle.homie-pixel.pixel-b .homie-pixel-svg {
   width: 100% !important;
   height: 100% !important;
   display: block !important;
@@ -5671,39 +5691,71 @@ body {
   shape-rendering: crispEdges !important;
   image-rendering: pixelated !important;
 }
-#turtle.homie-pixel.pixel-b .px { shape-rendering: crispEdges !important; }
-#turtle.homie-pixel.pixel-b .skin,
-#turtle.homie-pixel.pixel-b .shell-outline,
-#turtle.homie-pixel.pixel-b .shell-line { fill: #f2eee5 !important; }
-#turtle.homie-pixel.pixel-b .shell-fill,
-#turtle.homie-pixel.pixel-b .face { fill: #000 !important; }
-#turtle.homie-pixel.pixel-b .shell-line { opacity: .9 !important; }
-#turtle.homie-pixel.pixel-b .pixel-shadow rect { fill: rgba(242,238,229,.13) !important; }
+
+#loaderScene #turtle.homie-pixel.pixel-b .px { shape-rendering: crispEdges !important; }
+#loaderScene #turtle.homie-pixel.pixel-b .skin,
+#loaderScene #turtle.homie-pixel.pixel-b .shell-outline,
+#loaderScene #turtle.homie-pixel.pixel-b .shell-line { fill: #f2eee5 !important; }
+#loaderScene #turtle.homie-pixel.pixel-b .shell-fill,
+#loaderScene #turtle.homie-pixel.pixel-b .face { fill: #000 !important; }
+#loaderScene #turtle.homie-pixel.pixel-b .shell-line { opacity: .9 !important; }
+#loaderScene #turtle.homie-pixel.pixel-b .pixel-shadow rect { fill: rgba(242,238,229,.12) !important; }
+
+/* Keep original story classes, only correct the pixel motions. */
+#loaderScene #turtle.homie-pixel.pixel-b g { transform-box: fill-box !important; }
+#loaderScene #turtle.homie-pixel.pixel-b .pixel-shell { transform-origin: 50% 80% !important; }
+#loaderScene #turtle.homie-pixel.pixel-b .pixel-head,
+#loaderScene #turtle.homie-pixel.pixel-b .pixel-neck { transform-origin: 0% 58% !important; }
+#loaderScene #turtle.homie-pixel.pixel-b .pixel-front-leg-a,
+#loaderScene #turtle.homie-pixel.pixel-b .pixel-front-leg-b,
+#loaderScene #turtle.homie-pixel.pixel-b .pixel-rear-leg-a,
+#loaderScene #turtle.homie-pixel.pixel-b .pixel-rear-leg-b { transform-origin: 50% 10% !important; }
+
+#loaderScene #turtle.homie-pixel.pixel-b.walk { animation: pixelBBodyWork .95s steps(2,end) infinite !important; }
+#loaderScene #turtle.homie-pixel.pixel-b.walk .pixel-shell { animation: pixelBShellWork .95s steps(2,end) infinite !important; }
+#loaderScene #turtle.homie-pixel.pixel-b.walk .pixel-head,
+#loaderScene #turtle.homie-pixel.pixel-b.walk .pixel-neck { animation: pixelBHeadWork .95s steps(2,end) infinite !important; }
+#loaderScene #turtle.homie-pixel.pixel-b.walk .pixel-front-leg-a,
+#loaderScene #turtle.homie-pixel.pixel-b.walk .pixel-rear-leg-b { animation: pixelBLegA .48s steps(2,end) infinite !important; }
+#loaderScene #turtle.homie-pixel.pixel-b.walk .pixel-front-leg-b,
+#loaderScene #turtle.homie-pixel.pixel-b.walk .pixel-rear-leg-a { animation: pixelBLegB .48s steps(2,end) infinite !important; }
+
+#loaderScene #turtle.homie-pixel.pixel-b.notice .pixel-neck { transform: translate(2px,-1px) scaleX(1.12) !important; }
+#loaderScene #turtle.homie-pixel.pixel-b.notice .pixel-head { transform: translate(4px,-3px) rotate(-6deg) !important; }
+
+#loaderScene #turtle.homie-pixel.pixel-b.hide .pixel-neck,
+#loaderScene #turtle.homie-pixel.pixel-b.hide .pixel-head,
+#loaderScene #turtle.homie-pixel.pixel-b.hide .pixel-front-leg-a,
+#loaderScene #turtle.homie-pixel.pixel-b.hide .pixel-front-leg-b,
+#loaderScene #turtle.homie-pixel.pixel-b.hide .pixel-rear-leg-a,
+#loaderScene #turtle.homie-pixel.pixel-b.hide .pixel-rear-leg-b,
+#loaderScene #turtle.homie-pixel.pixel-b.hide .pixel-tail { opacity: 0 !important; }
+#loaderScene #turtle.homie-pixel.pixel-b.hide .pixel-shell { animation: pixelBShellFear .09s steps(2,end) infinite !important; }
 
 @media (max-width: 430px) {
-  .loader-scene {
+  #loaderScene.loader-scene {
     width: 72vw !important;
     max-width: 380px !important;
   }
-  .loader {
+  #loaderScene .loader {
     height: 34px !important;
     background:
       repeating-linear-gradient(90deg,
         transparent 0 18px,
-        rgba(242,238,229,.18) 18px 20px,
+        rgba(242,238,229,.20) 18px 20px,
         transparent 20px 36px),
       #000 !important;
   }
-  .fill {
+  #loaderScene .fill {
     background: repeating-linear-gradient(90deg,
       #f2eee5 0 18px,
       transparent 18px 22px) !important;
   }
-  #turtle.homie-pixel.pixel-b,
-  .loader-scene .turtle-track #turtle.homie-pixel.pixel-b {
-    width: 56px !important;
+  #loaderScene #turtle.homie-pixel.pixel-b,
+  #loaderScene .turtle-track #turtle.turtle.homie-pixel.pixel-b {
+    width: 52px !important;
     height: 25px !important;
-    margin-left: -28px !important;
-    top: 29px !important;
+    margin-left: -26px !important;
+    top: 24px !important;
   }
 }
