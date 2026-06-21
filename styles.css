@@ -5218,599 +5218,118 @@ body {
   height: 76px !important;
   overflow: visible !important;
 }
-#turtle.homie-pixel,
-.loader-scene .turtle-track #turtle.homie-pixel {
-  position: absolute !important;
-  left: 50% !important;
-  top: 30px !important;
-  width: 76px !important;
-  height: 34px !important;
-  margin-left: -38px !important;
-  opacity: .98 !important;
-  transform: translate3d(0,0,0) scale(1) !important;
-  transform-origin: 50% 70% !important;
-  overflow: visible !important;
-  contain: none !important;
-  background: transparent !important;
-  border: 0 !important;
-  filter: drop-shadow(0 0 4px rgba(242,238,229,.20)) !important;
-  image-rendering: pixelated !important;
-  clip-path: none !important;
-}
-#turtle.homie-pixel .homie-pixel-svg {
-  width: 100% !important;
-  height: 100% !important;
-  display: block !important;
-  overflow: visible !important;
-  shape-rendering: crispEdges !important;
-  image-rendering: pixelated !important;
-}
-#turtle.homie-pixel .px { shape-rendering: crispEdges !important; }
-#turtle.homie-pixel .skin,
-#turtle.homie-pixel .shell-outline,
-#turtle.homie-pixel .shell-line { fill: #f2eee5 !important; }
-#turtle.homie-pixel .shell-fill,
-#turtle.homie-pixel .face { fill: #000 !important; }
-#turtle.homie-pixel .shell-line { opacity: .92 !important; }
-#turtle.homie-pixel .pixel-shadow rect { fill: rgba(242,238,229,.12) !important; }
-#turtle.homie-pixel g { transform-box: fill-box !important; }
-#turtle.homie-pixel .pixel-shell { transform-origin: 50% 80% !important; }
-#turtle.homie-pixel .pixel-head,
-#turtle.homie-pixel .pixel-neck { transform-origin: 0% 58% !important; }
-#turtle.homie-pixel .pixel-front-leg-a,
-#turtle.homie-pixel .pixel-front-leg-b { transform-origin: 50% 10% !important; }
-#turtle.homie-pixel .pixel-rear-leg-a,
-#turtle.homie-pixel .pixel-rear-leg-b { transform-origin: 50% 10% !important; }
-#turtle.homie-pixel .pixel-tail { transform-origin: 100% 50% !important; }
-
-#turtle.homie-pixel.walk { animation: pixelHomieBodyWork 1.1s steps(2,end) infinite !important; }
-#turtle.homie-pixel.walk .pixel-shell { animation: pixelHomieShellWork 1.1s steps(2,end) infinite !important; }
-#turtle.homie-pixel.walk .pixel-head,
-#turtle.homie-pixel.walk .pixel-neck { animation: pixelHomieHeadWork 1.1s steps(2,end) infinite !important; }
-#turtle.homie-pixel.walk .pixel-front-leg-a,
-#turtle.homie-pixel.walk .pixel-rear-leg-b { animation: pixelHomieLegA .55s steps(2,end) infinite !important; }
-#turtle.homie-pixel.walk .pixel-front-leg-b,
-#turtle.homie-pixel.walk .pixel-rear-leg-a { animation: pixelHomieLegB .55s steps(2,end) infinite !important; }
-#turtle.homie-pixel.walk .pixel-tail { animation: pixelHomieTail .55s steps(2,end) infinite !important; }
-@keyframes pixelHomieBodyWork { 50% { transform: translate3d(.8px,.8px,0) scale(1) !important; } }
-@keyframes pixelHomieShellWork { 50% { transform: translateY(.7px); } }
-@keyframes pixelHomieHeadWork { 50% { transform: translate(1px,-1px); } }
-@keyframes pixelHomieLegA { 50% { transform: translate(2px,-1px); } }
-@keyframes pixelHomieLegB { 50% { transform: translate(-2px,1px); } }
-@keyframes pixelHomieTail { 50% { transform: translate(-1px,0); opacity: .78; } }
-
-/* Existing story beat: notice / look up. */
-#turtle.homie-pixel.notice {
-  animation: pixelHomieNoticeBody .75s steps(2,end) infinite !important;
-}
-#turtle.homie-pixel.notice .pixel-neck { transform: translate(2px,-1px) scaleX(1.15) !important; }
-#turtle.homie-pixel.notice .pixel-head { transform: translate(4px,-3px) rotate(-6deg) !important; }
-#turtle.homie-pixel.notice .pixel-front-leg-a,
-#turtle.homie-pixel.notice .pixel-front-leg-b,
-#turtle.homie-pixel.notice .pixel-rear-leg-a,
-#turtle.homie-pixel.notice .pixel-rear-leg-b { animation: none !important; }
-@keyframes pixelHomieNoticeBody { 50% { transform: translate3d(-.8px,.4px,0) scale(1) !important; } }
-
-/* Existing story beat: shell. Shell stays. Appendages vanish into the job. */
-#turtle.homie-pixel.hide .pixel-neck,
-#turtle.homie-pixel.hide .pixel-head,
-#turtle.homie-pixel.hide .pixel-front-leg-a,
-#turtle.homie-pixel.hide .pixel-front-leg-b,
-#turtle.homie-pixel.hide .pixel-rear-leg-a,
-#turtle.homie-pixel.hide .pixel-rear-leg-b,
-#turtle.homie-pixel.hide .pixel-tail { opacity: 0 !important; }
-#turtle.homie-pixel.hide .pixel-shell { animation: pixelHomieShellFear .09s steps(2,end) infinite !important; }
-@keyframes pixelHomieShellFear { 50% { transform: translate(1px,-1px); } }
-
-/* Existing story beat: cautious peek. */
-#turtle.homie-pixel.peek .pixel-front-leg-a,
-#turtle.homie-pixel.peek .pixel-front-leg-b,
-#turtle.homie-pixel.peek .pixel-rear-leg-a,
-#turtle.homie-pixel.peek .pixel-rear-leg-b,
-#turtle.homie-pixel.peek .pixel-tail { opacity: .34 !important; }
-#turtle.homie-pixel.peek .pixel-neck { opacity: 1 !important; animation: pixelHomiePeekNeck 1.08s steps(4,end) forwards !important; }
-#turtle.homie-pixel.peek .pixel-head { opacity: 1 !important; animation: pixelHomiePeekHead 1.08s steps(4,end) forwards !important; }
-@keyframes pixelHomiePeekNeck {
-  0% { transform: translate(-5px,2px) scaleX(.2); opacity: 0; }
-  40% { transform: translate(-2px,1px) scaleX(.55); opacity: .55; }
-  75% { transform: translate(1px,-1px) scaleX(.85); opacity: .85; }
-  100% { transform: translate(3px,-2px) scaleX(1.18); opacity: 1; }
-}
-@keyframes pixelHomiePeekHead {
-  0% { transform: translate(-9px,3px) scale(.55); opacity: 0; }
-  40% { transform: translate(-4px,1px) scale(.72); opacity: .6; }
-  75% { transform: translate(1px,-2px) scale(.9) rotate(-4deg); opacity: .9; }
-  100% { transform: translate(5px,-4px) scale(1) rotate(-8deg); opacity: 1; }
-}
-
-/* Existing story beat: door / book it. */
-#turtle.homie-pixel.escape {
-  opacity: 1 !important;
-  animation: pixelHomieDoorRun 4.45s cubic-bezier(.28,0,.12,1) forwards !important;
-  clip-path: inset(0 0 0 0) !important;
-}
-#turtle.homie-pixel.escape .pixel-neck,
-#turtle.homie-pixel.escape .pixel-head,
-#turtle.homie-pixel.escape .pixel-front-leg-a,
-#turtle.homie-pixel.escape .pixel-front-leg-b,
-#turtle.homie-pixel.escape .pixel-rear-leg-a,
-#turtle.homie-pixel.escape .pixel-rear-leg-b,
-#turtle.homie-pixel.escape .pixel-tail { opacity: 1 !important; }
-#turtle.homie-pixel.escape .pixel-shell { animation: pixelHomieRunShell .28s steps(2,end) infinite !important; }
-#turtle.homie-pixel.escape .pixel-head,
-#turtle.homie-pixel.escape .pixel-neck { animation: pixelHomieRunHead .28s steps(2,end) infinite !important; }
-#turtle.homie-pixel.escape .pixel-front-leg-a,
-#turtle.homie-pixel.escape .pixel-rear-leg-b { animation: pixelHomieRunLegA .28s steps(2,end) infinite !important; }
-#turtle.homie-pixel.escape .pixel-front-leg-b,
-#turtle.homie-pixel.escape .pixel-rear-leg-a { animation: pixelHomieRunLegB .28s steps(2,end) infinite !important; }
-#turtle.homie-pixel.escape .pixel-tail { animation: pixelHomieRunTail .28s steps(2,end) infinite !important; }
-@keyframes pixelHomieDoorRun {
-  0% { transform: translate3d(0,0,0) scale(1) !important; opacity: 1; clip-path: inset(0 0 0 0); }
-  72% { transform: translate3d(150px,0,0) scale(1) !important; opacity: 1; clip-path: inset(0 0 0 0); }
-  86% { transform: translate3d(184px,0,0) scale(.94) !important; opacity: .9; clip-path: inset(0 0 0 0); }
-  94% { transform: translate3d(204px,0,0) scale(.88) !important; opacity: .6; clip-path: inset(0 0 0 55%); }
-  100% { transform: translate3d(220px,0,0) scale(.78) !important; opacity: 0; clip-path: inset(0 0 0 100%); }
-}
-@keyframes pixelHomieRunShell { 50% { transform: translate(1px,1px); } }
-@keyframes pixelHomieRunHead { 50% { transform: translate(2px,-1px); } }
-@keyframes pixelHomieRunLegA { 50% { transform: translate(3px,-1px); } }
-@keyframes pixelHomieRunLegB { 50% { transform: translate(-3px,1px); } }
-@keyframes pixelHomieRunTail { 50% { transform: translate(-1px,0); opacity: .7; } }
-
-/* Door stays ahead and below. */
-.loader-scene::after {
-  left: calc(50% + 96px) !important;
-  top: calc(100% + 18px) !important;
-  width: 6px !important;
-  border-radius: 0 !important;
-  background: #f2eee5 !important;
-  box-shadow: 0 0 8px rgba(242,238,229,.82), 0 0 18px rgba(223,255,63,.14) !important;
-}
-.loader-scene.portal-open::after { height: 48px !important; opacity: 1 !important; }
-.loader-scene.portal-close::after { height: 0 !important; opacity: 0 !important; }
-
-@media (max-width: 430px) {
-  .loader-scene { width: 60vw !important; }
-  #turtle.homie-pixel,
-  .loader-scene .turtle-track #turtle.homie-pixel {
-    width: 64px !important;
-    height: 29px !important;
-    margin-left: -32px !important;
-    top: 32px !important;
-  }
-}
-
 
 /* =========================================================
-   FINAL LOCK — PIXEL HOMIE B + LOADER BAR #8
-   Actor swap only. Story classes remain: walk / notice / hide / peek / escape.
-   Goal: bar is the star, Homie is small but readable. Not ant. Not mascot.
+   CHANNEL 17 — FINAL HOMIE B / LOADER BAR #8 CLEAN LOCK
+   Purpose: one approved loader, one approved tiny worker turtle.
 ========================================================= */
-.loader-scene {
-  width: min(60vw, 318px) !important;
-}
-.loader {
-  height: 32px !important;
-  padding: 5px !important;
-  border-radius: 0 !important;
-  border: 2px solid rgba(242,238,229,.92) !important;
-  background: #000 !important;
-  box-shadow: 0 0 0 1px rgba(0,0,0,1), 0 0 14px rgba(242,238,229,.08) !important;
-}
-.fill {
-  left: 5px !important;
-  top: 5px !important;
-  bottom: 5px !important;
-  max-width: calc(100% - 10px) !important;
-  border-radius: 0 !important;
-  background: repeating-linear-gradient(90deg, #f2eee5 0 10px, transparent 10px 14px) !important;
-  box-shadow: none !important;
-  image-rendering: pixelated !important;
-  transition: width .08s steps(1,end) !important;
-}
-.fill::before { display: none !important; }
-.percent {
-  font-size: .68rem !important;
-  letter-spacing: 3px !important;
-  color: #f2eee5 !important;
-  mix-blend-mode: difference !important;
-  text-shadow: none !important;
-}
-.loader.offcourse { animation: pixelBarOffCourse .7s steps(2,end) infinite !important; }
-@keyframes pixelBarOffCourse { 50% { transform: translateX(1px); filter: brightness(1.18); } }
-.loader.complete { animation: pixelBarComplete .65s steps(2,end) infinite !important; }
-@keyframes pixelBarComplete { 50% { filter: brightness(1.45); box-shadow: 0 0 0 1px #000, 0 0 22px rgba(242,238,229,.22) !important; } }
 
-.loader-scene .turtle-track {
-  height: 76px !important;
-  overflow: visible !important;
-}
-#turtle.homie-pixel.pixel-b,
-.loader-scene .turtle-track #turtle.homie-pixel.pixel-b {
-  position: absolute !important;
-  left: 50% !important;
-  top: 27px !important;
-  width: 86px !important;
-  height: 39px !important;
-  margin-left: -43px !important;
-  opacity: .98 !important;
-  transform: translate3d(0,0,0) scale(1) !important;
-  transform-origin: 50% 70% !important;
-  overflow: visible !important;
-  contain: none !important;
-  background: transparent !important;
-  border: 0 !important;
-  filter: drop-shadow(0 0 4px rgba(242,238,229,.20)) !important;
-  image-rendering: pixelated !important;
-  clip-path: none !important;
-}
-#turtle.homie-pixel.pixel-b .homie-pixel-svg {
-  width: 100% !important;
-  height: 100% !important;
-  display: block !important;
-  overflow: visible !important;
-  shape-rendering: crispEdges !important;
-  image-rendering: pixelated !important;
-}
-#turtle.homie-pixel.pixel-b .px { shape-rendering: crispEdges !important; }
-#turtle.homie-pixel.pixel-b .skin,
-#turtle.homie-pixel.pixel-b .shell-outline,
-#turtle.homie-pixel.pixel-b .shell-line { fill: #f2eee5 !important; }
-#turtle.homie-pixel.pixel-b .shell-fill,
-#turtle.homie-pixel.pixel-b .face { fill: #000 !important; }
-#turtle.homie-pixel.pixel-b .shell-line { opacity: .92 !important; }
-#turtle.homie-pixel.pixel-b .pixel-shadow rect { fill: rgba(242,238,229,.12) !important; }
-#turtle.homie-pixel.pixel-b g { transform-box: fill-box !important; }
-#turtle.homie-pixel.pixel-b .pixel-shell { transform-origin: 50% 80% !important; }
-#turtle.homie-pixel.pixel-b .pixel-head,
-#turtle.homie-pixel.pixel-b .pixel-neck { transform-origin: 0% 58% !important; }
-#turtle.homie-pixel.pixel-b .pixel-front-leg-a,
-#turtle.homie-pixel.pixel-b .pixel-front-leg-b,
-#turtle.homie-pixel.pixel-b .pixel-rear-leg-a,
-#turtle.homie-pixel.pixel-b .pixel-rear-leg-b { transform-origin: 50% 10% !important; }
-#turtle.homie-pixel.pixel-b .pixel-tail { transform-origin: 100% 50% !important; }
-
-#turtle.homie-pixel.pixel-b.walk { animation: pixelBBodyWork 1.1s steps(2,end) infinite !important; }
-#turtle.homie-pixel.pixel-b.walk .pixel-shell { animation: pixelBShellWork 1.1s steps(2,end) infinite !important; }
-#turtle.homie-pixel.pixel-b.walk .pixel-head,
-#turtle.homie-pixel.pixel-b.walk .pixel-neck { animation: pixelBHeadWork 1.1s steps(2,end) infinite !important; }
-#turtle.homie-pixel.pixel-b.walk .pixel-front-leg-a,
-#turtle.homie-pixel.pixel-b.walk .pixel-rear-leg-b { animation: pixelBLegA .55s steps(2,end) infinite !important; }
-#turtle.homie-pixel.pixel-b.walk .pixel-front-leg-b,
-#turtle.homie-pixel.pixel-b.walk .pixel-rear-leg-a { animation: pixelBLegB .55s steps(2,end) infinite !important; }
-#turtle.homie-pixel.pixel-b.walk .pixel-tail { animation: pixelBTail .55s steps(2,end) infinite !important; }
-@keyframes pixelBBodyWork { 50% { transform: translate3d(.8px,.8px,0) scale(1) !important; } }
-@keyframes pixelBShellWork { 50% { transform: translateY(.7px); } }
-@keyframes pixelBHeadWork { 50% { transform: translate(1px,-1px); } }
-@keyframes pixelBLegA { 50% { transform: translate(2px,-1px); } }
-@keyframes pixelBLegB { 50% { transform: translate(-2px,1px); } }
-@keyframes pixelBTail { 50% { transform: translate(-1px,0); opacity: .78; } }
-
-#turtle.homie-pixel.pixel-b.notice { animation: pixelBNoticeBody .75s steps(2,end) infinite !important; }
-#turtle.homie-pixel.pixel-b.notice .pixel-neck { transform: translate(2px,-1px) scaleX(1.15) !important; }
-#turtle.homie-pixel.pixel-b.notice .pixel-head { transform: translate(4px,-3px) rotate(-6deg) !important; }
-#turtle.homie-pixel.pixel-b.notice .pixel-front-leg-a,
-#turtle.homie-pixel.pixel-b.notice .pixel-front-leg-b,
-#turtle.homie-pixel.pixel-b.notice .pixel-rear-leg-a,
-#turtle.homie-pixel.pixel-b.notice .pixel-rear-leg-b { animation: none !important; }
-@keyframes pixelBNoticeBody { 50% { transform: translate3d(-.8px,.4px,0) scale(1) !important; } }
-
-#turtle.homie-pixel.pixel-b.hide .pixel-neck,
-#turtle.homie-pixel.pixel-b.hide .pixel-head,
-#turtle.homie-pixel.pixel-b.hide .pixel-front-leg-a,
-#turtle.homie-pixel.pixel-b.hide .pixel-front-leg-b,
-#turtle.homie-pixel.pixel-b.hide .pixel-rear-leg-a,
-#turtle.homie-pixel.pixel-b.hide .pixel-rear-leg-b,
-#turtle.homie-pixel.pixel-b.hide .pixel-tail { opacity: 0 !important; }
-#turtle.homie-pixel.pixel-b.hide .pixel-shell { animation: pixelBShellFear .09s steps(2,end) infinite !important; }
-@keyframes pixelBShellFear { 50% { transform: translate(1px,-1px); } }
-
-#turtle.homie-pixel.pixel-b.peek .pixel-front-leg-a,
-#turtle.homie-pixel.pixel-b.peek .pixel-front-leg-b,
-#turtle.homie-pixel.pixel-b.peek .pixel-rear-leg-a,
-#turtle.homie-pixel.pixel-b.peek .pixel-rear-leg-b,
-#turtle.homie-pixel.pixel-b.peek .pixel-tail { opacity: .34 !important; }
-#turtle.homie-pixel.pixel-b.peek .pixel-neck { opacity: 1 !important; animation: pixelBPeekNeck 1.08s steps(4,end) forwards !important; }
-#turtle.homie-pixel.pixel-b.peek .pixel-head { opacity: 1 !important; animation: pixelBPeekHead 1.08s steps(4,end) forwards !important; }
-@keyframes pixelBPeekNeck {
-  0% { transform: translate(-5px,2px) scaleX(.2); opacity: 0; }
-  40% { transform: translate(-2px,1px) scaleX(.55); opacity: .55; }
-  75% { transform: translate(1px,-1px) scaleX(.85); opacity: .85; }
-  100% { transform: translate(3px,-2px) scaleX(1.18); opacity: 1; }
-}
-@keyframes pixelBPeekHead {
-  0% { transform: translate(-9px,3px) scale(.55); opacity: 0; }
-  40% { transform: translate(-4px,1px) scale(.72); opacity: .6; }
-  75% { transform: translate(1px,-2px) scale(.9) rotate(-4deg); opacity: .9; }
-  100% { transform: translate(5px,-4px) scale(1) rotate(-8deg); opacity: 1; }
-}
-
-#turtle.homie-pixel.pixel-b.escape {
-  opacity: 1 !important;
-  animation: pixelBDoorRun 4.45s cubic-bezier(.28,0,.12,1) forwards !important;
-  clip-path: inset(0 0 0 0) !important;
-}
-#turtle.homie-pixel.pixel-b.escape .pixel-neck,
-#turtle.homie-pixel.pixel-b.escape .pixel-head,
-#turtle.homie-pixel.pixel-b.escape .pixel-front-leg-a,
-#turtle.homie-pixel.pixel-b.escape .pixel-front-leg-b,
-#turtle.homie-pixel.pixel-b.escape .pixel-rear-leg-a,
-#turtle.homie-pixel.pixel-b.escape .pixel-rear-leg-b,
-#turtle.homie-pixel.pixel-b.escape .pixel-tail { opacity: 1 !important; }
-#turtle.homie-pixel.pixel-b.escape .pixel-shell { animation: pixelBRunShell .28s steps(2,end) infinite !important; }
-#turtle.homie-pixel.pixel-b.escape .pixel-head,
-#turtle.homie-pixel.pixel-b.escape .pixel-neck { animation: pixelBRunHead .28s steps(2,end) infinite !important; }
-#turtle.homie-pixel.pixel-b.escape .pixel-front-leg-a,
-#turtle.homie-pixel.pixel-b.escape .pixel-rear-leg-b { animation: pixelBRunLegA .28s steps(2,end) infinite !important; }
-#turtle.homie-pixel.pixel-b.escape .pixel-front-leg-b,
-#turtle.homie-pixel.pixel-b.escape .pixel-rear-leg-a { animation: pixelBRunLegB .28s steps(2,end) infinite !important; }
-#turtle.homie-pixel.pixel-b.escape .pixel-tail { animation: pixelBRunTail .28s steps(2,end) infinite !important; }
-@keyframes pixelBDoorRun {
-  0% { transform: translate3d(0,0,0) scale(1) !important; opacity: 1; clip-path: inset(0 0 0 0); }
-  72% { transform: translate3d(150px,0,0) scale(1) !important; opacity: 1; clip-path: inset(0 0 0 0); }
-  86% { transform: translate3d(184px,0,0) scale(.94) !important; opacity: .9; clip-path: inset(0 0 0 0); }
-  94% { transform: translate3d(204px,0,0) scale(.88) !important; opacity: .6; clip-path: inset(0 0 0 55%); }
-  100% { transform: translate3d(220px,0,0) scale(.78) !important; opacity: 0; clip-path: inset(0 0 0 100%); }
-}
-@keyframes pixelBRunShell { 50% { transform: translate(1px,1px); } }
-@keyframes pixelBRunHead { 50% { transform: translate(2px,-1px); } }
-@keyframes pixelBRunLegA { 50% { transform: translate(3px,-1px); } }
-@keyframes pixelBRunLegB { 50% { transform: translate(-3px,1px); } }
-@keyframes pixelBRunTail { 50% { transform: translate(-1px,0); opacity: .7; } }
-
-.loader-scene::after {
-  left: calc(50% + 96px) !important;
-  top: calc(100% + 18px) !important;
-  width: 6px !important;
-  border-radius: 0 !important;
-  background: #f2eee5 !important;
-  box-shadow: 0 0 8px rgba(242,238,229,.82), 0 0 18px rgba(223,255,63,.14) !important;
-}
-.loader-scene.portal-open::after { height: 48px !important; opacity: 1 !important; }
-.loader-scene.portal-close::after { height: 0 !important; opacity: 0 !important; }
-
-@media (max-width: 430px) {
-  .loader-scene { width: 60vw !important; }
-  #turtle.homie-pixel.pixel-b,
-  .loader-scene .turtle-track #turtle.homie-pixel.pixel-b {
-    width: 78px !important;
-    height: 35px !important;
-    margin-left: -39px !important;
-    top: 29px !important;
-  }
-}
-
-/* =========================================================
-   R2 HOTFIX — PIXEL HOMIE B + LOADER BAR #8 REAL SCREEN FIX
-   Purpose: make the bar the hero, restore segmented #8 bar,
-   and keep Homie B small/readable underneath. Story classes unchanged.
-========================================================= */
-.loader-scene {
-  width: min(72vw, 380px) !important;
-  max-width: 380px !important;
-  overflow: visible !important;
-}
-.loader {
-  position: relative !important;
-  height: 34px !important;
-  padding: 5px !important;
-  border-radius: 0 !important;
-  border: 2px solid rgba(242,238,229,.96) !important;
-  background:
-    repeating-linear-gradient(90deg,
-      transparent 0 21px,
-      rgba(242,238,229,.18) 21px 23px,
-      transparent 23px 42px),
-    #000 !important;
-  box-shadow:
-    0 0 0 1px rgba(0,0,0,1),
-    0 0 18px rgba(242,238,229,.10) !important;
-}
-.fill {
-  position: absolute !important;
-  left: 5px !important;
-  top: 5px !important;
-  bottom: 5px !important;
-  height: auto !important;
-  max-width: calc(100% - 10px) !important;
-  border-radius: 0 !important;
-  background: repeating-linear-gradient(90deg,
-    #f2eee5 0 20px,
-    transparent 20px 24px) !important;
-  box-shadow: none !important;
-  image-rendering: pixelated !important;
-  transition: width .08s steps(1,end) !important;
-}
-.fill::before,
-.fill::after { display: none !important; content: none !important; }
-.percent {
-  position: absolute !important;
-  left: 50% !important;
-  top: -35px !important;
-  transform: translateX(-50%) !important;
-  width: auto !important;
-  height: auto !important;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace !important;
-  font-size: 1.08rem !important;
-  line-height: 1 !important;
-  letter-spacing: 2px !important;
-  color: #f2eee5 !important;
-  mix-blend-mode: normal !important;
-  text-shadow: 0 0 8px rgba(242,238,229,.18) !important;
-  pointer-events: none !important;
-}
-.loader-scene .turtle-track {
-  position: relative !important;
-  height: 72px !important;
-  overflow: visible !important;
-}
-#turtle.homie-pixel.pixel-b,
-.loader-scene .turtle-track #turtle.homie-pixel.pixel-b {
-  position: absolute !important;
-  left: 50% !important;
-  top: 28px !important;
-  width: 58px !important;
-  height: 26px !important;
-  margin-left: -29px !important;
-  opacity: .98 !important;
-  transform: translate3d(0,0,0) scale(1) !important;
-  transform-origin: 50% 70% !important;
-  overflow: visible !important;
-  contain: none !important;
-  background: transparent !important;
-  border: 0 !important;
-  filter: drop-shadow(0 0 3px rgba(242,238,229,.24)) !important;
-  image-rendering: pixelated !important;
-  clip-path: none !important;
-}
-#turtle.homie-pixel.pixel-b .homie-pixel-svg {
-  width: 100% !important;
-  height: 100% !important;
-  display: block !important;
-  overflow: visible !important;
-  shape-rendering: crispEdges !important;
-  image-rendering: pixelated !important;
-}
-#turtle.homie-pixel.pixel-b .px { shape-rendering: crispEdges !important; }
-#turtle.homie-pixel.pixel-b .skin,
-#turtle.homie-pixel.pixel-b .shell-outline,
-#turtle.homie-pixel.pixel-b .shell-line { fill: #f2eee5 !important; }
-#turtle.homie-pixel.pixel-b .shell-fill,
-#turtle.homie-pixel.pixel-b .face { fill: #000 !important; }
-#turtle.homie-pixel.pixel-b .shell-line { opacity: .9 !important; }
-#turtle.homie-pixel.pixel-b .pixel-shadow rect { fill: rgba(242,238,229,.13) !important; }
-
-@media (max-width: 430px) {
-  .loader-scene {
-    width: 72vw !important;
-    max-width: 380px !important;
-  }
-  .loader {
-    height: 34px !important;
-    background:
-      repeating-linear-gradient(90deg,
-        transparent 0 18px,
-        rgba(242,238,229,.18) 18px 20px,
-        transparent 20px 36px),
-      #000 !important;
-  }
-  .fill {
-    background: repeating-linear-gradient(90deg,
-      #f2eee5 0 18px,
-      transparent 18px 22px) !important;
-  }
-  #turtle.homie-pixel.pixel-b,
-  .loader-scene .turtle-track #turtle.homie-pixel.pixel-b {
-    width: 56px !important;
-    height: 25px !important;
-    margin-left: -28px !important;
-    top: 29px !important;
-  }
-}
-
-/* =========================================================
-   R2 FINAL OVERRIDE — HOMIE B + BAR #8 ONLY
-   Last rule wins. Kills pill loader / old rig leftovers.
-========================================================= */
 #loaderScene.loader-scene {
   position: absolute !important;
   left: 50% !important;
   top: 48% !important;
-  width: min(72vw, 380px) !important;
-  max-width: 380px !important;
+  width: min(72vw, 310px) !important;
   transform: translate(-50%, -50%) !important;
-  overflow: visible !important;
   z-index: 35 !important;
+  overflow: visible !important;
 }
-#loaderScene.fade-out {
-  opacity: 0 !important;
-  transform: translate(-50%, -52%) !important;
-  filter: blur(4px) !important;
-  pointer-events: none !important;
-}
+
 #loader.loader {
   position: relative !important;
-  box-sizing: border-box !important;
+  height: 32px !important;
   width: 100% !important;
-  height: 34px !important;
-  padding: 5px !important;
-  overflow: visible !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  border: 2px solid rgba(242,238,229,.92) !important;
   border-radius: 0 !important;
-  border: 2px solid #f2eee5 !important;
   background:
     repeating-linear-gradient(90deg,
-      transparent 0 20px,
-      rgba(242,238,229,.19) 20px 22px,
-      transparent 22px 40px),
+      transparent 0 18px,
+      rgba(242,238,229,.22) 18px 20px,
+      transparent 20px 36px),
     #000 !important;
-  box-shadow: 0 0 18px rgba(242,238,229,.10) !important;
+  box-shadow: 0 0 0 1px rgba(242,238,229,.12), 0 0 16px rgba(242,238,229,.08) !important;
 }
-#loader.loader::before,
-#loader.loader::after { display: none !important; content: none !important; }
+
 #fill.fill {
   position: absolute !important;
-  left: 5px !important;
-  top: 5px !important;
-  bottom: 5px !important;
-  height: auto !important;
+  left: 0 !important;
+  top: 0 !important;
+  bottom: 0 !important;
+  height: 100% !important;
+  max-width: 100% !important;
   width: 0%;
-  max-width: calc(100% - 10px) !important;
   border-radius: 0 !important;
   background: repeating-linear-gradient(90deg,
-    #f2eee5 0 20px,
-    transparent 20px 24px) !important;
+    #f2eee5 0 18px,
+    transparent 18px 22px) !important;
   box-shadow: none !important;
-  transition: width .08s steps(1,end) !important;
-  overflow: hidden !important;
+  transition: width .08s linear !important;
 }
-#fill.fill::before,
-#fill.fill::after { display: none !important; content: none !important; }
+
+#fill.fill::before { display: none !important; }
+
 #percent.percent {
   position: absolute !important;
   inset: auto !important;
   left: 50% !important;
-  top: -34px !important;
+  top: -30px !important;
   transform: translateX(-50%) !important;
-  width: auto !important;
-  height: auto !important;
+  z-index: 8 !important;
   display: block !important;
-  place-items: unset !important;
-  z-index: 6 !important;
   color: #f2eee5 !important;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace !important;
-  font-size: 1.08rem !important;
+  font-family: "Courier New", monospace !important;
+  font-size: 1.02rem !important;
   font-weight: 700 !important;
-  line-height: 1 !important;
   letter-spacing: 2px !important;
+  line-height: 1 !important;
   opacity: .96 !important;
   mix-blend-mode: normal !important;
-  text-shadow: 0 0 8px rgba(242,238,229,.16) !important;
   pointer-events: none !important;
+  text-shadow: 0 0 8px rgba(242,238,229,.18) !important;
 }
-#turtleTrack.turtle-track,
-.loader-scene #turtleTrack.turtle-track {
+
+#loader.loader.offcourse { animation: c17BarNervous .7s steps(2,end) infinite !important; }
+#loader.loader.complete { animation: c17BarComplete .9s steps(2,end) infinite !important; }
+@keyframes c17BarNervous { 50% { transform: translateX(1px); filter: brightness(1.25); } }
+@keyframes c17BarComplete { 50% { filter: brightness(1.35); box-shadow: 0 0 18px rgba(242,238,229,.18) !important; } }
+
+#loader.loader.homie-cut-out,
+#loader.loader.homie-cut-out #fill.fill,
+#loader.loader.homie-cut-out #percent.percent {
+  animation: c17BarCutOut .62s steps(4,end) forwards !important;
+}
+@keyframes c17BarCutOut {
+  0% { opacity: 1; filter: none; }
+  50% { opacity: .36; filter: blur(1px); }
+  100% { opacity: 0; visibility: hidden; filter: blur(4px); }
+}
+
+#turtleTrack.turtle-track {
   position: relative !important;
+  width: 100% !important;
   height: 70px !important;
   overflow: visible !important;
 }
-#turtle.turtle.homie-pixel.pixel-b,
-.loader-scene .turtle-track #turtle.turtle.homie-pixel.pixel-b {
+
+#turtle.turtle.homie-pixel.pixel-b {
   position: absolute !important;
   left: 50% !important;
-  top: 27px !important;
-  width: 54px !important;
-  height: 30px !important;
-  margin-left: -27px !important;
-  opacity: .98 !important;
+  top: 22px !important;
+  width: 62px !important;
+  height: 35px !important;
+  margin-left: -31px !important;
+  opacity: .96 !important;
   background: transparent !important;
   border: 0 !important;
   overflow: visible !important;
   contain: none !important;
   transform: translate3d(0,0,0) scale(1) !important;
   transform-origin: 50% 75% !important;
+  filter: drop-shadow(0 0 3px rgba(242,238,229,.2)) !important;
   clip-path: none !important;
-  filter: drop-shadow(0 0 3px rgba(242,238,229,.24)) !important;
 }
+
 #turtle.turtle.homie-pixel.pixel-b .homie-pixel-svg {
   width: 100% !important;
   height: 100% !important;
@@ -5826,7 +5345,7 @@ body {
 #turtle.turtle.homie-pixel.pixel-b .shell-fill,
 #turtle.turtle.homie-pixel.pixel-b .face { fill: #000 !important; }
 #turtle.turtle.homie-pixel.pixel-b .shell-line { opacity: .9 !important; }
-#turtle.turtle.homie-pixel.pixel-b .pixel-shadow rect { fill: rgba(242,238,229,.13) !important; }
+#turtle.turtle.homie-pixel.pixel-b .pixel-shadow rect { fill: rgba(242,238,229,.12) !important; }
 #turtle.turtle.homie-pixel.pixel-b g { transform-box: fill-box !important; }
 #turtle.turtle.homie-pixel.pixel-b .pixel-shell { transform-origin: 50% 80% !important; }
 #turtle.turtle.homie-pixel.pixel-b .pixel-head,
@@ -5887,9 +5406,10 @@ body {
   75% { transform: translate(1px,-2px) scale(.9) rotate(-4deg); opacity: .9; }
   100% { transform: translate(5px,-4px) scale(1) rotate(-8deg); opacity: 1; }
 }
+
 #turtle.turtle.homie-pixel.pixel-b.escape {
   opacity: 1 !important;
-  animation: pixelBDoorRun 4.45s cubic-bezier(.28,0,.12,1) forwards !important;
+  animation: pixelBDoorRun 3.65s cubic-bezier(.28,0,.12,1) forwards !important;
   clip-path: inset(0 0 0 0) !important;
 }
 #turtle.turtle.homie-pixel.pixel-b.escape .pixel-neck,
@@ -5899,20 +5419,20 @@ body {
 #turtle.turtle.homie-pixel.pixel-b.escape .pixel-rear-leg-a,
 #turtle.turtle.homie-pixel.pixel-b.escape .pixel-rear-leg-b,
 #turtle.turtle.homie-pixel.pixel-b.escape .pixel-tail { opacity: 1 !important; }
-#turtle.turtle.homie-pixel.pixel-b.escape .pixel-shell { animation: pixelBRunShell .28s steps(2,end) infinite !important; }
+#turtle.turtle.homie-pixel.pixel-b.escape .pixel-shell { animation: pixelBRunShell .24s steps(2,end) infinite !important; }
 #turtle.turtle.homie-pixel.pixel-b.escape .pixel-head,
-#turtle.turtle.homie-pixel.pixel-b.escape .pixel-neck { animation: pixelBRunHead .28s steps(2,end) infinite !important; }
+#turtle.turtle.homie-pixel.pixel-b.escape .pixel-neck { animation: pixelBRunHead .24s steps(2,end) infinite !important; }
 #turtle.turtle.homie-pixel.pixel-b.escape .pixel-front-leg-a,
-#turtle.turtle.homie-pixel.pixel-b.escape .pixel-rear-leg-b { animation: pixelBRunLegA .28s steps(2,end) infinite !important; }
+#turtle.turtle.homie-pixel.pixel-b.escape .pixel-rear-leg-b { animation: pixelBRunLegA .24s steps(2,end) infinite !important; }
 #turtle.turtle.homie-pixel.pixel-b.escape .pixel-front-leg-b,
-#turtle.turtle.homie-pixel.pixel-b.escape .pixel-rear-leg-a { animation: pixelBRunLegB .28s steps(2,end) infinite !important; }
-#turtle.turtle.homie-pixel.pixel-b.escape .pixel-tail { animation: pixelBRunTail .28s steps(2,end) infinite !important; }
+#turtle.turtle.homie-pixel.pixel-b.escape .pixel-rear-leg-a { animation: pixelBRunLegB .24s steps(2,end) infinite !important; }
+#turtle.turtle.homie-pixel.pixel-b.escape .pixel-tail { animation: pixelBRunTail .24s steps(2,end) infinite !important; }
 @keyframes pixelBDoorRun {
   0% { transform: translate3d(0,0,0) scale(1) !important; opacity: 1; clip-path: inset(0 0 0 0); }
-  72% { transform: translate3d(150px,0,0) scale(1) !important; opacity: 1; clip-path: inset(0 0 0 0); }
-  86% { transform: translate3d(184px,0,0) scale(.94) !important; opacity: .9; clip-path: inset(0 0 0 0); }
-  94% { transform: translate3d(204px,0,0) scale(.88) !important; opacity: .6; clip-path: inset(0 0 0 55%); }
-  100% { transform: translate3d(220px,0,0) scale(.78) !important; opacity: 0; clip-path: inset(0 0 0 100%); }
+  70% { transform: translate3d(126px,0,0) scale(1) !important; opacity: 1; clip-path: inset(0 0 0 0); }
+  86% { transform: translate3d(154px,0,0) scale(.96) !important; opacity: .92; clip-path: inset(0 0 0 0); }
+  94% { transform: translate3d(174px,0,0) scale(.9) !important; opacity: .62; clip-path: inset(0 0 0 55%); }
+  100% { transform: translate3d(190px,0,0) scale(.78) !important; opacity: 0; clip-path: inset(0 0 0 100%); }
 }
 @keyframes pixelBRunShell { 50% { transform: translate(1px,1px); } }
 @keyframes pixelBRunHead { 50% { transform: translate(2px,-1px); } }
@@ -5921,37 +5441,33 @@ body {
 @keyframes pixelBRunTail { 50% { transform: translate(-1px,0); opacity: .7; } }
 
 #loaderScene.loader-scene::after {
-  left: calc(50% + 105px) !important;
-  top: calc(100% + 18px) !important;
+  content: "" !important;
+  position: absolute !important;
+  left: calc(50% + 90px) !important;
+  top: calc(100% + 17px) !important;
   width: 6px !important;
+  height: 0 !important;
+  opacity: 0 !important;
   border-radius: 0 !important;
   background: #f2eee5 !important;
+  transform-origin: bottom center !important;
   box-shadow: 0 0 8px rgba(242,238,229,.82), 0 0 18px rgba(223,255,63,.14) !important;
+  pointer-events: none !important;
 }
-#loaderScene.loader-scene.portal-open::after { height: 48px !important; opacity: 1 !important; }
-#loaderScene.loader-scene.portal-close::after { height: 0 !important; opacity: 0 !important; }
+#loaderScene.loader-scene.portal-open::after { animation: c17DoorOpen .32s steps(4,end) forwards !important; }
+#loaderScene.loader-scene.portal-close::after { animation: c17DoorClose .34s steps(4,end) forwards !important; }
+@keyframes c17DoorOpen { from { height:0; opacity:0; } to { height:48px; opacity:1; } }
+@keyframes c17DoorClose { from { height:48px; opacity:1; } to { height:0; opacity:0; } }
 
 @media (max-width: 430px) {
-  #loaderScene.loader-scene { width: 72vw !important; }
-  #loader.loader {
-    height: 34px !important;
-    background:
-      repeating-linear-gradient(90deg,
-        transparent 0 18px,
-        rgba(242,238,229,.19) 18px 20px,
-        transparent 20px 36px),
-      #000 !important;
+  #loaderScene.loader-scene { width: 72vw !important; top: 48% !important; }
+  #loader.loader { height: 32px !important; }
+  #percent.percent { top: -30px !important; font-size: 1rem !important; }
+  #turtle.turtle.homie-pixel.pixel-b {
+    width: 62px !important;
+    height: 35px !important;
+    margin-left: -31px !important;
+    top: 22px !important;
   }
-  #fill.fill {
-    background: repeating-linear-gradient(90deg,
-      #f2eee5 0 18px,
-      transparent 18px 22px) !important;
-  }
-  #turtle.turtle.homie-pixel.pixel-b,
-  .loader-scene .turtle-track #turtle.turtle.homie-pixel.pixel-b {
-    width: 54px !important;
-    height: 30px !important;
-    margin-left: -27px !important;
-    top: 27px !important;
-  }
+  #loaderScene.loader-scene::after { left: calc(50% + 88px) !important; top: calc(100% + 17px) !important; }
 }
