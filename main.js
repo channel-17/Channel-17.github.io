@@ -847,15 +847,15 @@ function completeSequence() {
 
   setTimeout(() => {
     loaderScene.classList.add("portal-close");
-  }, 7650);
+  }, 7050);
 
   setTimeout(() => {
     loader.classList.add("homie-cut-out");
-  }, 7900);
+  }, 7350);
 
   setTimeout(() => {
     loaderScene.classList.add("fade-out");
-  }, 8700);
+  }, 8200);
 }
 
 function openChannel() {
