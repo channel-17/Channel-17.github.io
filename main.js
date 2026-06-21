@@ -144,7 +144,7 @@ const coverageTargets = [...loaderTargets, ...symbolTargets, ...missTargets];
 
 function setProgress(value) {
   progress = Math.max(0, Math.min(100, value));
-  fill.style.width = progress <= 0 ? "0%" : `calc(${progress}% - 12px)`;
+  fill.style.width = progress <= 0 ? "0%" : `${progress}%`;
   percent.textContent = `${Math.round(progress)}%`;
 }
 
