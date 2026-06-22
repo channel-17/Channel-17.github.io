@@ -6188,100 +6188,97 @@ body {
 
 
 /* =========================================================
-   CHANNEL 17 — PASS 16 TARGET LOCK
-   Symbol top. Loader/% middle. Homie directly under loader.
-   Green reference = shape only. Final = off-white.
+   FORCE TARGET PASS — EXACT MOCKUP STACK
+   Percent visible above loader. Loader off-white pixel-pill.
+   Homie directly under loader. Symbol lifted away.
 ========================================================= */
 :root {
-  --p16-cream: #f2eee5;
-  --p16-black: #000000;
+  --force-white: #f2eee5;
+  --force-black: #000;
 }
 
-/* SYMBOL: its own top zone, separated from loader */
+/* move symbol out of the loader/Homie stack */
 #signalGhost.signal-ghost,
 .signal-ghost {
-  top: 24.5% !important;
-  width: 138px !important;
-  height: 138px !important;
+  top: 14.5% !important;
+  width: 132px !important;
+  height: 132px !important;
+  opacity: 0.18 !important;
   transform: translate(-50%, -50%) !important;
 }
-
 #signalNode.signal-node,
 .signal-node {
-  top: 24.5% !important;
-  width: 142px !important;
-  height: 142px !important;
+  top: 14.5% !important;
+  width: 136px !important;
+  height: 136px !important;
 }
 
-/* LOADER STACK: middle zone */
+/* exact target stack placement */
 #loaderScene.loader-scene {
   position: absolute !important;
   left: 50% !important;
-  top: 43.8% !important;
-  width: min(78vw, 352px) !important;
+  top: 30.5% !important;
+  width: min(86vw, 390px) !important;
   transform: translate(-50%, -50%) !important;
   overflow: visible !important;
   z-index: 35 !important;
 }
 
-/* Percent above bar */
-#percent.percent {
-  position: absolute !important;
-  left: 50% !important;
-  top: -55px !important;
-  bottom: auto !important;
-  transform: translateX(-50%) !important;
-  width: auto !important;
-  height: auto !important;
-  display: block !important;
-  visibility: visible !important;
-  opacity: 1 !important;
-  color: var(--p16-cream) !important;
-  font-family: "Courier New", monospace !important;
-  font-size: 1.45rem !important;
-  font-weight: 900 !important;
-  line-height: 1 !important;
-  letter-spacing: 1px !important;
-  text-shadow: 0 0 8px rgba(242,238,229,.22), 3px 3px 0 #000 !important;
-  mix-blend-mode: normal !important;
-  pointer-events: none !important;
-  z-index: 20 !important;
-}
-
-/* Approved pixel-pill shape, off-white */
+/* percent is inside loader in HTML, so loader must NOT clip it */
 #loader.loader {
   position: relative !important;
   width: 100% !important;
   height: 35px !important;
   padding: 0 !important;
-  overflow: hidden !important;
-  border: 4px solid var(--p16-cream) !important;
+  overflow: visible !important;
+  border: 4px solid var(--force-white) !important;
   border-radius: 0 !important;
-  background: var(--p16-black) !important;
+  background: var(--force-black) !important;
   box-shadow:
     0 0 0 5px rgba(0,0,0,.96),
-    0 0 18px rgba(242,238,229,.10) !important;
-  clip-path: polygon(4.5% 0, 95.5% 0, 100% 29%, 100% 71%, 95.5% 100%, 4.5% 100%, 0 71%, 0 29%) !important;
+    0 0 18px rgba(242,238,229,.12) !important;
+  clip-path: polygon(4% 0, 96% 0, 100% 28%, 100% 72%, 96% 100%, 4% 100%, 0 72%, 0 28%) !important;
   image-rendering: pixelated !important;
 }
-
 #loader.loader::before,
 #loader.loader::after {
   display: none !important;
 }
 
-/* Segmented fill */
+#percent.percent {
+  position: absolute !important;
+  left: 50% !important;
+  top: -64px !important;
+  bottom: auto !important;
+  transform: translateX(-50%) !important;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  width: auto !important;
+  height: auto !important;
+  color: var(--force-white) !important;
+  font-family: "Courier New", monospace !important;
+  font-size: 2.18rem !important;
+  font-weight: 900 !important;
+  line-height: 1 !important;
+  letter-spacing: 1px !important;
+  text-shadow: 0 0 8px rgba(242,238,229,.25), 3px 3px 0 #000 !important;
+  mix-blend-mode: normal !important;
+  pointer-events: none !important;
+  z-index: 99 !important;
+}
+
 #fill.fill {
   position: absolute !important;
-  left: 23px !important;
+  left: 24px !important;
   top: 8px !important;
   bottom: auto !important;
   height: 17px !important;
-  max-width: calc(100% - 46px) !important;
+  max-width: calc(100% - 48px) !important;
   border-radius: 0 !important;
   background:
     repeating-linear-gradient(90deg,
-      var(--p16-cream) 0 15px,
+      var(--force-white) 0 15px,
       transparent 15px 22px
     ) !important;
   box-shadow: none !important;
@@ -6290,19 +6287,18 @@ body {
 }
 #fill.fill::before { display: none !important; }
 
-/* HOMIE: directly under loader */
+/* Homie target placement directly below bar */
 #turtleTrack.turtle-track {
   position: relative !important;
   width: 100% !important;
-  height: 112px !important;
+  height: 190px !important;
   overflow: visible !important;
   pointer-events: none !important;
 }
-
 #turtle.turtle.homie-pixel.pixel-b {
   position: absolute !important;
   left: 50% !important;
-  top: 58px !important;
+  top: 142px !important;
   width: 86px !important;
   height: 49px !important;
   margin-left: -43px !important;
@@ -6317,7 +6313,6 @@ body {
   border: 0 !important;
   z-index: 4 !important;
 }
-
 #turtle.turtle.homie-pixel.pixel-b .homie-pixel-svg {
   width: 100% !important;
   height: 100% !important;
@@ -6327,48 +6322,46 @@ body {
   shape-rendering: crispEdges !important;
 }
 
-/* Approved Homie read */
+/* target turtle colors */
 #turtle.turtle.homie-pixel.pixel-b .skin,
 #turtle.turtle.homie-pixel.pixel-b .shell-outline,
 #turtle.turtle.homie-pixel.pixel-b .shell-line {
-  fill: var(--p16-cream) !important;
+  fill: var(--force-white) !important;
   stroke: none !important;
 }
-
 #turtle.turtle.homie-pixel.pixel-b .shell-fill,
 #turtle.turtle.homie-pixel.pixel-b .face {
   fill: #000 !important;
   stroke: none !important;
 }
 
-/* Only legs / neck / head animate */
+/* only legs/neck/head animate */
 #turtle.turtle.homie-pixel.pixel-b.walk,
 #turtle.turtle.homie-pixel.pixel-b.notice,
 #turtle.turtle.homie-pixel.pixel-b.peek {
   animation: none !important;
 }
-
 #turtle.turtle.homie-pixel.pixel-b.walk .pixel-front-leg-a,
 #turtle.turtle.homie-pixel.pixel-b.walk .pixel-rear-leg-b {
-  animation: p16LegA .52s steps(2,end) infinite !important;
+  animation: forceLegA .52s steps(2,end) infinite !important;
 }
 #turtle.turtle.homie-pixel.pixel-b.walk .pixel-front-leg-b,
 #turtle.turtle.homie-pixel.pixel-b.walk .pixel-rear-leg-a {
-  animation: p16LegB .52s steps(2,end) infinite !important;
+  animation: forceLegB .52s steps(2,end) infinite !important;
 }
 #turtle.turtle.homie-pixel.pixel-b.walk .pixel-neck,
 #turtle.turtle.homie-pixel.pixel-b.walk .pixel-head {
-  animation: p16HeadIdle 1.04s steps(2,end) infinite !important;
+  animation: forceHeadIdle 1.04s steps(2,end) infinite !important;
 }
-@keyframes p16LegA { 50% { transform: translate(1px,-1px); } }
-@keyframes p16LegB { 50% { transform: translate(-1px,1px); } }
-@keyframes p16HeadIdle { 50% { transform: translate(1px,-1px); } }
+@keyframes forceLegA { 50% { transform: translate(1px,-1px); } }
+@keyframes forceLegB { 50% { transform: translate(-1px,1px); } }
+@keyframes forceHeadIdle { 50% { transform: translate(1px,-1px); } }
 
 #turtle.turtle.homie-pixel.pixel-b.notice .pixel-neck,
 #turtle.turtle.homie-pixel.pixel-b.notice .pixel-head {
-  animation: p16NoticeHead .45s steps(3,end) forwards !important;
+  animation: forceNoticeHead .45s steps(3,end) forwards !important;
 }
-@keyframes p16NoticeHead { 100% { transform: translate(2px,-3px); } }
+@keyframes forceNoticeHead { 100% { transform: translate(2px,-3px); } }
 
 #turtle.turtle.homie-pixel.pixel-b.hide .pixel-neck,
 #turtle.turtle.homie-pixel.pixel-b.hide .pixel-head,
@@ -6383,7 +6376,7 @@ body {
 #turtle.turtle.homie-pixel.pixel-b.peek .pixel-neck,
 #turtle.turtle.homie-pixel.pixel-b.peek .pixel-head {
   opacity: 1 !important;
-  animation: p16PeekHead 1s steps(4,end) forwards !important;
+  animation: forcePeekHead 1s steps(4,end) forwards !important;
 }
 #turtle.turtle.homie-pixel.pixel-b.peek .pixel-front-leg-a,
 #turtle.turtle.homie-pixel.pixel-b.peek .pixel-front-leg-b,
@@ -6392,7 +6385,7 @@ body {
 #turtle.turtle.homie-pixel.pixel-b.peek .pixel-tail {
   opacity: .40 !important;
 }
-@keyframes p16PeekHead {
+@keyframes forcePeekHead {
   0% { transform: translate(-5px,2px); opacity: 0; }
   35% { transform: translate(-2px,1px); opacity: .7; }
   70% { transform: translate(1px,-2px); opacity: .95; }
@@ -6400,123 +6393,111 @@ body {
 }
 
 #turtle.turtle.homie-pixel.pixel-b.escape {
-  animation: p16DoorRun 3s cubic-bezier(.22,0,.08,1) forwards !important;
+  animation: forceDoorRun 3s cubic-bezier(.22,0,.08,1) forwards !important;
 }
 #turtle.turtle.homie-pixel.pixel-b.escape .pixel-neck,
 #turtle.turtle.homie-pixel.pixel-b.escape .pixel-head {
-  animation: p16RunHead .38s steps(2,end) infinite !important;
+  animation: forceRunHead .38s steps(2,end) infinite !important;
   opacity: 1 !important;
 }
 #turtle.turtle.homie-pixel.pixel-b.escape .pixel-front-leg-a,
 #turtle.turtle.homie-pixel.pixel-b.escape .pixel-rear-leg-b {
-  animation: p16RunLegA .38s steps(2,end) infinite !important;
+  animation: forceRunLegA .38s steps(2,end) infinite !important;
   opacity: 1 !important;
 }
 #turtle.turtle.homie-pixel.pixel-b.escape .pixel-front-leg-b,
 #turtle.turtle.homie-pixel.pixel-b.escape .pixel-rear-leg-a {
-  animation: p16RunLegB .38s steps(2,end) infinite !important;
+  animation: forceRunLegB .38s steps(2,end) infinite !important;
   opacity: 1 !important;
 }
-@keyframes p16RunHead { 50% { transform: translate(2px,-1px); } }
-@keyframes p16RunLegA { 50% { transform: translate(3px,-1px); } }
-@keyframes p16RunLegB { 50% { transform: translate(-3px,1px); } }
-@keyframes p16DoorRun {
+@keyframes forceRunHead { 50% { transform: translate(2px,-1px); } }
+@keyframes forceRunLegA { 50% { transform: translate(3px,-1px); } }
+@keyframes forceRunLegB { 50% { transform: translate(-3px,1px); } }
+@keyframes forceDoorRun {
   0% { transform: translate3d(0,0,0) scale(1) !important; opacity: 1; clip-path: inset(0 0 0 0); }
   62% { transform: translate3d(126px,0,0) scale(1) !important; opacity: 1; clip-path: inset(0 0 0 0); }
   82% { transform: translate3d(158px,0,0) scale(.95) !important; opacity: .92; clip-path: inset(0 0 0 0); }
   100% { transform: translate3d(184px,0,0) scale(.76) !important; opacity: 0; clip-path: inset(0 0 0 100%); }
 }
 
-/* Door aligned to Homie's ground path */
+/* door now matches new Homie ground path */
 #loaderScene.loader-scene::after {
   content: "" !important;
   position: absolute !important;
   left: calc(50% + 94px) !important;
-  top: 88px !important;
+  top: 172px !important;
   width: 7px !important;
   height: 0 !important;
   opacity: 0 !important;
   border-radius: 0 !important;
-  background: var(--p16-cream) !important;
+  background: var(--force-white) !important;
   transform-origin: bottom center !important;
   box-shadow: 0 0 8px rgba(242,238,229,.82) !important;
   z-index: 8 !important;
   pointer-events: none !important;
 }
 #loaderScene.loader-scene.portal-open::after {
-  animation: p16DoorOpen .32s steps(4,end) forwards !important;
+  animation: forceDoorOpen .32s steps(4,end) forwards !important;
 }
 #loaderScene.loader-scene.portal-close::after {
-  animation: p16DoorClose .34s steps(4,end) forwards !important;
+  animation: forceDoorClose .34s steps(4,end) forwards !important;
 }
-@keyframes p16DoorOpen {
+@keyframes forceDoorOpen {
   from { height:0; opacity:0; transform: translateY(44px); }
   to { height:48px; opacity:1; transform: translateY(0); }
 }
-@keyframes p16DoorClose {
+@keyframes forceDoorClose {
   from { height:48px; opacity:1; transform: translateY(0); }
   to { height:0; opacity:0; transform: translateY(44px); }
-}
-
-/* Restore maze pulses */
-.maze.active {
-  opacity: 1 !important;
-  visibility: visible !important;
-  pointer-events: none !important;
-}
-.maze.active .pipe {
-  animation: pipeWake 2.2s ease forwards !important;
-}
-.maze.active .pipe::before {
-  animation: beaconRun 1.6s ease forwards !important;
 }
 
 @media (max-width: 430px) {
   #signalGhost.signal-ghost,
   .signal-ghost {
-    top: 24.5% !important;
-    width: 136px !important;
-    height: 136px !important;
+    top: 14.5% !important;
+    width: 128px !important;
+    height: 128px !important;
   }
   #signalNode.signal-node,
   .signal-node {
-    top: 24.5% !important;
-    width: 140px !important;
-    height: 140px !important;
+    top: 14.5% !important;
+    width: 132px !important;
+    height: 132px !important;
   }
   #loaderScene.loader-scene {
-    top: 43.8% !important;
-    width: 78vw !important;
-  }
-  #percent.percent {
-    top: -55px !important;
-    font-size: 1.45rem !important;
+    top: 30.5% !important;
+    width: 86vw !important;
   }
   #loader.loader {
     height: 35px !important;
+    overflow: visible !important;
+  }
+  #percent.percent {
+    top: -64px !important;
+    font-size: 2.18rem !important;
   }
   #fill.fill {
-    left: 23px !important;
+    left: 24px !important;
     top: 8px !important;
     height: 17px !important;
-    max-width: calc(100% - 46px) !important;
+    max-width: calc(100% - 48px) !important;
     background:
       repeating-linear-gradient(90deg,
-        var(--p16-cream) 0 14px,
+        var(--force-white) 0 14px,
         transparent 14px 21px
       ) !important;
   }
   #turtleTrack.turtle-track {
-    height: 112px !important;
+    height: 190px !important;
   }
   #turtle.turtle.homie-pixel.pixel-b {
-    top: 58px !important;
+    top: 142px !important;
     width: 86px !important;
     height: 49px !important;
     margin-left: -43px !important;
   }
   #loaderScene.loader-scene::after {
     left: calc(50% + 94px) !important;
-    top: 88px !important;
+    top: 172px !important;
   }
 }
