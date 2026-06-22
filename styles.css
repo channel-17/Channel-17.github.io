@@ -5652,60 +5652,84 @@ body {
 
 
 /* =========================================================
-   R2 FIRE FIX — WHITE PIXEL-PILL + APPROVED PIXEL HOMIE B
-   Surgical override only: Carl/Wren/Frank/avatars/station untouched.
+   TARGET LOCK PASS — PIXEL HOMIE + OFF-WHITE PIXEL BAR
+   Source: user Sketchbook target image. No redesign.
+   Bar, percent, and Homie use same off-white.
+   Only Homie's legs, neck, and head animate.
 ========================================================= */
+:root {
+  --c17-target-white: #f2eee5;
+  --c17-target-black: #020202;
+}
 
 #loaderScene.loader-scene {
-  width: min(76vw, 330px) !important;
-  top: 47.5% !important;
+  position: absolute !important;
+  left: 50% !important;
+  top: 44.5% !important;
+  width: min(80vw, 350px) !important;
+  transform: translate(-50%, -50%) !important;
   overflow: visible !important;
+  z-index: 35 !important;
 }
 
 #loader.loader {
   position: relative !important;
-  height: 32px !important;
+  width: 100% !important;
+  height: 34px !important;
   padding: 0 !important;
   overflow: hidden !important;
-  border: 3px solid #f2eee5 !important;
+  border: 4px solid var(--c17-target-white) !important;
   border-radius: 0 !important;
-  background: #000 !important;
-  box-shadow: 0 0 0 1px rgba(242,238,229,.28), 0 0 12px rgba(242,238,229,.08) !important;
+  background: var(--c17-target-black) !important;
+  box-shadow:
+    0 0 0 5px rgba(0,0,0,.92),
+    0 0 18px rgba(242,238,229,.10) !important;
   image-rendering: pixelated !important;
 }
 
-/* pixel-stair pill ends: reference geometry, NOT green */
+/* Pixel-pill stair-step end caps. */
 #loader.loader::before,
 #loader.loader::after {
   content: "" !important;
   position: absolute !important;
-  top: -3px !important;
-  width: 24px !important;
-  height: 32px !important;
-  background: #000 !important;
-  z-index: 4 !important;
+  top: 50% !important;
+  width: 12px !important;
+  height: 20px !important;
+  transform: translateY(-50%) !important;
+  background: var(--c17-target-black) !important;
+  z-index: 5 !important;
   pointer-events: none !important;
 }
 #loader.loader::before {
-  left: -3px !important;
-  clip-path: polygon(10px 0, 24px 0, 24px 3px, 16px 3px, 16px 6px, 10px 6px, 10px 9px, 7px 9px, 7px 23px, 10px 23px, 10px 26px, 16px 26px, 16px 29px, 24px 29px, 24px 32px, 10px 32px, 10px 29px, 6px 29px, 6px 26px, 3px 26px, 3px 23px, 0 23px, 0 9px, 3px 9px, 3px 6px, 6px 6px, 6px 3px, 10px 3px) !important;
-  border-left: 3px solid #f2eee5 !important;
+  left: -1px !important;
+  border-right: 4px solid var(--c17-target-white) !important;
+  box-shadow:
+    4px -10px 0 -4px var(--c17-target-white),
+    4px 10px 0 -4px var(--c17-target-white) !important;
 }
 #loader.loader::after {
-  right: -3px !important;
-  clip-path: polygon(0 0, 14px 0, 14px 3px, 18px 3px, 18px 6px, 21px 6px, 21px 9px, 24px 9px, 24px 23px, 21px 23px, 21px 26px, 18px 26px, 18px 29px, 14px 29px, 14px 32px, 0 32px, 0 29px, 8px 29px, 8px 26px, 14px 26px, 14px 23px, 17px 23px, 17px 9px, 14px 9px, 14px 6px, 8px 6px, 8px 3px, 0 3px) !important;
-  border-right: 3px solid #f2eee5 !important;
+  right: -1px !important;
+  border-left: 4px solid var(--c17-target-white) !important;
+  box-shadow:
+    -4px -10px 0 -4px var(--c17-target-white),
+    -4px 10px 0 -4px var(--c17-target-white) !important;
 }
 
 #fill.fill {
-  left: 20px !important;
+  position: absolute !important;
+  left: 22px !important;
   top: 7px !important;
   bottom: auto !important;
   height: 18px !important;
-  max-width: calc(100% - 40px) !important;
+  max-width: calc(100% - 44px) !important;
   width: 0%;
   border-radius: 0 !important;
-  background: repeating-linear-gradient(90deg, #f2eee5 0 15px, transparent 15px 21px) !important;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      var(--c17-target-white) 0 15px,
+      transparent 15px 22px
+    ) !important;
   box-shadow: none !important;
   transition: width .08s steps(2,end) !important;
   z-index: 2 !important;
@@ -5713,38 +5737,53 @@ body {
 #fill.fill::before { display: none !important; }
 
 #percent.percent {
-  inset: auto 0 calc(100% + 13px) 0 !important;
-  height: 24px !important;
+  position: absolute !important;
+  inset: auto 0 calc(100% + 16px) 0 !important;
   display: grid !important;
   place-items: center !important;
-  color: #f2eee5 !important;
-  font-size: 1.06rem !important;
+  height: 32px !important;
+  color: var(--c17-target-white) !important;
+  font-family: "Courier New", monospace !important;
+  font-size: 1.22rem !important;
   line-height: 1 !important;
-  font-weight: 800 !important;
+  font-weight: 900 !important;
   letter-spacing: 1px !important;
-  opacity: .98 !important;
+  opacity: 1 !important;
   mix-blend-mode: normal !important;
-  text-shadow: 0 0 7px rgba(242,238,229,.18) !important;
+  text-shadow:
+    0 0 7px rgba(242,238,229,.20),
+    2px 2px 0 rgba(0,0,0,.55) !important;
+  pointer-events: none !important;
+  z-index: 9 !important;
 }
 
-#turtleTrack.turtle-track { height: 84px !important; overflow: visible !important; }
+#turtleTrack.turtle-track {
+  position: relative !important;
+  width: 100% !important;
+  height: 112px !important;
+  overflow: visible !important;
+  pointer-events: none !important;
+}
 
 #turtle.turtle.homie-pixel.pixel-b {
   position: absolute !important;
   left: 50% !important;
-  top: 22px !important;
-  width: 86px !important;
-  height: 50px !important;
-  margin-left: -43px !important;
-  opacity: .98 !important;
+  top: 58px !important;
+  width: 82px !important;
+  height: 46px !important;
+  margin-left: -41px !important;
+  opacity: 1 !important;
   overflow: visible !important;
   contain: none !important;
   transform: translate3d(0,0,0) scale(1) !important;
-  transform-origin: 50% 82% !important;
+  transform-origin: 50% 78% !important;
   image-rendering: pixelated !important;
-  filter: drop-shadow(0 0 4px rgba(242,238,229,.18)) !important;
-  z-index: 2 !important;
+  filter: drop-shadow(0 0 5px rgba(242,238,229,.16)) !important;
+  z-index: 4 !important;
+  background: transparent !important;
+  border: 0 !important;
 }
+
 #turtle.turtle.homie-pixel.pixel-b .homie-pixel-svg {
   width: 100% !important;
   height: 100% !important;
@@ -5753,105 +5792,209 @@ body {
   image-rendering: pixelated !important;
   shape-rendering: crispEdges !important;
 }
-#turtle.turtle.homie-pixel.pixel-b .px.skin,
-#turtle.turtle.homie-pixel.pixel-b .px.shell-outline,
-#turtle.turtle.homie-pixel.pixel-b .px.shell-line { fill: #f2eee5 !important; }
-#turtle.turtle.homie-pixel.pixel-b .px.shell-cut,
-#turtle.turtle.homie-pixel.pixel-b .px.face,
-#turtle.turtle.homie-pixel.pixel-b .px.mouth { fill: #000 !important; }
-#turtle.turtle.homie-pixel.pixel-b .pixel-shadow { fill: rgba(242,238,229,.10) !important; }
 
-#turtle.turtle.homie-pixel.pixel-b.walk { animation: pixelBApprovedBody .95s steps(2,end) infinite !important; }
+#turtle.turtle.homie-pixel.pixel-b .px,
+#turtle.turtle.homie-pixel.pixel-b .skin,
+#turtle.turtle.homie-pixel.pixel-b .shell-outline,
+#turtle.turtle.homie-pixel.pixel-b .shell-fill,
+#turtle.turtle.homie-pixel.pixel-b .shell-line {
+  fill: var(--c17-target-white) !important;
+  stroke: none !important;
+}
+
+/* Keep the face dark, like the approved target. */
+#turtle.turtle.homie-pixel.pixel-b .face {
+  fill: #000 !important;
+}
+
+/* Kill old whole-body wobble. Only legs, neck, head move. */
+#turtle.turtle.homie-pixel.pixel-b.walk,
+#turtle.turtle.homie-pixel.pixel-b.notice,
+#turtle.turtle.homie-pixel.pixel-b.peek {
+  animation: none !important;
+}
+
 #turtle.turtle.homie-pixel.pixel-b.walk .pixel-front-leg-a,
-#turtle.turtle.homie-pixel.pixel-b.walk .pixel-rear-leg-b { animation: pixelBApprovedLegA .48s steps(2,end) infinite !important; }
+#turtle.turtle.homie-pixel.pixel-b.walk .pixel-rear-leg-b {
+  animation: targetLegA .52s steps(2,end) infinite !important;
+}
 #turtle.turtle.homie-pixel.pixel-b.walk .pixel-front-leg-b,
-#turtle.turtle.homie-pixel.pixel-b.walk .pixel-rear-leg-a { animation: pixelBApprovedLegB .48s steps(2,end) infinite !important; }
-#turtle.turtle.homie-pixel.pixel-b.walk .pixel-head,
-#turtle.turtle.homie-pixel.pixel-b.walk .pixel-neck { animation: pixelBApprovedHeadTiny .95s steps(2,end) infinite !important; }
-@keyframes pixelBApprovedBody { 50% { transform: translate3d(.5px,.7px,0) scale(1) !important; } }
-@keyframes pixelBApprovedLegA { 50% { transform: translate(2px,-1px); } }
-@keyframes pixelBApprovedLegB { 50% { transform: translate(-2px,1px); } }
-@keyframes pixelBApprovedHeadTiny { 50% { transform: translate(1px,-1px); } }
+#turtle.turtle.homie-pixel.pixel-b.walk .pixel-rear-leg-a {
+  animation: targetLegB .52s steps(2,end) infinite !important;
+}
+#turtle.turtle.homie-pixel.pixel-b.walk .pixel-neck,
+#turtle.turtle.homie-pixel.pixel-b.walk .pixel-head {
+  animation: targetNeckHeadIdle 1.04s steps(2,end) infinite !important;
+}
 
-#turtle.turtle.homie-pixel.pixel-b.notice .pixel-head,
-#turtle.turtle.homie-pixel.pixel-b.notice .pixel-neck { transform: translate(2px,-2px) !important; }
-#turtle.turtle.homie-pixel.pixel-b.hide .pixel-head,
+@keyframes targetLegA {
+  50% { transform: translate(2px,-1px); }
+}
+@keyframes targetLegB {
+  50% { transform: translate(-2px,1px); }
+}
+@keyframes targetNeckHeadIdle {
+  50% { transform: translate(1px,-1px); }
+}
+
+#turtle.turtle.homie-pixel.pixel-b.notice .pixel-neck,
+#turtle.turtle.homie-pixel.pixel-b.notice .pixel-head {
+  animation: targetNoticeHead .42s steps(3,end) forwards !important;
+}
+@keyframes targetNoticeHead {
+  100% { transform: translate(3px,-3px); }
+}
+
 #turtle.turtle.homie-pixel.pixel-b.hide .pixel-neck,
-#turtle.turtle.homie-pixel.pixel-b.hide .pixel-tail,
+#turtle.turtle.homie-pixel.pixel-b.hide .pixel-head,
 #turtle.turtle.homie-pixel.pixel-b.hide .pixel-front-leg-a,
 #turtle.turtle.homie-pixel.pixel-b.hide .pixel-front-leg-b,
 #turtle.turtle.homie-pixel.pixel-b.hide .pixel-rear-leg-a,
-#turtle.turtle.homie-pixel.pixel-b.hide .pixel-rear-leg-b { opacity: 0 !important; }
-#turtle.turtle.homie-pixel.pixel-b.hide .pixel-shell { animation: pixelBApprovedShellHide .09s steps(2,end) infinite !important; }
-@keyframes pixelBApprovedShellHide { 50% { transform: translate(1px,-1px); } }
+#turtle.turtle.homie-pixel.pixel-b.hide .pixel-rear-leg-b,
+#turtle.turtle.homie-pixel.pixel-b.hide .pixel-tail {
+  opacity: 0 !important;
+}
 
-#turtle.turtle.homie-pixel.pixel-b.peek .pixel-head,
-#turtle.turtle.homie-pixel.pixel-b.peek .pixel-neck { opacity: 1 !important; animation: pixelBApprovedPeek 1.05s steps(4,end) forwards !important; }
-#turtle.turtle.homie-pixel.pixel-b.peek .pixel-tail,
+#turtle.turtle.homie-pixel.pixel-b.peek .pixel-neck,
+#turtle.turtle.homie-pixel.pixel-b.peek .pixel-head {
+  opacity: 1 !important;
+  animation: targetPeekHead 1.05s steps(4,end) forwards !important;
+}
 #turtle.turtle.homie-pixel.pixel-b.peek .pixel-front-leg-a,
 #turtle.turtle.homie-pixel.pixel-b.peek .pixel-front-leg-b,
 #turtle.turtle.homie-pixel.pixel-b.peek .pixel-rear-leg-a,
-#turtle.turtle.homie-pixel.pixel-b.peek .pixel-rear-leg-b { opacity: .38 !important; }
-@keyframes pixelBApprovedPeek {
-  0% { transform: translate(-8px,3px) scale(.45); opacity: 0; }
-  40% { transform: translate(-4px,1px) scale(.70); opacity: .65; }
-  70% { transform: translate(1px,-2px) scale(.92); opacity: .88; }
-  100% { transform: translate(4px,-4px) scale(1.04); opacity: 1; }
+#turtle.turtle.homie-pixel.pixel-b.peek .pixel-rear-leg-b,
+#turtle.turtle.homie-pixel.pixel-b.peek .pixel-tail {
+  opacity: .38 !important;
+}
+@keyframes targetPeekHead {
+  0% { transform: translate(-7px,3px); opacity: 0; }
+  35% { transform: translate(-3px,1px); opacity: .65; }
+  70% { transform: translate(2px,-2px); opacity: .9; }
+  100% { transform: translate(6px,-5px); opacity: 1; }
 }
 
-#turtle.turtle.homie-pixel.pixel-b.escape { animation: pixelBApprovedDoorRun 2.85s cubic-bezier(.2,0,.08,1) forwards !important; }
-#turtle.turtle.homie-pixel.pixel-b.escape .pixel-head,
+#turtle.turtle.homie-pixel.pixel-b.escape {
+  opacity: 1 !important;
+  animation: targetDoorRun 3.15s cubic-bezier(.24,0,.08,1) forwards !important;
+  clip-path: inset(0 0 0 0) !important;
+}
 #turtle.turtle.homie-pixel.pixel-b.escape .pixel-neck,
-#turtle.turtle.homie-pixel.pixel-b.escape .pixel-tail,
+#turtle.turtle.homie-pixel.pixel-b.escape .pixel-head {
+  opacity: 1 !important;
+  animation: targetRunHead .38s steps(2,end) infinite !important;
+}
 #turtle.turtle.homie-pixel.pixel-b.escape .pixel-front-leg-a,
+#turtle.turtle.homie-pixel.pixel-b.escape .pixel-rear-leg-b {
+  opacity: 1 !important;
+  animation: targetRunLegA .38s steps(2,end) infinite !important;
+}
 #turtle.turtle.homie-pixel.pixel-b.escape .pixel-front-leg-b,
-#turtle.turtle.homie-pixel.pixel-b.escape .pixel-rear-leg-a,
-#turtle.turtle.homie-pixel.pixel-b.escape .pixel-rear-leg-b { opacity: 1 !important; }
-#turtle.turtle.homie-pixel.pixel-b.escape .pixel-front-leg-a,
-#turtle.turtle.homie-pixel.pixel-b.escape .pixel-rear-leg-b { animation: pixelBApprovedRunA .32s steps(2,end) infinite !important; }
-#turtle.turtle.homie-pixel.pixel-b.escape .pixel-front-leg-b,
-#turtle.turtle.homie-pixel.pixel-b.escape .pixel-rear-leg-a { animation: pixelBApprovedRunB .32s steps(2,end) infinite !important; }
-@keyframes pixelBApprovedRunA { 50% { transform: translate(3px,-1px); } }
-@keyframes pixelBApprovedRunB { 50% { transform: translate(-3px,1px); } }
-@keyframes pixelBApprovedDoorRun {
+#turtle.turtle.homie-pixel.pixel-b.escape .pixel-rear-leg-a {
+  opacity: 1 !important;
+  animation: targetRunLegB .38s steps(2,end) infinite !important;
+}
+@keyframes targetRunHead {
+  50% { transform: translate(3px,-1px); }
+}
+@keyframes targetRunLegA {
+  50% { transform: translate(3px,-1px); }
+}
+@keyframes targetRunLegB {
+  50% { transform: translate(-3px,1px); }
+}
+@keyframes targetDoorRun {
   0% { transform: translate3d(0,0,0) scale(1) !important; opacity: 1; clip-path: inset(0 0 0 0); }
-  50% { transform: translate3d(108px,0,0) scale(1) !important; opacity: 1; clip-path: inset(0 0 0 0); }
-  72% { transform: translate3d(135px,0,0) scale(.96) !important; opacity: .96; clip-path: inset(0 0 0 0); }
-  88% { transform: translate3d(154px,0,0) scale(.9) !important; opacity: .62; clip-path: inset(0 0 0 55%); }
-  100% { transform: translate3d(170px,0,0) scale(.78) !important; opacity: 0; clip-path: inset(0 0 0 100%); }
+  62% { transform: translate3d(126px,0,0) scale(1) !important; opacity: 1; clip-path: inset(0 0 0 0); }
+  78% { transform: translate3d(154px,0,0) scale(.96) !important; opacity: .95; clip-path: inset(0 0 0 0); }
+  90% { transform: translate3d(171px,0,0) scale(.88) !important; opacity: .60; clip-path: inset(0 0 0 58%); }
+  100% { transform: translate3d(184px,0,0) scale(.78) !important; opacity: 0; clip-path: inset(0 0 0 100%); }
 }
 
+/* Door aligned with Homie's ground path. */
 #loaderScene.loader-scene::after {
   content: "" !important;
   position: absolute !important;
-  left: calc(50% + 86px) !important;
-  top: 44px !important;
-  width: 6px !important;
+  left: calc(50% + 92px) !important;
+  top: 88px !important;
+  width: 7px !important;
   height: 0 !important;
   opacity: 0 !important;
   border-radius: 0 !important;
-  background: #f2eee5 !important;
+  background: var(--c17-target-white) !important;
   transform-origin: bottom center !important;
-  box-shadow: 0 0 8px rgba(242,238,229,.82), 0 0 18px rgba(223,255,63,.18) !important;
+  box-shadow:
+    0 0 8px rgba(242,238,229,.82),
+    0 0 18px rgba(242,238,229,.22) !important;
   z-index: 8 !important;
   pointer-events: none !important;
 }
-#loaderScene.loader-scene.portal-open::after { animation: c17DoorOpenFixed .32s steps(4,end) forwards !important; }
-#loaderScene.loader-scene.portal-close::after { animation: c17DoorCloseFixed .34s steps(4,end) forwards !important; }
-@keyframes c17DoorOpenFixed { from { height:0; opacity:0; transform: translateY(48px); } to { height:48px; opacity:1; transform: translateY(0); } }
-@keyframes c17DoorCloseFixed { from { height:48px; opacity:1; transform: translateY(0); } to { height:0; opacity:0; transform: translateY(48px); } }
+#loaderScene.loader-scene.portal-open::after {
+  animation: targetDoorOpen .32s steps(4,end) forwards !important;
+}
+#loaderScene.loader-scene.portal-close::after {
+  animation: targetDoorClose .34s steps(4,end) forwards !important;
+}
+@keyframes targetDoorOpen {
+  from { height:0; opacity:0; transform: translateY(44px); }
+  to { height:48px; opacity:1; transform: translateY(0); }
+}
+@keyframes targetDoorClose {
+  from { height:48px; opacity:1; transform: translateY(0); }
+  to { height:0; opacity:0; transform: translateY(44px); }
+}
 
-.maze { display: block !important; visibility: hidden !important; }
-.maze.active { display: block !important; visibility: visible !important; opacity: 1 !important; pointer-events: none !important; }
-.maze.active .pipe { animation: pipeAlive 2.15s ease forwards !important; }
-.maze.active .pipe::before { animation: beadRun 1.55s linear forwards !important; }
-@keyframes pipeAlive { 0% { opacity: 0; filter: blur(3px); } 35% { opacity: .58; } 100% { opacity: .24; filter: blur(.6px); } }
-@keyframes beadRun { 0% { opacity: 0; transform: translateX(0) translateY(0); } 12% { opacity: 1; } 86% { opacity: 1; } 100% { opacity: 0; transform: translateX(28px) translateY(0); } }
+.maze {
+  display: block !important;
+}
+.maze.active {
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: none !important;
+}
+.maze.active .pipe {
+  animation: pipeWake 2.2s ease forwards !important;
+}
+.maze.active .pipe::before {
+  animation: beaconRun 1.6s ease forwards !important;
+}
 
 @media (max-width: 430px) {
-  #loaderScene.loader-scene { width: 76vw !important; top: 47.5% !important; }
-  #loader.loader { height: 32px !important; }
-  #percent.percent { bottom: calc(100% + 12px) !important; font-size: 1.04rem !important; }
-  #turtle.turtle.homie-pixel.pixel-b { width: 84px !important; height: 49px !important; margin-left: -42px !important; top: 22px !important; }
-  #loaderScene.loader-scene::after { left: calc(50% + 86px) !important; top: 44px !important; }
+  #loaderScene.loader-scene {
+    width: 80vw !important;
+    top: 44.5% !important;
+  }
+  #loader.loader {
+    height: 33px !important;
+    border-width: 4px !important;
+  }
+  #fill.fill {
+    left: 22px !important;
+    top: 7px !important;
+    height: 17px !important;
+    max-width: calc(100% - 44px) !important;
+    background:
+      repeating-linear-gradient(
+        90deg,
+        var(--c17-target-white) 0 14px,
+        transparent 14px 21px
+      ) !important;
+  }
+  #percent.percent {
+    bottom: calc(100% + 15px) !important;
+    font-size: 1.20rem !important;
+  }
+  #turtleTrack.turtle-track {
+    height: 112px !important;
+  }
+  #turtle.turtle.homie-pixel.pixel-b {
+    top: 58px !important;
+    width: 82px !important;
+    height: 46px !important;
+    margin-left: -41px !important;
+  }
+  #loaderScene.loader-scene::after {
+    left: calc(50% + 92px) !important;
+    top: 88px !important;
+  }
 }
