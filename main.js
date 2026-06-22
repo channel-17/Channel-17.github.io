@@ -868,14 +868,15 @@ function openChannel() {
   outerSymbol.classList.add("dissolve");
   innerSymbol.classList.add("alive");
 
-  // No visible maze before Station. The click is the wall breaking.
-  maze.classList.remove("active");
+  // Surgical restore: the wall breaks with green maze pulses, then the station settles in.
+  maze.classList.add("active");
 
   setTimeout(() => {
     signalNode.classList.add("fade-out");
   }, 1500);
 
   setTimeout(() => {
+    maze.classList.remove("active");
     home.classList.add("open");
     idleMaze.classList.add("active");
   }, 2200);
