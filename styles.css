@@ -6810,3 +6810,23 @@ body {
   0%,100% { filter: brightness(1); opacity: .96; }
   50% { filter: brightness(1.18); opacity: 1; }
 }
+
+
+/* =========================================================
+   CHANNEL 17 — PASS 27
+   Loader polish only.
+   Position stays locked.
+   Fix: vertically center fill cells so top/bottom gap matches.
+========================================================= */
+
+#fill.fill {
+  top: 10px !important;
+  height: 22px !important;
+}
+
+@media (max-width: 430px) {
+  #fill.fill {
+    top: 10px !important;
+    height: 22px !important;
+  }
+}
