@@ -6777,3 +6777,36 @@ body {
   opacity: 0 !important;
   visibility: hidden !important;
 }
+
+/* PASS 26 — LOADER REFINEMENT ONLY */
+#loader.loader {
+  height: 44px !important;
+  border-width: 4px !important;
+  background: #000 !important;
+  box-shadow:
+    0 0 0 5px rgba(0,0,0,.96),
+    0 0 18px rgba(242,238,229,.12),
+    inset 0 0 0 1px rgba(242,238,229,.18) !important;
+}
+
+#fill.fill {
+  left: 26px !important;
+  top: 9px !important;
+  height: 24px !important;
+  max-width: calc(100% - 52px) !important;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      #f2eee5 0 18px,
+      transparent 18px 26px
+    ) !important;
+  box-shadow:
+    0 0 8px rgba(242,238,229,.30),
+    0 0 14px rgba(242,238,229,.10) !important;
+  animation: p26CellBuzz .42s steps(2,end) infinite !important;
+}
+
+@keyframes p26CellBuzz {
+  0%,100% { filter: brightness(1); opacity: .96; }
+  50% { filter: brightness(1.18); opacity: 1; }
+}
