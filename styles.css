@@ -6778,55 +6778,200 @@ body {
   visibility: hidden !important;
 }
 
-/* PASS 26 — LOADER REFINEMENT ONLY */
+/* =========================================================
+   CHANNEL 17 — PASS 28 CLEAN LOADER STACK
+   CPR: remove patch-stack behavior by making this the single active
+   loader-zone authority. No story/Carl/Wren/Frank/avatar changes.
+========================================================= */
+:root {
+  --p28-cream: #f2eee5;
+  --p28-black: #000;
+  --p28-red: #ff1d25;
+}
+
+/* Symbol stays locked. */
+#signalGhost.signal-ghost,
+.signal-ghost {
+  top: 18% !important;
+  width: 138px !important;
+  height: 138px !important;
+  transform: translate(-50%, -50%) !important;
+}
+
+#signalNode.signal-node,
+.signal-node {
+  top: 18% !important;
+  width: 142px !important;
+  height: 142px !important;
+}
+
+/* Loader position stays locked. */
+#loaderScene.loader-scene {
+  position: absolute !important;
+  left: 50% !important;
+  top: 34.5% !important;
+  width: min(86vw, 392px) !important;
+  transform: translate(-50%, -50%) !important;
+  overflow: visible !important;
+  z-index: 35 !important;
+}
+
+/* Keep percent out until its own pass. */
+#percent.percent {
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
+
+/* Clean loader: shorter horizontally, fatter vertically, less dead end space. */
 #loader.loader {
+  position: relative !important;
+  width: 82% !important;
   height: 44px !important;
-  border-width: 4px !important;
-  background: #000 !important;
+  margin: 0 auto !important;
+  padding: 0 !important;
+  overflow: visible !important;
+  border: 4px solid var(--p28-cream) !important;
+  border-radius: 0 !important;
+  background: var(--p28-black) !important;
   box-shadow:
     0 0 0 5px rgba(0,0,0,.96),
     0 0 18px rgba(242,238,229,.12),
-    inset 0 0 0 1px rgba(242,238,229,.18) !important;
+    inset 0 0 0 1px rgba(242,238,229,.16) !important;
+  clip-path: polygon(5% 0, 95% 0, 100% 28%, 100% 72%, 95% 100%, 5% 100%, 0 72%, 0 28%) !important;
+  image-rendering: pixelated !important;
+  transform: translateY(76px) !important;
 }
 
+/* Kill old nub/cap experiments. */
+#loader.loader::before,
+#loader.loader::after {
+  display: none !important;
+}
+
+/* Clean electric cells: more interior fill, square-ish, vertically centered. */
 #fill.fill {
-  left: 26px !important;
-  top: 9px !important;
-  height: 24px !important;
-  max-width: calc(100% - 52px) !important;
+  position: absolute !important;
+  left: 18px !important;
+  right: auto !important;
+  top: 8px !important;
+  bottom: auto !important;
+  height: 22px !important;
+  max-width: calc(100% - 36px) !important;
+  border-radius: 0 !important;
   background:
     repeating-linear-gradient(
       90deg,
-      #f2eee5 0 18px,
-      transparent 18px 26px
+      var(--p28-cream) 0 18px,
+      transparent 18px 24px
     ) !important;
   box-shadow:
     0 0 8px rgba(242,238,229,.30),
     0 0 14px rgba(242,238,229,.10) !important;
-  animation: p26CellBuzz .42s steps(2,end) infinite !important;
+  transition: width .08s steps(2,end) !important;
+  animation: p28CellBuzz .42s steps(2,end) infinite !important;
+  z-index: 2 !important;
 }
+#fill.fill::before { display: none !important; }
 
-@keyframes p26CellBuzz {
+@keyframes p28CellBuzz {
   0%,100% { filter: brightness(1); opacity: .96; }
   50% { filter: brightness(1.18); opacity: 1; }
 }
 
+/* Homie placeholder remains locked from loader-only phase. */
+#turtleTrack.turtle-track {
+  position: relative !important;
+  width: 100% !important;
+  height: 170px !important;
+  overflow: visible !important;
+  pointer-events: none !important;
+}
 
-/* =========================================================
-   CHANNEL 17 — PASS 27
-   Loader polish only.
-   Position stays locked.
-   Fix: vertically center fill cells so top/bottom gap matches.
-========================================================= */
+#turtle.turtle,
+#turtle.turtle.homie-pixel,
+#turtle.turtle.homie-pixel.pixel-b,
+#turtle.turtle.homie-pixel.pixel-b * {
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
 
-#fill.fill {
-  top: 10px !important;
-  height: 22px !important;
+#turtleTrack.turtle-track::after {
+  content: "✕" !important;
+  position: absolute !important;
+  left: 50% !important;
+  top: 112px !important;
+  transform: translate(-50%, -50%) !important;
+  color: var(--p28-red) !important;
+  font-family: Arial, sans-serif !important;
+  font-size: 58px !important;
+  font-weight: 900 !important;
+  line-height: 1 !important;
+  text-shadow:
+    0 0 8px rgba(255,29,37,.78),
+    0 0 18px rgba(255,29,37,.34) !important;
+  z-index: 9 !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* Door tracks placeholder, not active visually until story calls it. */
+#loaderScene.loader-scene::after {
+  left: calc(50% + 94px) !important;
+  top: 142px !important;
+  background: var(--p28-cream) !important;
+  box-shadow: 0 0 8px rgba(242,238,229,.82) !important;
 }
 
 @media (max-width: 430px) {
+  #signalGhost.signal-ghost,
+  .signal-ghost {
+    top: 18% !important;
+    width: 132px !important;
+    height: 132px !important;
+  }
+
+  #signalNode.signal-node,
+  .signal-node {
+    top: 18% !important;
+    width: 136px !important;
+    height: 136px !important;
+  }
+
+  #loaderScene.loader-scene {
+    top: 34.5% !important;
+    width: 86vw !important;
+  }
+
+  #loader.loader {
+    width: 82% !important;
+    height: 44px !important;
+    transform: translateY(76px) !important;
+  }
+
   #fill.fill {
-    top: 10px !important;
+    left: 18px !important;
+    top: 8px !important;
     height: 22px !important;
+    max-width: calc(100% - 36px) !important;
+    background:
+      repeating-linear-gradient(
+        90deg,
+        var(--p28-cream) 0 18px,
+        transparent 18px 24px
+      ) !important;
+  }
+
+  #turtleTrack.turtle-track {
+    height: 170px !important;
+  }
+
+  #turtleTrack.turtle-track::after {
+    top: 112px !important;
+    font-size: 58px !important;
+  }
+
+  #loaderScene.loader-scene::after {
+    left: calc(50% + 94px) !important;
+    top: 142px !important;
   }
 }
