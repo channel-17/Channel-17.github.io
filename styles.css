@@ -6702,3 +6702,31 @@ body {
     top: 142px !important;
   }
 }
+
+
+/* PASS 20 — LAYOUT ONLY LOCK
+   Symbol stays.
+   Loader moves down.
+   Homie zone moves down.
+*/
+
+#loaderScene.loader-scene{
+  top:42% !important;
+}
+
+#turtleTrack.turtle-track{
+  height:220px !important;
+}
+
+#turtleTrack.turtle-track::after{
+  top:155px !important;
+}
+
+#turtle.turtle,
+#turtle{
+  top:155px !important;
+}
+
+#loaderScene.loader-scene::after{
+  top:185px !important;
+}
