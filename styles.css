@@ -6761,3 +6761,19 @@ body {
   opacity: 0 !important;
   visibility: hidden !important;
 }
+
+
+/* =========================================================
+   CHANNEL 17 — PASS 24
+   Loader-only correction.
+   Symbol stays. X/Homie slot stays. Loader moves DOWN hard.
+========================================================= */
+
+#loader.loader {
+  transform: translateY(76px) !important;
+}
+
+#percent.percent {
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
