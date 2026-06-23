@@ -6501,3 +6501,204 @@ body {
     top: 172px !important;
   }
 }
+
+
+/* =========================================================
+   CHANNEL 17 — PASS 19A: LOADER-ONLY LOCK PASS
+   Keep Channel 17 story/code intact.
+   Hide turtle visually and place a big red X where Homie will go.
+========================================================= */
+:root {
+  --p19-cream: #f2eee5;
+  --p19-black: #000000;
+  --p19-red: #ff1d25;
+}
+
+#signalGhost.signal-ghost,
+.signal-ghost {
+  top: 18% !important;
+  width: 138px !important;
+  height: 138px !important;
+  transform: translate(-50%, -50%) !important;
+}
+
+#signalNode.signal-node,
+.signal-node {
+  top: 18% !important;
+  width: 142px !important;
+  height: 142px !important;
+}
+
+#loaderScene.loader-scene {
+  position: absolute !important;
+  left: 50% !important;
+  top: 34.5% !important;
+  width: min(86vw, 392px) !important;
+  transform: translate(-50%, -50%) !important;
+  overflow: visible !important;
+  z-index: 35 !important;
+}
+
+#percent.percent {
+  position: absolute !important;
+  left: 50% !important;
+  top: -62px !important;
+  bottom: auto !important;
+  transform: translateX(-50%) !important;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  width: auto !important;
+  height: auto !important;
+  color: var(--p19-cream) !important;
+  font-family: "Courier New", monospace !important;
+  font-size: 2.05rem !important;
+  font-weight: 900 !important;
+  line-height: 1 !important;
+  letter-spacing: 1px !important;
+  text-shadow: 0 0 8px rgba(242,238,229,.22), 3px 3px 0 #000 !important;
+  mix-blend-mode: normal !important;
+  pointer-events: none !important;
+  z-index: 99 !important;
+}
+
+#loader.loader {
+  position: relative !important;
+  width: 100% !important;
+  height: 36px !important;
+  padding: 0 !important;
+  overflow: visible !important;
+  border: 4px solid var(--p19-cream) !important;
+  border-radius: 0 !important;
+  background: var(--p19-black) !important;
+  box-shadow:
+    0 0 0 5px rgba(0,0,0,.96),
+    0 0 18px rgba(242,238,229,.10) !important;
+  clip-path: polygon(4% 0, 96% 0, 100% 28%, 100% 72%, 96% 100%, 4% 100%, 0 72%, 0 28%) !important;
+  image-rendering: pixelated !important;
+}
+
+#loader.loader::before,
+#loader.loader::after {
+  display: none !important;
+}
+
+#fill.fill {
+  position: absolute !important;
+  left: 24px !important;
+  top: 8px !important;
+  bottom: auto !important;
+  height: 18px !important;
+  max-width: calc(100% - 48px) !important;
+  border-radius: 0 !important;
+  background:
+    repeating-linear-gradient(90deg,
+      var(--p19-cream) 0 15px,
+      transparent 15px 22px
+    ) !important;
+  box-shadow: none !important;
+  transition: width .08s steps(2,end) !important;
+  z-index: 2 !important;
+}
+
+#fill.fill::before {
+  display: none !important;
+}
+
+#turtleTrack.turtle-track {
+  position: relative !important;
+  width: 100% !important;
+  height: 170px !important;
+  overflow: visible !important;
+  pointer-events: none !important;
+}
+
+#turtle.turtle,
+#turtle.turtle.homie-pixel,
+#turtle.turtle.homie-pixel.pixel-b,
+#turtle.turtle.homie-pixel.pixel-b * {
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
+
+#turtleTrack.turtle-track::after {
+  content: "✕" !important;
+  position: absolute !important;
+  left: 50% !important;
+  top: 112px !important;
+  transform: translate(-50%, -50%) !important;
+  color: var(--p19-red) !important;
+  font-family: Arial, sans-serif !important;
+  font-size: 58px !important;
+  font-weight: 900 !important;
+  line-height: 1 !important;
+  text-shadow:
+    0 0 8px rgba(255,29,37,.78),
+    0 0 18px rgba(255,29,37,.34) !important;
+  z-index: 9 !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+#loaderScene.loader-scene::after {
+  left: calc(50% + 94px) !important;
+  top: 142px !important;
+  background: var(--p19-cream) !important;
+  box-shadow: 0 0 8px rgba(242,238,229,.82) !important;
+}
+
+@media (max-width: 430px) {
+  #signalGhost.signal-ghost,
+  .signal-ghost {
+    top: 18% !important;
+    width: 132px !important;
+    height: 132px !important;
+  }
+
+  #signalNode.signal-node,
+  .signal-node {
+    top: 18% !important;
+    width: 136px !important;
+    height: 136px !important;
+  }
+
+  #loaderScene.loader-scene {
+    top: 34.5% !important;
+    width: 86vw !important;
+  }
+
+  #percent.percent {
+    top: -62px !important;
+    font-size: 2.05rem !important;
+  }
+
+  #loader.loader {
+    height: 36px !important;
+  }
+
+  #fill.fill {
+    left: 24px !important;
+    top: 8px !important;
+    height: 18px !important;
+    max-width: calc(100% - 48px) !important;
+    background:
+      repeating-linear-gradient(90deg,
+        var(--p19-cream) 0 14px,
+        transparent 14px 21px
+      ) !important;
+  }
+
+  #turtleTrack.turtle-track {
+    height: 170px !important;
+  }
+
+  #turtleTrack.turtle-track::after {
+    top: 112px !important;
+    font-size: 58px !important;
+  }
+
+  #loaderScene.loader-scene::after {
+    left: calc(50% + 94px) !important;
+    top: 142px !important;
+  }
+}
