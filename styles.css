@@ -6730,3 +6730,34 @@ body {
 #loaderScene.loader-scene::after{
   top:185px !important;
 }
+
+
+/* =========================================================
+   CHANNEL 17 — PASS 21
+   Layout-only correction:
+   Symbol stays.
+   Homie/X stays.
+   Loader bar moves DOWN into the white outlined pill zone.
+   Nothing else moves.
+========================================================= */
+
+#loaderScene.loader-scene {
+  top: 41.5% !important;
+}
+
+/* Counter-move the Homie/X slot so it stays where Pass 20 placed it
+   while the loader scene moves down. */
+#turtleTrack.turtle-track {
+  transform: translateY(-70px) !important;
+}
+
+/* Keep the door aligned with the Homie/X slot after the counter-move. */
+#loaderScene.loader-scene::after {
+  transform: translateY(-70px) !important;
+}
+
+/* Keep percent hidden/ignored for this layout-only loader pass. */
+#percent.percent {
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
