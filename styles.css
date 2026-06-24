@@ -6977,63 +6977,26 @@ body {
 }
 
 /* =========================================================
-   CHANNEL 17 — PASS 29 SYMBOL RESTORATION
-   Loader stays locked. Homie/percentage untouched.
-   Inner + outer symbol emerge together from darkness.
+   CHANNEL 17 — PASS 30 CLEANUP / BACK TO PASS 28
+   Removes Pass 29 avatar color mutation and symbol frame-one visibility.
+   Loader remains locked. No avatar recolor logic.
 ========================================================= */
 
 #signalNode.signal-node,
 .signal-node {
   opacity: 0 !important;
-  transform: translate(-50%, -50%) scale(.88) !important;
-  filter: brightness(.45) contrast(1.08) drop-shadow(0 0 0 rgba(216,255,47,0)) !important;
-  transition:
-    opacity 1.8s ease,
-    transform 1.8s ease,
-    filter 1.8s ease !important;
-}
-
-#signalNode.signal-node.symbol-emerging,
-.signal-node.symbol-emerging {
-  opacity: .32 !important;
-  transform: translate(-50%, -50%) scale(.94) !important;
-  filter: brightness(.82) contrast(1.08) drop-shadow(0 0 11px rgba(216,255,47,.15)) !important;
-}
-
-#signalNode.signal-node.symbol-waking,
-.signal-node.symbol-waking {
-  opacity: .72 !important;
-  transform: translate(-50%, -50%) scale(1) !important;
-  filter: brightness(1.05) contrast(1.12) drop-shadow(0 0 18px rgba(216,255,47,.25)) !important;
+  visibility: hidden !important;
 }
 
 #signalNode.signal-node.ready,
 .signal-node.ready {
   opacity: 1 !important;
-  transform: translate(-50%, -50%) scale(1.03) !important;
-}
-
-#outerSymbol.outer-symbol,
-#innerSymbol.inner-symbol {
-  opacity: 1 !important;
   visibility: visible !important;
 }
 
-#signalNode.signal-node.channel-open #outerSymbol.outer-symbol,
-.signal-node.channel-open #outerSymbol.outer-symbol {
-  opacity: 0 !important;
-  transform: scale(1.08) !important;
-  transition: opacity .8s ease, transform .8s ease !important;
-}
-
+/* No random avatar hologram/color treatment. */
 .profile.symbol-contact,
 .profile.symbol-contact * {
-  filter: hue-rotate(155deg) saturate(2.4) brightness(1.18) drop-shadow(0 0 10px rgba(80,210,255,.55)) !important;
-}
-
-.profile.symbol-contact {
-  border-color: rgba(92, 218, 255, .95) !important;
-  box-shadow:
-    0 0 0 2px rgba(92,218,255,.28),
-    0 0 18px rgba(92,218,255,.50) !important;
+  filter: none !important;
+  box-shadow: inherit !important;
 }
