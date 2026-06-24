@@ -6086,3 +6086,38 @@ body {
 #loaderScene.loader-scene::after {
   top: 240px !important;
 }
+
+/* =========================================================
+   CHANNEL 17 — CURRENT LOADER COLOR AUTHORITY
+   Restore warm off-white signal color. No layout changes.
+========================================================= */
+
+:root {
+  --c17-loader-cream: #f2eee5;
+}
+
+#loader.loader {
+  border-color: var(--c17-loader-cream) !important;
+  color: var(--c17-loader-cream) !important;
+  box-shadow:
+    0 0 0 5px rgba(0,0,0,.96),
+    0 0 18px rgba(242,238,229,.12),
+    inset 0 0 0 1px rgba(242,238,229,.16) !important;
+}
+
+#fill.fill {
+  background:
+    repeating-linear-gradient(
+      90deg,
+      var(--c17-loader-cream) 0 18px,
+      transparent 18px 24px
+    ) !important;
+  box-shadow:
+    0 0 8px rgba(242,238,229,.30),
+    0 0 14px rgba(242,238,229,.10) !important;
+}
+
+#loaderScene.loader-scene::after {
+  background: var(--c17-loader-cream) !important;
+  box-shadow: 0 0 8px rgba(242,238,229,.82) !important;
+}
