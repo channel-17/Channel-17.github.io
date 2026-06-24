@@ -890,5 +890,3 @@ signalNode.addEventListener("touchend", event => {
 }, {
   passive: false
 });
-
-
