@@ -177,7 +177,6 @@ const loading = setInterval(() => {
   if (progress >= 24 && !ghosted) {
     ghosted = true;
     signalGhost.classList.add("waking");
-    signalNode.classList.add("symbol-emerging");
   }
 
   if (progress >= 38 && !hiveWaveStarted) {
@@ -188,7 +187,6 @@ const loading = setInterval(() => {
   if (progress >= 42 && !burning) {
     burning = true;
     signalGhost.classList.add("burning");
-    signalNode.classList.add("symbol-waking");
     startBurnPulse();
   }
 
@@ -585,7 +583,6 @@ function closeCarlProfile() {
   stopWoundPulse();
 
   signalNode.classList.add("ready");
-    signalNode.classList.add("symbol-waking");
   signalNode.classList.remove("fade-out");
   signalNode.style.pointerEvents = "auto";
 }
@@ -895,19 +892,3 @@ signalNode.addEventListener("touchend", event => {
 });
 
 
-function markSymbolContactsPass29() {
-  if (!signalNode || !profileField) return;
-  const symbolBox = signalNode.getBoundingClientRect();
-  document.querySelectorAll(".profile").forEach((p) => {
-    const b = p.getBoundingClientRect();
-    const hit = !(
-      b.right < symbolBox.left ||
-      b.left > symbolBox.right ||
-      b.bottom < symbolBox.top ||
-      b.top > symbolBox.bottom
-    );
-    if (hit) p.classList.add("symbol-contact");
-  });
-}
-
-setInterval(markSymbolContactsPass29, 120);
