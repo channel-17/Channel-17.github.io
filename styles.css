@@ -7032,16 +7032,16 @@ body {
 }
 
 /* =========================================================
-   CHANNEL 17 — PASS 33
+   CHANNEL 17 — PASS 34
    Full replacement build.
-   Homie/X zone down again.
+   Between Pass 32 and Pass 33.
    Loader locked. Symbol untouched. Frank/avatar behavior untouched.
 ========================================================= */
 
 #turtleTrack.turtle-track::after {
-  top: 245px !important;
+  top: 220px !important;
 }
 
 #loaderScene.loader-scene::after {
-  top: 275px !important;
+  top: 250px !important;
 }
