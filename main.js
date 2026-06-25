@@ -890,3 +890,31 @@ signalNode.addEventListener("touchend", event => {
 }, {
   passive: false
 });
+
+
+function c17UpdateLoaderPercentPass43() {
+  const percent = document.getElementById("percent");
+  const fill = document.getElementById("fill");
+  if (!percent) return;
+
+  let value = 0;
+
+  if (fill) {
+    const inlineWidth = fill.style.width || "";
+    const parsed = parseFloat(String(inlineWidth).replace("%", ""));
+    if (Number.isFinite(parsed)) value = parsed;
+  }
+
+  // Fallback: if inline style hasn't updated yet, try computed width.
+  if ((!value || value < 0.5) && fill && fill.parentElement) {
+    const fw = fill.getBoundingClientRect().width;
+    const pw = fill.parentElement.getBoundingClientRect().width;
+    if (pw > 0) value = (fw / pw) * 100;
+  }
+
+  value = Math.max(0, Math.min(100, Math.round(value)));
+  percent.textContent = value + "%";
+}
+
+setInterval(c17UpdateLoaderPercentPass43, 50);
+window.addEventListener("load", c17UpdateLoaderPercentPass43);
