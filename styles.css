@@ -6120,3 +6120,49 @@ body {
   background: var(--c17-loader-cream) !important;
   box-shadow: 0 0 8px rgba(242,238,229,.82) !important;
 }
+
+/* =========================================================
+   CHANNEL 17 — CURRENT PERCENTAGE AUTHORITY
+   Real rendered percentage. Belongs to loader system.
+   Visible above bar, same aged-bone color. No other layout changes.
+========================================================= */
+
+#loaderScene.loader-scene {
+  overflow: visible !important;
+}
+
+#percent.percent {
+  position: absolute !important;
+  left: 50% !important;
+  top: 39px !important;
+  transform: translateX(-50%) !important;
+  inset: auto auto auto auto !important;
+  z-index: 120 !important;
+
+  display: block !important;
+  width: auto !important;
+  height: auto !important;
+  min-width: 44px !important;
+
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: none !important;
+
+  color: var(--c17-loader-cream, #b8ad92) !important;
+  font-family: "Courier New", monospace !important;
+  font-size: 1.02rem !important;
+  font-weight: 900 !important;
+  line-height: 1 !important;
+  letter-spacing: 2px !important;
+  text-align: center !important;
+
+  mix-blend-mode: normal !important;
+  text-shadow:
+    0 0 5px rgba(184,173,146,.34),
+    0 0 12px rgba(184,173,146,.14) !important;
+}
+
+#loaderScene.loader-scene.fade-out #percent.percent {
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
