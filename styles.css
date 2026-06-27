@@ -2182,7 +2182,8 @@ body {
 .carl-alias-card ul { margin-left: 18px; }
 .carl-alias-card li { margin: 3px 0; font-size: 0.74rem; color: rgba(255,255,255,0.92); }
 .weakness-card { text-align: center; }
-.weakness-icons { display: flex; justify-content: center; gap: 18px; font-size: 1.5rem; }
+.weakness-icons { display:flex; justify-content:center; align-items:center; }
+.weakness-icons img{width:80px;height:80px;object-fit:contain;display:block;margin:0 auto;}
 .metric-row {
   display: flex;
   justify-content: space-between;
