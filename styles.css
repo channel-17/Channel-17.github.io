@@ -6134,7 +6134,7 @@ body {
 #percent.percent {
   position: absolute !important;
   left: 50% !important;
-  top: 39px !important;
+  top: 51px !important;
   transform: translateX(-50%) !important;
   inset: auto auto auto auto !important;
   z-index: 120 !important;
@@ -6216,7 +6216,7 @@ body {
 .photo-thumbs { grid-template-columns: repeat(4, 1fr); }
 
 /* =========================================================
-   PASS 42 — PERCENTAGE ONLY / FINAL POSITION OVERRIDE
+   PASS 43 — PERCENTAGE ONLY / DOWNWARD NUDGE
    Root cause found: earlier percent rule set left/top, THEN set
    `inset: auto auto auto auto`, which cancels left/top.
    This block puts inset FIRST, then re-applies left/top after it.
@@ -6234,7 +6234,7 @@ body {
   right: auto !important;
   bottom: auto !important;
   left: 50% !important;
-  top: 39px !important;
+  top: 51px !important;
   transform: translateX(-50%) !important;
   display: block !important;
   width: auto !important;
