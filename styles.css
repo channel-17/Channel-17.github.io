@@ -6134,7 +6134,7 @@ body {
 #percent.percent {
   position: absolute !important;
   left: 50% !important;
-  top: 51px !important;
+  top: 39px !important;
   transform: translateX(-50%) !important;
   inset: auto auto auto auto !important;
   z-index: 120 !important;
@@ -6216,44 +6216,26 @@ body {
 .photo-thumbs { grid-template-columns: repeat(4, 1fr); }
 
 /* =========================================================
-   PASS 43 — PERCENTAGE ONLY / DOWNWARD NUDGE
-   Root cause found: earlier percent rule set left/top, THEN set
-   `inset: auto auto auto auto`, which cancels left/top.
-   This block puts inset FIRST, then re-applies left/top after it.
-   Do not move this block above older loader CSS.
+   CHANNEL 17 — PASS 44 PERCENTAGE VERTICAL AUTHORITY
+   One-nail pass: percentage only.
+   Fix: earlier active rule set top, then inset afterward, which canceled top.
+   This final authority places inset first, then top/left after it.
 ========================================================= */
-
-#loaderScene.loader-scene {
-  position: absolute !important;
-  overflow: visible !important;
-}
-
+#loaderScene.loader-scene > #percent.percent,
 #percent.percent {
   position: absolute !important;
   inset: auto !important;
+  left: 50% !important;
+  top: 56px !important;
   right: auto !important;
   bottom: auto !important;
-  left: 50% !important;
-  top: 51px !important;
   transform: translateX(-50%) !important;
   display: block !important;
   width: auto !important;
   min-width: 44px !important;
   height: auto !important;
-  z-index: 9999 !important;
   opacity: 1 !important;
   visibility: visible !important;
   pointer-events: none !important;
-  color: var(--c17-loader-cream, #b8ad92) !important;
-  font-family: "Courier New", monospace !important;
-  font-size: 1.02rem !important;
-  font-weight: 900 !important;
-  line-height: 1 !important;
-  letter-spacing: 2px !important;
-  text-align: center !important;
-  mix-blend-mode: normal !important;
-  text-shadow:
-    0 0 5px rgba(184,173,146,.34),
-    0 0 12px rgba(184,173,146,.14) !important;
+  z-index: 120 !important;
 }
-
