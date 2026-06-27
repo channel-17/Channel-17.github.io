@@ -6215,27 +6215,21 @@ body {
 }
 .photo-thumbs { grid-template-columns: repeat(4, 1fr); }
 
+
 /* =========================================================
-   CHANNEL 17 — PASS 44 PERCENTAGE VERTICAL AUTHORITY
-   One-nail pass: percentage only.
-   Fix: earlier active rule set top, then inset afterward, which canceled top.
-   This final authority places inset first, then top/left after it.
+   PASS 45 — PERCENTAGE VERTICAL AUTHORITY
+   One nail only: percent stays centered horizontally, moves down
+   closer to loader bar. This rule is last so older percent rules
+   cannot override it.
 ========================================================= */
-#loaderScene.loader-scene > #percent.percent,
-#percent.percent {
+#loaderScene.loader-scene > #percent.percent {
   position: absolute !important;
   inset: auto !important;
   left: 50% !important;
-  top: 56px !important;
   right: auto !important;
   bottom: auto !important;
+  top: 58px !important;
   transform: translateX(-50%) !important;
-  display: block !important;
-  width: auto !important;
-  min-width: 44px !important;
-  height: auto !important;
-  opacity: 1 !important;
-  visibility: visible !important;
-  pointer-events: none !important;
+  margin: 0 !important;
   z-index: 120 !important;
 }
