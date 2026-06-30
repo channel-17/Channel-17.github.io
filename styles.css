@@ -6236,16 +6236,17 @@ body {
 }
 
 
-/* Hidden Jinx Card reveal — Shadow Frequency. Founder-window only. */
+/* Hidden Jinx Card reveal — Shadow Frequency. Founder-window only.
+   Click target = middle general size. Visible spike floats just above it. */
 .jinx-shadow-frequency {
   position: absolute;
   left: 50%;
-  bottom: 9.25%;
-  width: 68px;
-  height: 54px;
+  bottom: 8%;
+  width: 76px;
+  height: 76px;
   transform: translateX(-50%);
   border: 0;
-  border-radius: 6px;
+  border-radius: 18px;
   background: transparent;
   opacity: 1;
   z-index: 24;
@@ -6267,40 +6268,41 @@ body {
   box-shadow: none;
 }
 
+/* The leak itself: not a heart, not a red monitor, a buried signal spike. */
 .jinx-shadow-frequency::before {
   content: "";
   position: absolute;
   left: 50%;
-  top: 48%;
-  width: 42px;
-  height: 12px;
+  top: -14px;
+  width: 54px;
+  height: 17px;
   transform: translate(-50%, -50%);
   opacity: 0;
   background:
     linear-gradient(90deg,
-      transparent 0 6px,
-      rgba(7, 9, 6, 0.94) 6px 14px,
+      transparent 0 5px,
+      rgba(4, 5, 4, 0.98) 5px 14px,
       transparent 14px 17px,
       rgba(10, 14, 8, 0.98) 17px 20px,
       transparent 20px 23px,
-      rgba(8, 11, 7, 0.96) 23px 30px,
-      transparent 30px 100%);
-  clip-path: polygon(0 60%, 28% 60%, 39% 18%, 48% 86%, 58% 43%, 70% 60%, 100% 60%, 100% 72%, 0 72%);
-  filter: blur(0.35px) drop-shadow(0 0 2px rgba(223,255,63,0.035));
+      rgba(4, 6, 4, 0.98) 23px 34px,
+      transparent 34px 100%);
+  clip-path: polygon(0 62%, 24% 62%, 34% 18%, 43% 92%, 52% 38%, 63% 62%, 100% 62%, 100% 72%, 0 72%);
+  filter: blur(0.25px) drop-shadow(0 0 3px rgba(223,255,63,0.06));
 }
 
 .jinx-shadow-frequency::after {
   content: "";
   position: absolute;
   left: 50%;
-  top: 48%;
-  width: 46px;
-  height: 16px;
+  top: -14px;
+  width: 60px;
+  height: 22px;
   transform: translate(-50%, -50%);
   opacity: 0;
-  background: rgba(223, 255, 63, 0.035);
-  clip-path: polygon(0 60%, 28% 60%, 39% 18%, 48% 86%, 58% 43%, 70% 60%, 100% 60%, 100% 72%, 0 72%);
-  filter: blur(3px);
+  background: rgba(223, 255, 63, 0.045);
+  clip-path: polygon(0 62%, 24% 62%, 34% 18%, 43% 92%, 52% 38%, 63% 62%, 100% 62%, 100% 72%, 0 72%);
+  filter: blur(4px);
 }
 
 .jinx-shadow-frequency.pulse-live {
@@ -6309,24 +6311,26 @@ body {
 }
 
 .jinx-shadow-frequency.pulse-live::before {
-  animation: shadowFrequencySpike 0.62s steps(4) forwards;
+  animation: shadowFrequencySpike 1.45s steps(5) forwards;
 }
 
 .jinx-shadow-frequency.pulse-live::after {
-  animation: shadowFrequencyHalo 0.62s steps(4) forwards;
+  animation: shadowFrequencyHalo 1.45s steps(5) forwards;
 }
 
 @keyframes shadowFrequencySpike {
-  0% { opacity: 0; transform: translate(-50%, -50%) scaleX(0.92); }
-  22% { opacity: 0.15; }
-  38% { opacity: 0.33; transform: translate(-50%, -50%) scaleX(1.04); }
-  54% { opacity: 0.18; transform: translate(calc(-50% + 1px), -50%) scaleX(0.97); }
-  100% { opacity: 0; transform: translate(-50%, -50%) scaleX(0.92); }
+  0% { opacity: 0; transform: translate(-50%, -50%) scaleX(0.82); }
+  14% { opacity: 0.10; }
+  30% { opacity: 0.42; transform: translate(-50%, -50%) scaleX(1.08); }
+  46% { opacity: 0.24; transform: translate(calc(-50% + 1px), -50%) scaleX(0.96); }
+  64% { opacity: 0.12; transform: translate(calc(-50% - 1px), -50%) scaleX(1.01); }
+  100% { opacity: 0; transform: translate(-50%, -50%) scaleX(0.82); }
 }
 
 @keyframes shadowFrequencyHalo {
   0% { opacity: 0; }
-  38% { opacity: 0.28; }
+  30% { opacity: 0.36; }
+  64% { opacity: 0.10; }
   100% { opacity: 0; }
 }
 
@@ -6371,6 +6375,6 @@ body {
   font-size: 34px;
   line-height: 40px;
   cursor: pointer;
-  text-shadow: 0 0 12px rgba(255, 255, 255, 0.54);
-  -webkit-tap-highlight-color: transparent;
+  text-shadow: 0 0 8px rgba(0,0,0,0.85);
 }
+
