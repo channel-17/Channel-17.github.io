@@ -6236,97 +6236,118 @@ body {
 }
 
 
-/* =========================================================
-   HIDDEN JINX CARD REVEAL — curiosity costs attention
-========================================================= */
-.jinx-heartbeat {
-  position: fixed;
+/* Hidden Jinx Card reveal — Shadow Heart. Tiny signal, tiny window, no pause. */
+.jinx-shadow-heart {
+  position: absolute;
   left: 50%;
-  bottom: 7.5vh;
-  width: 46px;
-  height: 34px;
+  bottom: 8.5%;
+  width: 76px;
+  height: 76px;
   transform: translateX(-50%);
   border: 0;
+  border-radius: 18px;
   background: transparent;
   opacity: 0;
-  visibility: hidden;
+  z-index: 24;
   pointer-events: none;
-  z-index: 88;
   -webkit-tap-highlight-color: transparent;
 }
-.jinx-heartbeat::before {
+
+.jinx-shadow-heart::before,
+.jinx-shadow-heart::after {
   content: "";
   position: absolute;
   left: 50%;
-  top: 50%;
+  top: 22%;
   width: 5px;
-  height: 5px;
-  transform: translate(-50%, -50%) rotate(45deg);
-  background: rgba(6, 7, 5, 0.92);
-  box-shadow:
-    0 0 3px rgba(223,255,63,0.11),
-    0 0 9px rgba(0,0,0,0.72);
-  animation: jinxHeartbeatTiny 1.7s ease-in-out infinite;
+  height: 8px;
+  border-radius: 5px 5px 0 0;
+  background: rgba(18, 21, 16, 0.88);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.72);
+  opacity: 0;
 }
-.jinx-heartbeat.armed {
-  opacity: 1;
-  visibility: visible;
+
+.jinx-shadow-heart::before {
+  transform: translate(-62%, -50%) rotate(-45deg);
+  transform-origin: 50% 100%;
+}
+
+.jinx-shadow-heart::after {
+  transform: translate(-38%, -50%) rotate(45deg);
+  transform-origin: 50% 100%;
+}
+
+.jinx-shadow-heart.pulse-live {
   pointer-events: auto;
+  cursor: pointer;
 }
-@keyframes jinxHeartbeatTiny {
-  0%, 100% { transform: translate(-50%, -50%) rotate(45deg) scale(0.72); opacity: 0.28; }
-  17% { transform: translate(-50%, -50%) rotate(45deg) scale(1.05); opacity: 0.55; }
-  34% { transform: translate(-50%, -50%) rotate(45deg) scale(0.78); opacity: 0.32; }
-  51% { transform: translate(-50%, -50%) rotate(45deg) scale(0.96); opacity: 0.46; }
+
+.jinx-shadow-heart.pulse-live::before,
+.jinx-shadow-heart.pulse-live::after {
+  animation: jinxShadowBeat 0.52s steps(3) forwards;
 }
+
+@keyframes jinxShadowBeat {
+  0% { opacity: 0; filter: blur(1px); }
+  28% { opacity: 0.34; filter: blur(0); }
+  48% { opacity: 0.18; }
+  68% { opacity: 0.42; transform: translate(-50%, -50%) scale(1.12) rotate(-45deg); }
+  100% { opacity: 0; filter: blur(1px); }
+}
+
+.jinx-shadow-heart.pulse-live::after {
+  animation-name: jinxShadowBeatRight;
+}
+
+@keyframes jinxShadowBeatRight {
+  0% { opacity: 0; filter: blur(1px); }
+  28% { opacity: 0.34; filter: blur(0); }
+  48% { opacity: 0.18; }
+  68% { opacity: 0.42; transform: translate(-50%, -50%) scale(1.12) rotate(45deg); }
+  100% { opacity: 0; filter: blur(1px); }
+}
+
 .jinx-card-overlay {
   position: fixed;
   inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  z-index: 10000;
+  display: grid;
+  place-items: center;
   padding: 18px;
+  background: rgba(0, 0, 0, 0.46);
   opacity: 0;
-  visibility: hidden;
   pointer-events: none;
-  z-index: 140;
-  background: rgba(0,0,0,0.34);
-  backdrop-filter: none;
+  transition: opacity 0.18s ease;
 }
+
 .jinx-card-overlay.open {
   opacity: 1;
-  visibility: visible;
   pointer-events: auto;
 }
-.jinx-card-frame {
-  width: min(92vw, 420px);
-  max-height: 84vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  filter: drop-shadow(0 0 18px rgba(0,0,0,0.82));
-}
-.jinx-card-frame img {
+
+.jinx-card-overlay img {
   display: block;
-  width: 100%;
-  max-height: 84vh;
+  width: min(92vw, 520px);
+  max-height: 86vh;
   object-fit: contain;
-  border-radius: 17px;
+  border-radius: 18px;
+  box-shadow: 0 0 34px rgba(0, 0, 0, 0.82), 0 0 18px rgba(242, 238, 229, 0.16);
 }
+
 .jinx-card-close {
   position: fixed;
-  right: 15px;
-  top: 13px;
-  width: 38px;
-  height: 38px;
+  top: 18px;
+  right: 18px;
+  z-index: 10001;
+  width: 44px;
+  height: 44px;
   border: 0;
   border-radius: 50%;
+  background: rgba(0, 0, 0, 0.42);
   color: #fff;
-  background: rgba(0,0,0,0.34);
-  font-family: Arial, sans-serif;
-  font-size: 30px;
-  line-height: 36px;
-  text-align: center;
-  z-index: 142;
+  font-size: 34px;
+  line-height: 40px;
+  cursor: pointer;
+  text-shadow: 0 0 12px rgba(255, 255, 255, 0.54);
   -webkit-tap-highlight-color: transparent;
 }
