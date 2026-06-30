@@ -37,7 +37,7 @@ const campTestModal = document.getElementById("campTestModal");
 const campTestClose = document.getElementById("campTestClose");
 const campResult = document.getElementById("campResult");
 const expandTestimonials = document.getElementById("expandTestimonials");
-const jinxShadowHeart = document.getElementById("jinxShadowHeart");
+const jinxShadowFrequency = document.getElementById("jinxShadowFrequency");
 const jinxCardOverlay = document.getElementById("jinxCardOverlay");
 const jinxCardClose = document.getElementById("jinxCardClose");
 
@@ -62,8 +62,8 @@ let frankDutyStarted = false;
 let frankDutyFramesPlayed = false;
 let woundPulseTimer = null;
 let hiveWoundUsed = false;
-let jinxHeartTimer = null;
-let jinxHeartArmed = false;
+let jinxFrequencyTimer = null;
+let jinxFrequencyArmed = false;
 
 let profileTimer = null;
 let engageTimer = null;
@@ -96,30 +96,30 @@ function closeJinxCard() {
   jinxCardOverlay.setAttribute("aria-hidden", "true");
 }
 
-function pulseJinxShadowHeart() {
-  if (!jinxShadowHeart || !jinxHeartArmed) return;
-  jinxShadowHeart.classList.add("pulse-live");
+function pulseJinxShadowFrequency() {
+  if (!jinxShadowFrequency || !jinxFrequencyArmed) return;
+  jinxShadowFrequency.classList.add("pulse-live");
   setTimeout(() => {
-    if (jinxShadowHeart) jinxShadowHeart.classList.remove("pulse-live");
-  }, 520);
+    if (jinxShadowFrequency) jinxShadowFrequency.classList.remove("pulse-live");
+  }, 540);
 }
 
-function armJinxShadowHeart() {
-  if (!jinxShadowHeart || jinxHeartArmed) return;
-  jinxHeartArmed = true;
+function armJinxShadowFrequency() {
+  if (!jinxShadowFrequency || jinxFrequencyArmed) return;
+  jinxFrequencyArmed = true;
   setTimeout(() => {
-    pulseJinxShadowHeart();
-    jinxHeartTimer = setInterval(pulseJinxShadowHeart, 17000);
-  }, 900);
+    pulseJinxShadowFrequency();
+    jinxFrequencyTimer = setInterval(pulseJinxShadowFrequency, 17000);
+  }, 2400);
 }
 
-if (jinxShadowHeart) {
-  jinxShadowHeart.addEventListener("click", () => {
-    if (!jinxShadowHeart.classList.contains("pulse-live")) return;
+if (jinxShadowFrequency) {
+  jinxShadowFrequency.addEventListener("click", () => {
+    if (!jinxShadowFrequency.classList.contains("pulse-live")) return;
     openJinxCard();
   });
-  jinxShadowHeart.addEventListener("touchend", event => {
-    if (!jinxShadowHeart.classList.contains("pulse-live")) return;
+  jinxShadowFrequency.addEventListener("touchend", event => {
+    if (!jinxShadowFrequency.classList.contains("pulse-live")) return;
     event.preventDefault();
     openJinxCard();
   }, { passive: false });
@@ -775,7 +775,7 @@ function spawnWren() {
     pulse.style.top = "31%";
     impactField.appendChild(pulse);
     setTimeout(() => pulse.remove(), 3600);
-    setTimeout(armJinxShadowHeart, 1250);
+    setTimeout(armJinxShadowFrequency, 1250);
   }, 3500);
 
   setTimeout(() => {
