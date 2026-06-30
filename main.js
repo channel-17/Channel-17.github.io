@@ -100,18 +100,22 @@ function closeJinxCard() {
 function pulseJinxShadowFrequency() {
   if (!jinxShadowFrequency || !jinxFrequencyArmed || founderWindowClosed) return;
   jinxShadowFrequency.classList.add("pulse-live");
+  jinxShadowFrequency.setAttribute("aria-hidden", "false");
   setTimeout(() => {
-    if (jinxShadowFrequency) jinxShadowFrequency.classList.remove("pulse-live");
-  }, 1180);
+    if (!jinxShadowFrequency) return;
+    jinxShadowFrequency.classList.remove("pulse-live");
+    jinxShadowFrequency.setAttribute("aria-hidden", "true");
+  }, 1250);
 }
 
 function armJinxShadowFrequency() {
   if (!jinxShadowFrequency || jinxFrequencyArmed || founderWindowClosed) return;
   jinxFrequencyArmed = true;
+  jinxShadowFrequency.classList.add("armed");
   setTimeout(() => {
     pulseJinxShadowFrequency();
     jinxFrequencyTimer = setInterval(pulseJinxShadowFrequency, 17000);
-  }, 1700);
+  }, 1450);
 }
 
 function closeFounderWindow() {
@@ -121,7 +125,10 @@ function closeFounderWindow() {
     clearInterval(jinxFrequencyTimer);
     jinxFrequencyTimer = null;
   }
-  if (jinxShadowFrequency) jinxShadowFrequency.classList.remove("pulse-live");
+  if (jinxShadowFrequency) {
+    jinxShadowFrequency.classList.remove("armed", "pulse-live");
+    jinxShadowFrequency.setAttribute("aria-hidden", "true");
+  }
 }
 
 if (jinxShadowFrequency) {
@@ -786,7 +793,7 @@ function spawnWren() {
     pulse.style.top = "31%";
     impactField.appendChild(pulse);
     setTimeout(() => pulse.remove(), 3600);
-    setTimeout(armJinxShadowFrequency, 1050);
+    setTimeout(armJinxShadowFrequency, 900);
   }, 3500);
 
   setTimeout(() => {
