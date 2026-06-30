@@ -6236,22 +6236,19 @@ body {
 }
 
 
-/* Hidden Jinx Card reveal — Shadow Frequency. Founder-window only.
-   The card overlay stays fully hidden until opened so iPhone rotation
-   cannot flash the giant JPG corner. */
+/* Hidden Jinx Card reveal — Shadow Frequency. Founder-window only. */
 .jinx-shadow-frequency {
   position: absolute;
   left: 50%;
-  bottom: calc(8% + 88px);
-  width: 76px;
-  height: 76px;
+  bottom: 18.4%;
+  width: 66px;
+  height: 66px;
   transform: translateX(-50%);
-  appearance: none;
-  -webkit-appearance: none;
   border: 0;
-  border-radius: 18px;
+  border-radius: 14px;
   background: transparent;
-  opacity: 1;
+  opacity: 0;
+  visibility: hidden;
   z-index: 31;
   pointer-events: none;
   cursor: default;
@@ -6265,6 +6262,10 @@ body {
   -webkit-tap-highlight-color: transparent;
 }
 
+.jinx-shadow-frequency.armed {
+  visibility: visible;
+}
+
 .jinx-shadow-frequency:focus,
 .jinx-shadow-frequency:active {
   outline: none;
@@ -6275,67 +6276,64 @@ body {
   content: "";
   position: absolute;
   left: 50%;
-  top: 50%;
-  width: 64px;
-  height: 21px;
-  transform: translate(-50%, -50%) scaleX(0.88);
+  top: 42%;
+  width: 54px;
+  height: 18px;
+  transform: translate(-50%, -50%);
   opacity: 0;
   background:
     linear-gradient(90deg,
-      transparent 0 7px,
-      rgba(1, 2, 1, 0.92) 7px 22px,
-      transparent 22px 25px,
-      rgba(6, 9, 5, 0.98) 25px 29px,
-      transparent 29px 32px,
-      rgba(1, 2, 1, 0.94) 32px 47px,
-      transparent 47px 100%);
-  clip-path: polygon(0 61%, 30% 61%, 40% 14%, 49% 88%, 58% 38%, 70% 61%, 100% 61%, 100% 74%, 0 74%);
-  filter:
-    blur(0.25px)
-    drop-shadow(0 0 1px rgba(223,255,63,0.08))
-    drop-shadow(0 0 5px rgba(223,255,63,0.05));
+      transparent 0 5px,
+      rgba(18, 22, 14, 0.70) 5px 16px,
+      transparent 16px 19px,
+      rgba(24, 32, 18, 0.82) 19px 23px,
+      transparent 23px 26px,
+      rgba(15, 20, 13, 0.74) 26px 39px,
+      transparent 39px 100%);
+  clip-path: polygon(0 62%, 25% 62%, 36% 20%, 46% 86%, 56% 43%, 70% 62%, 100% 62%, 100% 72%, 0 72%);
+  filter: blur(0.25px) drop-shadow(0 0 3px rgba(223,255,63,0.09));
 }
 
 .jinx-shadow-frequency::after {
   content: "";
   position: absolute;
   left: 50%;
-  top: 50%;
-  width: 70px;
-  height: 26px;
-  transform: translate(-50%, -50%) scaleX(0.88);
+  top: 42%;
+  width: 58px;
+  height: 22px;
+  transform: translate(-50%, -50%);
   opacity: 0;
-  background: rgba(223, 255, 63, 0.06);
-  clip-path: polygon(0 61%, 30% 61%, 40% 14%, 49% 88%, 58% 38%, 70% 61%, 100% 61%, 100% 74%, 0 74%);
-  filter: blur(5px);
+  background: rgba(223, 255, 63, 0.055);
+  clip-path: polygon(0 62%, 25% 62%, 36% 20%, 46% 86%, 56% 43%, 70% 62%, 100% 62%, 100% 72%, 0 72%);
+  filter: blur(4px);
 }
 
 .jinx-shadow-frequency.pulse-live {
+  opacity: 1;
   pointer-events: auto;
   cursor: pointer;
 }
 
 .jinx-shadow-frequency.pulse-live::before {
-  animation: shadowFrequencySpike 1.18s steps(5) forwards;
+  animation: shadowFrequencySpike 1.15s steps(5) forwards;
 }
 
 .jinx-shadow-frequency.pulse-live::after {
-  animation: shadowFrequencyHalo 1.18s steps(5) forwards;
+  animation: shadowFrequencyHalo 1.15s steps(5) forwards;
 }
 
 @keyframes shadowFrequencySpike {
-  0% { opacity: 0; transform: translate(-50%, -50%) scaleX(0.84); }
-  18% { opacity: 0.12; }
-  34% { opacity: 0.42; transform: translate(-50%, -50%) scaleX(1.02); }
-  48% { opacity: 0.28; transform: translate(calc(-50% + 1px), -50%) scaleX(0.96); }
-  68% { opacity: 0.16; transform: translate(calc(-50% - 1px), -50%) scaleX(1); }
-  100% { opacity: 0; transform: translate(-50%, -50%) scaleX(0.84); }
+  0% { opacity: 0; transform: translate(-50%, -50%) scaleX(0.88); }
+  18% { opacity: 0.18; }
+  34% { opacity: 0.48; transform: translate(-50%, -50%) scaleX(1.08); }
+  52% { opacity: 0.28; transform: translate(calc(-50% + 1px), -50%) scaleX(0.96); }
+  72% { opacity: 0.13; }
+  100% { opacity: 0; transform: translate(-50%, -50%) scaleX(0.88); }
 }
 
 @keyframes shadowFrequencyHalo {
   0% { opacity: 0; }
-  34% { opacity: 0.38; }
-  68% { opacity: 0.12; }
+  34% { opacity: 0.42; }
   100% { opacity: 0; }
 }
 
@@ -6345,12 +6343,16 @@ body {
   z-index: 10000;
   display: grid;
   place-items: center;
-  padding: 18px;
-  background: rgba(0, 0, 0, 0.54);
+  padding: 16px;
+  background: rgba(0, 0, 0, 0.50);
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
   transition: opacity 0.18s ease, visibility 0s linear 0.18s;
+}
+
+.jinx-card-overlay[hidden] {
+  display: none !important;
 }
 
 .jinx-card-overlay.open {
@@ -6363,29 +6365,17 @@ body {
 .jinx-card-overlay img {
   display: block;
   width: auto;
-  max-width: min(82vw, 380px);
+  max-width: min(82vw, 390px);
   max-height: 78vh;
   object-fit: contain;
   border-radius: 16px;
   box-shadow: 0 0 34px rgba(0, 0, 0, 0.82), 0 0 18px rgba(242, 238, 229, 0.16);
 }
 
-@media (orientation: landscape) {
-  .jinx-card-overlay {
-    padding: 10px;
-  }
-
-  .jinx-card-overlay img {
-    max-width: 42vw;
-    max-height: 84vh;
-    border-radius: 12px;
-  }
-}
-
 .jinx-card-close {
   position: fixed;
-  top: 18px;
-  right: 18px;
+  top: max(14px, env(safe-area-inset-top));
+  right: max(14px, env(safe-area-inset-right));
   z-index: 10001;
   width: 44px;
   height: 44px;
@@ -6399,3 +6389,20 @@ body {
   text-shadow: 0 0 12px rgba(255, 255, 255, 0.54);
   -webkit-tap-highlight-color: transparent;
 }
+
+@media (orientation: landscape) and (max-height: 520px) {
+  .jinx-card-overlay {
+    padding: 8px 52px;
+  }
+
+  .jinx-card-overlay img {
+    max-width: min(44vw, 340px);
+    max-height: 86vh;
+    border-radius: 12px;
+  }
+
+  .jinx-shadow-frequency {
+    bottom: 22%;
+  }
+}
+
