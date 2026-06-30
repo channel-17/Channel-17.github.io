@@ -6236,75 +6236,93 @@ body {
 }
 
 
-/* Hidden Jinx Card reveal — Shadow Heart. Tiny signal, tiny window, no pause. */
-.jinx-shadow-heart {
+/* Hidden Jinx Card reveal — Shadow Frequency. Pirate signal, tiny window, no pause. */
+.jinx-shadow-frequency {
   position: absolute;
   left: 50%;
-  bottom: 8.5%;
+  bottom: 8%;
   width: 76px;
   height: 76px;
   transform: translateX(-50%);
   border: 0;
   border-radius: 18px;
   background: transparent;
-  opacity: 0;
+  opacity: 1;
   z-index: 24;
   pointer-events: none;
+  cursor: default;
   -webkit-tap-highlight-color: transparent;
 }
 
-.jinx-shadow-heart::before,
-.jinx-shadow-heart::after {
+.jinx-shadow-frequency::before {
   content: "";
   position: absolute;
   left: 50%;
-  top: 22%;
-  width: 5px;
-  height: 8px;
-  border-radius: 5px 5px 0 0;
-  background: rgba(18, 21, 16, 0.88);
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.72);
+  top: 23%;
+  width: 50px;
+  height: 18px;
+  transform: translate(-50%, -50%);
   opacity: 0;
+  background:
+    linear-gradient(90deg,
+      transparent 0 8%,
+      rgba(9, 12, 8, 0.9) 8% 20%,
+      transparent 20% 26%,
+      rgba(12, 17, 10, 0.96) 26% 32%,
+      transparent 32% 38%,
+      rgba(19, 25, 13, 0.96) 38% 44%,
+      transparent 44% 52%,
+      rgba(8, 11, 7, 0.92) 52% 67%,
+      transparent 67% 100%
+    );
+  clip-path: polygon(
+    0 58%, 18% 58%, 24% 58%, 29% 42%, 34% 72%,
+    43% 10%, 52% 88%, 60% 48%, 68% 58%, 100% 58%,
+    100% 72%, 0 72%
+  );
+  filter: drop-shadow(0 0 2px rgba(223,255,63,0.06));
 }
 
-.jinx-shadow-heart::before {
-  transform: translate(-62%, -50%) rotate(-45deg);
-  transform-origin: 50% 100%;
+.jinx-shadow-frequency::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 23%;
+  width: 58px;
+  height: 24px;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  background: radial-gradient(ellipse at center, rgba(223,255,63,0.055), rgba(223,255,63,0.018) 42%, transparent 72%);
+  filter: blur(2px);
 }
 
-.jinx-shadow-heart::after {
-  transform: translate(-38%, -50%) rotate(45deg);
-  transform-origin: 50% 100%;
-}
-
-.jinx-shadow-heart.pulse-live {
+.jinx-shadow-frequency.pulse-live {
   pointer-events: auto;
   cursor: pointer;
 }
 
-.jinx-shadow-heart.pulse-live::before,
-.jinx-shadow-heart.pulse-live::after {
-  animation: jinxShadowBeat 0.52s steps(3) forwards;
+.jinx-shadow-frequency.pulse-live::before {
+  animation: jinxShadowFrequencySpike 0.54s steps(4) forwards;
 }
 
-@keyframes jinxShadowBeat {
-  0% { opacity: 0; filter: blur(1px); }
-  28% { opacity: 0.34; filter: blur(0); }
-  48% { opacity: 0.18; }
-  68% { opacity: 0.42; transform: translate(-50%, -50%) scale(1.12) rotate(-45deg); }
-  100% { opacity: 0; filter: blur(1px); }
+.jinx-shadow-frequency.pulse-live::after {
+  animation: jinxShadowFrequencyGlow 0.54s steps(4) forwards;
 }
 
-.jinx-shadow-heart.pulse-live::after {
-  animation-name: jinxShadowBeatRight;
+@keyframes jinxShadowFrequencySpike {
+  0% { opacity: 0; transform: translate(-50%, -50%) scaleX(0.82); }
+  18% { opacity: 0.18; transform: translate(-51%, -50%) scaleX(0.96); }
+  38% { opacity: 0.42; transform: translate(-49%, -50%) scaleX(1.02); }
+  54% { opacity: 0.24; transform: translate(-50%, -50%) scaleX(0.94); }
+  74% { opacity: 0.34; transform: translate(-50%, -50%) scaleX(1.05); }
+  100% { opacity: 0; transform: translate(-50%, -50%) scaleX(0.86); }
 }
 
-@keyframes jinxShadowBeatRight {
-  0% { opacity: 0; filter: blur(1px); }
-  28% { opacity: 0.34; filter: blur(0); }
-  48% { opacity: 0.18; }
-  68% { opacity: 0.42; transform: translate(-50%, -50%) scale(1.12) rotate(45deg); }
-  100% { opacity: 0; filter: blur(1px); }
+@keyframes jinxShadowFrequencyGlow {
+  0% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+  38% { opacity: 0.38; transform: translate(-50%, -50%) scale(1.04); }
+  70% { opacity: 0.14; transform: translate(-50%, -50%) scale(0.92); }
+  100% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
 }
 
 .jinx-card-overlay {
