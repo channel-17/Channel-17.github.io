@@ -64,6 +64,7 @@ let woundPulseTimer = null;
 let hiveWoundUsed = false;
 let jinxFrequencyTimer = null;
 let jinxFrequencyArmed = false;
+let founderWindowClosed = false;
 
 let profileTimer = null;
 let engageTimer = null;
@@ -97,20 +98,30 @@ function closeJinxCard() {
 }
 
 function pulseJinxShadowFrequency() {
-  if (!jinxShadowFrequency || !jinxFrequencyArmed) return;
+  if (!jinxShadowFrequency || !jinxFrequencyArmed || founderWindowClosed) return;
   jinxShadowFrequency.classList.add("pulse-live");
   setTimeout(() => {
     if (jinxShadowFrequency) jinxShadowFrequency.classList.remove("pulse-live");
-  }, 540);
+  }, 620);
 }
 
 function armJinxShadowFrequency() {
-  if (!jinxShadowFrequency || jinxFrequencyArmed) return;
+  if (!jinxShadowFrequency || jinxFrequencyArmed || founderWindowClosed) return;
   jinxFrequencyArmed = true;
   setTimeout(() => {
     pulseJinxShadowFrequency();
     jinxFrequencyTimer = setInterval(pulseJinxShadowFrequency, 17000);
-  }, 2400);
+  }, 2600);
+}
+
+function closeFounderWindow() {
+  founderWindowClosed = true;
+  jinxFrequencyArmed = false;
+  if (jinxFrequencyTimer) {
+    clearInterval(jinxFrequencyTimer);
+    jinxFrequencyTimer = null;
+  }
+  if (jinxShadowFrequency) jinxShadowFrequency.classList.remove("pulse-live");
 }
 
 if (jinxShadowFrequency) {
@@ -775,7 +786,7 @@ function spawnWren() {
     pulse.style.top = "31%";
     impactField.appendChild(pulse);
     setTimeout(() => pulse.remove(), 3600);
-    setTimeout(armJinxShadowFrequency, 1250);
+    setTimeout(armJinxShadowFrequency, 1850);
   }, 3500);
 
   setTimeout(() => {
@@ -918,6 +929,7 @@ function completeSequence() {
 
 function openChannel() {
   if (!signalNode.classList.contains("ready")) return;
+  closeFounderWindow();
 
   signalNode.style.pointerEvents = "none";
   if (navigator.vibrate) navigator.vibrate(34);
