@@ -97,38 +97,66 @@ function closeJinxCard() {
   jinxCardOverlay.setAttribute("aria-hidden", "true");
 }
 
+let jinxFrequencyPulseTimeout = null;
+let jinxFrequencyClearTimeout = null;
+
 function pulseJinxShadowFrequency() {
   if (!jinxShadowFrequency || !jinxFrequencyArmed || founderWindowClosed) return;
+
+  jinxShadowFrequency.classList.remove("pulse-live");
+  void jinxShadowFrequency.offsetWidth;
   jinxShadowFrequency.classList.add("pulse-live");
-  setTimeout(() => {
+
+  if (jinxFrequencyClearTimeout) clearTimeout(jinxFrequencyClearTimeout);
+  jinxFrequencyClearTimeout = setTimeout(() => {
     if (jinxShadowFrequency) jinxShadowFrequency.classList.remove("pulse-live");
-  }, 620);
+  }, 1450);
 }
 
 function armJinxShadowFrequency() {
   if (!jinxShadowFrequency || jinxFrequencyArmed || founderWindowClosed) return;
+
   jinxFrequencyArmed = true;
-  setTimeout(() => {
+
+  // Founder Window: first leak happens while the original QR transmission is still alive,
+  // before the symbol press/station load. After that, it whispers every 17 seconds.
+  if (jinxFrequencyPulseTimeout) clearTimeout(jinxFrequencyPulseTimeout);
+  jinxFrequencyPulseTimeout = setTimeout(() => {
     pulseJinxShadowFrequency();
+    if (jinxFrequencyTimer) clearInterval(jinxFrequencyTimer);
     jinxFrequencyTimer = setInterval(pulseJinxShadowFrequency, 17000);
-  }, 2600);
+  }, 1200);
 }
 
 function closeFounderWindow() {
   founderWindowClosed = true;
   jinxFrequencyArmed = false;
+
+  if (jinxFrequencyPulseTimeout) {
+    clearTimeout(jinxFrequencyPulseTimeout);
+    jinxFrequencyPulseTimeout = null;
+  }
+
+  if (jinxFrequencyClearTimeout) {
+    clearTimeout(jinxFrequencyClearTimeout);
+    jinxFrequencyClearTimeout = null;
+  }
+
   if (jinxFrequencyTimer) {
     clearInterval(jinxFrequencyTimer);
     jinxFrequencyTimer = null;
   }
+
   if (jinxShadowFrequency) jinxShadowFrequency.classList.remove("pulse-live");
 }
 
 if (jinxShadowFrequency) {
-  jinxShadowFrequency.addEventListener("click", () => {
+  jinxShadowFrequency.addEventListener("click", event => {
     if (!jinxShadowFrequency.classList.contains("pulse-live")) return;
+    event.preventDefault();
     openJinxCard();
   });
+
   jinxShadowFrequency.addEventListener("touchend", event => {
     if (!jinxShadowFrequency.classList.contains("pulse-live")) return;
     event.preventDefault();
@@ -786,7 +814,7 @@ function spawnWren() {
     pulse.style.top = "31%";
     impactField.appendChild(pulse);
     setTimeout(() => pulse.remove(), 3600);
-    setTimeout(armJinxShadowFrequency, 1850);
+    setTimeout(armJinxShadowFrequency, 900);
   }, 3500);
 
   setTimeout(() => {
