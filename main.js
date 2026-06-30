@@ -105,17 +105,16 @@ function pulseJinxShadowFrequency() {
     if (!jinxShadowFrequency) return;
     jinxShadowFrequency.classList.remove("pulse-live");
     jinxShadowFrequency.setAttribute("aria-hidden", "true");
-  }, 1250);
+  }, 1150);
 }
 
 function armJinxShadowFrequency() {
   if (!jinxShadowFrequency || jinxFrequencyArmed || founderWindowClosed) return;
   jinxFrequencyArmed = true;
-  jinxShadowFrequency.classList.add("armed");
   setTimeout(() => {
     pulseJinxShadowFrequency();
     jinxFrequencyTimer = setInterval(pulseJinxShadowFrequency, 17000);
-  }, 1450);
+  }, 2600);
 }
 
 function closeFounderWindow() {
@@ -126,7 +125,7 @@ function closeFounderWindow() {
     jinxFrequencyTimer = null;
   }
   if (jinxShadowFrequency) {
-    jinxShadowFrequency.classList.remove("armed", "pulse-live");
+    jinxShadowFrequency.classList.remove("pulse-live");
     jinxShadowFrequency.setAttribute("aria-hidden", "true");
   }
 }
@@ -793,7 +792,7 @@ function spawnWren() {
     pulse.style.top = "31%";
     impactField.appendChild(pulse);
     setTimeout(() => pulse.remove(), 3600);
-    setTimeout(armJinxShadowFrequency, 900);
+    setTimeout(armJinxShadowFrequency, 1850);
   }, 3500);
 
   setTimeout(() => {
