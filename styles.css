@@ -6237,19 +6237,22 @@ body {
 
 
 /* Hidden Jinx Card reveal — Shadow Frequency. Founder-window only.
-   Click target = middle general size. Visible spike floats just above it. */
+   The card overlay stays fully hidden until opened so iPhone rotation
+   cannot flash the giant JPG corner. */
 .jinx-shadow-frequency {
   position: absolute;
   left: 50%;
-  bottom: 8%;
+  bottom: calc(8% + 88px);
   width: 76px;
   height: 76px;
   transform: translateX(-50%);
+  appearance: none;
+  -webkit-appearance: none;
   border: 0;
   border-radius: 18px;
   background: transparent;
   opacity: 1;
-  z-index: 24;
+  z-index: 31;
   pointer-events: none;
   cursor: default;
   color: transparent;
@@ -6268,41 +6271,43 @@ body {
   box-shadow: none;
 }
 
-/* The leak itself: not a heart, not a red monitor, a buried signal spike. */
 .jinx-shadow-frequency::before {
   content: "";
   position: absolute;
   left: 50%;
-  top: -14px;
-  width: 54px;
-  height: 17px;
-  transform: translate(-50%, -50%);
+  top: 50%;
+  width: 64px;
+  height: 21px;
+  transform: translate(-50%, -50%) scaleX(0.88);
   opacity: 0;
   background:
     linear-gradient(90deg,
-      transparent 0 5px,
-      rgba(4, 5, 4, 0.98) 5px 14px,
-      transparent 14px 17px,
-      rgba(10, 14, 8, 0.98) 17px 20px,
-      transparent 20px 23px,
-      rgba(4, 6, 4, 0.98) 23px 34px,
-      transparent 34px 100%);
-  clip-path: polygon(0 62%, 24% 62%, 34% 18%, 43% 92%, 52% 38%, 63% 62%, 100% 62%, 100% 72%, 0 72%);
-  filter: blur(0.25px) drop-shadow(0 0 3px rgba(223,255,63,0.06));
+      transparent 0 7px,
+      rgba(1, 2, 1, 0.92) 7px 22px,
+      transparent 22px 25px,
+      rgba(6, 9, 5, 0.98) 25px 29px,
+      transparent 29px 32px,
+      rgba(1, 2, 1, 0.94) 32px 47px,
+      transparent 47px 100%);
+  clip-path: polygon(0 61%, 30% 61%, 40% 14%, 49% 88%, 58% 38%, 70% 61%, 100% 61%, 100% 74%, 0 74%);
+  filter:
+    blur(0.25px)
+    drop-shadow(0 0 1px rgba(223,255,63,0.08))
+    drop-shadow(0 0 5px rgba(223,255,63,0.05));
 }
 
 .jinx-shadow-frequency::after {
   content: "";
   position: absolute;
   left: 50%;
-  top: -14px;
-  width: 60px;
-  height: 22px;
-  transform: translate(-50%, -50%);
+  top: 50%;
+  width: 70px;
+  height: 26px;
+  transform: translate(-50%, -50%) scaleX(0.88);
   opacity: 0;
-  background: rgba(223, 255, 63, 0.045);
-  clip-path: polygon(0 62%, 24% 62%, 34% 18%, 43% 92%, 52% 38%, 63% 62%, 100% 62%, 100% 72%, 0 72%);
-  filter: blur(4px);
+  background: rgba(223, 255, 63, 0.06);
+  clip-path: polygon(0 61%, 30% 61%, 40% 14%, 49% 88%, 58% 38%, 70% 61%, 100% 61%, 100% 74%, 0 74%);
+  filter: blur(5px);
 }
 
 .jinx-shadow-frequency.pulse-live {
@@ -6311,26 +6316,26 @@ body {
 }
 
 .jinx-shadow-frequency.pulse-live::before {
-  animation: shadowFrequencySpike 1.45s steps(5) forwards;
+  animation: shadowFrequencySpike 1.18s steps(5) forwards;
 }
 
 .jinx-shadow-frequency.pulse-live::after {
-  animation: shadowFrequencyHalo 1.45s steps(5) forwards;
+  animation: shadowFrequencyHalo 1.18s steps(5) forwards;
 }
 
 @keyframes shadowFrequencySpike {
-  0% { opacity: 0; transform: translate(-50%, -50%) scaleX(0.82); }
-  14% { opacity: 0.10; }
-  30% { opacity: 0.42; transform: translate(-50%, -50%) scaleX(1.08); }
-  46% { opacity: 0.24; transform: translate(calc(-50% + 1px), -50%) scaleX(0.96); }
-  64% { opacity: 0.12; transform: translate(calc(-50% - 1px), -50%) scaleX(1.01); }
-  100% { opacity: 0; transform: translate(-50%, -50%) scaleX(0.82); }
+  0% { opacity: 0; transform: translate(-50%, -50%) scaleX(0.84); }
+  18% { opacity: 0.12; }
+  34% { opacity: 0.42; transform: translate(-50%, -50%) scaleX(1.02); }
+  48% { opacity: 0.28; transform: translate(calc(-50% + 1px), -50%) scaleX(0.96); }
+  68% { opacity: 0.16; transform: translate(calc(-50% - 1px), -50%) scaleX(1); }
+  100% { opacity: 0; transform: translate(-50%, -50%) scaleX(0.84); }
 }
 
 @keyframes shadowFrequencyHalo {
   0% { opacity: 0; }
-  30% { opacity: 0.36; }
-  64% { opacity: 0.10; }
+  34% { opacity: 0.38; }
+  68% { opacity: 0.12; }
   100% { opacity: 0; }
 }
 
@@ -6341,24 +6346,40 @@ body {
   display: grid;
   place-items: center;
   padding: 18px;
-  background: rgba(0, 0, 0, 0.46);
+  background: rgba(0, 0, 0, 0.54);
   opacity: 0;
+  visibility: hidden;
   pointer-events: none;
-  transition: opacity 0.18s ease;
+  transition: opacity 0.18s ease, visibility 0s linear 0.18s;
 }
 
 .jinx-card-overlay.open {
   opacity: 1;
+  visibility: visible;
   pointer-events: auto;
+  transition: opacity 0.18s ease;
 }
 
 .jinx-card-overlay img {
   display: block;
-  width: min(92vw, 520px);
-  max-height: 86vh;
+  width: auto;
+  max-width: min(82vw, 380px);
+  max-height: 78vh;
   object-fit: contain;
-  border-radius: 18px;
+  border-radius: 16px;
   box-shadow: 0 0 34px rgba(0, 0, 0, 0.82), 0 0 18px rgba(242, 238, 229, 0.16);
+}
+
+@media (orientation: landscape) {
+  .jinx-card-overlay {
+    padding: 10px;
+  }
+
+  .jinx-card-overlay img {
+    max-width: 42vw;
+    max-height: 84vh;
+    border-radius: 12px;
+  }
 }
 
 .jinx-card-close {
@@ -6375,6 +6396,6 @@ body {
   font-size: 34px;
   line-height: 40px;
   cursor: pointer;
-  text-shadow: 0 0 8px rgba(0,0,0,0.85);
+  text-shadow: 0 0 12px rgba(255, 255, 255, 0.54);
+  -webkit-tap-highlight-color: transparent;
 }
-
