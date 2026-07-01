@@ -115,7 +115,7 @@ function pulseJinxShadowFrequency() {
     jinxShadowFrequency.classList.remove("pulse-live");
     jinxShadowFrequency.setAttribute("aria-hidden", "true");
     jinxShadowFrequency.tabIndex = -1;
-  }, 1750);
+  }, 2350);
 }
 
 function armJinxShadowFrequency() {
