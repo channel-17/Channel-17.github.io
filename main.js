@@ -63,7 +63,9 @@ let frankDutyFramesPlayed = false;
 let woundPulseTimer = null;
 let hiveWoundUsed = false;
 let jinxFrequencyTimer = null;
+let jinxFrequencyClearTimer = null;
 let jinxFrequencyArmed = false;
+let jinxFrequencyUsed = false;
 let founderWindowClosed = false;
 
 let profileTimer = null;
@@ -103,60 +105,71 @@ function closeJinxCard() {
   }, 190);
 }
 
+function hideJinxShadowFrequency() {
+  if (!jinxShadowFrequency) return;
+  jinxShadowFrequency.classList.remove("armed", "pulse-live");
+  jinxShadowFrequency.setAttribute("aria-hidden", "true");
+  jinxShadowFrequency.tabIndex = -1;
+}
+
+function consumeJinxShadowFrequency() {
+  jinxFrequencyUsed = true;
+  jinxFrequencyArmed = false;
+  founderWindowClosed = true;
+
+  if (jinxFrequencyTimer) {
+    window.clearTimeout(jinxFrequencyTimer);
+    jinxFrequencyTimer = null;
+  }
+
+  if (jinxFrequencyClearTimer) {
+    window.clearTimeout(jinxFrequencyClearTimer);
+    jinxFrequencyClearTimer = null;
+  }
+
+  hideJinxShadowFrequency();
+}
+
 function pulseJinxShadowFrequency() {
-  if (!jinxShadowFrequency || !jinxFrequencyArmed || founderWindowClosed) return;
+  if (!jinxShadowFrequency || !jinxFrequencyArmed || founderWindowClosed || jinxFrequencyUsed) return;
 
   jinxShadowFrequency.classList.add("pulse-live");
   jinxShadowFrequency.setAttribute("aria-hidden", "false");
   jinxShadowFrequency.tabIndex = 0;
 
-  window.setTimeout(() => {
-    if (!jinxShadowFrequency) return;
-    jinxShadowFrequency.classList.remove("pulse-live");
-    jinxShadowFrequency.setAttribute("aria-hidden", "true");
-    jinxShadowFrequency.tabIndex = -1;
-  }, 2350);
+  jinxFrequencyClearTimer = window.setTimeout(() => {
+    consumeJinxShadowFrequency();
+  }, 4300);
 }
 
 function armJinxShadowFrequency() {
-  if (!jinxShadowFrequency || jinxFrequencyArmed || founderWindowClosed) return;
+  if (!jinxShadowFrequency || jinxFrequencyArmed || founderWindowClosed || jinxFrequencyUsed) return;
 
   jinxFrequencyArmed = true;
   jinxShadowFrequency.classList.add("armed");
   jinxShadowFrequency.setAttribute("aria-hidden", "true");
   jinxShadowFrequency.tabIndex = -1;
 
-  window.setTimeout(() => {
+  jinxFrequencyTimer = window.setTimeout(() => {
     pulseJinxShadowFrequency();
-    jinxFrequencyTimer = window.setInterval(pulseJinxShadowFrequency, 17000);
-  }, 650);
+  }, 520);
 }
 
 function closeFounderWindow() {
-  founderWindowClosed = true;
-  jinxFrequencyArmed = false;
-
-  if (jinxFrequencyTimer) {
-    window.clearInterval(jinxFrequencyTimer);
-    jinxFrequencyTimer = null;
-  }
-
-  if (jinxShadowFrequency) {
-    jinxShadowFrequency.classList.remove("armed", "pulse-live");
-    jinxShadowFrequency.setAttribute("aria-hidden", "true");
-    jinxShadowFrequency.tabIndex = -1;
-  }
+  consumeJinxShadowFrequency();
 }
 
 if (jinxShadowFrequency) {
   jinxShadowFrequency.addEventListener("click", () => {
     if (!jinxShadowFrequency.classList.contains("pulse-live")) return;
+    consumeJinxShadowFrequency();
     openJinxCard();
   });
 
   jinxShadowFrequency.addEventListener("touchend", event => {
     if (!jinxShadowFrequency.classList.contains("pulse-live")) return;
     event.preventDefault();
+    consumeJinxShadowFrequency();
     openJinxCard();
   }, { passive: false });
 }
@@ -664,6 +677,7 @@ function triggerCarl(carl) {
 }
 
 function openCarlProfile() {
+  closeFounderWindow();
   carlOpened = true;
   carlProfile.classList.add("open");
   carlProfile.setAttribute("aria-hidden", "false");
@@ -722,6 +736,7 @@ function closeCarlPhotos() {
 }
 
 function openHiveMindCarlFile() {
+  closeFounderWindow();
   if (!carlProfilePortal || !carlProfilePortal.classList.contains("portal-open") || hiveWoundUsed) return;
   hiveCarlFile.classList.add("open");
   hiveCarlFile.setAttribute("aria-hidden", "false");
