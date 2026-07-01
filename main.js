@@ -139,7 +139,7 @@ function pulseJinxShadowFrequency() {
 
   jinxFrequencyClearTimer = window.setTimeout(() => {
     consumeJinxShadowFrequency();
-  }, 4300);
+  }, 6800);
 }
 
 function armJinxShadowFrequency() {
