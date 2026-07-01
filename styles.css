@@ -6236,13 +6236,13 @@ body {
 }
 
 
-/* Hidden Jinx Card reveal — Shadow Frequency. Founder-window only. */
+/* Hidden Jinx Card reveal — Jinx Frequency. Founder-window only, one pulse only. */
 .jinx-shadow-frequency {
   position: absolute;
   left: 50%;
-  bottom: calc(8% + 86px);
-  width: 82px;
-  height: 70px;
+  bottom: calc(8% + 96px);
+  width: 86px;
+  height: 74px;
   transform: translateX(-50%);
   border: 0;
   border-radius: 18px;
@@ -6280,26 +6280,26 @@ body {
   position: absolute;
   left: 50%;
   top: 50%;
-  width: 72px;
-  height: 24px;
+  width: 76px;
+  height: 26px;
   transform: translate(-50%, -50%);
   opacity: 0;
   background:
     linear-gradient(90deg,
-      transparent 0 5px,
-      rgba(22, 30, 18, 0.92) 5px 17px,
-      transparent 17px 20px,
-      rgba(32, 46, 22, 0.98) 20px 28px,
-      rgba(82, 112, 32, 0.42) 28px 30px,
-      transparent 30px 33px,
-      rgba(22, 30, 18, 0.94) 33px 52px,
-      transparent 52px 100%);
-  clip-path: polygon(0 62%, 24% 62%, 35% 12%, 46% 91%, 57% 34%, 70% 62%, 100% 62%, 100% 73%, 0 73%);
+      transparent 0 6px,
+      rgba(7, 9, 8, 0.98) 6px 18px,
+      transparent 18px 21px,
+      rgba(13, 16, 14, 0.98) 21px 31px,
+      rgba(32, 38, 33, 0.52) 31px 33px,
+      transparent 33px 36px,
+      rgba(8, 10, 9, 0.98) 36px 57px,
+      transparent 57px 100%);
+  clip-path: polygon(0 63%, 24% 63%, 35% 15%, 45% 88%, 56% 36%, 69% 63%, 100% 63%, 100% 73%, 0 73%);
   filter:
-    blur(0.12px)
-    drop-shadow(0 0 3px rgba(223,255,63,0.28))
-    drop-shadow(0 0 10px rgba(223,255,63,0.16))
-    drop-shadow(0 0 22px rgba(223,255,63,0.06));
+    blur(0.18px)
+    drop-shadow(0 0 4px rgba(70, 76, 66, 0.18))
+    drop-shadow(0 0 14px rgba(24, 30, 24, 0.46))
+    drop-shadow(0 0 30px rgba(0, 0, 0, 0.88));
 }
 
 .jinx-shadow-frequency::after {
@@ -6307,13 +6307,12 @@ body {
   position: absolute;
   left: 50%;
   top: 50%;
-  width: 82px;
-  height: 32px;
+  width: 92px;
+  height: 40px;
   transform: translate(-50%, -50%);
   opacity: 0;
-  background: rgba(223, 255, 63, 0.14);
-  clip-path: polygon(0 62%, 24% 62%, 35% 12%, 46% 91%, 57% 34%, 70% 62%, 100% 62%, 100% 73%, 0 73%);
-  filter: blur(7px);
+  background: radial-gradient(ellipse at center, rgba(42, 50, 42, 0.28) 0%, rgba(8, 10, 9, 0.18) 36%, rgba(0, 0, 0, 0) 72%);
+  filter: blur(8px);
 }
 
 .jinx-shadow-frequency.pulse-live {
@@ -6323,29 +6322,31 @@ body {
 }
 
 .jinx-shadow-frequency.pulse-live::before {
-  animation: shadowFrequencySpike 2.25s steps(7) forwards;
+  animation: shadowFrequencySpike 4.25s steps(9) forwards;
 }
 
 .jinx-shadow-frequency.pulse-live::after {
-  animation: shadowFrequencyHalo 2.25s steps(7) forwards;
+  animation: shadowFrequencyHalo 4.25s ease forwards;
 }
 
 @keyframes shadowFrequencySpike {
   0% { opacity: 0; transform: translate(-50%, -50%) scaleX(0.78); }
-  12% { opacity: 0.24; }
-  24% { opacity: 0.76; transform: translate(calc(-50% - 1px), -50%) scaleX(1.12); }
-  38% { opacity: 0.88; transform: translate(calc(-50% + 1px), -50%) scaleX(1.02); }
-  54% { opacity: 0.44; transform: translate(-50%, -50%) scaleX(0.92); }
-  76% { opacity: 0.20; }
+  10% { opacity: 0.18; }
+  20% { opacity: 0.50; transform: translate(calc(-50% - 1px), -50%) scaleX(1.08); }
+  34% { opacity: 0.82; transform: translate(calc(-50% + 1px), -50%) scaleX(1.02); }
+  48% { opacity: 0.64; transform: translate(-50%, -50%) scaleX(0.96); }
+  66% { opacity: 0.36; }
+  86% { opacity: 0.16; }
   100% { opacity: 0; transform: translate(-50%, -50%) scaleX(0.82); }
 }
 
 @keyframes shadowFrequencyHalo {
-  0% { opacity: 0; }
-  22% { opacity: 0.76; }
-  46% { opacity: 0.42; }
-  72% { opacity: 0.18; }
-  100% { opacity: 0; }
+  0% { opacity: 0; transform: translate(-50%, -50%) scale(0.78); }
+  18% { opacity: 0.30; }
+  36% { opacity: 0.54; transform: translate(-50%, -50%) scale(1.08); }
+  58% { opacity: 0.34; }
+  82% { opacity: 0.14; }
+  100% { opacity: 0; transform: translate(-50%, -50%) scale(1.22); }
 }
 
 .jinx-card-overlay {
@@ -6379,8 +6380,8 @@ body {
   max-width: min(76vw, 340px);
   max-height: 72svh;
   object-fit: contain;
-  border-radius: 8px;
-  clip-path: inset(1.8% 1.5% 2.6% 1.5% round 9px);
+  border-radius: 7px;
+  clip-path: inset(2.25% 2.05% 3.15% 2.35% round 7px);
   box-shadow: 0 0 38px rgba(0, 0, 0, 0.9);
 }
 
@@ -6410,12 +6411,12 @@ body {
   .jinx-card-overlay img {
     max-width: min(38vw, 300px);
     max-height: 84svh;
-    border-radius: 8px;
-    clip-path: inset(1.8% 1.5% 2.6% 1.5% round 8px);
+    border-radius: 7px;
+    clip-path: inset(2.25% 2.05% 3.15% 2.35% round 7px);
   }
 
   .jinx-shadow-frequency {
-    bottom: calc(8% + 66px);
+    bottom: calc(8% + 72px);
   }
 }
 
