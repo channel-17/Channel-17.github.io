@@ -225,38 +225,48 @@ const normalAssets = [
 ];
 
 const loaderTargets = [
-  // CHANNEL 17 ZONE MAP — loader bar chaos field.
-  // Green / orange / yellow clusters live around the bar, not in the turtle zone.
-  { x: 34, y: 42.5, zone: "loader" },
-  { x: 40, y: 43.2, zone: "loader" },
-  { x: 47, y: 42.7, zone: "loader" },
-  { x: 54, y: 43.4, zone: "loader" },
-  { x: 61, y: 42.8, zone: "loader" },
-  { x: 68, y: 43.5, zone: "loader" },
-  { x: 38, y: 47.0, zone: "loader" },
-  { x: 50, y: 47.3, zone: "loader" },
-  { x: 63, y: 47.1, zone: "loader" }
+  // CHANNEL 17 ZONE MAP — LOADER BAR CHAOS FIELD.
+  // Main avatar traffic belongs here: green/orange/yellow clusters around the bar.
+  // This keeps the signal zone cleaner and keeps the turtle zone reserved for Frank.
+  { x: 34.0, y: 40.8, zone: "loader", cluster: "left-gap" },
+  { x: 38.5, y: 41.9, zone: "loader", cluster: "left-gap" },
+  { x: 42.0, y: 43.2, zone: "loader", cluster: "left-gap" },
+
+  { x: 48.0, y: 40.6, zone: "loader", cluster: "center-load" },
+  { x: 52.0, y: 42.5, zone: "loader", cluster: "center-load" },
+  { x: 56.0, y: 44.0, zone: "loader", cluster: "center-load" },
+
+  { x: 61.5, y: 40.9, zone: "loader", cluster: "right-load" },
+  { x: 66.0, y: 42.3, zone: "loader", cluster: "right-load" },
+  { x: 70.0, y: 43.8, zone: "loader", cluster: "right-load" },
+
+  { x: 46.5, y: 47.2, zone: "loader", cluster: "lower-pressure" },
+  { x: 58.5, y: 47.0, zone: "loader", cluster: "lower-pressure" }
 ];
 
 const symbolTargets = [
-  // Signal zone stays higher and cleaner so the symbol reads as its own territory.
-  { x: 43, y: 25.5, zone: "symbol" },
-  { x: 50, y: 23.8, zone: "symbol" },
-  { x: 57, y: 25.5, zone: "symbol" },
-  { x: 46, y: 31.5, zone: "symbol" },
-  { x: 54, y: 31.5, zone: "symbol" }
+  // SIGNAL ZONE — higher pyramid/signal territory only.
+  // Use sparingly so the signal reads as its own zone instead of becoming the main pile.
+  { x: 43.0, y: 24.5, zone: "symbol" },
+  { x: 50.0, y: 22.6, zone: "symbol" },
+  { x: 57.0, y: 24.5, zone: "symbol" },
+  { x: 46.5, y: 30.4, zone: "symbol" },
+  { x: 53.5, y: 30.4, zone: "symbol" }
 ];
 
 const missTargets = [
-  { x: 30, y: 46, zone: "miss" },
-  { x: 72, y: 46, zone: "miss" },
-  { x: 36, y: 52, zone: "miss" },
-  { x: 64, y: 52, zone: "miss" }
+  // Edge pressure still belongs near the loader, not down in the turtle/Frank zone.
+  { x: 26.5, y: 42.4, zone: "miss" },
+  { x: 75.0, y: 42.8, zone: "miss" },
+  { x: 31.5, y: 47.0, zone: "miss" },
+  { x: 70.5, y: 47.2, zone: "miss" }
 ];
 
 const coverageTargets = [...loaderTargets, ...symbolTargets, ...missTargets];
 
-const CARL_ZONE = { x: 25.5, y: 43.0 };
+// CARL ZONE — light-blue mark from Jinx reference.
+// Left side of loader, aligned with the first loader gap.
+const CARL_ZONE = { x: 25.0, y: 42.3 };
 const CARL_HEART_START = { x: 88, y: 75 };
 const CARL_HEART_PATH = [
   { left: "88%", top: "75%", transform: "translate(-50%, -50%) scale(0.72) rotate(0deg)", opacity: 0 },
@@ -455,9 +465,15 @@ function pickTarget() {
     return loaderTargets[count % loaderTargets.length];
   }
 
-  // After the symbol appears, the system throws only a handful at the symbol at a time.
-  if (count % 7 < 5) {
+  // Zone law: loader bar is the main chaos field.
+  // Signal zone gets occasional touches only; it must not become the main pile.
+  if (count % 8 === 0 || count % 8 === 5) {
     return symbolTargets[count % symbolTargets.length];
+  }
+
+  // Rare edge pressure near the loader, never down in Frank's turtle zone.
+  if (count % 11 === 3) {
+    return missTargets[count % missTargets.length];
   }
 
   return loaderTargets[count % loaderTargets.length];
@@ -474,8 +490,10 @@ function spawnProfile(side, delay = 0, opts = {}) {
     profile.className = "profile";
 
     const asset = opts.asset || normalAssets[profileCount % normalAssets.length];
-    const x = jitter(target.x, target.zone === "miss" ? 4.2 : 2.6);
-    const y = jitter(target.y, target.zone === "miss" ? 4.6 : 2.8);
+    const jitterX = target.zone === "symbol" ? 2.0 : target.zone === "miss" ? 3.2 : 2.4;
+    const jitterY = target.zone === "symbol" ? 2.2 : target.zone === "miss" ? 3.0 : 2.2;
+    const x = jitter(target.x, jitterX);
+    const y = jitter(target.y, jitterY);
 
     profile.style.left = `calc(${x}% - ${AVATAR_HALF}px)`;
     profile.style.top = `calc(${y}% - ${AVATAR_HALF}px)`;
@@ -616,7 +634,8 @@ function spawnCarl() {
 
   setTimeout(() => {
     for (let i = 0; i < 4; i++) {
-      setTimeout(() => spawnProfile("left", 0, { force: loaderTargets[(i + 1) % loaderTargets.length] }), i * 90);
+      // Carl gets buried by the left loader-bar chaos, not by turtle-zone traffic.
+      setTimeout(() => spawnProfile("left", 0, { force: loaderTargets[i % 3] }), i * 90);
     }
   }, 260);
 
@@ -874,12 +893,13 @@ function spawnFrank() {
   turtle.classList.add("covered-by-frank");
 
   const frankPositions = [
-    { x: 47.0, y: 54.0, sx: "-55px", sy: "35px" },
-    { x: 49.2, y: 53.0, sx: "-35px", sy: "28px" },
-    { x: 45.8, y: 53.4, sx: "-65px", sy: "18px" },
-    { x: 48.4, y: 52.6, sx: "-45px", sy: "22px" },
-    { x: 46.6, y: 54.2, sx: "-74px", sy: "26px" },
-    { x: 49.8, y: 53.6, sx: "-42px", sy: "34px" }
+    // TURTLE ZONE — Frank only. Same joke, same territory: overlap Frank with Frank.
+    { x: 48.2, y: 55.0, sx: "-58px", sy: "38px" },
+    { x: 50.0, y: 54.2, sx: "-40px", sy: "31px" },
+    { x: 46.8, y: 54.6, sx: "-68px", sy: "23px" },
+    { x: 49.1, y: 53.9, sx: "-48px", sy: "24px" },
+    { x: 47.5, y: 55.4, sx: "-76px", sy: "29px" },
+    { x: 50.9, y: 54.8, sx: "-44px", sy: "36px" }
   ];
 
   frankPositions.forEach((pos, index) => {
