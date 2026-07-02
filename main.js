@@ -227,18 +227,18 @@ const normalAssets = [
 const loaderTargets = [
   // CHANNEL 17 ZONE MAP — LOADER BAR SUPPRESSION FIELD.
   // Not a road/highway and not one spinning blob.
-  // Virus logic now attacks exposed loader sections: far left, far right, center, then gaps.
-  { x: 24.0, y: 31.6, zone: "loader", cluster: "bar-left-edge" },
-  { x: 76.0, y: 31.6, zone: "loader", cluster: "bar-right-edge" },
-  { x: 50.0, y: 31.4, zone: "loader", cluster: "bar-center" },
-  { x: 36.0, y: 31.9, zone: "loader", cluster: "bar-left-gap" },
-  { x: 64.0, y: 31.9, zone: "loader", cluster: "bar-right-gap" },
-  { x: 30.0, y: 31.0, zone: "loader", cluster: "bar-left-high" },
-  { x: 70.0, y: 31.0, zone: "loader", cluster: "bar-right-high" },
-  { x: 43.0, y: 32.5, zone: "loader", cluster: "bar-center-left" },
-  { x: 57.0, y: 32.5, zone: "loader", cluster: "bar-center-right" },
-  { x: 27.5, y: 33.0, zone: "loader", cluster: "bar-left-low" },
-  { x: 72.5, y: 32.7, zone: "loader", cluster: "bar-right-low" }
+  // Virus logic now attacks the face of the loader: far left, far right, center, then exposed gaps.
+  { x: 24.0, y: 29.8, zone: "loader", cluster: "bar-left-edge" },
+  { x: 76.0, y: 29.8, zone: "loader", cluster: "bar-right-edge" },
+  { x: 50.0, y: 29.6, zone: "loader", cluster: "bar-center" },
+  { x: 36.0, y: 30.0, zone: "loader", cluster: "bar-left-gap" },
+  { x: 64.0, y: 30.0, zone: "loader", cluster: "bar-right-gap" },
+  { x: 30.0, y: 29.2, zone: "loader", cluster: "bar-left-high" },
+  { x: 70.0, y: 29.2, zone: "loader", cluster: "bar-right-high" },
+  { x: 43.0, y: 30.6, zone: "loader", cluster: "bar-center-left" },
+  { x: 57.0, y: 30.6, zone: "loader", cluster: "bar-center-right" },
+  { x: 27.5, y: 30.9, zone: "loader", cluster: "bar-left-low" },
+  { x: 72.5, y: 30.8, zone: "loader", cluster: "bar-right-low" }
 ];
 
 const symbolTargets = [
@@ -253,26 +253,26 @@ const symbolTargets = [
 
 const missTargets = [
   // Loader-edge pressure only. No random drift into Frank/turtle territory.
-  { x: 22.0, y: 34.8, zone: "miss" },
-  { x: 78.0, y: 34.2, zone: "miss" },
-  { x: 33.0, y: 35.0, zone: "miss" },
-  { x: 67.0, y: 34.6, zone: "miss" }
+  { x: 22.0, y: 31.8, zone: "miss" },
+  { x: 78.0, y: 31.6, zone: "miss" },
+  { x: 33.0, y: 32.0, zone: "miss" },
+  { x: 67.0, y: 31.9, zone: "miss" }
 ];
 
 const coverageTargets = [...loaderTargets, ...symbolTargets, ...missTargets];
 
 // CARL ZONE — light-blue mark from Jinx reference.
 // Left side of loader, aligned with the first loader gap.
-const CARL_ZONE = { x: 25.0, y: 34.8 };
+const CARL_ZONE = { x: 25.0, y: 31.6 };
 const CARL_HEART_START = { x: 88, y: 75 };
 const CARL_HEART_PATH = [
   { left: "88%", top: "74%", transform: "translate(-50%, -50%) scale(1.02) rotate(0deg)", opacity: 0 },
-  { left: "86%", top: "63%", transform: "translate(-50%, -50%) scale(1.04) rotate(-2deg)", opacity: 0.92, offset: 0.10 },
-  { left: "84%", top: "48%", transform: "translate(-50%, -50%) scale(1.06) rotate(5deg)", opacity: 0.96, offset: 0.22 },
-  { left: "80%", top: "30%", transform: "translate(-50%, -50%) scale(1.06) rotate(11deg)", opacity: 0.94, offset: 0.34 },
-  { left: "69%", top: "24%", transform: "translate(-50%, -50%) scale(1.03) rotate(-12deg)", opacity: 0.91, offset: 0.48 },
-  { left: "46%", top: "27%", transform: "translate(-50%, -50%) scale(1.00) rotate(-31deg)", opacity: 0.86, offset: 0.64 },
-  { left: "33%", top: "41%", transform: "translate(-50%, -50%) scale(0.98) rotate(22deg)", opacity: 0.80, offset: 0.80 },
+  { left: "87%", top: "63%", transform: "translate(-50%, -50%) scale(1.04) rotate(-2deg)", opacity: 0.92, offset: 0.10 },
+  { left: "85%", top: "49%", transform: "translate(-50%, -50%) scale(1.06) rotate(5deg)", opacity: 0.96, offset: 0.22 },
+  { left: "82%", top: "34%", transform: "translate(-50%, -50%) scale(1.06) rotate(10deg)", opacity: 0.94, offset: 0.34 },
+  { left: "72%", top: "25%", transform: "translate(-50%, -50%) scale(1.03) rotate(-12deg)", opacity: 0.91, offset: 0.48 },
+  { left: "51%", top: "27%", transform: "translate(-50%, -50%) scale(1.00) rotate(-29deg)", opacity: 0.86, offset: 0.64 },
+  { left: "36%", top: "31%", transform: "translate(-50%, -50%) scale(0.98) rotate(24deg)", opacity: 0.82, offset: 0.80 },
   { left: `${CARL_ZONE.x}%`, top: `${CARL_ZONE.y}%`, transform: "translate(-50%, -50%) scale(1.02) rotate(-8deg)", opacity: 0.94, offset: 0.94 },
   { left: `${CARL_ZONE.x}%`, top: `${CARL_ZONE.y}%`, transform: "translate(-50%, -50%) scale(0.68) rotate(-8deg)", opacity: 0 }
 ];
@@ -484,8 +484,8 @@ function spawnProfile(side, delay = 0, opts = {}) {
     profile.className = "profile";
 
     const asset = opts.asset || normalAssets[profileCount % normalAssets.length];
-    const jitterX = target.zone === "symbol" ? 2.0 : target.zone === "miss" ? 2.2 : 1.55;
-    const jitterY = target.zone === "symbol" ? 2.0 : target.zone === "miss" ? 0.45 : 0.34;
+    const jitterX = target.zone === "symbol" ? 2.0 : target.zone === "miss" ? 1.65 : 1.35;
+    const jitterY = target.zone === "symbol" ? 2.0 : target.zone === "miss" ? 0.22 : 0.20;
     const x = jitter(target.x, jitterX);
     const y = jitter(target.y, jitterY);
 
@@ -715,7 +715,7 @@ function triggerCarl(carl) {
     carl.classList.add("burying");
 
     for (let i = 0; i < 8; i++) {
-      setTimeout(() => spawnProfile("left"), i * 48);
+      setTimeout(() => spawnProfile("left", 0, { force: loaderTargets[i % loaderTargets.length] }), i * 48);
     }
 
     setTimeout(() => carl.remove(), 430);
