@@ -628,8 +628,59 @@ body {
 
 .engage.heart.carl-trigger-heart {
   z-index: 30;
-  font-size: 22px;
-  animation: carlDeadHeart 2.1s ease forwards;
+  width: 28px;
+  height: 28px;
+  opacity: 0;
+  will-change: left, top, transform, opacity, filter;
+  filter:
+    drop-shadow(0 0 5px rgba(255, 82, 160, 0.28))
+    drop-shadow(0 0 12px rgba(255, 82, 160, 0.14));
+}
+
+.carl-trigger-heart.off-course {
+  filter:
+    grayscale(0.35)
+    drop-shadow(0 0 7px rgba(255, 255, 255, 0.14))
+    drop-shadow(0 0 14px rgba(255, 82, 160, 0.12));
+}
+
+.carl-trigger-heart.dead-stage {
+  filter:
+    grayscale(1)
+    brightness(0.78)
+    contrast(1.12)
+    drop-shadow(0 0 6px rgba(235, 235, 235, 0.12));
+}
+
+
+/* C17 ZIP19 — Carl zone / heart path override.
+   The story heart is animated by JavaScript so it can travel the drawn path. */
+.carl-trigger-heart.asset-heart {
+  z-index: 30;
+  width: 28px;
+  height: 28px;
+  opacity: 0;
+  animation: none !important;
+  pointer-events: none;
+  will-change: left, top, transform, opacity, filter;
+  filter:
+    drop-shadow(0 0 5px rgba(255, 82, 160, 0.28))
+    drop-shadow(0 0 12px rgba(255, 82, 160, 0.14));
+}
+
+.carl-trigger-heart.asset-heart.off-course {
+  filter:
+    grayscale(0.35)
+    drop-shadow(0 0 7px rgba(255, 255, 255, 0.14))
+    drop-shadow(0 0 14px rgba(255, 82, 160, 0.12));
+}
+
+.carl-trigger-heart.asset-heart.dead-stage {
+  filter:
+    grayscale(1)
+    brightness(0.78)
+    contrast(1.12)
+    drop-shadow(0 0 6px rgba(235, 235, 235, 0.12));
 }
 
 .engage.like {
