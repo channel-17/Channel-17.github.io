@@ -225,58 +225,55 @@ const normalAssets = [
 ];
 
 const loaderTargets = [
-  // CHANNEL 17 ZONE MAP — LOADER BAR CHAOS FIELD.
-  // Main avatar traffic belongs here: green/orange/yellow clusters around the bar.
-  // This keeps the signal zone cleaner and keeps the turtle zone reserved for Frank.
-  { x: 34.0, y: 40.8, zone: "loader", cluster: "left-gap" },
-  { x: 38.5, y: 41.9, zone: "loader", cluster: "left-gap" },
-  { x: 42.0, y: 43.2, zone: "loader", cluster: "left-gap" },
-
-  { x: 48.0, y: 40.6, zone: "loader", cluster: "center-load" },
-  { x: 52.0, y: 42.5, zone: "loader", cluster: "center-load" },
-  { x: 56.0, y: 44.0, zone: "loader", cluster: "center-load" },
-
-  { x: 61.5, y: 40.9, zone: "loader", cluster: "right-load" },
-  { x: 66.0, y: 42.3, zone: "loader", cluster: "right-load" },
-  { x: 70.0, y: 43.8, zone: "loader", cluster: "right-load" },
-
-  { x: 46.5, y: 47.2, zone: "loader", cluster: "lower-pressure" },
-  { x: 58.5, y: 47.0, zone: "loader", cluster: "lower-pressure" }
+  // CHANNEL 17 ZONE MAP — LOADER BAR SUPPRESSION FIELD.
+  // Not a road/highway and not one spinning blob.
+  // Virus logic now attacks exposed loader sections: far left, far right, center, then gaps.
+  { x: 24.0, y: 38.8, zone: "loader", cluster: "bar-left-edge" },
+  { x: 76.0, y: 38.8, zone: "loader", cluster: "bar-right-edge" },
+  { x: 50.0, y: 38.4, zone: "loader", cluster: "bar-center" },
+  { x: 36.0, y: 39.0, zone: "loader", cluster: "bar-left-gap" },
+  { x: 64.0, y: 39.0, zone: "loader", cluster: "bar-right-gap" },
+  { x: 30.0, y: 37.9, zone: "loader", cluster: "bar-left-high" },
+  { x: 70.0, y: 37.9, zone: "loader", cluster: "bar-right-high" },
+  { x: 43.0, y: 40.2, zone: "loader", cluster: "bar-center-left" },
+  { x: 57.0, y: 40.2, zone: "loader", cluster: "bar-center-right" },
+  { x: 27.5, y: 41.1, zone: "loader", cluster: "bar-left-low" },
+  { x: 72.5, y: 41.1, zone: "loader", cluster: "bar-right-low" }
 ];
 
 const symbolTargets = [
-  // SIGNAL ZONE — higher pyramid/signal territory only.
-  // Use sparingly so the signal reads as its own zone instead of becoming the main pile.
-  { x: 43.0, y: 24.5, zone: "symbol" },
-  { x: 50.0, y: 22.6, zone: "symbol" },
-  { x: 57.0, y: 24.5, zone: "symbol" },
-  { x: 46.5, y: 30.4, zone: "symbol" },
-  { x: 53.5, y: 30.4, zone: "symbol" }
+  // SIGNAL ZONE — top pyramid neighborhood only.
+  // This zone is reserved for the late bright-blue reassignment, not early loader suppression.
+  { x: 42.0, y: 20.5, zone: "symbol" },
+  { x: 50.0, y: 17.8, zone: "symbol" },
+  { x: 58.0, y: 20.5, zone: "symbol" },
+  { x: 45.5, y: 27.0, zone: "symbol" },
+  { x: 54.5, y: 27.0, zone: "symbol" }
 ];
 
 const missTargets = [
-  // Edge pressure still belongs near the loader, not down in the turtle/Frank zone.
-  { x: 26.5, y: 42.4, zone: "miss" },
-  { x: 75.0, y: 42.8, zone: "miss" },
-  { x: 31.5, y: 47.0, zone: "miss" },
-  { x: 70.5, y: 47.2, zone: "miss" }
+  // Loader-edge pressure only. No random drift into Frank/turtle territory.
+  { x: 22.0, y: 39.5, zone: "miss" },
+  { x: 78.0, y: 39.5, zone: "miss" },
+  { x: 33.0, y: 41.8, zone: "miss" },
+  { x: 67.0, y: 41.8, zone: "miss" }
 ];
 
 const coverageTargets = [...loaderTargets, ...symbolTargets, ...missTargets];
 
 // CARL ZONE — light-blue mark from Jinx reference.
 // Left side of loader, aligned with the first loader gap.
-const CARL_ZONE = { x: 25.0, y: 42.3 };
+const CARL_ZONE = { x: 25.0, y: 39.0 };
 const CARL_HEART_START = { x: 88, y: 75 };
 const CARL_HEART_PATH = [
-  { left: "88%", top: "75%", transform: "translate(-50%, -50%) scale(0.72) rotate(0deg)", opacity: 0 },
-  { left: "86%", top: "62%", transform: "translate(-50%, -50%) scale(0.88) rotate(-5deg)", opacity: 0.9, offset: 0.12 },
-  { left: "78%", top: "34%", transform: "translate(-50%, -50%) scale(1.0) rotate(8deg)", opacity: 0.95, offset: 0.30 },
-  { left: "55%", top: "26%", transform: "translate(-50%, -50%) scale(0.96) rotate(-16deg)", opacity: 0.85, offset: 0.48 },
-  { left: "28%", top: "35%", transform: "translate(-50%, -50%) scale(0.86) rotate(-42deg)", opacity: 0.72, offset: 0.64 },
-  { left: "43%", top: "49%", transform: "translate(-50%, -50%) scale(0.78) rotate(24deg)", opacity: 0.64, offset: 0.78 },
-  { left: `${CARL_ZONE.x}%`, top: `${CARL_ZONE.y}%`, transform: "translate(-50%, -50%) scale(0.55) rotate(-7deg)", opacity: 0.9, offset: 0.94 },
-  { left: `${CARL_ZONE.x}%`, top: `${CARL_ZONE.y}%`, transform: "translate(-50%, -50%) scale(0.25) rotate(-7deg)", opacity: 0 }
+  { left: "88%", top: "72%", transform: "translate(-50%, -50%) scale(0.98) rotate(0deg)", opacity: 0 },
+  { left: "86%", top: "60%", transform: "translate(-50%, -50%) scale(1.04) rotate(-4deg)", opacity: 0.92, offset: 0.10 },
+  { left: "82%", top: "31%", transform: "translate(-50%, -50%) scale(1.08) rotate(7deg)", opacity: 0.96, offset: 0.26 },
+  { left: "58%", top: "24%", transform: "translate(-50%, -50%) scale(1.02) rotate(-14deg)", opacity: 0.88, offset: 0.43 },
+  { left: "27%", top: "31%", transform: "translate(-50%, -50%) scale(0.98) rotate(-38deg)", opacity: 0.78, offset: 0.60 },
+  { left: "42%", top: "45%", transform: "translate(-50%, -50%) scale(0.96) rotate(26deg)", opacity: 0.70, offset: 0.76 },
+  { left: `${CARL_ZONE.x}%`, top: `${CARL_ZONE.y}%`, transform: "translate(-50%, -50%) scale(0.98) rotate(-7deg)", opacity: 0.94, offset: 0.94 },
+  { left: `${CARL_ZONE.x}%`, top: `${CARL_ZONE.y}%`, transform: "translate(-50%, -50%) scale(0.66) rotate(-7deg)", opacity: 0 }
 ];
 
 function setProgress(value) {
@@ -313,7 +310,7 @@ const loading = setInterval(() => {
 
   if (progress >= 24 && !ghosted) {
     ghosted = true;
-    signalGhost.classList.add("waking");
+    // Pyramid/signal stays fully hidden until the true signal reveal.
   }
 
   if (progress >= 38 && !hiveWaveStarted) {
@@ -323,7 +320,6 @@ const loading = setInterval(() => {
 
   if (progress >= 42 && !burning) {
     burning = true;
-    signalGhost.classList.add("burning");
     startBurnPulse();
   }
 
@@ -363,27 +359,27 @@ const loading = setInterval(() => {
 }, 45);
 
 function startAttack() {
-  // The system attacks what exists first: loader center, then loader sides, then Homie.
-  spawnProfile("top", 0, { force: loaderTargets[0] });
-  setTimeout(() => spawnProfile("left", 0, { force: loaderTargets[1] }), 260);
-  setTimeout(() => spawnProfile("right", 0, { force: loaderTargets[2] }), 520);
-  setTimeout(() => spawnProfile("left", 0, { force: loaderTargets[3] }), 860);
-  setTimeout(() => spawnProfile("right", 0, { force: loaderTargets[4] }), 1180);
+  // Suppression routine: hit exposed loader sections, not a left-to-right highway.
+  // Far left, far right, center, then the biggest visible gaps.
+  loaderTargets.slice(0, 7).forEach((target, index) => {
+    const sides = ["left", "right", "top", "left", "right", "top", "right"];
+    setTimeout(() => spawnProfile(sides[index] || randomSide(), 0, { force: target }), index * 220);
+  });
 
   profileTimer = setInterval(() => {
     if (completed) return;
     spawnProfile(randomSide());
-  }, 430);
+  }, 520);
 
   engageTimer = setInterval(() => {
     if (completed) return;
     spawnEngagement();
-  }, 760);
+  }, 920);
 
   slashTimer = setInterval(() => {
     if (completed) return;
     spawnSlash(randomSide());
-  }, 330);
+  }, 420);
 }
 
 function randomSide() {
@@ -461,19 +457,16 @@ function spawnEngagement() {
 function pickTarget() {
   const count = profileCount;
 
-  if (progress < 38) {
+  // Before the final signal moment, all general avatar pressure belongs to the loader bar.
+  // Use a gap-seeking order so it feels like the machine is covering exposed authenticity.
+  if (progress < 82) {
+    if (count % 9 === 4) return missTargets[count % missTargets.length];
     return loaderTargets[count % loaderTargets.length];
   }
 
-  // Zone law: loader bar is the main chaos field.
-  // Signal zone gets occasional touches only; it must not become the main pile.
-  if (count % 8 === 0 || count % 8 === 5) {
+  // Late-stage reassignment may touch the signal/pyramid zone.
+  if (count % 3 === 0) {
     return symbolTargets[count % symbolTargets.length];
-  }
-
-  // Rare edge pressure near the loader, never down in Frank's turtle zone.
-  if (count % 11 === 3) {
-    return missTargets[count % missTargets.length];
   }
 
   return loaderTargets[count % loaderTargets.length];
@@ -482,7 +475,7 @@ function pickTarget() {
 function spawnProfile(side, delay = 0, opts = {}) {
   setTimeout(() => {
     const old = profileField.querySelectorAll(".profile:not(.carl):not(.frank):not(.wren)");
-    if (old.length > 20) old[0].remove();
+    if (old.length > 15) old[0].remove();
 
     const target = opts.force || pickTarget();
 
@@ -490,8 +483,8 @@ function spawnProfile(side, delay = 0, opts = {}) {
     profile.className = "profile";
 
     const asset = opts.asset || normalAssets[profileCount % normalAssets.length];
-    const jitterX = target.zone === "symbol" ? 2.0 : target.zone === "miss" ? 3.2 : 2.4;
-    const jitterY = target.zone === "symbol" ? 2.2 : target.zone === "miss" ? 3.0 : 2.2;
+    const jitterX = target.zone === "symbol" ? 2.0 : target.zone === "miss" ? 2.2 : 1.55;
+    const jitterY = target.zone === "symbol" ? 2.0 : target.zone === "miss" ? 1.4 : 0.95;
     const x = jitter(target.x, jitterX);
     const y = jitter(target.y, jitterY);
 
@@ -624,10 +617,10 @@ function spawnCarl() {
   carl.type = "button";
   carl.setAttribute("aria-label", "Carl Gates");
 
-  carl.style.left = `calc(${CARL_ZONE.x}% - 48px)`;
-  carl.style.top = `calc(${CARL_ZONE.y}% - 48px)`;
-  carl.style.setProperty("--sx", "-44px");
-  carl.style.setProperty("--sy", "4px");
+  carl.style.left = `calc(${CARL_ZONE.x}% - ${AVATAR_HALF}px)`;
+  carl.style.top = `calc(${CARL_ZONE.y}% - ${AVATAR_HALF}px)`;
+  carl.style.setProperty("--sx", "-72px");
+  carl.style.setProperty("--sy", "0px");
   carl.innerHTML = `<img src="AssetCARL.PNG" alt="">`;
 
   profileField.appendChild(carl);
@@ -893,13 +886,13 @@ function spawnFrank() {
   turtle.classList.add("covered-by-frank");
 
   const frankPositions = [
-    // TURTLE ZONE — Frank only. Same joke, same territory: overlap Frank with Frank.
-    { x: 48.2, y: 55.0, sx: "-58px", sy: "38px" },
-    { x: 50.0, y: 54.2, sx: "-40px", sy: "31px" },
-    { x: 46.8, y: 54.6, sx: "-68px", sy: "23px" },
-    { x: 49.1, y: 53.9, sx: "-48px", sy: "24px" },
-    { x: 47.5, y: 55.4, sx: "-76px", sy: "29px" },
-    { x: 50.9, y: 54.8, sx: "-44px", sy: "36px" }
+    // FRANK ZONE — green-cross center only. Frank overlaps Frank; nobody else belongs here.
+    { x: 50.0, y: 45.4, sx: "-44px", sy: "34px" },
+    { x: 50.7, y: 45.0, sx: "-38px", sy: "28px" },
+    { x: 49.3, y: 45.7, sx: "-52px", sy: "30px" },
+    { x: 50.2, y: 44.9, sx: "-45px", sy: "24px" },
+    { x: 49.7, y: 45.8, sx: "-56px", sy: "32px" },
+    { x: 50.9, y: 45.5, sx: "-40px", sy: "36px" }
   ];
 
   frankPositions.forEach((pos, index) => {
