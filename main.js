@@ -228,17 +228,17 @@ const loaderTargets = [
   // CHANNEL 17 ZONE MAP — LOADER BAR SUPPRESSION FIELD.
   // Not a road/highway and not one spinning blob.
   // Virus logic now attacks exposed loader sections: far left, far right, center, then gaps.
-  { x: 24.0, y: 35.2, zone: "loader", cluster: "bar-left-edge" },
-  { x: 76.0, y: 35.2, zone: "loader", cluster: "bar-right-edge" },
-  { x: 50.0, y: 35.0, zone: "loader", cluster: "bar-center" },
-  { x: 36.0, y: 35.5, zone: "loader", cluster: "bar-left-gap" },
-  { x: 64.0, y: 35.5, zone: "loader", cluster: "bar-right-gap" },
-  { x: 30.0, y: 34.4, zone: "loader", cluster: "bar-left-high" },
-  { x: 70.0, y: 34.4, zone: "loader", cluster: "bar-right-high" },
-  { x: 43.0, y: 36.4, zone: "loader", cluster: "bar-center-left" },
-  { x: 57.0, y: 36.4, zone: "loader", cluster: "bar-center-right" },
-  { x: 27.5, y: 37.2, zone: "loader", cluster: "bar-left-low" },
-  { x: 72.5, y: 37.2, zone: "loader", cluster: "bar-right-low" }
+  { x: 24.0, y: 33.9, zone: "loader", cluster: "bar-left-edge" },
+  { x: 76.0, y: 33.9, zone: "loader", cluster: "bar-right-edge" },
+  { x: 50.0, y: 33.7, zone: "loader", cluster: "bar-center" },
+  { x: 36.0, y: 34.1, zone: "loader", cluster: "bar-left-gap" },
+  { x: 64.0, y: 34.1, zone: "loader", cluster: "bar-right-gap" },
+  { x: 30.0, y: 33.2, zone: "loader", cluster: "bar-left-high" },
+  { x: 70.0, y: 33.2, zone: "loader", cluster: "bar-right-high" },
+  { x: 43.0, y: 34.9, zone: "loader", cluster: "bar-center-left" },
+  { x: 57.0, y: 34.9, zone: "loader", cluster: "bar-center-right" },
+  { x: 27.5, y: 35.5, zone: "loader", cluster: "bar-left-low" },
+  { x: 72.5, y: 35.1, zone: "loader", cluster: "bar-right-low" }
 ];
 
 const symbolTargets = [
@@ -253,10 +253,10 @@ const symbolTargets = [
 
 const missTargets = [
   // Loader-edge pressure only. No random drift into Frank/turtle territory.
-  { x: 22.0, y: 39.5, zone: "miss" },
-  { x: 78.0, y: 39.5, zone: "miss" },
-  { x: 33.0, y: 41.8, zone: "miss" },
-  { x: 67.0, y: 41.8, zone: "miss" }
+  { x: 22.0, y: 38.1, zone: "miss" },
+  { x: 78.0, y: 37.5, zone: "miss" },
+  { x: 33.0, y: 39.2, zone: "miss" },
+  { x: 67.0, y: 38.4, zone: "miss" }
 ];
 
 const coverageTargets = [...loaderTargets, ...symbolTargets, ...missTargets];
@@ -484,7 +484,7 @@ function spawnProfile(side, delay = 0, opts = {}) {
 
     const asset = opts.asset || normalAssets[profileCount % normalAssets.length];
     const jitterX = target.zone === "symbol" ? 2.0 : target.zone === "miss" ? 2.2 : 1.55;
-    const jitterY = target.zone === "symbol" ? 2.0 : target.zone === "miss" ? 1.4 : 0.72;
+    const jitterY = target.zone === "symbol" ? 2.0 : target.zone === "miss" ? 0.9 : 0.52;
     const x = jitter(target.x, jitterX);
     const y = jitter(target.y, jitterY);
 
