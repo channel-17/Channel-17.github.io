@@ -225,30 +225,49 @@ const normalAssets = [
 ];
 
 const loaderTargets = [
-  { x: 50, y: 44, zone: "loader" },
-  { x: 43, y: 44, zone: "loader" },
-  { x: 57, y: 44, zone: "loader" },
-  { x: 39, y: 46, zone: "loader" },
-  { x: 61, y: 46, zone: "loader" },
-  { x: 48, y: 45.5, zone: "loader" }
+  // CHANNEL 17 ZONE MAP — loader bar chaos field.
+  // Green / orange / yellow clusters live around the bar, not in the turtle zone.
+  { x: 34, y: 42.5, zone: "loader" },
+  { x: 40, y: 43.2, zone: "loader" },
+  { x: 47, y: 42.7, zone: "loader" },
+  { x: 54, y: 43.4, zone: "loader" },
+  { x: 61, y: 42.8, zone: "loader" },
+  { x: 68, y: 43.5, zone: "loader" },
+  { x: 38, y: 47.0, zone: "loader" },
+  { x: 50, y: 47.3, zone: "loader" },
+  { x: 63, y: 47.1, zone: "loader" }
 ];
 
 const symbolTargets = [
-  { x: 48, y: 30, zone: "symbol" },
-  { x: 52, y: 30, zone: "symbol" },
-  { x: 45, y: 34, zone: "symbol" },
-  { x: 55, y: 34, zone: "symbol" },
-  { x: 50, y: 37, zone: "symbol" }
+  // Signal zone stays higher and cleaner so the symbol reads as its own territory.
+  { x: 43, y: 25.5, zone: "symbol" },
+  { x: 50, y: 23.8, zone: "symbol" },
+  { x: 57, y: 25.5, zone: "symbol" },
+  { x: 46, y: 31.5, zone: "symbol" },
+  { x: 54, y: 31.5, zone: "symbol" }
 ];
 
 const missTargets = [
-  { x: 32, y: 42, zone: "miss" },
-  { x: 68, y: 42, zone: "miss" },
-  { x: 35, y: 62, zone: "miss" },
-  { x: 65, y: 62, zone: "miss" }
+  { x: 30, y: 46, zone: "miss" },
+  { x: 72, y: 46, zone: "miss" },
+  { x: 36, y: 52, zone: "miss" },
+  { x: 64, y: 52, zone: "miss" }
 ];
 
 const coverageTargets = [...loaderTargets, ...symbolTargets, ...missTargets];
+
+const CARL_ZONE = { x: 25.5, y: 43.0 };
+const CARL_HEART_START = { x: 88, y: 75 };
+const CARL_HEART_PATH = [
+  { left: "88%", top: "75%", transform: "translate(-50%, -50%) scale(0.72) rotate(0deg)", opacity: 0 },
+  { left: "86%", top: "62%", transform: "translate(-50%, -50%) scale(0.88) rotate(-5deg)", opacity: 0.9, offset: 0.12 },
+  { left: "78%", top: "34%", transform: "translate(-50%, -50%) scale(1.0) rotate(8deg)", opacity: 0.95, offset: 0.30 },
+  { left: "55%", top: "26%", transform: "translate(-50%, -50%) scale(0.96) rotate(-16deg)", opacity: 0.85, offset: 0.48 },
+  { left: "28%", top: "35%", transform: "translate(-50%, -50%) scale(0.86) rotate(-42deg)", opacity: 0.72, offset: 0.64 },
+  { left: "43%", top: "49%", transform: "translate(-50%, -50%) scale(0.78) rotate(24deg)", opacity: 0.64, offset: 0.78 },
+  { left: `${CARL_ZONE.x}%`, top: `${CARL_ZONE.y}%`, transform: "translate(-50%, -50%) scale(0.55) rotate(-7deg)", opacity: 0.9, offset: 0.94 },
+  { left: `${CARL_ZONE.x}%`, top: `${CARL_ZONE.y}%`, transform: "translate(-50%, -50%) scale(0.25) rotate(-7deg)", opacity: 0 }
+];
 
 function setProgress(value) {
   progress = Math.max(0, Math.min(100, value));
@@ -583,21 +602,21 @@ function fireBlast(index) {
 
 function spawnCarl() {
   const carl = document.createElement("button");
-  carl.className = "profile carl";
+  carl.className = "profile carl carl-zone-anchor";
   carl.type = "button";
   carl.setAttribute("aria-label", "Carl Gates");
 
-  carl.style.left = "calc(18% - 48px)";
-  carl.style.top = "calc(47% - 48px)";
-  carl.style.setProperty("--sx", "-35px");
-  carl.style.setProperty("--sy", "8px");
+  carl.style.left = `calc(${CARL_ZONE.x}% - 48px)`;
+  carl.style.top = `calc(${CARL_ZONE.y}% - 48px)`;
+  carl.style.setProperty("--sx", "-44px");
+  carl.style.setProperty("--sy", "4px");
   carl.innerHTML = `<img src="AssetCARL.PNG" alt="">`;
 
   profileField.appendChild(carl);
 
   setTimeout(() => {
     for (let i = 0; i < 4; i++) {
-      setTimeout(() => spawnProfile("left"), i * 90);
+      setTimeout(() => spawnProfile("left", 0, { force: loaderTargets[(i + 1) % loaderTargets.length] }), i * 90);
     }
   }, 260);
 
@@ -611,7 +630,7 @@ function spawnCarl() {
       carl.classList.add("burying");
       setTimeout(() => carl.remove(), 460);
     }
-  }, 3600);
+  }, 6200);
 }
 
 function releaseDeadHeartTowardCarl() {
@@ -622,31 +641,44 @@ function releaseDeadHeartTowardCarl() {
   heart.className = "engage carl-trigger-heart asset-heart pink-stage";
   heart.src = HEART_PINK;
   heart.alt = "";
-  heart.style.left = "88%";
-  heart.style.top = "86%";
+  heart.style.left = `${CARL_HEART_START.x}%`;
+  heart.style.top = `${CARL_HEART_START.y}%`;
+  heart.style.opacity = "0";
 
   engagementField.appendChild(heart);
 
-  // First X: meaning starts draining.
+  const flight = heart.animate(CARL_HEART_PATH, {
+    duration: 5200,
+    easing: "cubic-bezier(.18,.64,.24,1)",
+    fill: "forwards"
+  });
+
+  // Near the top, the pink heart loses its clean path and starts meaning-drain.
   setTimeout(() => {
     if (!heart.parentNode) return;
-    heart.classList.add("draining");
-  }, 760);
+    heart.classList.add("draining", "off-course");
+  }, 1520);
 
-  // Second X: fully gray/broken, using Jinx's repo asset.
+  // After the gust / overcorrection, it becomes the gray cracked heart before impact.
   setTimeout(() => {
     if (!heart.parentNode) return;
     heart.src = HEART_GREY;
     heart.classList.remove("pink-stage", "draining");
     heart.classList.add("dead-stage");
-  }, 1480);
+  }, 3150);
 
-  // Carl hit: very brief ring of death. Miss it and fuck off.
+  // Carl hit: the blown-off-course heart finally strikes his locked zone.
   setTimeout(() => {
     triggerCarl(carl);
-  }, 2150);
+  }, 4920);
 
-  setTimeout(() => heart.remove(), 3200);
+  flight.onfinish = () => {
+    if (heart && heart.parentNode) heart.remove();
+  };
+
+  setTimeout(() => {
+    if (heart && heart.parentNode) heart.remove();
+  }, 5750);
 }
 
 function triggerCarl(carl) {
