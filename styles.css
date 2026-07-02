@@ -6674,3 +6674,80 @@ body {
     filter: grayscale(0.2) contrast(0.95);
   }
 }
+
+
+/* C17 ZIP28 — loader band correction + soft S-heart + Carl visible/flicker/bury */
+.profile.loader-cover {
+  z-index: 58 !important;
+}
+
+.profile.carl.carl-zone-anchor {
+  z-index: 43 !important;
+  pointer-events: none !important;
+}
+
+.profile.carl.carl-impact-visible {
+  z-index: 74 !important;
+  opacity: 1 !important;
+  transform: translate(0, 0) scale(1) !important;
+  filter:
+    contrast(1.03)
+    saturate(1.05)
+    drop-shadow(0 0 12px rgba(0,0,0,0.9));
+}
+
+.profile.carl.carl-ring-death {
+  z-index: 78 !important;
+  animation: carlThreeBoomFlicker 1.02s steps(1) 1 forwards !important;
+}
+
+.engage.carl-trigger-heart.asset-heart,
+.engage.heart.carl-trigger-heart,
+.carl-trigger-heart.asset-heart {
+  width: 42px !important;
+  height: 42px !important;
+  z-index: 92 !important;
+  animation: none !important;
+  pointer-events: none !important;
+  transform-origin: center center !important;
+  overflow: visible !important;
+  filter: none !important;
+}
+
+.carl-trigger-heart .carl-heart-pink {
+  transition:
+    opacity 2.35s cubic-bezier(.25,.7,.18,1),
+    filter 2.35s cubic-bezier(.25,.7,.18,1),
+    transform 2.35s cubic-bezier(.25,.7,.18,1) !important;
+}
+
+.carl-trigger-heart .carl-heart-grey {
+  transition:
+    opacity 2.35s cubic-bezier(.25,.7,.18,1),
+    filter 2.35s cubic-bezier(.25,.7,.18,1),
+    transform 2.35s cubic-bezier(.25,.7,.18,1) !important;
+}
+
+.carl-trigger-heart.grey-taking-over .carl-heart-pink {
+  opacity: 0.04 !important;
+  filter:
+    grayscale(0.96)
+    brightness(0.72)
+    drop-shadow(0 0 3px rgba(255,82,160,0.05)) !important;
+  transform: scale(0.94) rotate(-7deg) !important;
+}
+
+.carl-trigger-heart.grey-taking-over .carl-heart-grey,
+.carl-trigger-heart.dead-stage .carl-heart-grey {
+  opacity: 1 !important;
+  filter:
+    grayscale(1)
+    brightness(0.92)
+    contrast(1.18)
+    drop-shadow(0 0 7px rgba(235,235,235,0.15)) !important;
+  transform: scale(1.04) rotate(4deg) !important;
+}
+
+.carl-trigger-heart.dead-stage .carl-heart-pink {
+  opacity: 0 !important;
+}
