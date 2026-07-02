@@ -228,17 +228,17 @@ const loaderTargets = [
   // CHANNEL 17 ZONE MAP — LOADER BAR SUPPRESSION FIELD.
   // Not a road/highway and not one spinning blob.
   // Virus logic now attacks exposed loader sections: far left, far right, center, then gaps.
-  { x: 24.0, y: 33.9, zone: "loader", cluster: "bar-left-edge" },
-  { x: 76.0, y: 33.9, zone: "loader", cluster: "bar-right-edge" },
-  { x: 50.0, y: 33.7, zone: "loader", cluster: "bar-center" },
-  { x: 36.0, y: 34.1, zone: "loader", cluster: "bar-left-gap" },
-  { x: 64.0, y: 34.1, zone: "loader", cluster: "bar-right-gap" },
-  { x: 30.0, y: 33.2, zone: "loader", cluster: "bar-left-high" },
-  { x: 70.0, y: 33.2, zone: "loader", cluster: "bar-right-high" },
-  { x: 43.0, y: 34.9, zone: "loader", cluster: "bar-center-left" },
-  { x: 57.0, y: 34.9, zone: "loader", cluster: "bar-center-right" },
-  { x: 27.5, y: 35.5, zone: "loader", cluster: "bar-left-low" },
-  { x: 72.5, y: 35.1, zone: "loader", cluster: "bar-right-low" }
+  { x: 24.0, y: 31.6, zone: "loader", cluster: "bar-left-edge" },
+  { x: 76.0, y: 31.6, zone: "loader", cluster: "bar-right-edge" },
+  { x: 50.0, y: 31.4, zone: "loader", cluster: "bar-center" },
+  { x: 36.0, y: 31.9, zone: "loader", cluster: "bar-left-gap" },
+  { x: 64.0, y: 31.9, zone: "loader", cluster: "bar-right-gap" },
+  { x: 30.0, y: 31.0, zone: "loader", cluster: "bar-left-high" },
+  { x: 70.0, y: 31.0, zone: "loader", cluster: "bar-right-high" },
+  { x: 43.0, y: 32.5, zone: "loader", cluster: "bar-center-left" },
+  { x: 57.0, y: 32.5, zone: "loader", cluster: "bar-center-right" },
+  { x: 27.5, y: 33.0, zone: "loader", cluster: "bar-left-low" },
+  { x: 72.5, y: 32.7, zone: "loader", cluster: "bar-right-low" }
 ];
 
 const symbolTargets = [
@@ -253,27 +253,28 @@ const symbolTargets = [
 
 const missTargets = [
   // Loader-edge pressure only. No random drift into Frank/turtle territory.
-  { x: 22.0, y: 38.1, zone: "miss" },
-  { x: 78.0, y: 37.5, zone: "miss" },
-  { x: 33.0, y: 39.2, zone: "miss" },
-  { x: 67.0, y: 38.4, zone: "miss" }
+  { x: 22.0, y: 34.8, zone: "miss" },
+  { x: 78.0, y: 34.2, zone: "miss" },
+  { x: 33.0, y: 35.0, zone: "miss" },
+  { x: 67.0, y: 34.6, zone: "miss" }
 ];
 
 const coverageTargets = [...loaderTargets, ...symbolTargets, ...missTargets];
 
 // CARL ZONE — light-blue mark from Jinx reference.
 // Left side of loader, aligned with the first loader gap.
-const CARL_ZONE = { x: 25.0, y: 39.0 };
+const CARL_ZONE = { x: 25.0, y: 34.8 };
 const CARL_HEART_START = { x: 88, y: 75 };
 const CARL_HEART_PATH = [
-  { left: "88%", top: "72%", transform: "translate(-50%, -50%) scale(0.98) rotate(0deg)", opacity: 0 },
-  { left: "86%", top: "60%", transform: "translate(-50%, -50%) scale(1.04) rotate(-4deg)", opacity: 0.92, offset: 0.10 },
-  { left: "82%", top: "31%", transform: "translate(-50%, -50%) scale(1.08) rotate(7deg)", opacity: 0.96, offset: 0.26 },
-  { left: "58%", top: "24%", transform: "translate(-50%, -50%) scale(1.02) rotate(-14deg)", opacity: 0.88, offset: 0.43 },
-  { left: "27%", top: "31%", transform: "translate(-50%, -50%) scale(0.98) rotate(-38deg)", opacity: 0.78, offset: 0.60 },
-  { left: "42%", top: "45%", transform: "translate(-50%, -50%) scale(0.96) rotate(26deg)", opacity: 0.70, offset: 0.76 },
-  { left: `${CARL_ZONE.x}%`, top: `${CARL_ZONE.y}%`, transform: "translate(-50%, -50%) scale(0.98) rotate(-7deg)", opacity: 0.94, offset: 0.94 },
-  { left: `${CARL_ZONE.x}%`, top: `${CARL_ZONE.y}%`, transform: "translate(-50%, -50%) scale(0.66) rotate(-7deg)", opacity: 0 }
+  { left: "88%", top: "74%", transform: "translate(-50%, -50%) scale(1.02) rotate(0deg)", opacity: 0 },
+  { left: "86%", top: "63%", transform: "translate(-50%, -50%) scale(1.04) rotate(-2deg)", opacity: 0.92, offset: 0.10 },
+  { left: "84%", top: "48%", transform: "translate(-50%, -50%) scale(1.06) rotate(5deg)", opacity: 0.96, offset: 0.22 },
+  { left: "80%", top: "30%", transform: "translate(-50%, -50%) scale(1.06) rotate(11deg)", opacity: 0.94, offset: 0.34 },
+  { left: "69%", top: "24%", transform: "translate(-50%, -50%) scale(1.03) rotate(-12deg)", opacity: 0.91, offset: 0.48 },
+  { left: "46%", top: "27%", transform: "translate(-50%, -50%) scale(1.00) rotate(-31deg)", opacity: 0.86, offset: 0.64 },
+  { left: "33%", top: "41%", transform: "translate(-50%, -50%) scale(0.98) rotate(22deg)", opacity: 0.80, offset: 0.80 },
+  { left: `${CARL_ZONE.x}%`, top: `${CARL_ZONE.y}%`, transform: "translate(-50%, -50%) scale(1.02) rotate(-8deg)", opacity: 0.94, offset: 0.94 },
+  { left: `${CARL_ZONE.x}%`, top: `${CARL_ZONE.y}%`, transform: "translate(-50%, -50%) scale(0.68) rotate(-8deg)", opacity: 0 }
 ];
 
 function setProgress(value) {
@@ -484,7 +485,7 @@ function spawnProfile(side, delay = 0, opts = {}) {
 
     const asset = opts.asset || normalAssets[profileCount % normalAssets.length];
     const jitterX = target.zone === "symbol" ? 2.0 : target.zone === "miss" ? 2.2 : 1.55;
-    const jitterY = target.zone === "symbol" ? 2.0 : target.zone === "miss" ? 0.9 : 0.52;
+    const jitterY = target.zone === "symbol" ? 2.0 : target.zone === "miss" ? 0.45 : 0.34;
     const x = jitter(target.x, jitterX);
     const y = jitter(target.y, jitterY);
 
@@ -649,40 +650,41 @@ function releaseDeadHeartTowardCarl() {
   const carl = profileField.querySelector(".profile.carl");
   if (!carl) return;
 
-  const heart = document.createElement("img");
+  const heart = document.createElement("div");
   heart.className = "engage carl-trigger-heart asset-heart pink-stage";
-  heart.src = HEART_PINK;
-  heart.alt = "";
   heart.style.left = `${CARL_HEART_START.x}%`;
   heart.style.top = `${CARL_HEART_START.y}%`;
   heart.style.opacity = "0";
+  heart.innerHTML = `
+    <img class="carl-heart-layer carl-heart-pink" src="${HEART_PINK}" alt="">
+    <img class="carl-heart-layer carl-heart-grey" src="${HEART_GREY}" alt="">
+  `;
 
   engagementField.appendChild(heart);
 
   const flight = heart.animate(CARL_HEART_PATH, {
-    duration: 5200,
+    duration: 5450,
     easing: "cubic-bezier(.18,.64,.24,1)",
     fill: "forwards"
   });
 
-  // Near the top, the pink heart loses its clean path and starts meaning-drain.
+  // Near the top, the pink heart loses meaning and crossfades into the gray PNG while drifting.
   setTimeout(() => {
     if (!heart.parentNode) return;
-    heart.classList.add("draining", "off-course");
-  }, 1520);
+    heart.classList.add("draining", "off-course", "grey-taking-over");
+  }, 1780);
 
-  // After the gust / overcorrection, it becomes the gray cracked heart before impact.
+  // By the overcorrection, the gray PNG has fully taken over before contact.
   setTimeout(() => {
     if (!heart.parentNode) return;
-    heart.src = HEART_GREY;
     heart.classList.remove("pink-stage", "draining");
     heart.classList.add("dead-stage");
-  }, 3150);
+  }, 3450);
 
-  // Carl hit: the blown-off-course heart finally strikes his locked zone.
+  // Carl hit: contact first, then three quick red flickers.
   setTimeout(() => {
     triggerCarl(carl);
-  }, 4920);
+  }, 5140);
 
   flight.onfinish = () => {
     if (heart && heart.parentNode) heart.remove();
@@ -690,7 +692,7 @@ function releaseDeadHeartTowardCarl() {
 
   setTimeout(() => {
     if (heart && heart.parentNode) heart.remove();
-  }, 5750);
+  }, 6000);
 }
 
 function triggerCarl(carl) {
