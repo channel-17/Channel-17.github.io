@@ -6751,3 +6751,34 @@ body {
 .carl-trigger-heart.dead-stage .carl-heart-pink {
   opacity: 0 !important;
 }
+
+/* C17 ZIP29 — Order 66 Carl hit correction.
+   Carl is present on the loader centerline/right lane until the heart touches him.
+   Blue/hive avatars remain symbol-only because revealHive still requires .symbol-touch. */
+.profile.carl.carl-zone-anchor {
+  z-index: 66 !important;
+  pointer-events: none !important;
+  opacity: 1 !important;
+}
+
+.profile.carl.carl-impact-visible {
+  z-index: 80 !important;
+}
+
+.profile.carl.carl-ring-death {
+  z-index: 82 !important;
+  animation: carlThreeBoomFlicker 1.05s steps(1) 1 forwards !important;
+}
+
+.profile.carl.burying {
+  z-index: 41 !important;
+  opacity: 0.82 !important;
+}
+
+.engage.carl-trigger-heart.asset-heart,
+.engage.heart.carl-trigger-heart,
+.carl-trigger-heart.asset-heart {
+  width: 44px !important;
+  height: 44px !important;
+  z-index: 94 !important;
+}
