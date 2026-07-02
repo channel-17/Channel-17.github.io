@@ -263,24 +263,22 @@ const missTargets = [
 
 const coverageTargets = [...loaderTargets, ...symbolTargets, ...missTargets];
 
-// CARL ZONE — light-blue mark from Jinx reference.
-// Left side of loader, aligned with the first loader gap.
-const CARL_ZONE = { x: 25.0, y: 32.8 };
-const CARL_HEART_START = { x: 91, y: 76 };
+// CARL ZONE — Jinx reference correction.
+// Carl is present on the loader centerline/right lane, not stranded low on an island.
+// Blue/hive avatars still only become true-blue on the symbol zone later.
+const CARL_ZONE = { x: 75.5, y: 31.35 };
+const CARL_HEART_START = { x: 4, y: 76 };
 const CARL_HEART_PATH = [
-  // ZIP28: bigger, slower, softer S-curve. Starts like the normal right-side hearts,
-  // loses color near the top, drifts like a feather/leash in wind, overcorrects, then clips Carl by accident.
-  { left: "91%", top: "78%", transform: "translate(-50%, -50%) scale(1.02) rotate(1deg)", opacity: 0, offset: 0 },
-  { left: "89%", top: "68%", transform: "translate(-50%, -50%) scale(1.05) rotate(-3deg)", opacity: 0.90, offset: 0.10 },
-  { left: "86%", top: "55%", transform: "translate(-50%, -50%) scale(1.07) rotate(4deg)", opacity: 0.96, offset: 0.22 },
-  { left: "82%", top: "41%", transform: "translate(-50%, -50%) scale(1.07) rotate(10deg)", opacity: 0.94, offset: 0.34 },
-  { left: "72%", top: "30%", transform: "translate(-50%, -50%) scale(1.04) rotate(-11deg)", opacity: 0.91, offset: 0.47 },
-  { left: "58%", top: "28%", transform: "translate(-50%, -50%) scale(1.02) rotate(-24deg)", opacity: 0.89, offset: 0.58 },
-  { left: "43%", top: "36%", transform: "translate(-50%, -50%) scale(1.00) rotate(21deg)", opacity: 0.87, offset: 0.70 },
-  { left: "54%", top: "47%", transform: "translate(-50%, -50%) scale(1.01) rotate(34deg)", opacity: 0.84, offset: 0.81 },
-  { left: "38%", top: "43%", transform: "translate(-50%, -50%) scale(1.02) rotate(-16deg)", opacity: 0.88, offset: 0.90 },
-  { left: `${CARL_ZONE.x}%`, top: `${CARL_ZONE.y}%`, transform: "translate(-50%, -50%) scale(1.03) rotate(-7deg)", opacity: 0.94, offset: 0.98 },
-  { left: `${CARL_ZONE.x}%`, top: `${CARL_ZONE.y}%`, transform: "translate(-50%, -50%) scale(0.74) rotate(-7deg)", opacity: 0, offset: 1 }
+  // Order 66 / ZIP29: first readable heart gets the full soft S-path, then clearly touches Carl.
+  { left: "4%", top: "76%", transform: "translate(-50%, -50%) scale(1.00) rotate(-4deg)", opacity: 0, offset: 0 },
+  { left: "10%", top: "66%", transform: "translate(-50%, -50%) scale(1.06) rotate(5deg)", opacity: 0.96, offset: 0.10 },
+  { left: "20%", top: "54%", transform: "translate(-50%, -50%) scale(1.08) rotate(-9deg)", opacity: 1, offset: 0.23 },
+  { left: "33%", top: "45%", transform: "translate(-50%, -50%) scale(1.06) rotate(12deg)", opacity: 0.98, offset: 0.36 },
+  { left: "48%", top: "49%", transform: "translate(-50%, -50%) scale(1.04) rotate(-15deg)", opacity: 0.96, offset: 0.52 },
+  { left: "61%", top: "40%", transform: "translate(-50%, -50%) scale(1.03) rotate(9deg)", opacity: 0.94, offset: 0.66 },
+  { left: "70%", top: "34%", transform: "translate(-50%, -50%) scale(1.02) rotate(-6deg)", opacity: 0.92, offset: 0.80 },
+  { left: `${CARL_ZONE.x}%`, top: `${CARL_ZONE.y}%`, transform: "translate(-50%, -50%) scale(1.06) rotate(0deg)", opacity: 1, offset: 0.96 },
+  { left: `${CARL_ZONE.x}%`, top: `${CARL_ZONE.y}%`, transform: "translate(-50%, -50%) scale(0.70) rotate(0deg)", opacity: 0, offset: 1 }
 ];
 
 function setProgress(value) {
@@ -330,12 +328,12 @@ const loading = setInterval(() => {
     startBurnPulse();
   }
 
-  if (progress >= 48 && !carlSeen) {
+  if (progress >= 19.05 && !carlSeen) {
     carlSeen = true;
     spawnCarl();
   }
 
-  if (progress >= 53 && !deadHeartReleased) {
+  if (progress >= 19.25 && !deadHeartReleased) {
     deadHeartReleased = true;
     releaseDeadHeartTowardCarl();
   }
@@ -632,12 +630,7 @@ function spawnCarl() {
 
   profileField.appendChild(carl);
 
-  setTimeout(() => {
-    for (let i = 0; i < 4; i++) {
-      // Carl gets buried by the left loader-bar chaos, not by turtle-zone traffic.
-      setTimeout(() => spawnProfile("left", 0, { force: loaderTargets[i % 3] }), i * 90);
-    }
-  }, 260);
+  // Carl stays visible until the heart makes contact. The cover-up happens after the flicker.
 
   carl.addEventListener("click", () => {
     if (!carl.classList.contains("carl-ready")) return;
@@ -669,28 +662,28 @@ function releaseDeadHeartTowardCarl() {
   engagementField.appendChild(heart);
 
   const flight = heart.animate(CARL_HEART_PATH, {
-    duration: 8200,
+    duration: 7200,
     easing: "cubic-bezier(.22,.72,.18,1)",
     fill: "forwards"
   });
 
-  // Near the top, the pink heart loses meaning and crossfades into the gray PNG while drifting.
+  // Full visible cycle: pink clue first, then it drains gray before impact.
   setTimeout(() => {
     if (!heart.parentNode) return;
     heart.classList.add("draining", "off-course", "grey-taking-over");
-  }, 2650);
+  }, 3600);
 
-  // By the overcorrection, the gray PNG has fully taken over before contact.
   setTimeout(() => {
     if (!heart.parentNode) return;
     heart.classList.remove("pink-stage", "draining");
     heart.classList.add("dead-stage");
-  }, 5400);
+  }, 5600);
 
-  // Carl hit: contact first, then three quick red flickers.
+  // Carl hit: heart visually touches Carl, disappears, then Carl flickers red.
   setTimeout(() => {
+    if (heart && heart.parentNode) heart.remove();
     triggerCarl(carl);
-  }, 7800);
+  }, 6950);
 
   flight.onfinish = () => {
     if (heart && heart.parentNode) heart.remove();
@@ -727,12 +720,20 @@ function triggerCarl(carl) {
     carl.classList.remove("carl-ring-death", "carl-ready", "carl-impact-visible");
     carl.classList.add("burying");
 
-    for (let i = 0; i < 9; i++) {
-      const burialTarget = loaderTargets[(i + 1) % loaderTargets.length];
-      setTimeout(() => spawnProfile(i % 2 ? "right" : "left", 0, { force: burialTarget }), i * 58);
+    const directCover = { x: CARL_ZONE.x, y: CARL_ZONE.y, zone: "loader", cluster: "carl-cover" };
+    const coverRing = [
+      directCover,
+      { x: CARL_ZONE.x - 3.2, y: CARL_ZONE.y + 0.25, zone: "loader", cluster: "carl-cover-left" },
+      { x: CARL_ZONE.x + 2.4, y: CARL_ZONE.y - 0.18, zone: "loader", cluster: "carl-cover-right" },
+      { x: CARL_ZONE.x - 1.0, y: CARL_ZONE.y + 1.25, zone: "loader", cluster: "carl-cover-low" }
+    ];
+
+    for (let i = 0; i < 10; i++) {
+      const burialTarget = coverRing[i % coverRing.length];
+      setTimeout(() => spawnProfile(i % 2 ? "right" : "left", 0, { force: burialTarget }), i * 62);
     }
 
-    setTimeout(() => carl.remove(), 760);
+    setTimeout(() => carl.remove(), 1250);
   }, 1850);
 }
 
