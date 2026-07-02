@@ -6639,3 +6639,38 @@ body {
 .carl-trigger-heart.dead-stage .carl-heart-pink {
   opacity: 0;
 }
+
+/* C17 ZIP27 — loader band higher + Carl buried + three-beat contact flicker */
+.profile.loader-cover {
+  z-index: 58 !important;
+}
+
+.profile.carl.carl-zone-anchor {
+  z-index: 42 !important;
+  pointer-events: none !important;
+}
+
+.profile.carl.carl-ring-death {
+  z-index: 70 !important;
+  animation:
+    profileSlam 0.42s cubic-bezier(0.08, 0.78, 0.12, 1) forwards,
+    carlThreeBoomFlicker 0.82s steps(1) 1 forwards !important;
+}
+
+@keyframes carlThreeBoomFlicker {
+  0%, 12%, 34%, 46%, 68%, 80% {
+    border-color: rgba(255, 29, 37, 1);
+    box-shadow:
+      0 0 0 4px rgba(255,29,37,0.92),
+      0 0 18px rgba(255,29,37,0.82),
+      0 0 42px rgba(255,29,37,0.42);
+    filter: contrast(1.18) saturate(1.2);
+  }
+  13%, 33%, 47%, 67%, 81%, 100% {
+    border-color: rgba(242,238,229,0.62);
+    box-shadow:
+      0 0 0 1px rgba(255,255,255,0.16),
+      0 0 12px rgba(0,0,0,0.9);
+    filter: grayscale(0.2) contrast(0.95);
+  }
+}
