@@ -6560,3 +6560,82 @@ body {
 .profile.frank.frank-stack {
   z-index: 80 !important;
 }
+
+/* C17 ZIP26 — loader lift + Carl buried + believable gray-heart crossfade */
+.profile.loader-cover {
+  z-index: 58 !important;
+}
+
+.profile.carl.carl-zone-anchor {
+  z-index: 44 !important;
+  pointer-events: none !important;
+}
+
+.profile.carl.carl-ring-death {
+  z-index: 70 !important;
+}
+
+.engage.carl-trigger-heart.asset-heart,
+.engage.heart.carl-trigger-heart,
+.carl-trigger-heart.asset-heart {
+  width: 38px !important;
+  height: 38px !important;
+  z-index: 92 !important;
+  animation: none !important;
+  pointer-events: none !important;
+  transform-origin: center center !important;
+  overflow: visible !important;
+  filter: none !important;
+}
+
+.carl-trigger-heart .carl-heart-layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+  will-change: opacity, filter, transform;
+}
+
+.carl-trigger-heart .carl-heart-pink {
+  opacity: 1;
+  filter:
+    drop-shadow(0 0 6px rgba(255,82,160,0.30))
+    drop-shadow(0 0 13px rgba(255,82,160,0.16));
+  transition: opacity 1.55s ease, filter 1.55s ease, transform 1.55s ease;
+}
+
+.carl-trigger-heart .carl-heart-grey {
+  opacity: 0;
+  filter:
+    grayscale(1)
+    brightness(0.72)
+    contrast(1.16)
+    drop-shadow(0 0 4px rgba(235,235,235,0.08));
+  transition: opacity 1.55s ease, filter 1.55s ease, transform 1.55s ease;
+}
+
+.carl-trigger-heart.grey-taking-over .carl-heart-pink {
+  opacity: 0.10;
+  filter:
+    grayscale(0.9)
+    brightness(0.82)
+    drop-shadow(0 0 4px rgba(255,82,160,0.08));
+  transform: scale(0.97) rotate(-3deg);
+}
+
+.carl-trigger-heart.grey-taking-over .carl-heart-grey,
+.carl-trigger-heart.dead-stage .carl-heart-grey {
+  opacity: 1;
+  filter:
+    grayscale(1)
+    brightness(0.88)
+    contrast(1.20)
+    drop-shadow(0 0 7px rgba(235,235,235,0.14));
+  transform: scale(1.02) rotate(2deg);
+}
+
+.carl-trigger-heart.dead-stage .carl-heart-pink {
+  opacity: 0;
+}
