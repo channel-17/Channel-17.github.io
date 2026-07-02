@@ -6471,3 +6471,92 @@ body {
   }
 }
 
+/* =========================================================
+   C17 ZIP23 — PROOF-OF-WORK BUILD
+   Avatar zone / loader suppression / Carl heart corrections
+   Source: channel-17.github.io-main 23.zip
+========================================================= */
+
+/* Signal/pyramid must NOT ghost in early. It appears only when the real signal is ready. */
+#signalGhost.signal-ghost,
+.signal-ghost,
+#signalGhost.signal-ghost.waking,
+.signal-ghost.waking,
+#signalGhost.signal-ghost.burning,
+.signal-ghost.burning {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  filter: none !important;
+  animation: none !important;
+}
+
+#signalNode.signal-node {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+#signalNode.signal-node.ready {
+  opacity: 0.82 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+}
+
+/* Loader suppression avatars: tighter to the bar, brighter when reassigned, less spinning-top blob. */
+.profile.loader-cover {
+  z-index: 58 !important;
+  box-shadow:
+    0 0 13px rgba(0,0,0,0.88),
+    0 0 0 1px rgba(255,255,255,0.22),
+    0 0 10px rgba(242,238,229,0.06) !important;
+}
+
+.profile.hive-reveal.has-hive-asset img,
+.profile.blue-frank img {
+  opacity: 1 !important;
+  filter:
+    brightness(1.58)
+    saturate(2.15)
+    contrast(1.12)
+    drop-shadow(0 0 12px rgba(58,180,255,0.70))
+    drop-shadow(0 0 24px rgba(31,118,255,0.36)) !important;
+}
+
+.profile.hive-reveal {
+  border-color: rgba(155,225,255,0.98) !important;
+  box-shadow:
+    0 0 13px rgba(0,0,0,0.86),
+    0 0 0 1px rgba(218,246,255,0.32),
+    0 0 25px rgba(40,165,255,0.52) !important;
+}
+
+/* Carl locked to the left loader zone, not the lower spinning pile. */
+.profile.carl.carl-zone-anchor {
+  z-index: 74 !important;
+}
+
+/* PNG heart must read at the same family size as the emoji hearts, not microscopic. */
+.engage.heart.carl-trigger-heart,
+.carl-trigger-heart.asset-heart {
+  width: 36px !important;
+  height: 36px !important;
+  z-index: 90 !important;
+  transform-origin: center center !important;
+  filter:
+    drop-shadow(0 0 6px rgba(255, 82, 160, 0.30))
+    drop-shadow(0 0 13px rgba(255, 82, 160, 0.18)) !important;
+}
+
+.carl-trigger-heart.asset-heart.dead-stage,
+.carl-trigger-heart.dead-stage {
+  filter:
+    grayscale(1)
+    brightness(0.86)
+    contrast(1.18)
+    drop-shadow(0 0 8px rgba(235,235,235,0.16)) !important;
+}
+
+/* Frank zone is centered under the loader. Frank only stacks with Frank there. */
+.profile.frank.frank-stack {
+  z-index: 80 !important;
+}
