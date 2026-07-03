@@ -263,25 +263,27 @@ const missTargets = [
 
 const coverageTargets = [...loaderTargets, ...symbolTargets, ...missTargets];
 
-// CARL ZONE — Jinx reference correction.
-// Carl is present on the loader centerline/right lane, not stranded low on an island.
-// Blue/hive avatars still only become true-blue on the symbol zone later.
-const CARL_ZONE = { x: 75.5, y: 31.35 };
-const CARL_HEART_START = { x: 7, y: 83 };
+// CARL ZONE — Build 30 correction from Jinx sketch.
+// Carl sits on the LEFT side of the loader. The single Carl heart starts bottom-right,
+// drifts up the right wall like the other hearts, gets blown off course at the top,
+// snakes through the big S/zigzag path, then bites Carl on contact.
+const CARL_ZONE = { x: 21.0, y: 31.35 };
+const CARL_HEART_START = { x: 82, y: 86 };
 const CARL_HEART_PATH = [
-  // ZIP30: Jinx Sketchbook correction — ONE Carl heart only. Slow soft S, wraps toward Carl, touches Carl, then Carl flickers before burial.
-  // Carl's profile location stays locked by CARL_ZONE above. Do not move him here.
-  { left: "7%", top: "83%", transform: "translate(-50%, -50%) scale(0.92) rotate(-12deg)", opacity: 0, offset: 0 },
-  { left: "10%", top: "76%", transform: "translate(-50%, -50%) scale(0.98) rotate(-6deg)", opacity: 0.72, offset: 0.08 },
-  { left: "15%", top: "66%", transform: "translate(-50%, -50%) scale(1.06) rotate(7deg)", opacity: 1, offset: 0.18 },
-  { left: "24%", top: "56%", transform: "translate(-50%, -50%) scale(1.12) rotate(16deg)", opacity: 1, offset: 0.30 },
-  { left: "38%", top: "50%", transform: "translate(-50%, -50%) scale(1.14) rotate(8deg)", opacity: 1, offset: 0.43 },
-  { left: "52%", top: "54%", transform: "translate(-50%, -50%) scale(1.10) rotate(-12deg)", opacity: 0.98, offset: 0.57 },
-  { left: "64%", top: "47%", transform: "translate(-50%, -50%) scale(1.07) rotate(-20deg)", opacity: 0.98, offset: 0.70 },
-  { left: "72%", top: "38%", transform: "translate(-50%, -50%) scale(1.05) rotate(-9deg)", opacity: 0.98, offset: 0.82 },
-  { left: "74.2%", top: "33.4%", transform: "translate(-50%, -50%) scale(1.08) rotate(7deg)", opacity: 1, offset: 0.91 },
-  { left: `${CARL_ZONE.x}%`, top: `${CARL_ZONE.y}%`, transform: "translate(-50%, -50%) scale(1.12) rotate(0deg)", opacity: 1, offset: 0.972 },
-  { left: `${CARL_ZONE.x}%`, top: `${CARL_ZONE.y}%`, transform: "translate(-50%, -50%) scale(0.78) rotate(0deg)", opacity: 0, offset: 1 }
+  { left: "82%", top: "86%", transform: "translate(-50%, -50%) scale(0.94) rotate(-8deg)", opacity: 0, offset: 0 },
+  { left: "78%", top: "73%", transform: "translate(-50%, -50%) scale(1.00) rotate(4deg)", opacity: 0.92, offset: 0.10 },
+  { left: "76%", top: "58%", transform: "translate(-50%, -50%) scale(1.04) rotate(-6deg)", opacity: 1, offset: 0.21 },
+  { left: "78%", top: "42%", transform: "translate(-50%, -50%) scale(1.06) rotate(8deg)", opacity: 1, offset: 0.33 },
+  { left: "74%", top: "27%", transform: "translate(-50%, -50%) scale(1.08) rotate(-11deg)", opacity: 1, offset: 0.45 },
+  { left: "70%", top: "17%", transform: "translate(-50%, -50%) scale(1.08) rotate(12deg)", opacity: 1, offset: 0.54 },
+  { left: "56%", top: "15%", transform: "translate(-50%, -50%) scale(1.07) rotate(-18deg)", opacity: 1, offset: 0.61 },
+  { left: "36%", top: "16%", transform: "translate(-50%, -50%) scale(1.06) rotate(19deg)", opacity: 1, offset: 0.69 },
+  { left: "20%", top: "25%", transform: "translate(-50%, -50%) scale(1.06) rotate(-20deg)", opacity: 1, offset: 0.77 },
+  { left: "8%", top: "36%", transform: "translate(-50%, -50%) scale(1.05) rotate(18deg)", opacity: 1, offset: 0.84 },
+  { left: "12%", top: "48%", transform: "translate(-50%, -50%) scale(1.04) rotate(-15deg)", opacity: 0.98, offset: 0.90 },
+  { left: "24%", top: "44%", transform: "translate(-50%, -50%) scale(1.06) rotate(10deg)", opacity: 1, offset: 0.945 },
+  { left: `${CARL_ZONE.x}%`, top: `${CARL_ZONE.y}%`, transform: "translate(-50%, -50%) scale(1.10) rotate(0deg)", opacity: 1, offset: 0.982 },
+  { left: `${CARL_ZONE.x}%`, top: `${CARL_ZONE.y}%`, transform: "translate(-50%, -50%) scale(0.64) rotate(0deg)", opacity: 0, offset: 1 }
 ];
 
 function setProgress(value) {
@@ -665,28 +667,28 @@ function releaseDeadHeartTowardCarl() {
   engagementField.appendChild(heart);
 
   const flight = heart.animate(CARL_HEART_PATH, {
-    duration: 9400,
-    easing: "cubic-bezier(.18,.66,.14,1)",
+    duration: 9200,
+    easing: "cubic-bezier(.18,.68,.16,1)",
     fill: "forwards"
   });
 
-  // One readable Carl heart. It stays pink long enough to be seen, then loses color on the approach.
+  // Full visible cycle: pink clue first, then it drains gray before impact.
   setTimeout(() => {
     if (!heart.parentNode) return;
     heart.classList.add("draining", "off-course", "grey-taking-over");
-  }, 6100);
+  }, 5200);
 
   setTimeout(() => {
     if (!heart.parentNode) return;
     heart.classList.remove("pink-stage", "draining");
     heart.classList.add("dead-stage");
-  }, 7900);
+  }, 7600);
 
-  // Carl hit: heart touches Carl first. Carl flickers while still visible. Burial waits until after flicker.
+  // Snake-bite contact: the instant the heart reaches Carl, Carl reacts.
   setTimeout(() => {
     if (heart && heart.parentNode) heart.remove();
     triggerCarl(carl);
-  }, 9150);
+  }, 9040);
 
   flight.onfinish = () => {
     if (heart && heart.parentNode) heart.remove();
@@ -694,7 +696,7 @@ function releaseDeadHeartTowardCarl() {
 
   setTimeout(() => {
     if (heart && heart.parentNode) heart.remove();
-  }, 10600);
+  }, 10800);
 }
 
 function triggerCarl(carl) {
@@ -702,20 +704,14 @@ function triggerCarl(carl) {
 
   carlTriggered = true;
 
-  // Contact makes Carl readable first. The red weakness flicker comes a beat later,
-  // then the loader suppression buries him again.
-  carl.classList.add("carl-impact-visible", "carl-ready");
-
-  setTimeout(() => {
-    if (!carl || !carl.parentNode) return;
-    carl.classList.add("carl-ring-death");
-  }, 120);
+  // Snake bite: contact makes Carl readable and red-flickering immediately.
+  carl.classList.add("carl-impact-visible", "carl-ready", "carl-ring-death");
 
   setTimeout(() => {
     if (!carlOpened) {
       carl.classList.remove("carl-ready");
     }
-  }, 1250);
+  }, 1900);
 
   setTimeout(() => {
     if (!carl || !carl.parentNode) return;
@@ -737,7 +733,7 @@ function triggerCarl(carl) {
     }
 
     setTimeout(() => carl.remove(), 1250);
-  }, 2100);
+  }, 1850);
 }
 
 function openCarlProfile() {
