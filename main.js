@@ -267,18 +267,21 @@ const coverageTargets = [...loaderTargets, ...symbolTargets, ...missTargets];
 // Carl is present on the loader centerline/right lane, not stranded low on an island.
 // Blue/hive avatars still only become true-blue on the symbol zone later.
 const CARL_ZONE = { x: 75.5, y: 31.35 };
-const CARL_HEART_START = { x: 4, y: 76 };
+const CARL_HEART_START = { x: 7, y: 83 };
 const CARL_HEART_PATH = [
-  // Order 66 / ZIP29: first readable heart gets the full soft S-path, then clearly touches Carl.
-  { left: "4%", top: "76%", transform: "translate(-50%, -50%) scale(1.00) rotate(-4deg)", opacity: 0, offset: 0 },
-  { left: "10%", top: "66%", transform: "translate(-50%, -50%) scale(1.06) rotate(5deg)", opacity: 0.96, offset: 0.10 },
-  { left: "20%", top: "54%", transform: "translate(-50%, -50%) scale(1.08) rotate(-9deg)", opacity: 1, offset: 0.23 },
-  { left: "33%", top: "45%", transform: "translate(-50%, -50%) scale(1.06) rotate(12deg)", opacity: 0.98, offset: 0.36 },
-  { left: "48%", top: "49%", transform: "translate(-50%, -50%) scale(1.04) rotate(-15deg)", opacity: 0.96, offset: 0.52 },
-  { left: "61%", top: "40%", transform: "translate(-50%, -50%) scale(1.03) rotate(9deg)", opacity: 0.94, offset: 0.66 },
-  { left: "70%", top: "34%", transform: "translate(-50%, -50%) scale(1.02) rotate(-6deg)", opacity: 0.92, offset: 0.80 },
-  { left: `${CARL_ZONE.x}%`, top: `${CARL_ZONE.y}%`, transform: "translate(-50%, -50%) scale(1.06) rotate(0deg)", opacity: 1, offset: 0.96 },
-  { left: `${CARL_ZONE.x}%`, top: `${CARL_ZONE.y}%`, transform: "translate(-50%, -50%) scale(0.70) rotate(0deg)", opacity: 0, offset: 1 }
+  // ZIP30: Jinx Sketchbook correction — ONE Carl heart only. Slow soft S, wraps toward Carl, touches Carl, then Carl flickers before burial.
+  // Carl's profile location stays locked by CARL_ZONE above. Do not move him here.
+  { left: "7%", top: "83%", transform: "translate(-50%, -50%) scale(0.92) rotate(-12deg)", opacity: 0, offset: 0 },
+  { left: "10%", top: "76%", transform: "translate(-50%, -50%) scale(0.98) rotate(-6deg)", opacity: 0.72, offset: 0.08 },
+  { left: "15%", top: "66%", transform: "translate(-50%, -50%) scale(1.06) rotate(7deg)", opacity: 1, offset: 0.18 },
+  { left: "24%", top: "56%", transform: "translate(-50%, -50%) scale(1.12) rotate(16deg)", opacity: 1, offset: 0.30 },
+  { left: "38%", top: "50%", transform: "translate(-50%, -50%) scale(1.14) rotate(8deg)", opacity: 1, offset: 0.43 },
+  { left: "52%", top: "54%", transform: "translate(-50%, -50%) scale(1.10) rotate(-12deg)", opacity: 0.98, offset: 0.57 },
+  { left: "64%", top: "47%", transform: "translate(-50%, -50%) scale(1.07) rotate(-20deg)", opacity: 0.98, offset: 0.70 },
+  { left: "72%", top: "38%", transform: "translate(-50%, -50%) scale(1.05) rotate(-9deg)", opacity: 0.98, offset: 0.82 },
+  { left: "74.2%", top: "33.4%", transform: "translate(-50%, -50%) scale(1.08) rotate(7deg)", opacity: 1, offset: 0.91 },
+  { left: `${CARL_ZONE.x}%`, top: `${CARL_ZONE.y}%`, transform: "translate(-50%, -50%) scale(1.12) rotate(0deg)", opacity: 1, offset: 0.972 },
+  { left: `${CARL_ZONE.x}%`, top: `${CARL_ZONE.y}%`, transform: "translate(-50%, -50%) scale(0.78) rotate(0deg)", opacity: 0, offset: 1 }
 ];
 
 function setProgress(value) {
@@ -662,28 +665,28 @@ function releaseDeadHeartTowardCarl() {
   engagementField.appendChild(heart);
 
   const flight = heart.animate(CARL_HEART_PATH, {
-    duration: 7200,
-    easing: "cubic-bezier(.22,.72,.18,1)",
+    duration: 9400,
+    easing: "cubic-bezier(.18,.66,.14,1)",
     fill: "forwards"
   });
 
-  // Full visible cycle: pink clue first, then it drains gray before impact.
+  // One readable Carl heart. It stays pink long enough to be seen, then loses color on the approach.
   setTimeout(() => {
     if (!heart.parentNode) return;
     heart.classList.add("draining", "off-course", "grey-taking-over");
-  }, 3600);
+  }, 6100);
 
   setTimeout(() => {
     if (!heart.parentNode) return;
     heart.classList.remove("pink-stage", "draining");
     heart.classList.add("dead-stage");
-  }, 5600);
+  }, 7900);
 
-  // Carl hit: heart visually touches Carl, disappears, then Carl flickers red.
+  // Carl hit: heart touches Carl first. Carl flickers while still visible. Burial waits until after flicker.
   setTimeout(() => {
     if (heart && heart.parentNode) heart.remove();
     triggerCarl(carl);
-  }, 6950);
+  }, 9150);
 
   flight.onfinish = () => {
     if (heart && heart.parentNode) heart.remove();
@@ -691,7 +694,7 @@ function releaseDeadHeartTowardCarl() {
 
   setTimeout(() => {
     if (heart && heart.parentNode) heart.remove();
-  }, 9000);
+  }, 10600);
 }
 
 function triggerCarl(carl) {
@@ -706,7 +709,7 @@ function triggerCarl(carl) {
   setTimeout(() => {
     if (!carl || !carl.parentNode) return;
     carl.classList.add("carl-ring-death");
-  }, 170);
+  }, 120);
 
   setTimeout(() => {
     if (!carlOpened) {
@@ -734,7 +737,7 @@ function triggerCarl(carl) {
     }
 
     setTimeout(() => carl.remove(), 1250);
-  }, 1850);
+  }, 2100);
 }
 
 function openCarlProfile() {
