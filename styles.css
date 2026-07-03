@@ -6782,3 +6782,93 @@ body {
   height: 44px !important;
   z-index: 94 !important;
 }
+
+/* C17 ZIP30 — Sketchbook Carl-heart correction.
+   One Carl heart only: slow, soft S path, clear screen presence, contact first, red flicker second, avatar burial last.
+   Carl profile location is controlled only by CARL_ZONE in main.js and was not moved. */
+.engage.carl-trigger-heart.asset-heart,
+.engage.heart.carl-trigger-heart,
+.carl-trigger-heart.asset-heart {
+  width: 50px !important;
+  height: 50px !important;
+  z-index: 96 !important;
+  animation: none !important;
+  pointer-events: none !important;
+  transform-origin: center center !important;
+  overflow: visible !important;
+  filter: none !important;
+}
+
+.carl-trigger-heart .carl-heart-layer {
+  will-change: opacity, filter, transform;
+}
+
+.carl-trigger-heart .carl-heart-pink {
+  opacity: 1 !important;
+  filter:
+    drop-shadow(0 0 8px rgba(255,82,160,0.42))
+    drop-shadow(0 0 18px rgba(255,82,160,0.20)) !important;
+  transition:
+    opacity 2.9s cubic-bezier(.22,.72,.16,1),
+    filter 2.9s cubic-bezier(.22,.72,.16,1),
+    transform 2.9s cubic-bezier(.22,.72,.16,1) !important;
+}
+
+.carl-trigger-heart .carl-heart-grey {
+  opacity: 0 !important;
+  filter:
+    grayscale(1)
+    brightness(0.76)
+    contrast(1.18)
+    drop-shadow(0 0 7px rgba(235,235,235,0.10)) !important;
+  transition:
+    opacity 2.9s cubic-bezier(.22,.72,.16,1),
+    filter 2.9s cubic-bezier(.22,.72,.16,1),
+    transform 2.9s cubic-bezier(.22,.72,.16,1) !important;
+}
+
+.carl-trigger-heart.grey-taking-over .carl-heart-pink {
+  opacity: 0.08 !important;
+  filter:
+    grayscale(0.95)
+    brightness(0.72)
+    drop-shadow(0 0 4px rgba(255,82,160,0.05)) !important;
+  transform: scale(0.96) rotate(-5deg) !important;
+}
+
+.carl-trigger-heart.grey-taking-over .carl-heart-grey,
+.carl-trigger-heart.dead-stage .carl-heart-grey {
+  opacity: 1 !important;
+  filter:
+    grayscale(1)
+    brightness(0.92)
+    contrast(1.20)
+    drop-shadow(0 0 9px rgba(235,235,235,0.15)) !important;
+  transform: scale(1.03) rotate(3deg) !important;
+}
+
+.carl-trigger-heart.dead-stage .carl-heart-pink {
+  opacity: 0 !important;
+}
+
+.profile.carl.carl-zone-anchor {
+  z-index: 66 !important;
+  opacity: 1 !important;
+  pointer-events: none !important;
+}
+
+.profile.carl.carl-impact-visible {
+  z-index: 84 !important;
+  opacity: 1 !important;
+  transform: translate(0, 0) scale(1) !important;
+}
+
+.profile.carl.carl-ring-death {
+  z-index: 86 !important;
+  animation: carlThreeBoomFlicker 1.18s steps(1) 1 forwards !important;
+}
+
+.profile.carl.burying {
+  z-index: 40 !important;
+  opacity: 0.76 !important;
+}
