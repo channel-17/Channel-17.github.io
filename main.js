@@ -152,7 +152,7 @@ function armJinxShadowFrequency() {
 
   jinxFrequencyTimer = window.setTimeout(() => {
     pulseJinxShadowFrequency();
-  }, 520);
+  }, 760);
 }
 
 function closeFounderWindow() {
@@ -266,37 +266,36 @@ const coverageTargets = [...loaderTargets, ...symbolTargets, ...missTargets];
 // Carl sits on the LEFT side of the loader. The single fate heart must look exactly like
 // the other hearts until the top-right fan catches it. Then it gets violently shoved
 // left/offscreen, overcorrects down to the bottom-left, and cuts upward into Carl.
-const CARL_ZONE = { x: 20.4, y: 31.20 };
+const CARL_ZONE = { x: 20.5, y: 36.2 };
 const CARL_HEART_START = { x: 88, y: 96 };
 const CARL_HEART_PATH = [
-  // Zone 1: starts at 17% and disguises itself as a normal background heart.
-  // Slow reverse-leaf rise on the right side; no special behavior yet.
-  { left: "88%", top: "96%", transform: "translate(-50%, -50%) translateX(0px) scale(0.86) rotate(-4deg)", opacity: 0, offset: 0 },
-  { left: "86%", top: "91%", transform: "translate(-50%, -50%) translateX(-4px) scale(0.86) rotate(2deg)", opacity: 0.82, offset: 0.08 },
-  { left: "89%", top: "85%", transform: "translate(-50%, -50%) translateX(5px) scale(0.86) rotate(-2deg)", opacity: 0.88, offset: 0.17 },
-  { left: "86%", top: "78%", transform: "translate(-50%, -50%) translateX(-6px) scale(0.86) rotate(3deg)", opacity: 0.92, offset: 0.27 },
-  { left: "88%", top: "69%", transform: "translate(-50%, -50%) translateX(4px) scale(0.86) rotate(-3deg)", opacity: 0.95, offset: 0.38 },
-  { left: "86%", top: "58%", transform: "translate(-50%, -50%) translateX(-5px) scale(0.86) rotate(4deg)", opacity: 0.97, offset: 0.49 },
-  { left: "89%", top: "45%", transform: "translate(-50%, -50%) translateX(6px) scale(0.86) rotate(-2deg)", opacity: 0.98, offset: 0.60 },
-  { left: "88%", top: "30%", transform: "translate(-50%, -50%) translateX(0px) scale(0.86) rotate(1deg)", opacity: 1, offset: 0.70 },
-  { left: "90%", top: "17%", transform: "translate(-50%, -50%) translateX(2px) scale(0.86) rotate(-1deg)", opacity: 1, offset: 0.76 },
+  // Zone 1: same pink heart as the others. Slow reverse-leaf rise only.
+  { left: "88%", top: "96%", transform: "translate(-50%, -50%) translateX(0px) scale(1) rotate(-4deg)", opacity: 0, offset: 0 },
+  { left: "86%", top: "91%", transform: "translate(-50%, -50%) translateX(-5px) scale(1) rotate(2deg)", opacity: 0.78, offset: 0.08 },
+  { left: "89%", top: "84%", transform: "translate(-50%, -50%) translateX(6px) scale(1) rotate(-2deg)", opacity: 0.86, offset: 0.18 },
+  { left: "86%", top: "76%", transform: "translate(-50%, -50%) translateX(-7px) scale(1) rotate(3deg)", opacity: 0.92, offset: 0.30 },
+  { left: "88%", top: "66%", transform: "translate(-50%, -50%) translateX(5px) scale(1) rotate(-3deg)", opacity: 0.96, offset: 0.42 },
+  { left: "86%", top: "54%", transform: "translate(-50%, -50%) translateX(-6px) scale(1) rotate(4deg)", opacity: 0.98, offset: 0.54 },
+  { left: "89%", top: "41%", transform: "translate(-50%, -50%) translateX(7px) scale(1) rotate(-2deg)", opacity: 1, offset: 0.64 },
+  { left: "88%", top: "28%", transform: "translate(-50%, -50%) translateX(0px) scale(1) rotate(1deg)", opacity: 1, offset: 0.70 },
 
-  // Zone 2: lower top-right fan. Visible on-screen first, then violent push left/offscreen.
-  { left: "93%", top: "12%", transform: "translate(-50%, -50%) scale(0.88) rotate(18deg)", opacity: 1, offset: 0.795 },
-  { left: "80%", top: "17%", transform: "translate(-50%, -50%) scale(0.88) rotate(28deg)", opacity: 1, offset: 0.825 },
-  { left: "46%", top: "13%", transform: "translate(-50%, -50%) scale(0.88) rotate(-30deg)", opacity: 0.98, offset: 0.865 },
-  { left: "4%", top: "19%", transform: "translate(-50%, -50%) scale(0.88) rotate(34deg)", opacity: 0.94, offset: 0.905 },
-  { left: "-18%", top: "31%", transform: "translate(-50%, -50%) scale(0.88) rotate(-38deg)", opacity: 0.88, offset: 0.925 },
+  // Zone 2: lower, visible top-right fan. It gets shoved left like a leaf, not guided.
+  { left: "92%", top: "24%", transform: "translate(-50%, -50%) scale(1) rotate(20deg)", opacity: 1, offset: 0.735 },
+  { left: "74%", top: "27%", transform: "translate(-50%, -50%) scale(1) rotate(38deg)", opacity: 1, offset: 0.765 },
+  { left: "39%", top: "22%", transform: "translate(-50%, -50%) scale(1) rotate(-44deg)", opacity: 0.98, offset: 0.805 },
+  { left: "5%", top: "27%", transform: "translate(-50%, -50%) scale(1) rotate(48deg)", opacity: 0.96, offset: 0.845 },
+  { left: "-22%", top: "36%", transform: "translate(-50%, -50%) scale(1) rotate(-52deg)", opacity: 0.88, offset: 0.875 },
 
-  // Zone 3: overcorrection. Drops low-left, then cuts upward into the fireworks/Carl pocket.
-  { left: "-12%", top: "78%", transform: "translate(-50%, -50%) scale(0.88) rotate(36deg)", opacity: 0.90, offset: 0.952 },
-  { left: "7%", top: "92%", transform: "translate(-50%, -50%) scale(0.88) rotate(-28deg)", opacity: 0.98, offset: 0.968 },
-  { left: "12%", top: "71%", transform: "translate(-50%, -50%) scale(0.88) rotate(20deg)", opacity: 1, offset: 0.982 },
-  { left: "16%", top: "48%", transform: "translate(-50%, -50%) scale(0.88) rotate(-12deg)", opacity: 1, offset: 0.991 },
+  // Zone 3: overcorrects low-left, then cuts upward into visible Carl.
+  { left: "-16%", top: "82%", transform: "translate(-50%, -50%) scale(1) rotate(42deg)", opacity: 0.88, offset: 0.910 },
+  { left: "4%", top: "96%", transform: "translate(-50%, -50%) scale(1) rotate(-34deg)", opacity: 0.97, offset: 0.935 },
+  { left: "10%", top: "80%", transform: "translate(-50%, -50%) scale(1) rotate(25deg)", opacity: 1, offset: 0.955 },
+  { left: "14%", top: "58%", transform: "translate(-50%, -50%) scale(1) rotate(-16deg)", opacity: 1, offset: 0.973 },
+  { left: "17%", top: "44%", transform: "translate(-50%, -50%) scale(1) rotate(9deg)", opacity: 1, offset: 0.988 },
 
-  // Fate/contact: Carl is visible here. Arrival into his left-loader pocket = instant zap.
-  { left: `${CARL_ZONE.x}%`, top: `${CARL_ZONE.y}%`, transform: "translate(-50%, -50%) scale(0.88) rotate(0deg)", opacity: 1, offset: 0.998 },
-  { left: `${CARL_ZONE.x}%`, top: `${CARL_ZONE.y}%`, transform: "translate(-50%, -50%) scale(0.62) rotate(0deg)", opacity: 0, offset: 1 }
+  // Fate/contact: actual hit on Carl. The zap starts here, not before.
+  { left: `${CARL_ZONE.x}%`, top: `${CARL_ZONE.y}%`, transform: "translate(-50%, -50%) scale(1) rotate(0deg)", opacity: 1, offset: 0.997 },
+  { left: `${CARL_ZONE.x}%`, top: `${CARL_ZONE.y}%`, transform: "translate(-50%, -50%) scale(0.72) rotate(0deg)", opacity: 0, offset: 1 }
 ];
 function setProgress(value) {
   progress = Math.max(0, Math.min(100, value));
@@ -378,7 +377,7 @@ const loading = setInterval(() => {
 
 function startAttack() {
   // Suppression routine: separate ugly bites, not a left-to-right highway.
-  const openingBites = [0, 4, 1, 7, 2, 9, 5];
+  const openingBites = [0, 6, 3, 9];
   openingBites.forEach((targetIndex, index) => {
     const sides = ["left", "top", "right", "left", "top", "right", "left"];
     setTimeout(() => spawnProfile(sides[index] || randomSide(), 0, { force: loaderTargets[targetIndex] }), index * 260);
@@ -387,17 +386,17 @@ function startAttack() {
   profileTimer = setInterval(() => {
     if (completed) return;
     spawnProfile(randomSide());
-  }, 520);
+  }, 760);
 
   engageTimer = setInterval(() => {
     if (completed) return;
     spawnEngagement();
-  }, 920);
+  }, 1080);
 
   slashTimer = setInterval(() => {
     if (completed) return;
     spawnSlash(randomSide());
-  }, 420);
+  }, 640);
 }
 
 function randomSide() {
@@ -454,7 +453,7 @@ function spawnEngagement() {
 
   const item = document.createElement("div");
   item.className = "engage heart heart-story";
-  item.textContent = "❤️";
+  item.textContent = "🩷";
   item.style.left = (82 + Math.random() * 12) + "%";
   item.style.top = (92 + Math.random() * 7) + "%";
   item.style.setProperty("--dur", (6.9 + Math.random() * 1.2) + "s");
@@ -493,7 +492,7 @@ function pickTarget() {
 function spawnProfile(side, delay = 0, opts = {}) {
   setTimeout(() => {
     const old = profileField.querySelectorAll(".profile:not(.carl):not(.frank):not(.wren)");
-    if (old.length > 15) old[0].remove();
+    if (old.length > 9) old[0].remove();
 
     const target = opts.force || pickTarget();
 
@@ -642,8 +641,9 @@ function spawnCarl() {
   carl.style.top = `calc(${CARL_ZONE.y}% - ${AVATAR_HALF}px)`;
   carl.style.setProperty("--sx", "-72px");
   carl.style.setProperty("--sy", "0px");
-  carl.style.zIndex = "88";
+  carl.style.setProperty("z-index", "118", "important");
   carl.style.opacity = "1";
+  carl.style.setProperty("filter", "brightness(1.08) contrast(1.04)", "important");
   carl.innerHTML = `<img src="AssetCARL.PNG" alt="">`;
 
   profileField.appendChild(carl);
@@ -660,7 +660,7 @@ function spawnCarl() {
       carl.classList.add("burying");
       setTimeout(() => carl.remove(), 460);
     }
-  }, 12200);
+  }, 18200);
 
   return carl;
 }
@@ -670,7 +670,7 @@ function releaseDeadHeartTowardCarl() {
 
   const heart = document.createElement("div");
   heart.className = "engage heart heart-story fate-carl-heart";
-  heart.textContent = "❤️";
+  heart.textContent = "🩷";
   heart.style.left = `${CARL_HEART_START.x}%`;
   heart.style.top = `${CARL_HEART_START.y}%`;
   heart.style.opacity = "0";
@@ -679,7 +679,7 @@ function releaseDeadHeartTowardCarl() {
   engagementField.appendChild(heart);
 
   const flight = heart.animate(CARL_HEART_PATH, {
-    duration: 31500,
+    duration: 36000,
     easing: "cubic-bezier(.16,.62,.18,1)",
     fill: "forwards"
   });
@@ -688,21 +688,21 @@ function releaseDeadHeartTowardCarl() {
   setTimeout(() => {
     if (!heart.parentNode) return;
     heart.classList.add("off-course");
-  }, 25000);
+  }, 26200);
 
   // Carl comes back as a visible left-loader bystander before the curl hits him.
   setTimeout(() => {
     if (!heart.parentNode || carlSeen) return;
     carlSeen = true;
     carl = spawnCarl();
-  }, 28700);
+  }, 30400);
 
   // Contact only: when the heart reaches Carl's pocket, the zap starts immediately.
   setTimeout(() => {
     carl = carl || profileField.querySelector(".profile.carl") || spawnCarl();
     if (heart && heart.parentNode) heart.remove();
     triggerCarl(carl);
-  }, 31350);
+  }, 35820);
 
   flight.onfinish = () => {
     if (heart && heart.parentNode) heart.remove();
@@ -710,7 +710,7 @@ function releaseDeadHeartTowardCarl() {
 
   setTimeout(() => {
     if (heart && heart.parentNode) heart.remove();
-  }, 32300);
+  }, 36900);
 }
 
 function triggerCarl(carl) {
@@ -720,10 +720,15 @@ function triggerCarl(carl) {
 
   // Snake bite: contact makes Carl readable and red-flickering immediately.
   carl.classList.add("carl-impact-visible", "carl-ready", "carl-ring-death");
+  carl.style.setProperty("z-index", "140", "important");
+  carl.style.setProperty("pointer-events", "auto", "important");
+  carl.style.setProperty("filter", "sepia(1) saturate(4.8) hue-rotate(310deg) brightness(1.34) contrast(1.25)", "important");
+  carl.style.setProperty("box-shadow", "0 0 18px rgba(255, 30, 70, 0.95), 0 0 34px rgba(255, 0, 55, 0.42)", "important");
 
   setTimeout(() => {
     if (!carlOpened) {
       carl.classList.remove("carl-ready");
+      carl.style.setProperty("pointer-events", "none", "important");
     }
   }, 1900);
 
@@ -741,9 +746,9 @@ function triggerCarl(carl) {
       { x: CARL_ZONE.x - 1.0, y: CARL_ZONE.y + 1.25, zone: "loader", cluster: "carl-cover-low" }
     ];
 
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 5; i++) {
       const burialTarget = coverRing[i % coverRing.length];
-      setTimeout(() => spawnProfile(i % 2 ? "right" : "left", 0, { force: burialTarget }), i * 62);
+      setTimeout(() => spawnProfile(i % 2 ? "right" : "left", 0, { force: burialTarget }), i * 120);
     }
 
     setTimeout(() => carl.remove(), 1250);
@@ -783,7 +788,7 @@ function startWoundPulse() {
       if (carlCard) carlCard.classList.remove("dating-page-glitch");
       if (hiveWound) hiveWound.classList.remove("pulse-open");
       if (carlProfilePortal) carlProfilePortal.classList.remove("portal-open");
-    }, 920);
+    }, 1080);
   };
 
   woundPulseTimer = setInterval(pulse, 17000);
