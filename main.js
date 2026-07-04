@@ -226,20 +226,18 @@ const normalAssets = [
 
 const loaderTargets = [
   // CHANNEL 17 ZONE MAP — LOADER BAR SUPPRESSION FIELD.
-  // Not a road/highway and not one spinning blob.
-  // Virus logic attacks the loader face: far left, far right, center, then exposed gaps.
-  // ZIP28 correction: band dropped one small tick from the too-high pass so the circles sit ON the bar, not above it.
-  { x: 24.0, y: 31.15, zone: "loader", cluster: "bar-left-edge" },
-  { x: 76.0, y: 31.15, zone: "loader", cluster: "bar-right-edge" },
-  { x: 50.0, y: 31.00, zone: "loader", cluster: "bar-center" },
-  { x: 36.0, y: 31.30, zone: "loader", cluster: "bar-left-gap" },
-  { x: 64.0, y: 31.30, zone: "loader", cluster: "bar-right-gap" },
-  { x: 30.0, y: 30.70, zone: "loader", cluster: "bar-left-high" },
-  { x: 70.0, y: 30.70, zone: "loader", cluster: "bar-right-high" },
-  { x: 43.0, y: 31.75, zone: "loader", cluster: "bar-center-left" },
-  { x: 57.0, y: 31.75, zone: "loader", cluster: "bar-center-right" },
-  { x: 27.5, y: 32.05, zone: "loader", cluster: "bar-left-low" },
-  { x: 72.5, y: 31.95, zone: "loader", cluster: "bar-right-low" }
+  // The virus suppresses in separate messy bites, not a neat animated loader bar.
+  { x: 25.0, y: 30.95, zone: "loader", cluster: "left-bite-high" },
+  { x: 74.0, y: 31.55, zone: "loader", cluster: "right-bite-low" },
+  { x: 48.0, y: 30.65, zone: "loader", cluster: "center-bite-high" },
+  { x: 35.0, y: 31.85, zone: "loader", cluster: "left-bite-low" },
+  { x: 63.0, y: 30.85, zone: "loader", cluster: "right-bite-high" },
+  { x: 29.0, y: 32.20, zone: "loader", cluster: "left-spill" },
+  { x: 69.5, y: 32.05, zone: "loader", cluster: "right-spill" },
+  { x: 42.0, y: 31.35, zone: "loader", cluster: "inner-left" },
+  { x: 56.5, y: 31.80, zone: "loader", cluster: "inner-right" },
+  { x: 22.0, y: 31.65, zone: "loader", cluster: "far-left-smother" },
+  { x: 78.0, y: 30.95, zone: "loader", cluster: "far-right-smother" }
 ];
 
 const symbolTargets = [
@@ -253,12 +251,13 @@ const symbolTargets = [
 ];
 
 const missTargets = [
-  // Loader-edge pressure only. No random drift into Frank/turtle territory.
-  // ZIP28 correction: right-side misses stay inside the loader lane.
-  { x: 22.0, y: 32.55, zone: "miss" },
-  { x: 78.0, y: 32.35, zone: "miss" },
-  { x: 33.0, y: 32.60, zone: "miss" },
-  { x: 67.0, y: 32.50, zone: "miss" }
+  // Messy near-misses so the loader feels suppressed by zones, not traced by a ruler.
+  { x: 20.5, y: 30.80, zone: "miss" },
+  { x: 79.5, y: 32.80, zone: "miss" },
+  { x: 32.0, y: 30.30, zone: "miss" },
+  { x: 68.0, y: 33.10, zone: "miss" },
+  { x: 45.0, y: 32.75, zone: "miss" },
+  { x: 59.0, y: 30.15, zone: "miss" }
 ];
 
 const coverageTargets = [...loaderTargets, ...symbolTargets, ...missTargets];
@@ -268,32 +267,29 @@ const coverageTargets = [...loaderTargets, ...symbolTargets, ...missTargets];
 // drifts up the right wall like the other hearts, gets blown off course at the top,
 // snakes through the big S/zigzag path, then bites Carl on contact.
 const CARL_ZONE = { x: 21.0, y: 31.35 };
-const CARL_HEART_START = { x: 86, y: 88 };
+const CARL_HEART_START = { x: 88, y: 94 };
 const CARL_HEART_PATH = [
-  // Beat 1: ordinary background-heart behavior. It is not special yet.
-  // It climbs the right edge slowly and does NOT hang around the loader/Carl lane.
-  { left: "88%", top: "92%", transform: "translate(-50%, -50%) scale(0.90) rotate(-4deg)", opacity: 0, offset: 0 },
-  { left: "87%", top: "82%", transform: "translate(-50%, -50%) scale(0.94) rotate(2deg)", opacity: 0.58, offset: 0.10 },
-  { left: "89%", top: "70%", transform: "translate(-50%, -50%) scale(0.96) rotate(-3deg)", opacity: 0.76, offset: 0.21 },
-  { left: "87%", top: "57%", transform: "translate(-50%, -50%) scale(0.98) rotate(3deg)", opacity: 0.86, offset: 0.32 },
-  { left: "88%", top: "42%", transform: "translate(-50%, -50%) scale(1.00) rotate(-2deg)", opacity: 0.94, offset: 0.43 },
-  { left: "86%", top: "26%", transform: "translate(-50%, -50%) scale(1.01) rotate(4deg)", opacity: 1, offset: 0.54 },
-  { left: "91%", top: "8%", transform: "translate(-50%, -50%) scale(1.02) rotate(-7deg)", opacity: 1, offset: 0.64 },
+  // Beat 1: it is just another heart. Bottom-right rise, same visual language as the background hearts.
+  { left: "88%", top: "94%", transform: "translate(-50%, -50%) scale(0.92) rotate(-5deg)", opacity: 0, offset: 0 },
+  { left: "86%", top: "86%", transform: "translate(-50%, -50%) scale(0.94) rotate(3deg)", opacity: 0.58, offset: 0.10 },
+  { left: "88%", top: "76%", transform: "translate(-50%, -50%) scale(0.96) rotate(-2deg)", opacity: 0.78, offset: 0.20 },
+  { left: "85%", top: "65%", transform: "translate(-50%, -50%) scale(0.98) rotate(4deg)", opacity: 0.88, offset: 0.30 },
+  { left: "87%", top: "53%", transform: "translate(-50%, -50%) scale(0.99) rotate(-4deg)", opacity: 0.94, offset: 0.40 },
+  { left: "85%", top: "40%", transform: "translate(-50%, -50%) scale(1.00) rotate(5deg)", opacity: 0.98, offset: 0.50 },
+  { left: "87%", top: "25%", transform: "translate(-50%, -50%) scale(1.01) rotate(-3deg)", opacity: 1, offset: 0.60 },
+  { left: "91%", top: "9%", transform: "translate(-50%, -50%) scale(1.02) rotate(8deg)", opacity: 1, offset: 0.68 },
 
-  // Beat 2: it leaves the page. The wind steals it before the S begins.
-  { left: "106%", top: "-7%", transform: "translate(-50%, -50%) scale(1.03) rotate(14deg)", opacity: 0.96, offset: 0.70 },
-  { left: "114%", top: "11%", transform: "translate(-50%, -50%) scale(1.04) rotate(-18deg)", opacity: 0.96, offset: 0.75 },
+  // Beat 2: the wind takes it. Big swoop, offscreen allowed, no loader hover.
+  { left: "105%", top: "-7%", transform: "translate(-50%, -50%) scale(1.03) rotate(24deg)", opacity: 0.96, offset: 0.735 },
+  { left: "82%", top: "-14%", transform: "translate(-50%, -50%) scale(1.04) rotate(-18deg)", opacity: 0.98, offset: 0.775 },
+  { left: "48%", top: "6%", transform: "translate(-50%, -50%) scale(1.05) rotate(28deg)", opacity: 1, offset: 0.825 },
+  { left: "7%", top: "23%", transform: "translate(-50%, -50%) scale(1.05) rotate(-31deg)", opacity: 1, offset: 0.875 },
+  { left: "-18%", top: "37%", transform: "translate(-50%, -50%) scale(1.04) rotate(22deg)", opacity: 0.94, offset: 0.915 },
 
-  // Beat 3: one large lazy feather/leaf S across the whole screen.
-  { left: "82%", top: "18%", transform: "translate(-50%, -50%) scale(1.04) rotate(22deg)", opacity: 1, offset: 0.80 },
-  { left: "45%", top: "17%", transform: "translate(-50%, -50%) scale(1.05) rotate(-20deg)", opacity: 1, offset: 0.855 },
-  { left: "10%", top: "39%", transform: "translate(-50%, -50%) scale(1.06) rotate(18deg)", opacity: 1, offset: 0.905 },
-  { left: "-8%", top: "58%", transform: "translate(-50%, -50%) scale(1.05) rotate(-16deg)", opacity: 0.98, offset: 0.94 },
-
-  // Beat 4: final gust back upward. Fate pushes the heart into Carl; the heart does not hunt him.
-  { left: "7%", top: "50%", transform: "translate(-50%, -50%) scale(1.05) rotate(12deg)", opacity: 1, offset: 0.962 },
-  { left: "17%", top: "39%", transform: "translate(-50%, -50%) scale(1.06) rotate(-8deg)", opacity: 1, offset: 0.982 },
-  { left: `${CARL_ZONE.x}%`, top: `${CARL_ZONE.y}%`, transform: "translate(-50%, -50%) scale(1.08) rotate(0deg)", opacity: 1, offset: 0.996 },
+  // Beat 3: it comes back from the left side of the phone, pushed into Carl by fate.
+  { left: "-6%", top: "35%", transform: "translate(-50%, -50%) scale(1.04) rotate(-16deg)", opacity: 0.98, offset: 0.945 },
+  { left: "11%", top: "33%", transform: "translate(-50%, -50%) scale(1.05) rotate(10deg)", opacity: 1, offset: 0.970 },
+  { left: `${CARL_ZONE.x}%`, top: `${CARL_ZONE.y}%`, transform: "translate(-50%, -50%) scale(1.08) rotate(0deg)", opacity: 1, offset: 0.992 },
   { left: `${CARL_ZONE.x}%`, top: `${CARL_ZONE.y}%`, transform: "translate(-50%, -50%) scale(0.66) rotate(0deg)", opacity: 0, offset: 1 }
 ];
 
@@ -377,11 +373,11 @@ const loading = setInterval(() => {
 }, 45);
 
 function startAttack() {
-  // Suppression routine: hit exposed loader sections, not a left-to-right highway.
-  // Far left, far right, center, then the biggest visible gaps.
-  loaderTargets.slice(0, 7).forEach((target, index) => {
-    const sides = ["left", "right", "top", "left", "right", "top", "right"];
-    setTimeout(() => spawnProfile(sides[index] || randomSide(), 0, { force: target }), index * 220);
+  // Suppression routine: separate ugly bites, not a left-to-right highway.
+  const openingBites = [0, 4, 1, 7, 2, 9, 5];
+  openingBites.forEach((targetIndex, index) => {
+    const sides = ["left", "top", "right", "left", "top", "right", "left"];
+    setTimeout(() => spawnProfile(sides[index] || randomSide(), 0, { force: loaderTargets[targetIndex] }), index * 260);
   });
 
   profileTimer = setInterval(() => {
@@ -475,11 +471,11 @@ function spawnEngagement() {
 function pickTarget() {
   const count = profileCount;
 
-  // Before the final signal moment, all general avatar pressure belongs to the loader bar.
-  // Use a gap-seeking order so it feels like the machine is covering exposed authenticity.
+  // Before the final signal moment, pressure stays in messy zones around the loader.
+  // It should suppress the bar, not draw a clean replacement bar over it.
   if (progress < 82) {
-    if (count % 9 === 4) return missTargets[count % missTargets.length];
-    return loaderTargets[count % loaderTargets.length];
+    if (count % 5 === 1 || count % 7 === 3) return missTargets[count % missTargets.length];
+    return loaderTargets[(count * 3 + Math.floor(count / 2)) % loaderTargets.length];
   }
 
   // Late-stage reassignment may touch the signal/pyramid zone.
@@ -501,8 +497,8 @@ function spawnProfile(side, delay = 0, opts = {}) {
     profile.className = "profile";
 
     const asset = opts.asset || normalAssets[profileCount % normalAssets.length];
-    const jitterX = target.zone === "symbol" ? 2.0 : target.zone === "miss" ? 1.45 : 1.22;
-    const jitterY = target.zone === "symbol" ? 2.0 : target.zone === "miss" ? 0.18 : 0.16;
+    const jitterX = target.zone === "symbol" ? 2.0 : target.zone === "miss" ? 2.25 : 1.85;
+    const jitterY = target.zone === "symbol" ? 2.0 : target.zone === "miss" ? 1.15 : 0.95;
     const x = jitter(target.x, jitterX);
     const y = jitter(target.y, jitterY);
 
@@ -678,10 +674,9 @@ function releaseDeadHeartTowardCarl() {
 
   engagementField.appendChild(heart);
 
-  const flightDuration = 30000;
   const flight = heart.animate(CARL_HEART_PATH, {
-    duration: flightDuration,
-    easing: "cubic-bezier(.33,.02,.18,1)",
+    duration: 23800,
+    easing: "cubic-bezier(.19,.73,.16,1)",
     fill: "forwards"
   });
 
@@ -689,32 +684,32 @@ function releaseDeadHeartTowardCarl() {
   setTimeout(() => {
     if (!heart.parentNode) return;
     heart.classList.add("off-course");
-  }, 19500);
+  }, 16200);
 
   setTimeout(() => {
     if (!heart.parentNode) return;
     heart.classList.add("draining", "grey-taking-over");
-  }, 23800);
+  }, 19900);
 
   setTimeout(() => {
     if (!heart.parentNode) return;
     heart.classList.remove("pink-stage", "draining");
     heart.classList.add("dead-stage");
-  }, 26300);
+  }, 22100);
 
-  // Carl appears only when the heart is making its way back up into the accident.
+  // Carl appears on the left side only when the wind is bringing the heart back into the phone.
   setTimeout(() => {
     if (!heart.parentNode || carlSeen) return;
     carlSeen = true;
     carl = spawnCarl();
-  }, 27100);
+  }, 21400);
 
   // Snake-bite contact: the instant the heart reaches Carl, Carl reacts.
   setTimeout(() => {
     carl = carl || profileField.querySelector(".profile.carl") || spawnCarl();
     if (heart && heart.parentNode) heart.remove();
     triggerCarl(carl);
-  }, 29880);
+  }, 23610);
 
   flight.onfinish = () => {
     if (heart && heart.parentNode) heart.remove();
@@ -722,7 +717,7 @@ function releaseDeadHeartTowardCarl() {
 
   setTimeout(() => {
     if (heart && heart.parentNode) heart.remove();
-  }, flightDuration + 1200);
+  }, 25000);
 }
 
 function triggerCarl(carl) {
