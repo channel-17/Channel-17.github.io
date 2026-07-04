@@ -58,6 +58,7 @@ let carlTriggered = false;
 let carlOpened = false;
 let hiveWaveStarted = false;
 let deadHeartReleased = false;
+let carlSceneComplete = false;
 let frankDutyStarted = false;
 let frankDutyFramesPlayed = false;
 let woundPulseTimer = null;
@@ -277,14 +278,14 @@ const CARL_HEART_PATH = [
   { left: "88%", top: "66%", transform: "translate(-50%, -50%) translateX(5px) scale(1) rotate(-3deg)", opacity: 0.96, offset: 0.42 },
   { left: "86%", top: "54%", transform: "translate(-50%, -50%) translateX(-6px) scale(1) rotate(4deg)", opacity: 0.98, offset: 0.54 },
   { left: "89%", top: "41%", transform: "translate(-50%, -50%) translateX(7px) scale(1) rotate(-2deg)", opacity: 1, offset: 0.64 },
-  { left: "88%", top: "28%", transform: "translate(-50%, -50%) translateX(0px) scale(1) rotate(1deg)", opacity: 1, offset: 0.70 },
+  { left: "88%", top: "34%", transform: "translate(-50%, -50%) translateX(0px) scale(1) rotate(1deg)", opacity: 1, offset: 0.70 },
 
   // Zone 2: lower, visible top-right fan. It gets shoved left like a leaf, not guided.
-  { left: "92%", top: "24%", transform: "translate(-50%, -50%) scale(1) rotate(20deg)", opacity: 1, offset: 0.735 },
-  { left: "74%", top: "27%", transform: "translate(-50%, -50%) scale(1) rotate(38deg)", opacity: 1, offset: 0.765 },
-  { left: "39%", top: "22%", transform: "translate(-50%, -50%) scale(1) rotate(-44deg)", opacity: 0.98, offset: 0.805 },
-  { left: "5%", top: "27%", transform: "translate(-50%, -50%) scale(1) rotate(48deg)", opacity: 0.96, offset: 0.845 },
-  { left: "-22%", top: "36%", transform: "translate(-50%, -50%) scale(1) rotate(-52deg)", opacity: 0.88, offset: 0.875 },
+  { left: "92%", top: "32%", transform: "translate(-50%, -50%) scale(1) rotate(20deg)", opacity: 1, offset: 0.735 },
+  { left: "72%", top: "34%", transform: "translate(-50%, -50%) scale(1) rotate(38deg)", opacity: 1, offset: 0.765 },
+  { left: "35%", top: "30%", transform: "translate(-50%, -50%) scale(1) rotate(-44deg)", opacity: 0.98, offset: 0.805 },
+  { left: "1%", top: "34%", transform: "translate(-50%, -50%) scale(1) rotate(48deg)", opacity: 0.96, offset: 0.845 },
+  { left: "-24%", top: "44%", transform: "translate(-50%, -50%) scale(1) rotate(-52deg)", opacity: 0.88, offset: 0.875 },
 
   // Zone 3: overcorrects low-left, then cuts upward into visible Carl.
   { left: "-16%", top: "82%", transform: "translate(-50%, -50%) scale(1) rotate(42deg)", opacity: 0.88, offset: 0.910 },
@@ -304,9 +305,18 @@ function setProgress(value) {
 }
 
 const loading = setInterval(() => {
-  if (state === "normal") progress += 0.16;
-  if (state === "notice") progress += 0.035;
-  if (state === "hide") progress += 0.23;
+  // Once the 17% heart/Carl scene begins, the main loader story must give it room.
+  // This prevents the Wren/late-avatar phase from taking over before the heart even
+  // reaches the fan-blown top of the screen.
+  const carlSceneHolding = deadHeartReleased && !carlSceneComplete;
+
+  if (carlSceneHolding) {
+    progress += 0.018;
+  } else {
+    if (state === "normal") progress += 0.16;
+    if (state === "notice") progress += 0.035;
+    if (state === "hide") progress += 0.23;
+  }
 
   if (progress >= 17 && !noticed) {
     noticed = true;
@@ -329,17 +339,17 @@ const loading = setInterval(() => {
     startAttack();
   }
 
-  if (progress >= 24 && !ghosted) {
+  if (progress >= 24 && !ghosted && carlSceneComplete) {
     ghosted = true;
     // Pyramid/signal stays fully hidden until the true signal reveal.
   }
 
-  if (progress >= 38 && !hiveWaveStarted) {
+  if (progress >= 38 && !hiveWaveStarted && carlSceneComplete) {
     hiveWaveStarted = true;
     beginHiveWave();
   }
 
-  if (progress >= 42 && !burning) {
+  if (progress >= 42 && !burning && carlSceneComplete) {
     burning = true;
     startBurnPulse();
   }
@@ -350,17 +360,17 @@ const loading = setInterval(() => {
     releaseDeadHeartTowardCarl();
   }
 
-  if (progress >= 55 && !generals) {
+  if (progress >= 55 && !generals && carlSceneComplete) {
     generals = true;
     deployGenerals();
   }
 
-  if (progress >= 62 && !wrenSeen) {
+  if (progress >= 72 && !wrenSeen && carlSceneComplete) {
     wrenSeen = true;
     spawnWren();
   }
 
-  if (progress >= 24 && !frankSeen) {
+  if (progress >= 24 && !frankSeen && carlSceneComplete) {
     frankSeen = true;
     spawnFrank();
   }
@@ -695,7 +705,7 @@ function releaseDeadHeartTowardCarl() {
     if (!heart.parentNode || carlSeen) return;
     carlSeen = true;
     carl = spawnCarl();
-  }, 30400);
+  }, 28800);
 
   // Contact only: when the heart reaches Carl's pocket, the zap starts immediately.
   setTimeout(() => {
@@ -730,7 +740,7 @@ function triggerCarl(carl) {
       carl.classList.remove("carl-ready");
       carl.style.setProperty("pointer-events", "none", "important");
     }
-  }, 1900);
+  }, 2600);
 
   setTimeout(() => {
     if (!carl || !carl.parentNode) return;
@@ -751,8 +761,11 @@ function triggerCarl(carl) {
       setTimeout(() => spawnProfile(i % 2 ? "right" : "left", 0, { force: burialTarget }), i * 120);
     }
 
-    setTimeout(() => carl.remove(), 1250);
-  }, 1850);
+    setTimeout(() => {
+      if (carl && carl.parentNode) carl.remove();
+      carlSceneComplete = true;
+    }, 1250);
+  }, 2500);
 }
 
 function openCarlProfile() {
