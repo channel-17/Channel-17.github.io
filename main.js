@@ -266,33 +266,36 @@ const coverageTargets = [...loaderTargets, ...symbolTargets, ...missTargets];
 // Carl sits on the LEFT side of the loader. The single Carl heart starts bottom-right,
 // drifts up the right wall like the other hearts, gets blown off course at the top,
 // snakes through the big S/zigzag path, then bites Carl on contact.
-const CARL_ZONE = { x: 21.0, y: 31.35 };
+const CARL_ZONE = { x: 20.6, y: 31.35 };
 const CARL_HEART_START = { x: 88, y: 94 };
 const CARL_HEART_PATH = [
-  // Beat 1: it is just another heart. Bottom-right rise, same visual language as the background hearts.
+  // Zone 1: normal-heart disguise. It climbs the right side with the crowd, not as a featured object.
   { left: "88%", top: "94%", transform: "translate(-50%, -50%) scale(0.92) rotate(-5deg)", opacity: 0, offset: 0 },
-  { left: "86%", top: "86%", transform: "translate(-50%, -50%) scale(0.94) rotate(3deg)", opacity: 0.58, offset: 0.10 },
-  { left: "88%", top: "76%", transform: "translate(-50%, -50%) scale(0.96) rotate(-2deg)", opacity: 0.78, offset: 0.20 },
-  { left: "85%", top: "65%", transform: "translate(-50%, -50%) scale(0.98) rotate(4deg)", opacity: 0.88, offset: 0.30 },
-  { left: "87%", top: "53%", transform: "translate(-50%, -50%) scale(0.99) rotate(-4deg)", opacity: 0.94, offset: 0.40 },
-  { left: "85%", top: "40%", transform: "translate(-50%, -50%) scale(1.00) rotate(5deg)", opacity: 0.98, offset: 0.50 },
-  { left: "87%", top: "25%", transform: "translate(-50%, -50%) scale(1.01) rotate(-3deg)", opacity: 1, offset: 0.60 },
-  { left: "91%", top: "9%", transform: "translate(-50%, -50%) scale(1.02) rotate(8deg)", opacity: 1, offset: 0.68 },
+  { left: "86%", top: "87%", transform: "translate(-50%, -50%) scale(0.94) rotate(2deg)", opacity: 0.55, offset: 0.09 },
+  { left: "88%", top: "78%", transform: "translate(-50%, -50%) scale(0.95) rotate(-2deg)", opacity: 0.78, offset: 0.18 },
+  { left: "85%", top: "66%", transform: "translate(-50%, -50%) scale(0.97) rotate(3deg)", opacity: 0.88, offset: 0.28 },
+  { left: "87%", top: "52%", transform: "translate(-50%, -50%) scale(0.99) rotate(-3deg)", opacity: 0.94, offset: 0.38 },
+  { left: "86%", top: "35%", transform: "translate(-50%, -50%) scale(1.00) rotate(4deg)", opacity: 0.98, offset: 0.48 },
+  { left: "89%", top: "12%", transform: "translate(-50%, -50%) scale(1.01) rotate(-2deg)", opacity: 1, offset: 0.54 },
 
-  // Beat 2: the wind takes it. Big swoop, offscreen allowed, no loader hover.
-  { left: "105%", top: "-7%", transform: "translate(-50%, -50%) scale(1.03) rotate(24deg)", opacity: 0.96, offset: 0.735 },
-  { left: "82%", top: "-14%", transform: "translate(-50%, -50%) scale(1.04) rotate(-18deg)", opacity: 0.98, offset: 0.775 },
-  { left: "48%", top: "6%", transform: "translate(-50%, -50%) scale(1.05) rotate(28deg)", opacity: 1, offset: 0.825 },
-  { left: "7%", top: "23%", transform: "translate(-50%, -50%) scale(1.05) rotate(-31deg)", opacity: 1, offset: 0.875 },
-  { left: "-18%", top: "37%", transform: "translate(-50%, -50%) scale(1.04) rotate(22deg)", opacity: 0.94, offset: 0.915 },
+  // Zone 2: wind shove. It stops being neat, whips through the upper-left curl, and can leave the phone.
+  { left: "104%", top: "-9%", transform: "translate(-50%, -50%) scale(1.03) rotate(28deg)", opacity: 0.96, offset: 0.585 },
+  { left: "70%", top: "-17%", transform: "translate(-50%, -50%) scale(1.04) rotate(-23deg)", opacity: 0.98, offset: 0.625 },
+  { left: "34%", top: "-12%", transform: "translate(-50%, -50%) scale(1.04) rotate(22deg)", opacity: 1, offset: 0.665 },
+  { left: "8%", top: "8%", transform: "translate(-50%, -50%) scale(1.05) rotate(-18deg)", opacity: 1, offset: 0.72 },
+  { left: "-10%", top: "33%", transform: "translate(-50%, -50%) scale(1.04) rotate(31deg)", opacity: 0.92, offset: 0.765 },
 
-  // Beat 3: it comes back from the left side of the phone, pushed into Carl by fate.
-  { left: "-6%", top: "35%", transform: "translate(-50%, -50%) scale(1.04) rotate(-16deg)", opacity: 0.98, offset: 0.945 },
-  { left: "11%", top: "33%", transform: "translate(-50%, -50%) scale(1.05) rotate(10deg)", opacity: 1, offset: 0.970 },
-  { left: `${CARL_ZONE.x}%`, top: `${CARL_ZONE.y}%`, transform: "translate(-50%, -50%) scale(1.08) rotate(0deg)", opacity: 1, offset: 0.992 },
+  // Zone 3: lower-left rescue arc. It drops closer to the bottom corner, then rises into the exact Carl/firework pocket.
+  { left: "-7%", top: "82%", transform: "translate(-50%, -50%) scale(1.03) rotate(-36deg)", opacity: 0.70, offset: 0.815 },
+  { left: "7%", top: "96%", transform: "translate(-50%, -50%) scale(1.05) rotate(29deg)", opacity: 1, offset: 0.855 },
+  { left: "19%", top: "78%", transform: "translate(-50%, -50%) scale(1.06) rotate(-24deg)", opacity: 1, offset: 0.895 },
+  { left: "12%", top: "56%", transform: "translate(-50%, -50%) scale(1.06) rotate(18deg)", opacity: 1, offset: 0.935 },
+  { left: "15%", top: "42%", transform: "translate(-50%, -50%) scale(1.07) rotate(-12deg)", opacity: 1, offset: 0.965 },
+
+  // Fate/contact: Carl appears in this pocket, then the heart smashes into him. Touch = instant zap.
+  { left: `${CARL_ZONE.x}%`, top: `${CARL_ZONE.y}%`, transform: "translate(-50%, -50%) scale(1.08) rotate(0deg)", opacity: 1, offset: 0.995 },
   { left: `${CARL_ZONE.x}%`, top: `${CARL_ZONE.y}%`, transform: "translate(-50%, -50%) scale(0.66) rotate(0deg)", opacity: 0, offset: 1 }
 ];
-
 function setProgress(value) {
   progress = Math.max(0, Math.min(100, value));
   fill.style.width = progress <= 0 ? "0%" : `${progress}%`;
@@ -675,7 +678,7 @@ function releaseDeadHeartTowardCarl() {
   engagementField.appendChild(heart);
 
   const flight = heart.animate(CARL_HEART_PATH, {
-    duration: 23800,
+    duration: 28500,
     easing: "cubic-bezier(.19,.73,.16,1)",
     fill: "forwards"
   });
@@ -684,32 +687,32 @@ function releaseDeadHeartTowardCarl() {
   setTimeout(() => {
     if (!heart.parentNode) return;
     heart.classList.add("off-course");
-  }, 16200);
+  }, 15400);
 
   setTimeout(() => {
     if (!heart.parentNode) return;
     heart.classList.add("draining", "grey-taking-over");
-  }, 19900);
+  }, 26500);
 
   setTimeout(() => {
     if (!heart.parentNode) return;
     heart.classList.remove("pink-stage", "draining");
     heart.classList.add("dead-stage");
-  }, 22100);
+  }, 24200);
 
   // Carl appears on the left side only when the wind is bringing the heart back into the phone.
   setTimeout(() => {
     if (!heart.parentNode || carlSeen) return;
     carlSeen = true;
     carl = spawnCarl();
-  }, 21400);
+  }, 27000);
 
   // Snake-bite contact: the instant the heart reaches Carl, Carl reacts.
   setTimeout(() => {
     carl = carl || profileField.querySelector(".profile.carl") || spawnCarl();
     if (heart && heart.parentNode) heart.remove();
     triggerCarl(carl);
-  }, 23610);
+  }, 28360);
 
   flight.onfinish = () => {
     if (heart && heart.parentNode) heart.remove();
@@ -717,7 +720,7 @@ function releaseDeadHeartTowardCarl() {
 
   setTimeout(() => {
     if (heart && heart.parentNode) heart.remove();
-  }, 25000);
+  }, 29600);
 }
 
 function triggerCarl(carl) {
