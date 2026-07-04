@@ -266,35 +266,37 @@ const coverageTargets = [...loaderTargets, ...symbolTargets, ...missTargets];
 // Carl sits on the LEFT side of the loader. The single fate heart must look exactly like
 // the other hearts until the top-right fan catches it. Then it gets violently shoved
 // left/offscreen, overcorrects down to the bottom-left, and cuts upward into Carl.
-const CARL_ZONE = { x: 20.2, y: 31.25 };
-const CARL_HEART_START = { x: 88, y: 95 };
+const CARL_ZONE = { x: 20.4, y: 31.20 };
+const CARL_HEART_START = { x: 88, y: 96 };
 const CARL_HEART_PATH = [
-  // Zone 1: normal-heart disguise. Same small heart feel as the other floating hearts.
-  { left: "88%", top: "95%", transform: "translate(-50%, -50%) translateX(0px) scale(0.72) rotate(-4deg)", opacity: 0, offset: 0 },
-  { left: "86%", top: "89%", transform: "translate(-50%, -50%) translateX(-4px) scale(0.72) rotate(2deg)", opacity: 0.86, offset: 0.08 },
-  { left: "89%", top: "82%", transform: "translate(-50%, -50%) translateX(5px) scale(0.72) rotate(-2deg)", opacity: 0.9, offset: 0.16 },
-  { left: "86%", top: "73%", transform: "translate(-50%, -50%) translateX(-6px) scale(0.72) rotate(3deg)", opacity: 0.92, offset: 0.25 },
-  { left: "88%", top: "62%", transform: "translate(-50%, -50%) translateX(4px) scale(0.72) rotate(-3deg)", opacity: 0.94, offset: 0.34 },
-  { left: "86%", top: "49%", transform: "translate(-50%, -50%) translateX(-5px) scale(0.72) rotate(4deg)", opacity: 0.96, offset: 0.43 },
-  { left: "89%", top: "34%", transform: "translate(-50%, -50%) translateX(6px) scale(0.72) rotate(-2deg)", opacity: 0.98, offset: 0.52 },
-  { left: "88%", top: "16%", transform: "translate(-50%, -50%) translateX(0px) scale(0.72) rotate(1deg)", opacity: 1, offset: 0.61 },
+  // Zone 1: starts at 17% and disguises itself as a normal background heart.
+  // Slow reverse-leaf rise on the right side; no special behavior yet.
+  { left: "88%", top: "96%", transform: "translate(-50%, -50%) translateX(0px) scale(0.86) rotate(-4deg)", opacity: 0, offset: 0 },
+  { left: "86%", top: "91%", transform: "translate(-50%, -50%) translateX(-4px) scale(0.86) rotate(2deg)", opacity: 0.82, offset: 0.08 },
+  { left: "89%", top: "85%", transform: "translate(-50%, -50%) translateX(5px) scale(0.86) rotate(-2deg)", opacity: 0.88, offset: 0.17 },
+  { left: "86%", top: "78%", transform: "translate(-50%, -50%) translateX(-6px) scale(0.86) rotate(3deg)", opacity: 0.92, offset: 0.27 },
+  { left: "88%", top: "69%", transform: "translate(-50%, -50%) translateX(4px) scale(0.86) rotate(-3deg)", opacity: 0.95, offset: 0.38 },
+  { left: "86%", top: "58%", transform: "translate(-50%, -50%) translateX(-5px) scale(0.86) rotate(4deg)", opacity: 0.97, offset: 0.49 },
+  { left: "89%", top: "45%", transform: "translate(-50%, -50%) translateX(6px) scale(0.86) rotate(-2deg)", opacity: 0.98, offset: 0.60 },
+  { left: "88%", top: "30%", transform: "translate(-50%, -50%) translateX(0px) scale(0.86) rotate(1deg)", opacity: 1, offset: 0.70 },
+  { left: "90%", top: "17%", transform: "translate(-50%, -50%) translateX(2px) scale(0.86) rotate(-1deg)", opacity: 1, offset: 0.76 },
 
-  // Zone 2: top-right fan. The heart stops being a normal rise and gets blown way left.
-  { left: "98%", top: "4%", transform: "translate(-50%, -50%) scale(0.76) rotate(24deg)", opacity: 1, offset: 0.66 },
-  { left: "64%", top: "-12%", transform: "translate(-50%, -50%) scale(0.76) rotate(-28deg)", opacity: 0.98, offset: 0.705 },
-  { left: "22%", top: "-10%", transform: "translate(-50%, -50%) scale(0.76) rotate(31deg)", opacity: 0.96, offset: 0.75 },
-  { left: "-16%", top: "13%", transform: "translate(-50%, -50%) scale(0.76) rotate(-34deg)", opacity: 0.88, offset: 0.795 },
+  // Zone 2: lower top-right fan. Visible on-screen first, then violent push left/offscreen.
+  { left: "93%", top: "12%", transform: "translate(-50%, -50%) scale(0.88) rotate(18deg)", opacity: 1, offset: 0.795 },
+  { left: "80%", top: "17%", transform: "translate(-50%, -50%) scale(0.88) rotate(28deg)", opacity: 1, offset: 0.825 },
+  { left: "46%", top: "13%", transform: "translate(-50%, -50%) scale(0.88) rotate(-30deg)", opacity: 0.98, offset: 0.865 },
+  { left: "4%", top: "19%", transform: "translate(-50%, -50%) scale(0.88) rotate(34deg)", opacity: 0.94, offset: 0.905 },
+  { left: "-18%", top: "31%", transform: "translate(-50%, -50%) scale(0.88) rotate(-38deg)", opacity: 0.88, offset: 0.925 },
 
-  // Zone 3: overcorrection. It shoots down to the bottom-left, then cuts upward into Carl's firework pocket.
-  { left: "-18%", top: "50%", transform: "translate(-50%, -50%) scale(0.76) rotate(38deg)", opacity: 0.78, offset: 0.835 },
-  { left: "3%", top: "103%", transform: "translate(-50%, -50%) scale(0.76) rotate(-31deg)", opacity: 0.92, offset: 0.875 },
-  { left: "11%", top: "82%", transform: "translate(-50%, -50%) scale(0.76) rotate(24deg)", opacity: 1, offset: 0.91 },
-  { left: "8%", top: "61%", transform: "translate(-50%, -50%) scale(0.76) rotate(-18deg)", opacity: 1, offset: 0.94 },
-  { left: "13%", top: "43%", transform: "translate(-50%, -50%) scale(0.76) rotate(12deg)", opacity: 1, offset: 0.968 },
+  // Zone 3: overcorrection. Drops low-left, then cuts upward into the fireworks/Carl pocket.
+  { left: "-12%", top: "78%", transform: "translate(-50%, -50%) scale(0.88) rotate(36deg)", opacity: 0.90, offset: 0.952 },
+  { left: "7%", top: "92%", transform: "translate(-50%, -50%) scale(0.88) rotate(-28deg)", opacity: 0.98, offset: 0.968 },
+  { left: "12%", top: "71%", transform: "translate(-50%, -50%) scale(0.88) rotate(20deg)", opacity: 1, offset: 0.982 },
+  { left: "16%", top: "48%", transform: "translate(-50%, -50%) scale(0.88) rotate(-12deg)", opacity: 1, offset: 0.991 },
 
-  // Fate/contact: Carl is visible here. Actual arrival into his left-loader pocket = instant zap.
-  { left: `${CARL_ZONE.x}%`, top: `${CARL_ZONE.y}%`, transform: "translate(-50%, -50%) scale(0.76) rotate(0deg)", opacity: 1, offset: 0.995 },
-  { left: `${CARL_ZONE.x}%`, top: `${CARL_ZONE.y}%`, transform: "translate(-50%, -50%) scale(0.58) rotate(0deg)", opacity: 0, offset: 1 }
+  // Fate/contact: Carl is visible here. Arrival into his left-loader pocket = instant zap.
+  { left: `${CARL_ZONE.x}%`, top: `${CARL_ZONE.y}%`, transform: "translate(-50%, -50%) scale(0.88) rotate(0deg)", opacity: 1, offset: 0.998 },
+  { left: `${CARL_ZONE.x}%`, top: `${CARL_ZONE.y}%`, transform: "translate(-50%, -50%) scale(0.62) rotate(0deg)", opacity: 0, offset: 1 }
 ];
 function setProgress(value) {
   progress = Math.max(0, Math.min(100, value));
@@ -343,8 +345,8 @@ const loading = setInterval(() => {
     startBurnPulse();
   }
 
-  // The fate heart starts around 18% as one of the normal hearts before the avatar landing.
-  if (progress >= 18.1 && !deadHeartReleased) {
+  // The fate heart starts at 17% as one of the normal hearts before avatar landing.
+  if (progress >= 17.0 && !deadHeartReleased) {
     deadHeartReleased = true;
     releaseDeadHeartTowardCarl();
   }
@@ -640,6 +642,8 @@ function spawnCarl() {
   carl.style.top = `calc(${CARL_ZONE.y}% - ${AVATAR_HALF}px)`;
   carl.style.setProperty("--sx", "-72px");
   carl.style.setProperty("--sy", "0px");
+  carl.style.zIndex = "88";
+  carl.style.opacity = "1";
   carl.innerHTML = `<img src="AssetCARL.PNG" alt="">`;
 
   profileField.appendChild(carl);
@@ -675,8 +679,8 @@ function releaseDeadHeartTowardCarl() {
   engagementField.appendChild(heart);
 
   const flight = heart.animate(CARL_HEART_PATH, {
-    duration: 24500,
-    easing: "cubic-bezier(.18,.68,.16,1)",
+    duration: 31500,
+    easing: "cubic-bezier(.16,.62,.18,1)",
     fill: "forwards"
   });
 
@@ -684,21 +688,21 @@ function releaseDeadHeartTowardCarl() {
   setTimeout(() => {
     if (!heart.parentNode) return;
     heart.classList.add("off-course");
-  }, 15000);
+  }, 25000);
 
   // Carl comes back as a visible left-loader bystander before the curl hits him.
   setTimeout(() => {
     if (!heart.parentNode || carlSeen) return;
     carlSeen = true;
     carl = spawnCarl();
-  }, 22100);
+  }, 28700);
 
   // Contact only: when the heart reaches Carl's pocket, the zap starts immediately.
   setTimeout(() => {
     carl = carl || profileField.querySelector(".profile.carl") || spawnCarl();
     if (heart && heart.parentNode) heart.remove();
     triggerCarl(carl);
-  }, 24180);
+  }, 31350);
 
   flight.onfinish = () => {
     if (heart && heart.parentNode) heart.remove();
@@ -706,7 +710,7 @@ function releaseDeadHeartTowardCarl() {
 
   setTimeout(() => {
     if (heart && heart.parentNode) heart.remove();
-  }, 25200);
+  }, 32300);
 }
 
 function triggerCarl(carl) {
