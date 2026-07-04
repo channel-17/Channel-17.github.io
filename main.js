@@ -270,24 +270,30 @@ const coverageTargets = [...loaderTargets, ...symbolTargets, ...missTargets];
 const CARL_ZONE = { x: 21.0, y: 31.35 };
 const CARL_HEART_START = { x: 86, y: 88 };
 const CARL_HEART_PATH = [
-  // Beat 1: ordinary background-heart behavior. Slow right-edge rise, no Carl yet.
-  { left: "86%", top: "88%", transform: "translate(-50%, -50%) scale(0.92) rotate(-5deg)", opacity: 0, offset: 0 },
-  { left: "85%", top: "79%", transform: "translate(-50%, -50%) scale(0.96) rotate(3deg)", opacity: 0.72, offset: 0.12 },
-  { left: "86%", top: "67%", transform: "translate(-50%, -50%) scale(0.98) rotate(-3deg)", opacity: 0.88, offset: 0.24 },
-  { left: "84%", top: "54%", transform: "translate(-50%, -50%) scale(1.00) rotate(4deg)", opacity: 0.94, offset: 0.36 },
-  { left: "85%", top: "39%", transform: "translate(-50%, -50%) scale(1.01) rotate(-4deg)", opacity: 0.98, offset: 0.48 },
-  { left: "83%", top: "22%", transform: "translate(-50%, -50%) scale(1.02) rotate(5deg)", opacity: 1, offset: 0.60 },
+  // Beat 1: ordinary background-heart behavior. It is not special yet.
+  // It climbs the right edge slowly and does NOT hang around the loader/Carl lane.
+  { left: "88%", top: "92%", transform: "translate(-50%, -50%) scale(0.90) rotate(-4deg)", opacity: 0, offset: 0 },
+  { left: "87%", top: "82%", transform: "translate(-50%, -50%) scale(0.94) rotate(2deg)", opacity: 0.58, offset: 0.10 },
+  { left: "89%", top: "70%", transform: "translate(-50%, -50%) scale(0.96) rotate(-3deg)", opacity: 0.76, offset: 0.21 },
+  { left: "87%", top: "57%", transform: "translate(-50%, -50%) scale(0.98) rotate(3deg)", opacity: 0.86, offset: 0.32 },
+  { left: "88%", top: "42%", transform: "translate(-50%, -50%) scale(1.00) rotate(-2deg)", opacity: 0.94, offset: 0.43 },
+  { left: "86%", top: "26%", transform: "translate(-50%, -50%) scale(1.01) rotate(4deg)", opacity: 1, offset: 0.54 },
+  { left: "91%", top: "8%", transform: "translate(-50%, -50%) scale(1.02) rotate(-7deg)", opacity: 1, offset: 0.64 },
 
-  // Beat 2: top-right accident. It gets blown off its rails like a leaf.
-  { left: "76%", top: "15%", transform: "translate(-50%, -50%) scale(1.03) rotate(-12deg)", opacity: 1, offset: 0.67 },
-  { left: "61%", top: "13%", transform: "translate(-50%, -50%) scale(1.04) rotate(17deg)", opacity: 1, offset: 0.74 },
-  { left: "42%", top: "18%", transform: "translate(-50%, -50%) scale(1.04) rotate(-20deg)", opacity: 1, offset: 0.81 },
-  { left: "23%", top: "29%", transform: "translate(-50%, -50%) scale(1.05) rotate(18deg)", opacity: 1, offset: 0.88 },
+  // Beat 2: it leaves the page. The wind steals it before the S begins.
+  { left: "106%", top: "-7%", transform: "translate(-50%, -50%) scale(1.03) rotate(14deg)", opacity: 0.96, offset: 0.70 },
+  { left: "114%", top: "11%", transform: "translate(-50%, -50%) scale(1.04) rotate(-18deg)", opacity: 0.96, offset: 0.75 },
 
-  // Beat 3: soft return upward into Carl. Carl appears only now.
-  { left: "14%", top: "43%", transform: "translate(-50%, -50%) scale(1.04) rotate(-14deg)", opacity: 0.98, offset: 0.925 },
-  { left: "18%", top: "37%", transform: "translate(-50%, -50%) scale(1.05) rotate(9deg)", opacity: 1, offset: 0.955 },
-  { left: `${CARL_ZONE.x}%`, top: `${CARL_ZONE.y}%`, transform: "translate(-50%, -50%) scale(1.08) rotate(0deg)", opacity: 1, offset: 0.987 },
+  // Beat 3: one large lazy feather/leaf S across the whole screen.
+  { left: "82%", top: "18%", transform: "translate(-50%, -50%) scale(1.04) rotate(22deg)", opacity: 1, offset: 0.80 },
+  { left: "45%", top: "17%", transform: "translate(-50%, -50%) scale(1.05) rotate(-20deg)", opacity: 1, offset: 0.855 },
+  { left: "10%", top: "39%", transform: "translate(-50%, -50%) scale(1.06) rotate(18deg)", opacity: 1, offset: 0.905 },
+  { left: "-8%", top: "58%", transform: "translate(-50%, -50%) scale(1.05) rotate(-16deg)", opacity: 0.98, offset: 0.94 },
+
+  // Beat 4: final gust back upward. Fate pushes the heart into Carl; the heart does not hunt him.
+  { left: "7%", top: "50%", transform: "translate(-50%, -50%) scale(1.05) rotate(12deg)", opacity: 1, offset: 0.962 },
+  { left: "17%", top: "39%", transform: "translate(-50%, -50%) scale(1.06) rotate(-8deg)", opacity: 1, offset: 0.982 },
+  { left: `${CARL_ZONE.x}%`, top: `${CARL_ZONE.y}%`, transform: "translate(-50%, -50%) scale(1.08) rotate(0deg)", opacity: 1, offset: 0.996 },
   { left: `${CARL_ZONE.x}%`, top: `${CARL_ZONE.y}%`, transform: "translate(-50%, -50%) scale(0.66) rotate(0deg)", opacity: 0, offset: 1 }
 ];
 
@@ -672,9 +678,10 @@ function releaseDeadHeartTowardCarl() {
 
   engagementField.appendChild(heart);
 
+  const flightDuration = 30000;
   const flight = heart.animate(CARL_HEART_PATH, {
-    duration: 14800,
-    easing: "cubic-bezier(.22,.64,.18,1)",
+    duration: flightDuration,
+    easing: "cubic-bezier(.33,.02,.18,1)",
     fill: "forwards"
   });
 
@@ -682,32 +689,32 @@ function releaseDeadHeartTowardCarl() {
   setTimeout(() => {
     if (!heart.parentNode) return;
     heart.classList.add("off-course");
-  }, 9000);
+  }, 19500);
 
   setTimeout(() => {
     if (!heart.parentNode) return;
     heart.classList.add("draining", "grey-taking-over");
-  }, 10800);
+  }, 23800);
 
   setTimeout(() => {
     if (!heart.parentNode) return;
     heart.classList.remove("pink-stage", "draining");
     heart.classList.add("dead-stage");
-  }, 12800);
+  }, 26300);
 
   // Carl appears only when the heart is making its way back up into the accident.
   setTimeout(() => {
     if (!heart.parentNode || carlSeen) return;
     carlSeen = true;
     carl = spawnCarl();
-  }, 12100);
+  }, 27100);
 
   // Snake-bite contact: the instant the heart reaches Carl, Carl reacts.
   setTimeout(() => {
     carl = carl || profileField.querySelector(".profile.carl") || spawnCarl();
     if (heart && heart.parentNode) heart.remove();
     triggerCarl(carl);
-  }, 14620);
+  }, 29880);
 
   flight.onfinish = () => {
     if (heart && heart.parentNode) heart.remove();
@@ -715,7 +722,7 @@ function releaseDeadHeartTowardCarl() {
 
   setTimeout(() => {
     if (heart && heart.parentNode) heart.remove();
-  }, 16000);
+  }, flightDuration + 1200);
 }
 
 function triggerCarl(carl) {
