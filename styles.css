@@ -6822,3 +6822,144 @@ body {
   pointer-events: auto !important;
   cursor: pointer !important;
 }
+
+
+/* =========================================================
+   BUILD32 SIGNAL CONTACT PASS — REAL ART DIRECTION REPAIR
+   Loader resolves in. Avatars normalized. Hearts start at 17%.
+   Carl contact is electric field connection, not a butterfly landing.
+========================================================= */
+.loader-scene.booting-in {
+  opacity: 0;
+  transform: translate(-50%, -46%) scale(0.985);
+  filter: blur(4px) brightness(0.72);
+}
+.loader-scene.booting-in.boot-visible {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+  filter: blur(0) brightness(1);
+  transition:
+    opacity 0.95s cubic-bezier(.18,.7,.15,1),
+    transform 0.95s cubic-bezier(.18,.7,.15,1),
+    filter 0.95s cubic-bezier(.18,.7,.15,1);
+}
+
+.profile {
+  width: 72px !important;
+  height: 72px !important;
+  border-width: 2px !important;
+}
+.profile img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  transform: scale(1.08);
+}
+.profile.carl img,
+.profile.frank img,
+.profile.wren img {
+  transform: scale(1.02);
+}
+.profile::after { inset: 7px !important; }
+
+.profile.carl.carl-zone-anchor {
+  z-index: 54 !important;
+  opacity: 0.86 !important;
+  pointer-events: none !important;
+  filter: saturate(0.88) contrast(0.94) brightness(0.92);
+}
+.profile.carl.carl-impact-visible {
+  z-index: 88 !important;
+  opacity: 1 !important;
+  filter: saturate(1.05) contrast(1.04) brightness(1) drop-shadow(0 0 10px rgba(0,0,0,0.92));
+}
+.profile.carl.carl-ring-death {
+  z-index: 90 !important;
+  animation: carlElectricFlicker 1.25s steps(1) 2 !important;
+}
+@keyframes carlElectricFlicker {
+  0%, 10%, 22%, 36%, 54%, 72% {
+    border-color: rgba(255, 29, 37, 1);
+    box-shadow:
+      0 0 0 3px rgba(255,29,37,0.94),
+      0 0 16px rgba(255,29,37,0.80),
+      0 0 36px rgba(255,29,37,0.34);
+    filter: contrast(1.18) saturate(1.18);
+  }
+  11%, 21%, 37%, 53%, 73%, 100% {
+    border-color: rgba(242,238,229,0.72);
+    box-shadow:
+      0 0 0 1px rgba(255,255,255,0.16),
+      0 0 12px rgba(0,0,0,0.90);
+    filter: grayscale(0.18) contrast(0.95);
+  }
+}
+.profile.carl.burying {
+  z-index: 49 !important;
+  opacity: 0.75 !important;
+}
+
+.engage.heart-story {
+  z-index: 36 !important;
+  font-size: 17px !important;
+  line-height: 1;
+  color: var(--pink) !important;
+  filter: drop-shadow(0 0 7px rgba(255,111,174,0.24));
+  animation-name: heartQuickRise !important;
+}
+@keyframes heartQuickRise {
+  0% { opacity: 0; transform: translateY(16px) translateX(0) scale(0.72) rotate(-2deg); }
+  10% { opacity: 0.9; }
+  72% { opacity: 0.82; }
+  100% { opacity: 0; transform: translateY(-110vh) translateX(var(--drift)) scale(0.92) rotate(6deg); }
+}
+.engage.carl-trigger-heart.asset-heart,
+.engage.heart.carl-trigger-heart,
+.carl-trigger-heart.asset-heart {
+  width: 22px !important;
+  height: 22px !important;
+  z-index: 91 !important;
+  animation: none !important;
+  pointer-events: none !important;
+  transform-origin: center center !important;
+  overflow: visible !important;
+  filter: none !important;
+}
+.carl-trigger-heart .carl-heart-pink,
+.carl-trigger-heart .carl-heart-grey {
+  transition:
+    opacity 0.62s cubic-bezier(.16,.8,.15,1),
+    filter 0.62s cubic-bezier(.16,.8,.15,1),
+    transform 0.62s cubic-bezier(.16,.8,.15,1) !important;
+}
+.carl-trigger-heart.grey-taking-over .carl-heart-pink {
+  opacity: 0.02 !important;
+  filter: grayscale(1) brightness(0.68) !important;
+  transform: scale(0.88) rotate(-10deg) !important;
+}
+.carl-trigger-heart.grey-taking-over .carl-heart-grey,
+.carl-trigger-heart.dead-stage .carl-heart-grey {
+  opacity: 1 !important;
+  filter: grayscale(1) brightness(0.92) contrast(1.2) drop-shadow(0 0 7px rgba(235,235,235,0.16)) !important;
+  transform: scale(1.06) rotate(4deg) !important;
+}
+
+.carl-zap-spark {
+  position: absolute;
+  width: 34px;
+  height: 34px;
+  transform: translate(-50%, -50%);
+  z-index: 95;
+  pointer-events: none;
+  background:
+    linear-gradient(35deg, transparent 0 42%, rgba(255,255,255,0.96) 43% 48%, rgba(255,29,37,0.92) 49% 55%, transparent 56%),
+    linear-gradient(-24deg, transparent 0 44%, rgba(255,255,255,0.88) 45% 49%, rgba(255,29,37,0.80) 50% 54%, transparent 55%);
+  filter: drop-shadow(0 0 8px rgba(255,29,37,0.86));
+  animation: carlZapPop 0.50s steps(3) forwards;
+}
+@keyframes carlZapPop {
+  0% { opacity: 0; transform: translate(-50%, -50%) scale(0.2) rotate(-8deg); }
+  18% { opacity: 1; transform: translate(-50%, -50%) scale(1.15) rotate(4deg); }
+  54% { opacity: 0.9; transform: translate(-50%, -50%) scale(0.86) rotate(-3deg); }
+  100% { opacity: 0; transform: translate(-50%, -50%) scale(1.6) rotate(8deg); }
+}
