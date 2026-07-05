@@ -7156,3 +7156,237 @@ body {
   border-radius: 50% !important;
   overflow: hidden !important;
 }
+
+/* =========================================================
+   BUILD34 DIRECTOR TIMELINE PASS — verified fresh from channel-17.github.io-main 34.zip
+   Purpose: loader birth, smoke hearts, lazy maintenance avatars, delayed symbol war,
+   broken-heart circuit contact with Carl. No Bobbi/chalkboard additions.
+========================================================= */
+
+/* 0–1%: loader resolves in instead of hard-spawning. */
+#loaderScene.loader-scene.booting-in {
+  opacity: 0 !important;
+  transform: translate(-50%, -47%) scale(0.982) !important;
+  filter: blur(5px) brightness(0.64) !important;
+}
+#loaderScene.loader-scene.booting-in.boot-visible {
+  opacity: 1 !important;
+  transform: translate(-50%, -50%) scale(1) !important;
+  filter: blur(0) brightness(1) !important;
+  transition:
+    opacity 1.08s cubic-bezier(.16,.72,.12,1),
+    transform 1.08s cubic-bezier(.16,.72,.12,1),
+    filter 1.08s cubic-bezier(.16,.72,.12,1) !important;
+}
+#percent.percent {
+  animation: c17PercentHumanFlicker 1.45s steps(2,end) infinite !important;
+}
+@keyframes c17PercentHumanFlicker {
+  0%, 100% { opacity: .94; }
+  46% { opacity: .72; }
+  52% { opacity: .98; }
+}
+
+/* Calm the loader: nervous, not seizure. */
+#loader.loader.offcourse {
+  animation: c17BarLowNerves 1.35s steps(2,end) infinite !important;
+}
+@keyframes c17BarLowNerves {
+  50% { transform: translateX(.5px); filter: brightness(1.08); }
+}
+#fill.fill {
+  transition: width .14s steps(1,end) !important;
+}
+
+/* Hearts are smoke markers: sporadic, readable, red/pink, not a filled wall. */
+.engage.heart-story {
+  z-index: 38 !important;
+  font-size: var(--heart-font, 24px) !important;
+  animation-name: c17SmokeHeartRise !important;
+  animation-duration: var(--dur, 7.4s) !important;
+  animation-timing-function: cubic-bezier(.24,.68,.18,1) !important;
+  animation-fill-mode: forwards !important;
+  opacity: 0;
+  filter: drop-shadow(0 0 7px rgba(0,0,0,.72)) !important;
+}
+@keyframes c17SmokeHeartRise {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 22px, 0) scale(calc(var(--heart-scale,1) * .86)) rotate(var(--start-rot,0deg));
+  }
+  10% { opacity: .86; }
+  58% {
+    opacity: .84;
+    transform: translate3d(calc(var(--drift,150px) * .35), -58vh, 0) scale(var(--heart-scale,1)) rotate(8deg);
+  }
+  78% { opacity: .55; filter: saturate(.75) brightness(.68) drop-shadow(0 0 5px rgba(0,0,0,.78)); }
+  100% {
+    opacity: 0;
+    filter: saturate(.1) brightness(.12) drop-shadow(0 0 2px rgba(0,0,0,.9));
+    transform: translate3d(var(--drift,170px), -112vh, 0) scale(calc(var(--heart-scale,1) * .94)) rotate(var(--end-rot,38deg));
+  }
+}
+.engage.heart-story.heart-fade-black {
+  color: #030303 !important;
+  filter: grayscale(1) brightness(.16) drop-shadow(0 0 3px rgba(0,0,0,.9)) !important;
+}
+
+/* 17% rejected heart: visibly turns gray and gets flicked off the sequence. */
+.rejected-broken-heart.asset-heart {
+  position: absolute !important;
+  width: 46px !important;
+  height: 46px !important;
+  z-index: 124 !important;
+  pointer-events: none !important;
+  filter: drop-shadow(0 0 8px rgba(0,0,0,.78)) !important;
+}
+.rejected-broken-heart.asset-heart img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain !important;
+  transition: filter .22s steps(2,end), opacity .22s steps(2,end), transform .22s steps(2,end) !important;
+}
+.rejected-broken-heart.rejected-grey img {
+  filter: grayscale(1) brightness(.82) contrast(1.16) !important;
+  transform: scale(1.10) rotate(-8deg) !important;
+}
+
+/* Avatar response: lazy system maintenance, not martial law. */
+.profile {
+  width: 72px !important;
+  height: 72px !important;
+  border-width: 2px !important;
+}
+.profile.loader-cover {
+  z-index: 58 !important;
+}
+.profile.symbol-touch {
+  z-index: 74 !important;
+}
+.profile img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+}
+
+/* Carl: visible in left pocket, not spotlight. The flicker is original circle/ring energy. */
+.profile.carl.carl-zone-anchor {
+  z-index: 64 !important;
+  opacity: .94 !important;
+  pointer-events: none !important;
+  filter: saturate(.94) contrast(.96) brightness(.94) drop-shadow(0 0 8px rgba(0,0,0,.82)) !important;
+}
+.profile.carl.carl-impact-visible,
+.profile.carl.carl-ready,
+.profile.carl.carl-ring-death {
+  z-index: 98 !important;
+  opacity: 1 !important;
+}
+.profile.carl.carl-zone-anchor.carl-ready,
+.profile.carl.carl-zone-anchor.carl-impact-visible.carl-ready {
+  pointer-events: auto !important;
+  cursor: pointer !important;
+}
+.profile.carl.carl-ring-death {
+  animation: c17CarlOriginalCircleFlicker .92s steps(1) 2 !important;
+}
+@keyframes c17CarlOriginalCircleFlicker {
+  0%, 11%, 29%, 43%, 61%, 76% {
+    border-color: rgba(255,29,37,1);
+    box-shadow:
+      0 0 0 4px rgba(255,29,37,.92),
+      0 0 16px rgba(255,29,37,.82),
+      0 0 38px rgba(255,29,37,.34) !important;
+    filter: contrast(1.18) saturate(1.16) !important;
+  }
+  12%, 28%, 44%, 60%, 77%, 100% {
+    border-color: rgba(242,238,229,.70);
+    box-shadow:
+      0 0 0 1px rgba(255,255,255,.18),
+      0 0 11px rgba(0,0,0,.88) !important;
+    filter: grayscale(.16) contrast(.96) !important;
+  }
+}
+.profile.carl.burying {
+  z-index: 49 !important;
+  opacity: .72 !important;
+}
+
+/* 55–64% gray broken-heart return: big enough to read, electric edge contact. */
+.engage.carl-trigger-heart.asset-heart,
+.engage.heart.carl-trigger-heart,
+.carl-trigger-heart.asset-heart {
+  width: 82px !important;
+  height: 82px !important;
+  z-index: 128 !important;
+  animation: none !important;
+  pointer-events: none !important;
+  overflow: visible !important;
+  transform-origin: center center !important;
+  filter: drop-shadow(0 0 10px rgba(0,0,0,.86)) !important;
+}
+.carl-trigger-heart .carl-heart-layer {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain !important;
+}
+.carl-trigger-heart .carl-heart-pink {
+  opacity: 0 !important;
+}
+.carl-trigger-heart .carl-heart-grey,
+.carl-trigger-heart.dead-stage .carl-heart-grey,
+.carl-trigger-heart.grey-taking-over .carl-heart-grey {
+  opacity: 1 !important;
+  filter: grayscale(1) brightness(.90) contrast(1.24) drop-shadow(0 0 10px rgba(245,245,245,.18)) !important;
+  transform: scale(1.05) rotate(3deg) !important;
+}
+.carl-zap-spark {
+  width: 74px !important;
+  height: 74px !important;
+  z-index: 140 !important;
+  filter: drop-shadow(0 0 12px rgba(255,29,37,.95)) drop-shadow(0 0 24px rgba(55,115,255,.55)) !important;
+  background:
+    linear-gradient(35deg, transparent 0 40%, rgba(83,145,255,.98) 41% 46%, rgba(255,255,255,.95) 47% 50%, rgba(255,29,37,.9) 51% 56%, transparent 57%),
+    linear-gradient(-25deg, transparent 0 43%, rgba(83,145,255,.92) 44% 48%, rgba(255,255,255,.9) 49% 52%, rgba(255,29,37,.84) 53% 57%, transparent 58%) !important;
+}
+
+/* Symbol phase: it wakes at 50% and gets the blue-avatar response at 52%, not before. */
+#signalGhost.signal-ghost.waking,
+.signal-ghost.waking {
+  opacity: .24 !important;
+  visibility: visible !important;
+  filter: drop-shadow(0 0 18px rgba(223,255,63,.22)) !important;
+  animation: c17SignalWakeBreathe 3.2s ease-in-out infinite !important;
+}
+#signalGhost.signal-ghost.burning,
+.signal-ghost.burning {
+  opacity: .46 !important;
+  visibility: visible !important;
+  filter: drop-shadow(0 0 28px rgba(223,255,63,.38)) !important;
+}
+@keyframes c17SignalWakeBreathe {
+  50% { opacity: .34; transform: translate(-50%, -50%) scale(1.022); }
+}
+.profile.hive-reveal.has-hive-asset img {
+  filter: brightness(1.36) saturate(1.55) contrast(1.08) drop-shadow(0 0 12px rgba(88,170,255,.56)) !important;
+}
+.profile.pixel-deteriorate {
+  animation: avatarPixelDeterioration 1.25s steps(7) forwards !important;
+}
+
+/* Frank blue-square artifact stays killed. */
+.profile.frank,
+.profile.frank img,
+.profile.blue-frank img,
+.profile.frank.frank-processing,
+.profile.frank.frank-final-hold {
+  border-radius: 50% !important;
+  overflow: hidden !important;
+  box-shadow: 0 0 13px rgba(0,0,0,.84), 0 0 0 1px rgba(255,255,255,.14) !important;
+}
+.profile.frank.frank-processing img,
+.profile.frank.frank-final-hold img {
+  filter: brightness(1.05) contrast(1.02) saturate(.96) !important;
+}
