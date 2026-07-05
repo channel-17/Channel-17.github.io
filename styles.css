@@ -2735,7 +2735,7 @@ body {
 /* Hearts: back to emoji, sparse, vertical, red -> pink -> gray -> black, then off-screen. */
 .engage.heart-story {
   z-index: 70;
-  font-size: 16px !important;
+  font-size: var(--heart-font, 20px) !important;
   line-height: 1;
   text-shadow: 0 0 8px rgba(0,0,0,0.72);
   animation-name: heartLongRise !important;
@@ -7069,4 +7069,90 @@ body {
   width: 62px !important;
   height: 62px !important;
   z-index: 125 !important;
+}
+
+
+/* =========================================================
+   BUILD32 FIELD REPAIR 3 — real field hearts + visible signal/contact
+   Fresh pass from Hateit.mp4 feedback.
+========================================================= */
+
+/* Normal hearts are sporadic field smoke, not a lane or wall. */
+.engage.heart-story {
+  font-size: var(--heart-font, 20px) !important;
+  animation-name: heartFieldRiseRight !important;
+  animation-duration: var(--dur, 5.4s) !important;
+  animation-timing-function: cubic-bezier(.28,.62,.18,1) !important;
+  animation-fill-mode: forwards !important;
+  opacity: 0;
+}
+@keyframes heartFieldRiseRight {
+  0% { opacity: 0; transform: translate3d(0, 18px, 0) scale(calc(var(--heart-scale, 1) * .86)) rotate(var(--start-rot, 0deg)); }
+  10% { opacity: .88; }
+  58% { opacity: .82; transform: translate3d(calc(var(--drift, 190px) * .42), -58vh, 0) scale(var(--heart-scale, 1)) rotate(8deg); }
+  82% { opacity: .52; filter: saturate(.65) brightness(.62); }
+  100% { opacity: 0; filter: saturate(.1) brightness(.15); transform: translate3d(var(--drift, 220px), -112vh, 0) scale(calc(var(--heart-scale, 1) * .92)) rotate(var(--end-rot, 42deg)); }
+}
+
+/* Carl's broken-heart PNG has to be visible and big enough to read. */
+.engage.carl-trigger-heart.asset-heart,
+.engage.heart.carl-trigger-heart,
+.carl-trigger-heart.asset-heart {
+  width: 70px !important;
+  height: 70px !important;
+  z-index: 122 !important;
+  animation: none !important;
+  pointer-events: none !important;
+  overflow: visible !important;
+}
+.carl-trigger-heart.grey-taking-over .carl-heart-pink {
+  opacity: 0.08 !important;
+  transition-duration: .38s !important;
+}
+.carl-trigger-heart.grey-taking-over .carl-heart-grey,
+.carl-trigger-heart.dead-stage .carl-heart-grey {
+  opacity: 1 !important;
+  transition-duration: .38s !important;
+  filter: grayscale(1) brightness(.92) contrast(1.24) drop-shadow(0 0 10px rgba(245,245,245,.18)) !important;
+}
+
+/* Carl must exist in his left-loader pocket and remain readable until the circuit completes. */
+.profile.carl.carl-zone-anchor {
+  z-index: 66 !important;
+  opacity: .96 !important;
+  pointer-events: none !important;
+}
+.profile.carl.carl-impact-visible,
+.profile.carl.carl-ready,
+.profile.carl.carl-ring-death {
+  z-index: 92 !important;
+}
+.profile.carl.carl-ring-death {
+  animation: carlThreeBoomFlicker 1.02s steps(1) 1 forwards !important;
+}
+
+/* The signal can ghost back in around 20%; it should not be visually dead until the end. */
+#signalGhost.signal-ghost.waking,
+.signal-ghost.waking {
+  opacity: .20 !important;
+  visibility: visible !important;
+  filter: drop-shadow(0 0 13px rgba(223,255,63,.18)) !important;
+  animation: ghostSignalBreathe 3.4s ease-in-out infinite !important;
+}
+#signalGhost.signal-ghost.burning,
+.signal-ghost.burning {
+  opacity: .34 !important;
+  visibility: visible !important;
+  filter: drop-shadow(0 0 18px rgba(223,255,63,.28)) !important;
+}
+@keyframes ghostSignalBreathe {
+  50% { opacity: .32; transform: translate(-50%, -50%) scale(1.025); }
+}
+
+/* The Frank processing box should not read as a blue square artifact. */
+.profile.frank,
+.profile.frank img,
+.profile.blue-frank img {
+  border-radius: 50% !important;
+  overflow: hidden !important;
 }
