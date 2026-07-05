@@ -6875,7 +6875,7 @@ body {
 }
 .profile.carl.carl-ring-death {
   z-index: 90 !important;
-  animation: carlElectricFlicker 1.25s steps(1) 2 !important;
+  animation: carlElectricFlicker 0.88s steps(1) 2 !important;
 }
 @keyframes carlElectricFlicker {
   0%, 10%, 22%, 36%, 54%, 72% {
@@ -6901,23 +6901,23 @@ body {
 
 .engage.heart-story {
   z-index: 36 !important;
-  font-size: 17px !important;
+  font-size: 18px !important;
   line-height: 1;
   color: var(--pink) !important;
   filter: drop-shadow(0 0 7px rgba(255,111,174,0.24));
-  animation-name: heartQuickRise !important;
+  animation-name: heartSparseRise !important;
 }
-@keyframes heartQuickRise {
-  0% { opacity: 0; transform: translateY(16px) translateX(0) scale(0.72) rotate(-2deg); }
-  10% { opacity: 0.9; }
-  72% { opacity: 0.82; }
-  100% { opacity: 0; transform: translateY(-110vh) translateX(var(--drift)) scale(0.92) rotate(6deg); }
+@keyframes heartSparseRise {
+  0% { opacity: 0; transform: translateY(18px) translateX(0) scale(0.76) rotate(var(--start-rot)); }
+  10% { opacity: 0.88; }
+  58% { opacity: 0.92; }
+  100% { opacity: 0; transform: translateY(-112vh) translateX(var(--drift)) scale(0.98) rotate(var(--end-rot)); }
 }
 .engage.carl-trigger-heart.asset-heart,
 .engage.heart.carl-trigger-heart,
 .carl-trigger-heart.asset-heart {
-  width: 22px !important;
-  height: 22px !important;
+  width: 42px !important;
+  height: 42px !important;
   z-index: 91 !important;
   animation: none !important;
   pointer-events: none !important;
@@ -6928,9 +6928,9 @@ body {
 .carl-trigger-heart .carl-heart-pink,
 .carl-trigger-heart .carl-heart-grey {
   transition:
-    opacity 0.62s cubic-bezier(.16,.8,.15,1),
-    filter 0.62s cubic-bezier(.16,.8,.15,1),
-    transform 0.62s cubic-bezier(.16,.8,.15,1) !important;
+    opacity 0.48s cubic-bezier(.16,.8,.15,1),
+    filter 0.48s cubic-bezier(.16,.8,.15,1),
+    transform 0.48s cubic-bezier(.16,.8,.15,1) !important;
 }
 .carl-trigger-heart.grey-taking-over .carl-heart-pink {
   opacity: 0.02 !important;
@@ -6962,4 +6962,111 @@ body {
   18% { opacity: 1; transform: translate(-50%, -50%) scale(1.15) rotate(4deg); }
   54% { opacity: 0.9; transform: translate(-50%, -50%) scale(0.86) rotate(-3deg); }
   100% { opacity: 0; transform: translate(-50%, -50%) scale(1.6) rotate(8deg); }
+}
+
+
+/* BUILD32 FIELD HEART CONTACT PATCH — sparse hearts + visible break + edge zap */
+.engage.heart-story {
+  font-size: 18px !important;
+  animation-name: heartSparseRise !important;
+  opacity: 0.9;
+}
+.engage.carl-trigger-heart.asset-heart,
+.engage.heart.carl-trigger-heart,
+.carl-trigger-heart.asset-heart {
+  width: 42px !important;
+  height: 42px !important;
+  z-index: 96 !important;
+}
+.carl-trigger-heart.grey-taking-over .carl-heart-pink {
+  opacity: 0 !important;
+  transform: scale(0.82) rotate(-14deg) !important;
+}
+.carl-trigger-heart.grey-taking-over .carl-heart-grey,
+.carl-trigger-heart.dead-stage .carl-heart-grey {
+  opacity: 1 !important;
+  transform: scale(1.10) rotate(6deg) !important;
+}
+.profile.carl.carl-zone-anchor {
+  z-index: 62 !important;
+  opacity: 0.94 !important;
+}
+.profile.carl.carl-impact-visible,
+.profile.carl.carl-ring-death {
+  z-index: 98 !important;
+}
+.carl-zap-spark {
+  width: 46px !important;
+  height: 46px !important;
+  z-index: 110 !important;
+  filter: drop-shadow(0 0 10px rgba(255,29,37,0.95)) drop-shadow(0 0 18px rgba(255,255,255,0.35)) !important;
+}
+
+
+/* BUILD32 FIELD HEART CONTACT REPAIR 2 — bigger rejected heart, sporadic hearts, visible signal, no Frank blue box */
+#signalGhost.signal-ghost.waking,
+.signal-ghost.waking {
+  opacity: 0.24 !important;
+  visibility: visible !important;
+  filter: drop-shadow(0 0 16px rgba(223,255,63,0.18)) !important;
+  animation: none !important;
+}
+#signalGhost.signal-ghost.burning,
+.signal-ghost.burning {
+  opacity: 0.46 !important;
+  visibility: visible !important;
+  filter: drop-shadow(0 0 28px rgba(223,255,63,0.38)) !important;
+  animation: ghostBurn 1.2s steps(2) infinite !important;
+}
+.profile.blue-frank,
+.profile.frank.frank-processing,
+.profile.frank.frank-final-hold {
+  border-color: rgba(242,238,229,0.68) !important;
+  box-shadow: 0 0 13px rgba(0,0,0,0.84), 0 0 0 1px rgba(255,255,255,0.14) !important;
+}
+.profile.frank.frank-processing img,
+.profile.frank.frank-final-hold img {
+  filter: brightness(1.05) contrast(1.02) saturate(0.96) !important;
+}
+.engage.heart-story {
+  font-size: 20px !important;
+  animation-name: heartFieldScatterRise !important;
+}
+.engage.heart-story.heart-fade-black {
+  color: #020202 !important;
+  filter: grayscale(1) brightness(0.22) drop-shadow(0 0 2px rgba(0,0,0,0.7)) !important;
+}
+@keyframes heartFieldScatterRise {
+  0% { opacity: 0; transform: translateY(20px) translateX(0) scale(calc(var(--heart-scale) * .86)) rotate(var(--start-rot)); }
+  12% { opacity: .86; }
+  56% { opacity: .84; }
+  100% { opacity: 0; transform: translateY(-106vh) translateX(var(--drift)) scale(var(--heart-scale)) rotate(var(--end-rot)); }
+}
+.engage.carl-trigger-heart.asset-heart,
+.engage.heart.carl-trigger-heart,
+.carl-trigger-heart.asset-heart {
+  width: 64px !important;
+  height: 64px !important;
+  z-index: 112 !important;
+}
+.carl-trigger-heart .carl-heart-pink,
+.carl-trigger-heart .carl-heart-grey {
+  transition:
+    opacity .34s cubic-bezier(.12,.88,.12,1),
+    filter .34s cubic-bezier(.12,.88,.12,1),
+    transform .34s cubic-bezier(.12,.88,.12,1) !important;
+}
+.carl-trigger-heart.grey-taking-over .carl-heart-pink {
+  opacity: 0 !important;
+  transform: scale(0.74) rotate(-18deg) !important;
+}
+.carl-trigger-heart.grey-taking-over .carl-heart-grey,
+.carl-trigger-heart.dead-stage .carl-heart-grey {
+  opacity: 1 !important;
+  transform: scale(1.16) rotate(8deg) !important;
+}
+.carl-zap-spark {
+  width: 62px !important;
+  height: 62px !important;
+  z-index: 125 !important;
 }
