@@ -58,7 +58,6 @@ let carlTriggered = false;
 let carlOpened = false;
 let hiveWaveStarted = false;
 let deadHeartReleased = false;
-let carlSceneComplete = false;
 let frankDutyStarted = false;
 let frankDutyFramesPlayed = false;
 let woundPulseTimer = null;
@@ -153,7 +152,7 @@ function armJinxShadowFrequency() {
 
   jinxFrequencyTimer = window.setTimeout(() => {
     pulseJinxShadowFrequency();
-  }, 760);
+  }, 520);
 }
 
 function closeFounderWindow() {
@@ -227,18 +226,20 @@ const normalAssets = [
 
 const loaderTargets = [
   // CHANNEL 17 ZONE MAP — LOADER BAR SUPPRESSION FIELD.
-  // The virus suppresses in separate messy bites, not a neat animated loader bar.
-  { x: 25.0, y: 30.95, zone: "loader", cluster: "left-bite-high" },
-  { x: 74.0, y: 31.55, zone: "loader", cluster: "right-bite-low" },
-  { x: 48.0, y: 30.65, zone: "loader", cluster: "center-bite-high" },
-  { x: 35.0, y: 31.85, zone: "loader", cluster: "left-bite-low" },
-  { x: 63.0, y: 30.85, zone: "loader", cluster: "right-bite-high" },
-  { x: 29.0, y: 32.20, zone: "loader", cluster: "left-spill" },
-  { x: 69.5, y: 32.05, zone: "loader", cluster: "right-spill" },
-  { x: 42.0, y: 31.35, zone: "loader", cluster: "inner-left" },
-  { x: 56.5, y: 31.80, zone: "loader", cluster: "inner-right" },
-  { x: 22.0, y: 31.65, zone: "loader", cluster: "far-left-smother" },
-  { x: 78.0, y: 30.95, zone: "loader", cluster: "far-right-smother" }
+  // Not a road/highway and not one spinning blob.
+  // Virus logic attacks the loader face: far left, far right, center, then exposed gaps.
+  // ZIP28 correction: band dropped one small tick from the too-high pass so the circles sit ON the bar, not above it.
+  { x: 24.0, y: 31.15, zone: "loader", cluster: "bar-left-edge" },
+  { x: 76.0, y: 31.15, zone: "loader", cluster: "bar-right-edge" },
+  { x: 50.0, y: 31.00, zone: "loader", cluster: "bar-center" },
+  { x: 36.0, y: 31.30, zone: "loader", cluster: "bar-left-gap" },
+  { x: 64.0, y: 31.30, zone: "loader", cluster: "bar-right-gap" },
+  { x: 30.0, y: 30.70, zone: "loader", cluster: "bar-left-high" },
+  { x: 70.0, y: 30.70, zone: "loader", cluster: "bar-right-high" },
+  { x: 43.0, y: 31.75, zone: "loader", cluster: "bar-center-left" },
+  { x: 57.0, y: 31.75, zone: "loader", cluster: "bar-center-right" },
+  { x: 27.5, y: 32.05, zone: "loader", cluster: "bar-left-low" },
+  { x: 72.5, y: 31.95, zone: "loader", cluster: "bar-right-low" }
 ];
 
 const symbolTargets = [
@@ -252,50 +253,47 @@ const symbolTargets = [
 ];
 
 const missTargets = [
-  // Messy near-misses so the loader feels suppressed by zones, not traced by a ruler.
-  { x: 20.5, y: 30.80, zone: "miss" },
-  { x: 79.5, y: 32.80, zone: "miss" },
-  { x: 32.0, y: 30.30, zone: "miss" },
-  { x: 68.0, y: 33.10, zone: "miss" },
-  { x: 45.0, y: 32.75, zone: "miss" },
-  { x: 59.0, y: 30.15, zone: "miss" }
+  // Loader-edge pressure only. No random drift into Frank/turtle territory.
+  // ZIP28 correction: right-side misses stay inside the loader lane.
+  { x: 22.0, y: 32.55, zone: "miss" },
+  { x: 78.0, y: 32.35, zone: "miss" },
+  { x: 33.0, y: 32.60, zone: "miss" },
+  { x: 67.0, y: 32.50, zone: "miss" }
 ];
 
 const coverageTargets = [...loaderTargets, ...symbolTargets, ...missTargets];
 
-// CARL ZONE — Build 32 correction from Jinx sketch.
-// Carl sits on the LEFT side of the loader. The single fate heart must look exactly like
-// the other hearts until the top-right fan catches it. Then it gets violently shoved
-// left/offscreen, overcorrects down to the bottom-left, and cuts upward into Carl.
-const CARL_ZONE = { x: 20.5, y: 36.2 };
-const CARL_HEART_START = { x: 88, y: 96 };
+// CARL ZONE — maintenance accident canon.
+// Carl belongs with the normal avatar stack: visible, left of the loader, not a special early star.
+// The heart begins as an ordinary pink heart at 17%, rises with the other hearts, then the system/fan
+// knocks it off-course at the top. That rejection turns it into the gray broken-heart PNG, it loops
+// through a big offscreen leaf-curl, and the broken heart zaps Carl by accident.
+const CARL_ZONE = { x: 21.0, y: 31.35 };
+const CARL_HEART_START = { x: 86, y: 92 };
 const CARL_HEART_PATH = [
-  // Zone 1: it is just another pink heart. Same size, same feeling, reverse-leaf rise.
-  { left: "88%", top: "96%", transform: "translate(-50%, -50%) translateX(0px) scale(1) rotate(-4deg)", opacity: 0, offset: 0 },
-  { left: "86%", top: "88%", transform: "translate(-50%, -50%) translateX(-9px) scale(1) rotate(2deg)", opacity: 0.88, offset: 0.09 },
-  { left: "89%", top: "77%", transform: "translate(-50%, -50%) translateX(8px) scale(1) rotate(-3deg)", opacity: 0.95, offset: 0.19 },
-  { left: "85%", top: "64%", transform: "translate(-50%, -50%) translateX(-11px) scale(1) rotate(4deg)", opacity: 1, offset: 0.29 },
-  { left: "89%", top: "49%", transform: "translate(-50%, -50%) translateX(9px) scale(1) rotate(-2deg)", opacity: 1, offset: 0.39 },
-  { left: "86%", top: "30%", transform: "translate(-50%, -50%) translateX(-7px) scale(1) rotate(3deg)", opacity: 1, offset: 0.49 },
-  { left: "90%", top: "17%", transform: "translate(-50%, -50%) translateX(3px) scale(1) rotate(1deg)", opacity: 1, offset: 0.55 },
+  // Beat 1: normal heart/smoke rise. It should not look special yet.
+  { left: "86%", top: "92%", transform: "translate(-50%, -50%) scale(0.76) rotate(-3deg)", opacity: 0, offset: 0 },
+  { left: "87%", top: "82%", transform: "translate(-50%, -50%) scale(0.82) rotate(2deg)", opacity: 0.72, offset: 0.08 },
+  { left: "85%", top: "70%", transform: "translate(-50%, -50%) scale(0.88) rotate(-2deg)", opacity: 0.88, offset: 0.17 },
+  { left: "87%", top: "56%", transform: "translate(-50%, -50%) scale(0.92) rotate(3deg)", opacity: 0.94, offset: 0.26 },
+  { left: "84%", top: "40%", transform: "translate(-50%, -50%) scale(0.96) rotate(-4deg)", opacity: 1, offset: 0.34 },
+  { left: "86%", top: "18%", transform: "translate(-50%, -50%) scale(1.0) rotate(5deg)", opacity: 1, offset: 0.43 },
 
-  // Zone 2: the top-right fan rejects it. This is the break: pink heart becomes gray broken heart.
-  { left: "94%", top: "18%", transform: "translate(-50%, -50%) scale(1) rotate(20deg)", opacity: 1, offset: 0.575 },
-  { left: "70%", top: "20%", transform: "translate(-50%, -50%) scale(1) rotate(52deg)", opacity: 1, offset: 0.615 },
-  { left: "34%", top: "15%", transform: "translate(-50%, -50%) scale(1) rotate(-64deg)", opacity: 0.96, offset: 0.665 },
-  { left: "-18%", top: "24%", transform: "translate(-50%, -50%) scale(1) rotate(78deg)", opacity: 0.82, offset: 0.720 },
+  // Beat 2: top-right fan/rejection. Harder directional push, not a gentle turn.
+  { left: "74%", top: "10%", transform: "translate(-50%, -50%) scale(1.02) rotate(-18deg)", opacity: 1, offset: 0.49 },
+  { left: "45%", top: "8%", transform: "translate(-50%, -50%) scale(1.03) rotate(24deg)", opacity: 1, offset: 0.56 },
+  { left: "12%", top: "15%", transform: "translate(-50%, -50%) scale(1.03) rotate(-30deg)", opacity: 1, offset: 0.63 },
+  { left: "-16%", top: "34%", transform: "translate(-50%, -50%) scale(1.02) rotate(32deg)", opacity: 0.96, offset: 0.70 },
 
-  // Zone 3: it overcorrects low-left, then cuts upward in the accidental curl toward Carl.
-  { left: "-24%", top: "72%", transform: "translate(-50%, -50%) scale(1) rotate(-62deg)", opacity: 0.78, offset: 0.770 },
-  { left: "2%", top: "100%", transform: "translate(-50%, -50%) scale(1) rotate(42deg)", opacity: 0.96, offset: 0.815 },
-  { left: "7%", top: "86%", transform: "translate(-50%, -50%) scale(1) rotate(-28deg)", opacity: 1, offset: 0.855 },
-  { left: "12%", top: "66%", transform: "translate(-50%, -50%) scale(1) rotate(16deg)", opacity: 1, offset: 0.895 },
-  { left: "17%", top: "48%", transform: "translate(-50%, -50%) scale(1) rotate(-9deg)", opacity: 1, offset: 0.940 },
+  // Beat 3: overcorrect offscreen/down-left, then cut upward into the accidental static-zap.
+  { left: "-20%", top: "74%", transform: "translate(-50%, -50%) scale(1.0) rotate(-24deg)", opacity: 0.90, offset: 0.78 },
+  { left: "4%", top: "88%", transform: "translate(-50%, -50%) scale(0.98) rotate(18deg)", opacity: 0.95, offset: 0.85 },
+  { left: "12%", top: "68%", transform: "translate(-50%, -50%) scale(1.00) rotate(-12deg)", opacity: 1, offset: 0.90 },
+  { left: "17%", top: "48%", transform: "translate(-50%, -50%) scale(1.02) rotate(10deg)", opacity: 1, offset: 0.95 },
+  { left: `${CARL_ZONE.x}%`, top: `${CARL_ZONE.y}%`, transform: "translate(-50%, -50%) scale(1.04) rotate(0deg)", opacity: 1, offset: 0.992 },
+  { left: `${CARL_ZONE.x}%`, top: `${CARL_ZONE.y}%`, transform: "translate(-50%, -50%) scale(0.68) rotate(0deg)", opacity: 0, offset: 1 }
+];
 
-  // Fate/contact: the electric-current bite happens here, not during the drift.
-  { left: `${CARL_ZONE.x}%`, top: `${CARL_ZONE.y}%`, transform: "translate(-50%, -50%) scale(1.02) rotate(0deg)", opacity: 1, offset: 0.985 },
-  { left: `${CARL_ZONE.x}%`, top: `${CARL_ZONE.y}%`, transform: "translate(-50%, -50%) scale(0.72) rotate(0deg)", opacity: 0, offset: 1 }
-]
 function setProgress(value) {
   progress = Math.max(0, Math.min(100, value));
   fill.style.width = progress <= 0 ? "0%" : `${progress}%`;
@@ -303,19 +301,9 @@ function setProgress(value) {
 }
 
 const loading = setInterval(() => {
-  // Once the 17% heart/Carl scene begins, the main loader story must give it room.
-  // This prevents the Wren/late-avatar phase from taking over before the heart even
-  // reaches the fan-blown top of the screen.
-  const carlSceneHolding = deadHeartReleased && !carlSceneComplete;
-
-  if (carlSceneHolding) {
-    progress += 0.006;
-    if (progress > 18.55) progress = 18.55;
-  } else {
-    if (state === "normal") progress += 0.16;
-    if (state === "notice") progress += 0.035;
-    if (state === "hide") progress += 0.23;
-  }
+  if (state === "normal") progress += 0.16;
+  if (state === "notice") progress += 0.035;
+  if (state === "hide") progress += 0.115;
 
   if (progress >= 17 && !noticed) {
     noticed = true;
@@ -338,38 +326,44 @@ const loading = setInterval(() => {
     startAttack();
   }
 
-  if (progress >= 24 && !ghosted && carlSceneComplete) {
+  if (progress >= 24 && !ghosted) {
     ghosted = true;
     // Pyramid/signal stays fully hidden until the true signal reveal.
   }
 
-  if (progress >= 38 && !hiveWaveStarted && carlSceneComplete) {
+  if (progress >= 78 && !hiveWaveStarted) {
     hiveWaveStarted = true;
     beginHiveWave();
   }
 
-  if (progress >= 42 && !burning && carlSceneComplete) {
+  if (progress >= 72 && !burning) {
     burning = true;
     startBurnPulse();
   }
 
-  // The fate heart starts at 17% as one of the normal hearts before avatar landing.
-  if (progress >= 17.0 && !deadHeartReleased) {
+  // Carl is no longer an early feature. The heart begins as background motion;
+  // Carl appears only late, when the heart is already returning upward into the accident.
+  if (progress >= 17.05 && !deadHeartReleased) {
     deadHeartReleased = true;
     releaseDeadHeartTowardCarl();
   }
 
-  if (progress >= 55 && !generals && carlSceneComplete) {
+  if (progress >= 84 && !generals) {
     generals = true;
     deployGenerals();
   }
 
-  if (progress >= 72 && !wrenSeen && carlSceneComplete) {
+  if (progress >= 90 && !wrenSeen) {
     wrenSeen = true;
     spawnWren();
   }
 
-  if (progress >= 24 && !frankSeen && carlSceneComplete) {
+  if (progress >= 20.2 && !carlSeen) {
+    carlSeen = true;
+    setTimeout(() => spawnCarl(), 520);
+  }
+
+  if (progress >= 24 && !frankSeen) {
     frankSeen = true;
     spawnFrank();
   }
@@ -385,27 +379,27 @@ const loading = setInterval(() => {
 }, 45);
 
 function startAttack() {
-  // Suppression routine: separate ugly bites, not a left-to-right highway.
-  const openingBites = [0, 6, 3, 9];
-  openingBites.forEach((targetIndex, index) => {
-    const sides = ["left", "top", "right", "left", "top", "right", "left"];
-    setTimeout(() => spawnProfile(sides[index] || randomSide(), 0, { force: loaderTargets[targetIndex] }), index * 260);
+  // Maintenance reaction, not martial law: lazy single covers, spaced apart.
+  // The system is just covering exposed authenticity pixels while the heart story breathes.
+  loaderTargets.slice(0, 5).forEach((target, index) => {
+    const sides = ["left", "right", "top", "left", "right"];
+    setTimeout(() => spawnProfile(sides[index] || randomSide(), 0, { force: target }), index * 760);
   });
 
   profileTimer = setInterval(() => {
     if (completed) return;
     spawnProfile(randomSide());
-  }, 760);
+  }, 1280);
 
   engageTimer = setInterval(() => {
     if (completed) return;
     spawnEngagement();
-  }, 1080);
+  }, 640);
 
   slashTimer = setInterval(() => {
     if (completed) return;
     spawnSlash(randomSide());
-  }, 640);
+  }, 940);
 }
 
 function randomSide() {
@@ -457,37 +451,38 @@ function spawnSlash(side) {
 }
 
 function spawnEngagement() {
-  // Background validation hearts stay sparse. The Carl clue heart is handled separately.
-  if (Math.random() < 0.42) return;
+  // Hearts start first at 17%: soft signal smoke that helps the system notice where to land.
+  // Keep them ordinary and sparse; the special Carl heart is only special after it gets rejected.
+  if (Math.random() < 0.24) return;
 
   const item = document.createElement("div");
   item.className = "engage heart heart-story";
-  item.textContent = "🩷";
-  item.style.left = (82 + Math.random() * 12) + "%";
-  item.style.top = (92 + Math.random() * 7) + "%";
-  item.style.setProperty("--dur", (6.9 + Math.random() * 1.2) + "s");
-  item.style.setProperty("--drift", Math.round(-18 + Math.random() * 36) + "px");
+  item.textContent = "❤️";
+  item.style.left = (78 + Math.random() * 16) + "%";
+  item.style.top = (93 + Math.random() * 8) + "%";
+  item.style.setProperty("--dur", (9.4 + Math.random() * 2.2) + "s");
+  item.style.setProperty("--drift", Math.round(-28 + Math.random() * 56) + "px");
 
   engagementField.appendChild(item);
   engageCount++;
 
-  if (progress >= 38) {
-    setTimeout(() => { if (item.parentNode) item.textContent = "🩷"; }, 1150);
-    setTimeout(() => { if (item.parentNode) item.textContent = "🩶"; }, 2650);
-    setTimeout(() => { if (item.parentNode) item.textContent = "🖤"; }, 4400);
+  if (progress >= 78) {
+    setTimeout(() => { if (item.parentNode) item.textContent = "🩷"; }, 1450);
+    setTimeout(() => { if (item.parentNode) item.textContent = "🩶"; }, 3600);
+    setTimeout(() => { if (item.parentNode) item.textContent = "🖤"; }, 5600);
   }
 
-  setTimeout(() => item.remove(), 8900);
+  setTimeout(() => item.remove(), 11800);
 }
 
 function pickTarget() {
   const count = profileCount;
 
-  // Before the final signal moment, pressure stays in messy zones around the loader.
-  // It should suppress the bar, not draw a clean replacement bar over it.
+  // Before the final signal moment, all general avatar pressure belongs to the loader bar.
+  // Use a gap-seeking order so it feels like the machine is covering exposed authenticity.
   if (progress < 82) {
-    if (count % 5 === 1 || count % 7 === 3) return missTargets[count % missTargets.length];
-    return loaderTargets[(count * 3 + Math.floor(count / 2)) % loaderTargets.length];
+    if (count % 9 === 4) return missTargets[count % missTargets.length];
+    return loaderTargets[count % loaderTargets.length];
   }
 
   // Late-stage reassignment may touch the signal/pyramid zone.
@@ -501,7 +496,7 @@ function pickTarget() {
 function spawnProfile(side, delay = 0, opts = {}) {
   setTimeout(() => {
     const old = profileField.querySelectorAll(".profile:not(.carl):not(.frank):not(.wren)");
-    if (old.length > 9) old[0].remove();
+    if (old.length > 15) old[0].remove();
 
     const target = opts.force || pickTarget();
 
@@ -509,8 +504,8 @@ function spawnProfile(side, delay = 0, opts = {}) {
     profile.className = "profile";
 
     const asset = opts.asset || normalAssets[profileCount % normalAssets.length];
-    const jitterX = target.zone === "symbol" ? 2.0 : target.zone === "miss" ? 2.25 : 1.85;
-    const jitterY = target.zone === "symbol" ? 2.0 : target.zone === "miss" ? 1.15 : 0.95;
+    const jitterX = target.zone === "symbol" ? 2.0 : target.zone === "miss" ? 1.45 : 1.22;
+    const jitterY = target.zone === "symbol" ? 2.0 : target.zone === "miss" ? 0.18 : 0.16;
     const x = jitter(target.x, jitterX);
     const y = jitter(target.y, jitterY);
 
@@ -650,9 +645,6 @@ function spawnCarl() {
   carl.style.top = `calc(${CARL_ZONE.y}% - ${AVATAR_HALF}px)`;
   carl.style.setProperty("--sx", "-72px");
   carl.style.setProperty("--sy", "0px");
-  carl.style.setProperty("z-index", "118", "important");
-  carl.style.opacity = "1";
-  carl.style.setProperty("filter", "brightness(1.08) contrast(1.04)", "important");
   carl.innerHTML = `<img src="AssetCARL.PNG" alt="">`;
 
   profileField.appendChild(carl);
@@ -669,7 +661,7 @@ function spawnCarl() {
       carl.classList.add("burying");
       setTimeout(() => carl.remove(), 460);
     }
-  }, 18200);
+  }, 12200);
 
   return carl;
 }
@@ -678,50 +670,54 @@ function releaseDeadHeartTowardCarl() {
   let carl = null;
 
   const heart = document.createElement("div");
-  heart.className = "engage heart heart-story fate-carl-heart";
-  heart.textContent = "🩷";
+  heart.className = "engage carl-trigger-heart asset-heart pink-stage";
   heart.style.left = `${CARL_HEART_START.x}%`;
   heart.style.top = `${CARL_HEART_START.y}%`;
   heart.style.opacity = "0";
-  heart.style.animation = "none";
-  heart.style.fontSize = "16px";
-  heart.style.width = "auto";
-  heart.style.height = "auto";
+  // Override old CSS-route experiments from previous builds; this path is owned by JS.
+  heart.style.setProperty("animation", "none", "important");
+  heart.style.setProperty("width", "18px", "important");
+  heart.style.setProperty("height", "18px", "important");
+  heart.innerHTML = `
+    <img class="carl-heart-layer carl-heart-pink" src="${HEART_PINK}" alt="">
+    <img class="carl-heart-layer carl-heart-grey" src="${HEART_GREY}" alt="">
+  `;
 
   engagementField.appendChild(heart);
 
+  const flightDuration = 15400;
   const flight = heart.animate(CARL_HEART_PATH, {
-    duration: 23000,
-    easing: "cubic-bezier(.18,.72,.16,1)",
+    duration: flightDuration,
+    easing: "cubic-bezier(.21,.58,.18,1)",
     fill: "forwards"
   });
 
-  // Lazy maintenance: a few avatars land, not a martial-law swarm. Carl blends in with them.
-  setTimeout(() => spawnProfile("left", 0, { force: { x: 33.5, y: 34.8, zone: "loader", cluster: "lazy-maintenance" } }), 1700);
-
-  setTimeout(() => {
-    if (carlSeen) return;
-    carlSeen = true;
-    carl = spawnCarl();
-  }, 2450);
-
-  setTimeout(() => spawnProfile("right", 0, { force: { x: 63.5, y: 33.9, zone: "loader", cluster: "lazy-maintenance" } }), 4200);
-  setTimeout(() => spawnProfile("top", 0, { force: { x: 49.5, y: 32.8, zone: "loader", cluster: "lazy-maintenance" } }), 6900);
-
-  // Fan hit: pink gets rejected and becomes the gray/broken PNG before the lost curl.
+  // The top-right fan rejects it. That is the story beat where pink becomes wounded.
   setTimeout(() => {
     if (!heart.parentNode) return;
-    heart.classList.add("off-course", "dead-stage");
-    heart.textContent = "";
-    heart.innerHTML = `<img src="${HEART_GREY}" alt="" style="width:22px;height:22px;object-fit:contain;display:block;filter:grayscale(1) brightness(.9) contrast(1.14) drop-shadow(0 0 7px rgba(220,220,220,.18));">`;
-  }, 13225);
+    heart.classList.add("off-course", "draining", "grey-taking-over");
+  }, 7550);
 
-  // Static bite: contact only. The heart gets close, then Carl instantly flickers.
+  setTimeout(() => {
+    if (!heart.parentNode) return;
+    heart.classList.remove("pink-stage", "draining");
+    heart.classList.add("dead-stage");
+  }, 8800);
+
+  // Carl should already be another avatar in the field. If not, put him there before the accident.
+  setTimeout(() => {
+    if (!heart.parentNode) return;
+    carl = profileField.querySelector(".profile.carl") || spawnCarl();
+    carlSeen = true;
+    if (carl) carl.classList.add("carl-wrong-place");
+  }, 2600);
+
+  // Static-zap contact: the broken heart gets close enough and Carl reacts instantly.
   setTimeout(() => {
     carl = carl || profileField.querySelector(".profile.carl") || spawnCarl();
     if (heart && heart.parentNode) heart.remove();
     triggerCarl(carl);
-  }, 22655);
+  }, 15180);
 
   flight.onfinish = () => {
     if (heart && heart.parentNode) heart.remove();
@@ -729,7 +725,7 @@ function releaseDeadHeartTowardCarl() {
 
   setTimeout(() => {
     if (heart && heart.parentNode) heart.remove();
-  }, 23800);
+  }, flightDuration + 900);
 }
 
 function triggerCarl(carl) {
@@ -739,15 +735,12 @@ function triggerCarl(carl) {
 
   // Snake bite: contact makes Carl readable and red-flickering immediately.
   carl.classList.add("carl-impact-visible", "carl-ready", "carl-ring-death");
-  carl.style.setProperty("z-index", "140", "important");
-  carl.style.setProperty("pointer-events", "auto", "important");
 
   setTimeout(() => {
     if (!carlOpened) {
       carl.classList.remove("carl-ready");
-      carl.style.setProperty("pointer-events", "none", "important");
     }
-  }, 2600);
+  }, 2200);
 
   setTimeout(() => {
     if (!carl || !carl.parentNode) return;
@@ -763,16 +756,13 @@ function triggerCarl(carl) {
       { x: CARL_ZONE.x - 1.0, y: CARL_ZONE.y + 1.25, zone: "loader", cluster: "carl-cover-low" }
     ];
 
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 4; i++) {
       const burialTarget = coverRing[i % coverRing.length];
-      setTimeout(() => spawnProfile(i % 2 ? "right" : "left", 0, { force: burialTarget }), i * 120);
+      setTimeout(() => spawnProfile(i % 2 ? "right" : "left", 0, { force: burialTarget }), i * 260);
     }
 
-    setTimeout(() => {
-      if (carl && carl.parentNode) carl.remove();
-      carlSceneComplete = true;
-    }, 1250);
-  }, 2500);
+    setTimeout(() => carl.remove(), 1550);
+  }, 2250);
 }
 
 function openCarlProfile() {
@@ -808,7 +798,7 @@ function startWoundPulse() {
       if (carlCard) carlCard.classList.remove("dating-page-glitch");
       if (hiveWound) hiveWound.classList.remove("pulse-open");
       if (carlProfilePortal) carlProfilePortal.classList.remove("portal-open");
-    }, 1080);
+    }, 920);
   };
 
   woundPulseTimer = setInterval(pulse, 17000);
