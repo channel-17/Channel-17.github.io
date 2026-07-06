@@ -2735,7 +2735,7 @@ body {
 /* Hearts: back to emoji, sparse, vertical, red -> pink -> gray -> black, then off-screen. */
 .engage.heart-story {
   z-index: 70;
-  font-size: var(--heart-font, 20px) !important;
+  font-size: 16px !important;
   line-height: 1;
   text-shadow: 0 0 8px rgba(0,0,0,0.72);
   animation-name: heartLongRise !important;
@@ -7072,278 +7072,41 @@ body {
 }
 
 
-/* =========================================================
-   BUILD32 FIELD REPAIR 3 — real field hearts + visible signal/contact
-   Fresh pass from Hateit.mp4 feedback.
-========================================================= */
-
-/* Normal hearts are sporadic field smoke, not a lane or wall. */
-.engage.heart-story {
-  font-size: var(--heart-font, 20px) !important;
-  animation-name: heartFieldRiseRight !important;
-  animation-duration: var(--dur, 5.4s) !important;
-  animation-timing-function: cubic-bezier(.28,.62,.18,1) !important;
-  animation-fill-mode: forwards !important;
-  opacity: 0;
-}
-@keyframes heartFieldRiseRight {
-  0% { opacity: 0; transform: translate3d(0, 18px, 0) scale(calc(var(--heart-scale, 1) * .86)) rotate(var(--start-rot, 0deg)); }
-  10% { opacity: .88; }
-  58% { opacity: .82; transform: translate3d(calc(var(--drift, 190px) * .42), -58vh, 0) scale(var(--heart-scale, 1)) rotate(8deg); }
-  82% { opacity: .52; filter: saturate(.65) brightness(.62); }
-  100% { opacity: 0; filter: saturate(.1) brightness(.15); transform: translate3d(var(--drift, 220px), -112vh, 0) scale(calc(var(--heart-scale, 1) * .92)) rotate(var(--end-rot, 42deg)); }
-}
-
-/* Carl's broken-heart PNG has to be visible and big enough to read. */
-.engage.carl-trigger-heart.asset-heart,
-.engage.heart.carl-trigger-heart,
-.carl-trigger-heart.asset-heart {
-  width: 70px !important;
-  height: 70px !important;
-  z-index: 122 !important;
-  animation: none !important;
-  pointer-events: none !important;
-  overflow: visible !important;
-}
-.carl-trigger-heart.grey-taking-over .carl-heart-pink {
-  opacity: 0.08 !important;
-  transition-duration: .38s !important;
-}
-.carl-trigger-heart.grey-taking-over .carl-heart-grey,
-.carl-trigger-heart.dead-stage .carl-heart-grey {
-  opacity: 1 !important;
-  transition-duration: .38s !important;
-  filter: grayscale(1) brightness(.92) contrast(1.24) drop-shadow(0 0 10px rgba(245,245,245,.18)) !important;
-}
-
-/* Carl must exist in his left-loader pocket and remain readable until the circuit completes. */
-.profile.carl.carl-zone-anchor {
-  z-index: 66 !important;
-  opacity: .96 !important;
-  pointer-events: none !important;
-}
-.profile.carl.carl-impact-visible,
-.profile.carl.carl-ready,
-.profile.carl.carl-ring-death {
-  z-index: 92 !important;
-}
-.profile.carl.carl-ring-death {
-  animation: carlThreeBoomFlicker 1.02s steps(1) 1 forwards !important;
-}
-
-/* The signal can ghost back in around 20%; it should not be visually dead until the end. */
-#signalGhost.signal-ghost.waking,
-.signal-ghost.waking {
-  opacity: .20 !important;
-  visibility: visible !important;
-  filter: drop-shadow(0 0 13px rgba(223,255,63,.18)) !important;
-  animation: ghostSignalBreathe 3.4s ease-in-out infinite !important;
-}
-#signalGhost.signal-ghost.burning,
-.signal-ghost.burning {
-  opacity: .34 !important;
-  visibility: visible !important;
-  filter: drop-shadow(0 0 18px rgba(223,255,63,.28)) !important;
-}
-@keyframes ghostSignalBreathe {
-  50% { opacity: .32; transform: translate(-50%, -50%) scale(1.025); }
-}
-
-/* The Frank processing box should not read as a blue square artifact. */
-.profile.frank,
-.profile.frank img,
-.profile.blue-frank img {
-  border-radius: 50% !important;
-  overflow: hidden !important;
-}
-
-/* =========================================================
-   BUILD34 DIRECTOR ROLLBACK REPAIR — growth, not switches
-   Source: channel-17.github.io-main 34.zip
-   Goal: compact director timeline, no dead-air then explosion.
-========================================================= */
-
-/* Loader birth: black -> signal acquisition -> bar/Homie/percent fade in before 1%. */
+/* BUILD35 YELLOW BRICK RESTORE — checkpoint-video skeleton, sanded only */
 .loader-scene.booting-in {
   opacity: 0 !important;
-  transform: translate(-50%, -47%) scale(0.988) !important;
-  filter: blur(3px) brightness(0.68) !important;
+  transform: translate(-50%, -46%) scale(0.985) !important;
+  filter: blur(4px) brightness(0.72) !important;
 }
 .loader-scene.booting-in.boot-visible {
   opacity: 1 !important;
   transform: translate(-50%, -50%) scale(1) !important;
   filter: blur(0) brightness(1) !important;
-  transition:
-    opacity 0.82s cubic-bezier(.18,.72,.14,1),
-    transform 0.82s cubic-bezier(.18,.72,.14,1),
-    filter 0.82s cubic-bezier(.18,.72,.14,1) !important;
+  transition: opacity .95s cubic-bezier(.18,.7,.15,1), transform .95s cubic-bezier(.18,.7,.15,1), filter .95s cubic-bezier(.18,.7,.15,1) !important;
 }
-
-/* Calm the loader/bar chaos. Suppression should read as lazy system maintenance, not a seizure. */
-.loader.offcourse .fill,
-.loader.complete .fill {
-  animation-duration: 1.55s !important;
-}
-.profile.loader-cover {
-  z-index: 54 !important;
-  opacity: 0.92 !important;
-  animation-duration: 0.58s !important;
-  box-shadow:
-    0 0 10px rgba(0,0,0,0.86),
-    0 0 0 1px rgba(255,255,255,0.18) !important;
-}
-.slash {
-  opacity: 0.38 !important;
-  animation-duration: 0.56s !important;
-}
-
-/* Avatar size normalization without filling circles with fake half-moons. */
-.profile {
-  width: 72px !important;
-  height: 72px !important;
-  overflow: hidden !important;
-}
-.profile img {
-  width: 100% !important;
-  height: 100% !important;
-  object-fit: cover !important;
-  transform: scale(1.04) !important;
-}
-.profile.carl img,
-.profile.frank img,
-.profile.wren img {
-  object-fit: cover !important;
-  transform: scale(1.02) !important;
-}
-
-/* Hearts are smoke markers: sporadic, visible, quicker, not a wall and not an organized lane. */
-.engage.heart-story {
-  z-index: 66 !important;
-  font-size: var(--heart-font, 22px) !important;
-  line-height: 1 !important;
-  opacity: 0;
-  text-shadow:
-    0 0 8px rgba(0,0,0,0.72),
-    0 0 12px rgba(255,80,130,0.14) !important;
-  animation: heartSmokeRiseDirector var(--dur, 3.8s) cubic-bezier(.22,.62,.16,1) forwards !important;
-}
-@keyframes heartSmokeRiseDirector {
-  0% { opacity: 0; transform: translateY(12px) translateX(0) scale(calc(var(--heart-scale, 1) * .76)) rotate(var(--start-rot, -8deg)); }
-  10% { opacity: .90; }
-  72% { opacity: .82; }
-  100% { opacity: 0; transform: translateY(-106vh) translateX(var(--drift, 140px)) scale(calc(var(--heart-scale, 1) * .92)) rotate(var(--end-rot, 36deg)); }
-}
-
-/* The chosen/broken heart is bigger and readable; it changes on-screen. */
 .engage.carl-trigger-heart.asset-heart,
 .engage.heart.carl-trigger-heart,
 .carl-trigger-heart.asset-heart {
-  width: 58px !important;
-  height: 58px !important;
-  z-index: 104 !important;
-  pointer-events: none !important;
-  filter: none !important;
+  width: 78px !important;
+  height: 78px !important;
+  z-index: 112 !important;
 }
-.carl-trigger-heart .carl-heart-pink,
-.carl-trigger-heart .carl-heart-grey {
-  transition:
-    opacity 0.38s cubic-bezier(.16,.82,.12,1),
-    filter 0.38s cubic-bezier(.16,.82,.12,1),
-    transform 0.38s cubic-bezier(.16,.82,.12,1) !important;
-}
-.carl-trigger-heart.grey-taking-over .carl-heart-pink {
-  opacity: 0 !important;
-  filter: grayscale(1) brightness(.62) !important;
-  transform: scale(.74) rotate(-18deg) !important;
-}
-.carl-trigger-heart.grey-taking-over .carl-heart-grey,
-.carl-trigger-heart.dead-stage .carl-heart-grey {
-  opacity: 1 !important;
-  filter:
-    grayscale(1)
-    brightness(.92)
-    contrast(1.18)
-    drop-shadow(0 0 7px rgba(235,235,235,.16)) !important;
-  transform: scale(1.08) rotate(5deg) !important;
-}
-
-/* Carl: visible as another avatar, then the old ring flicker — no full red block, no red sock box. */
 .profile.carl.carl-zone-anchor {
-  z-index: 60 !important;
-  opacity: 0.95 !important;
-  pointer-events: none !important;
-  filter: saturate(.94) contrast(.96) brightness(.96) !important;
+  opacity: .92 !important;
+  filter: saturate(.9) contrast(.95) brightness(.92) !important;
 }
-.profile.carl.carl-impact-visible {
-  z-index: 94 !important;
-  opacity: 1 !important;
-  filter: saturate(1.04) contrast(1.02) brightness(1) drop-shadow(0 0 10px rgba(0,0,0,.90)) !important;
-}
+.profile.carl.carl-impact-visible,
 .profile.carl.carl-ring-death {
   z-index: 98 !important;
-  animation: carlOriginalRingFlicker .72s steps(1) 2 !important;
 }
-@keyframes carlOriginalRingFlicker {
-  0%, 16%, 38%, 62% {
-    border-color: rgba(255,29,37,1);
-    box-shadow:
-      0 0 0 3px rgba(255,29,37,.92),
-      0 0 16px rgba(255,29,37,.78),
-      0 0 34px rgba(255,29,37,.32);
-    filter: contrast(1.12) saturate(1.05);
-  }
-  17%, 37%, 63%, 100% {
-    border-color: rgba(242,238,229,.68);
-    box-shadow:
-      0 0 0 1px rgba(255,255,255,.16),
-      0 0 12px rgba(0,0,0,.88);
-    filter: grayscale(.10) contrast(.96);
-  }
+.profile.carl.carl-ring-death {
+  animation: carlElectricFlicker .88s steps(1) 2 !important;
 }
-.profile.carl.burying {
-  z-index: 44 !important;
-  opacity: .78 !important;
+/* no red box, no Carl billboard: only the ring/flicker gets the hit */
+.profile.carl.carl-ring-death img {
+  filter: contrast(1.04) saturate(1.02) !important;
 }
-.carl-zap-spark {
-  width: 26px !important;
-  height: 26px !important;
-  z-index: 112 !important;
-  background:
-    linear-gradient(36deg, transparent 0 45%, rgba(255,255,255,.98) 46% 51%, rgba(255,29,37,.78) 52% 56%, transparent 57%),
-    linear-gradient(-34deg, transparent 0 47%, rgba(255,255,255,.86) 48% 52%, transparent 53%) !important;
-  filter: drop-shadow(0 0 7px rgba(255,29,37,.76)) !important;
-  animation: carlTinyContactZap .36s steps(3) forwards !important;
-}
-@keyframes carlTinyContactZap {
-  0% { opacity: 0; transform: translate(-50%, -50%) scale(.24) rotate(-8deg); }
-  22% { opacity: 1; transform: translate(-50%, -50%) scale(1.05) rotate(5deg); }
-  58% { opacity: .86; transform: translate(-50%, -50%) scale(.82) rotate(-4deg); }
-  100% { opacity: 0; transform: translate(-50%, -50%) scale(1.28) rotate(7deg); }
-}
-
-/* Symbol phase: show later, but do not leave it visually dead until the ending. */
-#signalGhost.signal-ghost.waking,
-.signal-ghost.waking {
-  opacity: .26 !important;
-  visibility: visible !important;
-  filter: drop-shadow(0 0 15px rgba(223,255,63,.18)) !important;
-  animation: none !important;
-}
-#signalGhost.signal-ghost.burning,
-.signal-ghost.burning {
-  opacity: .38 !important;
-  visibility: visible !important;
-  filter: drop-shadow(0 0 20px rgba(223,255,63,.26)) !important;
-}
-.profile.hive-reveal.has-hive-asset img,
-.profile.blue-frank img {
-  opacity: 1 !important;
-  filter:
-    brightness(1.30)
-    saturate(1.45)
-    contrast(1.06)
-    drop-shadow(0 0 9px rgba(58,180,255,.45)) !important;
-}
-.profile.hive-dissolve {
-  animation-duration: 1.05s !important;
+.engage.heart-story {
+  animation-name: heartFieldScatterRise !important;
+  font-size: 20px !important;
 }
