@@ -7110,3 +7110,42 @@ body {
   animation-name: heartFieldScatterRise !important;
   font-size: 20px !important;
 }
+
+
+/* BUILD36 FOREMAN HEARTS-ONLY PASS — validation smoke field */
+.engage.heart-story {
+  z-index: 36 !important;
+  font-size: 24px !important;
+  line-height: 1 !important;
+  color: inherit !important;
+  filter: drop-shadow(0 0 8px rgba(255,111,174,0.28)) !important;
+  animation-name: heartValidationSmokeRise !important;
+  animation-duration: var(--dur) !important;
+  animation-timing-function: cubic-bezier(.34,.02,.25,1) !important;
+  animation-fill-mode: forwards !important;
+  will-change: transform, opacity, filter !important;
+}
+.engage.heart-story.heart-fade-black {
+  color: #080707 !important;
+  filter: grayscale(1) brightness(0.20) drop-shadow(0 0 3px rgba(0,0,0,0.78)) !important;
+}
+@keyframes heartValidationSmokeRise {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 24px, 0) scale(calc(var(--heart-scale) * .78)) rotate(var(--start-rot));
+  }
+  11% { opacity: .72; }
+  24% {
+    opacity: .90;
+    transform: translate3d(calc(var(--sway) * -0.42), -22vh, 0) scale(calc(var(--heart-scale) * .92)) rotate(var(--mid-rot));
+  }
+  55% {
+    opacity: .92;
+    transform: translate3d(calc(var(--sway) * .36), -58vh, 0) scale(var(--heart-scale)) rotate(calc(var(--end-rot) * .42));
+  }
+  82% { opacity: .66; }
+  100% {
+    opacity: 0;
+    transform: translate3d(var(--drift), -118vh, 0) scale(calc(var(--heart-scale) * .96)) rotate(var(--end-rot));
+  }
+}
