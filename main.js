@@ -497,17 +497,16 @@ function spawnEngagement(options = {}) {
   item.className = "engage heart heart-story";
   item.textContent = Math.random() < 0.58 ? "🩷" : "❤️";
 
-  const rightSide = Math.random() < 0.78;
-  const x = rightSide ? 66 + Math.random() * 28 : 46 + Math.random() * 22;
+  const x = 82 + Math.random() * 12; // locked right-side heart highway only
   const startY = 92 + Math.random() * 16;
-  const dur = 7.2 + Math.random() * 2.6;
-  const drift = rightSide ? 18 + Math.random() * 58 : 46 + Math.random() * 82;
+  const dur = 10.5 + Math.random() * 5.5; // slower organic rise
+  const drift = -18 + Math.random() * 36; // tiny zigzag, no screen invasion
 
   item.style.left = x + "%";
   item.style.top = startY + "%";
   item.style.setProperty("--dur", dur.toFixed(2) + "s");
   item.style.setProperty("--drift", Math.round(drift) + "px");
-  item.style.setProperty("--sway", Math.round(10 + Math.random() * 32) + "px");
+  item.style.setProperty("--sway", Math.round(6 + Math.random() * 18) + "px");
   item.style.setProperty("--start-rot", Math.round(-12 + Math.random() * 24) + "deg");
   item.style.setProperty("--mid-rot", Math.round(-8 + Math.random() * 16) + "deg");
   item.style.setProperty("--end-rot", Math.round(14 + Math.random() * 42) + "deg");
