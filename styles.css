@@ -7149,3 +7149,26 @@ body {
     transform: translate3d(var(--drift), -118vh, 0) scale(calc(var(--heart-scale) * .96)) rotate(var(--end-rot));
   }
 }
+
+/* BUILD36 FOREMAN HEART PASS 2 — upright balloon validation hearts */
+.engage.heart-story {
+  font-size: 22px !important;
+  line-height: 1 !important;
+  animation-name: heartBalloonRise !important;
+  animation-duration: var(--dur) !important;
+  animation-timing-function: cubic-bezier(.22,.56,.31,1) !important;
+  animation-fill-mode: forwards !important;
+  transform-origin: center center !important;
+  filter: drop-shadow(0 0 6px rgba(255,111,174,0.22)) !important;
+}
+@keyframes heartBalloonRise {
+  0% { opacity: 0; transform: translate3d(0, 20px, 0) scale(calc(var(--heart-scale) * .88)) rotate(0deg); }
+  12% { opacity: .92; transform: translate3d(var(--bob-a), 0, 0) scale(var(--heart-scale)) rotate(0deg); }
+  34% { opacity: .95; transform: translate3d(var(--bob-b), -28vh, 0) scale(var(--heart-scale)) rotate(0deg); }
+  62% { opacity: .88; transform: translate3d(calc(var(--drift) * .55), -62vh, 0) scale(var(--heart-scale)) rotate(0deg); }
+  100% { opacity: 0; transform: translate3d(var(--drift), -112vh, 0) scale(var(--heart-scale)) rotate(0deg); }
+}
+.engage.heart-story.heart-fade-black {
+  color: #090707 !important;
+  filter: grayscale(1) brightness(0.20) drop-shadow(0 0 2px rgba(0,0,0,0.68)) !important;
+}
