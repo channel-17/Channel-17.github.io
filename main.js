@@ -59,6 +59,7 @@ let carlOpened = false;
 let hiveWaveStarted = false;
 let deadHeartReleased = false;
 let heartSmokeStarted = false;
+let heartSmokeSpawnCount = 0;
 let frankDutyStarted = false;
 let frankDutyFramesPlayed = false;
 let woundPulseTimer = null;
@@ -355,12 +356,8 @@ const loading = setInterval(() => {
     startBurnPulse();
   }
 
-  // The heart starts at 17% with the other hearts. Carl arrives as a normal avatar in the field,
-  // visible but not special, so the later zap reads as accident instead of staged feature.
-  if (progress >= 17.05 && !deadHeartReleased) {
-    deadHeartReleased = true;
-    releaseDeadHeartTowardCarl();
-  }
+  // FOREMAN MODE: hearts-only pass.
+  // Carl's special broken-heart event is intentionally paused until the regular heart field is approved.
 
   if (progress >= 88 && !generals) {
     generals = true;
@@ -393,13 +390,27 @@ const loading = setInterval(() => {
 }, 45);
 
 function startHeartSmoke() {
-  // Hearts rise first at 17%, before avatars fully land. They are the smoke in the field.
+  // FOREMAN MODE — HEART FIELD ONLY.
+  // Start with one validation heart, then let the field grow naturally: and then another... and another.
+  // Pink/red only. No Carl heart. No broken-heart event. No zones.
   if (engageTimer) return;
-  spawnEngagement();
+  heartSmokeSpawnCount = 0;
+  spawnEngagement({ guaranteed: true });
+
   engageTimer = setInterval(() => {
     if (completed) return;
-    spawnEngagement();
-  }, 940);
+
+    heartSmokeSpawnCount++;
+    spawnEngagement({ guaranteed: true });
+
+    // As the infestation grows, occasional extra hearts appear with human-feeling delay.
+    if (heartSmokeSpawnCount > 3 && Math.random() < 0.34) {
+      setTimeout(() => { if (!completed) spawnEngagement({ guaranteed: true }); }, 360 + Math.random() * 520);
+    }
+    if (heartSmokeSpawnCount > 8 && Math.random() < 0.22) {
+      setTimeout(() => { if (!completed) spawnEngagement({ guaranteed: true }); }, 760 + Math.random() * 620);
+    }
+  }, 1320);
 }
 
 function startAttack() {
@@ -477,28 +488,37 @@ function spawnSlash(side) {
   setTimeout(() => slash.remove(), 700);
 }
 
-function spawnEngagement() {
-  // Sporadic field hearts: red/pink, uneven pockets, not a lane and not filler.
-  // They rise like reverse falling leaves and drift off the right side before fading black.
-  if (Math.random() < 0.48) return;
+function spawnEngagement(options = {}) {
+  // Pink/red validation hearts only: visually appealing smoke markers, not a fast wall.
+  // They mostly rise along the right side, but with enough stagger to feel like infestation instead of a lane.
+  if (!options.guaranteed && Math.random() < 0.18) return;
 
   const item = document.createElement("div");
   item.className = "engage heart heart-story";
-  item.textContent = Math.random() < 0.54 ? "🩷" : "❤️";
+  item.textContent = Math.random() < 0.58 ? "🩷" : "❤️";
 
-  item.style.left = (4 + Math.random() * 88) + "%";
-  item.style.top = (88 + Math.random() * 18) + "%";
-  item.style.setProperty("--dur", (3.15 + Math.random() * 1.25) + "s");
-  item.style.setProperty("--drift", Math.round(90 + Math.random() * 170) + "px");
-  item.style.setProperty("--start-rot", Math.round(-16 + Math.random() * 32) + "deg");
-  item.style.setProperty("--end-rot", Math.round(22 + Math.random() * 56) + "deg");
-  item.style.setProperty("--heart-scale", (0.78 + Math.random() * 0.36).toFixed(2));
+  const rightSide = Math.random() < 0.78;
+  const x = rightSide ? 66 + Math.random() * 28 : 46 + Math.random() * 22;
+  const startY = 92 + Math.random() * 16;
+  const dur = 7.2 + Math.random() * 2.6;
+  const drift = rightSide ? 18 + Math.random() * 58 : 46 + Math.random() * 82;
+
+  item.style.left = x + "%";
+  item.style.top = startY + "%";
+  item.style.setProperty("--dur", dur.toFixed(2) + "s");
+  item.style.setProperty("--drift", Math.round(drift) + "px");
+  item.style.setProperty("--sway", Math.round(10 + Math.random() * 32) + "px");
+  item.style.setProperty("--start-rot", Math.round(-12 + Math.random() * 24) + "deg");
+  item.style.setProperty("--mid-rot", Math.round(-8 + Math.random() * 16) + "deg");
+  item.style.setProperty("--end-rot", Math.round(14 + Math.random() * 42) + "deg");
+  item.style.setProperty("--heart-scale", (0.92 + Math.random() * 0.22).toFixed(2));
 
   engagementField.appendChild(item);
   engageCount++;
 
-  setTimeout(() => { if (item.parentNode) item.classList.add("heart-fade-black"); }, 2600 + Math.random() * 1100);
-  setTimeout(() => item.remove(), 6500);
+  const fadeAt = Math.max(5200, (dur * 1000) - 1300);
+  setTimeout(() => { if (item.parentNode) item.classList.add("heart-fade-black"); }, fadeAt);
+  setTimeout(() => item.remove(), (dur * 1000) + 900);
 }
 
 function pickTarget() {
