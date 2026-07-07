@@ -7150,23 +7150,23 @@ body {
   }
 }
 
-/* BUILD36 FOREMAN HEART PASS 2 — upright balloon validation hearts */
+/* BUILD36 FOREMAN HEART PASS 3 — right-lane upright validation hearts */
 .engage.heart-story {
-  font-size: 22px !important;
+  font-size: 24px !important;
   line-height: 1 !important;
-  animation-name: heartBalloonRise !important;
+  animation-name: heartRightLaneFloat !important;
   animation-duration: var(--dur) !important;
-  animation-timing-function: cubic-bezier(.22,.56,.31,1) !important;
+  animation-timing-function: linear !important;
   animation-fill-mode: forwards !important;
   transform-origin: center center !important;
   filter: drop-shadow(0 0 6px rgba(255,111,174,0.22)) !important;
 }
-@keyframes heartBalloonRise {
-  0% { opacity: 0; transform: translate3d(0, 20px, 0) scale(calc(var(--heart-scale) * .88)) rotate(0deg); }
-  12% { opacity: .92; transform: translate3d(var(--bob-a), 0, 0) scale(var(--heart-scale)) rotate(0deg); }
-  34% { opacity: .95; transform: translate3d(var(--bob-b), -28vh, 0) scale(var(--heart-scale)) rotate(0deg); }
-  62% { opacity: .88; transform: translate3d(calc(var(--drift) * .55), -62vh, 0) scale(var(--heart-scale)) rotate(0deg); }
-  100% { opacity: 0; transform: translate3d(var(--drift), -112vh, 0) scale(var(--heart-scale)) rotate(0deg); }
+@keyframes heartRightLaneFloat {
+  0% { opacity: 0; transform: translate3d(0, 18px, 0) scale(calc(var(--heart-scale) * .90)) rotate(0deg); }
+  10% { opacity: .92; transform: translate3d(var(--bob-a), 0, 0) scale(var(--heart-scale)) rotate(0deg); }
+  35% { opacity: .94; transform: translate3d(calc(var(--bob-b) * .55), -30vh, 0) scale(var(--heart-scale)) rotate(0deg); }
+  68% { opacity: .88; transform: translate3d(calc(var(--drift) * .55), -72vh, 0) scale(var(--heart-scale)) rotate(0deg); }
+  100% { opacity: 0; transform: translate3d(var(--drift), -118vh, 0) scale(var(--heart-scale)) rotate(0deg); }
 }
 .engage.heart-story.heart-fade-black {
   color: #090707 !important;
