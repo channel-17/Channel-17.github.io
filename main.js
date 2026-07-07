@@ -489,32 +489,34 @@ function spawnSlash(side) {
 }
 
 function spawnEngagement(options = {}) {
-  // FOREMAN HEART PASS 2: pink/red validation hearts only.
-  // Upright balloon float: no worm motion, no heavy tilt, no special Carl-heart.
+  // FOREMAN HEART PASS 3: right-lane validation hearts only.
+  // Pink/red only. Upright, simple upward float. No worm/slinky travel, no center-screen invasion.
   if (!options.guaranteed && engageCount > 0 && Math.random() < 0.30) return;
 
   const item = document.createElement("div");
   item.className = "engage heart heart-story";
   item.textContent = Math.random() < 0.58 ? "🩷" : "❤️";
 
-  const rightSide = Math.random() < 0.74;
-  const x = rightSide ? 66 + Math.random() * 26 : 32 + Math.random() * 34;
-  const startY = 94 + Math.random() * 10;
-  const dur = 6.4 + Math.random() * 2.0;
-  const drift = rightSide ? -8 + Math.random() * 42 : -14 + Math.random() * 38;
+  // Keep the field in the approved right-side lane. Variation is vertical timing/spacing, not wandering across the phone.
+  const laneX = 72 + Math.random() * 18;
+  const startY = 96 + Math.random() * 8;
+  const dur = 8.6 + Math.random() * 1.8;
+  const laneDrift = -10 + Math.random() * 20;
+  const softSwayA = -5 + Math.random() * 10;
+  const softSwayB = -4 + Math.random() * 8;
 
-  item.style.left = x + "%";
+  item.style.left = laneX + "%";
   item.style.top = startY + "%";
   item.style.setProperty("--dur", dur.toFixed(2) + "s");
-  item.style.setProperty("--drift", Math.round(drift) + "px");
-  item.style.setProperty("--bob-a", Math.round(-5 + Math.random() * 10) + "px");
-  item.style.setProperty("--bob-b", Math.round(-7 + Math.random() * 14) + "px");
-  item.style.setProperty("--heart-scale", (0.92 + Math.random() * 0.20).toFixed(2));
+  item.style.setProperty("--drift", Math.round(laneDrift) + "px");
+  item.style.setProperty("--bob-a", Math.round(softSwayA) + "px");
+  item.style.setProperty("--bob-b", Math.round(softSwayB) + "px");
+  item.style.setProperty("--heart-scale", (0.96 + Math.random() * 0.16).toFixed(2));
 
   engagementField.appendChild(item);
   engageCount++;
 
-  const fadeAt = Math.max(5000, (dur * 1000) - 1100);
+  const fadeAt = Math.max(6500, (dur * 1000) - 1000);
   setTimeout(() => { if (item.parentNode) item.classList.add("heart-fade-black"); }, fadeAt);
   setTimeout(() => item.remove(), (dur * 1000) + 900);
 }
