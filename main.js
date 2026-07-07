@@ -489,33 +489,32 @@ function spawnSlash(side) {
 }
 
 function spawnEngagement(options = {}) {
-  // Pink/red validation hearts only: visually appealing smoke markers, not a fast wall.
-  // They mostly rise along the right side, but with enough stagger to feel like infestation instead of a lane.
-  if (!options.guaranteed && Math.random() < 0.18) return;
+  // FOREMAN HEART PASS 2: pink/red validation hearts only.
+  // Upright balloon float: no worm motion, no heavy tilt, no special Carl-heart.
+  if (!options.guaranteed && engageCount > 0 && Math.random() < 0.30) return;
 
   const item = document.createElement("div");
   item.className = "engage heart heart-story";
   item.textContent = Math.random() < 0.58 ? "🩷" : "❤️";
 
-  const x = 82 + Math.random() * 12; // locked right-side heart highway only
-  const startY = 92 + Math.random() * 16;
-  const dur = 10.5 + Math.random() * 5.5; // slower organic rise
-  const drift = -18 + Math.random() * 36; // tiny zigzag, no screen invasion
+  const rightSide = Math.random() < 0.74;
+  const x = rightSide ? 66 + Math.random() * 26 : 32 + Math.random() * 34;
+  const startY = 94 + Math.random() * 10;
+  const dur = 6.4 + Math.random() * 2.0;
+  const drift = rightSide ? -8 + Math.random() * 42 : -14 + Math.random() * 38;
 
   item.style.left = x + "%";
   item.style.top = startY + "%";
   item.style.setProperty("--dur", dur.toFixed(2) + "s");
   item.style.setProperty("--drift", Math.round(drift) + "px");
-  item.style.setProperty("--sway", Math.round(6 + Math.random() * 18) + "px");
-  item.style.setProperty("--start-rot", Math.round(-12 + Math.random() * 24) + "deg");
-  item.style.setProperty("--mid-rot", Math.round(-8 + Math.random() * 16) + "deg");
-  item.style.setProperty("--end-rot", Math.round(14 + Math.random() * 42) + "deg");
-  item.style.setProperty("--heart-scale", (0.92 + Math.random() * 0.22).toFixed(2));
+  item.style.setProperty("--bob-a", Math.round(-5 + Math.random() * 10) + "px");
+  item.style.setProperty("--bob-b", Math.round(-7 + Math.random() * 14) + "px");
+  item.style.setProperty("--heart-scale", (0.92 + Math.random() * 0.20).toFixed(2));
 
   engagementField.appendChild(item);
   engageCount++;
 
-  const fadeAt = Math.max(5200, (dur * 1000) - 1300);
+  const fadeAt = Math.max(5000, (dur * 1000) - 1100);
   setTimeout(() => { if (item.parentNode) item.classList.add("heart-fade-black"); }, fadeAt);
   setTimeout(() => item.remove(), (dur * 1000) + 900);
 }
