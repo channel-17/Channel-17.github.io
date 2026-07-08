@@ -7268,3 +7268,141 @@ body {
   z-index: 2 !important;
   opacity: 0.72 !important;
 }
+
+/* =========================================================
+   BUILD 40 — FOREMAN ZONE BRICK
+   Scope: avatar zone logic visuals only.
+   - Same-size profile circles, no visible padding/fluff.
+   - Loader avatars one-and-done; Carl sits as final left loader profile.
+   - Frank piles imperfectly on Homie.
+   - Blue symbol avatars burn only at contact and spread outward.
+========================================================= */
+:root {
+  --avatar-size-locked: 72px;
+  --avatar-half-locked: 36px;
+}
+
+.profile {
+  width: var(--avatar-size-locked) !important;
+  height: var(--avatar-size-locked) !important;
+  border-radius: 50% !important;
+  overflow: hidden !important;
+}
+
+.profile img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center center !important;
+  display: block !important;
+  transform: scale(1.13) !important;
+}
+
+.profile::after {
+  inset: 5px !important;
+  border-radius: 50% !important;
+  pointer-events: none !important;
+}
+
+.profile.loader-cover {
+  z-index: 52 !important;
+}
+
+.profile.carl {
+  z-index: 56 !important;
+}
+
+.profile.carl.carl-wrong-place,
+.profile.carl.carl-zone-anchor {
+  animation: profileSlam 0.42s cubic-bezier(0.08, 0.78, 0.12, 1) forwards, carlTinyPulse 2.6s ease-in-out infinite 0.7s !important;
+}
+
+/* Frank: same target, messy dysfunctional coin pile. */
+.profile.frank-stack {
+  rotate: var(--fr, 0deg);
+  transform-origin: 50% 50%;
+}
+
+.profile.frank img {
+  transform: scale(1.16) !important;
+}
+
+/* Blue response: avatar remains; only signal-contact area burns through first. */
+.profile.symbol-touch,
+.profile.symbol-probe {
+  z-index: 42 !important;
+}
+
+.profile.signal-burn-contact {
+  border-color: rgba(126, 182, 255, 0.95) !important;
+  box-shadow:
+    0 0 14px rgba(0,0,0,0.84),
+    0 0 0 1px rgba(220,238,255,0.32),
+    0 0 20px rgba(75,162,255,0.32) !important;
+}
+
+.profile.signal-burn-contact img {
+  filter: brightness(1.25) saturate(1.75) contrast(1.08) drop-shadow(0 0 10px rgba(87,170,255,0.45)) !important;
+  clip-path: circle(100% at 50% 50%) !important;
+}
+
+.profile.signal-burn-contact::before {
+  content: "";
+  position: absolute;
+  inset: 15px 18px 17px 18px;
+  border-radius: 48% 52% 45% 55%;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(255,245,145,0.96) 0 13%, rgba(255,128,34,0.92) 18% 38%, rgba(133,39,13,0.45) 45%, transparent 62%);
+  mix-blend-mode: screen;
+  opacity: 0.88;
+  filter: blur(0.6px) drop-shadow(0 0 10px rgba(255,112,30,0.75));
+  transform: scale(0.38);
+  animation: signalContactBurnStart 1.15s steps(5) forwards;
+  z-index: 4;
+  pointer-events: none;
+}
+
+.profile.signal-burn-contact::after {
+  box-shadow:
+    inset 0 0 0 2px rgba(255,255,255,0.34),
+    inset 0 0 18px rgba(255,136,42,0.18),
+    0 0 10px rgba(84,170,255,0.38) !important;
+}
+
+.profile.signal-burn-spread img {
+  clip-path: polygon(0 0,100% 0,100% 100%,0 100%,0 0, 39% 36%, 60% 35%, 65% 56%, 52% 68%, 35% 57%, 39% 36%) !important;
+}
+
+.profile.signal-burn-spread::before {
+  inset: 9px 11px 10px 12px;
+  transform: scale(0.72);
+  opacity: 0.95;
+  animation: signalContactBurnSpread 1.5s steps(6) forwards;
+}
+
+.profile.signal-burn-deep img {
+  clip-path: polygon(0 0,100% 0,100% 100%,0 100%,0 0, 28% 22%, 72% 24%, 80% 62%, 58% 84%, 20% 68%, 28% 22%) !important;
+  filter: brightness(1.15) saturate(1.45) contrast(1.05) drop-shadow(0 0 10px rgba(87,170,255,0.36)) !important;
+}
+
+.profile.signal-burn-deep::before {
+  inset: 3px 4px 4px 4px;
+  transform: scale(1.02);
+  opacity: 0.90;
+}
+
+.profile.signal-burn-hold {
+  opacity: 0.88;
+}
+
+@keyframes signalContactBurnStart {
+  0% { transform: scale(0.18); opacity: 0.0; filter: blur(1.2px); }
+  22% { transform: scale(0.44); opacity: 0.98; filter: blur(0.4px); }
+  100% { transform: scale(0.62); opacity: 0.82; filter: blur(0.8px); }
+}
+
+@keyframes signalContactBurnSpread {
+  0% { transform: scale(0.62); opacity: 0.86; }
+  45% { transform: scale(0.90); opacity: 0.96; }
+  100% { transform: scale(1.08); opacity: 0.74; }
+}
