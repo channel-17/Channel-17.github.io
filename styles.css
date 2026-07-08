@@ -6831,17 +6831,17 @@ body {
 ========================================================= */
 .loader-scene.booting-in {
   opacity: 0;
-  transform: translate(-50%, -46%) scale(0.985);
-  filter: blur(4px) brightness(0.72);
+  transform: translate(-50%, -45%) scale(0.975);
+  filter: blur(7px) brightness(0.55);
 }
 .loader-scene.booting-in.boot-visible {
   opacity: 1;
   transform: translate(-50%, -50%) scale(1);
   filter: blur(0) brightness(1);
   transition:
-    opacity 0.95s cubic-bezier(.18,.7,.15,1),
-    transform 0.95s cubic-bezier(.18,.7,.15,1),
-    filter 0.95s cubic-bezier(.18,.7,.15,1);
+    opacity 1.68s cubic-bezier(.12,.62,.12,1),
+    transform 1.68s cubic-bezier(.12,.62,.12,1),
+    filter 1.68s cubic-bezier(.12,.62,.12,1);
 }
 
 .profile {
@@ -7075,14 +7075,14 @@ body {
 /* BUILD35 YELLOW BRICK RESTORE — checkpoint-video skeleton, sanded only */
 .loader-scene.booting-in {
   opacity: 0 !important;
-  transform: translate(-50%, -46%) scale(0.985) !important;
-  filter: blur(4px) brightness(0.72) !important;
+  transform: translate(-50%, -45%) scale(0.975) !important;
+  filter: blur(7px) brightness(0.55) !important;
 }
 .loader-scene.booting-in.boot-visible {
   opacity: 1 !important;
   transform: translate(-50%, -50%) scale(1) !important;
   filter: blur(0) brightness(1) !important;
-  transition: opacity .95s cubic-bezier(.18,.7,.15,1), transform .95s cubic-bezier(.18,.7,.15,1), filter .95s cubic-bezier(.18,.7,.15,1) !important;
+  transition: opacity 1.68s cubic-bezier(.12,.62,.12,1), transform 1.68s cubic-bezier(.12,.62,.12,1), filter 1.68s cubic-bezier(.12,.62,.12,1) !important;
 }
 .engage.carl-trigger-heart.asset-heart,
 .engage.heart.carl-trigger-heart,
@@ -7171,34 +7171,4 @@ body {
 .engage.heart-story.heart-fade-black {
   color: #090707 !important;
   filter: grayscale(1) brightness(0.20) drop-shadow(0 0 2px rgba(0,0,0,0.68)) !important;
-}
-
-
-/* =========================================================
-   FOREMAN PASS — SOFTER LOADER BLEED-IN
-   Target only: opening loader fade. Hearts/social/Carl untouched.
-========================================================= */
-.loader-scene.booting-in {
-  opacity: 0 !important;
-  transform: translate(-50%, -49%) scale(0.992) !important;
-  filter: blur(7px) brightness(0.38) saturate(0.72) !important;
-  pointer-events: none !important;
-}
-
-.loader-scene.booting-in.boot-visible {
-  opacity: 1 !important;
-  transform: translate(-50%, -50%) scale(1) !important;
-  filter: blur(0) brightness(1) saturate(1) !important;
-  transition:
-    opacity 1.85s cubic-bezier(.12,.58,.16,1) !important,
-    transform 1.85s cubic-bezier(.12,.58,.16,1) !important,
-    filter 1.85s cubic-bezier(.12,.58,.16,1) !important;
-}
-
-.loader-scene.booting-in .loader,
-.loader-scene.booting-in .percent,
-.loader-scene.booting-in .turtle-track {
-  transition:
-    opacity 1.85s cubic-bezier(.12,.58,.16,1),
-    filter 1.85s cubic-bezier(.12,.58,.16,1);
 }
