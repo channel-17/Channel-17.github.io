@@ -79,11 +79,22 @@ const AVATAR_SIZE = 72;
 const HEART_PINK = "heart.pink.PNG";
 const HEART_GREY = "heart.grey.PNG";
 
+// FOREMAN MODE — LOADER FADE-IN ONLY.
+// Screen starts black/quiet, then the loader scene fades in before progress begins.
+const LOADER_BOOT_DELAY_MS = 520;
+const LOADER_FADE_IN_MS = 980;
+let loaderBootComplete = false;
+
 if (loaderScene) {
   loaderScene.classList.add("booting-in");
-  requestAnimationFrame(() => {
-    requestAnimationFrame(() => loaderScene.classList.add("boot-visible"));
-  });
+  setTimeout(() => {
+    loaderScene.classList.add("boot-visible");
+  }, LOADER_BOOT_DELAY_MS);
+  setTimeout(() => {
+    loaderBootComplete = true;
+  }, LOADER_BOOT_DELAY_MS + LOADER_FADE_IN_MS);
+} else {
+  loaderBootComplete = true;
 }
 const AVATAR_HALF = AVATAR_SIZE / 2;
 const frankFrames = [
@@ -310,6 +321,11 @@ function setProgress(value) {
 }
 
 const loading = setInterval(() => {
+  if (!loaderBootComplete) {
+    setProgress(0);
+    return;
+  }
+
   if (state === "normal") progress += 0.16;
   if (state === "notice") progress += 0.072;
   if (state === "hide") progress += 0.18;
