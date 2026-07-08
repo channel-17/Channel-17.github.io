@@ -489,13 +489,35 @@ function spawnSlash(side) {
 }
 
 function spawnEngagement(options = {}) {
-  // FOREMAN HEART PASS 3: right-lane validation hearts only.
-  // Pink/red only. Upright, simple upward float. No worm/slinky travel, no center-screen invasion.
+  // FOREMAN HEART PASS 4: keep the approved right-lane heart motion, add rare social-noise icons only.
+  // Hearts stay dominant. Icons are seasoning: likes / reposts / subscribe-play / gold bell. No center-screen drift.
   if (!options.guaranteed && engageCount > 0 && Math.random() < 0.30) return;
 
   const item = document.createElement("div");
-  item.className = "engage heart heart-story";
-  item.textContent = Math.random() < 0.58 ? "🩷" : "❤️";
+
+  const iconRoll = Math.random();
+  let symbol = Math.random() < 0.58 ? "🩷" : "❤️";
+  let iconClass = "heart";
+
+  // Keep first few emissions as pure hearts so the approved validation stream establishes itself first.
+  if (heartSmokeSpawnCount > 3) {
+    if (iconRoll > 0.84 && iconRoll <= 0.90) {
+      symbol = "👍";
+      iconClass = "like";
+    } else if (iconRoll > 0.90 && iconRoll <= 0.945) {
+      symbol = "🔁";
+      iconClass = "repost";
+    } else if (iconRoll > 0.945 && iconRoll <= 0.975) {
+      symbol = "▶️";
+      iconClass = "subscribe";
+    } else if (iconRoll > 0.975) {
+      symbol = "🔔";
+      iconClass = "bell";
+    }
+  }
+
+  item.className = `engage heart-story social-smoke ${iconClass}`;
+  item.textContent = symbol;
 
   // Keep the field in the approved right-side lane. Variation is vertical timing/spacing, not wandering across the phone.
   const laneX = 72 + Math.random() * 18;
