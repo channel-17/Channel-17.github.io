@@ -7172,3 +7172,65 @@ body {
   color: #090707 !important;
   filter: grayscale(1) brightness(0.20) drop-shadow(0 0 2px rgba(0,0,0,0.68)) !important;
 }
+
+
+/* BUILD33 PROTECTED SYMBOL REAL PASS — inner and outer act as ONE during QR load.
+   No naked Inner/Trust ghost. Outer wall only dissolves after user click. */
+#signalGhost.signal-ghost,
+.signal-ghost {
+  opacity: 0 !important;
+  visibility: hidden;
+}
+
+#signalGhost.signal-ghost.waking,
+.signal-ghost.waking {
+  opacity: 0.28 !important;
+  visibility: visible !important;
+  filter: drop-shadow(0 0 18px rgba(223,255,63,0.20)) !important;
+  animation: none !important;
+}
+
+#signalGhost.signal-ghost.burning,
+.signal-ghost.burning {
+  opacity: 0.48 !important;
+  visibility: visible !important;
+  filter: drop-shadow(0 0 30px rgba(223,255,63,0.38)) !important;
+  animation: ghostBurn 1.2s steps(2) infinite !important;
+}
+
+.signal-ghost .ghost-outer-symbol,
+.signal-ghost .ghost-inner-symbol {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.signal-ghost .ghost-inner-symbol {
+  z-index: 1;
+  opacity: 1;
+}
+
+.signal-ghost .ghost-outer-symbol {
+  z-index: 2;
+  opacity: 0.86;
+}
+
+.signal-node.ready .inner-symbol,
+.signal-node.ready .outer-symbol {
+  opacity: 1;
+}
+
+.signal-node.ready .outer-symbol {
+  opacity: 0.86 !important;
+}
+
+.signal-node:not(.pressed) .outer-symbol,
+.signal-node:not(.pressed) .inner-symbol {
+  visibility: visible;
+}
+
+.signal-node.pressed .outer-symbol.dissolve {
+  animation: outerDissolve 1.9s ease forwards;
+}
