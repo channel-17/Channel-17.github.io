@@ -495,24 +495,22 @@ function spawnEngagement(options = {}) {
 
   const item = document.createElement("div");
 
-  const iconRoll = Math.random();
   let symbol = Math.random() < 0.58 ? "🩷" : "❤️";
   let iconClass = "heart";
 
-  // Keep first few emissions as pure hearts so the approved validation stream establishes itself first.
+  // Foreman correction: social noise must actually be visible, but hearts still dominate.
+  // First three emissions stay pure hearts. After that, every fifth field item is a social icon,
+  // with a small extra random chance between them. Same lane, same float, no new motion language.
   if (heartSmokeSpawnCount > 3) {
-    if (iconRoll > 0.84 && iconRoll <= 0.90) {
-      symbol = "👍";
-      iconClass = "like";
-    } else if (iconRoll > 0.90 && iconRoll <= 0.945) {
-      symbol = "🔁";
-      iconClass = "repost";
-    } else if (iconRoll > 0.945 && iconRoll <= 0.975) {
-      symbol = "▶️";
-      iconClass = "subscribe";
-    } else if (iconRoll > 0.975) {
-      symbol = "🔔";
-      iconClass = "bell";
+    const iconCycle = ["👍", "🔔", "🔁", "▶️"];
+    const cycleClass = ["like", "bell", "repost", "subscribe"];
+    const cycleIndex = Math.floor((heartSmokeSpawnCount - 4) / 5) % iconCycle.length;
+    const scheduledIcon = ((heartSmokeSpawnCount - 4) % 5) === 0;
+    const bonusIcon = !scheduledIcon && Math.random() < 0.10;
+
+    if (scheduledIcon || bonusIcon) {
+      symbol = iconCycle[cycleIndex];
+      iconClass = cycleClass[cycleIndex];
     }
   }
 
