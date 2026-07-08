@@ -80,9 +80,9 @@ const HEART_PINK = "heart.pink.PNG";
 const HEART_GREY = "heart.grey.PNG";
 
 // FOREMAN MODE — LOADER FADE-IN ONLY.
-// Screen holds black first, then the loader bleeds in slowly before progress begins.
-const LOADER_BOOT_DELAY_MS = 950;
-const LOADER_FADE_IN_MS = 1850;
+// Screen starts black/quiet, then the loader scene fades in before progress begins.
+const LOADER_BOOT_DELAY_MS = 780;
+const LOADER_FADE_IN_MS = 1680;
 let loaderBootComplete = false;
 
 if (loaderScene) {
