@@ -50,6 +50,8 @@ let breached = false;
 let ghosted = false;
 let burning = false;
 let generals = false;
+let loaderCoverageDone = false;
+let symbolBattleStarted = false;
 
 let frankSeen = false;
 let wrenSeen = false;
@@ -245,40 +247,31 @@ const normalAssets = [
 ];
 
 const loaderTargets = [
-  // CHANNEL 17 ZONE MAP — LOADER BAR SUPPRESSION FIELD.
-  // Not a road/highway and not one spinning blob.
-  // Virus logic attacks the loader face: far left, far right, center, then exposed gaps.
-  // ZIP28 correction: band dropped one small tick from the too-high pass so the circles sit ON the bar, not above it.
-  { x: 24.0, y: 31.15, zone: "loader", cluster: "bar-left-edge" },
-  { x: 76.0, y: 31.15, zone: "loader", cluster: "bar-right-edge" },
+  // ZONE 1 — LOADER BAR: one-and-done coverage.
+  // Six normal avatars cover the bar; Carl is the final left-side loader avatar. Then this zone stops.
+  { x: 32.5, y: 31.15, zone: "loader", cluster: "bar-left-mid" },
   { x: 50.0, y: 31.00, zone: "loader", cluster: "bar-center" },
-  { x: 36.0, y: 31.30, zone: "loader", cluster: "bar-left-gap" },
-  { x: 64.0, y: 31.30, zone: "loader", cluster: "bar-right-gap" },
-  { x: 30.0, y: 30.70, zone: "loader", cluster: "bar-left-high" },
-  { x: 70.0, y: 30.70, zone: "loader", cluster: "bar-right-high" },
-  { x: 43.0, y: 31.75, zone: "loader", cluster: "bar-center-left" },
-  { x: 57.0, y: 31.75, zone: "loader", cluster: "bar-center-right" },
-  { x: 27.5, y: 32.05, zone: "loader", cluster: "bar-left-low" },
-  { x: 72.5, y: 31.95, zone: "loader", cluster: "bar-right-low" }
+  { x: 67.5, y: 31.15, zone: "loader", cluster: "bar-right-mid" },
+  { x: 40.5, y: 31.62, zone: "loader", cluster: "bar-left-low" },
+  { x: 59.5, y: 30.62, zone: "loader", cluster: "bar-right-high" },
+  { x: 74.0, y: 31.50, zone: "loader", cluster: "bar-right-edge" }
 ];
 
 const symbolTargets = [
-  // SIGNAL ZONE — top pyramid neighborhood only.
-  // This zone is reserved for the late bright-blue reassignment, not early loader suppression.
+  // ZONE 3 — C.17 SYMBOL: blue response only.
+  // These are allowed to keep arriving because the symbol is the actual threat.
   { x: 42.0, y: 20.5, zone: "symbol" },
   { x: 50.0, y: 17.8, zone: "symbol" },
   { x: 58.0, y: 20.5, zone: "symbol" },
   { x: 45.5, y: 27.0, zone: "symbol" },
-  { x: 54.5, y: 27.0, zone: "symbol" }
+  { x: 54.5, y: 27.0, zone: "symbol" },
+  { x: 50.0, y: 24.0, zone: "symbol" }
 ];
 
 const missTargets = [
-  // Loader-edge pressure only. No random drift into Frank/turtle territory.
-  // ZIP28 correction: right-side misses stay inside the loader lane.
+  // Reserved drift/miss references. Loader/symbol zone logic should not lean on this during the current brick.
   { x: 22.0, y: 32.55, zone: "miss" },
-  { x: 78.0, y: 32.35, zone: "miss" },
-  { x: 33.0, y: 32.60, zone: "miss" },
-  { x: 67.0, y: 32.50, zone: "miss" }
+  { x: 78.0, y: 32.35, zone: "miss" }
 ];
 
 const coverageTargets = [...loaderTargets, ...symbolTargets, ...missTargets];
@@ -372,6 +365,10 @@ const loading = setInterval(() => {
     startBurnPulse();
   }
 
+  if (progress >= 52 && !symbolBattleStarted) {
+    startSymbolBattle();
+  }
+
   // FOREMAN MODE: hearts-only pass.
   // Carl's special broken-heart event is intentionally paused until the regular heart field is approved.
 
@@ -385,10 +382,7 @@ const loading = setInterval(() => {
     spawnWren();
   }
 
-  if (progress >= 19.2 && !carlSeen) {
-    carlSeen = true;
-    setTimeout(() => spawnCarl(), 880);
-  }
+  // Carl is now the final loader-bar avatar inside startAttack(), not an early separate spotlight.
 
   if (progress >= 24 && !frankSeen) {
     frankSeen = true;
@@ -430,30 +424,45 @@ function startHeartSmoke() {
 }
 
 function startAttack() {
-  // Maintenance reaction, not martial law: bam... wait... bam.
-  // The system casually covers exposed authenticity pixels; it does not machine-gun the loader.
-  const earlyTargets = [loaderTargets[1], loaderTargets[4], loaderTargets[2], loaderTargets[7], loaderTargets[8]];
-  earlyTargets.forEach((target, index) => {
-    const sides = ["right", "left", "top", "left", "right"];
-    setTimeout(() => spawnProfile(sides[index] || randomSide(), 0, { force: target }), 720 + index * 1720);
+  // ZONE 1 — LOADER BAR: one-and-done.
+  // Six normal profiles cover the bar lazily. Carl is the final loader-bar profile on the left.
+  // After that, the loader is considered covered and the system stops wasting avatars there.
+  if (profileTimer) return;
+
+  const sides = ["right", "left", "top", "right", "left", "top"];
+  loaderTargets.forEach((target, index) => {
+    setTimeout(() => spawnProfile(sides[index] || randomSide(), 0, { force: target, noAutoRemove: true }), 720 + index * 1050);
   });
 
-  profileTimer = setInterval(() => {
-    if (completed) return;
-    spawnProfile(randomSide());
-  }, 2460);
-
-  if (!engageTimer) {
-    engageTimer = setInterval(() => {
-      if (completed) return;
-      spawnEngagement();
-    }, 980);
-  }
+  setTimeout(() => {
+    if (!carlSeen) {
+      carlSeen = true;
+      spawnCarl();
+    }
+    loaderCoverageDone = true;
+  }, 720 + loaderTargets.length * 1050 + 520);
 
   slashTimer = setInterval(() => {
     if (completed) return;
     spawnSlash(randomSide());
-  }, 2250);
+  }, 3200);
+}
+
+function startSymbolBattle() {
+  // ZONE 3 — SYMBOL: blue avatars respond to the protected frequency.
+  // They do not attack the loader. They only matter when they land on the symbol.
+  if (symbolBattleStarted) return;
+  symbolBattleStarted = true;
+
+  [0, 1, 2].forEach((i) => {
+    setTimeout(() => spawnProfile(["top", "left", "right"][i], 0, { force: symbolTargets[i % symbolTargets.length], symbolProbe: true }), i * 360);
+  });
+
+  profileTimer = setInterval(() => {
+    if (completed) return;
+    const target = symbolTargets[profileCount % symbolTargets.length];
+    spawnProfile(randomSide(), 0, { force: target, symbolProbe: true });
+  }, 1850);
 }
 
 function randomSide() {
@@ -559,20 +568,8 @@ function spawnEngagement(options = {}) {
 
 function pickTarget() {
   const count = profileCount;
-
-  // Before the final signal moment, all general avatar pressure belongs to the loader bar.
-  // Use a gap-seeking order so it feels like the machine is covering exposed authenticity.
-  if (progress < 82) {
-    if (count % 10 === 5) return missTargets[count % missTargets.length];
-    const safeTargets = loaderTargets.filter(target => Math.abs(target.x - CARL_ZONE.x) > 7.0);
-    return safeTargets[count % safeTargets.length];
-  }
-
-  // Late-stage reassignment may touch the signal/pyramid zone.
-  if (count % 3 === 0) {
-    return symbolTargets[count % symbolTargets.length];
-  }
-
+  if (!loaderCoverageDone) return loaderTargets[count % loaderTargets.length];
+  if (symbolBattleStarted) return symbolTargets[count % symbolTargets.length];
   return loaderTargets[count % loaderTargets.length];
 }
 
@@ -597,6 +594,7 @@ function spawnProfile(side, delay = 0, opts = {}) {
     profile.dataset.zone = target.zone;
     if (target.zone === "symbol") profile.classList.add("symbol-touch");
     if (target.zone === "loader") profile.classList.add("loader-cover");
+    if (opts.symbolProbe) profile.classList.add("symbol-probe");
 
     let sx = "0px";
     let sy = "0px";
@@ -615,15 +613,17 @@ function spawnProfile(side, delay = 0, opts = {}) {
 
     spawnSlash(side);
 
-    if (target.zone === "symbol" && progress >= 82) {
-      setTimeout(() => revealHive(profile), 260 + Math.random() * 260);
+    if (target.zone === "symbol") {
+      setTimeout(() => revealHive(profile), 220 + Math.random() * 260);
     }
 
-    setTimeout(() => {
-      if (profile && profile.parentNode && !profile.classList.contains("carl") && !profile.classList.contains("frank")) {
-        profile.remove();
-      }
-    }, target.zone === "symbol" ? 7600 : 5200);
+    if (!opts.noAutoRemove) {
+      setTimeout(() => {
+        if (profile && profile.parentNode && !profile.classList.contains("carl") && !profile.classList.contains("frank")) {
+          profile.remove();
+        }
+      }, target.zone === "symbol" ? 9800 : 5200);
+    }
   }, delay);
 }
 
@@ -644,19 +644,24 @@ function revealHive(profile) {
       image.src = asset;
     }
 
-    profile.classList.add("hive-reveal", "has-hive-asset");
+    profile.classList.add("hive-reveal", "has-hive-asset", "signal-burn-contact");
+
+    // Gold contact burns the section touching the symbol first; the avatar shell remains.
+    setTimeout(() => {
+      if (profile && profile.parentNode) profile.classList.add("signal-burn-spread");
+    }, 1200);
 
     setTimeout(() => {
-      if (profile && profile.parentNode) profile.classList.add("pixel-deteriorate");
-    }, 4300);
+      if (profile && profile.parentNode) profile.classList.add("signal-burn-deep");
+    }, 2500);
 
     setTimeout(() => {
-      if (profile && profile.parentNode) profile.classList.add("hive-dissolve");
-    }, 5100);
+      if (profile && profile.parentNode) profile.classList.add("signal-burn-hold");
+    }, 4200);
 
     setTimeout(() => {
       if (profile && profile.parentNode) profile.remove();
-    }, 6900);
+    }, 9800);
   }, 230);
 }
 
@@ -711,7 +716,7 @@ function fireBlast(index) {
   setTimeout(() => blast.remove(), 430);
 
   for (let i = 0; i < 3; i++) {
-    setTimeout(() => spawnProfile(["left", "right", "top"][i]), i * 80);
+    setTimeout(() => spawnProfile(["left", "right", "top"][i], 0, { force: symbolTargets[(profileCount + i) % symbolTargets.length], symbolProbe: true }), i * 160);
   }
 }
 
@@ -738,12 +743,7 @@ function spawnCarl() {
     openCarlProfile();
   }, { once: true });
 
-  setTimeout(() => {
-    if (carl && carl.parentNode && !carlTriggered) {
-      carl.classList.add("burying");
-      setTimeout(() => carl.remove(), 460);
-    }
-  }, 22000);
+  // Carl stays as the final left-side loader avatar. He is left alone until the Carl-heart brick is unlocked.
 
   return carl;
 }
@@ -1019,13 +1019,13 @@ function spawnFrank() {
   turtle.classList.add("covered-by-frank");
 
   const frankPositions = [
-    // FRANK ZONE — green-cross center only. Frank overlaps Frank; nobody else belongs here.
-    { x: 50.0, y: 45.4, sx: "-44px", sy: "34px" },
-    { x: 50.7, y: 45.0, sx: "-38px", sy: "28px" },
-    { x: 49.3, y: 45.7, sx: "-52px", sy: "30px" },
-    { x: 50.2, y: 44.9, sx: "-45px", sy: "24px" },
-    { x: 49.7, y: 45.8, sx: "-56px", sy: "32px" },
-    { x: 50.9, y: 45.5, sx: "-40px", sy: "36px" }
+    // ZONE 2 — HOMIE: Frank duty only. Messy pile, not a perfect stack of coins.
+    { x: 50.0, y: 45.4, sx: "-44px", sy: "34px", r: "-7deg" },
+    { x: 48.9, y: 46.1, sx: "-52px", sy: "30px", r: "8deg" },
+    { x: 51.2, y: 44.8, sx: "-38px", sy: "27px", r: "-3deg" },
+    { x: 49.5, y: 44.5, sx: "-48px", sy: "22px", r: "11deg" },
+    { x: 50.8, y: 46.4, sx: "-41px", sy: "37px", r: "-10deg" },
+    { x: 49.8, y: 45.7, sx: "-56px", sy: "32px", r: "4deg" }
   ];
 
   frankPositions.forEach((pos, index) => {
@@ -1036,6 +1036,7 @@ function spawnFrank() {
       frank.style.top = `calc(${pos.y}% - ${AVATAR_HALF}px)`;
       frank.style.setProperty("--sx", pos.sx);
       frank.style.setProperty("--sy", pos.sy);
+      frank.style.setProperty("--fr", pos.r || "0deg");
       frank.style.zIndex = String(22 + index);
       frank.innerHTML = `<img src="AssetFRANK.PNG" alt="">`;
       profileField.appendChild(frank);
