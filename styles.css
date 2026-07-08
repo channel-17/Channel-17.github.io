@@ -379,9 +379,21 @@ body {
 }
 
 .signal-ghost img {
+  position: absolute;
+  inset: 0;
+  display: block;
   width: 100%;
   height: 100%;
   object-fit: contain;
+}
+
+.signal-ghost .ghost-inner-symbol {
+  z-index: 1;
+}
+
+.signal-ghost .ghost-outer-symbol {
+  z-index: 2;
+  opacity: 0.72;
 }
 
 .signal-ghost.waking {
@@ -7233,4 +7245,26 @@ body {
 
 .signal-node.pressed .outer-symbol.dissolve {
   animation: outerDissolve 1.9s ease forwards;
+}
+
+
+/* BUILD33 SYMBOL STACK FIX — inner/outer stay locked together during QR load */
+#signalGhost.signal-ghost {
+  overflow: visible !important;
+}
+#signalGhost.signal-ghost img {
+  position: absolute !important;
+  inset: 0 !important;
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain !important;
+  transform: none !important;
+}
+#signalGhost.signal-ghost .ghost-inner-symbol {
+  z-index: 1 !important;
+}
+#signalGhost.signal-ghost .ghost-outer-symbol {
+  z-index: 2 !important;
+  opacity: 0.72 !important;
 }
