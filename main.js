@@ -379,33 +379,33 @@ const coverageTargets = [...loaderTargets, ...symbolTargets, ...missTargets];
 // One pink heart rises like the others, gets flicked by the top-right system/fan, visibly breaks on-screen,
 // then overcorrects through a fast wind curl and completes an electric edge-contact with Carl.
 const CARL_ZONE = { x: 25.6, y: 34.18 };
-const CARL_HEART_START = { x: 82, y: 104 };
+const CARL_HEART_START = { x: 82, y: 98 };
 const CARL_HEART_CONTACT = { x: CARL_ZONE.x + 3.6, y: CARL_ZONE.y + 0.04 };
 const CARL_HEART_PATH = [
-  // One regular red broken heart believes it belongs with the right-side social chaos.
-  // It stays red all the way up the right lane until the Virus rejects it.
-  { left: "82%", top: "104%", transform: "translate(-50%, -50%) scale(1.00) rotate(-5deg)", opacity: 0, offset: 0 },
-  { left: "84%", top: "91%", transform: "translate(-50%, -50%) scale(1.02) rotate(1deg)", opacity: 0.72, offset: 0.10 },
-  { left: "81%", top: "76%", transform: "translate(-50%, -50%) scale(1.03) rotate(-2deg)", opacity: 0.92, offset: 0.22 },
-  { left: "85%", top: "60%", transform: "translate(-50%, -50%) scale(1.04) rotate(2deg)", opacity: 1, offset: 0.34 },
-  { left: "82%", top: "42%", transform: "translate(-50%, -50%) scale(1.04) rotate(-2deg)", opacity: 1, offset: 0.47 },
-  { left: "84%", top: "23%", transform: "translate(-50%, -50%) scale(1.05) rotate(1deg)", opacity: 1, offset: 0.58 },
-  { left: "82%", top: "13%", transform: "translate(-50%, -50%) scale(1.12) rotate(-9deg)", opacity: 1, offset: 0.625 },
+  // One regular red broken heart rides the exact social-chaos/right-side lane.
+  // It thinks it belongs with the other hearts until the virus catches it near the top.
+  { left: "82%", top: "102%", transform: "translate(-50%, -50%) scale(1.00) rotate(-4deg)", opacity: 0, offset: 0 },
+  { left: "84%", top: "91%", transform: "translate(-50%, -50%) scale(1.00) rotate(2deg)", opacity: .76, offset: 0.10 },
+  { left: "81%", top: "78%", transform: "translate(-50%, -50%) scale(1.00) rotate(-2deg)", opacity: .92, offset: 0.22 },
+  { left: "85%", top: "64%", transform: "translate(-50%, -50%) scale(1.00) rotate(2deg)", opacity: 1, offset: 0.34 },
+  { left: "82%", top: "49%", transform: "translate(-50%, -50%) scale(1.00) rotate(-2deg)", opacity: 1, offset: 0.46 },
+  { left: "84%", top: "34%", transform: "translate(-50%, -50%) scale(1.00) rotate(1deg)", opacity: 1, offset: 0.56 },
+  { left: "82%", top: "20%", transform: "translate(-50%, -50%) scale(1.00) rotate(-1deg)", opacity: 1, offset: 0.635 },
 
-  // Get-this-error-out flick: hard left, not a right-side exit.
-  { left: "42%", top: "9%", transform: "translate(-50%, -50%) scale(1.12) rotate(-72deg)", opacity: .96, offset: 0.655 },
-  { left: "-20%", top: "8%", transform: "translate(-50%, -50%) scale(1.05) rotate(-148deg)", opacity: 0, offset: 0.705 },
+  // Error recognition: violent left flick, not a right-side exit.
+  { left: "81%", top: "15%", transform: "translate(-50%, -50%) scale(1.02) rotate(-8deg)", opacity: 1, offset: 0.655 },
+  { left: "42%", top: "10%", transform: "translate(-50%, -50%) scale(1.03) rotate(-70deg)", opacity: .96, offset: 0.685 },
+  { left: "-16%", top: "12%", transform: "translate(-50%, -50%) scale(1.00) rotate(-148deg)", opacity: 0, offset: 0.725 },
 
-  // Re-entry: bottom-center rise. It returns red first, then drains into the gray PNG while climbing.
-  { left: "50%", top: "111%", transform: "translate(-50%, -50%) scale(1.12) rotate(-6deg)", opacity: 0, offset: 0.735 },
-  { left: "50%", top: "99%", transform: "translate(-50%, -50%) scale(1.13) rotate(-4deg)", opacity: .76, offset: 0.785 },
-  { left: "49%", top: "88%", transform: "translate(-50%, -50%) scale(1.13) rotate(-2deg)", opacity: .98, offset: 0.830 },
-  { left: "47%", top: "76%", transform: "translate(-50%, -50%) scale(1.12) rotate(0deg)", opacity: 1, offset: 0.870 },
-  { left: "43%", top: "64%", transform: "translate(-50%, -50%) scale(1.10) rotate(1deg)", opacity: 1, offset: 0.910 },
-  { left: "38%", top: "53%", transform: "translate(-50%, -50%) scale(1.08) rotate(-1deg)", opacity: 1, offset: 0.945 },
-  { left: "32%", top: "43%", transform: "translate(-50%, -50%) scale(1.06) rotate(1deg)", opacity: 1, offset: 0.975 },
-  { left: `${CARL_HEART_CONTACT.x}%`, top: `${CARL_HEART_CONTACT.y}%`, transform: "translate(-50%, -50%) scale(1.04) rotate(-2deg)", opacity: 1, offset: 0.995 },
-  { left: `${CARL_HEART_CONTACT.x}%`, top: `${CARL_HEART_CONTACT.y}%`, transform: "translate(-50%, -50%) scale(1.04) rotate(-2deg)", opacity: 0, offset: 1 }
+  // Re-entry: bottom-middle, same size, red first; then it withers into the gray PNG as Carl starts eroding.
+  { left: "49%", top: "113%", transform: "translate(-50%, -50%) scale(1.00) rotate(-6deg)", opacity: 0, offset: 0.755 },
+  { left: "48%", top: "101%", transform: "translate(-50%, -50%) scale(1.00) rotate(-4deg)", opacity: .76, offset: 0.800 },
+  { left: "46%", top: "90%", transform: "translate(-50%, -50%) scale(1.00) rotate(-2deg)", opacity: 1, offset: 0.845 },
+  { left: "43%", top: "78%", transform: "translate(-50%, -50%) scale(1.00) rotate(0deg)", opacity: 1, offset: 0.885 },
+  { left: "39%", top: "65%", transform: "translate(-50%, -50%) scale(1.00) rotate(-1deg)", opacity: 1, offset: 0.925 },
+  { left: "34%", top: "52%", transform: "translate(-50%, -50%) scale(1.00) rotate(1deg)", opacity: 1, offset: 0.960 },
+  { left: `${CARL_HEART_CONTACT.x}%`, top: `${CARL_HEART_CONTACT.y}%`, transform: "translate(-50%, -50%) scale(1.00) rotate(-2deg)", opacity: 1, offset: 0.992 },
+  { left: `${CARL_HEART_CONTACT.x}%`, top: `${CARL_HEART_CONTACT.y}%`, transform: "translate(-50%, -50%) scale(1.00) rotate(-2deg)", opacity: 0, offset: 1 }
 ];
 
 function setProgress(value) {
@@ -874,25 +874,25 @@ function releaseDeadHeartTowardCarl() {
   let carl = null;
 
   const heart = document.createElement("div");
-  heart.className = "engage carl-trigger-heart asset-heart red-broken-stage matrix-error-heart";
+  heart.className = "engage carl-trigger-heart asset-heart pink-stage matrix-error-heart";
   heart.style.left = `${CARL_HEART_START.x}%`;
   heart.style.top = `${CARL_HEART_START.y}%`;
   heart.style.opacity = "0";
   // Override old CSS-route experiments from previous builds; this path is owned by JS.
   heart.style.setProperty("animation", "none", "important");
-  heart.style.setProperty("width", "50px", "important");
-  heart.style.setProperty("height", "50px", "important");
+  heart.style.setProperty("width", "66px", "important");
+  heart.style.setProperty("height", "66px", "important");
   heart.innerHTML = `
-    <span class="carl-heart-layer carl-heart-red" aria-hidden="true">💔</span>
+    <img class="carl-heart-layer carl-heart-pink" src="${HEART_PINK}" alt="">
     <img class="carl-heart-layer carl-heart-grey" src="${HEART_GREY}" alt="">
   `;
 
   engagementField.appendChild(heart);
 
-  const flightDuration = 22800;
+  const flightDuration = 21500;
   const flight = heart.animate(CARL_HEART_PATH, {
     duration: flightDuration,
-    easing: "cubic-bezier(.30,.52,.14,1)",
+    easing: "cubic-bezier(.28,.54,.18,1)",
     fill: "forwards"
   });
 
@@ -901,32 +901,31 @@ function releaseDeadHeartTowardCarl() {
     if (!heart.parentNode) return;
     carl = profileField.querySelector(".profile.carl") || spawnCarl();
     carlSeen = true;
-  }, 2100);
+    if (carl && carl.parentNode) carl.classList.add("carl-heart-eroding");
+  }, 16250);
 
-  // Virus rejection: flicked hard left while still red.
+  // The top-right fan rejects it. This is when the pink heart becomes the gray broken-heart PNG.
   setTimeout(() => {
     if (!heart.parentNode) return;
-    heart.classList.add("off-course");
-  }, 14200);
-
-  // Bottom re-entry: still red, then visibly drains into Jinx's gray PNG during the climb.
-  setTimeout(() => {
-    if (!heart.parentNode) return;
-    heart.classList.add("draining", "grey-taking-over");
-  }, 17900);
+    heart.classList.add("off-course", "draining", "grey-taking-over");
+    carl = carl || profileField.querySelector(".profile.carl") || spawnCarl();
+    if (carl && carl.parentNode) carl.classList.add("carl-heart-eroding");
+  }, 17250);
 
   setTimeout(() => {
     if (!heart.parentNode) return;
-    heart.classList.remove("red-broken-stage", "draining");
+    heart.classList.remove("pink-stage", "draining");
     heart.classList.add("dead-stage");
-  }, 20100);
+    carl = carl || profileField.querySelector(".profile.carl") || spawnCarl();
+    if (carl && carl.parentNode) carl.classList.add("carl-heart-eroded");
+  }, 18900);
 
   // Static-zap contact: edge of the broken heart enters Carl's ring and the circuit completes.
   setTimeout(() => {
     carl = carl || profileField.querySelector(".profile.carl") || spawnCarl();
     if (heart && heart.parentNode) heart.remove();
     triggerCarl(carl);
-  }, 22250);
+  }, 20850);
 
   flight.onfinish = () => {
     if (heart && heart.parentNode) heart.remove();
