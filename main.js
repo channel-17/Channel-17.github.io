@@ -40,6 +40,7 @@ const expandTestimonials = document.getElementById("expandTestimonials");
 const jinxShadowFrequency = document.getElementById("jinxShadowFrequency");
 const jinxCardOverlay = document.getElementById("jinxCardOverlay");
 const jinxCardClose = document.getElementById("jinxCardClose");
+let poemNoteOverlay = null;
 
 let progress = 0;
 let state = "normal";
@@ -109,6 +110,48 @@ const frankFrames = [
   "blue.frank6.PNG"
 ];
 let activeFrankStack = [];
+
+
+function ensurePoemNoteOverlay() {
+  if (poemNoteOverlay) return poemNoteOverlay;
+
+  poemNoteOverlay = document.createElement("aside");
+  poemNoteOverlay.className = "poem-note-overlay";
+  poemNoteOverlay.id = "poemNoteOverlay";
+  poemNoteOverlay.setAttribute("aria-hidden", "true");
+  poemNoteOverlay.innerHTML = `
+    <section class="poem-note-card" role="dialog" aria-modal="true" aria-label="poem note">
+      <button class="poem-note-close" id="poemNoteClose" type="button" aria-label="close poem note">×</button>
+      <div class="poem-note-kicker">private frequency</div>
+      <h2>poem note</h2>
+      <div class="poem-note-paper">
+        <p>Write the poem here.</p>
+        <p class="poem-note-placeholder">This page is a placeholder for the secret flame.</p>
+      </div>
+    </section>
+  `;
+  document.body.appendChild(poemNoteOverlay);
+
+  const close = poemNoteOverlay.querySelector("#poemNoteClose");
+  close.addEventListener("click", closePoemNote);
+  poemNoteOverlay.addEventListener("click", (event) => {
+    if (event.target === poemNoteOverlay) closePoemNote();
+  });
+
+  return poemNoteOverlay;
+}
+
+function openPoemNote() {
+  const overlay = ensurePoemNoteOverlay();
+  overlay.classList.add("open");
+  overlay.setAttribute("aria-hidden", "false");
+}
+
+function closePoemNote() {
+  if (!poemNoteOverlay) return;
+  poemNoteOverlay.classList.remove("open");
+  poemNoteOverlay.setAttribute("aria-hidden", "true");
+}
 
 function openJinxCard() {
   if (!jinxCardOverlay) return;
@@ -286,18 +329,26 @@ const CARL_ZONE = { x: 25.6, y: 34.18 };
 const CARL_HEART_START = { x: 83, y: 96 };
 const CARL_HEART_CONTACT = { x: CARL_ZONE.x + 4.0, y: CARL_ZONE.y + 0.05 };
 const CARL_HEART_PATH = [
-  // ONE STORY HEART: same slow social-chaos lane as the pink/red hearts.
-  // It rises like a loose balloon up the right side first — no left-screen whip, no fast coin-slot motion.
-  { left: "83%", top: "101%", transform: "translate(-50%, -50%) scale(1.00) rotate(-5deg)", opacity: 0, offset: 0 },
-  { left: "84%", top: "91%", transform: "translate(calc(-50% - 4px), -50%) scale(1.02) rotate(2deg)", opacity: 0.82, offset: 0.12 },
-  { left: "81%", top: "79%", transform: "translate(calc(-50% + 5px), -50%) scale(1.03) rotate(-3deg)", opacity: 1, offset: 0.25 },
-  { left: "86%", top: "66%", transform: "translate(calc(-50% - 3px), -50%) scale(1.04) rotate(4deg)", opacity: 1, offset: 0.38 },
-  { left: "82%", top: "53%", transform: "translate(calc(-50% + 4px), -50%) scale(1.05) rotate(-2deg)", opacity: 1, offset: 0.51 },
-  { left: "85%", top: "40%", transform: "translate(calc(-50% - 5px), -50%) scale(1.06) rotate(3deg)", opacity: 1, offset: 0.64 },
-  { left: "82%", top: "27%", transform: "translate(calc(-50% + 3px), -50%) scale(1.07) rotate(-4deg)", opacity: 1, offset: 0.77 },
-  { left: "84%", top: "15%", transform: "translate(calc(-50% - 4px), -50%) scale(1.08) rotate(2deg)", opacity: 1, offset: 0.90 },
-  { left: "82%", top: "8%", transform: "translate(calc(-50% + 5px), -50%) scale(1.10) rotate(-7deg)", opacity: 1, offset: 0.985 },
-  { left: "81%", top: "4%", transform: "translate(calc(-50% + 7px), -50%) scale(1.12) rotate(-11deg)", opacity: 0, offset: 1 }
+  // Normal-heart climb. Same read as the field hearts until the top-right maintenance flick.
+  { left: "82%", top: "96%", transform: "translate(-50%, -50%) scale(1.02) rotate(-5deg)", opacity: 0, offset: 0 },
+  { left: "84%", top: "82%", transform: "translate(-50%, -50%) scale(1.04) rotate(3deg)", opacity: 0.9, offset: 0.11 },
+  { left: "81%", top: "66%", transform: "translate(-50%, -50%) scale(1.05) rotate(-3deg)", opacity: 1, offset: 0.24 },
+  { left: "85%", top: "47%", transform: "translate(-50%, -50%) scale(1.07) rotate(5deg)", opacity: 1, offset: 0.37 },
+  { left: "82%", top: "27%", transform: "translate(-50%, -50%) scale(1.08) rotate(-4deg)", opacity: 1, offset: 0.49 },
+  { left: "84%", top: "13%", transform: "translate(-50%, -50%) scale(1.10) rotate(2deg)", opacity: 1, offset: 0.565 },
+
+  // Visible on-screen rejection: the top-right system/finger flicks it left and breaks it.
+  { left: "82%", top: "14%", transform: "translate(-50%, -50%) scale(1.15) rotate(-18deg)", opacity: 1, offset: 0.595 },
+  { left: "58%", top: "15%", transform: "translate(-50%, -50%) scale(1.20) rotate(35deg)", opacity: 1, offset: 0.645 },
+  { left: "24%", top: "19%", transform: "translate(-50%, -50%) scale(1.24) rotate(-46deg)", opacity: 1, offset: 0.70 },
+  { left: "-10%", top: "29%", transform: "translate(-50%, -50%) scale(1.23) rotate(42deg)", opacity: 1, offset: 0.755 },
+
+  // Overcorrect: bottom-left phone space, big curl upward, forbidden edge contact with Carl.
+  { left: "2%", top: "78%", transform: "translate(-50%, -50%) scale(1.20) rotate(-32deg)", opacity: 1, offset: 0.815 },
+  { left: "11%", top: "82%", transform: "translate(-50%, -50%) scale(1.18) rotate(25deg)", opacity: 1, offset: 0.865 },
+  { left: "16%", top: "62%", transform: "translate(-50%, -50%) scale(1.16) rotate(-18deg)", opacity: 1, offset: 0.918 },
+  { left: `${CARL_HEART_CONTACT.x}%`, top: `${CARL_HEART_CONTACT.y}%`, transform: "translate(-50%, -50%) scale(1.16) rotate(-8deg)", opacity: 1, offset: 0.982 },
+  { left: `${CARL_HEART_CONTACT.x}%`, top: `${CARL_HEART_CONTACT.y}%`, transform: "translate(-50%, -50%) scale(1.34) rotate(-8deg)", opacity: 0, offset: 1 }
 ];
 
 function setProgress(value) {
@@ -537,6 +588,21 @@ function spawnEngagement(options = {}) {
 
   item.className = `engage heart-story social-smoke ${iconClass}`;
   item.textContent = symbol;
+  if (iconClass === "secret-flame") {
+    item.setAttribute("role", "button");
+    item.setAttribute("aria-label", "secret poem note");
+    item.tabIndex = 0;
+    item.addEventListener("click", (event) => {
+      event.stopPropagation();
+      openPoemNote();
+    });
+    item.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        openPoemNote();
+      }
+    });
+  }
 
   // Keep the field in the approved right-side lane. Variation is vertical timing/spacing, not wandering across the phone.
   const laneX = 72 + Math.random() * 18;
@@ -746,15 +812,39 @@ function releaseDeadHeartTowardCarl() {
 
   engagementField.appendChild(heart);
 
-  const flightDuration = 9800;
+  const flightDuration = 6100;
   const flight = heart.animate(CARL_HEART_PATH, {
     duration: flightDuration,
-    easing: "cubic-bezier(.25,.62,.25,1)",
+    easing: "cubic-bezier(.2,.72,.08,1)",
     fill: "forwards"
   });
 
-  // This brick is only the slow right-side heart motion.
-  // Carl/gray-contact is intentionally left alone for the next brick.
+  // Carl lands as one normal avatar while the heart is still only background smoke.
+  setTimeout(() => {
+    if (!heart.parentNode) return;
+    carl = profileField.querySelector(".profile.carl") || spawnCarl();
+    carlSeen = true;
+  }, 1250);
+
+  // The top-right fan rejects it. This is when the pink heart becomes the gray broken-heart PNG.
+  setTimeout(() => {
+    if (!heart.parentNode) return;
+    heart.classList.add("off-course", "draining", "grey-taking-over");
+  }, 3620);
+
+  setTimeout(() => {
+    if (!heart.parentNode) return;
+    heart.classList.remove("pink-stage", "draining");
+    heart.classList.add("dead-stage");
+  }, 4050);
+
+  // Static-zap contact: edge of the broken heart enters Carl's ring and the circuit completes.
+  setTimeout(() => {
+    carl = carl || profileField.querySelector(".profile.carl") || spawnCarl();
+    spawnCarlZap();
+    if (heart && heart.parentNode) heart.remove();
+    triggerCarl(carl);
+  }, 5990);
 
   flight.onfinish = () => {
     if (heart && heart.parentNode) heart.remove();
