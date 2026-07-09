@@ -605,12 +605,26 @@ function spawnEngagement(options = {}) {
   }
 
   // Keep the field in the approved right-side lane. Variation is vertical timing/spacing, not wandering across the phone.
-  const laneX = 72 + Math.random() * 18;
-  const startY = 96 + Math.random() * 8;
-  const dur = 8.6 + Math.random() * 1.8;
-  const laneDrift = -10 + Math.random() * 20;
-  const softSwayA = -5 + Math.random() * 10;
-  const softSwayB = -4 + Math.random() * 8;
+  let laneX = 72 + Math.random() * 18;
+  let startY = 96 + Math.random() * 8;
+  let dur = 8.6 + Math.random() * 1.8;
+  let laneDrift = -10 + Math.random() * 20;
+  let softSwayA = -5 + Math.random() * 10;
+  let softSwayB = -4 + Math.random() * 8;
+  let heartScale = 0.96 + Math.random() * 0.16;
+
+  // FIRE BRICK 42: the secret flame is not a spring/slinky.
+  // It rides the same right-side social-chaos lane as the hearts, but floats like one helium balloon:
+  // steady lift, tiny drift, no aggressive bob, no bounce language.
+  if (iconClass === "secret-flame") {
+    laneX = 78 + Math.random() * 6;
+    startY = 98 + Math.random() * 4;
+    dur = 9.35 + Math.random() * 0.75;
+    laneDrift = -4 + Math.random() * 8;
+    softSwayA = -1 + Math.random() * 2;
+    softSwayB = -1 + Math.random() * 2;
+    heartScale = 1.02;
+  }
 
   item.style.left = laneX + "%";
   item.style.top = startY + "%";
@@ -618,7 +632,7 @@ function spawnEngagement(options = {}) {
   item.style.setProperty("--drift", Math.round(laneDrift) + "px");
   item.style.setProperty("--bob-a", Math.round(softSwayA) + "px");
   item.style.setProperty("--bob-b", Math.round(softSwayB) + "px");
-  item.style.setProperty("--heart-scale", (0.96 + Math.random() * 0.16).toFixed(2));
+  item.style.setProperty("--heart-scale", heartScale.toFixed(2));
 
   engagementField.appendChild(item);
   engageCount++;
