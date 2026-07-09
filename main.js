@@ -66,6 +66,7 @@ let heartSmokeSpawnCount = 0;
 let frankDutyStarted = false;
 let frankDutyFramesPlayed = false;
 let secretFlameReleased = false;
+const secretFlameSpawnAt = 8 + Math.floor(Math.random() * 9);
 let woundPulseTimer = null;
 let hiveWoundUsed = false;
 let jinxFrequencyTimer = null;
@@ -120,13 +121,18 @@ function ensurePoemNoteOverlay() {
   poemNoteOverlay.id = "poemNoteOverlay";
   poemNoteOverlay.setAttribute("aria-hidden", "true");
   poemNoteOverlay.innerHTML = `
-    <section class="poem-note-card" role="dialog" aria-modal="true" aria-label="poem note">
+    <section class="poem-note-card" role="dialog" aria-modal="true" aria-label="Red poem">
       <button class="poem-note-close" id="poemNoteClose" type="button" aria-label="close poem note">×</button>
-      <div class="poem-note-kicker">private frequency</div>
-      <h2>poem note</h2>
+      <h2>Red.</h2>
       <div class="poem-note-paper">
-        <p>Write the poem here.</p>
-        <p class="poem-note-placeholder">This page is a placeholder for the secret flame.</p>
+        <p>Walked into your office, saw the fire in your hair<br>Bright red like a warning, but I didn’t even care<br>You sat at that desk, whole room shifted tone<br>Like I stepped into a palace that was never my own</p>
+        <p>You looked up for a second, I was caught in the frame<br>Started callin’ you Jasmine, just didn’t say it by name<br>It was a joke in my head.<br>Started feeling surreal.<br>Like there was a crown in my future I might not have to steal</p>
+        <p>Every visit turned a moment into somethin’ more deep<br>I was buildin’ whole worlds while you were talkin’ to me<br>Had a carpet in my mind, had a plan, had a pace<br>Had a version of forever when I saw your face</p>
+        <p>Never crossed any lines, kept it cool, kept it tight<br>But I felt somethin’ shift with you in my sight.<br>Thought the door might be open<br>just a crack, just enough…<br>Thought maybe… just maybe,<br>This was fairytale kind of stuff.</p>
+        <p>The silence got louder, you were driftin’ away<br>Conversations got shorter, different look in your gaze<br>Didn’t see it all happen, never watched you choose him<br>Just held it inside.<br>While my walls were caving in.</p>
+        <p>He was part of your story, I’m not even a page<br>Just a thought scribbled down<br>And then quickly erased<br>That’s the part I can’t get over, missing this win.<br>I never lost you to him—I just never got to begin</p>
+        <p>Now I’m stuck with a palace that I built in my head<br>Walkin’ down empty hallways,<br>where the words went unsaid<br>Scrabbling for a genie<br>My wish was never spoke<br>I feel like the punchline without a setup, just a half-finished joke</p>
+        <p>I still picture your hair and how the light shaded those strands.<br>You smiled at me and I thought fate had a plan<br>Now it flickers like a memory that burns when I sleep<br>The crown I imagined that I never could keep</p>
       </div>
     </section>
   `;
@@ -580,7 +586,7 @@ function spawnEngagement(options = {}) {
     }
   }
 
-  if (!secretFlameReleased && heartSmokeSpawnCount > 9) {
+  if (!secretFlameReleased && heartSmokeSpawnCount >= secretFlameSpawnAt) {
     secretFlameReleased = true;
     symbol = "🔥";
     iconClass = "secret-flame";
@@ -619,11 +625,11 @@ function spawnEngagement(options = {}) {
   if (iconClass === "secret-flame") {
     laneX = 78 + Math.random() * 6;
     startY = 98 + Math.random() * 4;
-    dur = 9.35 + Math.random() * 0.75;
-    laneDrift = -4 + Math.random() * 8;
-    softSwayA = -1 + Math.random() * 2;
-    softSwayB = -1 + Math.random() * 2;
-    heartScale = 1.02;
+    dur = 10.2 + Math.random() * 1.4;
+    laneDrift = -6 + Math.random() * 12;
+    softSwayA = -2 + Math.random() * 4;
+    softSwayB = -2 + Math.random() * 4;
+    heartScale = 1.02 + Math.random() * 0.06;
   }
 
   item.style.left = laneX + "%";
