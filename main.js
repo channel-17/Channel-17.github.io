@@ -345,15 +345,15 @@ const normalAssets = [
 
 const loaderTargets = [
   // C.17 LOADER BRICK — nine total on the loader bar: 8 regular profiles + Carl final-left.
-  // No coin-roll stream. Each profile is a deliberate cover piece landing ON the bar.
-  { x: 33.2, y: 34.18, zone: "loader", cluster: "loader-01" },
-  { x: 39.1, y: 34.10, zone: "loader", cluster: "loader-02" },
-  { x: 45.0, y: 34.22, zone: "loader", cluster: "loader-03" },
-  { x: 50.9, y: 34.12, zone: "loader", cluster: "loader-04" },
-  { x: 56.8, y: 34.24, zone: "loader", cluster: "loader-05" },
-  { x: 62.7, y: 34.14, zone: "loader", cluster: "loader-06" },
-  { x: 68.6, y: 34.22, zone: "loader", cluster: "loader-07" },
-  { x: 74.5, y: 34.16, zone: "loader", cluster: "loader-08" }
+  // Sporadic tactical hits only. No coin-roll, no left-to-right fill, no profile under Carl.
+  { x: 44.2, y: 34.02, zone: "loader", cluster: "loader-mid-left" },
+  { x: 73.4, y: 34.20, zone: "loader", cluster: "loader-far-right" },
+  { x: 56.0, y: 34.08, zone: "loader", cluster: "loader-center" },
+  { x: 66.2, y: 34.26, zone: "loader", cluster: "loader-right-mid" },
+  { x: 36.8, y: 34.18, zone: "loader", cluster: "loader-left-safe" },
+  { x: 61.4, y: 34.00, zone: "loader", cluster: "loader-center-right" },
+  { x: 49.8, y: 34.30, zone: "loader", cluster: "loader-mid-low" },
+  { x: 78.1, y: 34.06, zone: "loader", cluster: "loader-right-cap" }
 ];
 
 const symbolTargets = [
@@ -520,14 +520,13 @@ function startHeartSmoke() {
 }
 
 function startAttack() {
-  // LOADER BAR: regular profile burial only. Enough bodies to hide the bar, then Carl lands final on far-left/start.
+  // LOADER BAR: the system slams deliberate cover pieces onto the bar, waits, then chooses the next target.
+  // Mission: bury the loader/authentic signal and stop. Carl is the final far-left hit.
   if (profileTimer) return;
 
-  const sides = ["top", "right", "bottom", "left", "top", "right", "bottom", "left"];
-  const slamDelays = [220, 430, 320, 560, 690, 610, 820, 760];
+  const slamDelays = [360, 1750, 2920, 4460, 5480, 6960, 8120, 9480];
   loaderTargets.forEach((target, index) => {
-    const side = sides[index % sides.length];
-    setTimeout(() => spawnProfile(side, 0, { force: target, noAutoRemove: true, loaderBurial: true }), slamDelays[index]);
+    setTimeout(() => spawnProfile("top", 0, { force: target, noAutoRemove: true, loaderBurial: true }), slamDelays[index]);
   });
 
   setTimeout(() => {
@@ -536,7 +535,7 @@ function startAttack() {
       spawnCarl();
     }
     loaderCoverageDone = true;
-  }, 1040);
+  }, 11020);
 
   slashTimer = setInterval(() => {
     if (completed) return;
@@ -734,18 +733,23 @@ function spawnProfile(side, delay = 0, opts = {}) {
     if (side === "right") sx = "115vw";
 
     if (opts.loaderBurial) {
+      // Loader avatars drop like heavy system stamps, not coins sliding in from the side.
       const loaderSmash = [
-        { sx: "-92px", sy: "-34px" },
-        { sx: "76px", sy: "-46px" },
-        { sx: "-68px", sy: "42px" },
-        { sx: "86px", sy: "34px" }
-      ][profileCount % 4];
+        { sx: "-10px", sy: "-170px", rot: "-7deg" },
+        { sx: "18px", sy: "-188px", rot: "5deg" },
+        { sx: "4px", sy: "-158px", rot: "-2deg" },
+        { sx: "-16px", sy: "-196px", rot: "8deg" },
+        { sx: "10px", sy: "-176px", rot: "3deg" }
+      ][profileCount % 5];
       sx = loaderSmash.sx;
       sy = loaderSmash.sy;
+      profile.style.setProperty("--rot", loaderSmash.rot);
+      profile.classList.add("loader-slam");
     }
 
     profile.style.setProperty("--sx", sx);
     profile.style.setProperty("--sy", sy);
+    if (!profile.style.getPropertyValue("--rot")) profile.style.setProperty("--rot", "0deg");
     profile.innerHTML = `<img src="${asset}" alt="">`;
 
     profileField.appendChild(profile);
@@ -843,8 +847,10 @@ function spawnCarl() {
 
   carl.style.left = `calc(${CARL_ZONE.x}% - ${AVATAR_HALF}px)`;
   carl.style.top = `calc(${CARL_ZONE.y}% - ${AVATAR_HALF}px)`;
-  carl.style.setProperty("--sx", "-112vw");
-  carl.style.setProperty("--sy", "6px");
+  carl.style.setProperty("--sx", "-6px");
+  carl.style.setProperty("--sy", "-210px");
+  carl.style.setProperty("--rot", "-4deg");
+  carl.classList.add("loader-slam", "loader-final-slam");
   carl.innerHTML = `<img src="AssetCARL.PNG" alt="">`;
 
   profileField.appendChild(carl);
