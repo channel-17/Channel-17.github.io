@@ -7854,6 +7854,7 @@ body {
   text-transform: none;
   letter-spacing: .01em;
   color: rgba(255,255,255,.92);
+  font-family: "Bradley Hand", "Segoe Print", "Comic Sans MS", cursive;
 }
 .poem-note-paper {
   min-height: min(48vh, 420px);
