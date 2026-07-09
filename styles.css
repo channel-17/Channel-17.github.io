@@ -7926,3 +7926,49 @@ body {
     transform: translate3d(var(--drift), -118vh, 0) scale(var(--heart-scale)) rotate(0deg);
   }
 }
+
+
+/* =========================================================
+   BUILD 47 — LOADER AVATAR MOVEMENT BRICK
+   Scope: loader avatar animation/sequence only.
+   - 8 regular tactical slams + Carl final far-left.
+   - No coin roll / no conveyor / no side-slide under Carl.
+========================================================= */
+.profile.loader-cover.loader-slam {
+  animation: loaderAvatarSlam 0.74s cubic-bezier(0.08, 0.82, 0.10, 1) forwards !important;
+  transform-origin: center center !important;
+  will-change: transform, opacity, filter;
+}
+
+.profile.carl.loader-final-slam,
+.profile.carl.carl-wrong-place.loader-final-slam,
+.profile.carl.carl-zone-anchor.loader-final-slam {
+  z-index: 90 !important;
+  animation: loaderAvatarSlam 0.86s cubic-bezier(0.08, 0.82, 0.10, 1) forwards !important;
+}
+
+@keyframes loaderAvatarSlam {
+  0% {
+    opacity: 0;
+    transform: translate(var(--sx), var(--sy)) scale(0.96) rotate(var(--rot));
+    filter: blur(1.2px) saturate(0.86) contrast(1.02);
+  }
+  52% {
+    opacity: 1;
+    transform: translate(0, 0) scale(1.10) rotate(var(--rot));
+    filter: blur(0) saturate(1) contrast(1.08);
+  }
+  66% {
+    opacity: 1;
+    transform: translate(0, 5px) scale(0.97) rotate(var(--rot));
+  }
+  82% {
+    opacity: 1;
+    transform: translate(0, -2px) scale(1.025) rotate(var(--rot));
+  }
+  100% {
+    opacity: 1;
+    transform: translate(0, 0) scale(1) rotate(var(--rot));
+    filter: blur(0) saturate(0.96) contrast(1);
+  }
+}
