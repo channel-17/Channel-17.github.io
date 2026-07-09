@@ -248,16 +248,16 @@ const normalAssets = [
 ];
 
 const loaderTargets = [
-  // C.17 ATTACK PASS — bar burial: many regular profiles smash ON the loader, not stacked like cards.
-  // Carl is the final far-left/start-piece avatar after the bar is buried.
-  ...Array.from({ length: 78 }, (_, i) => {
-    const col = i % 26;
-    const row = Math.floor(i / 26);
-    const baseX = 25.5 + col * 1.95;
-    const rowY = [34.18, 34.88, 33.48][row] || 34.18;
-    const shove = (i % 5 - 2) * 0.14;
-    return { x: baseX + shove, y: rowY, zone: "loader", cluster: `bar-bury-${i}` };
-  })
+  // C.17 LOADER BRICK — nine total on the loader bar: 8 regular profiles + Carl final-left.
+  // No coin-roll stream. Each profile is a deliberate cover piece landing ON the bar.
+  { x: 33.2, y: 34.18, zone: "loader", cluster: "loader-01" },
+  { x: 39.1, y: 34.10, zone: "loader", cluster: "loader-02" },
+  { x: 45.0, y: 34.22, zone: "loader", cluster: "loader-03" },
+  { x: 50.9, y: 34.12, zone: "loader", cluster: "loader-04" },
+  { x: 56.8, y: 34.24, zone: "loader", cluster: "loader-05" },
+  { x: 62.7, y: 34.14, zone: "loader", cluster: "loader-06" },
+  { x: 68.6, y: 34.22, zone: "loader", cluster: "loader-07" },
+  { x: 74.5, y: 34.16, zone: "loader", cluster: "loader-08" }
 ];
 
 const symbolTargets = [
@@ -427,10 +427,11 @@ function startAttack() {
   // LOADER BAR: regular profile burial only. Enough bodies to hide the bar, then Carl lands final on far-left/start.
   if (profileTimer) return;
 
-  const sides = ["right", "left", "top", "bottom"];
+  const sides = ["top", "right", "bottom", "left", "top", "right", "bottom", "left"];
+  const slamDelays = [220, 430, 320, 560, 690, 610, 820, 760];
   loaderTargets.forEach((target, index) => {
     const side = sides[index % sides.length];
-    setTimeout(() => spawnProfile(side, 0, { force: target, noAutoRemove: true, loaderBurial: true }), 260 + index * 58);
+    setTimeout(() => spawnProfile(side, 0, { force: target, noAutoRemove: true, loaderBurial: true }), slamDelays[index]);
   });
 
   setTimeout(() => {
@@ -439,7 +440,7 @@ function startAttack() {
       spawnCarl();
     }
     loaderCoverageDone = true;
-  }, 260 + loaderTargets.length * 58 + 240);
+  }, 1040);
 
   slashTimer = setInterval(() => {
     if (completed) return;
@@ -606,6 +607,17 @@ function spawnProfile(side, delay = 0, opts = {}) {
     if (side === "bottom") sy = "115vh";
     if (side === "left") sx = "-115vw";
     if (side === "right") sx = "115vw";
+
+    if (opts.loaderBurial) {
+      const loaderSmash = [
+        { sx: "-92px", sy: "-34px" },
+        { sx: "76px", sy: "-46px" },
+        { sx: "-68px", sy: "42px" },
+        { sx: "86px", sy: "34px" }
+      ][profileCount % 4];
+      sx = loaderSmash.sx;
+      sy = loaderSmash.sy;
+    }
 
     profile.style.setProperty("--sx", sx);
     profile.style.setProperty("--sy", sy);
