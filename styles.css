@@ -8060,3 +8060,120 @@ body {
 .carl-trigger-heart.matrix-error-heart.dead-stage .carl-heart-pink {
   opacity: 0 !important;
 }
+
+/* C17 51 FIX — Carl heart story: red broken emoji first, gray PNG only after bottom re-entry; Carl visible + old-school red ring */
+.profile.carl.carl-zone-anchor,
+.profile.carl.loader-cover,
+.profile.carl.loader-final-slam {
+  opacity: 1 !important;
+  visibility: visible !important;
+  display: block !important;
+  z-index: 96 !important;
+  pointer-events: none !important;
+  filter: saturate(.96) contrast(1.02) brightness(.96) drop-shadow(0 0 12px rgba(0,0,0,.86)) !important;
+}
+.profile.carl.carl-zone-anchor img,
+.profile.carl.loader-cover img {
+  opacity: 1 !important;
+  visibility: visible !important;
+  display: block !important;
+}
+.profile.carl.carl-impact-visible,
+.profile.carl.carl-ring-death,
+.profile.carl.carl-impact-visible.carl-ring-death,
+.profile.carl.carl-zone-anchor.carl-ring-death {
+  opacity: 1 !important;
+  visibility: visible !important;
+  z-index: 180 !important;
+  pointer-events: auto !important;
+  cursor: pointer !important;
+  border-color: rgba(255,29,37,1) !important;
+  animation: c17CarlRingBoomBoomBoom 1.42s steps(1) 1 forwards !important;
+  transform: translate(0,0) scale(1) !important;
+}
+.profile.carl.carl-impact-visible::before,
+.profile.carl.carl-impact-visible::after,
+.profile.carl.carl-ring-death::before,
+.profile.carl.carl-ring-death::after {
+  content: none !important;
+  display: none !important;
+  opacity: 0 !important;
+}
+@keyframes c17CarlRingBoomBoomBoom {
+  0%, 13%, 34%, 47%, 68%, 81% {
+    opacity: 1;
+    border-color: rgba(255,29,37,1);
+    box-shadow:
+      0 0 0 4px rgba(255,29,37,.98),
+      0 0 18px rgba(255,29,37,.84),
+      0 0 40px rgba(255,29,37,.38),
+      0 0 16px rgba(0,0,0,.88);
+    filter: saturate(1.08) contrast(1.08) brightness(1.02);
+  }
+  14%, 33%, 48%, 67%, 82%, 100% {
+    opacity: 1;
+    border-color: rgba(242,238,229,.78);
+    box-shadow:
+      0 0 0 1px rgba(255,255,255,.18),
+      0 0 12px rgba(0,0,0,.92);
+    filter: saturate(.92) contrast(.98) brightness(.94);
+  }
+}
+.profile.carl.carl-dead-profile {
+  opacity: .9 !important;
+  visibility: visible !important;
+  z-index: 96 !important;
+  filter: grayscale(.32) saturate(.68) brightness(.78) contrast(.94) !important;
+}
+
+.engage.carl-trigger-heart.asset-heart.matrix-error-heart,
+.carl-trigger-heart.asset-heart.matrix-error-heart {
+  width: 64px !important;
+  height: 64px !important;
+  z-index: 190 !important;
+  animation: none !important;
+  pointer-events: none !important;
+  overflow: visible !important;
+  filter: drop-shadow(0 0 10px rgba(0,0,0,.92)) !important;
+}
+.carl-trigger-heart.matrix-error-heart .carl-heart-layer {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  display: grid !important;
+  place-items: center !important;
+  object-fit: contain !important;
+  pointer-events: none !important;
+  transition: opacity 2.1s cubic-bezier(.25,.7,.18,1), filter 2.1s cubic-bezier(.25,.7,.18,1), transform 2.1s cubic-bezier(.25,.7,.18,1) !important;
+}
+.carl-trigger-heart.matrix-error-heart .carl-heart-red-emoji {
+  opacity: 1 !important;
+  font-size: 48px !important;
+  line-height: 1 !important;
+  font-family: "Apple Color Emoji", "Segoe UI Emoji", sans-serif !important;
+  filter: drop-shadow(0 0 8px rgba(255,29,37,.34)) drop-shadow(0 0 12px rgba(0,0,0,.82)) !important;
+}
+.carl-trigger-heart.matrix-error-heart .carl-heart-grey {
+  opacity: 0 !important;
+  filter: grayscale(1) saturate(.2) contrast(1.08) brightness(.82) drop-shadow(0 0 8px rgba(0,0,0,.88)) !important;
+}
+.carl-trigger-heart.matrix-error-heart.off-course .carl-heart-red-emoji {
+  opacity: 1 !important;
+  transform: scale(1.06) rotate(18deg) !important;
+}
+.carl-trigger-heart.matrix-error-heart.off-course .carl-heart-grey {
+  opacity: 0 !important;
+}
+.carl-trigger-heart.matrix-error-heart.grey-taking-over .carl-heart-red-emoji,
+.carl-trigger-heart.matrix-error-heart.dead-stage .carl-heart-red-emoji {
+  opacity: 0 !important;
+  filter: grayscale(1) brightness(.55) drop-shadow(0 0 5px rgba(0,0,0,.9)) !important;
+  transform: scale(.98) rotate(-5deg) !important;
+}
+.carl-trigger-heart.matrix-error-heart.grey-taking-over .carl-heart-grey,
+.carl-trigger-heart.matrix-error-heart.dead-stage .carl-heart-grey {
+  opacity: 1 !important;
+  filter: grayscale(1) saturate(.25) contrast(1.16) brightness(.88) drop-shadow(0 0 9px rgba(0,0,0,.9)) !important;
+  transform: scale(1.02) rotate(1deg) !important;
+}
