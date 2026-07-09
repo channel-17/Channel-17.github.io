@@ -8062,13 +8062,13 @@ body {
 }
 
 
-/* C17 HEART PASS 52 — Carl broken-heart elegance pass.
-   Red broken heart stays red through the top rejection.
-   After bottom re-entry it crossfades to the gray PNG while climbing calmly to Carl. */
+/* C17 HEART PASS 53 — Carl broken-heart correction.
+   Red heart stays red until the top-left rejection. It re-enters bottom-center larger,
+   then crossfades to the gray PNG during the elegant climb into Carl. */
 .engage.carl-trigger-heart.asset-heart.matrix-error-heart,
 .carl-trigger-heart.asset-heart.matrix-error-heart {
-  width: 46px !important;
-  height: 46px !important;
+  width: 58px !important;
+  height: 58px !important;
   z-index: 126 !important;
   animation: none !important;
   pointer-events: none !important;
