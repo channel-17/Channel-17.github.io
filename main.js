@@ -113,7 +113,14 @@ let activeFrankStack = [];
 
 
 function ensurePoemNoteOverlay() {
-  if (poemNoteOverlay) return poemNoteOverlay;
+  // Red poem safety: if an older placeholder overlay survived a mobile back/forward cache,
+  // destroy it and rebuild this note from the current source.
+  const existingPoemNote = document.getElementById("poemNoteOverlay");
+  if (poemNoteOverlay && poemNoteOverlay.textContent && poemNoteOverlay.textContent.includes("Walked into your office")) {
+    return poemNoteOverlay;
+  }
+  if (existingPoemNote) existingPoemNote.remove();
+  poemNoteOverlay = null;
 
   poemNoteOverlay = document.createElement("aside");
   poemNoteOverlay.className = "poem-note-overlay";
