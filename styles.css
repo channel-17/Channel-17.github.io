@@ -8123,97 +8123,87 @@ body {
     0 0 36px rgba(255,29,37,.28) !important;
 }
 
-
-/* C17 HEART 54 — Carl matrix-error heart correction.
-   One regular red broken heart belongs in the social lane until the Virus rejects it;
-   after the hard-left flick, it returns bottom-center and drains into Jinx's gray PNG. */
-.carl-trigger-heart.asset-heart {
-  width: 50px !important;
-  height: 50px !important;
-  z-index: 36 !important;
-  overflow: visible;
-  display: grid;
-  place-items: center;
-  transform-origin: center center;
-}
-
-.carl-trigger-heart .carl-heart-layer {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  transition: opacity 1.65s ease, filter 1.65s ease, transform 1.65s ease;
-}
-
-.carl-trigger-heart .carl-heart-red {
-  font-size: 48px;
-  line-height: 1;
-  opacity: 1;
+/* C17 HEART PASS 55 — single red broken-heart belongs to the chaos until rejection.
+   Bottom re-entry starts red at normal size; Carl begins eroding as the gray PNG takes over. */
+.engage.carl-trigger-heart.asset-heart.matrix-error-heart,
+.carl-trigger-heart.asset-heart.matrix-error-heart {
+  width: 66px !important;
+  height: 66px !important;
+  z-index: 128 !important;
+  animation: none !important;
+  pointer-events: none !important;
+  overflow: visible !important;
   filter:
-    drop-shadow(0 0 7px rgba(255, 34, 42, 0.58))
-    drop-shadow(0 0 18px rgba(255, 34, 42, 0.28));
+    drop-shadow(0 0 10px rgba(0,0,0,.96))
+    drop-shadow(0 0 7px rgba(255,29,37,.16)) !important;
 }
-
-.carl-trigger-heart .carl-heart-grey {
-  object-fit: contain;
-  opacity: 0;
-  filter:
-    grayscale(1)
-    brightness(0.88)
-    contrast(1.08)
-    drop-shadow(0 0 6px rgba(235, 235, 235, 0.14));
+.carl-trigger-heart.matrix-error-heart .carl-heart-layer {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain !important;
+  transition: opacity 2.35s ease, filter 2.35s ease, transform 2.35s ease !important;
 }
-
-.carl-trigger-heart.grey-taking-over .carl-heart-red {
-  opacity: 0.22;
-  filter:
-    grayscale(0.8)
-    brightness(0.72)
-    drop-shadow(0 0 5px rgba(180, 180, 180, 0.14));
-}
-
-.carl-trigger-heart.grey-taking-over .carl-heart-grey {
-  opacity: 0.82;
-}
-
-.carl-trigger-heart.dead-stage .carl-heart-red {
-  opacity: 0;
-}
-
-.carl-trigger-heart.dead-stage .carl-heart-grey {
-  opacity: 1;
-}
-
-.profile.carl {
-  z-index: 42 !important;
-  opacity: 1;
-}
-
-.profile.carl.carl-wrong-place,
-.profile.carl.carl-impact-visible {
+.carl-trigger-heart.matrix-error-heart .carl-heart-pink {
   opacity: 1 !important;
+  filter: saturate(1.18) contrast(1.08) brightness(1.03) !important;
+  transform: scale(1) !important;
 }
-
+.carl-trigger-heart.matrix-error-heart .carl-heart-grey {
+  opacity: 0 !important;
+  filter: grayscale(1) saturate(.12) contrast(.98) brightness(.72) !important;
+  transform: scale(1) !important;
+}
+.carl-trigger-heart.matrix-error-heart.grey-taking-over .carl-heart-pink {
+  opacity: .34 !important;
+  filter: grayscale(.82) saturate(.26) brightness(.76) contrast(.94) !important;
+  transform: scale(.985) !important;
+}
+.carl-trigger-heart.matrix-error-heart.grey-taking-over .carl-heart-grey {
+  opacity: .78 !important;
+  transform: scale(.99) !important;
+}
+.carl-trigger-heart.matrix-error-heart.dead-stage .carl-heart-pink {
+  opacity: 0 !important;
+  transform: scale(.96) !important;
+}
+.carl-trigger-heart.matrix-error-heart.dead-stage .carl-heart-grey {
+  opacity: 1 !important;
+  filter: grayscale(1) saturate(.08) contrast(1.04) brightness(.78) !important;
+  transform: scale(.97) !important;
+}
+.profile.carl.carl-heart-eroding {
+  opacity: 1 !important;
+  visibility: visible !important;
+  z-index: 185 !important;
+  filter: saturate(.86) contrast(1.08) brightness(.88) grayscale(.22) !important;
+  box-shadow:
+    0 0 0 2px rgba(242,238,229,.54),
+    0 0 14px rgba(255,29,37,.13),
+    inset 0 0 14px rgba(0,0,0,.55) !important;
+}
+.profile.carl.carl-heart-eroded {
+  filter: saturate(.42) contrast(1.18) brightness(.72) grayscale(.70) !important;
+  box-shadow:
+    0 0 0 2px rgba(242,238,229,.42),
+    0 0 18px rgba(255,29,37,.18),
+    inset 0 0 22px rgba(0,0,0,.75) !important;
+}
+.profile.carl.carl-heart-eroding img,
+.profile.carl.carl-heart-eroded img {
+  transition: filter 1.4s ease, opacity 1.4s ease !important;
+}
+.profile.carl.carl-heart-eroded img {
+  opacity: .78 !important;
+}
 .profile.carl.carl-ring-death {
-  pointer-events: auto;
-  cursor: pointer;
-  animation: carlRingDeathThree 1.35s steps(1, end) 1 !important;
-}
-
-@keyframes carlRingDeathThree {
-  0%, 16%, 34%, 52%, 70%, 100% {
-    border-color: rgba(242,238,229,0.86);
-    box-shadow:
-      0 0 16px rgba(0,0,0,0.88),
-      0 0 0 1px rgba(255,255,255,0.16);
-  }
-  8%, 26%, 44%, 62% {
-    border-color: var(--ring-red);
-    box-shadow:
-      0 0 16px rgba(0,0,0,0.88),
-      0 0 0 2px rgba(255,29,37,0.88),
-      0 0 28px rgba(255,29,37,0.72);
-  }
+  opacity: 1 !important;
+  visibility: visible !important;
+  border-color: rgba(255,29,37,1) !important;
+  animation: carlRingThreeBlink 0.46s steps(1) 0s 5 both !important;
+  box-shadow:
+    0 0 0 3px rgba(255,29,37,.86),
+    0 0 18px rgba(255,29,37,.76),
+    0 0 36px rgba(255,29,37,.30) !important;
 }
