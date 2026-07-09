@@ -7761,17 +7761,94 @@ body {
   100% { opacity: 0; transform: translate(16vw, 3vh) scale(1.1); }
 }
 
-/* Secret flame seed: one personal future click target inside the chaos. */
+/* Secret flame seed: one personal future click target inside the chaos.
+   Same lane / rise / story as the hearts, just clickable. */
 .engage.secret-flame {
-  font-size: 21px !important;
+  cursor: pointer !important;
+  pointer-events: auto !important;
+  font-size: 24px !important;
   z-index: 132 !important;
-  text-shadow: 0 0 12px rgba(255,98,20,.68), 0 0 24px rgba(255,184,40,.24) !important;
-  animation: c17SecretFlameRise 7.4s cubic-bezier(.16,.62,.12,1) forwards !important;
+  color: inherit !important;
+  filter: drop-shadow(0 0 8px rgba(255,111,174,0.28)) !important;
+  text-shadow: 0 0 8px rgba(255,126,22,.52), 0 0 18px rgba(255,202,64,.22) !important;
+  animation-name: heartRightLaneFloat !important;
+  animation-duration: var(--dur) !important;
+  animation-timing-function: linear !important;
+  animation-fill-mode: forwards !important;
+  transform-origin: center center !important;
 }
-@keyframes c17SecretFlameRise {
-  0% { opacity: 0; transform: translateY(14px) translateX(0) scale(.58) rotate(-4deg); }
-  10% { opacity: .96; }
-  42% { transform: translateY(-34vh) translateX(-4vw) scale(1.25) rotate(3deg); }
-  76% { opacity: .9; transform: translateY(-74vh) translateX(3vw) scale(1.55) rotate(-5deg); }
-  100% { opacity: 0; transform: translateY(-110vh) translateX(-1vw) scale(1.75) rotate(2deg); }
+.engage.secret-flame:hover,
+.engage.secret-flame:focus-visible {
+  outline: none !important;
+  text-shadow: 0 0 10px rgba(255,255,255,.62), 0 0 22px rgba(255,126,22,.48) !important;
 }
+
+.poem-note-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: grid;
+  place-items: center;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  background: rgba(0,0,0,.72);
+  transition: opacity .22s ease, visibility .22s ease;
+}
+.poem-note-overlay.open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+.poem-note-card {
+  position: relative;
+  width: min(88vw, 520px);
+  min-height: min(64vh, 560px);
+  padding: 22px 18px 20px;
+  border: 1px solid rgba(255,255,255,.18);
+  border-radius: 18px;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(255,255,255,.08), transparent 34%),
+    linear-gradient(180deg, rgba(13,13,13,.98), rgba(4,4,4,.98));
+  box-shadow: 0 0 34px rgba(255,255,255,.10), 0 18px 80px rgba(0,0,0,.72);
+  color: rgba(255,255,255,.88);
+}
+.poem-note-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,.22);
+  background: rgba(0,0,0,.45);
+  color: rgba(255,255,255,.86);
+  font-size: 22px;
+  line-height: 1;
+}
+.poem-note-kicker {
+  margin-bottom: 8px;
+  font-size: 10px;
+  letter-spacing: .28em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.48);
+}
+.poem-note-card h2 {
+  margin: 0 44px 16px 0;
+  font-size: clamp(28px, 7vw, 44px);
+  font-weight: 500;
+  letter-spacing: .02em;
+  text-transform: lowercase;
+}
+.poem-note-paper {
+  min-height: min(48vh, 420px);
+  padding: 20px 18px;
+  border-radius: 14px;
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.10);
+  box-shadow: inset 0 0 24px rgba(0,0,0,.22);
+  font-size: clamp(18px, 4.6vw, 25px);
+  line-height: 1.52;
+}
+.poem-note-paper p { margin: 0 0 18px; }
+.poem-note-placeholder { color: rgba(255,255,255,.42); font-size: .82em; }
