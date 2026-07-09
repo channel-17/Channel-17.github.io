@@ -8122,3 +8122,98 @@ body {
     0 0 18px rgba(255,29,37,.74),
     0 0 36px rgba(255,29,37,.28) !important;
 }
+
+
+/* C17 HEART 54 — Carl matrix-error heart correction.
+   One regular red broken heart belongs in the social lane until the Virus rejects it;
+   after the hard-left flick, it returns bottom-center and drains into Jinx's gray PNG. */
+.carl-trigger-heart.asset-heart {
+  width: 50px !important;
+  height: 50px !important;
+  z-index: 36 !important;
+  overflow: visible;
+  display: grid;
+  place-items: center;
+  transform-origin: center center;
+}
+
+.carl-trigger-heart .carl-heart-layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  transition: opacity 1.65s ease, filter 1.65s ease, transform 1.65s ease;
+}
+
+.carl-trigger-heart .carl-heart-red {
+  font-size: 48px;
+  line-height: 1;
+  opacity: 1;
+  filter:
+    drop-shadow(0 0 7px rgba(255, 34, 42, 0.58))
+    drop-shadow(0 0 18px rgba(255, 34, 42, 0.28));
+}
+
+.carl-trigger-heart .carl-heart-grey {
+  object-fit: contain;
+  opacity: 0;
+  filter:
+    grayscale(1)
+    brightness(0.88)
+    contrast(1.08)
+    drop-shadow(0 0 6px rgba(235, 235, 235, 0.14));
+}
+
+.carl-trigger-heart.grey-taking-over .carl-heart-red {
+  opacity: 0.22;
+  filter:
+    grayscale(0.8)
+    brightness(0.72)
+    drop-shadow(0 0 5px rgba(180, 180, 180, 0.14));
+}
+
+.carl-trigger-heart.grey-taking-over .carl-heart-grey {
+  opacity: 0.82;
+}
+
+.carl-trigger-heart.dead-stage .carl-heart-red {
+  opacity: 0;
+}
+
+.carl-trigger-heart.dead-stage .carl-heart-grey {
+  opacity: 1;
+}
+
+.profile.carl {
+  z-index: 42 !important;
+  opacity: 1;
+}
+
+.profile.carl.carl-wrong-place,
+.profile.carl.carl-impact-visible {
+  opacity: 1 !important;
+}
+
+.profile.carl.carl-ring-death {
+  pointer-events: auto;
+  cursor: pointer;
+  animation: carlRingDeathThree 1.35s steps(1, end) 1 !important;
+}
+
+@keyframes carlRingDeathThree {
+  0%, 16%, 34%, 52%, 70%, 100% {
+    border-color: rgba(242,238,229,0.86);
+    box-shadow:
+      0 0 16px rgba(0,0,0,0.88),
+      0 0 0 1px rgba(255,255,255,0.16);
+  }
+  8%, 26%, 44%, 62% {
+    border-color: var(--ring-red);
+    box-shadow:
+      0 0 16px rgba(0,0,0,0.88),
+      0 0 0 2px rgba(255,29,37,0.88),
+      0 0 28px rgba(255,29,37,0.72);
+  }
+}
