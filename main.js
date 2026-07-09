@@ -247,14 +247,12 @@ const normalAssets = [
 ];
 
 const loaderTargets = [
-  // ZONE 1 — LOADER BAR: one-and-done coverage.
-  // Six normal avatars cover the bar; Carl is the final left-side loader avatar. Then this zone stops.
-  { x: 32.5, y: 31.15, zone: "loader", cluster: "bar-left-mid" },
-  { x: 50.0, y: 31.00, zone: "loader", cluster: "bar-center" },
-  { x: 67.5, y: 31.15, zone: "loader", cluster: "bar-right-mid" },
-  { x: 40.5, y: 31.62, zone: "loader", cluster: "bar-left-low" },
-  { x: 59.5, y: 30.62, zone: "loader", cluster: "bar-right-high" },
-  { x: 74.0, y: 31.50, zone: "loader", cluster: "bar-right-edge" }
+  // ZONE 1 — LOADER BAR: limited one-and-done coverage.
+  // Profiles sit ON the bar, same size, then Carl lands as the final left-side loader avatar and the loader attack stops.
+  { x: 42.0, y: 34.35, zone: "loader", cluster: "bar-left-on" },
+  { x: 51.0, y: 34.40, zone: "loader", cluster: "bar-center-on" },
+  { x: 60.0, y: 34.35, zone: "loader", cluster: "bar-right-on" },
+  { x: 69.0, y: 34.42, zone: "loader", cluster: "bar-right-edge-on" }
 ];
 
 const symbolTargets = [
@@ -281,7 +279,7 @@ const coverageTargets = [...loaderTargets, ...symbolTargets, ...missTargets];
 // Hearts begin at 17% as sparse field-smoke, not a wall and not a lane.
 // One pink heart rises like the others, gets flicked by the top-right system/fan, visibly breaks on-screen,
 // then overcorrects through a fast wind curl and completes an electric edge-contact with Carl.
-const CARL_ZONE = { x: 21.5, y: 31.25 };
+const CARL_ZONE = { x: 33.0, y: 34.38 };
 const CARL_HEART_START = { x: 83, y: 96 };
 const CARL_HEART_CONTACT = { x: CARL_ZONE.x - 7.0, y: CARL_ZONE.y + 0.05 };
 const CARL_HEART_PATH = [
@@ -424,12 +422,11 @@ function startHeartSmoke() {
 }
 
 function startAttack() {
-  // ZONE 1 — LOADER BAR: one-and-done.
-  // Six normal profiles cover the bar lazily. Carl is the final loader-bar profile on the left.
-  // After that, the loader is considered covered and the system stops wasting avatars there.
+  // ZONE 1 — LOADER BAR: limited one-and-done.
+  // Normal profiles sit lower/on the bar. Carl lands last on the left side. Then loader coverage stops.
   if (profileTimer) return;
 
-  const sides = ["right", "left", "top", "right", "left", "top"];
+  const sides = ["right", "left", "top", "right"];
   loaderTargets.forEach((target, index) => {
     setTimeout(() => spawnProfile(sides[index] || randomSide(), 0, { force: target, noAutoRemove: true }), 720 + index * 1050);
   });
@@ -440,7 +437,7 @@ function startAttack() {
       spawnCarl();
     }
     loaderCoverageDone = true;
-  }, 720 + loaderTargets.length * 1050 + 520);
+  }, 720 + loaderTargets.length * 1050 + 360);
 
   slashTimer = setInterval(() => {
     if (completed) return;
@@ -584,8 +581,8 @@ function spawnProfile(side, delay = 0, opts = {}) {
     profile.className = "profile";
 
     const asset = opts.asset || normalAssets[profileCount % normalAssets.length];
-    const jitterX = target.zone === "symbol" ? 2.0 : target.zone === "miss" ? 1.45 : 1.22;
-    const jitterY = target.zone === "symbol" ? 2.0 : target.zone === "miss" ? 0.18 : 0.16;
+    const jitterX = target.zone === "symbol" ? 1.45 : target.zone === "miss" ? 1.45 : 0.46;
+    const jitterY = target.zone === "symbol" ? 1.35 : target.zone === "miss" ? 0.18 : 0.08;
     const x = jitter(target.x, jitterX);
     const y = jitter(target.y, jitterY);
 
@@ -622,7 +619,7 @@ function spawnProfile(side, delay = 0, opts = {}) {
         if (profile && profile.parentNode && !profile.classList.contains("carl") && !profile.classList.contains("frank")) {
           profile.remove();
         }
-      }, target.zone === "symbol" ? 9800 : 5200);
+      }, target.zone === "symbol" ? 14000 : 5200);
     }
   }, delay);
 }
@@ -658,6 +655,10 @@ function revealHive(profile) {
     setTimeout(() => {
       if (profile && profile.parentNode) profile.classList.add("signal-burn-hold");
     }, 4200);
+
+    setTimeout(() => {
+      if (profile && profile.parentNode) profile.classList.add("signal-burn-consumed");
+    }, 6500);
 
     setTimeout(() => {
       if (profile && profile.parentNode) profile.remove();
