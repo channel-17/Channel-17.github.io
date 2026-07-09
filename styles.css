@@ -8031,7 +8031,7 @@ body {
   overflow: visible !important;
   filter:
     drop-shadow(0 0 10px rgba(0,0,0,.92))
-    drop-shadow(0 0 6px rgba(255,29,37,.16)) !important;
+    drop-shadow(0 0 8px rgba(255,29,37,.12)) !important;
 }
 .carl-trigger-heart.matrix-error-heart .carl-heart-layer {
   position: absolute !important;
@@ -8039,7 +8039,7 @@ body {
   width: 100% !important;
   height: 100% !important;
   object-fit: contain !important;
-  transition: opacity .75s ease, filter .75s ease, transform .75s ease !important;
+  transition: opacity 1.55s ease, filter 1.55s ease, transform 1.55s ease !important;
 }
 .carl-trigger-heart.matrix-error-heart .carl-heart-pink {
   opacity: 1 !important;
