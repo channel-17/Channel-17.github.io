@@ -7972,3 +7972,7 @@ body {
     filter: blur(0) saturate(0.96) contrast(1);
   }
 }
+
+
+/* Ghost Channel frequency */
+.frequency,.frequency-symbol,#frequencyButton,#frequency{color:#b7bd8a;opacity:.35;text-shadow:0 0 8px #b7bd8a;filter:blur(.2px);}
