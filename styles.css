@@ -7852,3 +7852,38 @@ body {
 }
 .poem-note-paper p { margin: 0 0 18px; }
 .poem-note-placeholder { color: rgba(255,255,255,.42); font-size: .82em; }
+
+/* FIRE BRICK 42 REPAIR — secret flame floats like the heart balloons, not a slinky. */
+.engage.secret-flame {
+  animation-name: secretFlameHeliumRise !important;
+  animation-duration: var(--dur) !important;
+  animation-timing-function: linear !important;
+  animation-fill-mode: forwards !important;
+  font-size: 24px !important;
+  line-height: 1 !important;
+  cursor: pointer !important;
+  pointer-events: auto !important;
+  transform-origin: center center !important;
+}
+@keyframes secretFlameHeliumRise {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 18px, 0) scale(calc(var(--heart-scale) * .90)) rotate(0deg);
+  }
+  10% {
+    opacity: .92;
+    transform: translate3d(var(--bob-a), 0, 0) scale(var(--heart-scale)) rotate(0deg);
+  }
+  40% {
+    opacity: .94;
+    transform: translate3d(var(--bob-b), -34vh, 0) scale(var(--heart-scale)) rotate(0deg);
+  }
+  72% {
+    opacity: .86;
+    transform: translate3d(calc(var(--drift) * .55), -76vh, 0) scale(var(--heart-scale)) rotate(0deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(var(--drift), -118vh, 0) scale(var(--heart-scale)) rotate(0deg);
+  }
+}
