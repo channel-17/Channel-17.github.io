@@ -7976,3 +7976,87 @@ body {
 
 /* Ghost Channel frequency */
 .frequency,.frequency-symbol,#frequencyButton,#frequency{color:#b7bd8a;opacity:.35;text-shadow:0 0 8px #b7bd8a;filter:blur(.2px);}
+
+
+/* C17 49 CARL HEART BRICK — matrix-error heart + old-school red ring only */
+.profile.carl.carl-ring-death,
+.profile.carl.carl-impact-visible.carl-ring-death,
+.profile.carl.carl-zone-anchor.carl-ring-death {
+  z-index: 104 !important;
+  opacity: 1 !important;
+  pointer-events: auto !important;
+  cursor: pointer !important;
+  animation: c17CarlRingOnlyThree 1.08s steps(1) 1 forwards !important;
+  transform: translate(0,0) scale(1) !important;
+}
+.profile.carl.carl-ring-death::before,
+.profile.carl.carl-ring-death::after,
+.profile.carl.carl-impact-visible::before,
+.profile.carl.carl-impact-visible::after {
+  content: none !important;
+  display: none !important;
+  opacity: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+.profile.carl.carl-ring-death img {
+  filter: none !important;
+  transform: none !important;
+}
+@keyframes c17CarlRingOnlyThree {
+  0%, 10%, 32%, 44%, 66%, 78% {
+    border-color: rgba(255, 29, 37, 1) !important;
+    box-shadow:
+      0 0 0 4px rgba(255,29,37,.98),
+      0 0 16px rgba(255,29,37,.78),
+      0 0 34px rgba(255,29,37,.36) !important;
+    filter: contrast(1.06) saturate(1.02) brightness(1.02) !important;
+  }
+  11%, 31%, 45%, 65%, 79%, 100% {
+    border-color: rgba(242,238,229,.74) !important;
+    box-shadow:
+      0 0 0 1px rgba(255,255,255,.18),
+      0 0 12px rgba(0,0,0,.92) !important;
+    filter: contrast(.98) saturate(.90) brightness(.92) !important;
+  }
+}
+
+.engage.carl-trigger-heart.asset-heart.matrix-error-heart,
+.carl-trigger-heart.asset-heart.matrix-error-heart {
+  z-index: 116 !important;
+  width: 64px !important;
+  height: 64px !important;
+  animation: none !important;
+  pointer-events: none !important;
+  overflow: visible !important;
+  filter:
+    drop-shadow(0 0 10px rgba(0,0,0,.92))
+    drop-shadow(0 0 6px rgba(255,29,37,.16)) !important;
+}
+.carl-trigger-heart.matrix-error-heart .carl-heart-layer {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain !important;
+  transition: opacity .75s ease, filter .75s ease, transform .75s ease !important;
+}
+.carl-trigger-heart.matrix-error-heart .carl-heart-pink {
+  opacity: 1 !important;
+  filter: saturate(1.14) contrast(1.06) brightness(1.03) !important;
+}
+.carl-trigger-heart.matrix-error-heart .carl-heart-grey {
+  opacity: 0 !important;
+  filter: grayscale(1) saturate(.2) contrast(1.04) brightness(.8) !important;
+}
+.carl-trigger-heart.matrix-error-heart.grey-taking-over .carl-heart-pink {
+  opacity: .18 !important;
+  filter: grayscale(.78) saturate(.35) brightness(.82) !important;
+}
+.carl-trigger-heart.matrix-error-heart.grey-taking-over .carl-heart-grey,
+.carl-trigger-heart.matrix-error-heart.dead-stage .carl-heart-grey {
+  opacity: 1 !important;
+}
+.carl-trigger-heart.matrix-error-heart.dead-stage .carl-heart-pink {
+  opacity: 0 !important;
+}
