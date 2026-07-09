@@ -843,7 +843,7 @@ function spawnCarl() {
   if (existingCarl) return existingCarl;
 
   const carl = document.createElement("button");
-  carl.className = "profile carl carl-zone-anchor carl-wrong-place loader-cover";
+  carl.className = "profile carl carl-zone-anchor loader-cover";
   carl.type = "button";
   carl.setAttribute("aria-label", "Carl Gates");
 
@@ -881,7 +881,7 @@ function releaseDeadHeartTowardCarl() {
   heart.style.setProperty("width", "64px", "important");
   heart.style.setProperty("height", "64px", "important");
   heart.innerHTML = `
-    <img class="carl-heart-layer carl-heart-pink" src="${HEART_PINK}" alt="">
+    <span class="carl-heart-layer carl-heart-red-emoji" aria-hidden="true">💔</span>
     <img class="carl-heart-layer carl-heart-grey" src="${HEART_GREY}" alt="">
   `;
 
@@ -904,13 +904,13 @@ function releaseDeadHeartTowardCarl() {
   // The top-right fan rejects it. This is when the pink heart becomes the gray broken-heart PNG.
   setTimeout(() => {
     if (!heart.parentNode) return;
-    heart.classList.add("off-course", "draining", "grey-taking-over");
+    heart.classList.add("off-course");
   }, 8250);
 
   setTimeout(() => {
     if (!heart.parentNode) return;
     heart.classList.remove("pink-stage", "draining");
-    heart.classList.add("dead-stage");
+    heart.classList.add("dead-stage", "grey-taking-over");
   }, 9000);
 
   // Static-zap contact: edge of the broken heart enters Carl's ring and the circuit completes.
@@ -949,7 +949,7 @@ function triggerCarl(carl) {
       carl.classList.remove("carl-ready", "carl-ring-death", "carl-impact-visible");
       carl.classList.add("carl-dead-profile");
     }
-  }, 1120);
+  }, 1650);
 }
 
 function openCarlProfile() {
