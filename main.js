@@ -292,15 +292,16 @@ const normalAssets = [
 
 const loaderTargets = [
   // C.17 LOADER BRICK — nine total on the loader bar: 8 regular profiles + Carl final-left.
-  // No coin-roll stream. Each profile is a deliberate cover piece landing ON the bar.
-  { x: 33.2, y: 34.18, zone: "loader", cluster: "loader-01" },
-  { x: 39.1, y: 34.10, zone: "loader", cluster: "loader-02" },
-  { x: 45.0, y: 34.22, zone: "loader", cluster: "loader-03" },
-  { x: 50.9, y: 34.12, zone: "loader", cluster: "loader-04" },
-  { x: 56.8, y: 34.24, zone: "loader", cluster: "loader-05" },
-  { x: 62.7, y: 34.14, zone: "loader", cluster: "loader-06" },
-  { x: 68.6, y: 34.22, zone: "loader", cluster: "loader-07" },
-  { x: 74.5, y: 34.16, zone: "loader", cluster: "loader-08" }
+  // Intentional table-smacks, not coin-roll slots.
+  // Regulars avoid Carl's final far-left lane so nothing slides under him or pulls the eye there.
+  { x: 41.8, y: 34.20, zone: "loader", cluster: "loader-left-mid" },
+  { x: 74.8, y: 34.12, zone: "loader", cluster: "loader-far-right" },
+  { x: 55.7, y: 34.24, zone: "loader", cluster: "loader-center" },
+  { x: 66.9, y: 34.10, zone: "loader", cluster: "loader-right-mid" },
+  { x: 49.2, y: 34.16, zone: "loader", cluster: "loader-inner-left" },
+  { x: 70.8, y: 34.25, zone: "loader", cluster: "loader-right-cap" },
+  { x: 59.8, y: 34.11, zone: "loader", cluster: "loader-center-right" },
+  { x: 37.2, y: 34.26, zone: "loader", cluster: "loader-left-cap" }
 ];
 
 const symbolTargets = [
@@ -470,11 +471,25 @@ function startAttack() {
   // LOADER BAR: regular profile burial only. Enough bodies to hide the bar, then Carl lands final on far-left/start.
   if (profileTimer) return;
 
-  const sides = ["top", "right", "bottom", "left", "top", "right", "bottom", "left"];
-  const slamDelays = [220, 430, 320, 560, 690, 610, 820, 760];
+  const loaderSlamPlan = [
+    { side: "top", delay: 260 },
+    { side: "right", delay: 880 },
+    { side: "bottom", delay: 520 },
+    { side: "top", delay: 1320 },
+    { side: "left", delay: 1080 },
+    { side: "right", delay: 1640 },
+    { side: "bottom", delay: 1460 },
+    { side: "top", delay: 1900 }
+  ];
+
   loaderTargets.forEach((target, index) => {
-    const side = sides[index % sides.length];
-    setTimeout(() => spawnProfile(side, 0, { force: target, noAutoRemove: true, loaderBurial: true }), slamDelays[index]);
+    const plan = loaderSlamPlan[index];
+    setTimeout(() => spawnProfile(plan.side, 0, {
+      force: target,
+      noAutoRemove: true,
+      loaderBurial: true,
+      loaderIndex: index
+    }), plan.delay);
   });
 
   setTimeout(() => {
@@ -483,7 +498,7 @@ function startAttack() {
       spawnCarl();
     }
     loaderCoverageDone = true;
-  }, 1040);
+  }, 2280);
 
   slashTimer = setInterval(() => {
     if (completed) return;
@@ -682,11 +697,15 @@ function spawnProfile(side, delay = 0, opts = {}) {
 
     if (opts.loaderBurial) {
       const loaderSmash = [
-        { sx: "-92px", sy: "-34px" },
-        { sx: "76px", sy: "-46px" },
-        { sx: "-68px", sy: "42px" },
-        { sx: "86px", sy: "34px" }
-      ][profileCount % 4];
+        { sx: "-58px", sy: "-92px" },
+        { sx: "64px", sy: "-78px" },
+        { sx: "-44px", sy: "82px" },
+        { sx: "46px", sy: "-88px" },
+        { sx: "-62px", sy: "-64px" },
+        { sx: "72px", sy: "72px" },
+        { sx: "36px", sy: "88px" },
+        { sx: "-42px", sy: "74px" }
+      ][opts.loaderIndex ?? (profileCount % 8)];
       sx = loaderSmash.sx;
       sy = loaderSmash.sy;
     }
@@ -790,8 +809,8 @@ function spawnCarl() {
 
   carl.style.left = `calc(${CARL_ZONE.x}% - ${AVATAR_HALF}px)`;
   carl.style.top = `calc(${CARL_ZONE.y}% - ${AVATAR_HALF}px)`;
-  carl.style.setProperty("--sx", "-112vw");
-  carl.style.setProperty("--sy", "6px");
+  carl.style.setProperty("--sx", "-72px");
+  carl.style.setProperty("--sy", "-96px");
   carl.innerHTML = `<img src="AssetCARL.PNG" alt="">`;
 
   profileField.appendChild(carl);
