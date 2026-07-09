@@ -382,28 +382,30 @@ const CARL_ZONE = { x: 25.6, y: 34.18 };
 const CARL_HEART_START = { x: 82, y: 98 };
 const CARL_HEART_CONTACT = { x: CARL_ZONE.x + 3.6, y: CARL_ZONE.y + 0.04 };
 const CARL_HEART_PATH = [
-  // One wrong red heart rides the approved right-side social-chaos lane: slow helium, not chaos.
-  { left: "82%", top: "100%", transform: "translate(-50%, -50%) scale(0.96) rotate(-4deg)", opacity: 0, offset: 0 },
-  { left: "84%", top: "88%", transform: "translate(-50%, -50%) scale(0.99) rotate(1deg)", opacity: 0.78, offset: 0.10 },
-  { left: "81%", top: "73%", transform: "translate(-50%, -50%) scale(1.02) rotate(-2deg)", opacity: 0.94, offset: 0.22 },
-  { left: "85%", top: "57%", transform: "translate(-50%, -50%) scale(1.04) rotate(2deg)", opacity: 1, offset: 0.34 },
-  { left: "82%", top: "39%", transform: "translate(-50%, -50%) scale(1.05) rotate(-2deg)", opacity: 1, offset: 0.46 },
-  { left: "84%", top: "20%", transform: "translate(-50%, -50%) scale(1.06) rotate(1deg)", opacity: 1, offset: 0.55 },
+  // One wrong red broken heart rides the approved right-side social-chaos lane: slow helium, not chaos.
+  // It stays RED all the way to the top rejection. The gray PNG only takes over after the bottom re-entry.
+  { left: "82%", top: "100%", transform: "translate(-50%, -50%) scale(0.82) rotate(-4deg)", opacity: 0, offset: 0 },
+  { left: "84%", top: "88%", transform: "translate(-50%, -50%) scale(0.84) rotate(1deg)", opacity: 0.70, offset: 0.10 },
+  { left: "81%", top: "73%", transform: "translate(-50%, -50%) scale(0.86) rotate(-2deg)", opacity: 0.88, offset: 0.22 },
+  { left: "85%", top: "57%", transform: "translate(-50%, -50%) scale(0.88) rotate(2deg)", opacity: 0.98, offset: 0.34 },
+  { left: "82%", top: "39%", transform: "translate(-50%, -50%) scale(0.90) rotate(-2deg)", opacity: 1, offset: 0.46 },
+  { left: "84%", top: "20%", transform: "translate(-50%, -50%) scale(0.92) rotate(1deg)", opacity: 1, offset: 0.55 },
 
-  // Virus acknowledgement: one clean violent rejection, then the heart is gone.
-  { left: "88%", top: "16%", transform: "translate(-50%, -50%) scale(1.10) rotate(-16deg)", opacity: 1, offset: 0.585 },
-  { left: "108%", top: "10%", transform: "translate(-50%, -50%) scale(1.13) rotate(50deg)", opacity: .9, offset: 0.63 },
-  { left: "121%", top: "1%", transform: "translate(-50%, -50%) scale(1.08) rotate(84deg)", opacity: 0, offset: 0.675 },
+  // Virus acknowledgement: the invisible system flicks the error off-screen.
+  { left: "88%", top: "16%", transform: "translate(-50%, -50%) scale(0.94) rotate(-16deg)", opacity: 1, offset: 0.585 },
+  { left: "108%", top: "10%", transform: "translate(-50%, -50%) scale(0.96) rotate(50deg)", opacity: .86, offset: 0.63 },
+  { left: "121%", top: "1%", transform: "translate(-50%, -50%) scale(0.92) rotate(84deg)", opacity: 0, offset: 0.675 },
 
-  // Re-entry: bottom-center palm-space return. Red fades to gray during one elegant slow climb to Carl.
-  { left: "50%", top: "116%", transform: "translate(-50%, -50%) scale(1.55) rotate(-8deg)", opacity: 0, offset: 0.705 },
-  { left: "50%", top: "101%", transform: "translate(-50%, -50%) scale(1.52) rotate(-5deg)", opacity: .55, offset: 0.745 },
-  { left: "48%", top: "88%", transform: "translate(-50%, -50%) scale(1.48) rotate(-2deg)", opacity: .96, offset: 0.79 },
-  { left: "43%", top: "74%", transform: "translate(-50%, -50%) scale(1.41) rotate(1deg)", opacity: 1, offset: 0.84 },
-  { left: "38%", top: "61%", transform: "translate(-50%, -50%) scale(1.34) rotate(-1deg)", opacity: 1, offset: 0.885 },
-  { left: "33%", top: "49%", transform: "translate(-50%, -50%) scale(1.25) rotate(1deg)", opacity: 1, offset: 0.925 },
-  { left: `${CARL_HEART_CONTACT.x}%`, top: `${CARL_HEART_CONTACT.y}%`, transform: "translate(-50%, -50%) scale(1.14) rotate(-2deg)", opacity: 1, offset: 0.985 },
-  { left: `${CARL_HEART_CONTACT.x}%`, top: `${CARL_HEART_CONTACT.y}%`, transform: "translate(-50%, -50%) scale(1.18) rotate(-2deg)", opacity: 0, offset: 1 }
+  // Re-entry: bottom-center palm-space return. It is already fading gray by the low middle of the screen.
+  { left: "50%", top: "116%", transform: "translate(-50%, -50%) scale(0.98) rotate(-8deg)", opacity: 0, offset: 0.705 },
+  { left: "50%", top: "101%", transform: "translate(-50%, -50%) scale(1.00) rotate(-5deg)", opacity: .46, offset: 0.745 },
+  { left: "49%", top: "90%", transform: "translate(-50%, -50%) scale(1.00) rotate(-3deg)", opacity: .86, offset: 0.795 },
+  { left: "47%", top: "78%", transform: "translate(-50%, -50%) scale(0.98) rotate(-1deg)", opacity: .98, offset: 0.845 },
+  { left: "43%", top: "66%", transform: "translate(-50%, -50%) scale(0.96) rotate(1deg)", opacity: 1, offset: 0.890 },
+  { left: "38%", top: "54%", transform: "translate(-50%, -50%) scale(0.94) rotate(-1deg)", opacity: 1, offset: 0.930 },
+  { left: "33%", top: "44%", transform: "translate(-50%, -50%) scale(0.92) rotate(1deg)", opacity: 1, offset: 0.965 },
+  { left: `${CARL_HEART_CONTACT.x}%`, top: `${CARL_HEART_CONTACT.y}%`, transform: "translate(-50%, -50%) scale(0.90) rotate(-2deg)", opacity: 1, offset: 0.992 },
+  { left: `${CARL_HEART_CONTACT.x}%`, top: `${CARL_HEART_CONTACT.y}%`, transform: "translate(-50%, -50%) scale(0.92) rotate(-2deg)", opacity: 0, offset: 1 }
 ];
 
 function setProgress(value) {
@@ -843,7 +845,7 @@ function spawnCarl() {
   if (existingCarl) return existingCarl;
 
   const carl = document.createElement("button");
-  carl.className = "profile carl carl-zone-anchor loader-cover";
+  carl.className = "profile carl carl-zone-anchor carl-wrong-place loader-cover";
   carl.type = "button";
   carl.setAttribute("aria-label", "Carl Gates");
 
@@ -878,19 +880,19 @@ function releaseDeadHeartTowardCarl() {
   heart.style.opacity = "0";
   // Override old CSS-route experiments from previous builds; this path is owned by JS.
   heart.style.setProperty("animation", "none", "important");
-  heart.style.setProperty("width", "64px", "important");
-  heart.style.setProperty("height", "64px", "important");
+  heart.style.setProperty("width", "46px", "important");
+  heart.style.setProperty("height", "46px", "important");
   heart.innerHTML = `
-    <span class="carl-heart-layer carl-heart-red-emoji" aria-hidden="true">💔</span>
+    <img class="carl-heart-layer carl-heart-pink" src="${HEART_PINK}" alt="">
     <img class="carl-heart-layer carl-heart-grey" src="${HEART_GREY}" alt="">
   `;
 
   engagementField.appendChild(heart);
 
-  const flightDuration = 11200;
+  const flightDuration = 15400;
   const flight = heart.animate(CARL_HEART_PATH, {
     duration: flightDuration,
-    easing: "cubic-bezier(.22,.58,.18,1)",
+    easing: "cubic-bezier(.28,.54,.18,1)",
     fill: "forwards"
   });
 
@@ -904,21 +906,21 @@ function releaseDeadHeartTowardCarl() {
   // The top-right fan rejects it. This is when the pink heart becomes the gray broken-heart PNG.
   setTimeout(() => {
     if (!heart.parentNode) return;
-    heart.classList.add("off-course");
-  }, 8250);
+    heart.classList.add("off-course", "draining", "grey-taking-over");
+  }, 11350);
 
   setTimeout(() => {
     if (!heart.parentNode) return;
     heart.classList.remove("pink-stage", "draining");
-    heart.classList.add("dead-stage", "grey-taking-over");
-  }, 9000);
+    heart.classList.add("dead-stage");
+  }, 12450);
 
   // Static-zap contact: edge of the broken heart enters Carl's ring and the circuit completes.
   setTimeout(() => {
     carl = carl || profileField.querySelector(".profile.carl") || spawnCarl();
     if (heart && heart.parentNode) heart.remove();
     triggerCarl(carl);
-  }, 10920);
+  }, 15020);
 
   flight.onfinish = () => {
     if (heart && heart.parentNode) heart.remove();
@@ -949,7 +951,7 @@ function triggerCarl(carl) {
       carl.classList.remove("carl-ready", "carl-ring-death", "carl-impact-visible");
       carl.classList.add("carl-dead-profile");
     }
-  }, 1650);
+  }, 2300);
 }
 
 function openCarlProfile() {
