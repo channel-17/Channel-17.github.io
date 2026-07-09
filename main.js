@@ -380,29 +380,30 @@ const coverageTargets = [...loaderTargets, ...symbolTargets, ...missTargets];
 // then overcorrects through a fast wind curl and completes an electric edge-contact with Carl.
 const CARL_ZONE = { x: 25.6, y: 34.18 };
 const CARL_HEART_START = { x: 82, y: 98 };
-const CARL_HEART_CONTACT = { x: CARL_ZONE.x + 4.0, y: CARL_ZONE.y + 0.05 };
+const CARL_HEART_CONTACT = { x: CARL_ZONE.x + 3.6, y: CARL_ZONE.y + 0.04 };
 const CARL_HEART_PATH = [
-  // The mistake: one red broken heart rides the same right-side social-chaos helium lane first.
-  { left: "82%", top: "98%", transform: "translate(-50%, -50%) scale(1.00) rotate(-5deg)", opacity: 0, offset: 0 },
-  { left: "84%", top: "84%", transform: "translate(-50%, -50%) scale(1.02) rotate(2deg)", opacity: 0.92, offset: 0.10 },
-  { left: "80%", top: "67%", transform: "translate(-50%, -50%) scale(1.04) rotate(-3deg)", opacity: 1, offset: 0.22 },
-  { left: "85%", top: "49%", transform: "translate(-50%, -50%) scale(1.05) rotate(4deg)", opacity: 1, offset: 0.34 },
-  { left: "82%", top: "29%", transform: "translate(-50%, -50%) scale(1.07) rotate(-3deg)", opacity: 1, offset: 0.45 },
-  { left: "84%", top: "13%", transform: "translate(-50%, -50%) scale(1.08) rotate(2deg)", opacity: 1, offset: 0.535 },
+  // One wrong red heart rides the approved right-side social-chaos lane: slow helium, not chaos.
+  { left: "82%", top: "100%", transform: "translate(-50%, -50%) scale(0.96) rotate(-4deg)", opacity: 0, offset: 0 },
+  { left: "84%", top: "88%", transform: "translate(-50%, -50%) scale(0.99) rotate(1deg)", opacity: 0.78, offset: 0.10 },
+  { left: "81%", top: "73%", transform: "translate(-50%, -50%) scale(1.02) rotate(-2deg)", opacity: 0.94, offset: 0.22 },
+  { left: "85%", top: "57%", transform: "translate(-50%, -50%) scale(1.04) rotate(2deg)", opacity: 1, offset: 0.34 },
+  { left: "82%", top: "39%", transform: "translate(-50%, -50%) scale(1.05) rotate(-2deg)", opacity: 1, offset: 0.46 },
+  { left: "84%", top: "20%", transform: "translate(-50%, -50%) scale(1.06) rotate(1deg)", opacity: 1, offset: 0.55 },
 
-  // Virus acknowledgement: built-in invisible eject button. The heart gets flicked out, violently.
-  { left: "87%", top: "12%", transform: "translate(-50%, -50%) scale(1.14) rotate(-20deg)", opacity: 1, offset: 0.56 },
-  { left: "113%", top: "7%", transform: "translate(-50%, -50%) scale(1.20) rotate(72deg)", opacity: 1, offset: 0.61 },
-  { left: "124%", top: "-6%", transform: "translate(-50%, -50%) scale(1.15) rotate(116deg)", opacity: 0, offset: 0.665 },
+  // Virus acknowledgement: one clean violent rejection, then the heart is gone.
+  { left: "88%", top: "16%", transform: "translate(-50%, -50%) scale(1.10) rotate(-16deg)", opacity: 1, offset: 0.585 },
+  { left: "108%", top: "10%", transform: "translate(-50%, -50%) scale(1.13) rotate(50deg)", opacity: .9, offset: 0.63 },
+  { left: "121%", top: "1%", transform: "translate(-50%, -50%) scale(1.08) rotate(84deg)", opacity: 0, offset: 0.675 },
 
-  // Re-entry: giant bottom-center palm-space return as red, then it drains gray while climbing toward Carl.
-  { left: "52%", top: "112%", transform: "translate(-50%, -50%) scale(1.62) rotate(-13deg)", opacity: 0, offset: 0.695 },
-  { left: "51%", top: "94%", transform: "translate(-50%, -50%) scale(1.56) rotate(10deg)", opacity: 1, offset: 0.755 },
-  { left: "45%", top: "76%", transform: "translate(-50%, -50%) scale(1.45) rotate(-9deg)", opacity: 1, offset: 0.815 },
-  { left: "37%", top: "60%", transform: "translate(-50%, -50%) scale(1.34) rotate(8deg)", opacity: 1, offset: 0.875 },
-  { left: "30%", top: "46%", transform: "translate(-50%, -50%) scale(1.22) rotate(-5deg)", opacity: 1, offset: 0.93 },
-  { left: `${CARL_HEART_CONTACT.x}%`, top: `${CARL_HEART_CONTACT.y}%`, transform: "translate(-50%, -50%) scale(1.11) rotate(-7deg)", opacity: 1, offset: 0.985 },
-  { left: `${CARL_HEART_CONTACT.x}%`, top: `${CARL_HEART_CONTACT.y}%`, transform: "translate(-50%, -50%) scale(1.22) rotate(-7deg)", opacity: 0, offset: 1 }
+  // Re-entry: bottom-center palm-space return. Red fades to gray during one elegant slow climb to Carl.
+  { left: "50%", top: "116%", transform: "translate(-50%, -50%) scale(1.55) rotate(-8deg)", opacity: 0, offset: 0.705 },
+  { left: "50%", top: "101%", transform: "translate(-50%, -50%) scale(1.52) rotate(-5deg)", opacity: .55, offset: 0.745 },
+  { left: "48%", top: "88%", transform: "translate(-50%, -50%) scale(1.48) rotate(-2deg)", opacity: .96, offset: 0.79 },
+  { left: "43%", top: "74%", transform: "translate(-50%, -50%) scale(1.41) rotate(1deg)", opacity: 1, offset: 0.84 },
+  { left: "38%", top: "61%", transform: "translate(-50%, -50%) scale(1.34) rotate(-1deg)", opacity: 1, offset: 0.885 },
+  { left: "33%", top: "49%", transform: "translate(-50%, -50%) scale(1.25) rotate(1deg)", opacity: 1, offset: 0.925 },
+  { left: `${CARL_HEART_CONTACT.x}%`, top: `${CARL_HEART_CONTACT.y}%`, transform: "translate(-50%, -50%) scale(1.14) rotate(-2deg)", opacity: 1, offset: 0.985 },
+  { left: `${CARL_HEART_CONTACT.x}%`, top: `${CARL_HEART_CONTACT.y}%`, transform: "translate(-50%, -50%) scale(1.18) rotate(-2deg)", opacity: 0, offset: 1 }
 ];
 
 function setProgress(value) {
@@ -886,10 +887,10 @@ function releaseDeadHeartTowardCarl() {
 
   engagementField.appendChild(heart);
 
-  const flightDuration = 6900;
+  const flightDuration = 11200;
   const flight = heart.animate(CARL_HEART_PATH, {
     duration: flightDuration,
-    easing: "cubic-bezier(.2,.72,.08,1)",
+    easing: "cubic-bezier(.22,.58,.18,1)",
     fill: "forwards"
   });
 
@@ -898,26 +899,26 @@ function releaseDeadHeartTowardCarl() {
     if (!heart.parentNode) return;
     carl = profileField.querySelector(".profile.carl") || spawnCarl();
     carlSeen = true;
-  }, 1250);
+  }, 2100);
 
   // The top-right fan rejects it. This is when the pink heart becomes the gray broken-heart PNG.
   setTimeout(() => {
     if (!heart.parentNode) return;
     heart.classList.add("off-course", "draining", "grey-taking-over");
-  }, 5280);
+  }, 8250);
 
   setTimeout(() => {
     if (!heart.parentNode) return;
     heart.classList.remove("pink-stage", "draining");
     heart.classList.add("dead-stage");
-  }, 5850);
+  }, 9000);
 
   // Static-zap contact: edge of the broken heart enters Carl's ring and the circuit completes.
   setTimeout(() => {
     carl = carl || profileField.querySelector(".profile.carl") || spawnCarl();
     if (heart && heart.parentNode) heart.remove();
     triggerCarl(carl);
-  }, 6780);
+  }, 10920);
 
   flight.onfinish = () => {
     if (heart && heart.parentNode) heart.remove();
