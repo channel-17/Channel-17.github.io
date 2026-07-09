@@ -64,6 +64,7 @@ let heartSmokeStarted = false;
 let heartSmokeSpawnCount = 0;
 let frankDutyStarted = false;
 let frankDutyFramesPlayed = false;
+let secretFlameReleased = false;
 let woundPulseTimer = null;
 let hiveWoundUsed = false;
 let jinxFrequencyTimer = null;
@@ -247,23 +248,25 @@ const normalAssets = [
 ];
 
 const loaderTargets = [
-  // ZONE 1 — LOADER BAR: limited one-and-done coverage.
-  // Profiles sit ON the bar, same size, then Carl lands as the final left-side loader avatar and the loader attack stops.
-  { x: 42.0, y: 34.35, zone: "loader", cluster: "bar-left-on" },
-  { x: 51.0, y: 34.40, zone: "loader", cluster: "bar-center-on" },
-  { x: 60.0, y: 34.35, zone: "loader", cluster: "bar-right-on" },
-  { x: 69.0, y: 34.42, zone: "loader", cluster: "bar-right-edge-on" }
+  // C.17 ATTACK PASS — bar burial: many regular profiles smash ON the loader, not stacked like cards.
+  // Carl is the final far-left/start-piece avatar after the bar is buried.
+  ...Array.from({ length: 78 }, (_, i) => {
+    const col = i % 26;
+    const row = Math.floor(i / 26);
+    const baseX = 25.5 + col * 1.95;
+    const rowY = [34.18, 34.88, 33.48][row] || 34.18;
+    const shove = (i % 5 - 2) * 0.14;
+    return { x: baseX + shove, y: rowY, zone: "loader", cluster: `bar-bury-${i}` };
+  })
 ];
 
 const symbolTargets = [
-  // ZONE 3 — C.17 SYMBOL: blue response only.
-  // These are allowed to keep arriving because the symbol is the actual threat.
-  { x: 42.0, y: 20.5, zone: "symbol" },
-  { x: 50.0, y: 17.8, zone: "symbol" },
-  { x: 58.0, y: 20.5, zone: "symbol" },
-  { x: 45.5, y: 27.0, zone: "symbol" },
-  { x: 54.5, y: 27.0, zone: "symbol" },
-  { x: 50.0, y: 24.0, zone: "symbol" }
+  // C.17 SYMBOL: intentional blue contact points only. Bam... bam... bam. No end-swarm chaos.
+  { x: 44.0, y: 21.2, zone: "symbol" },
+  { x: 51.0, y: 18.8, zone: "symbol" },
+  { x: 57.2, y: 22.2, zone: "symbol" },
+  { x: 47.0, y: 27.0, zone: "symbol" },
+  { x: 54.5, y: 26.2, zone: "symbol" }
 ];
 
 const missTargets = [
@@ -279,9 +282,9 @@ const coverageTargets = [...loaderTargets, ...symbolTargets, ...missTargets];
 // Hearts begin at 17% as sparse field-smoke, not a wall and not a lane.
 // One pink heart rises like the others, gets flicked by the top-right system/fan, visibly breaks on-screen,
 // then overcorrects through a fast wind curl and completes an electric edge-contact with Carl.
-const CARL_ZONE = { x: 33.0, y: 34.38 };
+const CARL_ZONE = { x: 25.6, y: 34.18 };
 const CARL_HEART_START = { x: 83, y: 96 };
-const CARL_HEART_CONTACT = { x: CARL_ZONE.x - 7.0, y: CARL_ZONE.y + 0.05 };
+const CARL_HEART_CONTACT = { x: CARL_ZONE.x + 4.0, y: CARL_ZONE.y + 0.05 };
 const CARL_HEART_PATH = [
   // Normal-heart climb. Same read as the field hearts until the top-right maintenance flick.
   { left: "82%", top: "96%", transform: "translate(-50%, -50%) scale(1.02) rotate(-5deg)", opacity: 0, offset: 0 },
@@ -367,15 +370,14 @@ const loading = setInterval(() => {
     startSymbolBattle();
   }
 
-  // FOREMAN MODE: hearts-only pass.
-  // Carl's special broken-heart event is intentionally paused until the regular heart field is approved.
-
-  if (progress >= 88 && !generals) {
-    generals = true;
-    deployGenerals();
+  if (progress >= 42 && !deadHeartReleased) {
+    deadHeartReleased = true;
+    releaseDeadHeartTowardCarl();
   }
 
-  if (progress >= 98 && !wrenSeen) {
+  // Generals/end-swarm disabled for C.17 attack pass: no last-second blue chaos.
+
+  if (progress >= 86 && !wrenSeen) {
     wrenSeen = true;
     spawnWren();
   }
@@ -422,13 +424,13 @@ function startHeartSmoke() {
 }
 
 function startAttack() {
-  // ZONE 1 — LOADER BAR: limited one-and-done.
-  // Normal profiles sit lower/on the bar. Carl lands last on the left side. Then loader coverage stops.
+  // LOADER BAR: regular profile burial only. Enough bodies to hide the bar, then Carl lands final on far-left/start.
   if (profileTimer) return;
 
-  const sides = ["right", "left", "top", "right"];
+  const sides = ["right", "left", "top", "bottom"];
   loaderTargets.forEach((target, index) => {
-    setTimeout(() => spawnProfile(sides[index] || randomSide(), 0, { force: target, noAutoRemove: true }), 720 + index * 1050);
+    const side = sides[index % sides.length];
+    setTimeout(() => spawnProfile(side, 0, { force: target, noAutoRemove: true, loaderBurial: true }), 260 + index * 58);
   });
 
   setTimeout(() => {
@@ -437,29 +439,27 @@ function startAttack() {
       spawnCarl();
     }
     loaderCoverageDone = true;
-  }, 720 + loaderTargets.length * 1050 + 360);
+  }, 260 + loaderTargets.length * 58 + 240);
 
   slashTimer = setInterval(() => {
     if (completed) return;
     spawnSlash(randomSide());
-  }, 3200);
+  }, 4200);
 }
 
 function startSymbolBattle() {
-  // ZONE 3 — SYMBOL: blue avatars respond to the protected frequency.
-  // They do not attack the loader. They only matter when they land on the symbol.
+  // SYMBOL: fewer blue avatars, harder readable impacts, faster hot-steel consumption.
   if (symbolBattleStarted) return;
   symbolBattleStarted = true;
 
-  [0, 1, 2].forEach((i) => {
-    setTimeout(() => spawnProfile(["top", "left", "right"][i], 0, { force: symbolTargets[i % symbolTargets.length], symbolProbe: true }), i * 360);
-  });
-
-  profileTimer = setInterval(() => {
-    if (completed) return;
-    const target = symbolTargets[profileCount % symbolTargets.length];
-    spawnProfile(randomSide(), 0, { force: target, symbolProbe: true });
-  }, 1850);
+  const attackCount = 12;
+  for (let i = 0; i < attackCount; i++) {
+    setTimeout(() => {
+      if (completed) return;
+      const target = symbolTargets[i % symbolTargets.length];
+      spawnProfile(["top", "left", "right", "bottom"][i % 4], 0, { force: target, symbolProbe: true });
+    }, i * 620);
+  }
 }
 
 function randomSide() {
@@ -536,6 +536,12 @@ function spawnEngagement(options = {}) {
     }
   }
 
+  if (!secretFlameReleased && heartSmokeSpawnCount > 9) {
+    secretFlameReleased = true;
+    symbol = "🔥";
+    iconClass = "secret-flame";
+  }
+
   item.className = `engage heart-story social-smoke ${iconClass}`;
   item.textContent = symbol;
 
@@ -573,7 +579,7 @@ function pickTarget() {
 function spawnProfile(side, delay = 0, opts = {}) {
   setTimeout(() => {
     const old = profileField.querySelectorAll(".profile:not(.carl):not(.frank):not(.wren)");
-    if (old.length > 10) old[0].remove();
+    if (old.length > 110) old[0].remove();
 
     const target = opts.force || pickTarget();
 
@@ -581,8 +587,8 @@ function spawnProfile(side, delay = 0, opts = {}) {
     profile.className = "profile";
 
     const asset = opts.asset || normalAssets[profileCount % normalAssets.length];
-    const jitterX = target.zone === "symbol" ? 1.45 : target.zone === "miss" ? 1.45 : 0.46;
-    const jitterY = target.zone === "symbol" ? 1.35 : target.zone === "miss" ? 0.18 : 0.08;
+    const jitterX = target.zone === "symbol" ? 0.88 : target.zone === "miss" ? 1.45 : 0.18;
+    const jitterY = target.zone === "symbol" ? 0.72 : target.zone === "miss" ? 0.18 : 0.06;
     const x = jitter(target.x, jitterX);
     const y = jitter(target.y, jitterY);
 
@@ -643,26 +649,22 @@ function revealHive(profile) {
 
     profile.classList.add("hive-reveal", "has-hive-asset", "signal-burn-contact");
 
-    // Gold contact burns the section touching the symbol first; the avatar shell remains.
+    // Hot metal / paper contact: readable blue, then the contact point eats outward fast.
     setTimeout(() => {
       if (profile && profile.parentNode) profile.classList.add("signal-burn-spread");
-    }, 1200);
+    }, 360);
 
     setTimeout(() => {
       if (profile && profile.parentNode) profile.classList.add("signal-burn-deep");
-    }, 2500);
+    }, 760);
 
     setTimeout(() => {
-      if (profile && profile.parentNode) profile.classList.add("signal-burn-hold");
-    }, 4200);
-
-    setTimeout(() => {
-      if (profile && profile.parentNode) profile.classList.add("signal-burn-consumed");
-    }, 6500);
+      if (profile && profile.parentNode) profile.classList.add("signal-burn-consumed", "pixel-deteriorate");
+    }, 1180);
 
     setTimeout(() => {
       if (profile && profile.parentNode) profile.remove();
-    }, 9800);
+    }, 2550);
   }, 230);
 }
 
@@ -686,39 +688,11 @@ function startBurnPulse() {
 }
 
 function deployGenerals() {
-  checkGenerals.classList.add("active");
-
-  const gens = [...checkGenerals.querySelectorAll(".general")];
-
-  setTimeout(() => {
-    gens.forEach(general => general.classList.add("verify"));
-  }, 700);
-
-  setTimeout(() => {
-    gens.forEach(general => {
-      general.classList.remove("verify");
-      general.classList.add("target");
-      general.querySelector("small").textContent = "target";
-    });
-  }, 1300);
-
-  [0, 1, 2].forEach(index => {
-    setTimeout(() => fireBlast(index), 1700 + index * 260);
-  });
+  // Disabled during C.17 attack pass. The old general wave created the stupid last-second chaos.
 }
 
 function fireBlast(index) {
-  const blast = document.createElement("div");
-  blast.className = "blast";
-  blast.style.setProperty("--a", [-18, 0, 18][index] + "deg");
-
-  impactField.appendChild(blast);
-
-  setTimeout(() => blast.remove(), 430);
-
-  for (let i = 0; i < 3; i++) {
-    setTimeout(() => spawnProfile(["left", "right", "top"][i], 0, { force: symbolTargets[(profileCount + i) % symbolTargets.length], symbolProbe: true }), i * 160);
-  }
+  // Disabled during C.17 attack pass.
 }
 
 function spawnCarl() {
@@ -726,14 +700,14 @@ function spawnCarl() {
   if (existingCarl) return existingCarl;
 
   const carl = document.createElement("button");
-  carl.className = "profile carl carl-zone-anchor carl-wrong-place";
+  carl.className = "profile carl carl-zone-anchor carl-wrong-place loader-cover";
   carl.type = "button";
   carl.setAttribute("aria-label", "Carl Gates");
 
   carl.style.left = `calc(${CARL_ZONE.x}% - ${AVATAR_HALF}px)`;
   carl.style.top = `calc(${CARL_ZONE.y}% - ${AVATAR_HALF}px)`;
-  carl.style.setProperty("--sx", "-82px");
-  carl.style.setProperty("--sy", "8px");
+  carl.style.setProperty("--sx", "-112vw");
+  carl.style.setProperty("--sy", "6px");
   carl.innerHTML = `<img src="AssetCARL.PNG" alt="">`;
 
   profileField.appendChild(carl);
@@ -824,34 +798,14 @@ function triggerCarl(carl) {
   if (!carl || !carl.parentNode || carlTriggered) return;
 
   carlTriggered = true;
-
-  // Snake bite: forbidden field connection makes Carl readable and red-flickering immediately.
   carl.classList.add("carl-impact-visible", "carl-ready", "carl-ring-death");
 
   setTimeout(() => {
-    if (!carlOpened) {
-      carl.classList.remove("carl-ready");
+    if (!carlOpened && carl && carl.parentNode) {
+      carl.classList.remove("carl-ready", "carl-ring-death", "carl-impact-visible");
+      carl.classList.add("carl-dead-profile");
     }
-  }, 2600);
-
-  setTimeout(() => {
-    if (!carl || !carl.parentNode) return;
-
-    carl.classList.remove("carl-ring-death", "carl-ready", "carl-impact-visible");
-    carl.classList.add("burying");
-
-    const coverRing = [
-      { x: CARL_ZONE.x + 0.2, y: CARL_ZONE.y + 0.05, zone: "loader", cluster: "carl-cover" },
-      { x: CARL_ZONE.x + 3.0, y: CARL_ZONE.y - 0.10, zone: "loader", cluster: "carl-cover-right" },
-      { x: CARL_ZONE.x - 2.7, y: CARL_ZONE.y + 0.30, zone: "loader", cluster: "carl-cover-left" }
-    ];
-
-    coverRing.forEach((burialTarget, i) => {
-      setTimeout(() => spawnProfile(i % 2 ? "right" : "left", 0, { force: burialTarget }), i * 520);
-    });
-
-    setTimeout(() => carl.remove(), 1900);
-  }, 2750);
+  }, 1120);
 }
 
 function openCarlProfile() {
@@ -978,40 +932,36 @@ document.querySelectorAll(".photo-thumb").forEach(button => {
 });
 
 function spawnWren() {
+  // Wren is a quick private contact with the symbol: lands, vanishes, leaves a tiny green pulse.
   const wren = document.createElement("div");
-  wren.className = "profile wren stubborn";
+  wren.className = "profile wren wren-quick-home";
 
-  wren.style.left = `calc(50% - ${AVATAR_HALF}px)`;
-  wren.style.top = `calc(31% - ${AVATAR_HALF}px)`;
-  wren.style.setProperty("--sx", "70px");
-  wren.style.setProperty("--sy", "-38px");
+  wren.style.left = `calc(51% - ${AVATAR_HALF}px)`;
+  wren.style.top = `calc(25.8% - ${AVATAR_HALF}px)`;
+  wren.style.setProperty("--sx", "42px");
+  wren.style.setProperty("--sy", "-82px");
   wren.innerHTML = `<img src="AssetWREN.PNG" alt="">`;
 
   profileField.appendChild(wren);
 
   setTimeout(() => {
     if (!wren || !wren.parentNode) return;
-    wren.classList.add("wren-notice");
-  }, 1500);
-
-  setTimeout(() => {
-    if (!wren || !wren.parentNode) return;
     wren.classList.add("wren-fade-home");
-  }, 2800);
+  }, 420);
 
   setTimeout(() => {
     const pulse = document.createElement("div");
     pulse.className = "wren-exit-pulse";
-    pulse.style.left = "50%";
-    pulse.style.top = "31%";
+    pulse.style.left = "51%";
+    pulse.style.top = "25.8%";
     impactField.appendChild(pulse);
-    setTimeout(() => pulse.remove(), 3600);
-    setTimeout(armJinxShadowFrequency, 900);
-  }, 3500);
+    setTimeout(() => pulse.remove(), 1800);
+    setTimeout(armJinxShadowFrequency, 260);
+  }, 980);
 
   setTimeout(() => {
     if (wren && wren.parentNode) wren.remove();
-  }, 4300);
+  }, 1450);
 }
 
 function spawnFrank() {
