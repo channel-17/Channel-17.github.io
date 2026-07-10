@@ -8544,3 +8544,47 @@ body {
 .carl-trigger-heart.matrix-error-heart.carl-heart-pop .carl-heart-layer {
   animation: c17HeartBalloonPop .28s cubic-bezier(.10,.72,.18,1) forwards !important;
 }
+
+
+/* C17 BUILD62 HOTFIX — the supplied heart.grey.PNG has wide transparent canvas.
+   Scale the PNG artwork inside the same 42px actor so the silver heart reads
+   at the exact same visual size as the red broken-heart emoji. */
+.carl-trigger-heart.matrix-error-heart .carl-heart-grey {
+  opacity: 0 !important;
+  transform: scale(2.72) !important;
+  transform-origin: 50% 50% !important;
+  object-fit: contain !important;
+  filter: grayscale(1) brightness(.86) contrast(1.14) drop-shadow(0 0 5px rgba(235,235,235,.10)) !important;
+}
+
+.carl-trigger-heart.matrix-error-heart.grey-taking-over .carl-heart-red {
+  opacity: .30 !important;
+  transform: scale(.99) !important;
+}
+
+.carl-trigger-heart.matrix-error-heart.grey-taking-over .carl-heart-grey {
+  opacity: .82 !important;
+  transform: scale(2.72) !important;
+}
+
+.carl-trigger-heart.matrix-error-heart.dead-stage .carl-heart-red {
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
+
+.carl-trigger-heart.matrix-error-heart.dead-stage .carl-heart-grey {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: scale(2.72) !important;
+}
+
+.carl-trigger-heart.matrix-error-heart.carl-heart-pop .carl-heart-grey {
+  animation: c17GreyHeartBalloonPop .28s cubic-bezier(.10,.72,.18,1) forwards !important;
+}
+
+@keyframes c17GreyHeartBalloonPop {
+  0%   { opacity: 1; transform: scale(2.72); filter: brightness(.90); }
+  38%  { opacity: 1; transform: scale(3.55); filter: brightness(1.28); }
+  70%  { opacity: .48; transform: scale(1.72); filter: brightness(1.05); }
+  100% { opacity: 0; transform: scale(.18); filter: brightness(.68); }
+}
