@@ -8366,3 +8366,119 @@ body {
     box-shadow: none;
   }
 }
+
+
+/* =========================================================
+   BUILD 60 — CARL HEART PATH / REFERENCE-LOCKED PASS
+   Scope: Carl heart route, red→gray handoff, pop, RROD only.
+========================================================= */
+
+.carl-trigger-heart.matrix-error-heart {
+  width: 32px !important;
+  height: 32px !important;
+  z-index: 210 !important;
+  overflow: visible !important;
+  pointer-events: none !important;
+  filter: none !important;
+}
+
+.carl-trigger-heart.matrix-error-heart .carl-heart-layer {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  transition:
+    opacity 1.75s ease-in-out,
+    filter 1.75s ease-in-out,
+    transform 1.75s ease-in-out !important;
+}
+
+.carl-trigger-heart.matrix-error-heart .carl-heart-red {
+  display: grid !important;
+  place-items: center !important;
+  opacity: 1 !important;
+  font-size: 24px !important;
+  line-height: 1 !important;
+  transform: scale(1) !important;
+  filter: drop-shadow(0 0 6px rgba(255,45,50,.24)) !important;
+}
+
+.carl-trigger-heart.matrix-error-heart .carl-heart-grey {
+  opacity: 0 !important;
+  object-fit: contain !important;
+  transform: scale(1) !important;
+  filter:
+    grayscale(1)
+    saturate(.05)
+    contrast(1.08)
+    brightness(.78)
+    drop-shadow(0 0 5px rgba(235,235,235,.10)) !important;
+}
+
+.carl-trigger-heart.matrix-error-heart.grey-taking-over .carl-heart-red {
+  opacity: .18 !important;
+  filter:
+    grayscale(.88)
+    saturate(.18)
+    brightness(.68)
+    drop-shadow(0 0 3px rgba(255,45,50,.08)) !important;
+}
+
+.carl-trigger-heart.matrix-error-heart.grey-taking-over .carl-heart-grey {
+  opacity: .84 !important;
+}
+
+.carl-trigger-heart.matrix-error-heart.dead-stage .carl-heart-red {
+  opacity: 0 !important;
+}
+
+.carl-trigger-heart.matrix-error-heart.dead-stage .carl-heart-grey {
+  opacity: 1 !important;
+  transform: scale(1) !important;
+}
+
+.carl-trigger-heart.matrix-error-heart.carl-heart-pop .carl-heart-layer {
+  animation: c17HeartBalloonPop .28s cubic-bezier(.10,.72,.18,1) forwards !important;
+}
+
+@keyframes c17HeartBalloonPop {
+  0%   { opacity: 1; transform: scale(1); filter: brightness(1); }
+  38%  { opacity: 1; transform: scale(1.42); filter: brightness(1.35); }
+  70%  { opacity: .48; transform: scale(.72); filter: brightness(1.10); }
+  100% { opacity: 0; transform: scale(.08); filter: brightness(.70); }
+}
+
+/* Carl stays visually ordinary until contact; only the ring reacts. */
+.profile.carl.carl-zone-anchor {
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+.profile.carl .carl-rrod-ring {
+  position: absolute !important;
+  inset: 1px !important;
+  z-index: 999 !important;
+  display: block !important;
+  border: 4px solid transparent !important;
+  border-radius: 50% !important;
+  box-sizing: border-box !important;
+  pointer-events: none !important;
+  opacity: 0;
+  animation: c17CarlRrod123 1.50s steps(1, end) 1 both !important;
+}
+
+@keyframes c17CarlRrod123 {
+  0%, 12%, 34%, 46%, 68%, 80% {
+    opacity: 1;
+    border-color: #ff1d25;
+    box-shadow:
+      inset 0 0 8px rgba(255,29,37,.98),
+      0 0 10px rgba(255,29,37,.98),
+      0 0 20px rgba(255,29,37,.50);
+  }
+  13%, 33%, 47%, 67%, 81%, 100% {
+    opacity: 0;
+    border-color: transparent;
+    box-shadow: none;
+  }
+}
