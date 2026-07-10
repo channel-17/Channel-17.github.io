@@ -919,19 +919,30 @@ function releaseDeadHeartTowardCarl() {
     carlSeen = true;
   }, 11200);
 
-  // The rejected heart comes back on-screen RED. Give that state a readable beat,
-  // then let the user's gray PNG bleed over it while the balloon is still climbing.
-  setTimeout(() => {
-    if (!heart.parentNode) return;
-    heart.classList.add("grey-taking-over");
-  }, 20150);
+  // CANON LOCK: the visible loader percentage owns the emotional color change.
+  // At 89% the red broken-heart balloon begins becoming the user's heart.grey.PNG,
+  // with enough screen time to read as gray before it reaches Carl.
+  let greySwapStarted = false;
+  let greySwapFinished = false;
 
-  // Finish the emotional change well before Carl. Same footprint, different heart.
-  setTimeout(() => {
-    if (!heart.parentNode) return;
-    heart.classList.remove("pink-stage");
-    heart.classList.add("dead-stage");
-  }, 21650);
+  const syncGreyHeartToProgress = () => {
+    if (!heart.isConnected || contactHandled) return;
+
+    if (!greySwapStarted && progress >= 89) {
+      greySwapStarted = true;
+      heart.classList.add("grey-taking-over", "grey-at-eighty-nine");
+    }
+
+    if (greySwapStarted && !greySwapFinished && progress >= 91) {
+      greySwapFinished = true;
+      heart.classList.remove("pink-stage");
+      heart.classList.add("dead-stage");
+    }
+
+    requestAnimationFrame(syncGreyHeartToProgress);
+  };
+
+  requestAnimationFrame(syncGreyHeartToProgress);
 
   const popOnPixelContact = () => {
     if (contactHandled || !heart.isConnected) return;
@@ -947,6 +958,9 @@ function releaseDeadHeartTowardCarl() {
         flight.pause();
         heart.classList.remove("grey-taking-over");
         heart.classList.add("dead-stage", "carl-heart-pop");
+        const contactX = Math.max(h.left, Math.min(h.right, c.left));
+        const contactY = Math.max(h.top, Math.min(h.bottom, c.top + c.height / 2));
+        spawnCarlZap(contactX, contactY);
         triggerCarl(carl);
         setTimeout(() => {
           if (heart.isConnected) heart.remove();
@@ -967,6 +981,10 @@ function releaseDeadHeartTowardCarl() {
       contactHandled = true;
       heart.classList.remove("grey-taking-over");
       heart.classList.add("dead-stage", "carl-heart-pop");
+      if (carl && carl.isConnected) {
+        const c = carl.getBoundingClientRect();
+        spawnCarlZap(c.left, c.top + c.height / 2);
+      }
       triggerCarl(carl);
       setTimeout(() => {
         if (heart.isConnected) heart.remove();
@@ -980,11 +998,16 @@ function releaseDeadHeartTowardCarl() {
   }, flightDuration + 1200);
 }
 
-function spawnCarlZap() {
+function spawnCarlZap(viewportX, viewportY) {
   const zap = document.createElement("div");
-  zap.className = "carl-zap-spark";
-  zap.style.left = `${CARL_ZONE.x - 6.2}%`;
-  zap.style.top = `${CARL_ZONE.y}%`;
+  zap.className = "carl-zap-spark carl-contact-pop";
+
+  const fieldRect = impactField.getBoundingClientRect();
+  const x = Number.isFinite(viewportX) ? viewportX - fieldRect.left : fieldRect.width * ((CARL_ZONE.x - 6.2) / 100);
+  const y = Number.isFinite(viewportY) ? viewportY - fieldRect.top : fieldRect.height * (CARL_ZONE.y / 100);
+
+  zap.style.left = `${x}px`;
+  zap.style.top = `${y}px`;
   impactField.appendChild(zap);
   setTimeout(() => zap.remove(), 520);
 }
