@@ -8253,3 +8253,40 @@ body {
   opacity: 1 !important;
   filter: grayscale(1) saturate(.04) contrast(1.05) brightness(.78) !important;
 }
+
+
+/* =========================================================
+   BUILD 55 — EARLY CARL HEART + VISIBLE THREE-BLINK RROD
+   Scope: timing and Carl contact feedback only.
+========================================================= */
+.profile.carl {
+  position: absolute !important;
+}
+
+.profile.carl .carl-rrod-ring {
+  position: absolute;
+  inset: 1px;
+  z-index: 20;
+  display: block;
+  border: 4px solid transparent;
+  border-radius: 50%;
+  pointer-events: none;
+  box-sizing: border-box;
+  opacity: 0;
+  animation: carlRrodThreeVisible 0.68s steps(1, end) 3 both;
+}
+
+@keyframes carlRrodThreeVisible {
+  0%, 42% {
+    opacity: 1;
+    border-color: #ff1d25;
+    box-shadow:
+      inset 0 0 7px rgba(255, 29, 37, .95),
+      0 0 9px rgba(255, 29, 37, .95);
+  }
+  43%, 100% {
+    opacity: 0;
+    border-color: transparent;
+    box-shadow: none;
+  }
+}
