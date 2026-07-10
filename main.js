@@ -469,10 +469,8 @@ const loading = setInterval(() => {
     startSymbolBattle();
   }
 
-  if (progress >= 42 && !deadHeartReleased) {
-    deadHeartReleased = true;
-    releaseDeadHeartTowardCarl();
-  }
+  // Carl's broken-heart error is released with the opening social noise, not late in the sequence.
+  // startHeartSmoke() owns the one-time release so it can be one of the first three visible items.
 
   // Generals/end-swarm disabled for C.17 attack pass: no last-second blue chaos.
 
@@ -505,6 +503,15 @@ function startHeartSmoke() {
   if (engageTimer) return;
   heartSmokeSpawnCount = 0;
   spawnEngagement({ guaranteed: true });
+
+  // The matrix-error heart belongs to the social stream at first.
+  // Release it almost immediately so it is one of the first three visible items and its full story
+  // has time to finish before the loading sequence ends.
+  setTimeout(() => {
+    if (completed || deadHeartReleased) return;
+    deadHeartReleased = true;
+    releaseDeadHeartTowardCarl();
+  }, 860);
 
   engageTimer = setInterval(() => {
     if (completed) return;
@@ -950,10 +957,20 @@ function triggerCarl(carl) {
   carlTriggered = true;
   carl.classList.add("carl-impact-visible", "carl-ready", "carl-ring-death");
 
+  // Dedicated inner ring avoids the profile's existing border/erosion animations overriding the RROD.
+  const oldRing = carl.querySelector(".carl-rrod-ring");
+  if (oldRing) oldRing.remove();
+  const ring = document.createElement("span");
+  ring.className = "carl-rrod-ring";
+  ring.setAttribute("aria-hidden", "true");
+  carl.appendChild(ring);
+
   setTimeout(() => {
     if (!carlOpened && carl && carl.parentNode) {
       carl.classList.remove("carl-ready", "carl-ring-death", "carl-impact-visible");
       carl.classList.add("carl-dead-profile");
+      const activeRing = carl.querySelector(".carl-rrod-ring");
+      if (activeRing) activeRing.remove();
     }
   }, 2300);
 }
