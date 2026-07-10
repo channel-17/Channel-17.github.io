@@ -8207,3 +8207,49 @@ body {
     0 0 18px rgba(255,29,37,.76),
     0 0 36px rgba(255,29,37,.30) !important;
 }
+
+
+/* C17 HEART PASS 56 — same-family red emoji, hard left flick, elegant left re-entry. */
+.engage.carl-trigger-heart.asset-heart.matrix-error-heart,
+.carl-trigger-heart.asset-heart.matrix-error-heart {
+  width: 32px !important;
+  height: 32px !important;
+  font-size: 24px !important;
+  line-height: 1 !important;
+}
+.carl-trigger-heart.matrix-error-heart .carl-heart-layer {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  transition: opacity 3.3s ease, filter 3.3s ease, transform 3.3s ease !important;
+}
+.carl-trigger-heart.matrix-error-heart .carl-heart-red {
+  display: grid !important;
+  place-items: center !important;
+  opacity: 1 !important;
+  font-size: 24px !important;
+  line-height: 1 !important;
+  filter: drop-shadow(0 0 6px rgba(255,45,50,.24)) !important;
+  transform: scale(1) !important;
+}
+.carl-trigger-heart.matrix-error-heart .carl-heart-grey {
+  opacity: 0 !important;
+  object-fit: contain !important;
+  filter: grayscale(1) saturate(.08) contrast(1.02) brightness(.76) !important;
+  transform: scale(1) !important;
+}
+.carl-trigger-heart.matrix-error-heart.grey-taking-over .carl-heart-red {
+  opacity: .34 !important;
+  filter: grayscale(.78) saturate(.26) brightness(.72) !important;
+}
+.carl-trigger-heart.matrix-error-heart.grey-taking-over .carl-heart-grey {
+  opacity: .78 !important;
+}
+.carl-trigger-heart.matrix-error-heart.dead-stage .carl-heart-red {
+  opacity: 0 !important;
+}
+.carl-trigger-heart.matrix-error-heart.dead-stage .carl-heart-grey {
+  opacity: 1 !important;
+  filter: grayscale(1) saturate(.04) contrast(1.05) brightness(.78) !important;
+}
