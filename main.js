@@ -382,30 +382,29 @@ const CARL_ZONE = { x: 25.6, y: 34.18 };
 const CARL_HEART_START = { x: 82, y: 98 };
 const CARL_HEART_CONTACT = { x: CARL_ZONE.x + 3.6, y: CARL_ZONE.y + 0.04 };
 const CARL_HEART_PATH = [
-  // One regular red broken heart rides the exact social-chaos/right-side lane.
-  // It thinks it belongs with the other hearts until the virus catches it near the top.
-  { left: "82%", top: "102%", transform: "translate(-50%, -50%) scale(1.00) rotate(-4deg)", opacity: 0, offset: 0 },
-  { left: "84%", top: "91%", transform: "translate(-50%, -50%) scale(1.00) rotate(2deg)", opacity: .76, offset: 0.10 },
-  { left: "81%", top: "78%", transform: "translate(-50%, -50%) scale(1.00) rotate(-2deg)", opacity: .92, offset: 0.22 },
-  { left: "85%", top: "64%", transform: "translate(-50%, -50%) scale(1.00) rotate(2deg)", opacity: 1, offset: 0.34 },
-  { left: "82%", top: "49%", transform: "translate(-50%, -50%) scale(1.00) rotate(-2deg)", opacity: 1, offset: 0.46 },
-  { left: "84%", top: "34%", transform: "translate(-50%, -50%) scale(1.00) rotate(1deg)", opacity: 1, offset: 0.56 },
-  { left: "82%", top: "20%", transform: "translate(-50%, -50%) scale(1.00) rotate(-1deg)", opacity: 1, offset: 0.635 },
+  // It belongs to the right-side social family: same size, same upright helium rise.
+  { left: "82%", top: "103%", transform: "translate(-50%, -50%) scale(1)", opacity: 0, offset: 0 },
+  { left: "84%", top: "92%", transform: "translate(-50%, -50%) scale(1)", opacity: .78, offset: 0.10 },
+  { left: "81%", top: "79%", transform: "translate(-50%, -50%) scale(1)", opacity: .94, offset: 0.22 },
+  { left: "85%", top: "65%", transform: "translate(-50%, -50%) scale(1)", opacity: 1, offset: 0.34 },
+  { left: "82%", top: "50%", transform: "translate(-50%, -50%) scale(1)", opacity: 1, offset: 0.46 },
+  { left: "84%", top: "35%", transform: "translate(-50%, -50%) scale(1)", opacity: 1, offset: 0.56 },
+  { left: "82%", top: "20%", transform: "translate(-50%, -50%) scale(1)", opacity: 1, offset: 0.635 },
 
-  // Error recognition: violent left flick, not a right-side exit.
-  { left: "81%", top: "15%", transform: "translate(-50%, -50%) scale(1.02) rotate(-8deg)", opacity: 1, offset: 0.655 },
-  { left: "42%", top: "10%", transform: "translate(-50%, -50%) scale(1.03) rotate(-70deg)", opacity: .96, offset: 0.685 },
-  { left: "-16%", top: "12%", transform: "translate(-50%, -50%) scale(1.00) rotate(-148deg)", opacity: 0, offset: 0.725 },
+  // The virus recognizes the error and violently throws it completely left.
+  { left: "81%", top: "15%", transform: "translate(-50%, -50%) scale(1)", opacity: 1, offset: 0.655 },
+  { left: "28%", top: "11%", transform: "translate(-50%, -50%) scale(1)", opacity: .98, offset: 0.682 },
+  { left: "-18%", top: "12%", transform: "translate(-50%, -50%) scale(1)", opacity: 0, offset: 0.710 },
 
-  // Re-entry: bottom-middle, same size, red first; then it withers into the gray PNG as Carl starts eroding.
-  { left: "49%", top: "113%", transform: "translate(-50%, -50%) scale(1.00) rotate(-6deg)", opacity: 0, offset: 0.755 },
-  { left: "48%", top: "101%", transform: "translate(-50%, -50%) scale(1.00) rotate(-4deg)", opacity: .76, offset: 0.800 },
-  { left: "46%", top: "90%", transform: "translate(-50%, -50%) scale(1.00) rotate(-2deg)", opacity: 1, offset: 0.845 },
-  { left: "43%", top: "78%", transform: "translate(-50%, -50%) scale(1.00) rotate(0deg)", opacity: 1, offset: 0.885 },
-  { left: "39%", top: "65%", transform: "translate(-50%, -50%) scale(1.00) rotate(-1deg)", opacity: 1, offset: 0.925 },
-  { left: "34%", top: "52%", transform: "translate(-50%, -50%) scale(1.00) rotate(1deg)", opacity: 1, offset: 0.960 },
-  { left: `${CARL_HEART_CONTACT.x}%`, top: `${CARL_HEART_CONTACT.y}%`, transform: "translate(-50%, -50%) scale(1.00) rotate(-2deg)", opacity: 1, offset: 0.992 },
-  { left: `${CARL_HEART_CONTACT.x}%`, top: `${CARL_HEART_CONTACT.y}%`, transform: "translate(-50%, -50%) scale(1.00) rotate(-2deg)", opacity: 0, offset: 1 }
+  // Re-entry is almost too far left. It rises elegantly and slowly toward Carl while withering gray.
+  { left: "10%", top: "112%", transform: "translate(-50%, -50%) scale(1)", opacity: 0, offset: 0.735 },
+  { left: "11%", top: "101%", transform: "translate(-50%, -50%) scale(1)", opacity: .80, offset: 0.775 },
+  { left: "12%", top: "90%", transform: "translate(-50%, -50%) scale(1)", opacity: 1, offset: 0.820 },
+  { left: "14%", top: "78%", transform: "translate(-50%, -50%) scale(1)", opacity: 1, offset: 0.865 },
+  { left: "17%", top: "65%", transform: "translate(-50%, -50%) scale(1)", opacity: 1, offset: 0.910 },
+  { left: "21%", top: "52%", transform: "translate(-50%, -50%) scale(1)", opacity: 1, offset: 0.952 },
+  { left: `${CARL_HEART_CONTACT.x}%`, top: `${CARL_HEART_CONTACT.y}%`, transform: "translate(-50%, -50%) scale(1)", opacity: 1, offset: 0.992 },
+  { left: `${CARL_HEART_CONTACT.x}%`, top: `${CARL_HEART_CONTACT.y}%`, transform: "translate(-50%, -50%) scale(1)", opacity: 0, offset: 1 }
 ];
 
 function setProgress(value) {
@@ -880,16 +879,16 @@ function releaseDeadHeartTowardCarl() {
   heart.style.opacity = "0";
   // Override old CSS-route experiments from previous builds; this path is owned by JS.
   heart.style.setProperty("animation", "none", "important");
-  heart.style.setProperty("width", "66px", "important");
-  heart.style.setProperty("height", "66px", "important");
+  heart.style.setProperty("width", "32px", "important");
+  heart.style.setProperty("height", "32px", "important");
   heart.innerHTML = `
-    <img class="carl-heart-layer carl-heart-pink" src="${HEART_PINK}" alt="">
+    <span class="carl-heart-layer carl-heart-red" aria-hidden="true">💔</span>
     <img class="carl-heart-layer carl-heart-grey" src="${HEART_GREY}" alt="">
   `;
 
   engagementField.appendChild(heart);
 
-  const flightDuration = 21500;
+  const flightDuration = 24000;
   const flight = heart.animate(CARL_HEART_PATH, {
     duration: flightDuration,
     easing: "cubic-bezier(.28,.54,.18,1)",
@@ -902,15 +901,15 @@ function releaseDeadHeartTowardCarl() {
     carl = profileField.querySelector(".profile.carl") || spawnCarl();
     carlSeen = true;
     if (carl && carl.parentNode) carl.classList.add("carl-heart-eroding");
-  }, 16250);
+  }, 17650);
 
-  // The top-right fan rejects it. This is when the pink heart becomes the gray broken-heart PNG.
+  // The fade begins the instant it re-enters at the bottom-left; Carl starts eroding at the same moment.
   setTimeout(() => {
     if (!heart.parentNode) return;
     heart.classList.add("off-course", "draining", "grey-taking-over");
     carl = carl || profileField.querySelector(".profile.carl") || spawnCarl();
     if (carl && carl.parentNode) carl.classList.add("carl-heart-eroding");
-  }, 17250);
+  }, 17650);
 
   setTimeout(() => {
     if (!heart.parentNode) return;
@@ -918,14 +917,14 @@ function releaseDeadHeartTowardCarl() {
     heart.classList.add("dead-stage");
     carl = carl || profileField.querySelector(".profile.carl") || spawnCarl();
     if (carl && carl.parentNode) carl.classList.add("carl-heart-eroded");
-  }, 18900);
+  }, 21600);
 
   // Static-zap contact: edge of the broken heart enters Carl's ring and the circuit completes.
   setTimeout(() => {
     carl = carl || profileField.querySelector(".profile.carl") || spawnCarl();
     if (heart && heart.parentNode) heart.remove();
     triggerCarl(carl);
-  }, 20850);
+  }, 23700);
 
   flight.onfinish = () => {
     if (heart && heart.parentNode) heart.remove();
