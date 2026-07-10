@@ -382,29 +382,14 @@ const CARL_ZONE = { x: 25.6, y: 34.18 };
 const CARL_HEART_START = { x: 82, y: 98 };
 const CARL_HEART_CONTACT = { x: CARL_ZONE.x + 3.6, y: CARL_ZONE.y + 0.04 };
 const CARL_HEART_PATH = [
-  // It belongs to the right-side social family: same size, same upright helium rise.
-  { left: "82%", top: "103%", transform: "translate(-50%, -50%) scale(1)", opacity: 0, offset: 0 },
-  { left: "84%", top: "92%", transform: "translate(-50%, -50%) scale(1)", opacity: .78, offset: 0.10 },
-  { left: "81%", top: "79%", transform: "translate(-50%, -50%) scale(1)", opacity: .94, offset: 0.22 },
-  { left: "85%", top: "65%", transform: "translate(-50%, -50%) scale(1)", opacity: 1, offset: 0.34 },
-  { left: "82%", top: "50%", transform: "translate(-50%, -50%) scale(1)", opacity: 1, offset: 0.46 },
-  { left: "84%", top: "35%", transform: "translate(-50%, -50%) scale(1)", opacity: 1, offset: 0.56 },
-  { left: "82%", top: "20%", transform: "translate(-50%, -50%) scale(1)", opacity: 1, offset: 0.635 },
-
-  // The virus recognizes the error and violently throws it completely left.
-  { left: "81%", top: "15%", transform: "translate(-50%, -50%) scale(1)", opacity: 1, offset: 0.655 },
-  { left: "28%", top: "11%", transform: "translate(-50%, -50%) scale(1)", opacity: .98, offset: 0.682 },
-  { left: "-18%", top: "12%", transform: "translate(-50%, -50%) scale(1)", opacity: 0, offset: 0.710 },
-
-  // Re-entry is almost too far left. It rises elegantly and slowly toward Carl while withering gray.
-  { left: "10%", top: "112%", transform: "translate(-50%, -50%) scale(1)", opacity: 0, offset: 0.735 },
-  { left: "11%", top: "101%", transform: "translate(-50%, -50%) scale(1)", opacity: .80, offset: 0.775 },
-  { left: "12%", top: "90%", transform: "translate(-50%, -50%) scale(1)", opacity: 1, offset: 0.820 },
-  { left: "14%", top: "78%", transform: "translate(-50%, -50%) scale(1)", opacity: 1, offset: 0.865 },
-  { left: "17%", top: "65%", transform: "translate(-50%, -50%) scale(1)", opacity: 1, offset: 0.910 },
-  { left: "21%", top: "52%", transform: "translate(-50%, -50%) scale(1)", opacity: 1, offset: 0.952 },
-  { left: `${CARL_HEART_CONTACT.x}%`, top: `${CARL_HEART_CONTACT.y}%`, transform: "translate(-50%, -50%) scale(1)", opacity: 1, offset: 0.992 },
-  { left: `${CARL_HEART_CONTACT.x}%`, top: `${CARL_HEART_CONTACT.y}%`, transform: "translate(-50%, -50%) scale(1)", opacity: 0, offset: 1 }
+  { left:"82%", top:"103%", transform:"translate(-50%,-50%) scale(1)", opacity:0, offset:0 },
+  { left:"84%", top:"75%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.25 },
+  { left:"82%", top:"24%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.48 },
+  { left:"-18%", top:"18%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.58 },
+  { left:"12%", top:"92%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.70 },
+  { left:"23%", top:"66%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.84 },
+  { left:`${CARL_HEART_CONTACT.x}%`, top:`${CARL_HEART_CONTACT.y}%`, transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.98 },
+  { left:`${CARL_HEART_CONTACT.x}%`, top:`${CARL_HEART_CONTACT.y}%`, transform:"translate(-50%,-50%) scale(1.4)", opacity:0, offset:1 }
 ];
 
 function setProgress(value) {
