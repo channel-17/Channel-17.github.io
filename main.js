@@ -382,14 +382,26 @@ const CARL_ZONE = { x: 25.6, y: 34.18 };
 const CARL_HEART_START = { x: 82, y: 98 };
 const CARL_HEART_CONTACT = { x: CARL_ZONE.x + 3.6, y: CARL_ZONE.y + 0.04 };
 const CARL_HEART_PATH = [
+  // It belongs to the social stream first: same right-side balloon rise, same scale, no mechanical turns.
   { left:"82%", top:"103%", transform:"translate(-50%,-50%) scale(1)", opacity:0, offset:0 },
-  { left:"84%", top:"75%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.25 },
-  { left:"82%", top:"24%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.48 },
-  { left:"-18%", top:"18%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.58 },
-  { left:"12%", top:"92%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.70 },
-  { left:"23%", top:"66%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.84 },
-  { left:`${CARL_HEART_CONTACT.x}%`, top:`${CARL_HEART_CONTACT.y}%`, transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.98 },
-  { left:`${CARL_HEART_CONTACT.x}%`, top:`${CARL_HEART_CONTACT.y}%`, transform:"translate(-50%,-50%) scale(1.4)", opacity:0, offset:1 }
+  { left:"83%", top:"88%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.08 },
+  { left:"81%", top:"64%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.22 },
+  { left:"84%", top:"39%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.35 },
+  { left:"82%", top:"21%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.44 },
+
+  // Soft system correction: a wind push carries it left instead of a hard mechanical tip.
+  { left:"60%", top:"18%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.50 },
+  { left:"24%", top:"20%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.56 },
+  { left:"-12%", top:"29%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.61 },
+
+  // It overcorrects, circles off-screen, then visibly touches the bottom before the color change begins.
+  { left:"-8%", top:"104%", transform:"translate(-50%,-50%) scale(1)", opacity:0, offset:.68 },
+  { left:"14%", top:"99%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.72 },
+  { left:"15%", top:"94%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.77 },
+  { left:"18%", top:"76%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.84 },
+  { left:"21%", top:"55%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.91 },
+  { left:`${CARL_HEART_CONTACT.x}%`, top:`${CARL_HEART_CONTACT.y}%`, transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.985 },
+  { left:`${CARL_HEART_CONTACT.x}%`, top:`${CARL_HEART_CONTACT.y}%`, transform:"translate(-50%,-50%) scale(1.42)", opacity:0, offset:1 }
 ];
 
 function setProgress(value) {
@@ -880,7 +892,7 @@ function releaseDeadHeartTowardCarl() {
 
   engagementField.appendChild(heart);
 
-  const flightDuration = 24000;
+  const flightDuration = 21400;
   const flight = heart.animate(CARL_HEART_PATH, {
     duration: flightDuration,
     easing: "cubic-bezier(.28,.54,.18,1)",
@@ -893,15 +905,15 @@ function releaseDeadHeartTowardCarl() {
     carl = profileField.querySelector(".profile.carl") || spawnCarl();
     carlSeen = true;
     if (carl && carl.parentNode) carl.classList.add("carl-heart-eroding");
-  }, 17650);
+  }, 15400);
 
-  // The fade begins the instant it re-enters at the bottom-left; Carl starts eroding at the same moment.
+  // Let the red heart visibly touch the bottom first. Then bleed gradually into the gray PNG on the climb.
   setTimeout(() => {
     if (!heart.parentNode) return;
     heart.classList.add("off-course", "draining", "grey-taking-over");
     carl = carl || profileField.querySelector(".profile.carl") || spawnCarl();
     if (carl && carl.parentNode) carl.classList.add("carl-heart-eroding");
-  }, 17650);
+  }, 16500);
 
   setTimeout(() => {
     if (!heart.parentNode) return;
@@ -909,14 +921,14 @@ function releaseDeadHeartTowardCarl() {
     heart.classList.add("dead-stage");
     carl = carl || profileField.querySelector(".profile.carl") || spawnCarl();
     if (carl && carl.parentNode) carl.classList.add("carl-heart-eroded");
-  }, 21600);
+  }, 18800);
 
-  // Static-zap contact: edge of the broken heart enters Carl's ring and the circuit completes.
+  // Contact happens well before 100%: balloon pops, then Carl gives three readable red-ring flashes.
   setTimeout(() => {
     carl = carl || profileField.querySelector(".profile.carl") || spawnCarl();
     if (heart && heart.parentNode) heart.remove();
     triggerCarl(carl);
-  }, 23700);
+  }, 21000);
 
   flight.onfinish = () => {
     if (heart && heart.parentNode) heart.remove();
