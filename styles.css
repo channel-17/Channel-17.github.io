@@ -8292,3 +8292,77 @@ body {
 }
 
 /* heart57 visual patch */
+
+/* =========================================================
+   BUILD 59 — CARL HEART STORY / STATIC LOADER LOCK
+   Scope only: graceful heart route, bottom-visible red→gray change,
+   no loader-avatar pulsing, and early three-flash RROD.
+========================================================= */
+
+/* Loader profiles hit once and become dead weight. No breathing/pulsing after impact. */
+.profile.loader-cover.loader-slam,
+.profile.carl.carl-wrong-place.loader-final-slam,
+.profile.carl.carl-zone-anchor.loader-final-slam {
+  animation: loaderAvatarSlam 0.74s cubic-bezier(0.08, 0.82, 0.10, 1) forwards !important;
+}
+
+/* The special heart is the same apparent size on both layers. */
+.engage.carl-trigger-heart.asset-heart.matrix-error-heart,
+.carl-trigger-heart.asset-heart.matrix-error-heart {
+  width: 34px !important;
+  height: 34px !important;
+  font-size: 26px !important;
+  overflow: visible !important;
+}
+.carl-trigger-heart.matrix-error-heart .carl-heart-layer {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 34px !important;
+  height: 34px !important;
+  transform: none !important;
+}
+.carl-trigger-heart.matrix-error-heart .carl-heart-red {
+  display: grid !important;
+  place-items: center !important;
+  font-size: 26px !important;
+  line-height: 34px !important;
+  opacity: 1 !important;
+  transition: opacity 2.45s ease, filter 2.45s ease !important;
+}
+.carl-trigger-heart.matrix-error-heart .carl-heart-grey {
+  object-fit: contain !important;
+  opacity: 0 !important;
+  transition: opacity 2.45s ease, filter 2.45s ease !important;
+}
+.carl-trigger-heart.matrix-error-heart.grey-taking-over .carl-heart-red {
+  opacity: .18 !important;
+  filter: grayscale(.88) saturate(.18) brightness(.72) !important;
+}
+.carl-trigger-heart.matrix-error-heart.grey-taking-over .carl-heart-grey {
+  opacity: .88 !important;
+}
+.carl-trigger-heart.matrix-error-heart.dead-stage .carl-heart-red {
+  opacity: 0 !important;
+}
+.carl-trigger-heart.matrix-error-heart.dead-stage .carl-heart-grey {
+  opacity: 1 !important;
+}
+
+/* Three unmistakable old-school red-ring flashes, no X, no symbol. */
+.profile.carl .carl-rrod-ring {
+  inset: -1px !important;
+  border-width: 4px !important;
+  animation: carlRrodThreeClean 0.72s steps(1, end) 3 both !important;
+}
+@keyframes carlRrodThreeClean {
+  0%, 45% {
+    opacity: 1;
+    border-color: #ff1d25;
+    box-shadow: 0 0 0 2px rgba(255,29,37,.78), 0 0 14px rgba(255,29,37,.92);
+  }
+  46%, 100% {
+    opacity: 0;
+    border-color: transparent;
+    box-shadow: none;
+  }
+}
