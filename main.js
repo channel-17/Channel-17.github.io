@@ -382,26 +382,37 @@ const CARL_ZONE = { x: 25.6, y: 34.18 };
 const CARL_HEART_START = { x: 82, y: 98 };
 const CARL_HEART_CONTACT = { x: CARL_ZONE.x + 3.6, y: CARL_ZONE.y + 0.04 };
 const CARL_HEART_PATH = [
-  // It belongs to the social stream first: same right-side balloon rise, same scale, no mechanical turns.
+  // SAME FAMILY AS THE SOCIAL HEARTS: slow helium rise up the right lane.
   { left:"82%", top:"103%", transform:"translate(-50%,-50%) scale(1)", opacity:0, offset:0 },
-  { left:"83%", top:"88%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.08 },
-  { left:"81%", top:"64%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.22 },
-  { left:"84%", top:"39%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.35 },
-  { left:"82%", top:"21%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.44 },
+  { left:"83%", top:"91%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.06 },
+  { left:"81%", top:"75%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.15 },
+  { left:"84%", top:"58%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.24 },
+  { left:"82%", top:"40%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.33 },
+  { left:"84%", top:"24%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.41 },
+  { left:"82%", top:"15%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.46 },
 
-  // Soft system correction: a wind push carries it left instead of a hard mechanical tip.
-  { left:"60%", top:"18%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.50 },
-  { left:"24%", top:"20%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.56 },
-  { left:"-12%", top:"29%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.61 },
+  // SOFT SYSTEM CORRECTION: wind catches it near the top and carries it left.
+  { left:"75%", top:"15%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.49 },
+  { left:"61%", top:"16%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.53 },
+  { left:"44%", top:"19%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.57 },
+  { left:"25%", top:"24%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.61 },
+  { left:"7%", top:"31%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.65 },
+  { left:"-10%", top:"42%", transform:"translate(-50%,-50%) scale(1)", opacity:.98, offset:.69 },
 
-  // It overcorrects, circles off-screen, then visibly touches the bottom before the color change begins.
-  { left:"-8%", top:"104%", transform:"translate(-50%,-50%) scale(1)", opacity:0, offset:.68 },
-  { left:"14%", top:"99%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.72 },
-  { left:"15%", top:"94%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.77 },
-  { left:"18%", top:"76%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.84 },
-  { left:"21%", top:"55%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.91 },
-  { left:`${CARL_HEART_CONTACT.x}%`, top:`${CARL_HEART_CONTACT.y}%`, transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.985 },
-  { left:`${CARL_HEART_CONTACT.x}%`, top:`${CARL_HEART_CONTACT.y}%`, transform:"translate(-50%,-50%) scale(1.42)", opacity:0, offset:1 }
+  // BIG OUTSIDE CURL: around the left edge and back underneath the screen.
+  { left:"-13%", top:"63%", transform:"translate(-50%,-50%) scale(1)", opacity:.92, offset:.73 },
+  { left:"-9%", top:"84%", transform:"translate(-50%,-50%) scale(1)", opacity:.72, offset:.77 },
+  { left:"10%", top:"105%", transform:"translate(-50%,-50%) scale(1)", opacity:0, offset:.80 },
+
+  // RE-ENTRY: red at the bottom, then a smooth climb toward Carl.
+  { left:"47%", top:"104%", transform:"translate(-50%,-50%) scale(1)", opacity:0, offset:.82 },
+  { left:"45%", top:"97%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.85 },
+  { left:"42%", top:"88%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.88 },
+  { left:"38%", top:"76%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.91 },
+  { left:"34%", top:"63%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.94 },
+  { left:"30%", top:"49%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.965 },
+  { left:`${CARL_HEART_CONTACT.x}%`, top:`${CARL_HEART_CONTACT.y}%`, transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.995 },
+  { left:`${CARL_HEART_CONTACT.x}%`, top:`${CARL_HEART_CONTACT.y}%`, transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:1 }
 ];
 
 function setProgress(value) {
@@ -881,7 +892,6 @@ function releaseDeadHeartTowardCarl() {
   heart.style.left = `${CARL_HEART_START.x}%`;
   heart.style.top = `${CARL_HEART_START.y}%`;
   heart.style.opacity = "0";
-  // Override old CSS-route experiments from previous builds; this path is owned by JS.
   heart.style.setProperty("animation", "none", "important");
   heart.style.setProperty("width", "32px", "important");
   heart.style.setProperty("height", "32px", "important");
@@ -892,43 +902,44 @@ function releaseDeadHeartTowardCarl() {
 
   engagementField.appendChild(heart);
 
-  const flightDuration = 21400;
+  const flightDuration = 24000;
   const flight = heart.animate(CARL_HEART_PATH, {
     duration: flightDuration,
-    easing: "cubic-bezier(.28,.54,.18,1)",
+    easing: "cubic-bezier(.32,.58,.20,1)",
     fill: "forwards"
   });
 
-  // Carl lands as one normal avatar while the heart is still only background smoke.
+  // Carl is already the final loader avatar. Resolve him early, but do not spotlight him.
   setTimeout(() => {
     if (!heart.parentNode) return;
     carl = profileField.querySelector(".profile.carl") || spawnCarl();
     carlSeen = true;
-    if (carl && carl.parentNode) carl.classList.add("carl-heart-eroding");
-  }, 15400);
+  }, 11200);
 
-  // Let the red heart visibly touch the bottom first. Then bleed gradually into the gray PNG on the climb.
+  // The heart re-enters at the bottom still red. After a visible beat, the gray PNG bleeds in.
   setTimeout(() => {
     if (!heart.parentNode) return;
-    heart.classList.add("off-course", "draining", "grey-taking-over");
-    carl = carl || profileField.querySelector(".profile.carl") || spawnCarl();
-    if (carl && carl.parentNode) carl.classList.add("carl-heart-eroding");
-  }, 16500);
+    heart.classList.add("grey-taking-over");
+  }, 20400);
 
+  // Complete the color change well before Carl contact.
   setTimeout(() => {
     if (!heart.parentNode) return;
-    heart.classList.remove("pink-stage", "draining");
+    heart.classList.remove("pink-stage");
     heart.classList.add("dead-stage");
-    carl = carl || profileField.querySelector(".profile.carl") || spawnCarl();
-    if (carl && carl.parentNode) carl.classList.add("carl-heart-eroded");
-  }, 18800);
+  }, 22200);
 
-  // Contact happens well before 100%: balloon pops, then Carl gives three readable red-ring flashes.
+  // Pixel touches pixel: the gray heart pops and Carl gives three clean RROD flashes.
   setTimeout(() => {
     carl = carl || profileField.querySelector(".profile.carl") || spawnCarl();
-    if (heart && heart.parentNode) heart.remove();
+    if (heart && heart.parentNode) {
+      heart.classList.add("carl-heart-pop");
+      setTimeout(() => {
+        if (heart && heart.parentNode) heart.remove();
+      }, 280);
+    }
     triggerCarl(carl);
-  }, 21000);
+  }, 23880);
 
   flight.onfinish = () => {
     if (heart && heart.parentNode) heart.remove();
