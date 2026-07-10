@@ -8588,3 +8588,61 @@ body {
   70%  { opacity: .48; transform: scale(1.72); filter: brightness(1.05); }
   100% { opacity: 0; transform: scale(.18); filter: brightness(.68); }
 }
+
+/* =========================================================
+   BUILD 63 — 89% GREY KRYPTONITE + ELECTRICAL CONTACT POP
+   Scope only: visible red→heart.grey.PNG handoff at 89%,
+   thin blue electrical edge snap, then Carl's red 1-2-3 ring.
+========================================================= */
+.carl-trigger-heart.matrix-error-heart.grey-at-eighty-nine .carl-heart-layer {
+  transition:
+    opacity 1.05s cubic-bezier(.20,.72,.18,1),
+    filter 1.05s cubic-bezier(.20,.72,.18,1),
+    transform 1.05s cubic-bezier(.20,.72,.18,1) !important;
+}
+
+.carl-trigger-heart.matrix-error-heart.grey-at-eighty-nine .carl-heart-red {
+  opacity: 0 !important;
+  filter: grayscale(1) saturate(0) brightness(.58) !important;
+}
+
+.carl-trigger-heart.matrix-error-heart.grey-at-eighty-nine .carl-heart-grey,
+.carl-trigger-heart.matrix-error-heart.dead-stage .carl-heart-grey {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: scale(2.72) !important;
+  filter:
+    grayscale(1)
+    brightness(.92)
+    contrast(1.18)
+    drop-shadow(0 0 5px rgba(235,235,235,.13)) !important;
+}
+
+.carl-zap-spark.carl-contact-pop {
+  width: 32px !important;
+  height: 32px !important;
+  border: 1px solid rgba(105,190,255,.58);
+  border-radius: 50%;
+  background:
+    linear-gradient(36deg, transparent 0 43%, rgba(238,249,255,.98) 44% 48%, rgba(255,29,37,.95) 49% 54%, transparent 55%),
+    linear-gradient(-28deg, transparent 0 45%, rgba(135,211,255,.72) 46% 48%, rgba(255,255,255,.94) 49% 52%, transparent 53%) !important;
+  box-shadow:
+    0 0 0 1px rgba(89,177,255,.20),
+    0 0 8px rgba(95,188,255,.38),
+    0 0 12px rgba(255,29,37,.52) !important;
+  filter: none !important;
+  animation: c17ElectricalContactPop .42s steps(3,end) forwards !important;
+}
+
+@keyframes c17ElectricalContactPop {
+  0%   { opacity: 0; transform: translate(-50%,-50%) scale(.18) rotate(-8deg); }
+  20%  { opacity: 1; transform: translate(-50%,-50%) scale(1.08) rotate(3deg); }
+  48%  { opacity: .95; transform: translate(-50%,-50%) scale(.82) rotate(-2deg); }
+  72%  { opacity: .68; transform: translate(-50%,-50%) scale(1.22) rotate(5deg); }
+  100% { opacity: 0; transform: translate(-50%,-50%) scale(1.58) rotate(8deg); }
+}
+
+.profile.carl .carl-rrod-ring {
+  border-width: 3px !important;
+  animation: c17CarlRrod123 1.50s steps(1,end) 1 both !important;
+}
