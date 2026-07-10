@@ -924,14 +924,14 @@ function releaseDeadHeartTowardCarl() {
   setTimeout(() => {
     if (!heart.parentNode) return;
     heart.classList.add("grey-taking-over");
-  }, 20400);
+  }, 20150);
 
   // Finish the emotional change well before Carl. Same footprint, different heart.
   setTimeout(() => {
     if (!heart.parentNode) return;
     heart.classList.remove("pink-stage");
     heart.classList.add("dead-stage");
-  }, 22000);
+  }, 21650);
 
   const popOnPixelContact = () => {
     if (contactHandled || !heart.isConnected) return;
