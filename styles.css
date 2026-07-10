@@ -8646,3 +8646,127 @@ body {
   border-width: 3px !important;
   animation: c17CarlRrod123 1.50s steps(1,end) 1 both !important;
 }
+
+
+/* =========================================================
+   BUILD 64 — VISIBLE 89% GREY HANDOFF + CLEAN ELECTRICAL CONTACT
+   Surgical override: slightly smaller story heart, instant readable PNG swap,
+   compact edge snap, then Carl's three red ring flickers.
+========================================================= */
+.carl-trigger-heart.matrix-error-heart {
+  width: 38px !important;
+  height: 38px !important;
+}
+
+.carl-trigger-heart.matrix-error-heart .carl-heart-layer {
+  transition: opacity .34s ease-out, filter .34s ease-out, transform .34s ease-out !important;
+}
+
+.carl-trigger-heart.matrix-error-heart .carl-heart-red {
+  font-size: 31px !important;
+  line-height: 38px !important;
+}
+
+.carl-trigger-heart.matrix-error-heart.grey-at-eighty-nine .carl-heart-red,
+.carl-trigger-heart.matrix-error-heart.dead-stage .carl-heart-red {
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
+
+.carl-trigger-heart.matrix-error-heart.grey-at-eighty-nine .carl-heart-grey,
+.carl-trigger-heart.matrix-error-heart.dead-stage .carl-heart-grey {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: scale(2.52) !important;
+  filter: grayscale(1) brightness(.96) contrast(1.20) drop-shadow(0 0 5px rgba(236,242,248,.16)) !important;
+}
+
+.carl-trigger-heart.matrix-error-heart.carl-heart-pop .carl-heart-grey {
+  animation: c17GreyHeartContactPop64 .24s cubic-bezier(.12,.78,.18,1) forwards !important;
+}
+
+@keyframes c17GreyHeartContactPop64 {
+  0%   { opacity: 1; transform: scale(2.52); filter: brightness(.96); }
+  28%  { opacity: 1; transform: scale(3.18); filter: brightness(1.42); }
+  58%  { opacity: .72; transform: scale(2.05); filter: brightness(1.16); }
+  100% { opacity: 0; transform: scale(.12); filter: brightness(.62); }
+}
+
+.carl-zap-spark.carl-contact-pop {
+  width: 34px !important;
+  height: 34px !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: none !important;
+  box-shadow: none !important;
+  overflow: visible !important;
+  animation: c17ContactSnap64 .34s steps(3,end) forwards !important;
+}
+
+.carl-zap-spark.carl-contact-pop::before,
+.carl-zap-spark.carl-contact-pop::after,
+.carl-zap-spark.carl-contact-pop .carl-zap-core,
+.carl-zap-spark.carl-contact-pop .carl-zap-arc {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  pointer-events: none;
+  transform-origin: 0 50%;
+}
+
+.carl-zap-spark.carl-contact-pop::before {
+  width: 29px;
+  height: 1px;
+  background: rgba(235,249,255,.98);
+  box-shadow: 0 0 4px rgba(117,204,255,.70), 0 0 7px rgba(255,29,37,.38);
+  transform: translate(-50%,-50%) rotate(-22deg);
+}
+
+.carl-zap-spark.carl-contact-pop::after {
+  width: 23px;
+  height: 1px;
+  background: rgba(255,43,48,.92);
+  box-shadow: 0 0 5px rgba(255,29,37,.62);
+  transform: translate(-50%,-50%) rotate(31deg);
+}
+
+.carl-zap-spark.carl-contact-pop .carl-zap-core {
+  width: 7px;
+  height: 7px;
+  border: 1px solid rgba(112,198,255,.64);
+  border-radius: 50%;
+  box-shadow: 0 0 5px rgba(112,198,255,.52), 0 0 8px rgba(255,255,255,.30);
+  transform: translate(-50%,-50%);
+}
+
+.carl-zap-spark.carl-contact-pop .carl-zap-arc {
+  width: 18px;
+  height: 8px;
+  border-top: 1px solid rgba(125,205,255,.64);
+  border-radius: 50%;
+  transform: translate(-50%,-50%) rotate(8deg);
+  filter: drop-shadow(0 0 3px rgba(125,205,255,.46));
+}
+
+@keyframes c17ContactSnap64 {
+  0%   { opacity: 0; transform: translate(-50%,-50%) scale(.30); }
+  22%  { opacity: 1; transform: translate(-50%,-50%) scale(1.05); }
+  58%  { opacity: .88; transform: translate(-50%,-50%) scale(.84); }
+  100% { opacity: 0; transform: translate(-50%,-50%) scale(1.34); }
+}
+
+.profile.carl .carl-rrod-ring {
+  border-width: 2px !important;
+  box-shadow: 0 0 7px rgba(255,29,37,.72), inset 0 0 4px rgba(255,29,37,.34) !important;
+  animation: c17CarlRrod123_64 1.34s steps(1,end) 1 both !important;
+}
+
+@keyframes c17CarlRrod123_64 {
+  0%, 10%   { opacity: 1; border-color: #ff1d25; }
+  11%, 25%  { opacity: 0; border-color: transparent; }
+  26%, 40%  { opacity: 1; border-color: #ff1d25; }
+  41%, 56%  { opacity: 0; border-color: transparent; }
+  57%, 73%  { opacity: 1; border-color: #ff1d25; }
+  74%, 100% { opacity: 0; border-color: transparent; }
+}
