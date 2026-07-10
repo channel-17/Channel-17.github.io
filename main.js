@@ -391,26 +391,26 @@ const CARL_HEART_PATH = [
   { left:"84%", top:"24%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.41 },
   { left:"82%", top:"15%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.46 },
 
-  // SOFT SYSTEM CORRECTION: wind catches it near the top and carries it left.
-  { left:"75%", top:"15%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.49 },
-  { left:"61%", top:"16%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.53 },
-  { left:"44%", top:"19%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.57 },
-  { left:"25%", top:"24%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.61 },
-  { left:"7%", top:"31%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.65 },
-  { left:"-10%", top:"42%", transform:"translate(-50%,-50%) scale(1)", opacity:.98, offset:.69 },
+  // SOFT SYSTEM CORRECTION: a believable wind push from the right, not a mechanical corner.
+  { left:"74%", top:"15%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.485 },
+  { left:"58%", top:"17%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.515 },
+  { left:"38%", top:"21%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.545 },
+  { left:"17%", top:"28%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.575 },
+  { left:"-8%", top:"39%", transform:"translate(-50%,-50%) scale(1)", opacity:.98, offset:.605 },
 
-  // BIG OUTSIDE CURL: around the left edge and back underneath the screen.
-  { left:"-13%", top:"63%", transform:"translate(-50%,-50%) scale(1)", opacity:.92, offset:.73 },
-  { left:"-9%", top:"84%", transform:"translate(-50%,-50%) scale(1)", opacity:.72, offset:.77 },
-  { left:"10%", top:"105%", transform:"translate(-50%,-50%) scale(1)", opacity:0, offset:.80 },
+  // OUTSIDE CURL: quickly clears the left edge, loops below, and returns visibly before 89%.
+  { left:"-12%", top:"62%", transform:"translate(-50%,-50%) scale(1)", opacity:.86, offset:.625 },
+  { left:"-5%", top:"85%", transform:"translate(-50%,-50%) scale(1)", opacity:.48, offset:.645 },
+  { left:"14%", top:"105%", transform:"translate(-50%,-50%) scale(1)", opacity:0, offset:.66 },
 
-  // RE-ENTRY: red at the bottom, then a smooth climb toward Carl.
-  { left:"47%", top:"104%", transform:"translate(-50%,-50%) scale(1)", opacity:0, offset:.82 },
-  { left:"45%", top:"97%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.85 },
-  { left:"42%", top:"88%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.88 },
-  { left:"38%", top:"76%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.91 },
-  { left:"34%", top:"63%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.94 },
-  { left:"30%", top:"49%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.965 },
+  // RE-ENTRY: clearly red at the bottom-left, then the 89% gray handoff is visible on-screen.
+  { left:"43%", top:"104%", transform:"translate(-50%,-50%) scale(1)", opacity:0, offset:.675 },
+  { left:"42%", top:"97%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.695 },
+  { left:"40%", top:"89%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.73 },
+  { left:"37%", top:"78%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.78 },
+  { left:"34%", top:"66%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.84 },
+  { left:"31%", top:"53%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.90 },
+  { left:"29.7%", top:"42%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.95 },
   { left:`${CARL_HEART_CONTACT.x}%`, top:`${CARL_HEART_CONTACT.y}%`, transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.995 },
   { left:`${CARL_HEART_CONTACT.x}%`, top:`${CARL_HEART_CONTACT.y}%`, transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:1 }
 ];
@@ -895,8 +895,8 @@ function releaseDeadHeartTowardCarl() {
   heart.style.top = `${CARL_HEART_START.y}%`;
   heart.style.opacity = "0";
   heart.style.setProperty("animation", "none", "important");
-  heart.style.setProperty("width", "42px", "important");
-  heart.style.setProperty("height", "42px", "important");
+  heart.style.setProperty("width", "38px", "important");
+  heart.style.setProperty("height", "38px", "important");
   heart.innerHTML = `
     <span class="carl-heart-layer carl-heart-red" aria-hidden="true">💔</span>
     <img class="carl-heart-layer carl-heart-grey" src="${HEART_GREY}" alt="">
@@ -930,13 +930,9 @@ function releaseDeadHeartTowardCarl() {
 
     if (!greySwapStarted && progress >= 89) {
       greySwapStarted = true;
-      heart.classList.add("grey-taking-over", "grey-at-eighty-nine");
-    }
-
-    if (greySwapStarted && !greySwapFinished && progress >= 91) {
       greySwapFinished = true;
       heart.classList.remove("pink-stage");
-      heart.classList.add("dead-stage");
+      heart.classList.add("grey-taking-over", "grey-at-eighty-nine", "dead-stage");
     }
 
     requestAnimationFrame(syncGreyHeartToProgress);
@@ -951,7 +947,13 @@ function releaseDeadHeartTowardCarl() {
     if (carl && carl.isConnected) {
       const h = heart.getBoundingClientRect();
       const c = carl.getBoundingClientRect();
-      const overlaps = h.right >= c.left && h.left <= c.right && h.bottom >= c.top && h.top <= c.bottom;
+      const heartCX = h.left + h.width / 2;
+      const heartCY = h.top + h.height / 2;
+      const carlCX = c.left + c.width / 2;
+      const carlCY = c.top + c.height / 2;
+      const distance = Math.hypot(heartCX - carlCX, heartCY - carlCY);
+      const contactDistance = (Math.min(c.width, c.height) / 2) + 15;
+      const overlaps = distance <= contactDistance;
 
       if (overlaps) {
         contactHandled = true;
@@ -1001,6 +1003,7 @@ function releaseDeadHeartTowardCarl() {
 function spawnCarlZap(viewportX, viewportY) {
   const zap = document.createElement("div");
   zap.className = "carl-zap-spark carl-contact-pop";
+  zap.innerHTML = `<span class="carl-zap-core"></span><span class="carl-zap-arc"></span>`;
 
   const fieldRect = impactField.getBoundingClientRect();
   const x = Number.isFinite(viewportX) ? viewportX - fieldRect.left : fieldRect.width * ((CARL_ZONE.x - 6.2) / 100);
