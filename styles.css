@@ -8482,3 +8482,65 @@ body {
     box-shadow: none;
   }
 }
+
+/* C17 BUILD61 — red broken balloon visibly becomes the user's gray PNG,
+   then pops on literal pixel contact with Carl. Surgical override only. */
+.carl-trigger-heart.matrix-error-heart {
+  width: 42px !important;
+  height: 42px !important;
+  overflow: visible !important;
+}
+
+.carl-trigger-heart.matrix-error-heart .carl-heart-layer {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  display: block !important;
+  object-fit: contain !important;
+  transform-origin: 50% 50% !important;
+  transition:
+    opacity 1.35s cubic-bezier(.22,.70,.18,1),
+    filter 1.35s cubic-bezier(.22,.70,.18,1),
+    transform 1.35s cubic-bezier(.22,.70,.18,1) !important;
+}
+
+.carl-trigger-heart.matrix-error-heart .carl-heart-red {
+  opacity: 1 !important;
+  font-size: 34px !important;
+  line-height: 42px !important;
+  text-align: center !important;
+  filter: drop-shadow(0 0 6px rgba(255,45,50,.25)) !important;
+}
+
+.carl-trigger-heart.matrix-error-heart .carl-heart-grey {
+  opacity: 0 !important;
+  transform: scale(1) !important;
+  filter: grayscale(1) brightness(.78) contrast(1.10) !important;
+}
+
+.carl-trigger-heart.matrix-error-heart.grey-taking-over .carl-heart-red {
+  opacity: .12 !important;
+  filter: grayscale(.92) saturate(.12) brightness(.62) !important;
+  transform: scale(.98) !important;
+}
+
+.carl-trigger-heart.matrix-error-heart.grey-taking-over .carl-heart-grey {
+  opacity: .88 !important;
+  transform: scale(1) !important;
+  filter: grayscale(1) brightness(.86) contrast(1.14) drop-shadow(0 0 5px rgba(235,235,235,.10)) !important;
+}
+
+.carl-trigger-heart.matrix-error-heart.dead-stage .carl-heart-red {
+  opacity: 0 !important;
+}
+
+.carl-trigger-heart.matrix-error-heart.dead-stage .carl-heart-grey {
+  opacity: 1 !important;
+  transform: scale(1) !important;
+  filter: grayscale(1) brightness(.90) contrast(1.18) drop-shadow(0 0 6px rgba(235,235,235,.12)) !important;
+}
+
+.carl-trigger-heart.matrix-error-heart.carl-heart-pop .carl-heart-layer {
+  animation: c17HeartBalloonPop .28s cubic-bezier(.10,.72,.18,1) forwards !important;
+}
