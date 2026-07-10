@@ -8770,3 +8770,54 @@ body {
   57%, 73%  { opacity: 1; border-color: #ff1d25; }
   74%, 100% { opacity: 0; border-color: transparent; }
 }
+
+
+/* =========================================================
+   BUILD 65 — SOFT REJECTION LOOP + EARLY VISIBLE GREY RETURN
+   Scope: story-heart size, red bottom-left re-entry, visible grey crossfade.
+========================================================= */
+.carl-trigger-heart.matrix-error-heart {
+  width: 34px !important;
+  height: 34px !important;
+}
+
+.carl-trigger-heart.matrix-error-heart .carl-heart-red {
+  font-size: 28px !important;
+  line-height: 34px !important;
+}
+
+.carl-trigger-heart.matrix-error-heart .carl-heart-layer {
+  transition:
+    opacity .92s cubic-bezier(.22,.70,.18,1),
+    filter .92s cubic-bezier(.22,.70,.18,1),
+    transform .92s cubic-bezier(.22,.70,.18,1) !important;
+}
+
+.carl-trigger-heart.matrix-error-heart.grey-return-visible .carl-heart-red,
+.carl-trigger-heart.matrix-error-heart.grey-taking-over .carl-heart-red,
+.carl-trigger-heart.matrix-error-heart.dead-stage .carl-heart-red {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  filter: grayscale(1) saturate(0) brightness(.58) !important;
+}
+
+.carl-trigger-heart.matrix-error-heart.grey-return-visible .carl-heart-grey,
+.carl-trigger-heart.matrix-error-heart.grey-taking-over .carl-heart-grey,
+.carl-trigger-heart.matrix-error-heart.dead-stage .carl-heart-grey {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: scale(2.28) !important;
+  filter: grayscale(1) brightness(.94) contrast(1.18)
+          drop-shadow(0 0 5px rgba(236,242,248,.14)) !important;
+}
+
+.carl-trigger-heart.matrix-error-heart.carl-heart-pop .carl-heart-grey {
+  animation: c17GreyHeartContactPop65 .25s cubic-bezier(.12,.78,.18,1) forwards !important;
+}
+
+@keyframes c17GreyHeartContactPop65 {
+  0%   { opacity: 1; transform: scale(2.28); filter: brightness(.94); }
+  28%  { opacity: 1; transform: scale(2.88); filter: brightness(1.38); }
+  58%  { opacity: .70; transform: scale(1.86); filter: brightness(1.14); }
+  100% { opacity: 0; transform: scale(.10); filter: brightness(.60); }
+}
