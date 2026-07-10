@@ -886,6 +886,8 @@ function spawnCarl() {
 
 function releaseDeadHeartTowardCarl() {
   let carl = null;
+  let contactHandled = false;
+  let collisionFrame = 0;
 
   const heart = document.createElement("div");
   heart.className = "engage carl-trigger-heart asset-heart pink-stage matrix-error-heart";
@@ -893,8 +895,8 @@ function releaseDeadHeartTowardCarl() {
   heart.style.top = `${CARL_HEART_START.y}%`;
   heart.style.opacity = "0";
   heart.style.setProperty("animation", "none", "important");
-  heart.style.setProperty("width", "32px", "important");
-  heart.style.setProperty("height", "32px", "important");
+  heart.style.setProperty("width", "42px", "important");
+  heart.style.setProperty("height", "42px", "important");
   heart.innerHTML = `
     <span class="carl-heart-layer carl-heart-red" aria-hidden="true">💔</span>
     <img class="carl-heart-layer carl-heart-grey" src="${HEART_GREY}" alt="">
@@ -909,45 +911,73 @@ function releaseDeadHeartTowardCarl() {
     fill: "forwards"
   });
 
-  // Carl is already the final loader avatar. Resolve him early, but do not spotlight him.
+  // Carl already exists as the final loader avatar. Resolve the exact live element
+  // before the return climb so pixel contact can drive the pop instead of a blind timer.
   setTimeout(() => {
     if (!heart.parentNode) return;
     carl = profileField.querySelector(".profile.carl") || spawnCarl();
     carlSeen = true;
   }, 11200);
 
-  // The heart re-enters at the bottom still red. After a visible beat, the gray PNG bleeds in.
+  // The rejected heart comes back on-screen RED. Give that state a readable beat,
+  // then let the user's gray PNG bleed over it while the balloon is still climbing.
   setTimeout(() => {
     if (!heart.parentNode) return;
     heart.classList.add("grey-taking-over");
   }, 20400);
 
-  // Complete the color change well before Carl contact.
+  // Finish the emotional change well before Carl. Same footprint, different heart.
   setTimeout(() => {
     if (!heart.parentNode) return;
     heart.classList.remove("pink-stage");
     heart.classList.add("dead-stage");
-  }, 22200);
+  }, 22000);
 
-  // Pixel touches pixel: the gray heart pops and Carl gives three clean RROD flashes.
-  setTimeout(() => {
-    carl = carl || profileField.querySelector(".profile.carl") || spawnCarl();
-    if (heart && heart.parentNode) {
-      heart.classList.add("carl-heart-pop");
-      setTimeout(() => {
-        if (heart && heart.parentNode) heart.remove();
-      }, 280);
+  const popOnPixelContact = () => {
+    if (contactHandled || !heart.isConnected) return;
+    carl = carl || profileField.querySelector(".profile.carl");
+
+    if (carl && carl.isConnected) {
+      const h = heart.getBoundingClientRect();
+      const c = carl.getBoundingClientRect();
+      const overlaps = h.right >= c.left && h.left <= c.right && h.bottom >= c.top && h.top <= c.bottom;
+
+      if (overlaps) {
+        contactHandled = true;
+        flight.pause();
+        heart.classList.remove("grey-taking-over");
+        heart.classList.add("dead-stage", "carl-heart-pop");
+        triggerCarl(carl);
+        setTimeout(() => {
+          if (heart.isConnected) heart.remove();
+        }, 300);
+        return;
+      }
     }
-    triggerCarl(carl);
-  }, 23880);
+
+    collisionFrame = requestAnimationFrame(popOnPixelContact);
+  };
+
+  collisionFrame = requestAnimationFrame(popOnPixelContact);
 
   flight.onfinish = () => {
-    if (heart && heart.parentNode) heart.remove();
+    cancelAnimationFrame(collisionFrame);
+    if (!contactHandled) {
+      carl = carl || profileField.querySelector(".profile.carl") || spawnCarl();
+      contactHandled = true;
+      heart.classList.remove("grey-taking-over");
+      heart.classList.add("dead-stage", "carl-heart-pop");
+      triggerCarl(carl);
+      setTimeout(() => {
+        if (heart.isConnected) heart.remove();
+      }, 300);
+    }
   };
 
   setTimeout(() => {
-    if (heart && heart.parentNode) heart.remove();
-  }, flightDuration + 900);
+    cancelAnimationFrame(collisionFrame);
+    if (heart.isConnected) heart.remove();
+  }, flightDuration + 1200);
 }
 
 function spawnCarlZap() {
