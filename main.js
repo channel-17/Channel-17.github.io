@@ -382,35 +382,33 @@ const CARL_ZONE = { x: 25.6, y: 34.18 };
 const CARL_HEART_START = { x: 82, y: 98 };
 const CARL_HEART_CONTACT = { x: CARL_ZONE.x + 3.6, y: CARL_ZONE.y + 0.04 };
 const CARL_HEART_PATH = [
-  // SAME FAMILY AS THE SOCIAL HEARTS: slow helium rise up the right lane.
+  // It belongs to the social stream first: same slow helium climb up the right side.
   { left:"82%", top:"103%", transform:"translate(-50%,-50%) scale(1)", opacity:0, offset:0 },
-  { left:"83%", top:"91%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.06 },
-  { left:"81%", top:"75%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.15 },
-  { left:"84%", top:"58%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.24 },
-  { left:"82%", top:"40%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.33 },
-  { left:"84%", top:"24%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.41 },
-  { left:"82%", top:"15%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.46 },
+  { left:"83%", top:"96%",  transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.04 },
+  { left:"81%", top:"82%",  transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.13 },
+  { left:"84%", top:"66%",  transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.22 },
+  { left:"82%", top:"49%",  transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.31 },
+  { left:"84%", top:"33%",  transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.39 },
+  { left:"82%", top:"18%",  transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.46 },
 
-  // SOFT SYSTEM CORRECTION: a believable wind push from the right, not a mechanical corner.
-  { left:"74%", top:"15%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.485 },
-  { left:"58%", top:"17%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.515 },
-  { left:"38%", top:"21%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.545 },
-  { left:"17%", top:"28%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.575 },
-  { left:"-8%", top:"39%", transform:"translate(-50%,-50%) scale(1)", opacity:.98, offset:.605 },
+  // The system notices it and gives it a soft corrective wind nudge, not a violent mechanical fling.
+  { left:"78%", top:"16%",  transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.49 },
+  { left:"68%", top:"16%",  transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.52 },
+  { left:"54%", top:"18%",  transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.55 },
+  { left:"38%", top:"22%",  transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.58 },
+  { left:"20%", top:"29%",  transform:"translate(-50%,-50%) scale(1)", opacity:.98, offset:.61 },
+  { left:"3%",  top:"40%",  transform:"translate(-50%,-50%) scale(1)", opacity:.88, offset:.64 },
+  { left:"-9%", top:"57%",  transform:"translate(-50%,-50%) scale(1)", opacity:.54, offset:.67 },
+  { left:"-7%", top:"78%",  transform:"translate(-50%,-50%) scale(1)", opacity:.18, offset:.69 },
+  { left:"8%",  top:"103%", transform:"translate(-50%,-50%) scale(1)", opacity:0, offset:.705 },
 
-  // OUTSIDE CURL: quickly clears the left edge, loops below, and returns visibly before 89%.
-  { left:"-12%", top:"62%", transform:"translate(-50%,-50%) scale(1)", opacity:.86, offset:.625 },
-  { left:"-5%", top:"85%", transform:"translate(-50%,-50%) scale(1)", opacity:.48, offset:.645 },
-  { left:"14%", top:"105%", transform:"translate(-50%,-50%) scale(1)", opacity:0, offset:.66 },
-
-  // RE-ENTRY: clearly red at the bottom-left, then the 89% gray handoff is visible on-screen.
-  { left:"43%", top:"104%", transform:"translate(-50%,-50%) scale(1)", opacity:0, offset:.675 },
-  { left:"42%", top:"97%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.695 },
-  { left:"40%", top:"89%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.73 },
-  { left:"37%", top:"78%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.78 },
-  { left:"34%", top:"66%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.84 },
-  { left:"31%", top:"53%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.90 },
-  { left:"29.7%", top:"42%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.95 },
+  // Bottom-left return: clearly red for a beat, then it visibly becomes the supplied grey PNG.
+  { left:"18%", top:"101%", transform:"translate(-50%,-50%) scale(1)", opacity:0, offset:.715 },
+  { left:"20%", top:"94%",  transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.735 },
+  { left:"22%", top:"84%",  transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.775 },
+  { left:"24%", top:"72%",  transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.825 },
+  { left:"26%", top:"59%",  transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.875 },
+  { left:"27.5%", top:"47%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.925 },
   { left:`${CARL_HEART_CONTACT.x}%`, top:`${CARL_HEART_CONTACT.y}%`, transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.995 },
   { left:`${CARL_HEART_CONTACT.x}%`, top:`${CARL_HEART_CONTACT.y}%`, transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:1 }
 ];
@@ -512,14 +510,13 @@ function startHeartSmoke() {
   heartSmokeSpawnCount = 0;
   spawnEngagement({ guaranteed: true });
 
-  // The matrix-error heart belongs to the social stream at first.
-  // Release it almost immediately so it is one of the first three visible items and its full story
-  // has time to finish before the loading sequence ends.
+  // Let normal social hearts establish the stream first. The broken heart arrives later
+  // as a believable member of the same family, not as the first thing on-screen.
   setTimeout(() => {
     if (completed || deadHeartReleased) return;
     deadHeartReleased = true;
     releaseDeadHeartTowardCarl();
-  }, 860);
+  }, 3600);
 
   engageTimer = setInterval(() => {
     if (completed) return;
@@ -895,8 +892,8 @@ function releaseDeadHeartTowardCarl() {
   heart.style.top = `${CARL_HEART_START.y}%`;
   heart.style.opacity = "0";
   heart.style.setProperty("animation", "none", "important");
-  heart.style.setProperty("width", "38px", "important");
-  heart.style.setProperty("height", "38px", "important");
+  heart.style.setProperty("width", "34px", "important");
+  heart.style.setProperty("height", "34px", "important");
   heart.innerHTML = `
     <span class="carl-heart-layer carl-heart-red" aria-hidden="true">💔</span>
     <img class="carl-heart-layer carl-heart-grey" src="${HEART_GREY}" alt="">
@@ -904,7 +901,7 @@ function releaseDeadHeartTowardCarl() {
 
   engagementField.appendChild(heart);
 
-  const flightDuration = 24000;
+  const flightDuration = 22500;
   const flight = heart.animate(CARL_HEART_PATH, {
     duration: flightDuration,
     easing: "cubic-bezier(.32,.58,.20,1)",
@@ -919,26 +916,23 @@ function releaseDeadHeartTowardCarl() {
     carlSeen = true;
   }, 11200);
 
-  // CANON LOCK: the visible loader percentage owns the emotional color change.
-  // At 89% the red broken-heart balloon begins becoming the user's heart.grey.PNG,
-  // with enough screen time to read as gray before it reaches Carl.
+  // The return climb owns the emotional change. It re-enters red at bottom-left,
+  // then quickly crossfades into the supplied heart.grey.PNG while still far from Carl.
   let greySwapStarted = false;
-  let greySwapFinished = false;
-
-  const syncGreyHeartToProgress = () => {
+  const syncGreyHeartToFlight = () => {
     if (!heart.isConnected || contactHandled) return;
+    const ratio = Math.max(0, Math.min(1, (flight.currentTime || 0) / flightDuration));
 
-    if (!greySwapStarted && progress >= 89) {
+    if (!greySwapStarted && ratio >= 0.755) {
       greySwapStarted = true;
-      greySwapFinished = true;
       heart.classList.remove("pink-stage");
-      heart.classList.add("grey-taking-over", "grey-at-eighty-nine", "dead-stage");
+      heart.classList.add("grey-taking-over", "grey-return-visible", "dead-stage");
     }
 
-    requestAnimationFrame(syncGreyHeartToProgress);
+    requestAnimationFrame(syncGreyHeartToFlight);
   };
 
-  requestAnimationFrame(syncGreyHeartToProgress);
+  requestAnimationFrame(syncGreyHeartToFlight);
 
   const popOnPixelContact = () => {
     if (contactHandled || !heart.isConnected) return;
