@@ -923,7 +923,7 @@ function releaseDeadHeartTowardCarl() {
     if (!heart.isConnected || contactHandled) return;
     const ratio = Math.max(0, Math.min(1, (flight.currentTime || 0) / flightDuration));
 
-    if (!greySwapStarted && ratio >= 0.755) {
+    if (!greySwapStarted && ratio >= 0.68) {
       greySwapStarted = true;
       heart.classList.remove("pink-stage");
       heart.classList.add("grey-taking-over", "grey-return-visible", "dead-stage");
