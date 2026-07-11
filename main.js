@@ -382,7 +382,6 @@ const CARL_ZONE = { x: 25.6, y: 34.18 };
 const CARL_HEART_START = { x: 82, y: 98 };
 const CARL_HEART_CONTACT = { x: CARL_ZONE.x + 3.6, y: CARL_ZONE.y + 0.04 };
 const CARL_HEART_PATH = [
-  // It belongs to the social stream first: same slow helium climb up the right side.
   { left:"82%", top:"103%", transform:"translate(-50%,-50%) scale(1)", opacity:0, offset:0 },
   { left:"83%", top:"96%",  transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.04 },
   { left:"81%", top:"82%",  transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.13 },
@@ -391,24 +390,22 @@ const CARL_HEART_PATH = [
   { left:"84%", top:"33%",  transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.39 },
   { left:"82%", top:"18%",  transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.46 },
 
-  // The system notices it and gives it a soft corrective wind nudge, not a violent mechanical fling.
-  { left:"78%", top:"16%",  transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.49 },
-  { left:"68%", top:"16%",  transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.52 },
-  { left:"54%", top:"18%",  transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.55 },
-  { left:"38%", top:"22%",  transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.58 },
-  { left:"20%", top:"29%",  transform:"translate(-50%,-50%) scale(1)", opacity:.98, offset:.61 },
-  { left:"3%",  top:"40%",  transform:"translate(-50%,-50%) scale(1)", opacity:.88, offset:.64 },
-  { left:"-9%", top:"57%",  transform:"translate(-50%,-50%) scale(1)", opacity:.54, offset:.67 },
-  { left:"-7%", top:"78%",  transform:"translate(-50%,-50%) scale(1)", opacity:.18, offset:.69 },
-  { left:"8%",  top:"103%", transform:"translate(-50%,-50%) scale(1)", opacity:0, offset:.705 },
+  { left:"79%", top:"17%",  transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.49 },
+  { left:"73%", top:"18%",  transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.52 },
+  { left:"64%", top:"20%",  transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.55 },
+  { left:"52%", top:"24%",  transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.58 },
+  { left:"38%", top:"30%",  transform:"translate(-50%,-50%) scale(1)", opacity:.98, offset:.61 },
+  { left:"22%", top:"39%",  transform:"translate(-50%,-50%) scale(1)", opacity:.92, offset:.64 },
+  { left:"7%",  top:"54%",  transform:"translate(-50%,-50%) scale(1)", opacity:.72, offset:.67 },
+  { left:"-7%", top:"73%",  transform:"translate(-50%,-50%) scale(1)", opacity:.28, offset:.70 },
+  { left:"8%",  top:"103%", transform:"translate(-50%,-50%) scale(1)", opacity:0, offset:.72 },
 
-  // Bottom-left return: clearly red for a beat, then it visibly becomes the supplied grey PNG.
-  { left:"18%", top:"101%", transform:"translate(-50%,-50%) scale(1)", opacity:0, offset:.715 },
-  { left:"20%", top:"94%",  transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.735 },
-  { left:"22%", top:"84%",  transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.775 },
-  { left:"24%", top:"72%",  transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.825 },
-  { left:"26%", top:"59%",  transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.875 },
-  { left:"27.5%", top:"47%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.925 },
+  { left:"17%", top:"101%", transform:"translate(-50%,-50%) scale(1)", opacity:0, offset:.73 },
+  { left:"18%", top:"94%",  transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.75 },
+  { left:"20%", top:"84%",  transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.79 },
+  { left:"22%", top:"72%",  transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.84 },
+  { left:"24%", top:"59%",  transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.89 },
+  { left:"26%", top:"47%",  transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.94 },
   { left:`${CARL_HEART_CONTACT.x}%`, top:`${CARL_HEART_CONTACT.y}%`, transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.995 },
   { left:`${CARL_HEART_CONTACT.x}%`, top:`${CARL_HEART_CONTACT.y}%`, transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:1 }
 ];
@@ -923,7 +920,7 @@ function releaseDeadHeartTowardCarl() {
     if (!heart.isConnected || contactHandled) return;
     const ratio = Math.max(0, Math.min(1, (flight.currentTime || 0) / flightDuration));
 
-    if (!greySwapStarted && ratio >= 0.68) {
+    if (!greySwapStarted && ratio >= 0.755) {
       greySwapStarted = true;
       heart.classList.remove("pink-stage");
       heart.classList.add("grey-taking-over", "grey-return-visible", "dead-stage");
