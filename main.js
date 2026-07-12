@@ -392,16 +392,15 @@ const CARL_HEART_PATH = [
   { left:"82%", top:"18%",  transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.46 },
 
   /* soft sideways rejection — still rising */
-  { left:"79%", top:"16.8%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.49 },
-  { left:"74%", top:"15.5%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.52 },
-  { left:"67%", top:"14.2%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.55 },
-  { left:"58%", top:"12.8%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.58 },
-  { left:"47%", top:"11.4%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.61 },
-  { left:"35%", top:"10%",   transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.64 },
-  { left:"22%", top:"8.5%",  transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.67 },
-  { left:"9%",  top:"6.5%",  transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.695 },
-  { left:"-7%", top:"4%",    transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.705 },
-  { left:"-7%", top:"4%",    transform:"translate(-50%,-50%) scale(1)", opacity:0, offset:.706 },
+  { left:"80%", top:"16.8%", ... },
+  { left:"78%", top:"15.7%", ... },
+  { left:"75%", top:"14.6%", ... },
+  { left:"71%", top:"13.2%", ... },
+  { left:"66%", top:"11.8%", ... },
+  { left:"60%", top:"10.2%", ... },
+  { left:"53%", top:"8.6%", ... },
+  { left:"45%", top:"6.8%", ... },
+  { left:"36%", top:"4.2%", ... },
 
   /* invisible reset to bottom-left */
   { left:"12%", top:"103%", transform:"translate(-50%,-50%) scale(1)", opacity:0, offset:.72 },
