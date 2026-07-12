@@ -630,21 +630,34 @@ function spawnEngagement(options = {}) {
   let symbol = Math.random() < 0.58 ? "🩷" : "❤️";
   let iconClass = "heart";
 
-  // Foreman correction: social noise must actually be visible, but hearts still dominate.
-  // First three emissions stay pure hearts. After that, every fifth field item is a social icon,
-  // with a small extra random chance between them. Same lane, same float, no new motion language.
-  if (heartSmokeSpawnCount > 3) {
-    const iconCycle = ["👍", "🔔", "😊", "😉", "❄️", "💯", "▶️"];
-    const cycleClass = ["like", "bell", "happy-face", "wink-face", "snowflake", "agree", "subscribe"];
-    const cycleIndex = Math.floor((heartSmokeSpawnCount - 4) / 5) % iconCycle.length;
-    const scheduledIcon = ((heartSmokeSpawnCount - 4) % 5) === 0;
-    const bonusIcon = !scheduledIcon && Math.random() < 0.10;
+  // Hearts stay dominant, but yellow faces appear often enough to register.
+// The snowflake is handled separately below so there can only be one.
+if (heartSmokeSpawnCount > 3) {
+  const iconCycle = ["👍", "😊", "🔔", "😉", "💯", "▶️"];
+  const cycleClass = ["like", "happy-face", "bell", "wink-face", "agree", "subscribe"];
 
-    if (scheduledIcon || bonusIcon) {
-      symbol = iconCycle[cycleIndex];
-      iconClass = cycleClass[cycleIndex];
-    }
+  const scheduledIcon = ((heartSmokeSpawnCount - 4) % 4) === 0;
+  const bonusFace = !scheduledIcon && Math.random() < 0.22;
+
+  if (scheduledIcon) {
+    const cycleIndex =
+      Math.floor((heartSmokeSpawnCount - 4) / 4) % iconCycle.length;
+
+    symbol = iconCycle[cycleIndex];
+    iconClass = cycleClass[cycleIndex];
+  } else if (bonusFace) {
+    const useWink = Math.random() < 0.45;
+
+    symbol = useWink ? "😉" : "😊";
+    iconClass = useWink ? "wink-face" : "happy-face";
   }
+}
+
+if (!snowflakeReleased && heartSmokeSpawnCount >= 7) {
+  snowflakeReleased = true;
+  symbol = "❄️";
+  iconClass = "snowflake";
+}
 
   if (!secretFlameReleased && heartSmokeSpawnCount > 9) {
     secretFlameReleased = true;
