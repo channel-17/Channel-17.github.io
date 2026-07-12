@@ -1040,14 +1040,18 @@ function triggerCarl(carl) {
   carl.appendChild(ring);
 
   setTimeout(() => {
-    if (!carlOpened && carl && carl.parentNode) {
-      carl.classList.remove("carl-ready", "carl-ring-death", "carl-impact-visible");
-      carl.classList.add("carl-dead-profile");
-      const activeRing = carl.querySelector(".carl-rrod-ring");
-      if (activeRing) activeRing.remove();
-    }
-  }, 2300);
-}
+  if (!carlOpened && carl && carl.parentNode) {
+    carl.classList.remove(
+      "carl-ready",
+      "carl-ring-death",
+      "carl-impact-visible",
+      "carl-dead-profile"
+    );
+
+    const activeRing = carl.querySelector(".carl-rrod-ring");
+    if (activeRing) activeRing.remove();
+  }
+}, 2300);
 
 function openCarlProfile() {
   closeFounderWindow();
