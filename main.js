@@ -391,25 +391,36 @@ const CARL_HEART_PATH = [
   { left:"84%", top:"33%",  transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.39 },
   { left:"82%", top:"18%",  transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.46 },
 
+  /* soft sideways rejection — still rising */
   { left:"79%", top:"16.8%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.49 },
   { left:"74%", top:"15.5%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.52 },
   { left:"67%", top:"14.2%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.55 },
   { left:"58%", top:"12.8%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.58 },
-  { left:"47%", top:"11.4%", transform:"translate(-50%,-50%) scale(1)", opacity:.96, offset:.61 },
-  { left:"35%", top:"10%",   transform:"translate(-50%,-50%) scale(1)", opacity:.86, offset:.64 },
-  { left:"22%", top:"8.5%",  transform:"translate(-50%,-50%) scale(1)", opacity:.68, offset:.67 },
-  { left:"9%",  top:"6.5%",  transform:"translate(-50%,-50%) scale(1)", opacity:.38, offset:.69 },
-  { left:"-6%", top:"4%",    transform:"translate(-50%,-50%) scale(1)", opacity:0, offset:.71 },
+  { left:"47%", top:"11.4%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.61 },
+  { left:"35%", top:"10%",   transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.64 },
+  { left:"22%", top:"8.5%",  transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.67 },
+  { left:"9%",  top:"6.5%",  transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.695 },
+  { left:"-7%", top:"4%",    transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.705 },
+  { left:"-7%", top:"4%",    transform:"translate(-50%,-50%) scale(1)", opacity:0, offset:.706 },
 
+  /* invisible reset to bottom-left */
   { left:"12%", top:"103%", transform:"translate(-50%,-50%) scale(1)", opacity:0, offset:.72 },
-  { left:"14%", top:"96%",  transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.74 },
-  { left:"15%", top:"87%",  transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.78 },
-  { left:"16%", top:"76%",  transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.82 },
-  { left:"18%", top:"64%",  transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.86 },
-  { left:"20%", top:"53%",  transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.90 },
-  { left:"23%", top:"44%",  transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.94 },
-  { left:"26%", top:"38%",  transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.97 },
-  { left:`${CARL_HEART_CONTACT.x}%`, top:`${CARL_HEART_CONTACT.y}%`, transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:1 }
+
+  /* return climb — always rising */
+  { left:"14%", top:"96%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.74 },
+  { left:"15%", top:"87%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.78 },
+  { left:"16%", top:"76%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.82 },
+  { left:"18%", top:"64%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.86 },
+  { left:"20%", top:"53%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.90 },
+  { left:"23%", top:"44%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.94 },
+  { left:"26%", top:"38%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.97 },
+  {
+    left:`${CARL_HEART_CONTACT.x}%`,
+    top:`${CARL_HEART_CONTACT.y}%`,
+    transform:"translate(-50%,-50%) scale(1)",
+    opacity:1,
+    offset:1
+  }
 ];
 
 function setProgress(value) {
@@ -636,8 +647,8 @@ if (heartSmokeSpawnCount > 3) {
   const iconCycle = ["👍", "😊", "🔔", "😉", "💯", "▶️"];
   const cycleClass = ["like", "happy-face", "bell", "wink-face", "agree", "subscribe"];
 
-  const scheduledIcon = ((heartSmokeSpawnCount - 4) % 4) === 0;
-  const bonusFace = !scheduledIcon && Math.random() < 0.22;
+  const scheduledIcon = ((heartSmokeSpawnCount - 4) % 3) === 0;
+  const bonusFace = !scheduledIcon && Math.random() < 0.34;
 
   if (scheduledIcon) {
     const cycleIndex =
@@ -939,11 +950,26 @@ function releaseDeadHeartTowardCarl() {
     if (!heart.isConnected || contactHandled) return;
     const ratio = Math.max(0, Math.min(1, (flight.currentTime || 0) / flightDuration));
 
-    if (!greySwapStarted && ratio >= 0.74) {
-      greySwapStarted = true;
-      heart.classList.remove("pink-stage");
-      heart.classList.add("grey-taking-over", "grey-return-visible", "dead-stage");
-    }
+    if (!greySwapStarted && ratio >= 0.755) {
+  greySwapStarted = true;
+
+  const redLayer = heart.querySelector(".carl-heart-red");
+  const greyLayer = heart.querySelector(".carl-heart-grey");
+
+  heart.classList.remove("pink-stage");
+  heart.classList.add("grey-taking-over", "grey-return-visible", "dead-stage");
+
+  if (redLayer) {
+    redLayer.style.setProperty("opacity", "0", "important");
+    redLayer.style.setProperty("visibility", "hidden", "important");
+  }
+
+  if (greyLayer) {
+    greyLayer.style.setProperty("opacity", "1", "important");
+    greyLayer.style.setProperty("visibility", "visible", "important");
+    greyLayer.style.setProperty("display", "block", "important");
+  }
+}
 
     requestAnimationFrame(syncGreyHeartToFlight);
   };
