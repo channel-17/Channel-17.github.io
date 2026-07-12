@@ -66,6 +66,7 @@ let heartSmokeSpawnCount = 0;
 let frankDutyStarted = false;
 let frankDutyFramesPlayed = false;
 let secretFlameReleased = false;
+let snowflakeReleased = false;
 let woundPulseTimer = null;
 let hiveWoundUsed = false;
 let jinxFrequencyTimer = null;
