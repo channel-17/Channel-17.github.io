@@ -632,8 +632,8 @@ function spawnEngagement(options = {}) {
   // First three emissions stay pure hearts. After that, every fifth field item is a social icon,
   // with a small extra random chance between them. Same lane, same float, no new motion language.
   if (heartSmokeSpawnCount > 3) {
-    const iconCycle = ["👍", "🔔", "😊", "😉","💯", "▶️"];
-    const cycleClass = ["like", "bell", "happy-face", "wink-face", "agree", "subscribe"];
+    const iconCycle = ["👍", "🔔", "😊", "😉", "❄️", "💯", "▶️"];
+    const cycleClass = ["like", "bell", "happy-face", "wink-face", "snowflake", "agree", "subscribe"];
     const cycleIndex = Math.floor((heartSmokeSpawnCount - 4) / 5) % iconCycle.length;
     const scheduledIcon = ((heartSmokeSpawnCount - 4) % 5) === 0;
     const bonusIcon = !scheduledIcon && Math.random() < 0.10;
