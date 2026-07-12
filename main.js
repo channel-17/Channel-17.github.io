@@ -390,23 +390,24 @@ const CARL_HEART_PATH = [
   { left:"84%", top:"33%",  transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.39 },
   { left:"82%", top:"18%",  transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.46 },
 
-  { left:"79%", top:"17%",  transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.49 },
-  { left:"73%", top:"18%",  transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.52 },
-  { left:"64%", top:"20%",  transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.55 },
-  { left:"52%", top:"24%",  transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.58 },
-  { left:"38%", top:"30%",  transform:"translate(-50%,-50%) scale(1)", opacity:.98, offset:.61 },
-  { left:"22%", top:"39%",  transform:"translate(-50%,-50%) scale(1)", opacity:.92, offset:.64 },
-  { left:"7%",  top:"54%",  transform:"translate(-50%,-50%) scale(1)", opacity:.72, offset:.67 },
-  { left:"-7%", top:"73%",  transform:"translate(-50%,-50%) scale(1)", opacity:.28, offset:.70 },
-  { left:"8%",  top:"103%", transform:"translate(-50%,-50%) scale(1)", opacity:0, offset:.72 },
+  { left:"79%", top:"17.5%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.49 },
+  { left:"74%", top:"18%",   transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.52 },
+  { left:"67%", top:"18.8%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.55 },
+  { left:"58%", top:"20%",   transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.58 },
+  { left:"47%", top:"21.5%", transform:"translate(-50%,-50%) scale(1)", opacity:.96, offset:.61 },
+  { left:"35%", top:"23%",   transform:"translate(-50%,-50%) scale(1)", opacity:.86, offset:.64 },
+  { left:"22%", top:"25%",   transform:"translate(-50%,-50%) scale(1)", opacity:.68, offset:.67 },
+  { left:"9%",  top:"27%",   transform:"translate(-50%,-50%) scale(1)", opacity:.38, offset:.69 },
+  { left:"-6%", top:"29%",   transform:"translate(-50%,-50%) scale(1)", opacity:0, offset:.71 },
 
-  { left:"17%", top:"101%", transform:"translate(-50%,-50%) scale(1)", opacity:0, offset:.73 },
-  { left:"18%", top:"94%",  transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.75 },
-  { left:"20%", top:"84%",  transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.79 },
-  { left:"22%", top:"72%",  transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.84 },
-  { left:"24%", top:"59%",  transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.89 },
-  { left:"26%", top:"47%",  transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.94 },
-  { left:`${CARL_HEART_CONTACT.x}%`, top:`${CARL_HEART_CONTACT.y}%`, transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.995 },
+  { left:"12%", top:"103%", transform:"translate(-50%,-50%) scale(1)", opacity:0, offset:.72 },
+  { left:"14%", top:"96%",  transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.74 },
+  { left:"15%", top:"87%",  transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.78 },
+  { left:"16%", top:"76%",  transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.82 },
+  { left:"18%", top:"64%",  transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.86 },
+  { left:"20%", top:"53%",  transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.90 },
+  { left:"23%", top:"44%",  transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.94 },
+  { left:"26%", top:"38%",  transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.97 },
   { left:`${CARL_HEART_CONTACT.x}%`, top:`${CARL_HEART_CONTACT.y}%`, transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:1 }
 ];
 
@@ -723,7 +724,11 @@ function spawnProfile(side, delay = 0, opts = {}) {
     const profile = document.createElement("div");
     profile.className = "profile";
 
-    const asset = opts.asset || normalAssets[profileCount % normalAssets.length];
+    const asset = opts.asset || (
+  target.zone === "symbol"
+    ? hiveAssets[profileCount % hiveAssets.length]
+    : normalAssets[profileCount % normalAssets.length]
+);
     const jitterX = target.zone === "symbol" ? 0.88 : target.zone === "miss" ? 1.45 : 0.18;
     const jitterY = target.zone === "symbol" ? 0.72 : target.zone === "miss" ? 0.18 : 0.06;
     const x = jitter(target.x, jitterX);
@@ -920,7 +925,7 @@ function releaseDeadHeartTowardCarl() {
     if (!heart.isConnected || contactHandled) return;
     const ratio = Math.max(0, Math.min(1, (flight.currentTime || 0) / flightDuration));
 
-    if (!greySwapStarted && ratio >= 0.755) {
+    if (!greySwapStarted && ratio >= 0.74) {
       greySwapStarted = true;
       heart.classList.remove("pink-stage");
       heart.classList.add("grey-taking-over", "grey-return-visible", "dead-stage");
@@ -1159,7 +1164,7 @@ function spawnWren() {
   wren.className = "profile wren wren-quick-home";
 
   wren.style.left = `calc(51% - ${AVATAR_HALF}px)`;
-  wren.style.top = `calc(25.8% - ${AVATAR_HALF}px)`;
+  wren.style.top = `calc(22% - ${AVATAR_HALF}px)`;
   wren.style.setProperty("--sx", "42px");
   wren.style.setProperty("--sy", "-82px");
   wren.innerHTML = `<img src="AssetWREN.PNG" alt="">`;
@@ -1175,7 +1180,7 @@ function spawnWren() {
     const pulse = document.createElement("div");
     pulse.className = "wren-exit-pulse";
     pulse.style.left = "51%";
-    pulse.style.top = "25.8%";
+    pulse.style.top = "22%";
     impactField.appendChild(pulse);
     setTimeout(() => pulse.remove(), 1800);
     setTimeout(armJinxShadowFrequency, 260);
