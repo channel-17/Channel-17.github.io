@@ -6337,28 +6337,21 @@ body {
   position: absolute;
   left: 50%;
   bottom: calc(8% + 96px);
-  width: 124px;
-  height: 92px;
+  width: 66px;
+  height: 66px;
   transform: translateX(-50%);
   border: 0;
-  border-radius: 18px;
+  border-radius: 50%;
   background: transparent;
   opacity: 0;
   visibility: hidden;
   z-index: 92;
   pointer-events: none;
   cursor: default;
-  color: transparent;
-  font-size: 0;
-  line-height: 0;
   outline: none;
   appearance: none;
   -webkit-appearance: none;
-  user-select: none;
-  -webkit-user-select: none;
-  -webkit-touch-callout: none;
   -webkit-tap-highlight-color: transparent;
-  touch-action: manipulation;
 }
 
 .jinx-shadow-frequency.armed {
@@ -6376,26 +6369,51 @@ body {
   position: absolute;
   left: 50%;
   top: 50%;
-  width: 82px;
-  height: 28px;
-  transform: translate(-50%, -50%);
+  width: 36px;
+  height: 36px;
+  transform: translate(-50%, -50%) rotate(-8deg);
+  border-radius: 50%;
   opacity: 0;
+
   background:
-    linear-gradient(90deg,
-      transparent 0 6px,
-      rgba(7, 9, 8, 0.98) 6px 18px,
-      transparent 18px 21px,
-      rgba(13, 16, 14, 0.98) 21px 31px,
-      rgba(32, 38, 33, 0.52) 31px 33px,
-      transparent 33px 36px,
-      rgba(8, 10, 9, 0.98) 36px 57px,
-      transparent 57px 100%);
-  clip-path: polygon(0 63%, 24% 63%, 35% 15%, 45% 88%, 56% 36%, 69% 63%, 100% 63%, 100% 73%, 0 73%);
+    radial-gradient(
+      circle at center,
+      rgba(183,189,138,.34) 0 5%,
+      transparent 7% 31%,
+      rgba(183,189,138,.28) 33% 36%,
+      transparent 38% 52%,
+      rgba(183,189,138,.18) 54% 57%,
+      transparent 59%
+    );
+
+  mask:
+    conic-gradient(
+      from 18deg,
+      #000 0 52deg,
+      transparent 52deg 82deg,
+      #000 82deg 170deg,
+      transparent 170deg 205deg,
+      #000 205deg 292deg,
+      transparent 292deg 326deg,
+      #000 326deg
+    );
+
+  -webkit-mask:
+    conic-gradient(
+      from 18deg,
+      #000 0 52deg,
+      transparent 52deg 82deg,
+      #000 82deg 170deg,
+      transparent 170deg 205deg,
+      #000 205deg 292deg,
+      transparent 292deg 326deg,
+      #000 326deg
+    );
+
   filter:
-    blur(0.18px)
-    drop-shadow(0 0 5px rgba(82, 90, 80, 0.26))
-    drop-shadow(0 0 18px rgba(32, 38, 32, 0.58))
-    drop-shadow(0 0 36px rgba(0, 0, 0, 0.92));
+    blur(.12px)
+    drop-shadow(0 0 4px rgba(183,189,138,.24))
+    drop-shadow(0 0 12px rgba(183,189,138,.12));
 }
 
 .jinx-shadow-frequency::after {
@@ -6403,12 +6421,19 @@ body {
   position: absolute;
   left: 50%;
   top: 50%;
-  width: 132px;
-  height: 58px;
+  width: 52px;
+  height: 52px;
   transform: translate(-50%, -50%);
+  border-radius: 50%;
   opacity: 0;
-  background: radial-gradient(ellipse at center, rgba(56, 64, 56, 0.34) 0%, rgba(16, 20, 17, 0.24) 38%, rgba(0, 0, 0, 0) 74%);
-  filter: blur(11px);
+  background:
+    radial-gradient(
+      circle,
+      rgba(183,189,138,.14) 0,
+      rgba(183,189,138,.06) 35%,
+      transparent 68%
+    );
+  filter: blur(8px);
 }
 
 .jinx-shadow-frequency.pulse-live {
@@ -6418,31 +6443,70 @@ body {
 }
 
 .jinx-shadow-frequency.pulse-live::before {
-  animation: shadowFrequencySpike 6.75s steps(11) forwards;
+  animation: ghostChannelPulse 6.75s ease-in-out forwards;
 }
 
 .jinx-shadow-frequency.pulse-live::after {
-  animation: shadowFrequencyHalo 6.75s ease forwards;
+  animation: ghostChannelHalo 6.75s ease-in-out forwards;
 }
 
-@keyframes shadowFrequencySpike {
-  0% { opacity: 0; transform: translate(-50%, -50%) scaleX(0.78); }
-  8% { opacity: 0.20; }
-  18% { opacity: 0.54; transform: translate(calc(-50% - 1px), -50%) scaleX(1.10); }
-  31% { opacity: 0.86; transform: translate(calc(-50% + 1px), -50%) scaleX(1.04); }
-  48% { opacity: 0.70; transform: translate(-50%, -50%) scaleX(0.98); }
-  66% { opacity: 0.44; }
-  84% { opacity: 0.20; }
-  100% { opacity: 0; transform: translate(-50%, -50%) scaleX(0.82); }
+@keyframes ghostChannelPulse {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) rotate(-8deg) scale(.78);
+  }
+
+  18% {
+    opacity: .22;
+  }
+
+  34% {
+    opacity: .58;
+    transform: translate(-50%, -50%) rotate(-5deg) scale(1.05);
+  }
+
+  51% {
+    opacity: .42;
+    transform: translate(-50%, -50%) rotate(-9deg) scale(.98);
+  }
+
+  69% {
+    opacity: .24;
+  }
+
+  84% {
+    opacity: .12;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) rotate(-8deg) scale(.88);
+  }
 }
 
-@keyframes shadowFrequencyHalo {
-  0% { opacity: 0; transform: translate(-50%, -50%) scale(0.78); }
-  14% { opacity: 0.34; }
-  32% { opacity: 0.62; transform: translate(-50%, -50%) scale(1.12); }
-  56% { opacity: 0.42; }
-  80% { opacity: 0.18; }
-  100% { opacity: 0; transform: translate(-50%, -50%) scale(1.34); }
+@keyframes ghostChannelHalo {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(.72);
+  }
+
+  28% {
+    opacity: .24;
+  }
+
+  48% {
+    opacity: .42;
+    transform: translate(-50%, -50%) scale(1.06);
+  }
+
+  72% {
+    opacity: .18;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1.22);
+  }
 }
 
 .jinx-card-overlay {
@@ -8743,8 +8807,10 @@ body {
 }
 
 .profile.carl .carl-rrod-ring {
-  border-width: 2px !important;
-  box-shadow: 0 0 7px rgba(255,29,37,.72), inset 0 0 4px rgba(255,29,37,.34) !important;
+  border-width: 1.25px !important;
+  box-shadow:
+    0 0 4px rgba(255,29,37,.62),
+    inset 0 0 2px rgba(255,29,37,.28) !important;
   animation: c17CarlRrod123_64 1.34s steps(1,end) 1 both !important;
 }
 
