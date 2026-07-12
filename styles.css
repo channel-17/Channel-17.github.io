@@ -8874,5 +8874,50 @@ body {
   58%  { opacity: .70; transform: scale(1.86); filter: brightness(1.14); }
   100% { opacity: 0; transform: scale(.10); filter: brightness(.60); }
 }
+/* BUILD 78 SURGERY — Carl brightness + smaller symbol attackers */
 
+/* Carl stays alive, bright, and visually equal to the other profiles. */
+.profile.carl,
+.profile.carl.carl-wrong-place,
+.profile.carl.carl-zone-anchor,
+.profile.carl.carl-impact-visible,
+.profile.carl.carl-ready,
+.profile.carl.carl-ring-death {
+  opacity: 1 !important;
+  visibility: visible !important;
+  filter: none !important;
+}
+
+.profile.carl img {
+  opacity: 1 !important;
+  filter:
+    brightness(1.08)
+    saturate(1.04)
+    contrast(1.03) !important;
+}
+
+/* Blue symbol attackers are smaller than loader avatars. */
+.profile.symbol-touch,
+.profile.symbol-probe,
+.profile.hive-reveal.has-hive-asset {
+  width: 58px !important;
+  height: 58px !important;
+}
+
+/* Keep the hot lava burn concentrated on the avatar edge. */
+.profile.signal-burn-contact::before,
+.profile.signal-burn-spread::before,
+.profile.signal-burn-deep::before,
+.profile.signal-burn-consumed::before {
+  inset: -2px !important;
+  background:
+    radial-gradient(
+      circle at 48% 50%,
+      rgba(255,255,230,1) 0 6%,
+      rgba(255,190,58,.98) 10%,
+      rgba(255,82,18,.92) 20%,
+      rgba(112,22,0,.72) 32%,
+      transparent 52%
+    ) !important;
+}
 }
