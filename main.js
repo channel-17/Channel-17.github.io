@@ -641,34 +641,60 @@ function spawnEngagement(options = {}) {
   let symbol = Math.random() < 0.58 ? "🩷" : "❤️";
   let iconClass = "heart";
 
-  // Hearts stay dominant, but yellow faces appear often enough to register.
-// The snowflake is handled separately below so there can only be one.
-if (heartSmokeSpawnCount > 3) {
-  const iconCycle = ["👍", "😊", "🔔", "😉", "💯", "▶️"];
-  const cycleClass = ["like", "happy-face", "bell", "wink-face", "agree", "subscribe"];
+  // Faces are now a real part of the social noise.
+  // Hearts still dominate, but faces appear frequently and randomly.
+  if (heartSmokeSpawnCount > 2) {
+    const faceSymbols = [
+      "😂", "😉", "😀", "😆", "😃",
+      "😁", "🤣", "😍", "🥰", "😘",
+      "😜", "😙"
+    ];
 
-  const scheduledIcon = ((heartSmokeSpawnCount - 4) % 3) === 0;
-  const bonusFace = !scheduledIcon && Math.random() < 0.34;
+    const platformSymbols = [
+      { symbol: "👍", className: "like" },
+      { symbol: "🔔", className: "bell" },
+      { symbol: "💯", className: "agree" },
+      { symbol: "▶️", className: "subscribe" }
+    ];
 
-  if (scheduledIcon) {
-    const cycleIndex =
-      Math.floor((heartSmokeSpawnCount - 4) / 4) % iconCycle.length;
+    const guaranteedFace =
+      ((heartSmokeSpawnCount - 3) % 3) === 0;
 
-    symbol = iconCycle[cycleIndex];
-    iconClass = cycleClass[cycleIndex];
-  } else if (bonusFace) {
-    const useWink = Math.random() < 0.45;
+    const randomFace =
+      !guaranteedFace && Math.random() < 0.38;
 
-    symbol = useWink ? "😉" : "😊";
-    iconClass = useWink ? "wink-face" : "happy-face";
+    const randomPlatformIcon =
+      !guaranteedFace &&
+      !randomFace &&
+      Math.random() < 0.14;
+
+    if (guaranteedFace || randomFace) {
+      symbol =
+        faceSymbols[
+          Math.floor(Math.random() * faceSymbols.length)
+        ];
+
+      iconClass = "social-face";
+    } else if (randomPlatformIcon) {
+      const platformIcon =
+        platformSymbols[
+          Math.floor(Math.random() * platformSymbols.length)
+        ];
+
+      symbol = platformIcon.symbol;
+      iconClass = platformIcon.className;
+    }
   }
-}
 
-if (!snowflakeReleased && heartSmokeSpawnCount >= 7) {
-  snowflakeReleased = true;
-  symbol = "❄️";
-  iconClass = "snowflake";
-}
+  // Exactly one snowflake per intro.
+  if (
+    !snowflakeReleased &&
+    heartSmokeSpawnCount >= 7
+  ) {
+    snowflakeReleased = true;
+    symbol = "❄️";
+    iconClass = "snowflake";
+  }
 
   if (!secretFlameReleased && heartSmokeSpawnCount > 9) {
     secretFlameReleased = true;
