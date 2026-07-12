@@ -451,7 +451,7 @@ const loading = setInterval(() => {
     startAttack();
   }
 
-  if (progress >= 20 && !ghosted) {
+  if (progress >= 40 && !ghosted) {
     ghosted = true;
     // Faint signal ghost returns around the early authenticity breach so the symbol is not visually dead until the end.
     signalGhost.classList.add("waking");
