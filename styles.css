@@ -7953,19 +7953,7 @@ body {
     transform: translate(var(--sx), var(--sy)) scale(0.96) rotate(var(--rot));
     filter: blur(1.2px) saturate(0.86) contrast(1.02);
   }
-  52% {
-    opacity: 1;
-    transform: translate(0, 0) scale(1.10) rotate(var(--rot));
-    filter: blur(0) saturate(1) contrast(1.08);
-  }
-  66% {
-    opacity: 1;
-    transform: translate(0, 5px) scale(0.97) rotate(var(--rot));
-  }
-  82% {
-    opacity: 1;
-    transform: translate(0, -2px) scale(1.025) rotate(var(--rot));
-  }
+
   100% {
     opacity: 1;
     transform: translate(0, 0) scale(1) rotate(var(--rot));
@@ -8456,10 +8444,10 @@ body {
 
 .profile.carl .carl-rrod-ring {
   position: absolute !important;
-  inset: 1px !important;
+  inset: 2px !important;
   z-index: 999 !important;
   display: block !important;
-  border: 4px solid transparent !important;
+  border: 1.5px solid transparent !important;
   border-radius: 50% !important;
   box-sizing: border-box !important;
   pointer-events: none !important;
@@ -8472,10 +8460,11 @@ body {
     opacity: 1;
     border-color: #ff1d25;
     box-shadow:
-      inset 0 0 8px rgba(255,29,37,.98),
-      0 0 10px rgba(255,29,37,.98),
-      0 0 20px rgba(255,29,37,.50);
+      inset 0 0 3px rgba(255,29,37,.72),
+      0 0 4px rgba(255,29,37,.82),
+      0 0 8px rgba(255,29,37,.28);
   }
+
   13%, 33%, 47%, 67%, 81%, 100% {
     opacity: 0;
     border-color: transparent;
