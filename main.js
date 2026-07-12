@@ -1052,6 +1052,7 @@ function triggerCarl(carl) {
     if (activeRing) activeRing.remove();
   }
 }, 2300);
+}
 
 function openCarlProfile() {
   closeFounderWindow();
