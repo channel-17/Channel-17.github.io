@@ -8920,4 +8920,23 @@ body {
       transparent 52%
     ) !important;
 }
+/* BUILD 80 — social-face preparation */
+
+.engage.social-face {
+  font-size: 27px;
+  line-height: 1;
+}
+
+/*
+  Future snowflake ending:
+  JavaScript will replace only elements carrying
+  .social-face with the frozen face 🥶.
+*/
+.engage.social-face.frozen-face {
+  filter:
+    saturate(.72)
+    brightness(1.08)
+    drop-shadow(0 0 4px rgba(190,225,255,.44));
+}
+
 }
