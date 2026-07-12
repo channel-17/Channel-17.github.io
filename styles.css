@@ -7948,16 +7948,16 @@ body {
 }
 
 @keyframes loaderAvatarSlam {
-  0% {
-    opacity: 0;
-    transform: translate(var(--sx), var(--sy)) scale(0.96) rotate(var(--rot));
-    filter: blur(1.2px) saturate(0.86) contrast(1.02);
+  0%{
+    opacity:0;
+    transform:translate(var(--sx),var(--sy)) scale(.96) rotate(var(--rot));
+    filter:blur(1px);
   }
 
-  100% {
-    opacity: 1;
-    transform: translate(0, 0) scale(1) rotate(var(--rot));
-    filter: blur(0) saturate(0.96) contrast(1);
+  100%{
+    opacity:1;
+    transform:translate(0,0) scale(1) rotate(var(--rot));
+    filter:none;
   }
 }
 
@@ -8442,17 +8442,14 @@ body {
   visibility: visible !important;
 }
 
-.profile.carl .carl-rrod-ring {
-  position: absolute !important;
-  inset: 2px !important;
-  z-index: 999 !important;
-  display: block !important;
-  border: 1.5px solid transparent !important;
-  border-radius: 50% !important;
-  box-sizing: border-box !important;
-  pointer-events: none !important;
-  opacity: 0;
-  animation: c17CarlRrod123 1.50s steps(1, end) 1 both !important;
+.profile.carl .carl-rrod-ring{
+    position:absolute;
+    inset:2px;
+    border:1.5px solid transparent;
+    border-radius:50%;
+    opacity:0;
+    pointer-events:none;
+    animation:c17CarlRrod123 1.45s steps(1,end) 1 both;
 }
 
 @keyframes c17CarlRrod123 {
