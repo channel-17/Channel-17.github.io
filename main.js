@@ -103,6 +103,7 @@ if (loaderScene) {
 }
 const AVATAR_HALF = AVATAR_SIZE / 2;
 const frankFrames = [
+  "blue.frank0.PNG",
   "blue.frank1.PNG",
   "blue.frank2.PNG",
   "blue.frank3.PNG",
