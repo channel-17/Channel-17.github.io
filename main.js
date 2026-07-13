@@ -975,26 +975,30 @@ function releaseDeadHeartTowardCarl() {
     if (!heart.isConnected || contactHandled) return;
     const ratio = Math.max(0, Math.min(1, (flight.currentTime || 0) / flightDuration));
 
-    if (!greySwapStarted && ratio >= 0.735) {
+    if (!greySwapStarted && ratio >= 0.720) {
   greySwapStarted = true;
 
-  const redLayer = heart.querySelector(".carl-heart-red");
-  const greyLayer = heart.querySelector(".carl-heart-grey");
+  greySwapStarted = true;
 
-  heart.classList.remove("pink-stage");
-  heart.classList.add("grey-taking-over", "grey-return-visible", "dead-stage");
+const redLayer = heart.querySelector(".carl-heart-red");
+const greyLayer = heart.querySelector(".carl-heart-grey");
 
-  if (redLayer) {
-    redLayer.style.setProperty("opacity", "0", "important");
-    redLayer.style.setProperty("visibility", "hidden", "important");
-  }
+heart.classList.remove("pink-stage");
+heart.classList.add("grey-taking-over");
 
-  if (greyLayer) {
-    greyLayer.style.setProperty("opacity", "1", "important");
-    greyLayer.style.setProperty("visibility", "visible", "important");
-    greyLayer.style.setProperty("display", "block", "important");
-  }
+if (redLayer) {
+  redLayer.style.opacity = "0";
+  redLayer.style.visibility = "hidden";
 }
+
+if (greyLayer) {
+  greyLayer.style.display = "block";
+  greyLayer.style.visibility = "visible";
+  greyLayer.style.opacity = "1";
+}
+
+heart.classList.add("grey-return-visible");
+heart.classList.add("dead-stage");
 
     requestAnimationFrame(syncGreyHeartToFlight);
   };
