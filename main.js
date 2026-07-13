@@ -345,8 +345,7 @@ const normalAssets = [
 ];
 
 const loaderTargets = [
-  // C.17 LOADER BRICK — nine total on the loader bar: 8 regular profiles + Carl final-left.
-  // Sporadic tactical hits only. No coin-roll, no left-to-right fill, no profile under Carl.
+  // Nine regular profiles bury the loader. Carl is the tenth and final far-left hit.
   { x: 44.2, y: 34.02, zone: "loader", cluster: "loader-mid-left" },
   { x: 73.4, y: 34.20, zone: "loader", cluster: "loader-far-right" },
   { x: 56.0, y: 34.08, zone: "loader", cluster: "loader-center" },
@@ -354,7 +353,8 @@ const loaderTargets = [
   { x: 36.8, y: 34.18, zone: "loader", cluster: "loader-left-safe" },
   { x: 61.4, y: 34.00, zone: "loader", cluster: "loader-center-right" },
   { x: 49.8, y: 34.30, zone: "loader", cluster: "loader-mid-low" },
-  { x: 78.1, y: 34.06, zone: "loader", cluster: "loader-right-cap" }
+  { x: 78.1, y: 34.06, zone: "loader", cluster: "loader-right-cap" },
+  { x: 29.6, y: 34.12, zone: "loader", cluster: "loader-carl-old-position" }
 ];
 
 const symbolTargets = [
@@ -379,7 +379,7 @@ const coverageTargets = [...loaderTargets, ...symbolTargets, ...missTargets];
 // Hearts begin at 17% as sparse field-smoke, not a wall and not a lane.
 // One pink heart rises like the others, gets flicked by the top-right system/fan, visibly breaks on-screen,
 // then overcorrects through a fast wind curl and completes an electric edge-contact with Carl.
-const CARL_ZONE = { x: 25.6, y: 34.18 };
+const CARL_ZONE = { x: 21.4, y: 34.18 };
 const CARL_HEART_START = { x: 82, y: 98 };
 const CARL_HEART_CONTACT = { x: CARL_ZONE.x + 3.6, y: CARL_ZONE.y + 0.04 };
 const CARL_HEART_PATH = [
@@ -391,17 +391,17 @@ const CARL_HEART_PATH = [
   { left:"84%", top:"33%",  transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.39 },
   { left:"82%", top:"18%",  transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.46 },
 
-  /* soft sideways rejection — still rising */
-  { left:"80%", top:"16.8%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.49 },
-  { left:"79%", top:"15.8%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.52 },
-  { left:"77%", top:"14.7%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.55 },
-  { left:"74%", top:"13.4%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.58 },
-  { left:"70%", top:"12%",   transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.61 },
-  { left:"65%", top:"10.5%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.64 },
-  { left:"59%", top:"8.9%",  transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.67 },
-  { left:"52%", top:"7%",    transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.695 },
-  { left:"44%", top:"4.5%",  transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.705 },
-  { left:"44%", top:"4.5%",  transform:"translate(-50%,-50%) scale(1)", opacity:0, offset:.706 },
+    /* light brush off the original helium lane — never drops, never shoots left */
+  { left:"81%", top:"16.5%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.49 },
+  { left:"80%", top:"14.8%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.52 },
+  { left:"78.5%", top:"13%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.55 },
+  { left:"76.5%", top:"11%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.58 },
+  { left:"74%", top:"8.8%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.61 },
+  { left:"71.5%", top:"6.4%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.64 },
+  { left:"69%", top:"3.8%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.67 },
+  { left:"66.5%", top:"1%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.695 },
+  { left:"64%", top:"-3%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.705 },
+  { left:"64%", top:"-3%", transform:"translate(-50%,-50%) scale(1)", opacity:0, offset:.706 },
   /* invisible reset to bottom-left */
   { left:"12%", top:"103%", transform:"translate(-50%,-50%) scale(1)", opacity:0, offset:.72 },
 
@@ -544,13 +544,29 @@ function startHeartSmoke() {
 }
 
 function startAttack() {
-  // LOADER BAR: the system slams deliberate cover pieces onto the bar, waits, then chooses the next target.
-  // Mission: bury the loader/authentic signal and stop. Carl is the final far-left hit.
+  // Tight, irregular magnetic hits. Nine regular profiles, then Carl seals the far-left.
   if (profileTimer) return;
 
-  const slamDelays = [360, 1750, 2920, 4460, 5480, 6960, 8120, 9480];
+  const slamDelays = [
+    260,
+    540,
+    850,
+    1180,
+    1510,
+    1870,
+    2240,
+    2660,
+    3090
+  ];
+
   loaderTargets.forEach((target, index) => {
-    setTimeout(() => spawnProfile("top", 0, { force: target, noAutoRemove: true, loaderBurial: true }), slamDelays[index]);
+    setTimeout(() => {
+      spawnProfile("top", 0, {
+        force: target,
+        noAutoRemove: true,
+        loaderBurial: true
+      });
+    }, slamDelays[index]);
   });
 
   setTimeout(() => {
@@ -558,8 +574,15 @@ function startAttack() {
       carlSeen = true;
       spawnCarl();
     }
+
     loaderCoverageDone = true;
-  }, 11020);
+  }, 3520);
+
+  slashTimer = setInterval(() => {
+    if (completed) return;
+    spawnSlash(randomSide());
+  }, 4200);
+}
 
   slashTimer = setInterval(() => {
     if (completed) return;
