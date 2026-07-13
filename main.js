@@ -1010,26 +1010,28 @@ function releaseDeadHeartTowardCarl() {
     greyLayer.style.setProperty("transition", "none", "important");
   }
 
+    let greySyncFrame = 0;
+
   const syncGreyHeartToPosition = () => {
-    if (!heart.isConnected || contactHandled) return;
+    if (!heart.isConnected || contactHandled || greyFadeComplete) {
+      cancelAnimationFrame(greySyncFrame);
+      return;
+    }
 
     const rect = heart.getBoundingClientRect();
-    const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
-    const viewportWidth = window.innerWidth || document.documentElement.clientWidth;
+    const viewportHeight =
+      window.innerHeight ||
+      document.documentElement.clientHeight ||
+      1;
 
-    const heartCenterY = rect.top + (rect.height / 2);
-    const heartCenterX = rect.left + (rect.width / 2);
-
+    const heartCenterY = rect.top + rect.height / 2;
     const yRatio = heartCenterY / viewportHeight;
-    const xRatio = heartCenterX / viewportWidth;
 
-    // This can only arm after the heart has completed the invisible reset
-    // and has re-entered from the lower-left.
-    if (!returnClimbStarted && xRatio <= 0.35 && yRatio >= 0.88) {
+    if (!returnClimbStarted && yRatio >= 0.88) {
       returnClimbStarted = true;
     }
 
-    if (returnClimbStarted && !greyFadeComplete) {
+    if (returnClimbStarted) {
       const FADE_START_Y = 0.89;
       const FADE_FULL_Y = 0.61;
 
@@ -1037,12 +1039,13 @@ function releaseDeadHeartTowardCarl() {
         0,
         Math.min(
           1,
-          (FADE_START_Y - yRatio) / (FADE_START_Y - FADE_FULL_Y)
+          (FADE_START_Y - yRatio) /
+          (FADE_START_Y - FADE_FULL_Y)
         )
       );
 
       const easedFade =
-  fadeProgress * fadeProgress * (3 - 2 * fadeProgress);
+        fadeProgress * fadeProgress * (3 - 2 * fadeProgress);
 
       if (redLayer) {
         redLayer.style.setProperty(
@@ -1092,14 +1095,20 @@ function releaseDeadHeartTowardCarl() {
           greyLayer.style.setProperty("opacity", "1", "important");
           greyLayer.style.setProperty("visibility", "visible", "important");
         }
+
+        return;
       }
     }
 
-    requestAnimationFrame(syncGreyHeartToPosition);
+    greySyncFrame = requestAnimationFrame(syncGreyHeartToPosition);
   };
 
-  requestAnimationFrame(syncGreyHeartToPosition);
-
+  // Do not poll the screen for the first sixteen seconds.
+  // Start only shortly before the heart returns on the left.
+  const greySyncStartTimer = setTimeout(() => {
+    if (!heart.isConnected || contactHandled) return;
+    greySyncFrame = requestAnimationFrame(syncGreyHeartToPosition);
+  }, 15800);
   const popOnPixelContact = () => {
     if (contactHandled || !heart.isConnected) return;
     carl = carl || profileField.querySelector(".profile.carl");
@@ -1132,10 +1141,10 @@ function releaseDeadHeartTowardCarl() {
       }
     }
 
-    collisionFrame = requestAnimationFrame(popOnPixelContact);
-  };
-
+    const collisionStartTimer = setTimeout(() => {
+  if (!heart.isConnected || contactHandled) return;
   collisionFrame = requestAnimationFrame(popOnPixelContact);
+}, 18200);
 
   flight.onfinish = () => {
     cancelAnimationFrame(collisionFrame);
