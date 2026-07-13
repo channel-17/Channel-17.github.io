@@ -393,16 +393,15 @@ const CARL_HEART_PATH = [
 
   /* soft sideways rejection — still rising */
   { left:"80%", top:"16.8%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.49 },
-  { left:"78%", top:"15.7%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.52 },
-  { left:"75%", top:"14.6%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.55 },
-  { left:"71%", top:"13.2%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.58 },
-  { left:"66%", top:"11.8%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.61 },
-  { left:"60%", top:"10.2%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.64 },
-  { left:"53%", top:"8.6%",  transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.67 },
-  { left:"45%", top:"6.8%",  transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.695 },
-  { left:"36%", top:"4.2%",  transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.705 },
-  { left:"36%", top:"4.2%",  transform:"translate(-50%,-50%) scale(1)", opacity:0, offset:.706 },
-
+  { left:"79%", top:"15.8%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.52 },
+  { left:"77%", top:"14.7%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.55 },
+  { left:"74%", top:"13.4%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.58 },
+  { left:"70%", top:"12%",   transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.61 },
+  { left:"65%", top:"10.5%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.64 },
+  { left:"59%", top:"8.9%",  transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.67 },
+  { left:"52%", top:"7%",    transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.695 },
+  { left:"44%", top:"4.5%",  transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.705 },
+  { left:"44%", top:"4.5%",  transform:"translate(-50%,-50%) scale(1)", opacity:0, offset:.706 },
   /* invisible reset to bottom-left */
   { left:"12%", top:"103%", transform:"translate(-50%,-50%) scale(1)", opacity:0, offset:.72 },
 
@@ -976,7 +975,7 @@ function releaseDeadHeartTowardCarl() {
     if (!heart.isConnected || contactHandled) return;
     const ratio = Math.max(0, Math.min(1, (flight.currentTime || 0) / flightDuration));
 
-    if (!greySwapStarted && ratio >= 0.755) {
+    if (!greySwapStarted && ratio >= 0.735) {
   greySwapStarted = true;
 
   const redLayer = heart.querySelector(".carl-heart-red");
