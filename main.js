@@ -1030,8 +1030,8 @@ function releaseDeadHeartTowardCarl() {
     }
 
     if (returnClimbStarted && !greyFadeComplete) {
-      const FADE_START_Y = 0.82;
-      const FADE_FULL_Y = 0.69;
+      const FADE_START_Y = 0.89;
+      const FADE_FULL_Y = 0.61;
 
       const fadeProgress = Math.max(
         0,
@@ -1041,10 +1041,13 @@ function releaseDeadHeartTowardCarl() {
         )
       );
 
+      const easedFade =
+  fadeProgress * fadeProgress * (3 - 2 * fadeProgress);
+
       if (redLayer) {
         redLayer.style.setProperty(
           "opacity",
-          String(1 - fadeProgress),
+          String(1 - erasedFade),
           "important"
         );
 
@@ -1058,7 +1061,7 @@ function releaseDeadHeartTowardCarl() {
       if (greyLayer) {
         greyLayer.style.setProperty(
           "opacity",
-          String(fadeProgress),
+          String(erasedFade),
           "important"
         );
 
@@ -1114,6 +1117,7 @@ function releaseDeadHeartTowardCarl() {
 
       if (overlaps) {
         contactHandled = true;
+        heart.classList.add("heart-pop");
         flight.pause();
         heart.classList.remove("grey-taking-over");
         heart.classList.add("dead-stage", "carl-heart-pop");
@@ -1138,6 +1142,7 @@ function releaseDeadHeartTowardCarl() {
     if (!contactHandled) {
       carl = carl || profileField.querySelector(".profile.carl") || spawnCarl();
       contactHandled = true;
+      heart.classList.add("heart-pop");
       heart.classList.remove("grey-taking-over");
       heart.classList.add("dead-stage", "carl-heart-pop");
       if (carl && carl.isConnected) {
