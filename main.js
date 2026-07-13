@@ -1000,6 +1000,8 @@ if (greyLayer) {
 heart.classList.add("grey-return-visible");
 heart.classList.add("dead-stage");
 
+    }
+
     requestAnimationFrame(syncGreyHeartToFlight);
   };
 
