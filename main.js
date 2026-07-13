@@ -1109,7 +1109,7 @@ function releaseDeadHeartTowardCarl() {
     if (!heart.isConnected || contactHandled) return;
     greySyncFrame = requestAnimationFrame(syncGreyHeartToPosition);
   }, 15800);
-  const popOnPixelContact = () => {
+    const popOnPixelContact = () => {
     if (contactHandled || !heart.isConnected) return;
     carl = carl || profileField.querySelector(".profile.carl");
 
@@ -1130,35 +1130,56 @@ function releaseDeadHeartTowardCarl() {
         flight.pause();
         heart.classList.remove("grey-taking-over");
         heart.classList.add("dead-stage", "carl-heart-pop");
+
         const contactX = Math.max(h.left, Math.min(h.right, c.left));
-        const contactY = Math.max(h.top, Math.min(h.bottom, c.top + c.height / 2));
+        const contactY = Math.max(
+          h.top,
+          Math.min(h.bottom, c.top + c.height / 2)
+        );
+
         spawnCarlZap(contactX, contactY);
         triggerCarl(carl);
+
         setTimeout(() => {
           if (heart.isConnected) heart.remove();
         }, 300);
+
         return;
       }
     }
 
-    const collisionStartTimer = setTimeout(() => {
-  if (!heart.isConnected || contactHandled) return;
-  collisionFrame = requestAnimationFrame(popOnPixelContact);
-}, 18200);
+    collisionFrame = requestAnimationFrame(popOnPixelContact);
+  };
+
+  const collisionStartTimer = setTimeout(() => {
+    if (!heart.isConnected || contactHandled) return;
+    collisionFrame = requestAnimationFrame(popOnPixelContact);
+  }, 18200);
 
   flight.onfinish = () => {
+    clearTimeout(greySyncStartTimer);
+    clearTimeout(collisionStartTimer);
+    cancelAnimationFrame(greySyncFrame);
     cancelAnimationFrame(collisionFrame);
+
     if (!contactHandled) {
-      carl = carl || profileField.querySelector(".profile.carl") || spawnCarl();
+      carl =
+        carl ||
+        profileField.querySelector(".profile.carl") ||
+        spawnCarl();
+
       contactHandled = true;
       heart.classList.add("heart-pop");
       heart.classList.remove("grey-taking-over");
       heart.classList.add("dead-stage", "carl-heart-pop");
+
       if (carl && carl.isConnected) {
         const c = carl.getBoundingClientRect();
         spawnCarlZap(c.left, c.top + c.height / 2);
       }
+
       triggerCarl(carl);
+
       setTimeout(() => {
         if (heart.isConnected) heart.remove();
       }, 300);
@@ -1166,7 +1187,11 @@ function releaseDeadHeartTowardCarl() {
   };
 
   setTimeout(() => {
+    clearTimeout(greySyncStartTimer);
+    clearTimeout(collisionStartTimer);
+    cancelAnimationFrame(greySyncFrame);
     cancelAnimationFrame(collisionFrame);
+
     if (heart.isConnected) heart.remove();
   }, flightDuration + 1200);
 }
