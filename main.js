@@ -976,7 +976,6 @@ function releaseDeadHeartTowardCarl() {
     const ratio = Math.max(0, Math.min(1, (flight.currentTime || 0) / flightDuration));
 
     if (!greySwapStarted && ratio >= 0.720) {
-  greySwapStarted = true;
 
   greySwapStarted = true;
 
