@@ -1047,7 +1047,7 @@ function releaseDeadHeartTowardCarl() {
       if (redLayer) {
         redLayer.style.setProperty(
           "opacity",
-          String(1 - erasedFade),
+          String(1 - easedFade),
           "important"
         );
 
@@ -1061,7 +1061,7 @@ function releaseDeadHeartTowardCarl() {
       if (greyLayer) {
         greyLayer.style.setProperty(
           "opacity",
-          String(erasedFade),
+          String(easedFade),
           "important"
         );
 
