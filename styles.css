@@ -8000,16 +8000,14 @@ body {
    - No coin roll / no conveyor / no side-slide under Carl.
 ========================================================= */
 .profile.loader-cover.loader-slam {
-  animation: loaderAvatarSlam 0.74s cubic-bezier(0.08, 0.82, 0.10, 1) forwards !important;
-  transform-origin: center center !important;
-  will-change: transform, opacity, filter;
+  animation: loaderAvatarSlam .52s cubic-bezier(.06,.88,.08,1) forwards !important;
 }
 
 .profile.carl.loader-final-slam,
 .profile.carl.carl-wrong-place.loader-final-slam,
 .profile.carl.carl-zone-anchor.loader-final-slam {
-  z-index: 90 !important;
-  animation: loaderAvatarSlam 0.86s cubic-bezier(0.08, 0.82, 0.10, 1) forwards !important;
+  z-index: 86 !important;
+  animation: loaderAvatarSlam .58s cubic-bezier(.06,.88,.08,1) forwards !important;
 }
 
 @keyframes loaderAvatarSlam {
@@ -8356,7 +8354,7 @@ body {
 .profile.loader-cover.loader-slam,
 .profile.carl.carl-wrong-place.loader-final-slam,
 .profile.carl.carl-zone-anchor.loader-final-slam {
-  animation: loaderAvatarSlam 0.74s cubic-bezier(0.08, 0.82, 0.10, 1) forwards !important;
+  animation: loaderAvatarSlam .52s cubic-bezier(.06,.88,.08,1) forwards !important;
 }
 
 /* The special heart is the same apparent size on both layers. */
