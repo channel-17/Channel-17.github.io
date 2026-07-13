@@ -584,12 +584,6 @@ function startAttack() {
   }, 4200);
 }
 
-  slashTimer = setInterval(() => {
-    if (completed) return;
-    spawnSlash(randomSide());
-  }, 4200);
-}
-
 function startSymbolBattle() {
   // SYMBOL: fewer blue avatars, harder readable impacts, faster hot-steel consumption.
   if (symbolBattleStarted) return;
