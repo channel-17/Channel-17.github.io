@@ -986,43 +986,116 @@ function releaseDeadHeartTowardCarl() {
     carlSeen = true;
   }, 11200);
 
-  // The return climb owns the emotional change. It re-enters red at bottom-left,
-  // then quickly crossfades into the supplied heart.grey.PNG while still far from Carl.
-  let greySwapStarted = false;
-  const syncGreyHeartToFlight = () => {
+    // Position-based red → gray transition.
+  // The heart returns lower-left still red.
+  // It starts changing at roughly 82% screen height
+  // and is completely gray by roughly 69% screen height.
+  let returnClimbStarted = false;
+  let greyFadeComplete = false;
+
+  const redLayer = heart.querySelector(".carl-heart-red");
+  const greyLayer = heart.querySelector(".carl-heart-grey");
+
+  if (redLayer) {
+    redLayer.style.setProperty("opacity", "1", "important");
+    redLayer.style.setProperty("visibility", "visible", "important");
+    redLayer.style.setProperty("transition", "none", "important");
+  }
+
+  if (greyLayer) {
+    greyLayer.style.setProperty("display", "block", "important");
+    greyLayer.style.setProperty("visibility", "visible", "important");
+    greyLayer.style.setProperty("opacity", "0", "important");
+    greyLayer.style.setProperty("transform", "scale(2.28)", "important");
+    greyLayer.style.setProperty("transition", "none", "important");
+  }
+
+  const syncGreyHeartToPosition = () => {
     if (!heart.isConnected || contactHandled) return;
-    const ratio = Math.max(0, Math.min(1, (flight.currentTime || 0) / flightDuration));
 
-    if (!greySwapStarted && ratio >= 0.720) {
+    const rect = heart.getBoundingClientRect();
+    const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+    const viewportWidth = window.innerWidth || document.documentElement.clientWidth;
 
-  greySwapStarted = true;
+    const heartCenterY = rect.top + (rect.height / 2);
+    const heartCenterX = rect.left + (rect.width / 2);
 
-const redLayer = heart.querySelector(".carl-heart-red");
-const greyLayer = heart.querySelector(".carl-heart-grey");
+    const yRatio = heartCenterY / viewportHeight;
+    const xRatio = heartCenterX / viewportWidth;
 
-heart.classList.remove("pink-stage");
-heart.classList.add("grey-taking-over");
-
-if (redLayer) {
-  redLayer.style.opacity = "0";
-  redLayer.style.visibility = "hidden";
-}
-
-if (greyLayer) {
-  greyLayer.style.display = "block";
-  greyLayer.style.visibility = "visible";
-  greyLayer.style.opacity = "1";
-}
-
-heart.classList.add("grey-return-visible");
-heart.classList.add("dead-stage");
-
+    // This can only arm after the heart has completed the invisible reset
+    // and has re-entered from the lower-left.
+    if (!returnClimbStarted && xRatio <= 0.35 && yRatio >= 0.88) {
+      returnClimbStarted = true;
     }
 
-    requestAnimationFrame(syncGreyHeartToFlight);
+    if (returnClimbStarted && !greyFadeComplete) {
+      const FADE_START_Y = 0.82;
+      const FADE_FULL_Y = 0.69;
+
+      const fadeProgress = Math.max(
+        0,
+        Math.min(
+          1,
+          (FADE_START_Y - yRatio) / (FADE_START_Y - FADE_FULL_Y)
+        )
+      );
+
+      if (redLayer) {
+        redLayer.style.setProperty(
+          "opacity",
+          String(1 - fadeProgress),
+          "important"
+        );
+
+        redLayer.style.setProperty(
+          "visibility",
+          fadeProgress >= 1 ? "hidden" : "visible",
+          "important"
+        );
+      }
+
+      if (greyLayer) {
+        greyLayer.style.setProperty(
+          "opacity",
+          String(fadeProgress),
+          "important"
+        );
+
+        greyLayer.style.setProperty(
+          "visibility",
+          "visible",
+          "important"
+        );
+      }
+
+      if (fadeProgress >= 1) {
+        greyFadeComplete = true;
+
+        heart.classList.remove(
+          "pink-stage",
+          "grey-taking-over",
+          "grey-return-visible"
+        );
+
+        heart.classList.add("dead-stage");
+
+        if (redLayer) {
+          redLayer.style.setProperty("opacity", "0", "important");
+          redLayer.style.setProperty("visibility", "hidden", "important");
+        }
+
+        if (greyLayer) {
+          greyLayer.style.setProperty("opacity", "1", "important");
+          greyLayer.style.setProperty("visibility", "visible", "important");
+        }
+      }
+    }
+
+    requestAnimationFrame(syncGreyHeartToPosition);
   };
 
-  requestAnimationFrame(syncGreyHeartToFlight);
+  requestAnimationFrame(syncGreyHeartToPosition);
 
   const popOnPixelContact = () => {
     if (contactHandled || !heart.isConnected) return;
