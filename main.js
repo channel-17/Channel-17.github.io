@@ -952,50 +952,47 @@ function spawnCarl() {
 }
 
 function releaseDeadHeartTowardCarl() {
-  if (!profileField) return;
+  let carl = null;
+  let contactHandled = false;
+  let collisionFrame = 0;
 
   const heart = document.createElement("div");
-  heart.className = "heart carl-heart carl-heart-flight";
-  heart.setAttribute("aria-hidden", "true");
-
+  heart.className = "engage carl-trigger-heart asset-heart pink-stage matrix-error-heart";
+  heart.style.left = `${CARL_HEART_START.x}%`;
+  heart.style.top = `${CARL_HEART_START.y}%`;
+  heart.style.opacity = "0";
+  heart.style.setProperty("animation", "none", "important");
+  heart.style.setProperty("width", "34px", "important");
+  heart.style.setProperty("height", "34px", "important");
   heart.innerHTML = `
-    <img class="carl-heart-layer carl-heart-red" src="${HEART_RED}" alt="">
+    <span class="carl-heart-layer carl-heart-red" aria-hidden="true">💔</span>
     <img class="carl-heart-layer carl-heart-grey" src="${HEART_GREY}" alt="">
   `;
 
-  profileField.appendChild(heart);
+  engagementField.appendChild(heart);
 
-  const viewportWidth =
-    window.innerWidth ||
-    document.documentElement.clientWidth ||
-    390;
+  const flightDuration = 22500;
+  const flight = heart.animate(CARL_HEART_PATH, {
+    duration: flightDuration,
+    easing: "cubic-bezier(.32,.58,.20,1)",
+    fill: "forwards"
+  });
 
-  const viewportHeight =
-    window.innerHeight ||
-    document.documentElement.clientHeight ||
-    844;
-
-  let carl = profileField.querySelector(".profile.carl");
-
-  if (!carl) {
-    carl = spawnCarl();
-  }
-
-  const carlRect = carl.getBoundingClientRect();
+  setTimeout(() => {
+    if (!heart.parentNode) return;
+    carl = profileField.querySelector(".profile.carl") || spawnCarl();
+    carlSeen = true;
+  }, 11200);
 
   let returnClimbStarted = false;
   let greyFadeComplete = false;
-  let contactHandled = false;
-  let collisionFrame = 0;
 
   const redLayer = heart.querySelector(".carl-heart-red");
   const greyLayer = heart.querySelector(".carl-heart-grey");
 
   if (redLayer) {
-    redLayer.style.setProperty("display", "block", "important");
-    redLayer.style.setProperty("visibility", "visible", "important");
     redLayer.style.setProperty("opacity", "1", "important");
-    redLayer.style.setProperty("transform", "scale(1)", "important");
+    redLayer.style.setProperty("visibility", "visible", "important");
     redLayer.style.setProperty("transition", "none", "important");
   }
 
@@ -1055,8 +1052,8 @@ function releaseDeadHeartTowardCarl() {
         );
 
         redLayer.style.setProperty(
-          "transform",
-          `scale(${1 - easedFade * 0.16})`,
+          "visibility",
+          fadeProgress >= 1 ? "hidden" : "visible",
           "important"
         );
       }
@@ -1069,15 +1066,22 @@ function releaseDeadHeartTowardCarl() {
         );
 
         greyLayer.style.setProperty(
-          "transform",
-          `scale(${2.28 - easedFade * 0.28})`,
+          "visibility",
+          "visible",
           "important"
         );
       }
 
       if (fadeProgress >= 1) {
         greyFadeComplete = true;
-        heart.classList.add("grey-taking-over");
+
+        heart.classList.remove(
+          "pink-stage",
+          "grey-taking-over",
+          "grey-return-visible"
+        );
+
+        heart.classList.add("dead-stage");
 
         if (redLayer) {
           redLayer.style.setProperty("opacity", "0", "important");
@@ -1096,72 +1100,6 @@ function releaseDeadHeartTowardCarl() {
 
   requestAnimationFrame(syncGreyHeartToPosition);
 
-  const startX = viewportWidth + 42;
-  const startY = viewportHeight * 0.84;
-
-  const farRightX = viewportWidth * 0.91;
-  const upperRightY = viewportHeight * 0.26;
-
-  const blowLeftX = -56;
-  const blowLeftY = viewportHeight * 0.19;
-
-  const resetLeftX = -48;
-  const resetBottomY = viewportHeight + 52;
-
-  const leftRiseX = viewportWidth * 0.10;
-  const leftRiseY = viewportHeight * 0.78;
-
-  const leftMiddleX = viewportWidth * 0.22;
-  const leftMiddleY = viewportHeight * 0.56;
-
-  const finalX =
-    carlRect.left +
-    Math.min(carlRect.width * 0.18, 8);
-
-  const finalY =
-    carlRect.top +
-    carlRect.height * 0.50;
-
-  const flightDuration = 20500;
-
-  const flight = heart.animate(
-    [
-      {
-        transform: `translate3d(${startX}px, ${startY}px, 0) rotate(-5deg)`,
-        offset: 0
-      },
-      {
-        transform: `translate3d(${farRightX}px, ${upperRightY}px, 0) rotate(8deg)`,
-        offset: 0.39
-      },
-      {
-        transform: `translate3d(${blowLeftX}px, ${blowLeftY}px, 0) rotate(-18deg)`,
-        offset: 0.49
-      },
-      {
-        transform: `translate3d(${resetLeftX}px, ${resetBottomY}px, 0) rotate(-9deg)`,
-        offset: 0.495
-      },
-      {
-        transform: `translate3d(${leftRiseX}px, ${leftRiseY}px, 0) rotate(6deg)`,
-        offset: 0.64
-      },
-      {
-        transform: `translate3d(${leftMiddleX}px, ${leftMiddleY}px, 0) rotate(-7deg)`,
-        offset: 0.78
-      },
-      {
-        transform: `translate3d(${finalX}px, ${finalY}px, 0) rotate(2deg)`,
-        offset: 1
-      }
-    ],
-    {
-      duration: flightDuration,
-      easing: "linear",
-      fill: "forwards"
-    }
-  );
-
   const popOnPixelContact = () => {
     if (contactHandled || !heart.isConnected) return;
 
@@ -1173,14 +1111,26 @@ function releaseDeadHeartTowardCarl() {
       const h = heart.getBoundingClientRect();
       const c = carl.getBoundingClientRect();
 
-      const touching =
-        h.right >= c.left &&
-        h.left <= c.right &&
-        h.bottom >= c.top &&
-        h.top <= c.bottom;
+      const heartCX = h.left + h.width / 2;
+      const heartCY = h.top + h.height / 2;
+      const carlCX = c.left + c.width / 2;
+      const carlCY = c.top + c.height / 2;
 
-      if (touching) {
+      const distance = Math.hypot(
+        heartCX - carlCX,
+        heartCY - carlCY
+      );
+
+      const contactDistance =
+        Math.min(c.width, c.height) / 2 + 15;
+
+      const overlaps =
+        distance <= contactDistance;
+
+      if (overlaps) {
         contactHandled = true;
+
+        heart.classList.add("heart-pop");
         flight.pause();
 
         heart.classList.remove("grey-taking-over");
