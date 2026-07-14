@@ -952,53 +952,50 @@ function spawnCarl() {
 }
 
 function releaseDeadHeartTowardCarl() {
-  let carl = null;
-  let contactHandled = false;
-  let collisionFrame = 0;
+  if (!profileField) return;
 
   const heart = document.createElement("div");
-  heart.className = "engage carl-trigger-heart asset-heart pink-stage matrix-error-heart";
-  heart.style.left = `${CARL_HEART_START.x}%`;
-  heart.style.top = `${CARL_HEART_START.y}%`;
-  heart.style.opacity = "0";
-  heart.style.setProperty("animation", "none", "important");
-  heart.style.setProperty("width", "34px", "important");
-  heart.style.setProperty("height", "34px", "important");
+  heart.className = "heart carl-heart carl-heart-flight";
+  heart.setAttribute("aria-hidden", "true");
+
   heart.innerHTML = `
-    <span class="carl-heart-layer carl-heart-red" aria-hidden="true">💔</span>
+    <img class="carl-heart-layer carl-heart-red" src="${HEART_RED}" alt="">
     <img class="carl-heart-layer carl-heart-grey" src="${HEART_GREY}" alt="">
   `;
 
-  engagementField.appendChild(heart);
+  profileField.appendChild(heart);
 
-  const flightDuration = 22500;
-  const flight = heart.animate(CARL_HEART_PATH, {
-    duration: flightDuration,
-    easing: "cubic-bezier(.32,.58,.20,1)",
-    fill: "forwards"
-  });
+  const viewportWidth =
+    window.innerWidth ||
+    document.documentElement.clientWidth ||
+    390;
 
-  // Carl already exists as the final loader avatar. Resolve the exact live element
-  // before the return climb so pixel contact can drive the pop instead of a blind timer.
-  setTimeout(() => {
-    if (!heart.parentNode) return;
-    carl = profileField.querySelector(".profile.carl") || spawnCarl();
-    carlSeen = true;
-  }, 11200);
+  const viewportHeight =
+    window.innerHeight ||
+    document.documentElement.clientHeight ||
+    844;
 
-    // Position-based red → gray transition.
-  // The heart returns lower-left still red.
-  // It starts changing at roughly 82% screen height
-  // and is completely gray by roughly 69% screen height.
+  let carl = profileField.querySelector(".profile.carl");
+
+  if (!carl) {
+    carl = spawnCarl();
+  }
+
+  const carlRect = carl.getBoundingClientRect();
+
   let returnClimbStarted = false;
   let greyFadeComplete = false;
+  let contactHandled = false;
+  let collisionFrame = 0;
 
   const redLayer = heart.querySelector(".carl-heart-red");
   const greyLayer = heart.querySelector(".carl-heart-grey");
 
   if (redLayer) {
-    redLayer.style.setProperty("opacity", "1", "important");
+    redLayer.style.setProperty("display", "block", "important");
     redLayer.style.setProperty("visibility", "visible", "important");
+    redLayer.style.setProperty("opacity", "1", "important");
+    redLayer.style.setProperty("transform", "scale(1)", "important");
     redLayer.style.setProperty("transition", "none", "important");
   }
 
@@ -1010,28 +1007,29 @@ function releaseDeadHeartTowardCarl() {
     greyLayer.style.setProperty("transition", "none", "important");
   }
 
-    let greySyncFrame = 0;
-
   const syncGreyHeartToPosition = () => {
-    if (!heart.isConnected || contactHandled || greyFadeComplete) {
-      cancelAnimationFrame(greySyncFrame);
-      return;
-    }
+    if (!heart.isConnected || contactHandled) return;
 
     const rect = heart.getBoundingClientRect();
     const viewportHeight =
       window.innerHeight ||
-      document.documentElement.clientHeight ||
-      1;
+      document.documentElement.clientHeight;
+
+    const viewportWidth =
+      window.innerWidth ||
+      document.documentElement.clientWidth;
 
     const heartCenterY = rect.top + rect.height / 2;
-    const yRatio = heartCenterY / viewportHeight;
+    const heartCenterX = rect.left + rect.width / 2;
 
-    if (!returnClimbStarted && yRatio >= 0.88) {
+    const yRatio = heartCenterY / viewportHeight;
+    const xRatio = heartCenterX / viewportWidth;
+
+    if (!returnClimbStarted && xRatio <= 0.35 && yRatio >= 0.88) {
       returnClimbStarted = true;
     }
 
-    if (returnClimbStarted) {
+    if (returnClimbStarted && !greyFadeComplete) {
       const FADE_START_Y = 0.89;
       const FADE_FULL_Y = 0.61;
 
@@ -1040,12 +1038,14 @@ function releaseDeadHeartTowardCarl() {
         Math.min(
           1,
           (FADE_START_Y - yRatio) /
-          (FADE_START_Y - FADE_FULL_Y)
+            (FADE_START_Y - FADE_FULL_Y)
         )
       );
 
       const easedFade =
-        fadeProgress * fadeProgress * (3 - 2 * fadeProgress);
+        fadeProgress *
+        fadeProgress *
+        (3 - 2 * fadeProgress);
 
       if (redLayer) {
         redLayer.style.setProperty(
@@ -1055,8 +1055,8 @@ function releaseDeadHeartTowardCarl() {
         );
 
         redLayer.style.setProperty(
-          "visibility",
-          fadeProgress >= 1 ? "hidden" : "visible",
+          "transform",
+          `scale(${1 - easedFade * 0.16})`,
           "important"
         );
       }
@@ -1069,22 +1069,15 @@ function releaseDeadHeartTowardCarl() {
         );
 
         greyLayer.style.setProperty(
-          "visibility",
-          "visible",
+          "transform",
+          `scale(${2.28 - easedFade * 0.28})`,
           "important"
         );
       }
 
       if (fadeProgress >= 1) {
         greyFadeComplete = true;
-
-        heart.classList.remove(
-          "pink-stage",
-          "grey-taking-over",
-          "grey-return-visible"
-        );
-
-        heart.classList.add("dead-stage");
+        heart.classList.add("grey-taking-over");
 
         if (redLayer) {
           redLayer.style.setProperty("opacity", "0", "important");
@@ -1095,46 +1088,118 @@ function releaseDeadHeartTowardCarl() {
           greyLayer.style.setProperty("opacity", "1", "important");
           greyLayer.style.setProperty("visibility", "visible", "important");
         }
-
-        return;
       }
     }
 
-    greySyncFrame = requestAnimationFrame(syncGreyHeartToPosition);
+    requestAnimationFrame(syncGreyHeartToPosition);
   };
 
-  // Do not poll the screen for the first sixteen seconds.
-  // Start only shortly before the heart returns on the left.
-  const greySyncStartTimer = setTimeout(() => {
-    if (!heart.isConnected || contactHandled) return;
-    greySyncFrame = requestAnimationFrame(syncGreyHeartToPosition);
-  }, 15800);
-    const popOnPixelContact = () => {
+  requestAnimationFrame(syncGreyHeartToPosition);
+
+  const startX = viewportWidth + 42;
+  const startY = viewportHeight * 0.84;
+
+  const farRightX = viewportWidth * 0.91;
+  const upperRightY = viewportHeight * 0.26;
+
+  const blowLeftX = -56;
+  const blowLeftY = viewportHeight * 0.19;
+
+  const resetLeftX = -48;
+  const resetBottomY = viewportHeight + 52;
+
+  const leftRiseX = viewportWidth * 0.10;
+  const leftRiseY = viewportHeight * 0.78;
+
+  const leftMiddleX = viewportWidth * 0.22;
+  const leftMiddleY = viewportHeight * 0.56;
+
+  const finalX =
+    carlRect.left +
+    Math.min(carlRect.width * 0.18, 8);
+
+  const finalY =
+    carlRect.top +
+    carlRect.height * 0.50;
+
+  const flightDuration = 20500;
+
+  const flight = heart.animate(
+    [
+      {
+        transform: `translate3d(${startX}px, ${startY}px, 0) rotate(-5deg)`,
+        offset: 0
+      },
+      {
+        transform: `translate3d(${farRightX}px, ${upperRightY}px, 0) rotate(8deg)`,
+        offset: 0.39
+      },
+      {
+        transform: `translate3d(${blowLeftX}px, ${blowLeftY}px, 0) rotate(-18deg)`,
+        offset: 0.49
+      },
+      {
+        transform: `translate3d(${resetLeftX}px, ${resetBottomY}px, 0) rotate(-9deg)`,
+        offset: 0.495
+      },
+      {
+        transform: `translate3d(${leftRiseX}px, ${leftRiseY}px, 0) rotate(6deg)`,
+        offset: 0.64
+      },
+      {
+        transform: `translate3d(${leftMiddleX}px, ${leftMiddleY}px, 0) rotate(-7deg)`,
+        offset: 0.78
+      },
+      {
+        transform: `translate3d(${finalX}px, ${finalY}px, 0) rotate(2deg)`,
+        offset: 1
+      }
+    ],
+    {
+      duration: flightDuration,
+      easing: "linear",
+      fill: "forwards"
+    }
+  );
+
+  const popOnPixelContact = () => {
     if (contactHandled || !heart.isConnected) return;
-    carl = carl || profileField.querySelector(".profile.carl");
+
+    carl =
+      carl ||
+      profileField.querySelector(".profile.carl");
 
     if (carl && carl.isConnected) {
       const h = heart.getBoundingClientRect();
       const c = carl.getBoundingClientRect();
-      const heartCX = h.left + h.width / 2;
-      const heartCY = h.top + h.height / 2;
-      const carlCX = c.left + c.width / 2;
-      const carlCY = c.top + c.height / 2;
-      const distance = Math.hypot(heartCX - carlCX, heartCY - carlCY);
-      const contactDistance = (Math.min(c.width, c.height) / 2) + 15;
-      const overlaps = distance <= contactDistance;
 
-      if (overlaps) {
+      const touching =
+        h.right >= c.left &&
+        h.left <= c.right &&
+        h.bottom >= c.top &&
+        h.top <= c.bottom;
+
+      if (touching) {
         contactHandled = true;
-        heart.classList.add("heart-pop");
         flight.pause();
-        heart.classList.remove("grey-taking-over");
-        heart.classList.add("dead-stage", "carl-heart-pop");
 
-        const contactX = Math.max(h.left, Math.min(h.right, c.left));
+        heart.classList.remove("grey-taking-over");
+        heart.classList.add(
+          "dead-stage",
+          "carl-heart-pop"
+        );
+
+        const contactX = Math.max(
+          h.left,
+          Math.min(h.right, c.left)
+        );
+
         const contactY = Math.max(
           h.top,
-          Math.min(h.bottom, c.top + c.height / 2)
+          Math.min(
+            h.bottom,
+            c.top + c.height / 2
+          )
         );
 
         spawnCarlZap(contactX, contactY);
@@ -1148,18 +1213,14 @@ function releaseDeadHeartTowardCarl() {
       }
     }
 
-    collisionFrame = requestAnimationFrame(popOnPixelContact);
+    collisionFrame =
+      requestAnimationFrame(popOnPixelContact);
   };
 
-  const collisionStartTimer = setTimeout(() => {
-    if (!heart.isConnected || contactHandled) return;
-    collisionFrame = requestAnimationFrame(popOnPixelContact);
-  }, 18200);
+  collisionFrame =
+    requestAnimationFrame(popOnPixelContact);
 
   flight.onfinish = () => {
-    clearTimeout(greySyncStartTimer);
-    clearTimeout(collisionStartTimer);
-    cancelAnimationFrame(greySyncFrame);
     cancelAnimationFrame(collisionFrame);
 
     if (!contactHandled) {
@@ -1169,13 +1230,21 @@ function releaseDeadHeartTowardCarl() {
         spawnCarl();
 
       contactHandled = true;
+
       heart.classList.add("heart-pop");
       heart.classList.remove("grey-taking-over");
-      heart.classList.add("dead-stage", "carl-heart-pop");
+      heart.classList.add(
+        "dead-stage",
+        "carl-heart-pop"
+      );
 
       if (carl && carl.isConnected) {
         const c = carl.getBoundingClientRect();
-        spawnCarlZap(c.left, c.top + c.height / 2);
+
+        spawnCarlZap(
+          c.left,
+          c.top + c.height / 2
+        );
       }
 
       triggerCarl(carl);
@@ -1187,9 +1256,6 @@ function releaseDeadHeartTowardCarl() {
   };
 
   setTimeout(() => {
-    clearTimeout(greySyncStartTimer);
-    clearTimeout(collisionStartTimer);
-    cancelAnimationFrame(greySyncFrame);
     cancelAnimationFrame(collisionFrame);
 
     if (heart.isConnected) heart.remove();
