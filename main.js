@@ -1140,7 +1140,7 @@ function releaseDeadHeartTowardCarl() {
 
           greyLayer.style.setProperty(
             "transform",
-            "scale(2.10)",
+            "scale(1.98)",
             "important"
           );
         }
@@ -1168,8 +1168,8 @@ function releaseDeadHeartTowardCarl() {
         These inner rectangles represent the visible heart and
         visible Carl profile instead of their oversized boxes.
       */
-      const heartInsetX = heartRect.width * 0.24;
-      const heartInsetY = heartRect.height * 0.20;
+      const heartInsetX = heartRect.width * 0.34;
+      const heartInsetY = heartRect.height * 0.28;
 
       const visibleHeart = {
         left: heartRect.left + heartInsetX,
@@ -1272,7 +1272,7 @@ function releaseDeadHeartTowardCarl() {
           if (heart.isConnected) {
             heart.remove();
           }
-        }, 170);
+        }, 110);
 
         return;
       }
