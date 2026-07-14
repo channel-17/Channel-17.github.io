@@ -1004,7 +1004,7 @@ function releaseDeadHeartTowardCarl() {
     greyLayer.style.setProperty("transition", "none", "important");
   }
 
-  const syncGreyHeartToPosition = () => {
+    const syncGreyHeartToPosition = () => {
     if (!heart.isConnected || contactHandled) return;
 
     const rect = heart.getBoundingClientRect();
@@ -1022,7 +1022,16 @@ function releaseDeadHeartTowardCarl() {
     const yRatio = heartCenterY / viewportHeight;
     const xRatio = heartCenterX / viewportWidth;
 
-    if (!returnClimbStarted && xRatio <= 0.35 && yRatio >= 0.88) {
+    /*
+      The fade is allowed to begin only after Little Miss Grey
+      has completed the invisible reset and re-entered on the left.
+    */
+    if (
+      !returnClimbStarted &&
+      xRatio <= 0.35 &&
+      yRatio <= 0.96 &&
+      yRatio >= 0.86
+    ) {
       returnClimbStarted = true;
     }
 
@@ -1030,7 +1039,7 @@ function releaseDeadHeartTowardCarl() {
       const FADE_START_Y = 0.89;
       const FADE_FULL_Y = 0.61;
 
-      const fadeProgress = Math.max(
+      const rawProgress = Math.max(
         0,
         Math.min(
           1,
@@ -1039,10 +1048,19 @@ function releaseDeadHeartTowardCarl() {
         )
       );
 
+      /*
+        Smootherstep removes the visible halfway hitch while
+        preserving the two approved fade lines.
+      */
       const easedFade =
-        fadeProgress *
-        fadeProgress *
-        (3 - 2 * fadeProgress);
+        rawProgress *
+        rawProgress *
+        rawProgress *
+        (
+          rawProgress *
+          (rawProgress * 6 - 15) +
+          10
+        );
 
       if (redLayer) {
         redLayer.style.setProperty(
@@ -1053,7 +1071,7 @@ function releaseDeadHeartTowardCarl() {
 
         redLayer.style.setProperty(
           "visibility",
-          fadeProgress >= 1 ? "hidden" : "visible",
+          easedFade >= 0.995 ? "hidden" : "visible",
           "important"
         );
       }
@@ -1070,9 +1088,19 @@ function releaseDeadHeartTowardCarl() {
           "visible",
           "important"
         );
+
+        /*
+          Keep the gray asset from visibly jumping in size
+          while it takes over from the emoji.
+        */
+        greyLayer.style.setProperty(
+          "transform",
+          `scale(${2.28 - easedFade * 0.18})`,
+          "important"
+        );
       }
 
-      if (fadeProgress >= 1) {
+      if (rawProgress >= 1) {
         greyFadeComplete = true;
 
         heart.classList.remove(
@@ -1084,13 +1112,37 @@ function releaseDeadHeartTowardCarl() {
         heart.classList.add("dead-stage");
 
         if (redLayer) {
-          redLayer.style.setProperty("opacity", "0", "important");
-          redLayer.style.setProperty("visibility", "hidden", "important");
+          redLayer.style.setProperty(
+            "opacity",
+            "0",
+            "important"
+          );
+
+          redLayer.style.setProperty(
+            "visibility",
+            "hidden",
+            "important"
+          );
         }
 
         if (greyLayer) {
-          greyLayer.style.setProperty("opacity", "1", "important");
-          greyLayer.style.setProperty("visibility", "visible", "important");
+          greyLayer.style.setProperty(
+            "opacity",
+            "1",
+            "important"
+          );
+
+          greyLayer.style.setProperty(
+            "visibility",
+            "visible",
+            "important"
+          );
+
+          greyLayer.style.setProperty(
+            "transform",
+            "scale(2.10)",
+            "important"
+          );
         }
       }
     }
@@ -1108,47 +1160,108 @@ function releaseDeadHeartTowardCarl() {
       profileField.querySelector(".profile.carl");
 
     if (carl && carl.isConnected) {
-      const h = heart.getBoundingClientRect();
-      const c = carl.getBoundingClientRect();
+      const heartRect = heart.getBoundingClientRect();
+      const carlRect = carl.getBoundingClientRect();
 
-      const heartCX = h.left + h.width / 2;
-      const heartCY = h.top + h.height / 2;
-      const carlCX = c.left + c.width / 2;
-      const carlCY = c.top + c.height / 2;
+      /*
+        Ignore the transparent padding around the gray PNG.
+        These inner rectangles represent the visible heart and
+        visible Carl profile instead of their oversized boxes.
+      */
+      const heartInsetX = heartRect.width * 0.24;
+      const heartInsetY = heartRect.height * 0.20;
 
-      const distance = Math.hypot(
-        heartCX - carlCX,
-        heartCY - carlCY
-      );
+      const visibleHeart = {
+        left: heartRect.left + heartInsetX,
+        right: heartRect.right - heartInsetX,
+        top: heartRect.top + heartInsetY,
+        bottom: heartRect.bottom - heartInsetY
+      };
 
-      const contactDistance =
-        Math.min(c.width, c.height) / 2 + 15;
+      const carlInset = 2;
 
-      const overlaps =
-        distance <= contactDistance;
+      const visibleCarl = {
+        left: carlRect.left + carlInset,
+        right: carlRect.right - carlInset,
+        top: carlRect.top + carlInset,
+        bottom: carlRect.bottom - carlInset
+      };
 
-      if (overlaps) {
+      const touching =
+        visibleHeart.right >= visibleCarl.left &&
+        visibleHeart.left <= visibleCarl.right &&
+        visibleHeart.bottom >= visibleCarl.top &&
+        visibleHeart.top <= visibleCarl.bottom;
+
+      if (touching) {
         contactHandled = true;
+        cancelAnimationFrame(collisionFrame);
 
-        heart.classList.add("heart-pop");
+        /*
+          Freeze on the exact first-contact frame.
+          No landing, hovering or sliding across Carl.
+        */
         flight.pause();
 
-        heart.classList.remove("grey-taking-over");
+        try {
+          flight.commitStyles();
+        } catch (error) {
+          // Safari may not expose commitStyles; pause still freezes it.
+        }
+
+        heart.classList.remove(
+          "pink-stage",
+          "grey-taking-over",
+          "grey-return-visible"
+        );
+
         heart.classList.add(
           "dead-stage",
           "carl-heart-pop"
         );
 
+        if (redLayer) {
+          redLayer.style.setProperty(
+            "opacity",
+            "0",
+            "important"
+          );
+
+          redLayer.style.setProperty(
+            "visibility",
+            "hidden",
+            "important"
+          );
+        }
+
+        if (greyLayer) {
+          greyLayer.style.setProperty(
+            "opacity",
+            "1",
+            "important"
+          );
+
+          greyLayer.style.setProperty(
+            "visibility",
+            "visible",
+            "important"
+          );
+        }
+
         const contactX = Math.max(
-          h.left,
-          Math.min(h.right, c.left)
+          visibleHeart.left,
+          Math.min(
+            visibleHeart.right,
+            visibleCarl.left
+          )
         );
 
         const contactY = Math.max(
-          h.top,
+          visibleHeart.top,
           Math.min(
-            h.bottom,
-            c.top + c.height / 2
+            visibleHeart.bottom,
+            visibleCarl.top +
+              (visibleCarl.bottom - visibleCarl.top) / 2
           )
         );
 
@@ -1156,8 +1269,10 @@ function releaseDeadHeartTowardCarl() {
         triggerCarl(carl);
 
         setTimeout(() => {
-          if (heart.isConnected) heart.remove();
-        }, 300);
+          if (heart.isConnected) {
+            heart.remove();
+          }
+        }, 170);
 
         return;
       }
