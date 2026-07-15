@@ -384,14 +384,17 @@ const CARL_ZONE = { x: 21.4, y: 34.18 };
 const CARL_HEART_START = { x: 82, y: 98 };
 const CARL_HEART_CONTACT = { x: CARL_ZONE.x + 3.6, y: CARL_ZONE.y + 0.04 };
 const CARL_HEART_PATH = [
-  { left:"82%", top:"103%", transform:"translate(-50%,-50%) scale(1)", opacity:0, offset:0 },
-  { left:"83%", top:"96%",  transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.04 },
-  { left:"81%", top:"82%",  transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.13 },
-  { left:"84%", top:"66%",  transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.22 },
-  { left:"82%", top:"49%",  transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.31 },
-  { left:"84%", top:"33%",  transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.39 },
-  { left:"82%", top:"18%",  transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.46 },
-
+  { left:"82%",   top:"103%", transform:"translate(-50%,-50%) scale(1) rotate(-2deg)", opacity:0, offset:0 },
+  { left:"82.6%", top:"96%",  transform:"translate(-50%,-50%) scale(1) rotate(-1deg)", opacity:1, offset:.04 },
+  { left:"81.4%", top:"88%",  transform:"translate(-50%,-50%) scale(1) rotate(1deg)",  opacity:1, offset:.095 },
+  { left:"82.8%", top:"78%",  transform:"translate(-50%,-50%) scale(1) rotate(2deg)",  opacity:1, offset:.15 },
+  { left:"81.9%", top:"68%",  transform:"translate(-50%,-50%) scale(1) rotate(0deg)",  opacity:1, offset:.205 },
+  { left:"83.2%", top:"58%",  transform:"translate(-50%,-50%) scale(1) rotate(-2deg)", opacity:1, offset:.26 },
+  { left:"82.1%", top:"48%",  transform:"translate(-50%,-50%) scale(1) rotate(-1deg)", opacity:1, offset:.31 },
+  { left:"83.4%", top:"39%",  transform:"translate(-50%,-50%) scale(1) rotate(1deg)",  opacity:1, offset:.355 },
+  { left:"82.5%", top:"31%",  transform:"translate(-50%,-50%) scale(1) rotate(2deg)",  opacity:1, offset:.395 },
+  { left:"83.1%", top:"24%",  transform:"translate(-50%,-50%) scale(1) rotate(0deg)",  opacity:1, offset:.43 },
+  { left:"82%",   top:"18%",  transform:"translate(-50%,-50%) scale(1) rotate(-1deg)", opacity:1, offset:.46 },
     /* light brush off the original helium lane — never drops, never shoots left */
   { left:"81%", top:"16.5%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.49 },
   { left:"80%", top:"14.8%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.52 },
