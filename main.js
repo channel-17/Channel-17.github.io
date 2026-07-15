@@ -1348,29 +1348,67 @@ function triggerCarl(carl) {
   if (!carl || !carl.parentNode || carlTriggered) return;
 
   carlTriggered = true;
-  carl.classList.add("carl-impact-visible", "carl-ready", "carl-ring-death");
+  carl.classList.add("carl-impact-visible", "carl-ready");
 
-  // Dedicated inner ring avoids the profile's existing border/erosion animations overriding the RROD.
   const oldRing = carl.querySelector(".carl-rrod-ring");
   if (oldRing) oldRing.remove();
+
   const ring = document.createElement("span");
   ring.className = "carl-rrod-ring";
   ring.setAttribute("aria-hidden", "true");
   carl.appendChild(ring);
 
-  setTimeout(() => {
-  if (!carlOpened && carl && carl.parentNode) {
-    carl.classList.remove(
-      "carl-ready",
-      "carl-ring-death",
-      "carl-impact-visible",
-      "carl-dead-profile"
-    );
+  /*
+    Real RROD:
+    thin red ring flickers 3 times, then holds faintly
+    for the remaining click window.
+  */
+  ring.animate(
+    [
+      { opacity: 0,   transform: "scale(0.96)" },
+      { opacity: 1,   transform: "scale(1)" },
+      { opacity: 0.08, transform: "scale(0.985)" },
+      { opacity: 1,   transform: "scale(1)" },
+      { opacity: 0.12, transform: "scale(0.99)" },
+      { opacity: 1,   transform: "scale(1)" },
+      { opacity: 0.34, transform: "scale(1)" }
+    ],
+    {
+      duration: 820,
+      easing: "steps(1, end)",
+      fill: "forwards"
+    }
+  );
 
-    const activeRing = carl.querySelector(".carl-rrod-ring");
-    if (activeRing) activeRing.remove();
-  }
-}, 2300);
+  carl.animate(
+    [
+      { filter: "none" },
+      { filter: "brightness(1.35) saturate(1.4)" },
+      { filter: "none" },
+      { filter: "brightness(1.2) saturate(1.25)" },
+      { filter: "none" }
+    ],
+    {
+      duration: 520,
+      easing: "steps(1, end)"
+    }
+  );
+
+  setTimeout(() => {
+    if (!carlOpened && carl && carl.parentNode) {
+      carl.classList.remove(
+        "carl-ready",
+        "carl-ring-death",
+        "carl-impact-visible",
+        "carl-dead-profile"
+      );
+
+      const activeRing =
+        carl.querySelector(".carl-rrod-ring");
+
+      if (activeRing) activeRing.remove();
+    }
+  }, 2300);
 }
 
 function openCarlProfile() {
