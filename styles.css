@@ -8956,4 +8956,71 @@ transform:translate(-50%,-50%) scale(.05);
 opacity:0;
 }
 
+   /* =========================================================
+   CARL CONTACT LOCK — CLEAN PIXEL POP + TRUE TRIPLE RROD
+   Heart movement/fade protected.
+========================================================= */
+
+/* Kill every older oversized electrical explosion. */
+.carl-zap-spark.carl-contact-pop {
+  width: 14px !important;
+  height: 14px !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: #fff !important;
+  box-shadow:
+    0 0 0 2px rgba(255,29,37,.92),
+    0 0 7px rgba(255,255,255,.88),
+    0 0 12px rgba(255,29,37,.58) !important;
+  overflow: visible !important;
+  animation: c17CleanPixelPop .20s steps(3,end) forwards !important;
 }
+
+.carl-zap-spark.carl-contact-pop::before,
+.carl-zap-spark.carl-contact-pop::after,
+.carl-zap-spark.carl-contact-pop .carl-zap-core,
+.carl-zap-spark.carl-contact-pop .carl-zap-arc {
+  display: none !important;
+}
+
+@keyframes c17CleanPixelPop {
+  0% {
+    opacity: 0;
+    transform: translate(-50%,-50%) scale(.25);
+  }
+
+  32% {
+    opacity: 1;
+    transform: translate(-50%,-50%) scale(1);
+  }
+
+  68% {
+    opacity: .90;
+    transform: translate(-50%,-50%) scale(.72);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(-50%,-50%) scale(.08);
+  }
+}
+
+/* Ring appearance only. JavaScript controls the exact three flashes. */
+.profile.carl .carl-rrod-ring {
+  position: absolute !important;
+  inset: -2px !important;
+  z-index: 40 !important;
+  display: block !important;
+  box-sizing: border-box !important;
+  border: 3px solid #ff1d25 !important;
+  border-radius: 50% !important;
+  opacity: 0;
+  pointer-events: none !important;
+  animation: none !important;
+  box-shadow:
+    0 0 0 1px rgba(255,29,37,.86),
+    0 0 9px rgba(255,29,37,.96),
+    0 0 20px rgba(255,29,37,.48),
+    inset 0 0 5px rgba(255,29,37,.52) !important;
+}
+
