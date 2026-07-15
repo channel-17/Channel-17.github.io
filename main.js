@@ -554,7 +554,7 @@ function startHeartSmoke() {
       guaranteed: true,
       carlBroken: true
     });
-  }, 3600);
+  }, 1700);
 
   engageTimer = setInterval(() => {
     if (completed) return;
