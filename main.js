@@ -384,38 +384,31 @@ const CARL_ZONE = { x: 21.4, y: 34.18 };
 const CARL_HEART_START = { x: 82, y: 98 };
 const CARL_HEART_CONTACT = { x: CARL_ZONE.x + 3.6, y: CARL_ZONE.y + 0.04 };
 const CARL_HEART_PATH = [
+  /* right-side climb — slow, simple helium rise */
   { left:"82%",   top:"103%", transform:"translate(-50%,-50%) scale(1) rotate(-1deg)",   opacity:0, offset:0 },
-  { left:"82.2%", top:"96%",  transform:"translate(-50%,-50%) scale(1) rotate(-0.5deg)", opacity:1, offset:.045 },
-  { left:"82.0%", top:"88%",  transform:"translate(-50%,-50%) scale(1) rotate(0deg)",    opacity:1, offset:.095 },
-  { left:"82.2%", top:"79%",  transform:"translate(-50%,-50%) scale(1) rotate(0.4deg)",  opacity:1, offset:.150 },
-  { left:"82.0%", top:"69%",  transform:"translate(-50%,-50%) scale(1) rotate(0deg)",    opacity:1, offset:.210 },
-  { left:"82.2%", top:"59%",  transform:"translate(-50%,-50%) scale(1) rotate(-0.4deg)", opacity:1, offset:.270 },
-  { left:"82.0%", top:"49%",  transform:"translate(-50%,-50%) scale(1) rotate(0deg)",    opacity:1, offset:.330 },
-  { left:"82.2%", top:"40%",  transform:"translate(-50%,-50%) scale(1) rotate(0.4deg)",  opacity:1, offset:.385 },
-  { left:"82.0%", top:"32%",  transform:"translate(-50%,-50%) scale(1) rotate(0deg)",    opacity:1, offset:.430 },
-  { left:"82.2%", top:"25%",  transform:"translate(-50%,-50%) scale(1) rotate(-0.4deg)", opacity:1, offset:.470 },
-  { left:"82%",   top:"18%",  transform:"translate(-50%,-50%) scale(1) rotate(0deg)",    opacity:1, offset:.500 },
+  { left:"82.2%", top:"96%",  transform:"translate(-50%,-50%) scale(1) rotate(-0.5deg)", opacity:1, offset:.04 },
+  { left:"82.0%", top:"78%",  transform:"translate(-50%,-50%) scale(1) rotate(0.3deg)",  opacity:1, offset:.17 },
+  { left:"82.2%", top:"58%",  transform:"translate(-50%,-50%) scale(1) rotate(-0.3deg)", opacity:1, offset:.31 },
+  { left:"82.0%", top:"39%",  transform:"translate(-50%,-50%) scale(1) rotate(0.25deg)", opacity:1, offset:.44 },
+  { left:"82%",   top:"18%",  transform:"translate(-50%,-50%) scale(1) rotate(0deg)",    opacity:1, offset:.58 },
 
-  /* soft wind correction — one continuous delicate drift */
-  { left:"81%",   top:"16.5%", transform:"translate(-50%,-50%) scale(1) rotate(-1deg)", opacity:1, offset:.520 },
-  { left:"79.5%", top:"14.5%", transform:"translate(-50%,-50%) scale(1) rotate(-2deg)", opacity:1, offset:.545 },
-  { left:"77.5%", top:"12.3%", transform:"translate(-50%,-50%) scale(1) rotate(-3deg)", opacity:1, offset:.575 },
-  { left:"75%",   top:"9.8%",  transform:"translate(-50%,-50%) scale(1) rotate(-4deg)", opacity:1, offset:.610 },
-  { left:"72.2%", top:"7.0%",  transform:"translate(-50%,-50%) scale(1) rotate(-5deg)", opacity:1, offset:.645 },
-  { left:"69.3%", top:"4.0%",  transform:"translate(-50%,-50%) scale(1) rotate(-6deg)", opacity:1, offset:.675 },
-  { left:"66.5%", top:"1%",    transform:"translate(-50%,-50%) scale(1) rotate(-7deg)", opacity:1, offset:.700 },
-  { left:"64%",   top:"-3%",   transform:"translate(-50%,-50%) scale(1) rotate(-8deg)", opacity:0, offset:.711 },
-  /* invisible reset to bottom-left */
-  { left:"12%", top:"103%", transform:"translate(-50%,-50%) scale(1)", opacity:0, offset:.72 },
+  /* protected delicate top-right wind nudge */
+  { left:"80.5%", top:"15.5%", transform:"translate(-50%,-50%) scale(1) rotate(-1deg)", opacity:1, offset:.595 },
+  { left:"76.5%", top:"10.5%", transform:"translate(-50%,-50%) scale(1) rotate(-3deg)", opacity:1, offset:.62 },
+  { left:"70.5%", top:"4.5%",  transform:"translate(-50%,-50%) scale(1) rotate(-5deg)", opacity:1, offset:.645 },
+  { left:"64%",   top:"-3%",   transform:"translate(-50%,-50%) scale(1) rotate(-7deg)", opacity:0, offset:.665 },
 
-  /* return climb — always rising */
-  { left:"14%", top:"96%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.74 },
-  { left:"15%", top:"87%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.78 },
-  { left:"16%", top:"76%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.82 },
-  { left:"18%", top:"64%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.86 },
-  { left:"20%", top:"53%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.90 },
-  { left:"23%", top:"44%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.94 },
-  { left:"26%", top:"38%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.97 },
+  /* instant invisible reset — no visible time wasted */
+  { left:"12%", top:"103%", transform:"translate(-50%,-50%) scale(1)", opacity:0, offset:.666 },
+
+  /* approved left return — protected emotional lift */
+  { left:"14%", top:"96%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.68 },
+  { left:"15%", top:"87%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.725 },
+  { left:"16%", top:"76%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.77 },
+  { left:"18%", top:"64%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.815 },
+  { left:"20%", top:"53%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.86 },
+  { left:"23%", top:"44%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.91 },
+  { left:"26%", top:"38%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.955 },
   {
     left:`${CARL_HEART_CONTACT.x}%`,
     top:`${CARL_HEART_CONTACT.y}%`,
@@ -973,12 +966,12 @@ function releaseDeadHeartTowardCarl() {
 
   engagementField.appendChild(heart);
 
-  const flightDuration = 30500;
-  const flight = heart.animate(CARL_HEART_PATH, {
-    duration: flightDuration,
-    easing: "cubic-bezier(.32,.58,.20,1)",
-    fill: "forwards"
-  });
+  const flightDuration = 22500;
+const flight = heart.animate(CARL_HEART_PATH, {
+  duration: flightDuration,
+  easing: "linear",
+  fill: "forwards"
+});
 
   setTimeout(() => {
     if (!heart.parentNode) return;
