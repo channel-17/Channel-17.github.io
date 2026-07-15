@@ -1043,8 +1043,8 @@ function releaseDeadHeartTowardCarl() {
   let returnClimbStarted = false;
   let greyFadeComplete = false;
 
-    heart.style.left = "12%";
-    heart.style.top = "103%";
+  const redLayer = heart.querySelector(".carl-heart-red");
+  const greyLayer = heart.querySelector(".carl-heart-grey");
   if (redLayer) {
     redLayer.style.setProperty("opacity", "1", "important");
     redLayer.style.setProperty("visibility", "visible", "important");
