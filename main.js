@@ -510,7 +510,10 @@ const loading = setInterval(() => {
     signalGhost.classList.add("burning");
     startBurnPulse();
   }
-
+    if (progress >= 80 && !generals) {
+    generals = true;
+    deployGenerals();
+  }
   if (progress >= 52 && !symbolBattleStarted) {
     startSymbolBattle();
   }
@@ -970,11 +973,50 @@ function startBurnPulse() {
 }
 
 function deployGenerals() {
-  // Disabled during C.17 attack pass. The old general wave created the stupid last-second chaos.
+  const cards = [...checkGenerals.querySelectorAll(".general")];
+
+  checkGenerals.classList.add("active");
+
+  cards.forEach(card => {
+    card.classList.remove("verify", "target");
+  });
+
+  /*
+    VERIFIED...
+    APPROVED...
+    AUTHORIZED...
+  */
+  cards.forEach((card, index) => {
+    setTimeout(() => {
+      card.classList.add("verify");
+    }, 260 + index * 280);
+  });
+
+  /*
+    The approval cards become targeting commands,
+    then discharge individually.
+  */
+  cards.forEach((card, index) => {
+    setTimeout(() => {
+      card.classList.remove("verify");
+      card.classList.add("target");
+      fireBlast(index);
+    }, 1650 + index * 320);
+  });
 }
 
 function fireBlast(index) {
-  // Disabled during C.17 attack pass.
+  const blast = document.createElement("div");
+  blast.className = "blast";
+
+  const angles = ["-18deg", "0deg", "18deg"];
+  blast.style.setProperty("--a", angles[index] || "0deg");
+
+  impactField.appendChild(blast);
+
+  setTimeout(() => {
+    if (blast.parentNode) blast.remove();
+  }, 500);
 }
 
 function spawnCarl() {
