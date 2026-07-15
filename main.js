@@ -974,7 +974,7 @@ function releaseDeadHeartTowardCarl() {
 
   engagementField.appendChild(heart);
 
-  const flightDuration = 25500;
+  const flightDuration = 30500;
   const flight = heart.animate(CARL_HEART_PATH, {
     duration: flightDuration,
     easing: "cubic-bezier(.32,.58,.20,1)",
