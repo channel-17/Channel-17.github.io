@@ -820,10 +820,10 @@ function spawnEngagement(options = {}) {
     When Actor One naturally disappears above the screen,
     immediately begin Actor Two at the bottom-left round robin.
   */
-  if (options.carlBroken) {
+    if (options.carlBroken) {
     setTimeout(() => {
       releaseDeadHeartTowardCarl();
-    }, dur * 1000);
+    }, Math.max(0, (dur * 1000) - 650));
   }
 
   setTimeout(() => {
