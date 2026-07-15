@@ -1426,18 +1426,30 @@ function triggerCarl(carl) {
     thin red ring flickers 3 times, then holds faintly
     for the remaining click window.
   */
+    /*
+    Love at first pixel:
+    pop finishes first, then exactly three unmistakable red flashes.
+  */
   ring.animate(
     [
-      { opacity: 0,   transform: "scale(0.96)" },
-      { opacity: 1,   transform: "scale(1)" },
-      { opacity: 0.08, transform: "scale(0.985)" },
-      { opacity: 1,   transform: "scale(1)" },
-      { opacity: 0.12, transform: "scale(0.99)" },
-      { opacity: 1,   transform: "scale(1)" },
-      { opacity: 0.34, transform: "scale(1)" }
+      { opacity: 0, transform: "scale(.97)", offset: 0 },
+
+      { opacity: 1, transform: "scale(1)", offset: .06 },
+      { opacity: 1, transform: "scale(1)", offset: .18 },
+      { opacity: 0, transform: "scale(.985)", offset: .19 },
+
+      { opacity: 1, transform: "scale(1)", offset: .34 },
+      { opacity: 1, transform: "scale(1)", offset: .47 },
+      { opacity: 0, transform: "scale(.985)", offset: .48 },
+
+      { opacity: 1, transform: "scale(1)", offset: .64 },
+      { opacity: 1, transform: "scale(1)", offset: .79 },
+      { opacity: 0, transform: "scale(.985)", offset: .80 },
+
+      { opacity: .30, transform: "scale(1)", offset: 1 }
     ],
     {
-      duration: 820,
+      duration: 1250,
       easing: "steps(1, end)",
       fill: "forwards"
     }
