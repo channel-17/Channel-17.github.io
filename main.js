@@ -385,8 +385,8 @@ const CARL_HEART_START = { x: 82, y: 98 };
 const CARL_HEART_CONTACT = { x: CARL_ZONE.x + 3.6, y: CARL_ZONE.y + 0.04 };
 const CARL_HEART_PATH = [
   /*
-    Actor Two begins at the invisible bottom-left round robin.
-    This is the protected red-to-gray return only.
+    Actor Two begins at the bottom-left round-robin point.
+    Existing left-side coordinates and timing proportions are preserved.
   */
   {
     left: "12%",
@@ -400,7 +400,7 @@ const CARL_HEART_PATH = [
     top: "96%",
     transform: "translate(-50%,-50%) scale(1)",
     opacity: 1,
-    offset: .029
+    offset: .028
   },
   {
     left: "15%",
@@ -452,68 +452,6 @@ const CARL_HEART_PATH = [
     offset: 1
   }
 ];
-
-function setProgress(value) {
-  progress = Math.max(0, Math.min(100, value));
-  fill.style.width = progress <= 0 ? "0%" : `${progress}%`;
-  percent.textContent = `${Math.round(progress)}%`;
-}
-
-const loading = setInterval(() => {
-  if (!loaderBootComplete) {
-    setProgress(0);
-    return;
-  }
-
-  if (state === "normal") progress += 0.16;
-  if (state === "notice") progress += 0.072;
-  if (state === "hide") progress += 0.18;
-
-  if (progress >= 17 && !noticed) {
-    noticed = true;
-    state = "notice";
-    turtle.classList.remove("walk");
-    turtle.classList.add("notice");
-    loader.classList.add("offcourse");
-    if (!heartSmokeStarted) {
-      heartSmokeStarted = true;
-      startHeartSmoke();
-    }
-  }
-
-  if (progress >= 18.4 && !hidden) {
-    hidden = true;
-    state = "hide";
-    turtle.classList.remove("notice");
-    turtle.classList.add("hide");
-  }
-
-  if (progress >= 18.7 && !breached) {
-    breached = true;
-    virusLayer.classList.add("active");
-    startAttack();
-  }
-
-  if (progress >= 40 && !ghosted) {
-    ghosted = true;
-    // Faint signal ghost returns around the early authenticity breach so the symbol is not visually dead until the end.
-    signalGhost.classList.add("waking");
-  }
-
-  if (progress >= 88 && !hiveWaveStarted) {
-    hiveWaveStarted = true;
-    beginHiveWave();
-  }
-
-  if (progress >= 76 && !burning) {
-    burning = true;
-    signalGhost.classList.add("burning");
-    startBurnPulse();
-  }
-
-  if (progress >= 52 && !symbolBattleStarted) {
-    startSymbolBattle();
-  }
 
   // Carl's broken-heart error is released with the opening social noise, not late in the sequence.
   // startHeartSmoke() owns the one-time release so it can be one of the first three visible items.
@@ -1050,9 +988,8 @@ function releaseDeadHeartTowardCarl() {
   let returnClimbStarted = false;
   let greyFadeComplete = false;
 
-  const redLayer = heart.querySelector(".carl-heart-red");
-  const greyLayer = heart.querySelector(".carl-heart-grey");
-
+    heart.style.left = "12%";
+    heart.style.top = "103%";
   if (redLayer) {
     redLayer.style.setProperty("opacity", "1", "important");
     redLayer.style.setProperty("visibility", "visible", "important");
