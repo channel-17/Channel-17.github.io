@@ -384,37 +384,134 @@ const CARL_ZONE = { x: 21.4, y: 34.18 };
 const CARL_HEART_START = { x: 82, y: 98 };
 const CARL_HEART_CONTACT = { x: CARL_ZONE.x + 3.6, y: CARL_ZONE.y + 0.04 };
 const CARL_HEART_PATH = [
-    /* identical to the normal heart stream until the system notices the crack */
-  { left:"82%",   top:"103%", transform:"translate(-50%,-50%) scale(1)", opacity:0, offset:0 },
-  { left:"82.1%", top:"96%",  transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.06 },
-  { left:"82.4%", top:"82%",  transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.18 },
-  { left:"82.0%", top:"67%",  transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.31 },
-  { left:"82.3%", top:"51%",  transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.43 },
-  { left:"82.1%", top:"35%",  transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.53 },
-  { left:"82%",   top:"20%",  transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.60 },
-
-  /* system correction — wrong signal, gentle rejection */
-  { left:"81.5%", top:"17%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.615 },
-  { left:"79%",   top:"13%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.632 },
-  { left:"74%",   top:"8%",  transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.648 },
-  { left:"67%",   top:"2%",  transform:"translate(-50%,-50%) scale(1)", opacity:0, offset:.662 },
-
-  /* invisible round robin */
-  { left:"12%", top:"103%", transform:"translate(-50%,-50%) scale(1)", opacity:0, offset:.663 },
-  /* approved left return — protected emotional lift */
-  { left:"14%", top:"96%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.68 },
-  { left:"15%", top:"87%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.725 },
-  { left:"16%", top:"76%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.77 },
-  { left:"18%", top:"64%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.815 },
-  { left:"20%", top:"53%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.86 },
-  { left:"23%", top:"44%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.91 },
-  { left:"26%", top:"38%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.955 },
+  /*
+    Right side: same motion language as every normal heart.
+    The crack is the only difference until the system rejects it.
+  */
   {
-    left:`${CARL_HEART_CONTACT.x}%`,
-    top:`${CARL_HEART_CONTACT.y}%`,
-    transform:"translate(-50%,-50%) scale(1)",
-    opacity:1,
-    offset:1
+    left: "82%",
+    top: "103%",
+    transform: "translate(-50%,-50%) translate3d(0, 18px, 0) scale(.90)",
+    opacity: 0,
+    offset: 0
+  },
+  {
+    left: "82%",
+    top: "96%",
+    transform: "translate(-50%,-50%) translate3d(1px, 0, 0) scale(1)",
+    opacity: .92,
+    offset: .047
+  },
+  {
+    left: "82%",
+    top: "66%",
+    transform: "translate(-50%,-50%) translate3d(-1px, 0, 0) scale(1)",
+    opacity: .94,
+    offset: .165
+  },
+  {
+    left: "82%",
+    top: "24%",
+    transform: "translate(-50%,-50%) translate3d(-1px, 0, 0) scale(1)",
+    opacity: .88,
+    offset: .32
+  },
+  {
+    left: "82%",
+    top: "16%",
+    transform: "translate(-50%,-50%) translate3d(-2px, 0, 0) scale(1)",
+    opacity: .88,
+    offset: .43
+  },
+
+  /* wrong signal — subtle involuntary rejection */
+  {
+    left: "81%",
+    top: "14%",
+    transform: "translate(-50%,-50%) translate3d(-3px, 0, 0) scale(1)",
+    opacity: .9,
+    offset: .445
+  },
+  {
+    left: "77%",
+    top: "9%",
+    transform: "translate(-50%,-50%) translate3d(-5px, 0, 0) scale(1)",
+    opacity: .9,
+    offset: .47
+  },
+  {
+    left: "69%",
+    top: "1%",
+    transform: "translate(-50%,-50%) translate3d(-7px, 0, 0) scale(1)",
+    opacity: 0,
+    offset: .50
+  },
+
+  /* invisible round robin — effectively instantaneous */
+  {
+    left: "12%",
+    top: "103%",
+    transform: "translate(-50%,-50%) scale(1)",
+    opacity: 0,
+    offset: .501
+  },
+
+  /* protected red-to-gray left return */
+  {
+    left: "14%",
+    top: "96%",
+    transform: "translate(-50%,-50%) scale(1)",
+    opacity: 1,
+    offset: .515
+  },
+  {
+    left: "15%",
+    top: "87%",
+    transform: "translate(-50%,-50%) scale(1)",
+    opacity: 1,
+    offset: .58
+  },
+  {
+    left: "16%",
+    top: "76%",
+    transform: "translate(-50%,-50%) scale(1)",
+    opacity: 1,
+    offset: .65
+  },
+  {
+    left: "18%",
+    top: "64%",
+    transform: "translate(-50%,-50%) scale(1)",
+    opacity: 1,
+    offset: .72
+  },
+  {
+    left: "20%",
+    top: "53%",
+    transform: "translate(-50%,-50%) scale(1)",
+    opacity: 1,
+    offset: .79
+  },
+  {
+    left: "23%",
+    top: "44%",
+    transform: "translate(-50%,-50%) scale(1)",
+    opacity: 1,
+    offset: .86
+  },
+  {
+    left: "26%",
+    top: "38%",
+    transform: "translate(-50%,-50%) scale(1)",
+    opacity: 1,
+    offset: .93
+  },
+  {
+    left: `${CARL_HEART_CONTACT.x}%`,
+    top: `${CARL_HEART_CONTACT.y}%`,
+    transform: "translate(-50%,-50%) scale(1)",
+    opacity: 1,
+    offset: 1
   }
 ];
 
@@ -966,7 +1063,7 @@ function releaseDeadHeartTowardCarl() {
 
   engagementField.appendChild(heart);
 
-  const flightDuration = 22500;
+  const flightDuration = 18500;
 const flight = heart.animate(CARL_HEART_PATH, {
   duration: flightDuration,
   easing: "linear",
