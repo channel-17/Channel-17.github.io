@@ -453,17 +453,72 @@ const CARL_HEART_PATH = [
   }
 ];
 
-  // Carl's broken-heart error is released with the opening social noise, not late in the sequence.
-  // startHeartSmoke() owns the one-time release so it can be one of the first three visible items.
+  function setProgress(value) {
+  progress = Math.max(0, Math.min(100, value));
+  fill.style.width = progress <= 0 ? "0%" : `${progress}%`;
+  percent.textContent = `${Math.round(progress)}%`;
+}
 
-  // Generals/end-swarm disabled for C.17 attack pass: no last-second blue chaos.
+const loading = setInterval(() => {
+  if (!loaderBootComplete) {
+    setProgress(0);
+    return;
+  }
+
+  if (state === "normal") progress += 0.16;
+  if (state === "notice") progress += 0.072;
+  if (state === "hide") progress += 0.18;
+
+  if (progress >= 17 && !noticed) {
+    noticed = true;
+    state = "notice";
+    turtle.classList.remove("walk");
+    turtle.classList.add("notice");
+    loader.classList.add("offcourse");
+
+    if (!heartSmokeStarted) {
+      heartSmokeStarted = true;
+      startHeartSmoke();
+    }
+  }
+
+  if (progress >= 18.4 && !hidden) {
+    hidden = true;
+    state = "hide";
+    turtle.classList.remove("notice");
+    turtle.classList.add("hide");
+  }
+
+  if (progress >= 18.7 && !breached) {
+    breached = true;
+    virusLayer.classList.add("active");
+    startAttack();
+  }
+
+  if (progress >= 40 && !ghosted) {
+    ghosted = true;
+    signalGhost.classList.add("waking");
+  }
+
+  if (progress >= 88 && !hiveWaveStarted) {
+    hiveWaveStarted = true;
+    beginHiveWave();
+  }
+
+  if (progress >= 76 && !burning) {
+    burning = true;
+    signalGhost.classList.add("burning");
+    startBurnPulse();
+  }
+
+  if (progress >= 52 && !symbolBattleStarted) {
+    startSymbolBattle();
+  }
 
   if (progress >= 86 && !wrenSeen) {
     wrenSeen = true;
     spawnWren();
   }
-
-  // Carl is now the final loader-bar avatar inside startAttack(), not an early separate spotlight.
 
   if (progress >= 24 && !frankSeen) {
     frankSeen = true;
