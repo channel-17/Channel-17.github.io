@@ -385,126 +385,64 @@ const CARL_HEART_START = { x: 82, y: 98 };
 const CARL_HEART_CONTACT = { x: CARL_ZONE.x + 3.6, y: CARL_ZONE.y + 0.04 };
 const CARL_HEART_PATH = [
   /*
-    Right side: same motion language as every normal heart.
-    The crack is the only difference until the system rejects it.
+    Actor Two begins at the invisible bottom-left round robin.
+    This is the protected red-to-gray return only.
   */
-  {
-    left: "82%",
-    top: "103%",
-    transform: "translate(-50%,-50%) translate3d(0, 18px, 0) scale(.90)",
-    opacity: 0,
-    offset: 0
-  },
-  {
-    left: "82%",
-    top: "96%",
-    transform: "translate(-50%,-50%) translate3d(1px, 0, 0) scale(1)",
-    opacity: .92,
-    offset: .047
-  },
-  {
-    left: "82%",
-    top: "66%",
-    transform: "translate(-50%,-50%) translate3d(-1px, 0, 0) scale(1)",
-    opacity: .94,
-    offset: .165
-  },
-  {
-    left: "82%",
-    top: "24%",
-    transform: "translate(-50%,-50%) translate3d(-1px, 0, 0) scale(1)",
-    opacity: .88,
-    offset: .32
-  },
-  {
-    left: "82%",
-    top: "16%",
-    transform: "translate(-50%,-50%) translate3d(-2px, 0, 0) scale(1)",
-    opacity: .88,
-    offset: .43
-  },
-
-  /* wrong signal — subtle involuntary rejection */
-  {
-    left: "81%",
-    top: "14%",
-    transform: "translate(-50%,-50%) translate3d(-3px, 0, 0) scale(1)",
-    opacity: .9,
-    offset: .445
-  },
-  {
-    left: "77%",
-    top: "9%",
-    transform: "translate(-50%,-50%) translate3d(-5px, 0, 0) scale(1)",
-    opacity: .9,
-    offset: .47
-  },
-  {
-    left: "69%",
-    top: "1%",
-    transform: "translate(-50%,-50%) translate3d(-7px, 0, 0) scale(1)",
-    opacity: 0,
-    offset: .50
-  },
-
-  /* invisible round robin — effectively instantaneous */
   {
     left: "12%",
     top: "103%",
     transform: "translate(-50%,-50%) scale(1)",
     opacity: 0,
-    offset: .501
+    offset: 0
   },
-
-  /* protected red-to-gray left return */
   {
     left: "14%",
     top: "96%",
     transform: "translate(-50%,-50%) scale(1)",
     opacity: 1,
-    offset: .515
+    offset: .029
   },
   {
     left: "15%",
     top: "87%",
     transform: "translate(-50%,-50%) scale(1)",
     opacity: 1,
-    offset: .58
+    offset: .158
   },
   {
     left: "16%",
     top: "76%",
     transform: "translate(-50%,-50%) scale(1)",
     opacity: 1,
-    offset: .65
+    offset: .299
   },
   {
     left: "18%",
     top: "64%",
     transform: "translate(-50%,-50%) scale(1)",
     opacity: 1,
-    offset: .72
+    offset: .439
   },
   {
     left: "20%",
     top: "53%",
     transform: "translate(-50%,-50%) scale(1)",
     opacity: 1,
-    offset: .79
+    offset: .579
   },
   {
     left: "23%",
     top: "44%",
     transform: "translate(-50%,-50%) scale(1)",
     opacity: 1,
-    offset: .86
+    offset: .719
   },
   {
     left: "26%",
     top: "38%",
     transform: "translate(-50%,-50%) scale(1)",
     opacity: 1,
-    offset: .93
+    offset: .860
   },
   {
     left: `${CARL_HEART_CONTACT.x}%`,
@@ -612,12 +550,17 @@ function startHeartSmoke() {
   heartSmokeSpawnCount = 0;
   spawnEngagement({ guaranteed: true });
 
-  // Let normal social hearts establish the stream first. The broken heart arrives later
-  // as a believable member of the same family, not as the first thing on-screen.
+  // Let the normal stream establish itself first.
+  // Actor One is then injected as one ordinary broken-heart emoji.
   setTimeout(() => {
     if (completed || deadHeartReleased) return;
+
     deadHeartReleased = true;
-    releaseDeadHeartTowardCarl();
+
+    spawnEngagement({
+      guaranteed: true,
+      carlBroken: true
+    });
   }, 3600);
 
   engageTimer = setInterval(() => {
@@ -805,10 +748,20 @@ function spawnEngagement(options = {}) {
     iconClass = "snowflake";
   }
 
-  if (!secretFlameReleased && heartSmokeSpawnCount > 9) {
+    if (!secretFlameReleased && heartSmokeSpawnCount > 9) {
     secretFlameReleased = true;
     symbol = "🔥";
     iconClass = "secret-flame";
+  }
+
+  /*
+    Actor One: a completely ordinary right-lane heart.
+    Same class, timing system, drift and CSS animation as every other heart.
+    The crack is its only visible difference.
+  */
+  if (options.carlBroken) {
+    symbol = "💔";
+    iconClass = "heart";
   }
 
   item.className = `engage heart-story social-smoke ${iconClass}`;
@@ -862,9 +815,27 @@ function spawnEngagement(options = {}) {
   engagementField.appendChild(item);
   engageCount++;
 
-  const fadeAt = Math.max(6500, (dur * 1000) - 1000);
-  setTimeout(() => { if (item.parentNode) item.classList.add("heart-fade-black"); }, fadeAt);
-  setTimeout(() => item.remove(), (dur * 1000) + 900);
+    const fadeAt = Math.max(6500, (dur * 1000) - 1000);
+
+  setTimeout(() => {
+    if (item.parentNode) {
+      item.classList.add("heart-fade-black");
+    }
+  }, fadeAt);
+
+  /*
+    When Actor One naturally disappears above the screen,
+    immediately begin Actor Two at the bottom-left round robin.
+  */
+  if (options.carlBroken) {
+    setTimeout(() => {
+      releaseDeadHeartTowardCarl();
+    }, dur * 1000);
+  }
+
+  setTimeout(() => {
+    if (item.parentNode) item.remove();
+  }, (dur * 1000) + 900);
 }
 
 function pickTarget() {
@@ -1050,8 +1021,8 @@ function releaseDeadHeartTowardCarl() {
 
   const heart = document.createElement("div");
   heart.className = "engage carl-trigger-heart asset-heart pink-stage matrix-error-heart";
-  heart.style.left = `${CARL_HEART_START.x}%`;
-  heart.style.top = `${CARL_HEART_START.y}%`;
+  heart.style.left = "12%";
+  heart.style.top = "103%";
   heart.style.opacity = "0";
   heart.style.setProperty("animation", "none", "important");
   heart.style.setProperty("width", "34px", "important");
@@ -1063,12 +1034,12 @@ function releaseDeadHeartTowardCarl() {
 
   engagementField.appendChild(heart);
 
-  const flightDuration = 18500;
-const flight = heart.animate(CARL_HEART_PATH, {
-  duration: flightDuration,
-  easing: "linear",
-  fill: "forwards"
-});
+  const flightDuration = 9000;
+  const flight = heart.animate(CARL_HEART_PATH, {
+    duration: flightDuration,
+    easing: "linear",
+    fill: "forwards"
+  });
 
   setTimeout(() => {
     if (!heart.parentNode) return;
