@@ -384,23 +384,23 @@ const CARL_ZONE = { x: 21.4, y: 34.18 };
 const CARL_HEART_START = { x: 82, y: 98 };
 const CARL_HEART_CONTACT = { x: CARL_ZONE.x + 3.6, y: CARL_ZONE.y + 0.04 };
 const CARL_HEART_PATH = [
-  /* right-side climb — slow, simple helium rise */
-  { left:"82%",   top:"103%", transform:"translate(-50%,-50%) scale(1) rotate(-1deg)",   opacity:0, offset:0 },
-  { left:"82.2%", top:"96%",  transform:"translate(-50%,-50%) scale(1) rotate(-0.5deg)", opacity:1, offset:.04 },
-  { left:"82.0%", top:"78%",  transform:"translate(-50%,-50%) scale(1) rotate(0.3deg)",  opacity:1, offset:.17 },
-  { left:"82.2%", top:"58%",  transform:"translate(-50%,-50%) scale(1) rotate(-0.3deg)", opacity:1, offset:.31 },
-  { left:"82.0%", top:"39%",  transform:"translate(-50%,-50%) scale(1) rotate(0.25deg)", opacity:1, offset:.44 },
-  { left:"82%",   top:"18%",  transform:"translate(-50%,-50%) scale(1) rotate(0deg)",    opacity:1, offset:.58 },
+    /* identical to the normal heart stream until the system notices the crack */
+  { left:"82%",   top:"103%", transform:"translate(-50%,-50%) scale(1)", opacity:0, offset:0 },
+  { left:"82.1%", top:"96%",  transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.06 },
+  { left:"82.4%", top:"82%",  transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.18 },
+  { left:"82.0%", top:"67%",  transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.31 },
+  { left:"82.3%", top:"51%",  transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.43 },
+  { left:"82.1%", top:"35%",  transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.53 },
+  { left:"82%",   top:"20%",  transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.60 },
 
-  /* protected delicate top-right wind nudge */
-  { left:"80.5%", top:"15.5%", transform:"translate(-50%,-50%) scale(1) rotate(-1deg)", opacity:1, offset:.595 },
-  { left:"76.5%", top:"10.5%", transform:"translate(-50%,-50%) scale(1) rotate(-3deg)", opacity:1, offset:.62 },
-  { left:"70.5%", top:"4.5%",  transform:"translate(-50%,-50%) scale(1) rotate(-5deg)", opacity:1, offset:.645 },
-  { left:"64%",   top:"-3%",   transform:"translate(-50%,-50%) scale(1) rotate(-7deg)", opacity:0, offset:.665 },
+  /* system correction — wrong signal, gentle rejection */
+  { left:"81.5%", top:"17%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.615 },
+  { left:"79%",   top:"13%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.632 },
+  { left:"74%",   top:"8%",  transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.648 },
+  { left:"67%",   top:"2%",  transform:"translate(-50%,-50%) scale(1)", opacity:0, offset:.662 },
 
-  /* instant invisible reset — no visible time wasted */
-  { left:"12%", top:"103%", transform:"translate(-50%,-50%) scale(1)", opacity:0, offset:.666 },
-
+  /* invisible round robin */
+  { left:"12%", top:"103%", transform:"translate(-50%,-50%) scale(1)", opacity:0, offset:.663 },
   /* approved left return — protected emotional lift */
   { left:"14%", top:"96%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.68 },
   { left:"15%", top:"87%", transform:"translate(-50%,-50%) scale(1)", opacity:1, offset:.725 },
