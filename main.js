@@ -1320,14 +1320,22 @@ function releaseDeadHeartTowardCarl() {
           )
         );
 
+                /*
+          Love at first pixel:
+          contact creates the visible pop first.
+          Carl's triple RROD begins only after the pop registers.
+        */
         spawnCarlZap(contactX, contactY);
-        triggerCarl(carl);
+
+        setTimeout(() => {
+          triggerCarl(carl);
+        }, 90);
 
         setTimeout(() => {
           if (heart.isConnected) {
             heart.remove();
           }
-        }, 110);
+        }, 150);
 
         return;
       }
@@ -1358,16 +1366,18 @@ function releaseDeadHeartTowardCarl() {
         "carl-heart-pop"
       );
 
-      if (carl && carl.isConnected) {
+            if (carl && carl.isConnected) {
         const c = carl.getBoundingClientRect();
 
         spawnCarlZap(
           c.left,
           c.top + c.height / 2
         );
-      }
 
-      triggerCarl(carl);
+        setTimeout(() => {
+          triggerCarl(carl);
+        }, 90);
+      }
 
       setTimeout(() => {
         if (heart.isConnected) heart.remove();
