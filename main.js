@@ -2021,7 +2021,7 @@ function convertFrozenSocialObjects() {
         current === "❤️" ||
         current === "💔"
       ) {
-        item.textContent = "💜";
+        item.textContent = "💙";
         item.classList.add("frost-red-heart");
         return;
       }
@@ -2041,48 +2041,40 @@ function revealTawnyaFromGreyHeart() {
   if (!frostOverlay) return;
 
   const greyHeart =
-    document.querySelector(
-      ".carl-trigger-heart"
-    );
+    document.querySelector(".carl-trigger-heart");
 
   const tawnya =
-    frostOverlay.querySelector(
-      ".c17-tawnya-avatar"
-    );
+    frostOverlay.querySelector(".c17-tawnya-avatar");
 
   if (!tawnya) return;
 
-  let centerX =
-    window.innerWidth * 0.22;
+  let centerX = window.innerWidth * 0.22;
+  let centerY = window.innerHeight * 0.36;
 
-  let centerY =
-    window.innerHeight * 0.36;
+  if (greyHeart && greyHeart.isConnected) {
+    const greyLayer =
+      greyHeart.querySelector(".carl-heart-grey");
 
-  if (greyHeart) {
+    const target =
+      greyLayer || greyHeart;
+
     const rect =
-      greyHeart.getBoundingClientRect();
+      target.getBoundingClientRect();
 
     centerX =
-      rect.left +
-      rect.width / 2;
+      rect.left + rect.width / 2;
 
     centerY =
-      rect.top +
-      rect.height / 2;
+      rect.top + rect.height / 2;
   }
 
   tawnya.style.left = `${centerX}px`;
   tawnya.style.top = `${centerY}px`;
 
-  tawnya.classList.add(
-    "tawnya-rewriting"
-  );
+  tawnya.classList.add("tawnya-rewriting");
 
   setTimeout(() => {
-    tawnya.classList.add(
-      "tawnya-complete"
-    );
-
+    tawnya.classList.add("tawnya-complete");
     tawnya.disabled = false;
   }, 3300);
 
@@ -2098,9 +2090,7 @@ function revealTawnyaFromGreyHeart() {
       }
 
       document.dispatchEvent(
-        new CustomEvent(
-          "c17:tawnya-open"
-        )
+        new CustomEvent("c17:tawnya-open")
       );
     },
     { once: true }
