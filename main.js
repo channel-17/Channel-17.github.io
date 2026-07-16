@@ -460,6 +460,10 @@ const CARL_HEART_PATH = [
 }
 
 const loading = setInterval(() => {
+  if (frostHolding || frostLocked) {
+    return;
+  }
+
   if (!loaderBootComplete) {
     setProgress(0);
     return;
@@ -760,8 +764,25 @@ function spawnEngagement(options = {}) {
     iconClass = "heart";
   }
 
-  item.className = `engage heart-story social-smoke ${iconClass}`;
-  item.textContent = symbol;
+    item.className = `engage heart-story social-smoke ${iconClass}`;
+    item.textContent = symbol;
+
+  if (iconClass === "snowflake") {
+    item.setAttribute("role", "button");
+    item.setAttribute("aria-label", "hold");
+    item.style.pointerEvents = "auto";
+    item.style.touchAction = "none";
+
+    item.addEventListener("pointerdown", event => {
+      event.preventDefault();
+      event.stopPropagation();
+
+      const pointX = event.clientX;
+      const pointY = event.clientY;
+
+      beginFrostHold(item, pointX, pointY);
+    });
+  }
   if (iconClass === "secret-flame") {
     item.setAttribute("role", "button");
     item.setAttribute("aria-label", "secret poem note");
@@ -1756,7 +1777,335 @@ function playBlueFrankSequence() {
     if (lead && lead.parentNode) lead.remove();
   }, 7600);
 }
+/* =========================================================
+   FROST TIMELINE — HIDDEN SNOWFLAKE HOLD
+========================================================= */
 
+let frostHolding = false;
+let frostLocked = false;
+let frostHoldTimer = null;
+let frostOverlay = null;
+let frostOriginX = 50;
+let frostOriginY = 50;
+let frostPausedAnimations = [];
+
+const FROST_HOLD_MS = 7000;
+const TAWNYA_ASSET = "AssetTAWNYA.PNG";
+
+function pauseFrostTimeline() {
+  document.documentElement.classList.add("frost-time-stop");
+
+  frostPausedAnimations = document
+    .getAnimations({ subtree: true })
+    .filter(animation => animation.playState === "running");
+
+  frostPausedAnimations.forEach(animation => {
+    try {
+      animation.pause();
+    } catch (error) {
+      // Safari safety.
+    }
+  });
+}
+
+function resumeFrostTimeline() {
+  if (frostLocked) return;
+
+  document.documentElement.classList.remove(
+    "frost-time-stop",
+    "frost-conquering",
+    "frost-dead-world"
+  );
+
+  frostPausedAnimations.forEach(animation => {
+    try {
+      animation.play();
+    } catch (error) {
+      // Safari safety.
+    }
+  });
+
+  frostPausedAnimations = [];
+
+  if (frostOverlay) {
+    frostOverlay.remove();
+    frostOverlay = null;
+  }
+}
+
+function createFrostOverlay(pointX, pointY) {
+  if (frostOverlay) frostOverlay.remove();
+
+  frostOriginX = Math.max(
+    0,
+    Math.min(100, (pointX / window.innerWidth) * 100)
+  );
+
+  frostOriginY = Math.max(
+    0,
+    Math.min(100, (pointY / window.innerHeight) * 100)
+  );
+
+  frostOverlay = document.createElement("div");
+  frostOverlay.className = "c17-frost-overlay";
+
+  frostOverlay.style.setProperty(
+    "--frost-x",
+    `${frostOriginX}%`
+  );
+
+  frostOverlay.style.setProperty(
+    "--frost-y",
+    `${frostOriginY}%`
+  );
+
+  frostOverlay.innerHTML = `
+    <div class="c17-frost-glass"></div>
+    <div class="c17-frost-crystals frost-crystal-a"></div>
+    <div class="c17-frost-crystals frost-crystal-b"></div>
+    <div class="c17-frost-crystals frost-crystal-c"></div>
+
+    <button
+      class="c17-tawnya-avatar"
+      type="button"
+      aria-label="Tawnya Grey"
+      disabled
+    >
+      <img src="${TAWNYA_ASSET}" alt="">
+    </button>
+  `;
+
+  document.body.appendChild(frostOverlay);
+}
+
+function beginFrostHold(snowflake, pointX, pointY) {
+  if (frostLocked || frostHolding) return;
+
+  frostHolding = true;
+
+  createFrostOverlay(pointX, pointY);
+  pauseFrostTimeline();
+
+  const cancelHold = () => {
+    document.removeEventListener(
+      "pointerup",
+      cancelHold,
+      true
+    );
+
+    document.removeEventListener(
+      "pointercancel",
+      cancelHold,
+      true
+    );
+
+    if (!frostHolding || frostLocked) return;
+
+    frostHolding = false;
+
+    clearTimeout(frostHoldTimer);
+    frostHoldTimer = null;
+
+    resumeFrostTimeline();
+  };
+
+  document.addEventListener(
+    "pointerup",
+    cancelHold,
+    true
+  );
+
+  document.addEventListener(
+    "pointercancel",
+    cancelHold,
+    true
+  );
+
+  frostHoldTimer = setTimeout(() => {
+    if (!frostHolding || frostLocked) return;
+
+    frostLocked = true;
+    frostHolding = false;
+
+    document.removeEventListener(
+      "pointerup",
+      cancelHold,
+      true
+    );
+
+    document.removeEventListener(
+      "pointercancel",
+      cancelHold,
+      true
+    );
+
+    launchFrostTimeline();
+  }, FROST_HOLD_MS);
+}
+
+function launchFrostTimeline() {
+  if (!frostOverlay) return;
+
+  document.documentElement.classList.add(
+    "frost-conquering"
+  );
+
+  frostOverlay.classList.add("frost-grow");
+
+  convertFrozenSocialObjects();
+
+  setTimeout(() => {
+    revealTawnyaFromGreyHeart();
+  }, 1300);
+
+  setTimeout(() => {
+    document.documentElement.classList.add(
+      "frost-dead-world"
+    );
+
+    frostOverlay.classList.add("frost-complete");
+  }, 5400);
+}
+
+function convertFrozenSocialObjects() {
+  const socialObjects = [
+    ...document.querySelectorAll(
+      ".engagement-field .social-smoke"
+    )
+  ];
+
+  socialObjects.forEach((item, index) => {
+    const rect = item.getBoundingClientRect();
+
+    const centerX =
+      rect.left +
+      rect.width / 2;
+
+    const centerY =
+      rect.top +
+      rect.height / 2;
+
+    const distance = Math.hypot(
+      centerX -
+        window.innerWidth *
+          (frostOriginX / 100),
+
+      centerY -
+        window.innerHeight *
+          (frostOriginY / 100)
+    );
+
+    const delay = Math.min(
+      3600,
+      distance * 3.2
+    );
+
+    setTimeout(() => {
+      if (!item.isConnected) return;
+
+      const current = item.textContent.trim();
+
+      if (item.classList.contains("social-face")) {
+        item.textContent = "🥶";
+        item.classList.add("frost-face");
+        return;
+      }
+
+      if (current === "🩷") {
+        item.textContent = "🩵";
+        item.classList.add("frost-pink-heart");
+        return;
+      }
+
+      if (
+        current === "❤️" ||
+        current === "💔"
+      ) {
+        item.textContent = "💜";
+        item.classList.add("frost-red-heart");
+        return;
+      }
+
+      item.classList.add("frost-object");
+    }, delay);
+  });
+
+  document
+    .querySelectorAll(".profile")
+    .forEach(profile => {
+      profile.classList.add("frost-avatar");
+    });
+}
+
+function revealTawnyaFromGreyHeart() {
+  if (!frostOverlay) return;
+
+  const greyHeart =
+    document.querySelector(
+      ".carl-trigger-heart"
+    );
+
+  const tawnya =
+    frostOverlay.querySelector(
+      ".c17-tawnya-avatar"
+    );
+
+  if (!tawnya) return;
+
+  let centerX =
+    window.innerWidth * 0.22;
+
+  let centerY =
+    window.innerHeight * 0.36;
+
+  if (greyHeart) {
+    const rect =
+      greyHeart.getBoundingClientRect();
+
+    centerX =
+      rect.left +
+      rect.width / 2;
+
+    centerY =
+      rect.top +
+      rect.height / 2;
+  }
+
+  tawnya.style.left = `${centerX}px`;
+  tawnya.style.top = `${centerY}px`;
+
+  tawnya.classList.add(
+    "tawnya-rewriting"
+  );
+
+  setTimeout(() => {
+    tawnya.classList.add(
+      "tawnya-complete"
+    );
+
+    tawnya.disabled = false;
+  }, 3300);
+
+  tawnya.addEventListener(
+    "click",
+    () => {
+      if (
+        !tawnya.classList.contains(
+          "tawnya-complete"
+        )
+      ) {
+        return;
+      }
+
+      document.dispatchEvent(
+        new CustomEvent(
+          "c17:tawnya-open"
+        )
+      );
+    },
+    { once: true }
+  );
+}
 function stopAttack() {
   clearInterval(profileTimer);
   clearInterval(engageTimer);
