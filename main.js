@@ -1790,7 +1790,7 @@ let frostOriginY = 50;
 let frostPausedAnimations = [];
 
 const FROST_HOLD_MS = 7000;
-const TAWNYA_ASSET = "AssetTAWNYA.PNG";
+const TAWNYA_ASSET = "Tawnya.profile.PNG";
 
 function pauseFrostTimeline() {
   document.documentElement.classList.add("frost-time-stop");
