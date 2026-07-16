@@ -9057,37 +9057,35 @@ html.frost-dead-world body {
 
 .c17-frost-glass {
   position: absolute;
-  inset: -18%;
+  inset: 0;
   opacity: 0;
-  transform: scale(.02);
-  transform-origin: var(--frost-x) var(--frost-y);
-
+  pointer-events: none;
   background:
     radial-gradient(
       circle at var(--frost-x) var(--frost-y),
-      rgba(255,255,255,.96) 0 1%,
-      rgba(226,247,255,.94) 3%,
-      rgba(172,219,242,.72) 7%,
-      rgba(220,244,255,.34) 14%,
-      transparent 24%
+      rgba(255,255,255,.94) 0 8px,
+      rgba(220,245,255,.72) 18px,
+      rgba(164,211,235,.36) 52px,
+      transparent 105px
     ),
-    repeating-radial-gradient(
-      circle at var(--frost-x) var(--frost-y),
-      rgba(255,255,255,.48) 0 2px,
-      rgba(180,225,245,.18) 3px 6px,
-      transparent 7px 13px
+    radial-gradient(
+      ellipse at var(--frost-x) var(--frost-y),
+      rgba(225,247,255,.20),
+      transparent 46%
     );
-
-  filter:
-    contrast(1.18)
-    saturate(.72)
-    blur(.4px);
-
-  mix-blend-mode: screen;
+  backdrop-filter:
+    blur(1.7px)
+    brightness(.72)
+    saturate(.48)
+    contrast(1.08);
+  -webkit-backdrop-filter:
+    blur(1.7px)
+    brightness(.72)
+    saturate(.48)
+    contrast(1.08);
 }
 
-.c17-frost-overlay.frost-grow
-.c17-frost-glass {
+.c17-frost-overlay.frost-grow .c17-frost-glass {
   animation:
     c17FrostConquer
     5.4s
@@ -9097,28 +9095,33 @@ html.frost-dead-world body {
 
 @keyframes c17FrostConquer {
   0% {
-    opacity: .16;
-    transform: scale(.02);
+    opacity: .12;
+    clip-path:
+      circle(8px at var(--frost-x) var(--frost-y));
   }
 
-  10% {
-    opacity: .62;
-    transform: scale(.08);
+  14% {
+    opacity: .46;
+    clip-path:
+      circle(58px at var(--frost-x) var(--frost-y));
   }
 
   38% {
-    opacity: .76;
-    transform: scale(.42);
+    opacity: .68;
+    clip-path:
+      circle(34vmax at var(--frost-x) var(--frost-y));
   }
 
   72% {
-    opacity: .88;
-    transform: scale(.88);
+    opacity: .84;
+    clip-path:
+      circle(82vmax at var(--frost-x) var(--frost-y));
   }
 
   100% {
     opacity: .94;
-    transform: scale(1.42);
+    clip-path:
+      circle(150vmax at var(--frost-x) var(--frost-y));
   }
 }
 
@@ -9126,149 +9129,120 @@ html.frost-dead-world body {
   position: absolute;
   left: var(--frost-x);
   top: var(--frost-y);
-  width: 160vmax;
-  height: 160vmax;
+  width: 18px;
+  height: 18px;
   opacity: 0;
-  transform:
-    translate(-50%,-50%)
-    scale(.015)
-    rotate(0deg);
-
-  transform-origin: center;
-  mix-blend-mode: screen;
   pointer-events: none;
+  transform-origin: 0 0;
+  mix-blend-mode: screen;
+}
 
+.c17-frost-crystals::before,
+.c17-frost-crystals::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 145vmax;
+  height: 4px;
+  border-radius: 999px;
+  transform-origin: left center;
   background:
-    repeating-conic-gradient(
-      from 8deg,
-      transparent 0deg 5deg,
-      rgba(242,252,255,.76) 6deg 7deg,
-      transparent 8deg 15deg
+    linear-gradient(
+      90deg,
+      rgba(247,253,255,.98) 0 1%,
+      rgba(185,225,244,.78) 7%,
+      rgba(220,246,255,.55) 22%,
+      rgba(164,211,235,.28) 48%,
+      transparent 84%
     );
-
-  mask-image:
-    radial-gradient(
-      circle,
-      #000 0 6%,
-      rgba(0,0,0,.94) 9%,
-      rgba(0,0,0,.62) 24%,
-      transparent 64%
-    );
-
+  box-shadow:
+    18vw 8vh 0 -1px rgba(225,248,255,.34),
+    34vw -12vh 0 -1px rgba(185,226,245,.28),
+    47vw 17vh 0 -1px rgba(226,248,255,.24),
+    63vw -8vh 0 -1px rgba(164,211,235,.20);
   filter:
     blur(.35px)
-    drop-shadow(
-      0 0 5px
-      rgba(222,247,255,.78)
-    );
+    drop-shadow(0 0 4px rgba(220,246,255,.68));
 }
 
-.frost-crystal-a {
-  rotate: 7deg;
+.frost-crystal-a::before {
+  transform: rotate(-27deg) scaleX(.02);
 }
 
-.frost-crystal-b {
-  rotate: 31deg;
-  scale: .82;
+.frost-crystal-a::after {
+  transform: rotate(18deg) scaleX(.02);
 }
 
-.frost-crystal-c {
-  rotate: -22deg;
-  scale: .68;
+.frost-crystal-b::before {
+  transform: rotate(67deg) scaleX(.02);
 }
 
-.c17-frost-overlay.frost-grow
-.frost-crystal-a {
-  animation:
-    c17CrystalSpreadA
-    5s
-    ease-out
-    forwards !important;
+.frost-crystal-b::after {
+  transform: rotate(112deg) scaleX(.02);
 }
 
-.c17-frost-overlay.frost-grow
-.frost-crystal-b {
-  animation:
-    c17CrystalSpreadB
-    5.2s
-    .18s
-    ease-out
-    forwards !important;
+.frost-crystal-c::before {
+  transform: rotate(154deg) scaleX(.02);
+}
+
+.frost-crystal-c::after {
+  transform: rotate(205deg) scaleX(.02);
 }
 
 .c17-frost-overlay.frost-grow
-.frost-crystal-c {
+.frost-crystal-a::before,
+.c17-frost-overlay.frost-grow
+.frost-crystal-a::after {
   animation:
-    c17CrystalSpreadC
+    c17FrostBranchGrow
     4.8s
-    .36s
-    ease-out
+    cubic-bezier(.16,.72,.2,1)
     forwards !important;
 }
 
-@keyframes c17CrystalSpreadA {
+.c17-frost-overlay.frost-grow
+.frost-crystal-b::before,
+.c17-frost-overlay.frost-grow
+.frost-crystal-b::after {
+  animation:
+    c17FrostBranchGrow
+    5.1s
+    .12s
+    cubic-bezier(.16,.72,.2,1)
+    forwards !important;
+}
+
+.c17-frost-overlay.frost-grow
+.frost-crystal-c::before,
+.c17-frost-overlay.frost-grow
+.frost-crystal-c::after {
+  animation:
+    c17FrostBranchGrow
+    5.25s
+    .24s
+    cubic-bezier(.16,.72,.2,1)
+    forwards !important;
+}
+
+@keyframes c17FrostBranchGrow {
   0% {
     opacity: 0;
-    transform:
-      translate(-50%,-50%)
-      scale(.015)
-      rotate(7deg);
+    scale: .02 1;
   }
 
-  14% {
+  10% {
     opacity: .92;
   }
 
-  100% {
-    opacity: .68;
-    transform:
-      translate(-50%,-50%)
-      scale(1.06)
-      rotate(14deg);
-  }
-}
-
-@keyframes c17CrystalSpreadB {
-  0% {
-    opacity: 0;
-    transform:
-      translate(-50%,-50%)
-      scale(.01)
-      rotate(31deg);
-  }
-
-  18% {
-    opacity: .78;
-  }
-
-  100% {
-    opacity: .56;
-    transform:
-      translate(-50%,-50%)
-      scale(.92)
-      rotate(21deg);
-  }
-}
-
-@keyframes c17CrystalSpreadC {
-  0% {
-    opacity: 0;
-    transform:
-      translate(-50%,-50%)
-      scale(.01)
-      rotate(-22deg);
-  }
-
-  22% {
+  42% {
     opacity: .72;
+    scale: .42 1;
   }
 
   100% {
-    opacity: .48;
-    transform:
-      translate(-50%,-50%)
-      scale(.78)
-      rotate(-10deg);
+    opacity: .42;
+    scale: 1 1;
   }
 }
 
