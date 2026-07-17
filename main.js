@@ -1946,95 +1946,147 @@ function beginFrostHold(snowflake, pointX, pointY) {
 function launchFrostTimeline() {
   if (!frostOverlay) return;
 
+  const FROST_SWEEP_MS = 9200;
+
   document.documentElement.classList.add(
     "frost-conquering"
   );
 
   frostOverlay.classList.add("frost-grow");
 
-  convertFrozenSocialObjects();
-
-  setTimeout(() => {
-    revealTawnyaFromGreyHeart();
-  }, 1300);
+  freezeObjectsBehindFrostWall(
+    FROST_SWEEP_MS
+  );
 
   setTimeout(() => {
     document.documentElement.classList.add(
       "frost-dead-world"
     );
 
-    frostOverlay.classList.add("frost-complete");
-  }, 5400);
+    frostOverlay.classList.add(
+      "frost-complete"
+    );
+  }, FROST_SWEEP_MS);
 }
 
-function convertFrozenSocialObjects() {
-  const socialObjects = [
+function freezeObjectsBehindFrostWall(
+  frostSweepMs
+) {
+  const originX =
+    window.innerWidth *
+    (frostOriginX / 100);
+
+  const originY =
+    window.innerHeight *
+    (frostOriginY / 100);
+
+  const farthestCornerDistance = Math.max(
+    Math.hypot(originX, originY),
+
+    Math.hypot(
+      window.innerWidth - originX,
+      originY
+    ),
+
+    Math.hypot(
+      originX,
+      window.innerHeight - originY
+    ),
+
+    Math.hypot(
+      window.innerWidth - originX,
+      window.innerHeight - originY
+    )
+  );
+
+  const targets = [
     ...document.querySelectorAll(
       ".engagement-field .social-smoke"
+    ),
+
+    ...document.querySelectorAll(
+      ".profile"
     )
   ];
 
-  socialObjects.forEach((item, index) => {
-    const rect = item.getBoundingClientRect();
+  targets.forEach(target => {
+    const rect =
+      target.getBoundingClientRect();
 
     const centerX =
-      rect.left +
-      rect.width / 2;
+      rect.left + rect.width / 2;
 
     const centerY =
-      rect.top +
-      rect.height / 2;
+      rect.top + rect.height / 2;
 
-    const distance = Math.hypot(
-      centerX -
-        window.innerWidth *
-          (frostOriginX / 100),
+    const distanceFromTouch =
+      Math.hypot(
+        centerX - originX,
+        centerY - originY
+      );
 
-      centerY -
-        window.innerHeight *
-          (frostOriginY / 100)
-    );
+    const travelPercent =
+      Math.min(
+        1,
+        distanceFromTouch /
+        farthestCornerDistance
+      );
 
-    const delay = Math.min(
-      3600,
-      distance * 3.2
-    );
+    const freezeDelay =
+      Math.max(
+        120,
+        travelPercent *
+        frostSweepMs *
+        0.94
+      );
 
     setTimeout(() => {
-      if (!item.isConnected) return;
-
-      const current = item.textContent.trim();
-
-      if (item.classList.contains("social-face")) {
-        item.textContent = "🥶";
-        item.classList.add("frost-face");
-        return;
-      }
-
-      if (current === "🩷") {
-        item.textContent = "🩵";
-        item.classList.add("frost-pink-heart");
-        return;
-      }
-
-      if (
-        current === "❤️" ||
-        current === "💔"
-      ) {
-        item.textContent = "💙";
-        item.classList.add("frost-red-heart");
-        return;
-      }
-
-      item.classList.add("frost-object");
-    }, delay);
+      freezeReachedObject(target);
+    }, freezeDelay);
   });
+}
 
-  document
-    .querySelectorAll(".profile")
-    .forEach(profile => {
-      profile.classList.add("frost-avatar");
-    });
+function freezeReachedObject(item) {
+  if (!item || !item.isConnected) return;
+
+  if (item.classList.contains("profile")) {
+    item.classList.add("frost-avatar");
+    return;
+  }
+
+  const current =
+    item.textContent.trim();
+
+  if (
+    item.classList.contains(
+      "social-face"
+    )
+  ) {
+    item.textContent = "🥶";
+    item.classList.add("frost-face");
+    return;
+  }
+
+  if (current === "🩷") {
+    item.textContent = "🩵";
+    item.classList.add(
+      "frost-pink-heart"
+    );
+    return;
+  }
+
+  if (
+    current === "❤️" ||
+    current === "💔"
+  ) {
+    item.textContent = "💙";
+    item.classList.add(
+      "frost-red-heart"
+    );
+    return;
+  }
+
+  item.classList.add("frost-object");
 }
 
 function revealTawnyaFromGreyHeart() {
