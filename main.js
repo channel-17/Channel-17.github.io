@@ -1860,20 +1860,11 @@ function createFrostOverlay(pointX, pointY) {
   );
 
   frostOverlay.innerHTML = `
-    <div class="c17-frost-glass"></div>
-    <div class="c17-frost-crystals frost-crystal-a"></div>
-    <div class="c17-frost-crystals frost-crystal-b"></div>
-    <div class="c17-frost-crystals frost-crystal-c"></div>
-
-    <button
-      class="c17-tawnya-avatar"
-      type="button"
-      aria-label="Tawnya Grey"
-      disabled
-    >
-      <img src="${TAWNYA_ASSET}" alt="">
-    </button>
-  `;
+  <canvas
+    class="c17-frost-canvas"
+    aria-hidden="true"
+  ></canvas>
+`;
 
   document.body.appendChild(frostOverlay);
 }
@@ -1946,147 +1937,567 @@ function beginFrostHold(snowflake, pointX, pointY) {
 function launchFrostTimeline() {
   if (!frostOverlay) return;
 
-  const FROST_SWEEP_MS = 9200;
-
   document.documentElement.classList.add(
     "frost-conquering"
   );
 
   frostOverlay.classList.add("frost-grow");
 
-  freezeObjectsBehindFrostWall(
-    FROST_SWEEP_MS
+  const canvas =
+    frostOverlay.querySelector(".c17-frost-canvas");
+
+  if (!canvas) return;
+
+  growFrostAcrossScreen(canvas);
+}
+
+function growFrostAcrossScreen(canvas) {
+  const context = canvas.getContext("2d");
+
+  if (!context) return;
+
+  const pixelRatio =
+    Math.min(window.devicePixelRatio || 1, 2);
+
+  const screenWidth = window.innerWidth;
+  const screenHeight = window.innerHeight;
+
+  canvas.width = Math.round(
+    screenWidth * pixelRatio
   );
 
-  setTimeout(() => {
-    document.documentElement.classList.add(
-      "frost-dead-world"
+  canvas.height = Math.round(
+    screenHeight * pixelRatio
+  );
+
+  canvas.style.width = `${screenWidth}px`;
+  canvas.style.height = `${screenHeight}px`;
+
+  context.setTransform(
+    pixelRatio,
+    0,
+    0,
+    pixelRatio,
+    0,
+    0
+  );
+
+  const originX =
+    screenWidth * (frostOriginX / 100);
+
+  const originY =
+    screenHeight * (frostOriginY / 100);
+
+  const maskCanvas =
+    document.createElement("canvas");
+
+  maskCanvas.width = canvas.width;
+  maskCanvas.height = canvas.height;
+
+  const mask =
+    maskCanvas.getContext("2d");
+
+  mask.setTransform(
+    pixelRatio,
+    0,
+    0,
+    pixelRatio,
+    0,
+    0
+  );
+
+  const edgeCanvas =
+    document.createElement("canvas");
+
+  edgeCanvas.width = canvas.width;
+  edgeCanvas.height = canvas.height;
+
+  const edge =
+    edgeCanvas.getContext("2d");
+
+  edge.setTransform(
+    pixelRatio,
+    0,
+    0,
+    pixelRatio,
+    0,
+    0
+  );
+
+  const tips = [];
+  const startTime = performance.now();
+  const growthDuration = 11800;
+
+  const farthestDistance = Math.max(
+    Math.hypot(originX, originY),
+    Math.hypot(
+      screenWidth - originX,
+      originY
+    ),
+    Math.hypot(
+      originX,
+      screenHeight - originY
+    ),
+    Math.hypot(
+      screenWidth - originX,
+      screenHeight - originY
+    )
+  );
+
+  function createTip(
+    x,
+    y,
+    angle,
+    speed,
+    width,
+    generation = 0
+  ) {
+    return {
+      x,
+      y,
+      previousX: x,
+      previousY: y,
+      angle,
+      speed,
+      width,
+      generation,
+      life: 0,
+      dead: false,
+      branchChance:
+        generation === 0 ? 0.032 : 0.018
+    };
+  }
+
+  /*
+    Many separate crystal tips are born beneath the user's
+    fingertip. Their different speeds prevent a circular wipe.
+  */
+  const originalTipCount = 42;
+
+  for (
+    let index = 0;
+    index < originalTipCount;
+    index += 1
+  ) {
+    const baseAngle =
+      (Math.PI * 2 * index) /
+      originalTipCount;
+
+    const angleJitter =
+      (Math.random() - 0.5) * 0.28;
+
+    tips.push(
+      createTip(
+        originX,
+        originY,
+        baseAngle + angleJitter,
+        0.72 + Math.random() * 1.18,
+        8 + Math.random() * 15
+      )
     );
+  }
+
+  /*
+    The first frozen seed directly beneath the fingertip.
+  */
+  mask.fillStyle = "rgba(255,255,255,1)";
+  mask.beginPath();
+  mask.arc(
+    originX,
+    originY,
+    12,
+    0,
+    Math.PI * 2
+  );
+  mask.fill();
+
+  function drawFrozenMaterial() {
+    context.clearRect(
+      0,
+      0,
+      screenWidth,
+      screenHeight
+    );
+
+    /*
+      Pale blue frozen glass revealed only where the growth
+      mask has physically reached.
+    */
+    context.save();
+
+    context.drawImage(
+      maskCanvas,
+      0,
+      0,
+      screenWidth,
+      screenHeight
+    );
+
+    context.globalCompositeOperation =
+      "source-in";
+
+    const frozenGradient =
+      context.createLinearGradient(
+        0,
+        0,
+        screenWidth,
+        screenHeight
+      );
+
+    frozenGradient.addColorStop(
+      0,
+      "rgba(224,249,255,0.97)"
+    );
+
+    frozenGradient.addColorStop(
+      0.28,
+      "rgba(154,215,237,0.96)"
+    );
+
+    frozenGradient.addColorStop(
+      0.52,
+      "rgba(207,241,249,0.98)"
+    );
+
+    frozenGradient.addColorStop(
+      0.76,
+      "rgba(113,184,216,0.97)"
+    );
+
+    frozenGradient.addColorStop(
+      1,
+      "rgba(226,248,252,0.98)"
+    );
+
+    context.fillStyle = frozenGradient;
+
+    context.fillRect(
+      0,
+      0,
+      screenWidth,
+      screenHeight
+    );
+
+    /*
+      Milky clouding trapped inside the frozen glass.
+    */
+    context.globalCompositeOperation =
+      "source-atop";
+
+    context.fillStyle =
+      "rgba(242,253,255,0.24)";
+
+    for (
+      let cloudIndex = 0;
+      cloudIndex < 26;
+      cloudIndex += 1
+    ) {
+      const cloudX =
+        originX +
+        Math.cos(cloudIndex * 2.39) *
+        farthestDistance *
+        ((cloudIndex % 9) / 9);
+
+      const cloudY =
+        originY +
+        Math.sin(cloudIndex * 1.73) *
+        farthestDistance *
+        ((cloudIndex % 11) / 11);
+
+      const cloudRadius =
+        34 + (cloudIndex % 6) * 19;
+
+      const cloudGradient =
+        context.createRadialGradient(
+          cloudX,
+          cloudY,
+          0,
+          cloudX,
+          cloudY,
+          cloudRadius
+        );
+
+      cloudGradient.addColorStop(
+        0,
+        "rgba(255,255,255,0.28)"
+      );
+
+      cloudGradient.addColorStop(
+        1,
+        "rgba(255,255,255,0)"
+      );
+
+      context.fillStyle = cloudGradient;
+      context.beginPath();
+
+      context.arc(
+        cloudX,
+        cloudY,
+        cloudRadius,
+        0,
+        Math.PI * 2
+      );
+
+      context.fill();
+    }
+
+    context.restore();
+
+    /*
+      Bright crystal veins and active glowing tips stay above
+      the pale-blue frozen backdrop.
+    */
+    context.save();
+
+    context.globalCompositeOperation =
+      "screen";
+
+    context.shadowColor =
+      "rgba(194,236,255,0.95)";
+
+    context.shadowBlur = 9;
+
+    context.drawImage(
+      edgeCanvas,
+      0,
+      0,
+      screenWidth,
+      screenHeight
+    );
+
+    context.restore();
+  }
+
+  function growFrame(now) {
+    const elapsed = now - startTime;
+
+    const progress =
+      Math.min(1, elapsed / growthDuration);
+
+    /*
+      Several tiny growth steps per rendered frame make the
+      branches crawl instead of jumping.
+    */
+    const stepsThisFrame =
+      progress < 0.32 ? 3 : 4;
+
+    for (
+      let step = 0;
+      step < stepsThisFrame;
+      step += 1
+    ) {
+      const currentTips = [...tips];
+
+      currentTips.forEach(tip => {
+        if (tip.dead) return;
+
+        tip.life += 1;
+
+        tip.previousX = tip.x;
+        tip.previousY = tip.y;
+
+        /*
+          Gentle wandering creates organic frost veins.
+        */
+        tip.angle +=
+          (Math.random() - 0.5) *
+          (tip.generation === 0 ? 0.11 : 0.17);
+
+        /*
+          Some branches hesitate while others briefly surge.
+        */
+        const movement =
+          tip.speed *
+          (
+            0.68 +
+            Math.random() * 1.12
+          );
+
+        tip.x += Math.cos(tip.angle) * movement;
+        tip.y += Math.sin(tip.angle) * movement;
+
+        const distanceFromOrigin =
+          Math.hypot(
+            tip.x - originX,
+            tip.y - originY
+          );
+
+        const distanceProgress =
+          Math.min(
+            1,
+            distanceFromOrigin /
+            farthestDistance
+          );
+
+        /*
+          The branch widens behind its bright leading tip.
+          This is the frozen backdrop physically filling in.
+        */
+        const fillWidth =
+          tip.width +
+          8 +
+          distanceProgress * 27;
+
+        mask.lineCap = "round";
+        mask.lineJoin = "round";
+        mask.strokeStyle =
+          "rgba(255,255,255,0.98)";
+        mask.lineWidth = fillWidth;
+
+        mask.beginPath();
+        mask.moveTo(
+          tip.previousX,
+          tip.previousY
+        );
+        mask.lineTo(tip.x, tip.y);
+        mask.stroke();
+
+        mask.fillStyle =
+          "rgba(255,255,255,0.96)";
+
+        mask.beginPath();
+
+        mask.arc(
+          tip.x,
+          tip.y,
+          fillWidth * (
+            0.42 +
+            Math.random() * 0.18
+          ),
+          0,
+          Math.PI * 2
+        );
+
+        mask.fill();
+
+        /*
+          White-blue crystal line at the moving edge.
+        */
+        edge.lineCap = "round";
+        edge.lineJoin = "round";
+
+        edge.strokeStyle =
+          Math.random() > 0.34
+            ? "rgba(247,254,255,0.90)"
+            : "rgba(171,224,246,0.82)";
+
+        edge.lineWidth =
+          Math.max(
+            0.8,
+            2.6 - distanceProgress * 1.2
+          );
+
+        edge.beginPath();
+        edge.moveTo(
+          tip.previousX,
+          tip.previousY
+        );
+        edge.lineTo(tip.x, tip.y);
+        edge.stroke();
+
+        /*
+          Forking crystal fingers.
+        */
+        if (
+          tips.length < 190 &&
+          tip.life > 10 &&
+          tip.generation < 4 &&
+          Math.random() < tip.branchChance
+        ) {
+          const forkDirection =
+            Math.random() > 0.5 ? 1 : -1;
+
+          const forkAngle =
+            tip.angle +
+            forkDirection *
+            (
+              0.34 +
+              Math.random() * 0.66
+            );
+
+          tips.push(
+            createTip(
+              tip.x,
+              tip.y,
+              forkAngle,
+              tip.speed *
+                (0.72 + Math.random() * 0.34),
+              Math.max(
+                4,
+                tip.width * 0.68
+              ),
+              tip.generation + 1
+            )
+          );
+        }
+
+        /*
+          Some minor branches naturally stop, leaving uneven
+          crystal shapes instead of perfect spokes.
+        */
+        if (
+          tip.generation > 0 &&
+          tip.life > 24 &&
+          Math.random() < 0.0028
+        ) {
+          tip.dead = true;
+        }
+
+        const outsideScreen =
+          tip.x < -90 ||
+          tip.x > screenWidth + 90 ||
+          tip.y < -90 ||
+          tip.y > screenHeight + 90;
+
+        if (outsideScreen) {
+          tip.dead = true;
+        }
+      });
+    }
+
+    drawFrozenMaterial();
+
+    const livingOriginalTips =
+      tips.filter(
+        tip =>
+          !tip.dead &&
+          tip.generation === 0
+      ).length;
+
+    if (
+      progress < 1 &&
+      livingOriginalTips > 0
+    ) {
+      requestAnimationFrame(growFrame);
+      return;
+    }
+
+    /*
+      Final frozen glass settles after the crawling front has
+      conquered the display.
+    */
+    mask.fillStyle =
+      "rgba(255,255,255,0.92)";
+
+    mask.fillRect(
+      0,
+      0,
+      screenWidth,
+      screenHeight
+    );
+
+    drawFrozenMaterial();
 
     frostOverlay.classList.add(
       "frost-complete"
     );
-  }, FROST_SWEEP_MS);
-}
 
-function freezeObjectsBehindFrostWall(
-  frostSweepMs
-) {
-  const originX =
-    window.innerWidth *
-    (frostOriginX / 100);
-
-  const originY =
-    window.innerHeight *
-    (frostOriginY / 100);
-
-  const farthestCornerDistance = Math.max(
-    Math.hypot(originX, originY),
-
-    Math.hypot(
-      window.innerWidth - originX,
-      originY
-    ),
-
-    Math.hypot(
-      originX,
-      window.innerHeight - originY
-    ),
-
-    Math.hypot(
-      window.innerWidth - originX,
-      window.innerHeight - originY
-    )
-  );
-
-  const targets = [
-    ...document.querySelectorAll(
-      ".engagement-field .social-smoke"
-    ),
-
-    ...document.querySelectorAll(
-      ".profile"
-    )
-  ];
-
-  targets.forEach(target => {
-    const rect =
-      target.getBoundingClientRect();
-
-    const centerX =
-      rect.left + rect.width / 2;
-
-    const centerY =
-      rect.top + rect.height / 2;
-
-    const distanceFromTouch =
-      Math.hypot(
-        centerX - originX,
-        centerY - originY
-      );
-
-    const travelPercent =
-      Math.min(
-        1,
-        distanceFromTouch /
-        farthestCornerDistance
-      );
-
-    const freezeDelay =
-      Math.max(
-        120,
-        travelPercent *
-        frostSweepMs *
-        0.94
-      );
-
-    setTimeout(() => {
-      freezeReachedObject(target);
-    }, freezeDelay);
-  });
-}
-
-function freezeReachedObject(item) {
-  if (!item || !item.isConnected) return;
-
-  if (item.classList.contains("profile")) {
-    item.classList.add("frost-avatar");
-    return;
-  }
-
-  const current =
-    item.textContent.trim();
-
-  if (
-    item.classList.contains(
-      "social-face"
-    )
-  ) {
-    item.textContent = "🥶";
-    item.classList.add("frost-face");
-    return;
-  }
-
-  if (current === "🩷") {
-    item.textContent = "🩵";
-    item.classList.add(
-      "frost-pink-heart"
+    document.documentElement.classList.add(
+      "frost-dead-world"
     );
-    return;
   }
 
-  if (
-    current === "❤️" ||
-    current === "💔"
-  ) {
-    item.textContent = "💙";
-    item.classList.add(
-      "frost-red-heart"
-    );
-    return;
-  }
-
-  item.classList.add("frost-object");
+  requestAnimationFrame(growFrame);
 }
 
 function revealTawnyaFromGreyHeart() {
