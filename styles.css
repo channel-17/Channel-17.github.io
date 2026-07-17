@@ -9060,68 +9060,271 @@ html.frost-dead-world body {
   inset: 0;
   opacity: 0;
   pointer-events: none;
+
   background:
     radial-gradient(
       circle at var(--frost-x) var(--frost-y),
-      rgba(255,255,255,.94) 0 8px,
-      rgba(220,245,255,.72) 18px,
-      rgba(164,211,235,.36) 52px,
-      transparent 105px
+      rgba(255,255,255,.98) 0 5px,
+      rgba(222,248,255,.92) 9px,
+      rgba(164,218,244,.64) 22px,
+      rgba(111,181,222,.28) 54px,
+      transparent 104px
     ),
-    radial-gradient(
-      ellipse at var(--frost-x) var(--frost-y),
-      rgba(225,247,255,.20),
-      transparent 46%
+
+    repeating-radial-gradient(
+      circle at var(--frost-x) var(--frost-y),
+      rgba(225,248,255,.16) 0 2px,
+      rgba(127,195,229,.08) 4px 7px,
+      transparent 10px 17px
+    ),
+
+    linear-gradient(
+      118deg,
+      rgba(219,245,255,.18),
+      rgba(85,153,194,.14) 38%,
+      rgba(220,247,255,.22) 64%,
+      rgba(72,129,169,.16)
     );
+
   backdrop-filter:
-    blur(1.7px)
-    brightness(.72)
-    saturate(.48)
-    contrast(1.08);
+    blur(1.8px)
+    brightness(.68)
+    saturate(.42)
+    contrast(1.14);
+
   -webkit-backdrop-filter:
-    blur(1.7px)
-    brightness(.72)
-    saturate(.48)
-    contrast(1.08);
+    blur(1.8px)
+    brightness(.68)
+    saturate(.42)
+    contrast(1.14);
+
+  box-shadow:
+    inset 0 0 70px
+      rgba(148,211,242,.10);
 }
 
-.c17-frost-overlay.frost-grow .c17-frost-glass {
+.c17-frost-glass::before,
+.c17-frost-glass::after {
+  content: "";
+  position: absolute;
+  inset: -12%;
+  opacity: 0;
+  pointer-events: none;
+  transform-origin:
+    var(--frost-x)
+    var(--frost-y);
+}
+
+.c17-frost-glass::before {
+  background:
+    repeating-conic-gradient(
+      from 7deg
+      at var(--frost-x)
+      var(--frost-y),
+
+      transparent 0deg 5deg,
+
+      rgba(237,252,255,.72)
+      6deg 6.5deg,
+
+      rgba(125,193,228,.28)
+      7deg 7.8deg,
+
+      transparent 9deg 16deg
+    );
+
+  filter:
+    blur(.45px)
+    drop-shadow(
+      0 0 3px
+      rgba(198,236,255,.54)
+    );
+}
+
+.c17-frost-glass::after {
+  background:
+    radial-gradient(
+      circle
+      at var(--frost-x)
+      var(--frost-y),
+
+      transparent 0 14%,
+
+      rgba(229,249,255,.10)
+      19%,
+
+      rgba(126,196,231,.26)
+      28%,
+
+      rgba(226,248,255,.12)
+      39%,
+
+      transparent 57%
+    );
+
+  filter: blur(4px);
+}
+
+.c17-frost-overlay.frost-grow
+.c17-frost-glass {
   animation:
-    c17FrostConquer
-    5.4s
-    cubic-bezier(.18,.72,.12,1)
+    c17FrostGlassSweep
+    9.2s
+    cubic-bezier(.22,.58,.12,1)
     forwards !important;
 }
 
-@keyframes c17FrostConquer {
+.c17-frost-overlay.frost-grow
+.c17-frost-glass::before {
+  animation:
+    c17FrostVeins
+    9.2s
+    cubic-bezier(.18,.62,.12,1)
+    forwards !important;
+}
+
+.c17-frost-overlay.frost-grow
+.c17-frost-glass::after {
+  animation:
+    c17FrostColdBloom
+    9.2s
+    cubic-bezier(.2,.55,.14,1)
+    forwards !important;
+}
+
+@keyframes c17FrostGlassSweep {
   0% {
-    opacity: .12;
+    opacity: .14;
+
     clip-path:
-      circle(8px at var(--frost-x) var(--frost-y));
+      circle(
+        7px
+        at var(--frost-x)
+        var(--frost-y)
+      );
   }
 
-  14% {
-    opacity: .46;
+  8% {
+    opacity: .36;
+
     clip-path:
-      circle(58px at var(--frost-x) var(--frost-y));
+      circle(
+        28px
+        at var(--frost-x)
+        var(--frost-y)
+      );
+  }
+
+  20% {
+    opacity: .52;
+
+    clip-path:
+      circle(
+        13vmax
+        at var(--frost-x)
+        var(--frost-y)
+      );
   }
 
   38% {
-    opacity: .68;
+    opacity: .66;
+
     clip-path:
-      circle(34vmax at var(--frost-x) var(--frost-y));
+      circle(
+        31vmax
+        at var(--frost-x)
+        var(--frost-y)
+      );
   }
 
-  72% {
-    opacity: .84;
+  59% {
+    opacity: .78;
+
     clip-path:
-      circle(82vmax at var(--frost-x) var(--frost-y));
+      circle(
+        57vmax
+        at var(--frost-x)
+        var(--frost-y)
+      );
+  }
+
+  79% {
+    opacity: .88;
+
+    clip-path:
+      circle(
+        91vmax
+        at var(--frost-x)
+        var(--frost-y)
+      );
   }
 
   100% {
-    opacity: .94;
+    opacity: .96;
+
     clip-path:
-      circle(150vmax at var(--frost-x) var(--frost-y));
+      circle(
+        155vmax
+        at var(--frost-x)
+        var(--frost-y)
+      );
+  }
+}
+
+@keyframes c17FrostVeins {
+  0% {
+    opacity: 0;
+    transform: scale(.015) rotate(0deg);
+  }
+
+  7% {
+    opacity: .78;
+  }
+
+  24% {
+    opacity: .88;
+    transform: scale(.18) rotate(.4deg);
+  }
+
+  48% {
+    opacity: .74;
+    transform: scale(.48) rotate(-.3deg);
+  }
+
+  73% {
+    opacity: .60;
+    transform: scale(.79) rotate(.25deg);
+  }
+
+  100% {
+    opacity: .48;
+    transform: scale(1.18) rotate(0deg);
+  }
+}
+
+@keyframes c17FrostColdBloom {
+  0% {
+    opacity: 0;
+    transform: scale(.02);
+  }
+
+  14% {
+    opacity: .42;
+  }
+
+  42% {
+    opacity: .60;
+    transform: scale(.48);
+  }
+
+  74% {
+    opacity: .72;
+    transform: scale(.84);
+  }
+
+  100% {
+    opacity: .78;
+    transform: scale(1.22);
   }
 }
 
@@ -9129,8 +9332,8 @@ html.frost-dead-world body {
   position: absolute;
   left: var(--frost-x);
   top: var(--frost-y);
-  width: 18px;
-  height: 18px;
+  width: 12px;
+  height: 12px;
   opacity: 0;
   pointer-events: none;
   transform-origin: 0 0;
@@ -9144,50 +9347,67 @@ html.frost-dead-world body {
   left: 0;
   top: 0;
   width: 145vmax;
-  height: 4px;
+  height: 2px;
   border-radius: 999px;
   transform-origin: left center;
+
   background:
     linear-gradient(
       90deg,
-      rgba(247,253,255,.98) 0 1%,
-      rgba(185,225,244,.78) 7%,
-      rgba(220,246,255,.55) 22%,
-      rgba(164,211,235,.28) 48%,
-      transparent 84%
+      rgba(250,254,255,.98) 0 1%,
+      rgba(186,229,248,.82) 8%,
+      rgba(224,248,255,.62) 21%,
+      rgba(126,191,226,.32) 48%,
+      rgba(219,247,255,.16) 69%,
+      transparent 91%
     );
+
   box-shadow:
-    18vw 8vh 0 -1px rgba(225,248,255,.34),
-    34vw -12vh 0 -1px rgba(185,226,245,.28),
-    47vw 17vh 0 -1px rgba(226,248,255,.24),
-    63vw -8vh 0 -1px rgba(164,211,235,.20);
+    12vw 5vh 0 -1px
+      rgba(229,250,255,.42),
+
+    25vw -9vh 0 -1px
+      rgba(170,220,245,.34),
+
+    41vw 14vh 0 -1px
+      rgba(228,249,255,.30),
+
+    58vw -7vh 0 -1px
+      rgba(154,207,237,.26),
+
+    76vw 9vh 0 -1px
+      rgba(221,247,255,.20);
+
   filter:
-    blur(.35px)
-    drop-shadow(0 0 4px rgba(220,246,255,.68));
+    blur(.25px)
+    drop-shadow(
+      0 0 4px
+      rgba(213,243,255,.76)
+    );
 }
 
 .frost-crystal-a::before {
-  transform: rotate(-27deg) scaleX(.02);
+  transform: rotate(-27deg) scaleX(.01);
 }
 
 .frost-crystal-a::after {
-  transform: rotate(18deg) scaleX(.02);
+  transform: rotate(19deg) scaleX(.01);
 }
 
 .frost-crystal-b::before {
-  transform: rotate(67deg) scaleX(.02);
+  transform: rotate(68deg) scaleX(.01);
 }
 
 .frost-crystal-b::after {
-  transform: rotate(112deg) scaleX(.02);
+  transform: rotate(113deg) scaleX(.01);
 }
 
 .frost-crystal-c::before {
-  transform: rotate(154deg) scaleX(.02);
+  transform: rotate(155deg) scaleX(.01);
 }
 
 .frost-crystal-c::after {
-  transform: rotate(205deg) scaleX(.02);
+  transform: rotate(207deg) scaleX(.01);
 }
 
 .c17-frost-overlay.frost-grow
@@ -9196,8 +9416,8 @@ html.frost-dead-world body {
 .frost-crystal-a::after {
   animation:
     c17FrostBranchGrow
-    4.8s
-    cubic-bezier(.16,.72,.2,1)
+    8.5s
+    cubic-bezier(.14,.58,.12,1)
     forwards !important;
 }
 
@@ -9207,9 +9427,9 @@ html.frost-dead-world body {
 .frost-crystal-b::after {
   animation:
     c17FrostBranchGrow
-    5.1s
-    .12s
-    cubic-bezier(.16,.72,.2,1)
+    8.8s
+    .18s
+    cubic-bezier(.14,.58,.12,1)
     forwards !important;
 }
 
@@ -9219,29 +9439,39 @@ html.frost-dead-world body {
 .frost-crystal-c::after {
   animation:
     c17FrostBranchGrow
-    5.25s
-    .24s
-    cubic-bezier(.16,.72,.2,1)
+    9.05s
+    .34s
+    cubic-bezier(.14,.58,.12,1)
     forwards !important;
 }
 
 @keyframes c17FrostBranchGrow {
   0% {
     opacity: 0;
-    scale: .02 1;
+    scale: .01 1;
   }
 
-  10% {
-    opacity: .92;
+  8% {
+    opacity: .96;
   }
 
-  42% {
-    opacity: .72;
-    scale: .42 1;
+  27% {
+    opacity: .84;
+    scale: .16 1;
+  }
+
+  51% {
+    opacity: .68;
+    scale: .47 1;
+  }
+
+  76% {
+    opacity: .54;
+    scale: .78 1;
   }
 
   100% {
-    opacity: .42;
+    opacity: .40;
     scale: 1 1;
   }
 }
