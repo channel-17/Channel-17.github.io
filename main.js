@@ -1956,20 +1956,16 @@ function growFrostAcrossScreen(canvas) {
 
   if (!context) return;
 
-  const pixelRatio =
-    Math.min(window.devicePixelRatio || 1, 2);
+  const pixelRatio = Math.min(
+    window.devicePixelRatio || 1,
+    2
+  );
 
   const screenWidth = window.innerWidth;
   const screenHeight = window.innerHeight;
 
-  canvas.width = Math.round(
-    screenWidth * pixelRatio
-  );
-
-  canvas.height = Math.round(
-    screenHeight * pixelRatio
-  );
-
+  canvas.width = Math.round(screenWidth * pixelRatio);
+  canvas.height = Math.round(screenHeight * pixelRatio);
   canvas.style.width = `${screenWidth}px`;
   canvas.style.height = `${screenHeight}px`;
 
@@ -1982,67 +1978,52 @@ function growFrostAcrossScreen(canvas) {
     0
   );
 
-  const originX =
-    screenWidth * (frostOriginX / 100);
+  const originX = screenWidth * (frostOriginX / 100);
+  const originY = screenHeight * (frostOriginY / 100);
 
-  const originY =
-    screenHeight * (frostOriginY / 100);
-
-  const maskCanvas =
-    document.createElement("canvas");
-
+  const maskCanvas = document.createElement("canvas");
   maskCanvas.width = canvas.width;
   maskCanvas.height = canvas.height;
 
-  const mask =
-    maskCanvas.getContext("2d");
+  const mask = maskCanvas.getContext("2d");
+  mask.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
 
-  mask.setTransform(
-    pixelRatio,
-    0,
-    0,
-    pixelRatio,
-    0,
-    0
-  );
-
-  const edgeCanvas =
-    document.createElement("canvas");
-
+  const edgeCanvas = document.createElement("canvas");
   edgeCanvas.width = canvas.width;
   edgeCanvas.height = canvas.height;
 
-  const edge =
-    edgeCanvas.getContext("2d");
-
-  edge.setTransform(
-    pixelRatio,
-    0,
-    0,
-    pixelRatio,
-    0,
-    0
-  );
+  const edge = edgeCanvas.getContext("2d");
+  edge.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
 
   const tips = [];
   const startTime = performance.now();
-  const growthDuration = 11800;
+  const growthDuration = 15600;
+  const settleDuration = 1700;
 
   const farthestDistance = Math.max(
     Math.hypot(originX, originY),
-    Math.hypot(
-      screenWidth - originX,
-      originY
-    ),
-    Math.hypot(
-      originX,
-      screenHeight - originY
-    ),
-    Math.hypot(
-      screenWidth - originX,
-      screenHeight - originY
-    )
+    Math.hypot(screenWidth - originX, originY),
+    Math.hypot(originX, screenHeight - originY),
+    Math.hypot(screenWidth - originX, screenHeight - originY)
   );
+
+  function randomPerimeterTarget() {
+    const side = Math.floor(Math.random() * 4);
+
+    if (side === 0) {
+      return { x: Math.random() * screenWidth, y: -45 };
+    }
+
+    if (side === 1) {
+      return { x: screenWidth + 45, y: Math.random() * screenHeight };
+    }
+
+    if (side === 2) {
+      return { x: Math.random() * screenWidth, y: screenHeight + 45 };
+    }
+
+    return { x: -45, y: Math.random() * screenHeight };
+  }
 
   function createTip(
     x,
@@ -2050,7 +2031,8 @@ function growFrostAcrossScreen(canvas) {
     angle,
     speed,
     width,
-    generation = 0
+    generation = 0,
+    delay = 0
   ) {
     return {
       x,
@@ -2061,440 +2043,358 @@ function growFrostAcrossScreen(canvas) {
       speed,
       width,
       generation,
+      delay,
       life: 0,
       dead: false,
-      branchChance:
-        generation === 0 ? 0.032 : 0.018
+      target: randomPerimeterTarget(),
+      branchChance: generation === 0 ? 0.018 : 0.011,
+      hunger: 0.012 + Math.random() * 0.018,
+      hesitation: 0
     };
   }
 
   /*
-    Many separate crystal tips are born beneath the user's
-    fingertip. Their different speeds prevent a circular wipe.
+    A small irregular nest begins under the finger. The leaders
+    are deliberately staggered so the freeze probes, hesitates,
+    and then commits instead of exploding in a perfect circle.
   */
-  const originalTipCount = 42;
+  const originalTipCount = 18;
 
-  for (
-    let index = 0;
-    index < originalTipCount;
-    index += 1
-  ) {
-    const baseAngle =
-      (Math.PI * 2 * index) /
-      originalTipCount;
-
-    const angleJitter =
-      (Math.random() - 0.5) * 0.28;
+  for (let index = 0; index < originalTipCount; index += 1) {
+    const angle = Math.random() * Math.PI * 2;
 
     tips.push(
       createTip(
-        originX,
-        originY,
-        baseAngle + angleJitter,
-        0.72 + Math.random() * 1.18,
-        8 + Math.random() * 15
+        originX + (Math.random() - 0.5) * 10,
+        originY + (Math.random() - 0.5) * 10,
+        angle,
+        0.48 + Math.random() * 0.66,
+        12 + Math.random() * 13,
+        0,
+        Math.random() * 1450
       )
     );
   }
 
-  /*
-    The first frozen seed directly beneath the fingertip.
-  */
-  mask.fillStyle = "rgba(255,255,255,1)";
+  mask.fillStyle = "rgba(255,255,255,0.92)";
   mask.beginPath();
-  mask.arc(
-    originX,
-    originY,
-    12,
-    0,
-    Math.PI * 2
-  );
+  mask.arc(originX, originY, 10, 0, Math.PI * 2);
   mask.fill();
 
-  function drawFrozenMaterial() {
-    context.clearRect(
+  function paintCloud(x, y, radius, strength) {
+    const cloudGradient = context.createRadialGradient(
+      x,
+      y,
       0,
-      0,
-      screenWidth,
-      screenHeight
+      x,
+      y,
+      radius
     );
+
+    cloudGradient.addColorStop(
+      0,
+      `rgba(111,156,171,${strength})`
+    );
+
+    cloudGradient.addColorStop(
+      0.5,
+      `rgba(68,109,128,${strength * 0.55})`
+    );
+
+    cloudGradient.addColorStop(1, "rgba(15,31,42,0)");
+
+    context.fillStyle = cloudGradient;
+    context.beginPath();
+    context.arc(x, y, radius, 0, Math.PI * 2);
+    context.fill();
+  }
+
+  function drawFrozenMaterial(settleAmount = 0) {
+    context.clearRect(0, 0, screenWidth, screenHeight);
 
     /*
-      Pale blue frozen glass revealed only where the growth
-      mask has physically reached.
+      The conquered world stays dark. The cyan lives inside the
+      ice like old parking-lot light trapped under a frozen lake.
     */
     context.save();
+    context.drawImage(maskCanvas, 0, 0, screenWidth, screenHeight);
+    context.globalCompositeOperation = "source-in";
 
-    context.drawImage(
-      maskCanvas,
+    const frozenGradient = context.createLinearGradient(
       0,
       0,
       screenWidth,
       screenHeight
     );
 
-    context.globalCompositeOperation =
-      "source-in";
+    frozenGradient.addColorStop(0, "rgba(8,20,30,0.985)");
+    frozenGradient.addColorStop(0.24, "rgba(20,50,67,0.98)");
+    frozenGradient.addColorStop(0.5, "rgba(43,91,109,0.975)");
+    frozenGradient.addColorStop(0.72, "rgba(18,47,65,0.985)");
+    frozenGradient.addColorStop(1, "rgba(6,18,28,0.99)");
 
-    const frozenGradient =
-      context.createLinearGradient(
+    context.fillStyle = frozenGradient;
+    context.fillRect(0, 0, screenWidth, screenHeight);
+
+    context.globalCompositeOperation = "source-atop";
+
+    for (let cloudIndex = 0; cloudIndex < 19; cloudIndex += 1) {
+      const reach = (cloudIndex + 2) / 21;
+      const cloudX =
+        originX +
+        Math.cos(cloudIndex * 2.17 + 0.4) *
+          farthestDistance *
+          reach;
+      const cloudY =
+        originY +
+        Math.sin(cloudIndex * 1.61 + 0.9) *
+          farthestDistance *
+          reach;
+      const cloudRadius = 38 + (cloudIndex % 5) * 23;
+
+      paintCloud(
+        cloudX,
+        cloudY,
+        cloudRadius,
+        0.065 + (cloudIndex % 3) * 0.018
+      );
+    }
+
+    context.fillStyle = "rgba(2,10,16,0.20)";
+    context.fillRect(0, 0, screenWidth, screenHeight);
+    context.restore();
+
+    /*
+      During the final settle, the last uncovered black pockets
+      quietly cool into the same material instead of flashing white.
+    */
+    if (settleAmount > 0) {
+      context.save();
+      context.globalCompositeOperation = "destination-over";
+      context.globalAlpha = Math.min(1, settleAmount) * 0.98;
+
+      const settleGradient = context.createLinearGradient(
         0,
         0,
         screenWidth,
         screenHeight
       );
 
-    frozenGradient.addColorStop(
-      0,
-      "rgba(224,249,255,0.97)"
-    );
+      settleGradient.addColorStop(0, "rgb(5,17,26)");
+      settleGradient.addColorStop(0.48, "rgb(22,55,70)");
+      settleGradient.addColorStop(1, "rgb(4,14,23)");
 
-    frozenGradient.addColorStop(
-      0.28,
-      "rgba(154,215,237,0.96)"
-    );
-
-    frozenGradient.addColorStop(
-      0.52,
-      "rgba(207,241,249,0.98)"
-    );
-
-    frozenGradient.addColorStop(
-      0.76,
-      "rgba(113,184,216,0.97)"
-    );
-
-    frozenGradient.addColorStop(
-      1,
-      "rgba(226,248,252,0.98)"
-    );
-
-    context.fillStyle = frozenGradient;
-
-    context.fillRect(
-      0,
-      0,
-      screenWidth,
-      screenHeight
-    );
-
-    /*
-      Milky clouding trapped inside the frozen glass.
-    */
-    context.globalCompositeOperation =
-      "source-atop";
-
-    context.fillStyle =
-      "rgba(242,253,255,0.24)";
-
-    for (
-      let cloudIndex = 0;
-      cloudIndex < 26;
-      cloudIndex += 1
-    ) {
-      const cloudX =
-        originX +
-        Math.cos(cloudIndex * 2.39) *
-        farthestDistance *
-        ((cloudIndex % 9) / 9);
-
-      const cloudY =
-        originY +
-        Math.sin(cloudIndex * 1.73) *
-        farthestDistance *
-        ((cloudIndex % 11) / 11);
-
-      const cloudRadius =
-        34 + (cloudIndex % 6) * 19;
-
-      const cloudGradient =
-        context.createRadialGradient(
-          cloudX,
-          cloudY,
-          0,
-          cloudX,
-          cloudY,
-          cloudRadius
-        );
-
-      cloudGradient.addColorStop(
-        0,
-        "rgba(255,255,255,0.28)"
-      );
-
-      cloudGradient.addColorStop(
-        1,
-        "rgba(255,255,255,0)"
-      );
-
-      context.fillStyle = cloudGradient;
-      context.beginPath();
-
-      context.arc(
-        cloudX,
-        cloudY,
-        cloudRadius,
-        0,
-        Math.PI * 2
-      );
-
-      context.fill();
+      context.fillStyle = settleGradient;
+      context.fillRect(0, 0, screenWidth, screenHeight);
+      context.restore();
     }
 
-    context.restore();
-
     /*
-      Bright crystal veins and active glowing tips stay above
-      the pale-blue frozen backdrop.
+      Honest fractures: thin, dirty cyan, and mostly unlit.
+      White is reserved for rare stress catches only.
     */
     context.save();
-
-    context.globalCompositeOperation =
-      "screen";
-
-    context.shadowColor =
-      "rgba(194,236,255,0.95)";
-
-    context.shadowBlur = 9;
-
-    context.drawImage(
-      edgeCanvas,
-      0,
-      0,
-      screenWidth,
-      screenHeight
-    );
-
+    context.globalCompositeOperation = "screen";
+    context.globalAlpha = 0.58;
+    context.shadowColor = "rgba(77,151,180,0.24)";
+    context.shadowBlur = 3;
+    context.drawImage(edgeCanvas, 0, 0, screenWidth, screenHeight);
     context.restore();
   }
 
   function growFrame(now) {
     const elapsed = now - startTime;
+    const progress = Math.min(1, elapsed / growthDuration);
+    const stepsThisFrame = progress < 0.45 ? 2 : 3;
 
-    const progress =
-      Math.min(1, elapsed / growthDuration);
-
-    /*
-      Several tiny growth steps per rendered frame make the
-      branches crawl instead of jumping.
-    */
-    const stepsThisFrame =
-      progress < 0.32 ? 3 : 4;
-
-    for (
-      let step = 0;
-      step < stepsThisFrame;
-      step += 1
-    ) {
+    for (let step = 0; step < stepsThisFrame; step += 1) {
       const currentTips = [...tips];
 
       currentTips.forEach(tip => {
-        if (tip.dead) return;
+        if (tip.dead || elapsed < tip.delay) return;
 
         tip.life += 1;
-
         tip.previousX = tip.x;
         tip.previousY = tip.y;
 
-        /*
-          Gentle wandering creates organic frost veins.
-        */
-        tip.angle +=
-          (Math.random() - 0.5) *
-          (tip.generation === 0 ? 0.11 : 0.17);
+        const targetAngle = Math.atan2(
+          tip.target.y - tip.y,
+          tip.target.x - tip.x
+        );
+
+        let angleDifference = targetAngle - tip.angle;
+        angleDifference = Math.atan2(
+          Math.sin(angleDifference),
+          Math.cos(angleDifference)
+        );
 
         /*
-          Some branches hesitate while others briefly surge.
+          Each leader sniffs toward a distant weak point, but noise,
+          hesitation, and abandoned routes keep the takeover animal.
         */
+        tip.angle += angleDifference * tip.hunger;
+        tip.angle +=
+          (Math.random() - 0.5) *
+          (tip.generation === 0 ? 0.09 : 0.15);
+
+        if (tip.hesitation > 0) {
+          tip.hesitation -= 1;
+          return;
+        }
+
+        if (Math.random() < 0.007) {
+          tip.hesitation = 3 + Math.floor(Math.random() * 10);
+          return;
+        }
+
+        const surge = Math.random() < 0.045 ? 1.8 : 1;
         const movement =
           tip.speed *
-          (
-            0.68 +
-            Math.random() * 1.12
-          );
+          (0.56 + Math.random() * 0.82) *
+          surge;
 
         tip.x += Math.cos(tip.angle) * movement;
         tip.y += Math.sin(tip.angle) * movement;
 
-        const distanceFromOrigin =
-          Math.hypot(
-            tip.x - originX,
-            tip.y - originY
-          );
+        const distanceFromOrigin = Math.hypot(
+          tip.x - originX,
+          tip.y - originY
+        );
 
-        const distanceProgress =
-          Math.min(
-            1,
-            distanceFromOrigin /
-            farthestDistance
-          );
+        const distanceProgress = Math.min(
+          1,
+          distanceFromOrigin / farthestDistance
+        );
 
-        /*
-          The branch widens behind its bright leading tip.
-          This is the frozen backdrop physically filling in.
-        */
+        const takeoverPressure = Math.max(
+          0,
+          (progress - 0.58) / 0.42
+        );
+
         const fillWidth =
           tip.width +
           8 +
-          distanceProgress * 27;
+          distanceProgress * 18 +
+          takeoverPressure * 24;
 
         mask.lineCap = "round";
         mask.lineJoin = "round";
-        mask.strokeStyle =
-          "rgba(255,255,255,0.98)";
+        mask.strokeStyle = "rgba(255,255,255,0.94)";
         mask.lineWidth = fillWidth;
-
         mask.beginPath();
-        mask.moveTo(
-          tip.previousX,
-          tip.previousY
-        );
+        mask.moveTo(tip.previousX, tip.previousY);
         mask.lineTo(tip.x, tip.y);
         mask.stroke();
 
-        mask.fillStyle =
-          "rgba(255,255,255,0.96)";
-
+        mask.fillStyle = "rgba(255,255,255,0.88)";
         mask.beginPath();
-
         mask.arc(
           tip.x,
           tip.y,
-          fillWidth * (
-            0.42 +
-            Math.random() * 0.18
-          ),
+          fillWidth * (0.34 + Math.random() * 0.14),
           0,
           Math.PI * 2
         );
-
         mask.fill();
 
-        /*
-          White-blue crystal line at the moving edge.
-        */
         edge.lineCap = "round";
         edge.lineJoin = "round";
-
         edge.strokeStyle =
-          Math.random() > 0.34
-            ? "rgba(247,254,255,0.90)"
-            : "rgba(171,224,246,0.82)";
-
-        edge.lineWidth =
-          Math.max(
-            0.8,
-            2.6 - distanceProgress * 1.2
-          );
-
-        edge.beginPath();
-        edge.moveTo(
-          tip.previousX,
-          tip.previousY
+          Math.random() > 0.93
+            ? "rgba(183,223,232,0.56)"
+            : Math.random() > 0.42
+              ? "rgba(86,157,181,0.46)"
+              : "rgba(47,111,139,0.34)";
+        edge.lineWidth = Math.max(
+          0.45,
+          1.55 - distanceProgress * 0.55
         );
+        edge.beginPath();
+        edge.moveTo(tip.previousX, tip.previousY);
         edge.lineTo(tip.x, tip.y);
         edge.stroke();
 
-        /*
-          Forking crystal fingers.
-        */
         if (
-          tips.length < 190 &&
-          tip.life > 10 &&
+          tips.length < 116 &&
+          tip.life > 18 &&
           tip.generation < 4 &&
           Math.random() < tip.branchChance
         ) {
-          const forkDirection =
-            Math.random() > 0.5 ? 1 : -1;
-
+          const forkDirection = Math.random() > 0.5 ? 1 : -1;
           const forkAngle =
             tip.angle +
-            forkDirection *
-            (
-              0.34 +
-              Math.random() * 0.66
-            );
+            forkDirection * (0.28 + Math.random() * 0.58);
 
           tips.push(
             createTip(
               tip.x,
               tip.y,
               forkAngle,
-              tip.speed *
-                (0.72 + Math.random() * 0.34),
-              Math.max(
-                4,
-                tip.width * 0.68
-              ),
-              tip.generation + 1
+              tip.speed * (0.7 + Math.random() * 0.26),
+              Math.max(5, tip.width * 0.7),
+              tip.generation + 1,
+              elapsed + Math.random() * 420
             )
           );
         }
 
-        /*
-          Some minor branches naturally stop, leaving uneven
-          crystal shapes instead of perfect spokes.
-        */
         if (
           tip.generation > 0 &&
-          tip.life > 24 &&
-          Math.random() < 0.0028
+          tip.life > 22 &&
+          Math.random() < 0.0046
         ) {
           tip.dead = true;
         }
 
-        const outsideScreen =
-          tip.x < -90 ||
-          tip.x > screenWidth + 90 ||
-          tip.y < -90 ||
-          tip.y > screenHeight + 90;
+        const targetReached =
+          Math.hypot(tip.target.x - tip.x, tip.target.y - tip.y) < 34;
 
-        if (outsideScreen) {
-          tip.dead = true;
+        if (targetReached) {
+          if (tip.generation === 0 && progress < 0.82) {
+            tip.target = randomPerimeterTarget();
+            tip.angle += (Math.random() - 0.5) * 1.25;
+          } else {
+            tip.dead = true;
+          }
         }
+
+        const outsideScreen =
+          tip.x < -100 ||
+          tip.x > screenWidth + 100 ||
+          tip.y < -100 ||
+          tip.y > screenHeight + 100;
+
+        if (outsideScreen) tip.dead = true;
       });
     }
 
     drawFrozenMaterial();
 
-    const livingOriginalTips =
-      tips.filter(
-        tip =>
-          !tip.dead &&
-          tip.generation === 0
-      ).length;
-
-    if (
-      progress < 1 &&
-      livingOriginalTips > 0
-    ) {
+    if (progress < 1) {
       requestAnimationFrame(growFrame);
       return;
     }
 
-    /*
-      Final frozen glass settles after the crawling front has
-      conquered the display.
-    */
-    mask.fillStyle =
-      "rgba(255,255,255,0.92)";
+    const settleStart = performance.now();
 
-    mask.fillRect(
-      0,
-      0,
-      screenWidth,
-      screenHeight
-    );
+    function settleFrame(settleNow) {
+      const settleAmount = Math.min(
+        1,
+        (settleNow - settleStart) / settleDuration
+      );
 
-    drawFrozenMaterial();
+      drawFrozenMaterial(settleAmount);
 
-    frostOverlay.classList.add(
-      "frost-complete"
-    );
+      if (settleAmount < 1) {
+        requestAnimationFrame(settleFrame);
+        return;
+      }
 
-    document.documentElement.classList.add(
-      "frost-dead-world"
-    );
+      frostOverlay.classList.add("frost-complete");
+      document.documentElement.classList.add("frost-dead-world");
+    }
+
+    requestAnimationFrame(settleFrame);
   }
 
   requestAnimationFrame(growFrame);
