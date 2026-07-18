@@ -1997,8 +1997,8 @@ function growFrostAcrossScreen(canvas) {
 
   const tips = [];
   const startTime = performance.now();
-  const growthDuration = 15600;
-  const settleDuration = 1700;
+  const growthDuration = 17200;
+  const settleDuration = 2200;
 
   const farthestDistance = Math.max(
     Math.hypot(originX, originY),
@@ -2093,12 +2093,12 @@ function growFrostAcrossScreen(canvas) {
 
     cloudGradient.addColorStop(
       0,
-      `rgba(111,156,171,${strength})`
+      `rgba(105,151,171,${strength})`
     );
 
     cloudGradient.addColorStop(
       0.5,
-      `rgba(68,109,128,${strength * 0.55})`
+      `rgba(54,95,115,${strength * 0.50})`
     );
 
     cloudGradient.addColorStop(1, "rgba(15,31,42,0)");
@@ -2127,11 +2127,11 @@ function growFrostAcrossScreen(canvas) {
       screenHeight
     );
 
-    frozenGradient.addColorStop(0, "rgba(8,20,30,0.985)");
-    frozenGradient.addColorStop(0.24, "rgba(20,50,67,0.98)");
-    frozenGradient.addColorStop(0.5, "rgba(43,91,109,0.975)");
-    frozenGradient.addColorStop(0.72, "rgba(18,47,65,0.985)");
-    frozenGradient.addColorStop(1, "rgba(6,18,28,0.99)");
+    frozenGradient.addColorStop(0, "rgba(4,12,20,0.992)");
+    frozenGradient.addColorStop(0.24, "rgba(13,34,49,0.988)");
+    frozenGradient.addColorStop(0.5, "rgba(37,78,96,0.982)");
+    frozenGradient.addColorStop(0.72, "rgba(15,41,58,0.989)");
+    frozenGradient.addColorStop(1, "rgba(3,10,18,0.995)");
 
     context.fillStyle = frozenGradient;
     context.fillRect(0, 0, screenWidth, screenHeight);
@@ -2156,11 +2156,11 @@ function growFrostAcrossScreen(canvas) {
         cloudX,
         cloudY,
         cloudRadius,
-        0.065 + (cloudIndex % 3) * 0.018
+        0.052 + (cloudIndex % 3) * 0.014
       );
     }
 
-    context.fillStyle = "rgba(2,10,16,0.20)";
+    context.fillStyle = "rgba(1,7,12,0.29)";
     context.fillRect(0, 0, screenWidth, screenHeight);
     context.restore();
 
@@ -2180,9 +2180,9 @@ function growFrostAcrossScreen(canvas) {
         screenHeight
       );
 
-      settleGradient.addColorStop(0, "rgb(5,17,26)");
-      settleGradient.addColorStop(0.48, "rgb(22,55,70)");
-      settleGradient.addColorStop(1, "rgb(4,14,23)");
+      settleGradient.addColorStop(0, "rgb(3,12,20)");
+      settleGradient.addColorStop(0.48, "rgb(19,48,64)");
+      settleGradient.addColorStop(1, "rgb(2,9,16)");
 
       context.fillStyle = settleGradient;
       context.fillRect(0, 0, screenWidth, screenHeight);
@@ -2195,9 +2195,9 @@ function growFrostAcrossScreen(canvas) {
     */
     context.save();
     context.globalCompositeOperation = "screen";
-    context.globalAlpha = 0.58;
-    context.shadowColor = "rgba(77,151,180,0.24)";
-    context.shadowBlur = 3;
+    context.globalAlpha = 0.46;
+    context.shadowColor = "rgba(70,139,169,0.18)";
+    context.shadowBlur = 2;
     context.drawImage(edgeCanvas, 0, 0, screenWidth, screenHeight);
     context.restore();
   }
