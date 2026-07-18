@@ -10071,16 +10071,26 @@ body,
 .c17-frost-overlay {
   position: fixed !important;
   inset: 0 !important;
+  z-index: 0 !important;
   overflow: hidden !important;
   pointer-events: none !important;
-  background: transparent !important;
+  background: #000 !important;
   isolation: isolate !important;
 }
 
-/*
-  Disable every previous radar-circle and CSS frost layer.
-  The canvas is now the only visible frost engine.
-*/
+html.frost-conquering .screen,
+html.frost-dead-world .screen {
+  background: transparent !important;
+}
+
+html.frost-conquering .screen,
+html.frost-dead-world .screen,
+html.frost-time-stop .screen {
+  position: relative !important;
+  z-index: 1 !important;
+}
+
+/* Retire every older CSS frost/radar layer. Canvas only. */
 .c17-frost-glass,
 .c17-frost-crystals,
 .c17-tawnya-avatar {
@@ -10095,20 +10105,10 @@ body,
   height: 100%;
   pointer-events: none;
   opacity: 0;
-  filter:
-    saturate(.92)
-    contrast(1.05)
-    drop-shadow(
-      0 0 8px rgba(186,231,249,.20)
-    );
+  filter: saturate(.9) contrast(1.08);
 }
 
-.c17-frost-overlay.frost-grow
-.c17-frost-canvas {
-  opacity: 1;
-}
-
-.c17-frost-overlay.frost-complete
-.c17-frost-canvas {
+.c17-frost-overlay.frost-grow .c17-frost-canvas,
+.c17-frost-overlay.frost-complete .c17-frost-canvas {
   opacity: 1;
 }
