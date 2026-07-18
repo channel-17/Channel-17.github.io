@@ -1953,14 +1953,9 @@ function launchFrostTimeline() {
 
 function growFrostAcrossScreen(canvas) {
   const context = canvas.getContext("2d");
-
   if (!context) return;
 
-  const pixelRatio = Math.min(
-    window.devicePixelRatio || 1,
-    2
-  );
-
+  const pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
   const screenWidth = window.innerWidth;
   const screenHeight = window.innerHeight;
 
@@ -1969,435 +1964,210 @@ function growFrostAcrossScreen(canvas) {
   canvas.style.width = `${screenWidth}px`;
   canvas.style.height = `${screenHeight}px`;
 
-  context.setTransform(
-    pixelRatio,
-    0,
-    0,
-    pixelRatio,
-    0,
-    0
-  );
+  context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
 
   const originX = screenWidth * (frostOriginX / 100);
   const originY = screenHeight * (frostOriginY / 100);
+  const startTime = performance.now();
+  const freezeDuration = 7000;
 
   const maskCanvas = document.createElement("canvas");
   maskCanvas.width = canvas.width;
   maskCanvas.height = canvas.height;
-
   const mask = maskCanvas.getContext("2d");
   mask.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
 
-  const edgeCanvas = document.createElement("canvas");
-  edgeCanvas.width = canvas.width;
-  edgeCanvas.height = canvas.height;
+  const cells = [];
+  const spacing = Math.max(28, Math.min(42, screenWidth / 11));
+  const diagonal = Math.hypot(screenWidth, screenHeight);
 
-  const edge = edgeCanvas.getContext("2d");
-  edge.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+  function noise(x, y) {
+    const value = Math.sin(x * 12.9898 + y * 78.233) * 43758.5453;
+    return value - Math.floor(value);
+  }
 
-  const tips = [];
-  const startTime = performance.now();
-  const growthDuration = 17200;
-  const settleDuration = 2200;
+  for (let y = -spacing; y <= screenHeight + spacing; y += spacing) {
+    for (let x = -spacing; x <= screenWidth + spacing; x += spacing) {
+      const jitterX = (noise(x, y) - 0.5) * spacing * 0.9;
+      const jitterY = (noise(y, x) - 0.5) * spacing * 0.9;
+      const cellX = x + jitterX;
+      const cellY = y + jitterY;
+      const distance = Math.hypot(cellX - originX, cellY - originY);
+      const distanceDelay = distance / diagonal;
+      const irregularDelay = (noise(x + 31, y + 17) - 0.5) * 0.24;
 
-  const farthestDistance = Math.max(
-    Math.hypot(originX, originY),
-    Math.hypot(screenWidth - originX, originY),
-    Math.hypot(originX, screenHeight - originY),
-    Math.hypot(screenWidth - originX, screenHeight - originY)
-  );
+      cells.push({
+        x: cellX,
+        y: cellY,
+        start: Math.max(0, Math.min(0.88, distanceDelay * 0.82 + irregularDelay)),
+        radius: spacing * (0.92 + noise(x + 9, y + 43) * 0.72),
+        cloud: 0.18 + noise(x + 81, y + 5) * 0.34
+      });
+    }
+  }
 
-  function randomPerimeterTarget() {
-    const side = Math.floor(Math.random() * 4);
+  const crystalBranches = [];
+  const branchCount = 52;
 
-    if (side === 0) {
-      return { x: Math.random() * screenWidth, y: -45 };
+  for (let index = 0; index < branchCount; index += 1) {
+    const angle = (Math.PI * 2 * index) / branchCount + (noise(index, 7) - 0.5) * 0.9;
+    const length = diagonal * (0.16 + noise(index, 13) * 0.5);
+    const segments = 3 + Math.floor(noise(index, 19) * 5);
+    const points = [{ x: originX, y: originY }];
+    let x = originX;
+    let y = originY;
+    let heading = angle;
+
+    for (let segment = 0; segment < segments; segment += 1) {
+      heading += (noise(index * 17 + segment, 29) - 0.5) * 0.7;
+      const segmentLength = length / segments * (0.72 + noise(index, segment + 41) * 0.62);
+      x += Math.cos(heading) * segmentLength;
+      y += Math.sin(heading) * segmentLength;
+      points.push({ x, y });
     }
 
-    if (side === 1) {
-      return { x: screenWidth + 45, y: Math.random() * screenHeight };
-    }
-
-    if (side === 2) {
-      return { x: Math.random() * screenWidth, y: screenHeight + 45 };
-    }
-
-    return { x: -45, y: Math.random() * screenHeight };
+    crystalBranches.push({
+      points,
+      start: 0.12 + noise(index, 61) * 0.52,
+      alpha: 0.16 + noise(index, 71) * 0.28,
+      width: 0.45 + noise(index, 83) * 1.05
+    });
   }
 
-  function createTip(
-    x,
-    y,
-    angle,
-    speed,
-    width,
-    generation = 0,
-    delay = 0
-  ) {
-    return {
-      x,
-      y,
-      previousX: x,
-      previousY: y,
-      angle,
-      speed,
-      width,
-      generation,
-      delay,
-      life: 0,
-      dead: false,
-      target: randomPerimeterTarget(),
-      branchChance: generation === 0 ? 0.018 : 0.011,
-      hunger: 0.012 + Math.random() * 0.018,
-      hesitation: 0
-    };
+  function smoothstep(edge0, edge1, value) {
+    const normalized = Math.max(0, Math.min(1, (value - edge0) / (edge1 - edge0)));
+    return normalized * normalized * (3 - 2 * normalized);
   }
 
-  /*
-    A small irregular nest begins under the finger. The leaders
-    are deliberately staggered so the freeze probes, hesitates,
-    and then commits instead of exploding in a perfect circle.
-  */
-  const originalTipCount = 18;
+  function paintMask(progress) {
+    mask.clearRect(0, 0, screenWidth, screenHeight);
+    mask.globalCompositeOperation = "source-over";
 
-  for (let index = 0; index < originalTipCount; index += 1) {
-    const angle = Math.random() * Math.PI * 2;
+    cells.forEach(cell => {
+      const local = smoothstep(cell.start, cell.start + 0.22, progress);
+      if (local <= 0) return;
 
-    tips.push(
-      createTip(
-        originX + (Math.random() - 0.5) * 10,
-        originY + (Math.random() - 0.5) * 10,
-        angle,
-        0.48 + Math.random() * 0.66,
-        12 + Math.random() * 13,
-        0,
-        Math.random() * 1450
-      )
-    );
+      const radius = cell.radius * local;
+      const gradient = mask.createRadialGradient(cell.x, cell.y, 0, cell.x, cell.y, radius);
+      gradient.addColorStop(0, `rgba(255,255,255,${0.98 * local})`);
+      gradient.addColorStop(0.62, `rgba(255,255,255,${0.88 * local})`);
+      gradient.addColorStop(1, "rgba(255,255,255,0)");
+
+      mask.fillStyle = gradient;
+      mask.beginPath();
+      mask.arc(cell.x, cell.y, radius, 0, Math.PI * 2);
+      mask.fill();
+    });
+
+    const fingerBloom = smoothstep(0, 0.15, progress);
+    const bloomRadius = 18 + fingerBloom * Math.max(screenWidth, screenHeight) * 0.12;
+    const bloom = mask.createRadialGradient(originX, originY, 0, originX, originY, bloomRadius);
+    bloom.addColorStop(0, "rgba(255,255,255,1)");
+    bloom.addColorStop(0.72, `rgba(255,255,255,${0.92 * fingerBloom})`);
+    bloom.addColorStop(1, "rgba(255,255,255,0)");
+    mask.fillStyle = bloom;
+    mask.beginPath();
+    mask.arc(originX, originY, bloomRadius, 0, Math.PI * 2);
+    mask.fill();
   }
 
-  mask.fillStyle = "rgba(255,255,255,0.92)";
-  mask.beginPath();
-  mask.arc(originX, originY, 10, 0, Math.PI * 2);
-  mask.fill();
-
-  function paintCloud(x, y, radius, strength) {
-    const cloudGradient = context.createRadialGradient(
-      x,
-      y,
-      0,
-      x,
-      y,
-      radius
-    );
-
-    cloudGradient.addColorStop(
-      0,
-      `rgba(105,151,171,${strength})`
-    );
-
-    cloudGradient.addColorStop(
-      0.5,
-      `rgba(54,95,115,${strength * 0.50})`
-    );
-
-    cloudGradient.addColorStop(1, "rgba(15,31,42,0)");
-
-    context.fillStyle = cloudGradient;
-    context.beginPath();
-    context.arc(x, y, radius, 0, Math.PI * 2);
-    context.fill();
-  }
-
-  function drawFrozenMaterial(settleAmount = 0) {
+  function drawFrozenSurface(progress) {
     context.clearRect(0, 0, screenWidth, screenHeight);
+    paintMask(progress);
 
-    /*
-      The conquered world stays dark. The cyan lives inside the
-      ice like old parking-lot light trapped under a frozen lake.
-    */
     context.save();
     context.drawImage(maskCanvas, 0, 0, screenWidth, screenHeight);
     context.globalCompositeOperation = "source-in";
 
-    const frozenGradient = context.createLinearGradient(
-      0,
-      0,
-      screenWidth,
-      screenHeight
-    );
-
-    frozenGradient.addColorStop(0, "rgba(4,12,20,0.992)");
-    frozenGradient.addColorStop(0.24, "rgba(13,34,49,0.988)");
-    frozenGradient.addColorStop(0.5, "rgba(37,78,96,0.982)");
-    frozenGradient.addColorStop(0.72, "rgba(15,41,58,0.989)");
-    frozenGradient.addColorStop(1, "rgba(3,10,18,0.995)");
-
-    context.fillStyle = frozenGradient;
+    const iceGradient = context.createLinearGradient(0, 0, screenWidth, screenHeight);
+    iceGradient.addColorStop(0, "rgba(55,105,126,0.99)");
+    iceGradient.addColorStop(0.28, "rgba(102,162,183,0.99)");
+    iceGradient.addColorStop(0.5, "rgba(151,203,216,0.99)");
+    iceGradient.addColorStop(0.72, "rgba(76,137,160,0.99)");
+    iceGradient.addColorStop(1, "rgba(34,78,101,0.99)");
+    context.fillStyle = iceGradient;
     context.fillRect(0, 0, screenWidth, screenHeight);
 
     context.globalCompositeOperation = "source-atop";
 
-    for (let cloudIndex = 0; cloudIndex < 19; cloudIndex += 1) {
-      const reach = (cloudIndex + 2) / 21;
-      const cloudX =
-        originX +
-        Math.cos(cloudIndex * 2.17 + 0.4) *
-          farthestDistance *
-          reach;
-      const cloudY =
-        originY +
-        Math.sin(cloudIndex * 1.61 + 0.9) *
-          farthestDistance *
-          reach;
-      const cloudRadius = 38 + (cloudIndex % 5) * 23;
+    cells.forEach((cell, index) => {
+      const local = smoothstep(cell.start + 0.02, cell.start + 0.28, progress);
+      if (local <= 0) return;
 
-      paintCloud(
-        cloudX,
-        cloudY,
-        cloudRadius,
-        0.052 + (cloudIndex % 3) * 0.014
-      );
-    }
+      const hazeRadius = cell.radius * (0.55 + cell.cloud);
+      const haze = context.createRadialGradient(cell.x, cell.y, 0, cell.x, cell.y, hazeRadius);
+      haze.addColorStop(0, `rgba(232,247,249,${cell.cloud * local})`);
+      haze.addColorStop(0.5, `rgba(195,228,235,${cell.cloud * 0.55 * local})`);
+      haze.addColorStop(1, "rgba(106,166,184,0)");
+      context.fillStyle = haze;
+      context.beginPath();
+      context.arc(cell.x, cell.y, hazeRadius, 0, Math.PI * 2);
+      context.fill();
 
-    context.fillStyle = "rgba(1,7,12,0.29)";
+      if (index % 5 === 0) {
+        context.fillStyle = `rgba(23,65,87,${0.12 * local})`;
+        context.beginPath();
+        context.arc(cell.x + cell.radius * 0.18, cell.y - cell.radius * 0.12, cell.radius * 0.42, 0, Math.PI * 2);
+        context.fill();
+      }
+    });
+
+    context.fillStyle = "rgba(7,24,36,0.18)";
     context.fillRect(0, 0, screenWidth, screenHeight);
     context.restore();
 
-    /*
-      During the final settle, the last uncovered black pockets
-      quietly cool into the same material instead of flashing white.
-    */
-    if (settleAmount > 0) {
+    context.save();
+    context.globalCompositeOperation = "screen";
+    context.lineCap = "round";
+    context.lineJoin = "round";
+
+    crystalBranches.forEach(branch => {
+      const local = smoothstep(branch.start, branch.start + 0.24, progress);
+      if (local <= 0) return;
+
+      const visibleSegments = Math.max(1, Math.floor((branch.points.length - 1) * local));
+      context.strokeStyle = `rgba(223,246,250,${branch.alpha * local})`;
+      context.lineWidth = branch.width;
+      context.beginPath();
+      context.moveTo(branch.points[0].x, branch.points[0].y);
+
+      for (let index = 1; index <= visibleSegments; index += 1) {
+        context.lineTo(branch.points[index].x, branch.points[index].y);
+      }
+
+      context.stroke();
+    });
+
+    context.restore();
+
+    const condensation = smoothstep(0, 0.2, progress) * (1 - smoothstep(0.58, 0.92, progress));
+    if (condensation > 0) {
       context.save();
-      context.globalCompositeOperation = "destination-over";
-      context.globalAlpha = Math.min(1, settleAmount) * 0.98;
-
-      const settleGradient = context.createLinearGradient(
-        0,
-        0,
-        screenWidth,
-        screenHeight
-      );
-
-      settleGradient.addColorStop(0, "rgb(3,12,20)");
-      settleGradient.addColorStop(0.48, "rgb(19,48,64)");
-      settleGradient.addColorStop(1, "rgb(2,9,16)");
-
-      context.fillStyle = settleGradient;
+      context.globalCompositeOperation = "screen";
+      const fog = context.createRadialGradient(originX, originY, 0, originX, originY, 90 + progress * 180);
+      fog.addColorStop(0, `rgba(235,248,250,${0.24 * condensation})`);
+      fog.addColorStop(0.58, `rgba(174,217,228,${0.12 * condensation})`);
+      fog.addColorStop(1, "rgba(174,217,228,0)");
+      context.fillStyle = fog;
       context.fillRect(0, 0, screenWidth, screenHeight);
       context.restore();
     }
-
-    /*
-      Honest fractures: thin, dirty cyan, and mostly unlit.
-      White is reserved for rare stress catches only.
-    */
-    context.save();
-    context.globalCompositeOperation = "screen";
-    context.globalAlpha = 0.46;
-    context.shadowColor = "rgba(70,139,169,0.18)";
-    context.shadowBlur = 2;
-    context.drawImage(edgeCanvas, 0, 0, screenWidth, screenHeight);
-    context.restore();
   }
 
-  function growFrame(now) {
-    const elapsed = now - startTime;
-    const progress = Math.min(1, elapsed / growthDuration);
-    const stepsThisFrame = progress < 0.45 ? 2 : 3;
-
-    for (let step = 0; step < stepsThisFrame; step += 1) {
-      const currentTips = [...tips];
-
-      currentTips.forEach(tip => {
-        if (tip.dead || elapsed < tip.delay) return;
-
-        tip.life += 1;
-        tip.previousX = tip.x;
-        tip.previousY = tip.y;
-
-        const targetAngle = Math.atan2(
-          tip.target.y - tip.y,
-          tip.target.x - tip.x
-        );
-
-        let angleDifference = targetAngle - tip.angle;
-        angleDifference = Math.atan2(
-          Math.sin(angleDifference),
-          Math.cos(angleDifference)
-        );
-
-        /*
-          Each leader sniffs toward a distant weak point, but noise,
-          hesitation, and abandoned routes keep the takeover animal.
-        */
-        tip.angle += angleDifference * tip.hunger;
-        tip.angle +=
-          (Math.random() - 0.5) *
-          (tip.generation === 0 ? 0.09 : 0.15);
-
-        if (tip.hesitation > 0) {
-          tip.hesitation -= 1;
-          return;
-        }
-
-        if (Math.random() < 0.007) {
-          tip.hesitation = 3 + Math.floor(Math.random() * 10);
-          return;
-        }
-
-        const surge = Math.random() < 0.045 ? 1.8 : 1;
-        const movement =
-          tip.speed *
-          (0.56 + Math.random() * 0.82) *
-          surge;
-
-        tip.x += Math.cos(tip.angle) * movement;
-        tip.y += Math.sin(tip.angle) * movement;
-
-        const distanceFromOrigin = Math.hypot(
-          tip.x - originX,
-          tip.y - originY
-        );
-
-        const distanceProgress = Math.min(
-          1,
-          distanceFromOrigin / farthestDistance
-        );
-
-        const takeoverPressure = Math.max(
-          0,
-          (progress - 0.58) / 0.42
-        );
-
-        const fillWidth =
-          tip.width +
-          8 +
-          distanceProgress * 18 +
-          takeoverPressure * 24;
-
-        mask.lineCap = "round";
-        mask.lineJoin = "round";
-        mask.strokeStyle = "rgba(255,255,255,0.94)";
-        mask.lineWidth = fillWidth;
-        mask.beginPath();
-        mask.moveTo(tip.previousX, tip.previousY);
-        mask.lineTo(tip.x, tip.y);
-        mask.stroke();
-
-        mask.fillStyle = "rgba(255,255,255,0.88)";
-        mask.beginPath();
-        mask.arc(
-          tip.x,
-          tip.y,
-          fillWidth * (0.34 + Math.random() * 0.14),
-          0,
-          Math.PI * 2
-        );
-        mask.fill();
-
-        edge.lineCap = "round";
-        edge.lineJoin = "round";
-        edge.strokeStyle =
-          Math.random() > 0.93
-            ? "rgba(183,223,232,0.56)"
-            : Math.random() > 0.42
-              ? "rgba(86,157,181,0.46)"
-              : "rgba(47,111,139,0.34)";
-        edge.lineWidth = Math.max(
-          0.45,
-          1.55 - distanceProgress * 0.55
-        );
-        edge.beginPath();
-        edge.moveTo(tip.previousX, tip.previousY);
-        edge.lineTo(tip.x, tip.y);
-        edge.stroke();
-
-        if (
-          tips.length < 116 &&
-          tip.life > 18 &&
-          tip.generation < 4 &&
-          Math.random() < tip.branchChance
-        ) {
-          const forkDirection = Math.random() > 0.5 ? 1 : -1;
-          const forkAngle =
-            tip.angle +
-            forkDirection * (0.28 + Math.random() * 0.58);
-
-          tips.push(
-            createTip(
-              tip.x,
-              tip.y,
-              forkAngle,
-              tip.speed * (0.7 + Math.random() * 0.26),
-              Math.max(5, tip.width * 0.7),
-              tip.generation + 1,
-              elapsed + Math.random() * 420
-            )
-          );
-        }
-
-        if (
-          tip.generation > 0 &&
-          tip.life > 22 &&
-          Math.random() < 0.0046
-        ) {
-          tip.dead = true;
-        }
-
-        const targetReached =
-          Math.hypot(tip.target.x - tip.x, tip.target.y - tip.y) < 34;
-
-        if (targetReached) {
-          if (tip.generation === 0 && progress < 0.82) {
-            tip.target = randomPerimeterTarget();
-            tip.angle += (Math.random() - 0.5) * 1.25;
-          } else {
-            tip.dead = true;
-          }
-        }
-
-        const outsideScreen =
-          tip.x < -100 ||
-          tip.x > screenWidth + 100 ||
-          tip.y < -100 ||
-          tip.y > screenHeight + 100;
-
-        if (outsideScreen) tip.dead = true;
-      });
-    }
-
-    drawFrozenMaterial();
+  function render(now) {
+    const progress = Math.min(1, (now - startTime) / freezeDuration);
+    drawFrozenSurface(progress);
 
     if (progress < 1) {
-      requestAnimationFrame(growFrame);
+      requestAnimationFrame(render);
       return;
     }
 
-    const settleStart = performance.now();
-
-    function settleFrame(settleNow) {
-      const settleAmount = Math.min(
-        1,
-        (settleNow - settleStart) / settleDuration
-      );
-
-      drawFrozenMaterial(settleAmount);
-
-      if (settleAmount < 1) {
-        requestAnimationFrame(settleFrame);
-        return;
-      }
-
-      frostOverlay.classList.add("frost-complete");
-      document.documentElement.classList.add("frost-dead-world");
-    }
-
-    requestAnimationFrame(settleFrame);
+    frostOverlay.classList.add("frost-complete");
+    document.documentElement.classList.add("frost-dead-world");
   }
 
-  requestAnimationFrame(growFrame);
+  requestAnimationFrame(render);
 }
 
 function revealTawnyaFromGreyHeart() {
