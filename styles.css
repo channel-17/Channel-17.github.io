@@ -10039,3 +10039,76 @@ body,
       0 0 8px rgba(167, 219, 242, .94)
     ) !important;
 }
+
+/* =========================================================
+   BUILD 113 — PROCEDURAL CRAWLING FROST CANVAS
+========================================================= */
+
+html,
+body,
+.engagement-field,
+.engage,
+.engage.snowflake {
+  -webkit-user-select: none !important;
+  user-select: none !important;
+  -webkit-touch-callout: none !important;
+  -webkit-tap-highlight-color: transparent !important;
+}
+
+.engage.snowflake {
+  touch-action: none !important;
+  outline: none !important;
+}
+
+.engage.snowflake:focus,
+.engage.snowflake:focus-visible,
+.engage.snowflake:active {
+  outline: none !important;
+  box-shadow: none !important;
+  background: transparent !important;
+}
+
+.c17-frost-overlay {
+  position: fixed !important;
+  inset: 0 !important;
+  overflow: hidden !important;
+  pointer-events: none !important;
+  background: transparent !important;
+  isolation: isolate !important;
+}
+
+/*
+  Disable every previous radar-circle and CSS frost layer.
+  The canvas is now the only visible frost engine.
+*/
+.c17-frost-glass,
+.c17-frost-crystals,
+.c17-tawnya-avatar {
+  display: none !important;
+}
+
+.c17-frost-canvas {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  opacity: 0;
+  filter:
+    saturate(.92)
+    contrast(1.05)
+    drop-shadow(
+      0 0 8px rgba(186,231,249,.20)
+    );
+}
+
+.c17-frost-overlay.frost-grow
+.c17-frost-canvas {
+  opacity: 1;
+}
+
+.c17-frost-overlay.frost-complete
+.c17-frost-canvas {
+  opacity: 1;
+}
