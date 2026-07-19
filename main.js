@@ -1778,7 +1778,7 @@ function playBlueFrankSequence() {
   setTimeout(() => {
     if (lead && lead.parentNode) lead.remove();
   }, 7600);
-} no
+}
 
 /* =========================================================
    FROST TIMELINE — HIDDEN SNOWFLAKE HOLD
