@@ -10124,17 +10124,123 @@ html.frost-time-stop .screen {
   filter: drop-shadow(0 0 4px rgba(188, 236, 245, .44));
 }
 
-.profile img.c17-freezing-asset {
-  transition: opacity 520ms ease, filter 900ms ease !important;
-  opacity: .18 !important;
-  filter: grayscale(1) saturate(.35) brightness(1.18) contrast(1.06) !important;
+.profile img.c17-original-swap-layer,
+.profile img.c17-frozen-swap-layer {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  border-radius: 50% !important;
+  object-fit: cover !important;
 }
 
-.profile img.c17-frozen-asset {
-  transition: opacity 760ms ease, filter 900ms ease !important;
-  opacity: 1 !important;
-  filter: saturate(.88) contrast(1.06) brightness(.94) !important;
+.profile img.c17-original-swap-layer {
+  z-index: 5 !important;
 }
+
+.profile img.c17-frozen-swap-layer {
+  z-index: 6 !important;
+  opacity: 1 !important;
+  filter: saturate(.9) contrast(1.08) brightness(.92) !important;
+  animation-duration: 1680ms !important;
+  animation-timing-function: steps(14, end) !important;
+  animation-fill-mode: forwards !important;
+  animation-play-state: running !important;
+}
+
+html.frost-time-stop .profile img.c17-frozen-swap-layer,
+html.frost-dead-world .profile img.c17-frozen-swap-layer,
+html.frost-time-stop .c17-freeze-pixel-front,
+html.frost-dead-world .c17-freeze-pixel-front {
+  animation-play-state: running !important;
+}
+
+.profile img.c17-frozen-swap-layer.from-left { animation-name: c17FreezeSweepLeft !important; }
+.profile img.c17-frozen-swap-layer.from-right { animation-name: c17FreezeSweepRight !important; }
+.profile img.c17-frozen-swap-layer.from-top { animation-name: c17FreezeSweepTop !important; }
+.profile img.c17-frozen-swap-layer.from-bottom { animation-name: c17FreezeSweepBottom !important; }
+
+.c17-freeze-pixel-front {
+  position: absolute;
+  z-index: 7;
+  pointer-events: none;
+  display: block;
+  opacity: .96;
+  background:
+    repeating-conic-gradient(
+      from 45deg,
+      rgba(230,252,255,.96) 0 25%,
+      rgba(91,190,214,.94) 0 50%,
+      rgba(14,76,108,.86) 0 75%,
+      transparent 0 100%
+    ) 0 0 / 7px 7px;
+  filter: drop-shadow(0 0 3px rgba(174,235,247,.85));
+  animation-duration: 1680ms !important;
+  animation-timing-function: steps(14, end) !important;
+  animation-fill-mode: forwards !important;
+  animation-play-state: running !important;
+}
+
+.c17-freeze-pixel-front.from-left,
+.c17-freeze-pixel-front.from-right {
+  top: 0;
+  bottom: 0;
+  width: 13px;
+}
+
+.c17-freeze-pixel-front.from-top,
+.c17-freeze-pixel-front.from-bottom {
+  left: 0;
+  right: 0;
+  height: 13px;
+}
+
+.c17-freeze-pixel-front.from-left { animation-name: c17PixelFrontLeft !important; }
+.c17-freeze-pixel-front.from-right { animation-name: c17PixelFrontRight !important; }
+.c17-freeze-pixel-front.from-top { animation-name: c17PixelFrontTop !important; }
+.c17-freeze-pixel-front.from-bottom { animation-name: c17PixelFrontBottom !important; }
+
+.profile img.c17-frozen-asset {
+  opacity: 1 !important;
+  filter: saturate(.9) contrast(1.08) brightness(.92) !important;
+}
+
+@keyframes c17FreezeSweepLeft {
+  0% { clip-path: polygon(0 0,0 0,0 100%,0 100%); }
+  18% { clip-path: polygon(0 0,20% 0,14% 18%,23% 34%,16% 52%,25% 68%,18% 84%,22% 100%,0 100%); }
+  42% { clip-path: polygon(0 0,44% 0,37% 16%,48% 33%,39% 49%,50% 66%,42% 82%,47% 100%,0 100%); }
+  68% { clip-path: polygon(0 0,70% 0,62% 15%,74% 31%,65% 48%,76% 64%,68% 82%,73% 100%,0 100%); }
+  100% { clip-path: polygon(0 0,100% 0,100% 100%,0 100%); }
+}
+
+@keyframes c17FreezeSweepRight {
+  0% { clip-path: polygon(100% 0,100% 0,100% 100%,100% 100%); }
+  18% { clip-path: polygon(78% 0,100% 0,100% 100%,78% 100%,82% 84%,75% 68%,84% 52%,77% 34%,86% 18%); }
+  42% { clip-path: polygon(56% 0,100% 0,100% 100%,53% 100%,58% 82%,50% 66%,61% 49%,52% 33%,63% 16%); }
+  68% { clip-path: polygon(30% 0,100% 0,100% 100%,27% 100%,32% 82%,24% 64%,35% 48%,26% 31%,38% 15%); }
+  100% { clip-path: polygon(0 0,100% 0,100% 100%,0 100%); }
+}
+
+@keyframes c17FreezeSweepTop {
+  0% { clip-path: polygon(0 0,100% 0,100% 0,0 0); }
+  18% { clip-path: polygon(0 0,100% 0,100% 22%,84% 18%,68% 25%,52% 16%,34% 23%,18% 14%,0 20%); }
+  42% { clip-path: polygon(0 0,100% 0,100% 47%,82% 42%,66% 50%,49% 39%,33% 48%,16% 37%,0 44%); }
+  68% { clip-path: polygon(0 0,100% 0,100% 73%,82% 68%,64% 76%,48% 65%,31% 74%,15% 62%,0 70%); }
+  100% { clip-path: polygon(0 0,100% 0,100% 100%,0 100%); }
+}
+
+@keyframes c17FreezeSweepBottom {
+  0% { clip-path: polygon(0 100%,100% 100%,100% 100%,0 100%); }
+  18% { clip-path: polygon(0 80%,18% 86%,34% 77%,52% 84%,68% 75%,84% 82%,100% 78%,100% 100%,0 100%); }
+  42% { clip-path: polygon(0 56%,16% 63%,33% 52%,49% 61%,66% 50%,82% 58%,100% 53%,100% 100%,0 100%); }
+  68% { clip-path: polygon(0 30%,15% 38%,31% 26%,48% 35%,64% 24%,82% 32%,100% 27%,100% 100%,0 100%); }
+  100% { clip-path: polygon(0 0,100% 0,100% 100%,0 100%); }
+}
+
+@keyframes c17PixelFrontLeft { 0% { left: -13px; } 100% { left: calc(100% + 2px); opacity: 0; } }
+@keyframes c17PixelFrontRight { 0% { right: -13px; } 100% { right: calc(100% + 2px); opacity: 0; } }
+@keyframes c17PixelFrontTop { 0% { top: -13px; } 100% { top: calc(100% + 2px); opacity: 0; } }
+@keyframes c17PixelFrontBottom { 0% { bottom: -13px; } 100% { bottom: calc(100% + 2px); opacity: 0; } }
 
 .c17-frozen-heart-hold {
   animation-play-state: paused !important;
