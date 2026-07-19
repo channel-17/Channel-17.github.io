@@ -1953,35 +1953,80 @@ function frostArrivalRatio(centerX, centerY, originX, originY) {
 function scheduleFrozenAssetSwaps(originX, originY, duration) {
   clearFrostSwapTimers();
 
-  const candidates = [...document.querySelectorAll(".profile img")];
+  const candidates = [...document.querySelectorAll(".profile img")]
+    .filter(image => !image.classList.contains("c17-frozen-swap-layer"));
 
   candidates.forEach(image => {
     const originalName = getAssetFilename(image.getAttribute("src") || image.src);
     const frozenName = FROZEN_ASSET_MAP.get(originalName);
     if (!frozenName) return;
 
+    const profile = image.closest(".profile");
+    if (!profile || profile.dataset.frostSwapScheduled === "true") return;
+    profile.dataset.frostSwapScheduled = "true";
+
     const rect = image.getBoundingClientRect();
     const centerX = rect.left + rect.width / 2;
     const centerY = rect.top + rect.height / 2;
-    const arrival = Math.round(duration * frostArrivalRatio(centerX, centerY, originX, originY));
+    const deltaX = centerX - originX;
+    const deltaY = centerY - originY;
+    const direction = Math.abs(deltaX) >= Math.abs(deltaY)
+      ? (deltaX >= 0 ? "from-left" : "from-right")
+      : (deltaY >= 0 ? "from-top" : "from-bottom");
+
+    // Start at first edge contact, slightly before the front reaches the object's center.
+    const arrival = Math.max(
+      0,
+      Math.round(duration * frostArrivalRatio(centerX, centerY, originX, originY) - 620)
+    );
 
     const timer = setTimeout(() => {
-      if (!image.isConnected || !frostLocked) return;
+      if (!image.isConnected || !profile.isConnected || !frostLocked) return;
 
       const preload = new Image();
       preload.onload = () => {
-        if (!image.isConnected || !frostLocked) return;
+        if (!image.isConnected || !profile.isConnected || !frostLocked) return;
 
-        image.classList.add("c17-freezing-asset");
+        const frozenLayer = document.createElement("img");
+        frozenLayer.src = frozenName;
+        frozenLayer.alt = "";
+        frozenLayer.setAttribute("aria-hidden", "true");
+        frozenLayer.className = `c17-frozen-swap-layer ${direction}`;
 
-        const swapTimer = setTimeout(() => {
-          if (!image.isConnected || !frostLocked) return;
+        image.classList.add("c17-original-swap-layer", direction);
+        const pixelFront = document.createElement("span");
+        pixelFront.className = `c17-freeze-pixel-front ${direction}`;
+        pixelFront.setAttribute("aria-hidden", "true");
+
+        profile.classList.add("c17-object-freezing", direction);
+        profile.appendChild(frozenLayer);
+        profile.appendChild(pixelFront);
+
+        const finishTimer = setTimeout(() => {
+          if (!image.isConnected || !profile.isConnected || !frostLocked) return;
+
           image.src = frozenName;
+          image.classList.remove(
+            "c17-original-swap-layer",
+            "from-left",
+            "from-right",
+            "from-top",
+            "from-bottom"
+          );
           image.classList.add("c17-frozen-asset");
-          image.classList.remove("c17-freezing-asset");
-        }, 520);
+          frozenLayer.remove();
+          pixelFront.remove();
+          profile.classList.remove(
+            "c17-object-freezing",
+            "from-left",
+            "from-right",
+            "from-top",
+            "from-bottom"
+          );
+          profile.classList.add("c17-object-frozen");
+        }, 1680);
 
-        frostSwapTimers.push(swapTimer);
+        frostSwapTimers.push(finishTimer);
       };
       preload.src = frozenName;
     }, arrival);
@@ -1989,7 +2034,6 @@ function scheduleFrozenAssetSwaps(originX, originY, duration) {
     frostSwapTimers.push(timer);
   });
 }
-
 function resolveFrozenHeartOutcome(originX, originY, duration) {
   const heart = document.querySelector(".carl-trigger-heart");
   if (!heart || !heart.isConnected) return;
