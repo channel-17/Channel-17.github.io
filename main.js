@@ -1778,7 +1778,8 @@ function playBlueFrankSequence() {
   setTimeout(() => {
     if (lead && lead.parentNode) lead.remove();
   }, 7600);
-}
+} no
+
 /* =========================================================
    FROST TIMELINE — HIDDEN SNOWFLAKE HOLD
 ========================================================= */
@@ -1787,13 +1788,14 @@ let frostHolding = false;
 let frostLocked = false;
 let frostHoldTimer = null;
 let frostOverlay = null;
+let frostSnowflakeAnchor = null;
 let frostOriginX = 50;
 let frostOriginY = 50;
 let frostPausedAnimations = [];
 let frostSwapTimers = [];
 
 const FROST_HOLD_MS = 7000;
-const FROST_GROW_MS = 9800;
+const FROST_GROW_MS = 11800;
 const TAWNYA_ASSET = "Tawnya.frozen.PNG";
 
 const FROZEN_ASSET_MAP = new Map([
@@ -1849,10 +1851,34 @@ function resumeFrostTimeline() {
 
   frostPausedAnimations = [];
 
+  if (frostSnowflakeAnchor) {
+    frostSnowflakeAnchor.remove();
+    frostSnowflakeAnchor = null;
+  }
+
   if (frostOverlay) {
     frostOverlay.remove();
     frostOverlay = null;
   }
+}
+
+function pinSnowflakeInPlace(snowflake) {
+  if (!snowflake || !snowflake.isConnected) return;
+
+  if (frostSnowflakeAnchor) frostSnowflakeAnchor.remove();
+
+  const rect = snowflake.getBoundingClientRect();
+  frostSnowflakeAnchor = snowflake.cloneNode(true);
+  frostSnowflakeAnchor.className = "c17-frozen-snowflake-anchor";
+  frostSnowflakeAnchor.removeAttribute("role");
+  frostSnowflakeAnchor.removeAttribute("aria-label");
+  frostSnowflakeAnchor.style.left = `${rect.left + rect.width / 2}px`;
+  frostSnowflakeAnchor.style.top = `${rect.top + rect.height / 2}px`;
+  frostSnowflakeAnchor.style.width = `${rect.width}px`;
+  frostSnowflakeAnchor.style.height = `${rect.height}px`;
+  document.body.appendChild(frostSnowflakeAnchor);
+
+  snowflake.style.visibility = "hidden";
 }
 
 function createFrostOverlay(pointX, pointY) {
@@ -1901,6 +1927,7 @@ function beginFrostHold(snowflake, pointX, pointY) {
     document.removeEventListener("pointerup", cancelHold, true);
     document.removeEventListener("pointercancel", cancelHold, true);
 
+    pinSnowflakeInPlace(snowflake);
     launchFrostTimeline();
   }, FROST_HOLD_MS);
 }
@@ -1913,10 +1940,19 @@ function getAssetFilename(src) {
   }
 }
 
+function frostArrivalRatio(centerX, centerY, originX, originY) {
+  const diagonal = Math.max(1, Math.hypot(window.innerWidth, window.innerHeight));
+  const distance = Math.hypot(centerX - originX, centerY - originY) / diagonal;
+  const directionalNoise =
+    Math.sin(centerX * 0.018 + centerY * 0.011) * 0.035 +
+    Math.sin(centerX * 0.006 - centerY * 0.015) * 0.028;
+
+  return Math.max(0.08, Math.min(0.92, 0.12 + distance * 0.78 + directionalNoise));
+}
+
 function scheduleFrozenAssetSwaps(originX, originY, duration) {
   clearFrostSwapTimers();
 
-  const diagonal = Math.max(1, Math.hypot(window.innerWidth, window.innerHeight));
   const candidates = [...document.querySelectorAll(".profile img")];
 
   candidates.forEach(image => {
@@ -1927,8 +1963,7 @@ function scheduleFrozenAssetSwaps(originX, originY, duration) {
     const rect = image.getBoundingClientRect();
     const centerX = rect.left + rect.width / 2;
     const centerY = rect.top + rect.height / 2;
-    const distanceRatio = Math.min(1, Math.hypot(centerX - originX, centerY - originY) / diagonal);
-    const arrival = Math.round(duration * (0.18 + distanceRatio * 0.70));
+    const arrival = Math.round(duration * frostArrivalRatio(centerX, centerY, originX, originY));
 
     const timer = setTimeout(() => {
       if (!image.isConnected || !frostLocked) return;
@@ -1936,9 +1971,17 @@ function scheduleFrozenAssetSwaps(originX, originY, duration) {
       const preload = new Image();
       preload.onload = () => {
         if (!image.isConnected || !frostLocked) return;
+
         image.classList.add("c17-freezing-asset");
-        image.src = frozenName;
-        requestAnimationFrame(() => image.classList.add("c17-frozen-asset"));
+
+        const swapTimer = setTimeout(() => {
+          if (!image.isConnected || !frostLocked) return;
+          image.src = frozenName;
+          image.classList.add("c17-frozen-asset");
+          image.classList.remove("c17-freezing-asset");
+        }, 520);
+
+        frostSwapTimers.push(swapTimer);
       };
       preload.src = frozenName;
     }, arrival);
@@ -1954,15 +1997,15 @@ function resolveFrozenHeartOutcome(originX, originY, duration) {
   const rect = heart.getBoundingClientRect();
   const centerX = rect.left + rect.width / 2;
   const centerY = rect.top + rect.height / 2;
-  const diagonal = Math.max(1, Math.hypot(window.innerWidth, window.innerHeight));
-  const distanceRatio = Math.min(1, Math.hypot(centerX - originX, centerY - originY) / diagonal);
-  const arrival = Math.round(duration * (0.20 + distanceRatio * 0.68));
+  const arrival = Math.round(duration * frostArrivalRatio(centerX, centerY, originX, originY));
 
   const greyLayer = heart.querySelector(".carl-heart-grey");
+  const greyStyle = greyLayer ? getComputedStyle(greyLayer) : null;
   const greyVisible = Boolean(
     greyLayer &&
-    getComputedStyle(greyLayer).visibility !== "hidden" &&
-    Number.parseFloat(getComputedStyle(greyLayer).opacity || "0") > 0.35
+    greyStyle &&
+    greyStyle.visibility !== "hidden" &&
+    Number.parseFloat(greyStyle.opacity || "0") > 0.35
   );
   const onLeft = centerX < window.innerWidth * 0.5;
 
@@ -1998,7 +2041,7 @@ function launchFrostTimeline() {
 }
 
 function growFrostAcrossScreen(canvas) {
-  const context = canvas.getContext("2d");
+  const context = canvas.getContext("2d", { alpha: true });
   if (!context) return;
 
   const pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
@@ -2006,7 +2049,7 @@ function growFrostAcrossScreen(canvas) {
   const screenHeight = window.innerHeight;
   const originX = screenWidth * (frostOriginX / 100);
   const originY = screenHeight * (frostOriginY / 100);
-  const diagonal = Math.hypot(screenWidth, screenHeight);
+  const diagonal = Math.max(1, Math.hypot(screenWidth, screenHeight));
   const startTime = performance.now();
 
   canvas.width = Math.round(screenWidth * pixelRatio);
@@ -2014,207 +2057,119 @@ function growFrostAcrossScreen(canvas) {
   canvas.style.width = `${screenWidth}px`;
   canvas.style.height = `${screenHeight}px`;
   context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+  context.imageSmoothingEnabled = true;
 
-  const maskCanvas = document.createElement("canvas");
-  maskCanvas.width = canvas.width;
-  maskCanvas.height = canvas.height;
-  const mask = maskCanvas.getContext("2d");
-  mask.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+  const fieldScale = 5;
+  const fieldWidth = Math.ceil(screenWidth / fieldScale);
+  const fieldHeight = Math.ceil(screenHeight / fieldScale);
+  const fieldCanvas = document.createElement("canvas");
+  fieldCanvas.width = fieldWidth;
+  fieldCanvas.height = fieldHeight;
+  const field = fieldCanvas.getContext("2d");
+  const image = field.createImageData(fieldWidth, fieldHeight);
 
-  function noise(x, y) {
-    const value = Math.sin(x * 12.9898 + y * 78.233) * 43758.5453;
+  function hash(x, y) {
+    const value = Math.sin(x * 127.1 + y * 311.7) * 43758.5453;
     return value - Math.floor(value);
   }
 
-  function smoothstep(edge0, edge1, value) {
-    const t = Math.max(0, Math.min(1, (value - edge0) / Math.max(0.0001, edge1 - edge0)));
-    return t * t * (3 - 2 * t);
+  function smoothNoise(x, y) {
+    const x0 = Math.floor(x);
+    const y0 = Math.floor(y);
+    const tx = x - x0;
+    const ty = y - y0;
+    const sx = tx * tx * (3 - 2 * tx);
+    const sy = ty * ty * (3 - 2 * ty);
+    const a = hash(x0, y0);
+    const b = hash(x0 + 1, y0);
+    const c = hash(x0, y0 + 1);
+    const d = hash(x0 + 1, y0 + 1);
+    const top = a + (b - a) * sx;
+    const bottom = c + (d - c) * sx;
+    return top + (bottom - top) * sy;
   }
 
-  const frostSeeds = [];
-  const seedSpacing = Math.max(18, Math.min(30, screenWidth / 15));
-
-  for (let y = -seedSpacing; y <= screenHeight + seedSpacing; y += seedSpacing) {
-    for (let x = -seedSpacing; x <= screenWidth + seedSpacing; x += seedSpacing) {
-      const jitterX = (noise(x, y) - 0.5) * seedSpacing * 1.15;
-      const jitterY = (noise(y, x) - 0.5) * seedSpacing * 1.15;
-      const px = x + jitterX;
-      const py = y + jitterY;
-      const distance = Math.hypot(px - originX, py - originY);
-      const irregular = (noise(x + 47, y + 91) - 0.5) * 0.17;
-
-      frostSeeds.push({
-        x: px,
-        y: py,
-        start: Math.max(0, Math.min(0.92, (distance / diagonal) * 0.86 + irregular)),
-        size: seedSpacing * (0.68 + noise(x + 11, y + 23) * 0.68),
-        cloud: 0.16 + noise(x + 73, y + 31) * 0.32,
-        angle: noise(x + 5, y + 101) * Math.PI
-      });
-    }
+  function fieldNoise(x, y) {
+    return (
+      smoothNoise(x * 0.055, y * 0.055) * 0.58 +
+      smoothNoise(x * 0.018 + 31, y * 0.018 + 17) * 0.29 +
+      smoothNoise(x * 0.008 + 73, y * 0.008 + 91) * 0.13
+    );
   }
 
-  const dendrites = [];
-  const leaders = 34;
+  function easeInOut(value) {
+    const clamped = Math.max(0, Math.min(1, value));
+    return clamped * clamped * (3 - 2 * clamped);
+  }
 
-  for (let leader = 0; leader < leaders; leader += 1) {
-    let x = originX;
-    let y = originY;
-    let heading = (Math.PI * 2 * leader) / leaders + (noise(leader, 17) - 0.5) * 0.55;
-    const points = [{ x, y }];
-    const segmentCount = 9 + Math.floor(noise(leader, 29) * 9);
-    const totalLength = diagonal * (0.30 + noise(leader, 41) * 0.58);
+  function paintFrozenField(progress) {
+    const eased = easeInOut(progress);
+    const threshold = -0.10 + eased * 1.16;
+    const data = image.data;
 
-    for (let segment = 0; segment < segmentCount; segment += 1) {
-      heading += (noise(leader * 31 + segment, 53) - 0.5) * 0.48;
-      const length = (totalLength / segmentCount) * (0.72 + noise(leader, segment + 67) * 0.62);
-      x += Math.cos(heading) * length;
-      y += Math.sin(heading) * length;
-      points.push({ x, y });
+    for (let y = 0; y < fieldHeight; y += 1) {
+      for (let x = 0; x < fieldWidth; x += 1) {
+        const px = x * fieldScale + fieldScale * 0.5;
+        const py = y * fieldScale + fieldScale * 0.5;
+        const distance = Math.hypot(px - originX, py - originY) / diagonal;
+        const noise = fieldNoise(x, y);
+        const front = distance * 1.24 - noise * 0.34;
+        const edge = Math.max(0, Math.min(1, (threshold - front) * 7.5));
+        const frozen = edge * edge * (3 - 2 * edge);
+        const index = (y * fieldWidth + x) * 4;
 
-      if (segment > 1 && segment < segmentCount - 1 && noise(leader * 71, segment * 13) > 0.62) {
-        const side = noise(segment, leader) > 0.5 ? 1 : -1;
-        const twigHeading = heading + side * (0.58 + noise(segment + 7, leader + 9) * 0.48);
-        const twigLength = length * (0.55 + noise(segment, 113) * 0.72);
-        dendrites.push({
-          points: [
-            { x, y },
-            { x: x + Math.cos(twigHeading) * twigLength, y: y + Math.sin(twigHeading) * twigLength }
-          ],
-          start: 0.10 + (segment / segmentCount) * 0.62,
-          width: 0.35 + noise(leader, segment + 131) * 0.62,
-          alpha: 0.16 + noise(segment, leader + 149) * 0.22
-        });
+        const materialNoise = fieldNoise(x + 83, y + 41);
+        const deep = 26 + materialNoise * 18;
+        const cyan = 105 + materialNoise * 48;
+        const pale = 145 + materialNoise * 48;
+
+        data[index] = Math.round(deep + frozen * 18);
+        data[index + 1] = Math.round(cyan + frozen * 26);
+        data[index + 2] = Math.round(pale + frozen * 34);
+        data[index + 3] = Math.round(frozen * 255);
       }
     }
 
-    dendrites.push({
-      points,
-      start: 0.04 + noise(leader, 157) * 0.20,
-      width: 0.55 + noise(leader, 163) * 0.72,
-      alpha: 0.20 + noise(leader, 173) * 0.24
-    });
-  }
+    field.putImageData(image, 0, 0);
 
-  function paintMask(progress) {
-    mask.clearRect(0, 0, screenWidth, screenHeight);
-    mask.globalCompositeOperation = "source-over";
-
-    frostSeeds.forEach(seed => {
-      const local = smoothstep(seed.start, seed.start + 0.18, progress);
-      if (local <= 0) return;
-
-      const radius = seed.size * (0.30 + local * 0.92);
-      const gradient = mask.createRadialGradient(seed.x, seed.y, radius * 0.08, seed.x, seed.y, radius);
-      gradient.addColorStop(0, `rgba(255,255,255,${0.98 * local})`);
-      gradient.addColorStop(0.52, `rgba(255,255,255,${0.90 * local})`);
-      gradient.addColorStop(0.84, `rgba(255,255,255,${0.48 * local})`);
-      gradient.addColorStop(1, "rgba(255,255,255,0)");
-
-      mask.fillStyle = gradient;
-      mask.beginPath();
-      mask.ellipse(seed.x, seed.y, radius * 1.35, radius * 0.72, seed.angle, 0, Math.PI * 2);
-      mask.fill();
-    });
-
-    const touchBloom = smoothstep(0, 0.11, progress);
-    const touchRadius = 14 + touchBloom * Math.max(screenWidth, screenHeight) * 0.10;
-    const bloom = mask.createRadialGradient(originX, originY, 0, originX, originY, touchRadius);
-    bloom.addColorStop(0, "rgba(255,255,255,1)");
-    bloom.addColorStop(0.68, `rgba(255,255,255,${0.92 * touchBloom})`);
-    bloom.addColorStop(1, "rgba(255,255,255,0)");
-    mask.fillStyle = bloom;
-    mask.fillRect(originX - touchRadius, originY - touchRadius, touchRadius * 2, touchRadius * 2);
-  }
-
-  function drawDendrite(branch, progress) {
-    const local = smoothstep(branch.start, branch.start + 0.42, progress);
-    if (local <= 0) return;
-
-    const totalSegments = branch.points.length - 1;
-    const visible = Math.max(1, Math.ceil(totalSegments * local));
-
-    context.beginPath();
-    context.moveTo(branch.points[0].x, branch.points[0].y);
-
-    for (let index = 1; index <= visible; index += 1) {
-      context.lineTo(branch.points[index].x, branch.points[index].y);
-    }
-
-    context.strokeStyle = `rgba(224,247,250,${branch.alpha * local})`;
-    context.lineWidth = branch.width;
-    context.stroke();
-  }
-
-  function drawFrozenSurface(progress) {
     context.clearRect(0, 0, screenWidth, screenHeight);
-    paintMask(progress);
+    context.drawImage(fieldCanvas, 0, 0, screenWidth, screenHeight);
 
     context.save();
-    context.drawImage(maskCanvas, 0, 0, screenWidth, screenHeight);
-    context.globalCompositeOperation = "source-in";
-
-    const iceGradient = context.createLinearGradient(0, 0, screenWidth, screenHeight);
-    iceGradient.addColorStop(0, "rgba(24,69,91,0.99)");
-    iceGradient.addColorStop(0.28, "rgba(74,132,151,0.99)");
-    iceGradient.addColorStop(0.50, "rgba(118,177,192,0.99)");
-    iceGradient.addColorStop(0.72, "rgba(61,119,140,0.99)");
-    iceGradient.addColorStop(1, "rgba(18,55,78,0.99)");
-    context.fillStyle = iceGradient;
-    context.fillRect(0, 0, screenWidth, screenHeight);
-
     context.globalCompositeOperation = "source-atop";
 
-    frostSeeds.forEach((seed, index) => {
-      const local = smoothstep(seed.start + 0.02, seed.start + 0.24, progress);
-      if (local <= 0) return;
+    const depth = context.createLinearGradient(0, 0, screenWidth, screenHeight);
+    depth.addColorStop(0, "rgba(10,34,52,0.46)");
+    depth.addColorStop(0.32, "rgba(89,156,176,0.16)");
+    depth.addColorStop(0.58, "rgba(193,231,237,0.20)");
+    depth.addColorStop(0.82, "rgba(54,112,137,0.22)");
+    depth.addColorStop(1, "rgba(8,29,46,0.48)");
+    context.fillStyle = depth;
+    context.fillRect(0, 0, screenWidth, screenHeight);
 
-      const hazeRadius = seed.size * (0.86 + seed.cloud);
-      const haze = context.createRadialGradient(seed.x, seed.y, 0, seed.x, seed.y, hazeRadius);
-      haze.addColorStop(0, `rgba(218,239,243,${seed.cloud * 0.72 * local})`);
-      haze.addColorStop(0.56, `rgba(169,208,218,${seed.cloud * 0.34 * local})`);
-      haze.addColorStop(1, "rgba(95,155,173,0)");
-      context.fillStyle = haze;
-      context.beginPath();
-      context.ellipse(seed.x, seed.y, hazeRadius * 1.18, hazeRadius * 0.68, seed.angle, 0, Math.PI * 2);
-      context.fill();
+    const coldBloom = context.createRadialGradient(
+      originX,
+      originY,
+      0,
+      originX,
+      originY,
+      Math.max(screenWidth, screenHeight) * 0.72
+    );
+    coldBloom.addColorStop(0, "rgba(218,245,248,0.22)");
+    coldBloom.addColorStop(0.28, "rgba(143,207,219,0.17)");
+    coldBloom.addColorStop(0.72, "rgba(51,116,140,0.08)");
+    coldBloom.addColorStop(1, "rgba(5,24,39,0)");
+    context.fillStyle = coldBloom;
+    context.fillRect(0, 0, screenWidth, screenHeight);
 
-      if (index % 7 === 0) {
-        context.fillStyle = `rgba(8,35,54,${0.10 * local})`;
-        context.beginPath();
-        context.ellipse(seed.x, seed.y, seed.size * 0.46, seed.size * 0.22, seed.angle, 0, Math.PI * 2);
-        context.fill();
-      }
-    });
-
-    context.fillStyle = "rgba(5,21,34,0.16)";
+    context.fillStyle = "rgba(2,14,26,0.18)";
     context.fillRect(0, 0, screenWidth, screenHeight);
     context.restore();
-
-    context.save();
-    context.globalCompositeOperation = "screen";
-    context.lineCap = "round";
-    context.lineJoin = "round";
-    dendrites.forEach(branch => drawDendrite(branch, progress));
-    context.restore();
-
-    const condensation = smoothstep(0, 0.34, progress) * (1 - smoothstep(0.70, 1, progress));
-    if (condensation > 0) {
-      context.save();
-      context.globalCompositeOperation = "screen";
-      const fog = context.createRadialGradient(originX, originY, 0, originX, originY, 70 + progress * 240);
-      fog.addColorStop(0, `rgba(218,240,244,${0.20 * condensation})`);
-      fog.addColorStop(0.62, `rgba(149,198,211,${0.10 * condensation})`);
-      fog.addColorStop(1, "rgba(149,198,211,0)");
-      context.fillStyle = fog;
-      context.fillRect(0, 0, screenWidth, screenHeight);
-      context.restore();
-    }
   }
 
   function render(now) {
     const progress = Math.min(1, (now - startTime) / FROST_GROW_MS);
-    drawFrozenSurface(progress);
+    paintFrozenField(progress);
 
     if (progress < 1) {
       requestAnimationFrame(render);
@@ -2239,6 +2194,7 @@ function revealTawnyaFromGreyHeart(heart) {
   tawnya.style.left = `${rect.left + rect.width / 2}px`;
   tawnya.style.top = `${rect.top + rect.height / 2}px`;
   tawnya.innerHTML = `<img src="${TAWNYA_ASSET}" alt="">`;
+  tawnya.disabled = true;
 
   heart.classList.add("c17-heart-becoming-tawnya");
   document.body.appendChild(tawnya);
@@ -2257,8 +2213,7 @@ function revealTawnyaFromGreyHeart(heart) {
     if (!tawnya.classList.contains("tawnya-complete")) return;
     document.dispatchEvent(new CustomEvent("c17:tawnya-open"));
   });
-}
-function stopAttack() {
+}function stopAttack() {
   clearInterval(profileTimer);
   clearInterval(engageTimer);
   clearInterval(slashTimer);
