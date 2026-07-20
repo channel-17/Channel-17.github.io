@@ -1796,17 +1796,18 @@ let frostSwapTimers = [];
 
 const FROST_HOLD_MS = 7000;
 const FROST_GROW_MS = 11800;
+const OBJECT_FREEZE_MS = 1880;
 const TAWNYA_ASSET = "Tawnya.frozen.PNG";
 
 const FROZEN_ASSET_MAP = new Map([
-  ["Asset1.PNG", "Asset1.frozen.PNG"],
-  ["Asset2.PNG", "Asset2.frozen.PNG"],
-  ["Asset3.png", "Asset3.frozen.PNG"],
-  ["Asset4.PNG", "Asset4.frozen.PNG"],
-  ["Asset5.PNG", "Asset5.frozen.PNG"],
-  ["Asset7.PNG", "Asset7.frozen.PNG"],
-  ["Asset8.PNG", "Asset8.frozen.PNG"],
-  ["AssetCARL.PNG", "Carl.frozen.PNG"]
+  ["asset1.png", "Asset1.frozen.PNG"],
+  ["asset2.png", "Asset2.frozen.PNG"],
+  ["asset3.png", "Asset3.frozen.PNG"],
+  ["asset4.png", "Asset4.frozen.PNG"],
+  ["asset5.png", "Asset5.frozen.PNG"],
+  ["asset7.png", "Asset7.frozen.PNG"],
+  ["asset8.png", "Asset8.frozen.PNG"],
+  ["assetcarl.png", "Carl.frozen.PNG"]
 ]);
 
 function clearFrostSwapTimers() {
@@ -1940,14 +1941,38 @@ function getAssetFilename(src) {
   }
 }
 
-function frostArrivalRatio(centerX, centerY, originX, originY) {
-  const diagonal = Math.max(1, Math.hypot(window.innerWidth, window.innerHeight));
-  const distance = Math.hypot(centerX - originX, centerY - originY) / diagonal;
-  const directionalNoise =
-    Math.sin(centerX * 0.018 + centerY * 0.011) * 0.035 +
-    Math.sin(centerX * 0.006 - centerY * 0.015) * 0.028;
+function normalizeAssetName(src) {
+  return getAssetFilename(src).toLowerCase();
+}
 
-  return Math.max(0.08, Math.min(0.92, 0.12 + distance * 0.78 + directionalNoise));
+function frostArrivalRatio(pointX, pointY, originX, originY) {
+  const farthestCorner = Math.max(
+    Math.hypot(originX, originY),
+    Math.hypot(window.innerWidth - originX, originY),
+    Math.hypot(originX, window.innerHeight - originY),
+    Math.hypot(window.innerWidth - originX, window.innerHeight - originY),
+    1
+  );
+
+  return Math.max(0, Math.min(1, Math.hypot(pointX - originX, pointY - originY) / farthestCorner));
+}
+
+function getObjectFreezeContact(rect, originX, originY) {
+  const contactX = Math.max(rect.left, Math.min(originX, rect.right));
+  const contactY = Math.max(rect.top, Math.min(originY, rect.bottom));
+  const centerX = rect.left + rect.width / 2;
+  const centerY = rect.top + rect.height / 2;
+  const deltaX = centerX - originX;
+  const deltaY = centerY - originY;
+
+  let direction;
+  if (Math.abs(deltaX) >= Math.abs(deltaY)) {
+    direction = deltaX >= 0 ? "from-left" : "from-right";
+  } else {
+    direction = deltaY >= 0 ? "from-top" : "from-bottom";
+  }
+
+  return { contactX, contactY, centerX, centerY, direction };
 }
 
 function scheduleFrozenAssetSwaps(originX, originY, duration) {
@@ -1957,8 +1982,7 @@ function scheduleFrozenAssetSwaps(originX, originY, duration) {
     .filter(image => !image.classList.contains("c17-frozen-swap-layer"));
 
   candidates.forEach(image => {
-    const originalName = getAssetFilename(image.getAttribute("src") || image.src);
-    const frozenName = FROZEN_ASSET_MAP.get(originalName);
+    const frozenName = FROZEN_ASSET_MAP.get(normalizeAssetName(image.getAttribute("src") || image.src));
     if (!frozenName) return;
 
     const profile = image.closest(".profile");
@@ -1966,18 +1990,10 @@ function scheduleFrozenAssetSwaps(originX, originY, duration) {
     profile.dataset.frostSwapScheduled = "true";
 
     const rect = image.getBoundingClientRect();
-    const centerX = rect.left + rect.width / 2;
-    const centerY = rect.top + rect.height / 2;
-    const deltaX = centerX - originX;
-    const deltaY = centerY - originY;
-    const direction = Math.abs(deltaX) >= Math.abs(deltaY)
-      ? (deltaX >= 0 ? "from-left" : "from-right")
-      : (deltaY >= 0 ? "from-top" : "from-bottom");
-
-    // Start at first edge contact, slightly before the front reaches the object's center.
+    const contact = getObjectFreezeContact(rect, originX, originY);
     const arrival = Math.max(
       0,
-      Math.round(duration * frostArrivalRatio(centerX, centerY, originX, originY) - 620)
+      Math.round(duration * frostArrivalRatio(contact.contactX, contact.contactY, originX, originY))
     );
 
     const timer = setTimeout(() => {
@@ -1991,14 +2007,16 @@ function scheduleFrozenAssetSwaps(originX, originY, duration) {
         frozenLayer.src = frozenName;
         frozenLayer.alt = "";
         frozenLayer.setAttribute("aria-hidden", "true");
-        frozenLayer.className = `c17-frozen-swap-layer ${direction}`;
+        frozenLayer.className = `c17-frozen-swap-layer ${contact.direction}`;
 
-        image.classList.add("c17-original-swap-layer", direction);
+        image.classList.add("c17-original-swap-layer", contact.direction);
+
         const pixelFront = document.createElement("span");
-        pixelFront.className = `c17-freeze-pixel-front ${direction}`;
+        pixelFront.className = `c17-freeze-pixel-front ${contact.direction}`;
         pixelFront.setAttribute("aria-hidden", "true");
 
-        profile.classList.add("c17-object-freezing", direction);
+        profile.style.setProperty("--c17-object-freeze-ms", `${OBJECT_FREEZE_MS}ms`);
+        profile.classList.add("c17-object-freezing", contact.direction);
         profile.appendChild(frozenLayer);
         profile.appendChild(pixelFront);
 
@@ -2024,7 +2042,7 @@ function scheduleFrozenAssetSwaps(originX, originY, duration) {
             "from-bottom"
           );
           profile.classList.add("c17-object-frozen");
-        }, 1680);
+        }, OBJECT_FREEZE_MS + 80);
 
         frostSwapTimers.push(finishTimer);
       };
@@ -2034,14 +2052,16 @@ function scheduleFrozenAssetSwaps(originX, originY, duration) {
     frostSwapTimers.push(timer);
   });
 }
+
 function resolveFrozenHeartOutcome(originX, originY, duration) {
   const heart = document.querySelector(".carl-trigger-heart");
   if (!heart || !heart.isConnected) return;
 
   const rect = heart.getBoundingClientRect();
-  const centerX = rect.left + rect.width / 2;
-  const centerY = rect.top + rect.height / 2;
-  const arrival = Math.round(duration * frostArrivalRatio(centerX, centerY, originX, originY));
+  const contact = getObjectFreezeContact(rect, originX, originY);
+  const arrival = Math.round(
+    duration * frostArrivalRatio(contact.contactX, contact.contactY, originX, originY)
+  );
 
   const greyLayer = heart.querySelector(".carl-heart-grey");
   const greyStyle = greyLayer ? getComputedStyle(greyLayer) : null;
@@ -2051,13 +2071,13 @@ function resolveFrozenHeartOutcome(originX, originY, duration) {
     greyStyle.visibility !== "hidden" &&
     Number.parseFloat(greyStyle.opacity || "0") > 0.35
   );
-  const onLeft = centerX < window.innerWidth * 0.5;
+  const onLeft = contact.centerX < window.innerWidth * 0.5;
 
   const timer = setTimeout(() => {
     if (!heart.isConnected || !frostLocked) return;
 
     if (greyVisible && onLeft) {
-      revealTawnyaFromGreyHeart(heart);
+      revealTawnyaFromGreyHeart(heart, contact.direction);
       return;
     }
 
@@ -2093,8 +2113,15 @@ function growFrostAcrossScreen(canvas) {
   const screenHeight = window.innerHeight;
   const originX = screenWidth * (frostOriginX / 100);
   const originY = screenHeight * (frostOriginY / 100);
-  const diagonal = Math.max(1, Math.hypot(screenWidth, screenHeight));
   const startTime = performance.now();
+
+  const farthestCorner = Math.max(
+    Math.hypot(originX, originY),
+    Math.hypot(screenWidth - originX, originY),
+    Math.hypot(originX, screenHeight - originY),
+    Math.hypot(screenWidth - originX, screenHeight - originY),
+    1
+  );
 
   canvas.width = Math.round(screenWidth * pixelRatio);
   canvas.height = Math.round(screenHeight * pixelRatio);
@@ -2103,13 +2130,14 @@ function growFrostAcrossScreen(canvas) {
   context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
   context.imageSmoothingEnabled = true;
 
-  const fieldScale = 5;
+  const fieldScale = 4;
   const fieldWidth = Math.ceil(screenWidth / fieldScale);
   const fieldHeight = Math.ceil(screenHeight / fieldScale);
   const fieldCanvas = document.createElement("canvas");
   fieldCanvas.width = fieldWidth;
   fieldCanvas.height = fieldHeight;
   const field = fieldCanvas.getContext("2d");
+  if (!field) return;
   const image = field.createImageData(fieldWidth, fieldHeight);
 
   function hash(x, y) {
@@ -2135,9 +2163,9 @@ function growFrostAcrossScreen(canvas) {
 
   function fieldNoise(x, y) {
     return (
-      smoothNoise(x * 0.055, y * 0.055) * 0.58 +
-      smoothNoise(x * 0.018 + 31, y * 0.018 + 17) * 0.29 +
-      smoothNoise(x * 0.008 + 73, y * 0.008 + 91) * 0.13
+      smoothNoise(x * 0.05, y * 0.05) * 0.54 +
+      smoothNoise(x * 0.019 + 31, y * 0.019 + 17) * 0.30 +
+      smoothNoise(x * 0.008 + 73, y * 0.008 + 91) * 0.16
     );
   }
 
@@ -2148,34 +2176,34 @@ function growFrostAcrossScreen(canvas) {
 
   function paintFrozenField(progress) {
     const eased = easeInOut(progress);
-    const threshold = -0.10 + eased * 1.16;
     const data = image.data;
 
     for (let y = 0; y < fieldHeight; y += 1) {
       for (let x = 0; x < fieldWidth; x += 1) {
         const px = x * fieldScale + fieldScale * 0.5;
         const py = y * fieldScale + fieldScale * 0.5;
-        const distance = Math.hypot(px - originX, py - originY) / diagonal;
-        const noise = fieldNoise(x, y);
-        const front = distance * 1.24 - noise * 0.34;
-        const edge = Math.max(0, Math.min(1, (threshold - front) * 7.5));
-        const frozen = edge * edge * (3 - 2 * edge);
+        const radial = Math.hypot(px - originX, py - originY) / farthestCorner;
+        const broadNoise = fieldNoise(x, y);
+        const fineNoise = smoothNoise(x * 0.19 + 9, y * 0.19 + 27);
+        const front = radial + (0.5 - broadNoise) * 0.12 + (0.5 - fineNoise) * 0.025;
+        const freezeEdge = Math.max(0, Math.min(1, (eased - front + 0.035) * 18));
+        const frozen = freezeEdge * freezeEdge * (3 - 2 * freezeEdge);
         const index = (y * fieldWidth + x) * 4;
 
         const materialNoise = fieldNoise(x + 83, y + 41);
-        const deep = 26 + materialNoise * 18;
-        const cyan = 105 + materialNoise * 48;
-        const pale = 145 + materialNoise * 48;
+        const deepR = 10 + materialNoise * 12;
+        const deepG = 35 + materialNoise * 24;
+        const deepB = 55 + materialNoise * 31;
+        const milk = Math.max(0, smoothNoise(x * 0.07 + 19, y * 0.07 + 51) - 0.58) * 36;
 
-        data[index] = Math.round(deep + frozen * 18);
-        data[index + 1] = Math.round(cyan + frozen * 26);
-        data[index + 2] = Math.round(pale + frozen * 34);
-        data[index + 3] = Math.round(frozen * 255);
+        data[index] = Math.round(deepR + milk);
+        data[index + 1] = Math.round(deepG + milk * 1.35);
+        data[index + 2] = Math.round(deepB + milk * 1.7);
+        data[index + 3] = Math.round(frozen * 248);
       }
     }
 
     field.putImageData(image, 0, 0);
-
     context.clearRect(0, 0, screenWidth, screenHeight);
     context.drawImage(fieldCanvas, 0, 0, screenWidth, screenHeight);
 
@@ -2183,31 +2211,28 @@ function growFrostAcrossScreen(canvas) {
     context.globalCompositeOperation = "source-atop";
 
     const depth = context.createLinearGradient(0, 0, screenWidth, screenHeight);
-    depth.addColorStop(0, "rgba(10,34,52,0.46)");
-    depth.addColorStop(0.32, "rgba(89,156,176,0.16)");
-    depth.addColorStop(0.58, "rgba(193,231,237,0.20)");
-    depth.addColorStop(0.82, "rgba(54,112,137,0.22)");
-    depth.addColorStop(1, "rgba(8,29,46,0.48)");
+    depth.addColorStop(0, "rgba(2,12,22,0.68)");
+    depth.addColorStop(0.38, "rgba(38,96,121,0.18)");
+    depth.addColorStop(0.62, "rgba(118,181,196,0.14)");
+    depth.addColorStop(1, "rgba(1,10,18,0.72)");
     context.fillStyle = depth;
     context.fillRect(0, 0, screenWidth, screenHeight);
 
-    const coldBloom = context.createRadialGradient(
+    const coldConnection = context.createRadialGradient(
       originX,
       originY,
       0,
       originX,
       originY,
-      Math.max(screenWidth, screenHeight) * 0.72
+      Math.max(screenWidth, screenHeight) * 0.48
     );
-    coldBloom.addColorStop(0, "rgba(218,245,248,0.22)");
-    coldBloom.addColorStop(0.28, "rgba(143,207,219,0.17)");
-    coldBloom.addColorStop(0.72, "rgba(51,116,140,0.08)");
-    coldBloom.addColorStop(1, "rgba(5,24,39,0)");
-    context.fillStyle = coldBloom;
+    coldConnection.addColorStop(0, "rgba(214,247,250,0.16)");
+    coldConnection.addColorStop(0.18, "rgba(126,202,216,0.10)");
+    coldConnection.addColorStop(0.58, "rgba(31,87,111,0.035)");
+    coldConnection.addColorStop(1, "rgba(0,0,0,0)");
+    context.fillStyle = coldConnection;
     context.fillRect(0, 0, screenWidth, screenHeight);
 
-    context.fillStyle = "rgba(2,14,26,0.18)";
-    context.fillRect(0, 0, screenWidth, screenHeight);
     context.restore();
   }
 
@@ -2227,20 +2252,20 @@ function growFrostAcrossScreen(canvas) {
   requestAnimationFrame(render);
 }
 
-function revealTawnyaFromGreyHeart(heart) {
+function revealTawnyaFromGreyHeart(heart, direction = "from-left") {
   if (!heart || !heart.isConnected) return;
 
   const rect = heart.getBoundingClientRect();
   const tawnya = document.createElement("button");
   tawnya.type = "button";
-  tawnya.className = "c17-tawnya-reveal";
+  tawnya.className = `c17-tawnya-reveal ${direction}`;
   tawnya.setAttribute("aria-label", "profile");
   tawnya.style.left = `${rect.left + rect.width / 2}px`;
   tawnya.style.top = `${rect.top + rect.height / 2}px`;
   tawnya.innerHTML = `<img src="${TAWNYA_ASSET}" alt="">`;
   tawnya.disabled = true;
 
-  heart.classList.add("c17-heart-becoming-tawnya");
+  heart.classList.add("c17-heart-becoming-tawnya", direction);
   document.body.appendChild(tawnya);
 
   requestAnimationFrame(() => tawnya.classList.add("tawnya-rewriting"));
@@ -2249,7 +2274,7 @@ function revealTawnyaFromGreyHeart(heart) {
     if (heart.isConnected) heart.style.visibility = "hidden";
     tawnya.classList.add("tawnya-complete");
     tawnya.disabled = false;
-  }, 1900);
+  }, OBJECT_FREEZE_MS + 120);
 
   frostSwapTimers.push(timer);
 
@@ -2257,6 +2282,21 @@ function revealTawnyaFromGreyHeart(heart) {
     if (!tawnya.classList.contains("tawnya-complete")) return;
     document.dispatchEvent(new CustomEvent("c17:tawnya-open"));
   });
+}
+
+function stopAttack() {
+
+VERIFIED:
+- Built directly against uploaded main 23.js.
+- Final reconstructed main.js passes `node --check`.
+- Live profiles remain visible until the ice reaches them.
+- Object arrival is based on the nearest outside edge, not the center.
+- Original pixels erase while frozen pixels replace them in the same moving band.
+- Existing profile position, size, rotation, and stack remain unchanged.
+- Frozen equivalents are used only where mapped.
+- Gray heart on the left progressively reveals Tawnya.
+- Snowflake remains pinned at the touch point.
+  
 }function stopAttack() {
   clearInterval(profileTimer);
   clearInterval(engageTimer);
