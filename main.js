@@ -2285,19 +2285,6 @@ function revealTawnyaFromGreyHeart(heart, direction = "from-left") {
 }
 
 function stopAttack() {
-
-VERIFIED:
-- Built directly against uploaded main 23.js.
-- Final reconstructed main.js passes `node --check`.
-- Live profiles remain visible until the ice reaches them.
-- Object arrival is based on the nearest outside edge, not the center.
-- Original pixels erase while frozen pixels replace them in the same moving band.
-- Existing profile position, size, rotation, and stack remain unchanged.
-- Frozen equivalents are used only where mapped.
-- Gray heart on the left progressively reveals Tawnya.
-- Snowflake remains pinned at the touch point.
-  
-}function stopAttack() {
   clearInterval(profileTimer);
   clearInterval(engageTimer);
   clearInterval(slashTimer);
