@@ -1817,6 +1817,86 @@ const FROZEN_SOCIAL_ASSET_MAP = new Map([
 
 let tawnyaRevealNode = null;
 let tawnyaProfileOverlay = null;
+let frostActorSnapshots = [];
+
+function clearFrostActorSnapshots() {
+  frostActorSnapshots.forEach(snapshot => {
+    if (snapshot && snapshot.isConnected) snapshot.remove();
+  });
+  frostActorSnapshots = [];
+}
+
+function copyFrozenLayerState(source, clone, selector) {
+  const sourceLayer = source.querySelector(selector);
+  const cloneLayer = clone.querySelector(selector);
+  if (!sourceLayer || !cloneLayer) return;
+
+  const style = getComputedStyle(sourceLayer);
+  cloneLayer.style.setProperty("opacity", style.opacity, "important");
+  cloneLayer.style.setProperty("visibility", style.visibility, "important");
+  cloneLayer.style.setProperty("display", style.display, "important");
+  cloneLayer.style.setProperty("transform", style.transform === "none" ? "none" : style.transform, "important");
+}
+
+function snapshotFrostActors() {
+  clearFrostActorSnapshots();
+
+  const actors = [
+    ...document.querySelectorAll(".engage.social-smoke"),
+    ...document.querySelectorAll(".carl-trigger-heart")
+  ];
+
+  actors.forEach((actor, index) => {
+    if (!actor || !actor.isConnected) return;
+
+    const rect = actor.getBoundingClientRect();
+    const style = getComputedStyle(actor);
+    const opacity = Number.parseFloat(style.opacity || "0");
+
+    if (
+      rect.width <= 0 ||
+      rect.height <= 0 ||
+      opacity <= 0.015 ||
+      rect.bottom < -8 ||
+      rect.top > window.innerHeight + 8 ||
+      rect.right < -8 ||
+      rect.left > window.innerWidth + 8
+    ) {
+      return;
+    }
+
+    const snapshot = actor.cloneNode(true);
+    snapshot.removeAttribute("id");
+    snapshot.classList.add("c17-frost-actor-snapshot");
+    snapshot.dataset.frostSourceIndex = String(index);
+
+    if (actor.classList.contains("carl-trigger-heart")) {
+      snapshot.classList.add("c17-frost-story-heart");
+      copyFrozenLayerState(actor, snapshot, ".carl-heart-red");
+      copyFrozenLayerState(actor, snapshot, ".carl-heart-grey");
+    } else {
+      snapshot.classList.add("c17-frost-social-snapshot");
+    }
+
+    snapshot.style.setProperty("position", "fixed", "important");
+    snapshot.style.setProperty("left", `${rect.left}px`, "important");
+    snapshot.style.setProperty("top", `${rect.top}px`, "important");
+    snapshot.style.setProperty("width", `${rect.width}px`, "important");
+    snapshot.style.setProperty("height", `${rect.height}px`, "important");
+    snapshot.style.setProperty("margin", "0", "important");
+    snapshot.style.setProperty("transform", "none", "important");
+    snapshot.style.setProperty("animation", "none", "important");
+    snapshot.style.setProperty("transition", "none", "important");
+    snapshot.style.setProperty("opacity", String(Math.max(opacity, 0.01)), "important");
+    snapshot.style.setProperty("visibility", "visible", "important");
+    snapshot.style.setProperty("pointer-events", "none", "important");
+
+    document.body.appendChild(snapshot);
+    frostActorSnapshots.push(snapshot);
+
+    actor.style.setProperty("visibility", "hidden", "important");
+  });
+}
 
 function clearFrostSwapTimers() {
   frostSwapTimers.forEach(timer => clearTimeout(timer));
@@ -1869,6 +1949,11 @@ function resumeFrostTimeline() {
     frostOverlay.remove();
     frostOverlay = null;
   }
+
+  clearFrostActorSnapshots();
+  document.querySelectorAll(".engage.social-smoke, .carl-trigger-heart").forEach(actor => {
+    actor.style.removeProperty("visibility");
+  });
 }
 
 function pinSnowflakeInPlace(snowflake) {
@@ -2062,7 +2147,7 @@ function scheduleFrozenAssetSwaps(originX, originY, duration) {
 }
 
 function scheduleFrozenSocialSwaps(originX, originY, duration) {
-  const candidates = [...document.querySelectorAll(".engage.social-smoke")];
+  const candidates = [...document.querySelectorAll(".c17-frost-social-snapshot")];
 
   candidates.forEach(item => {
     if (!item.isConnected || item.dataset.frostSwapScheduled === "true") return;
@@ -2096,7 +2181,7 @@ function scheduleFrozenSocialSwaps(originX, originY, duration) {
 }
 
 function resolveFrozenHeartOutcome(originX, originY, duration) {
-  const heart = document.querySelector(".carl-trigger-heart");
+  const heart = document.querySelector(".c17-frost-story-heart") || document.querySelector(".carl-trigger-heart");
   if (!heart || !heart.isConnected) return;
 
   const rect = heart.getBoundingClientRect();
@@ -2142,6 +2227,7 @@ function launchFrostTimeline() {
   const originX = window.innerWidth * (frostOriginX / 100);
   const originY = window.innerHeight * (frostOriginY / 100);
 
+  snapshotFrostActors();
   scheduleFrozenAssetSwaps(originX, originY, FROST_GROW_MS);
   scheduleFrozenSocialSwaps(originX, originY, FROST_GROW_MS);
   resolveFrozenHeartOutcome(originX, originY, FROST_GROW_MS);
