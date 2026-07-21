@@ -2195,20 +2195,21 @@ function scheduleFrozenSocialSwaps(originX, originY, duration) {
 }
 
 function resolveFrozenHeartOutcome(originX, originY, duration) {
-  const heart = document.querySelector(".c17-frost-story-heart") || document.querySelector(".carl-trigger-heart");
-  if (!heart || !heart.isConnected) return;
+  const hearts = [
+    ...document.querySelectorAll(".c17-frost-story-heart"),
+    ...document.querySelectorAll(".carl-trigger-heart:not(.c17-frost-story-heart)")
+  ].filter(heart => heart && heart.isConnected);
 
-  const rect = heart.getBoundingClientRect();
-  const contact = getObjectFreezeContact(rect, originX, originY);
-  const arrival = Math.round(
-    duration * frostArrivalRatio(contact.contactX, contact.contactY, originX, originY)
-  );
+  if (!hearts.length) return;
 
-  const timer = setTimeout(() => {
-    if (!heart.isConnected || !frostLocked) return;
-
-    const liveRect = heart.getBoundingClientRect();
-    const liveCenterX = liveRect.left + liveRect.width / 2;
+  /*
+    Preserve the exact stopped frame, but choose the actual left-return heart
+    deliberately instead of trusting querySelector order. This prevents an
+    older/right-side copy from stealing the Tawnya outcome.
+  */
+  const ranked = hearts.map(heart => {
+    const rect = heart.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
     const greyLayer = heart.querySelector(".carl-heart-grey");
     const greyStyle = greyLayer ? getComputedStyle(greyLayer) : null;
     const greyOpacity = greyStyle ? Number.parseFloat(greyStyle.opacity || "0") : 0;
@@ -2217,35 +2218,48 @@ function resolveFrozenHeartOutcome(originX, originY, duration) {
       heart.classList.contains("dead-stage") ||
       (greyLayer && greyStyle && greyStyle.visibility !== "hidden" && greyOpacity > 0.03)
     );
-    const onLeftReturn = heart.dataset.frostHeartSide === "left" || liveCenterX < window.innerWidth * 0.5;
+    const onLeftReturn = heart.dataset.frostHeartSide === "left" || centerX < window.innerWidth * 0.5;
+    return { heart, rect, centerX, greyVisible, onLeftReturn };
+  });
 
-    /*
-      No route or timing change: the left-return story heart is the gray-heart state.
-      Once the frost front reaches that exact frozen frame, Tawnya must replace it.
-    */
-    if (onLeftReturn && (greyVisible || heart.classList.contains("c17-frost-story-heart"))) {
-      revealTawnyaFromGreyHeart(heart, contact.direction);
-      return;
-    }
+  const tawnyaCandidate = ranked
+    .filter(entry => entry.onLeftReturn && entry.greyVisible)
+    .sort((a, b) => a.centerX - b.centerX)[0] || null;
 
-    heart.classList.add("c17-frozen-heart-hold", "c17-frozen-red-heart");
+  ranked.forEach(entry => {
+    const { heart, rect } = entry;
+    const contact = getObjectFreezeContact(rect, originX, originY);
+    const arrival = Math.round(
+      duration * frostArrivalRatio(contact.contactX, contact.contactY, originX, originY)
+    );
 
-    heart.querySelectorAll(".carl-heart-layer").forEach(layer => {
-      layer.style.setProperty("display", "none", "important");
-      layer.style.setProperty("visibility", "hidden", "important");
-    });
+    const timer = setTimeout(() => {
+      if (!heart.isConnected || !frostLocked) return;
 
-    let frozenHeartImage = heart.querySelector(".c17-frozen-story-heart-asset");
-    if (!frozenHeartImage) {
-      frozenHeartImage = document.createElement("img");
-      frozenHeartImage.className = "c17-frozen-story-heart-asset";
-      frozenHeartImage.alt = "";
-      heart.appendChild(frozenHeartImage);
-    }
-    frozenHeartImage.src = FROZEN_STORY_HEART_ASSET;
-  }, arrival);
+      if (tawnyaCandidate && heart === tawnyaCandidate.heart) {
+        revealTawnyaFromGreyHeart(heart, contact.direction);
+        return;
+      }
 
-  frostSwapTimers.push(timer);
+      heart.classList.add("c17-frozen-heart-hold", "c17-frozen-red-heart");
+
+      heart.querySelectorAll(".carl-heart-layer").forEach(layer => {
+        layer.style.setProperty("display", "none", "important");
+        layer.style.setProperty("visibility", "hidden", "important");
+      });
+
+      let frozenHeartImage = heart.querySelector(".c17-frozen-story-heart-asset");
+      if (!frozenHeartImage) {
+        frozenHeartImage = document.createElement("img");
+        frozenHeartImage.className = "c17-frozen-story-heart-asset";
+        frozenHeartImage.alt = "";
+        heart.appendChild(frozenHeartImage);
+      }
+      frozenHeartImage.src = FROZEN_STORY_HEART_ASSET;
+    }, arrival);
+
+    frostSwapTimers.push(timer);
+  });
 }
 
 function launchFrostTimeline() {
@@ -2467,14 +2481,29 @@ function revealTawnyaFromGreyHeart(heart, direction = "from-left") {
   if (!heart || !heart.isConnected || tawnyaRevealNode) return;
 
   const rect = heart.getBoundingClientRect();
+  const centerX = rect.left + rect.width / 2;
+  const centerY = rect.top + rect.height / 2;
   const tawnya = document.createElement("button");
   tawnya.type = "button";
   tawnya.className = `c17-tawnya-reveal ${direction}`;
   tawnya.setAttribute("aria-label", "open Tawnya Grey profile");
-  tawnya.style.left = `${rect.left + rect.width / 2}px`;
-  tawnya.style.top = `${rect.top + rect.height / 2}px`;
+  tawnya.style.setProperty("left", `${centerX}px`, "important");
+  tawnya.style.setProperty("top", `${centerY}px`, "important");
+  tawnya.style.setProperty("z-index", "2147483645", "important");
+  tawnya.style.setProperty("display", "grid", "important");
+  tawnya.style.setProperty("opacity", "1", "important");
+  tawnya.style.setProperty("visibility", "visible", "important");
   tawnya.style.setProperty("--c17-object-freeze-ms", `${OBJECT_FREEZE_MS}ms`);
-  tawnya.innerHTML = `<img src="${TAWNYA_ASSET}" alt="Tawnya Grey">`;
+
+  const image = document.createElement("img");
+  image.src = TAWNYA_ASSET;
+  image.alt = "Tawnya Grey";
+  image.decoding = "sync";
+  image.style.setProperty("display", "block", "important");
+  image.style.setProperty("opacity", "1", "important");
+  image.style.setProperty("visibility", "visible", "important");
+  tawnya.appendChild(image);
+
   tawnya.disabled = true;
   tawnyaRevealNode = tawnya;
 
@@ -2482,16 +2511,16 @@ function revealTawnyaFromGreyHeart(heart, direction = "from-left") {
   document.body.appendChild(tawnya);
 
   requestAnimationFrame(() => {
-    tawnya.classList.add("tawnya-rewriting");
-    const image = tawnya.querySelector("img");
-    if (image) {
-      image.style.setProperty("opacity", "1", "important");
-      image.style.setProperty("visibility", "visible", "important");
-    }
+    requestAnimationFrame(() => {
+      tawnya.classList.add("tawnya-rewriting");
+    });
   });
 
   const timer = setTimeout(() => {
-    if (heart.isConnected) heart.style.visibility = "hidden";
+    if (heart.isConnected) {
+      heart.style.setProperty("opacity", "0", "important");
+      heart.style.setProperty("visibility", "hidden", "important");
+    }
     tawnya.classList.add("tawnya-complete");
     tawnya.disabled = false;
   }, OBJECT_FREEZE_MS + 120);
