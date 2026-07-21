@@ -11063,3 +11063,37 @@ html.frost-dead-world .profile {
 .c17-tawnya-reveal.tawnya-complete {
   pointer-events: auto !important;
 }
+
+
+/* =========================================================
+   BRICK 135 — TAWNYA SCALE + HEART-TO-PROFILE REWRITE
+   Keep the circular frozen profile. Smaller than normal avatars.
+========================================================= */
+
+.c17-tawnya-reveal {
+  width: 56px !important;
+  height: 56px !important;
+  border-width: 1px !important;
+  box-shadow:
+    0 0 0 1px rgba(67,145,181,.82),
+    0 0 10px rgba(213,247,253,.84),
+    0 0 24px rgba(42,119,158,.54) !important;
+}
+
+.c17-tawnya-reveal img {
+  width: 100% !important;
+  height: 100% !important;
+  transform-origin: 50% 50% !important;
+  will-change: opacity, transform, filter, clip-path !important;
+}
+
+.c17-heart-becoming-tawnya {
+  transform-origin: 50% 50% !important;
+  will-change: opacity, transform, filter, clip-path !important;
+}
+
+.c17-tawnya-reveal.tawnya-complete {
+  width: 56px !important;
+  height: 56px !important;
+  pointer-events: auto !important;
+}
