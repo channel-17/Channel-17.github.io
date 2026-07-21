@@ -1810,6 +1810,14 @@ const FROZEN_ASSET_MAP = new Map([
   ["assetcarl.png", "Carl.frozen.PNG"]
 ]);
 
+const FROZEN_SOCIAL_ASSET_MAP = new Map([
+  ["🔥", "Asset.flame.frozen.PNG"],
+  ["👎", "Asset.thumbsdown.frozen.PNG"]
+]);
+
+let tawnyaRevealNode = null;
+let tawnyaProfileOverlay = null;
+
 function clearFrostSwapTimers() {
   frostSwapTimers.forEach(timer => clearTimeout(timer));
   frostSwapTimers = [];
@@ -2053,6 +2061,40 @@ function scheduleFrozenAssetSwaps(originX, originY, duration) {
   });
 }
 
+function scheduleFrozenSocialSwaps(originX, originY, duration) {
+  const candidates = [...document.querySelectorAll(".engage.social-smoke")];
+
+  candidates.forEach(item => {
+    if (!item.isConnected || item.dataset.frostSwapScheduled === "true") return;
+    item.dataset.frostSwapScheduled = "true";
+
+    const rect = item.getBoundingClientRect();
+    const contact = getObjectFreezeContact(rect, originX, originY);
+    const arrival = Math.max(
+      0,
+      Math.round(duration * frostArrivalRatio(contact.contactX, contact.contactY, originX, originY))
+    );
+
+    const timer = setTimeout(() => {
+      if (!item.isConnected || !frostLocked) return;
+
+      const frozenAsset = FROZEN_SOCIAL_ASSET_MAP.get(item.textContent.trim());
+      if (frozenAsset) {
+        item.textContent = "";
+        const image = document.createElement("img");
+        image.src = frozenAsset;
+        image.alt = "";
+        image.className = "c17-frozen-social-asset";
+        item.appendChild(image);
+      }
+
+      item.classList.add("c17-social-frozen");
+    }, arrival);
+
+    frostSwapTimers.push(timer);
+  });
+}
+
 function resolveFrozenHeartOutcome(originX, originY, duration) {
   const heart = document.querySelector(".carl-trigger-heart");
   if (!heart || !heart.isConnected) return;
@@ -2063,20 +2105,21 @@ function resolveFrozenHeartOutcome(originX, originY, duration) {
     duration * frostArrivalRatio(contact.contactX, contact.contactY, originX, originY)
   );
 
-  const greyLayer = heart.querySelector(".carl-heart-grey");
-  const greyStyle = greyLayer ? getComputedStyle(greyLayer) : null;
-  const greyVisible = Boolean(
-    greyLayer &&
-    greyStyle &&
-    greyStyle.visibility !== "hidden" &&
-    Number.parseFloat(greyStyle.opacity || "0") > 0.35
-  );
-  const onLeft = contact.centerX < window.innerWidth * 0.5;
-
   const timer = setTimeout(() => {
     if (!heart.isConnected || !frostLocked) return;
 
-    if (greyVisible && onLeft) {
+    const liveRect = heart.getBoundingClientRect();
+    const liveCenterX = liveRect.left + liveRect.width / 2;
+    const greyLayer = heart.querySelector(".carl-heart-grey");
+    const greyStyle = greyLayer ? getComputedStyle(greyLayer) : null;
+    const greyOpacity = greyStyle ? Number.parseFloat(greyStyle.opacity || "0") : 0;
+    const greyVisible = Boolean(
+      heart.classList.contains("dead-stage") ||
+      (greyLayer && greyStyle && greyStyle.visibility !== "hidden" && greyOpacity > 0.05)
+    );
+    const onLeftReturn = liveCenterX < window.innerWidth * 0.5;
+
+    if (greyVisible && onLeftReturn) {
       revealTawnyaFromGreyHeart(heart, contact.direction);
       return;
     }
@@ -2100,6 +2143,7 @@ function launchFrostTimeline() {
   const originY = window.innerHeight * (frostOriginY / 100);
 
   scheduleFrozenAssetSwaps(originX, originY, FROST_GROW_MS);
+  scheduleFrozenSocialSwaps(originX, originY, FROST_GROW_MS);
   resolveFrozenHeartOutcome(originX, originY, FROST_GROW_MS);
   growFrostAcrossScreen(canvas);
 }
@@ -2252,18 +2296,68 @@ function growFrostAcrossScreen(canvas) {
   requestAnimationFrame(render);
 }
 
+function ensureTawnyaProfileOverlay() {
+  if (tawnyaProfileOverlay && tawnyaProfileOverlay.isConnected) return tawnyaProfileOverlay;
+
+  tawnyaProfileOverlay = document.createElement("aside");
+  tawnyaProfileOverlay.className = "c17-tawnya-profile-overlay";
+  tawnyaProfileOverlay.setAttribute("aria-hidden", "true");
+  tawnyaProfileOverlay.innerHTML = `
+    <article class="c17-tawnya-profile-card" role="dialog" aria-modal="true" aria-label="Tawnya Grey profile">
+      <button class="c17-tawnya-profile-close" type="button" aria-label="close Tawnya profile">×</button>
+      <div class="c17-tawnya-file-label">RECOVERED BLUE PROFILE</div>
+      <img class="c17-tawnya-profile-image" src="Tawnya.profile.PNG" alt="Tawnya Grey">
+      <h2>Tawnya Grey</h2>
+      <p class="c17-tawnya-status">in a relationship with <strong>Thomas Doggon Foolery</strong></p>
+      <section class="c17-tawnya-profile-block">
+        <span>KNOWN FRIENDS</span>
+        <b>Thomas Doggon Foolery</b>
+        <b>Joseph Mahhmah</b>
+      </section>
+      <section class="c17-tawnya-profile-block">
+        <span>SYSTEM NOTE</span>
+        <p>Profile recovered beneath the gray-heart signal after total frost takeover.</p>
+      </section>
+    </article>
+  `;
+
+  document.body.appendChild(tawnyaProfileOverlay);
+
+  const close = tawnyaProfileOverlay.querySelector(".c17-tawnya-profile-close");
+  close.addEventListener("click", closeTawnyaProfile);
+  tawnyaProfileOverlay.addEventListener("click", event => {
+    if (event.target === tawnyaProfileOverlay) closeTawnyaProfile();
+  });
+
+  return tawnyaProfileOverlay;
+}
+
+function openTawnyaProfile() {
+  const overlay = ensureTawnyaProfileOverlay();
+  overlay.classList.add("open");
+  overlay.setAttribute("aria-hidden", "false");
+}
+
+function closeTawnyaProfile() {
+  if (!tawnyaProfileOverlay) return;
+  tawnyaProfileOverlay.classList.remove("open");
+  tawnyaProfileOverlay.setAttribute("aria-hidden", "true");
+}
+
 function revealTawnyaFromGreyHeart(heart, direction = "from-left") {
-  if (!heart || !heart.isConnected) return;
+  if (!heart || !heart.isConnected || tawnyaRevealNode) return;
 
   const rect = heart.getBoundingClientRect();
   const tawnya = document.createElement("button");
   tawnya.type = "button";
   tawnya.className = `c17-tawnya-reveal ${direction}`;
-  tawnya.setAttribute("aria-label", "profile");
+  tawnya.setAttribute("aria-label", "open Tawnya Grey profile");
   tawnya.style.left = `${rect.left + rect.width / 2}px`;
   tawnya.style.top = `${rect.top + rect.height / 2}px`;
-  tawnya.innerHTML = `<img src="${TAWNYA_ASSET}" alt="">`;
+  tawnya.style.setProperty("--c17-object-freeze-ms", `${OBJECT_FREEZE_MS}ms`);
+  tawnya.innerHTML = `<img src="${TAWNYA_ASSET}" alt="Tawnya Grey">`;
   tawnya.disabled = true;
+  tawnyaRevealNode = tawnya;
 
   heart.classList.add("c17-heart-becoming-tawnya", direction);
   document.body.appendChild(tawnya);
@@ -2280,6 +2374,7 @@ function revealTawnyaFromGreyHeart(heart, direction = "from-left") {
 
   tawnya.addEventListener("click", () => {
     if (!tawnya.classList.contains("tawnya-complete")) return;
+    openTawnyaProfile();
     document.dispatchEvent(new CustomEvent("c17:tawnya-open"));
   });
 }
