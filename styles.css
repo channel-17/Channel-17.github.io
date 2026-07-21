@@ -10532,3 +10532,72 @@ html.frost-dead-world .screen {
   font-size: .78rem;
   line-height: 1.35;
 }
+
+
+/* =========================================================
+   BRICK 127 — FREEZE ACTOR PRESERVATION
+   Baseline: pre-126 build. No heart route or timing changes.
+   Emojis and the story heart are snapshotted at the exact stop frame
+   so their existing removal timers cannot erase them behind the wall.
+========================================================= */
+
+.c17-frost-actor-snapshot {
+  position: fixed !important;
+  z-index: 10035 !important;
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: none !important;
+  animation: none !important;
+  transition: none !important;
+  transform: none !important;
+  overflow: visible !important;
+  isolation: isolate;
+}
+
+.c17-frost-social-snapshot {
+  line-height: 1 !important;
+  text-shadow: 0 0 8px rgba(0,0,0,.72) !important;
+}
+
+.c17-frost-social-snapshot.c17-social-frozen {
+  opacity: 1 !important;
+  visibility: visible !important;
+  filter:
+    saturate(.38)
+    brightness(1.18)
+    contrast(1.12)
+    drop-shadow(0 0 5px rgba(164,224,237,.48)) !important;
+}
+
+.c17-frost-story-heart {
+  z-index: 10036 !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+.c17-frost-story-heart .carl-heart-layer {
+  animation: none !important;
+  transition: none !important;
+}
+
+.c17-frost-story-heart.c17-frozen-heart-hold {
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+.c17-frost-story-heart.c17-heart-becoming-tawnya {
+  opacity: .32 !important;
+  visibility: visible !important;
+}
+
+html.frost-conquering .profile,
+html.frost-dead-world .profile {
+  z-index: 10040 !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+.c17-tawnya-reveal {
+  z-index: 10045 !important;
+}
