@@ -10784,3 +10784,59 @@ html.frost-dead-world .profile {
   filter: none !important;
   transform: none !important;
 }
+
+
+/* =========================================================
+   BRICK 130 — TAWNYA MUST RENDER ABOVE THE FROZEN WORLD
+   No heart path, timing, or frost-shape changes.
+========================================================= */
+.c17-tawnya-reveal {
+  position: fixed !important;
+  z-index: 2147483645 !important;
+  display: grid !important;
+  place-items: center !important;
+  width: 82px !important;
+  height: 82px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 2px solid rgba(235, 252, 255, .98) !important;
+  border-radius: 50% !important;
+  overflow: hidden !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: translate(-50%, -50%) !important;
+  background: transparent !important;
+  box-shadow:
+    0 0 0 2px rgba(66, 137, 173, .84),
+    0 0 16px rgba(205, 243, 251, .88),
+    0 0 36px rgba(48, 126, 165, .56) !important;
+  isolation: isolate !important;
+}
+
+.c17-tawnya-reveal img {
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 2 !important;
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  max-width: none !important;
+  border-radius: 50% !important;
+  object-fit: cover !important;
+  object-position: center center !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  filter: none !important;
+  transform: none !important;
+}
+
+.c17-tawnya-reveal.tawnya-rewriting,
+.c17-tawnya-reveal.tawnya-complete {
+  clip-path: none !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+.c17-tawnya-reveal.tawnya-complete {
+  pointer-events: auto !important;
+}
