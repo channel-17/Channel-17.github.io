@@ -1874,6 +1874,19 @@ function snapshotFrostActors() {
       snapshot.classList.add("c17-frost-story-heart");
       copyFrozenLayerState(actor, snapshot, ".carl-heart-red");
       copyFrozenLayerState(actor, snapshot, ".carl-heart-grey");
+
+      const greyLayer = actor.querySelector(".carl-heart-grey");
+      const redLayer = actor.querySelector(".carl-heart-red");
+      const greyStyle = greyLayer ? getComputedStyle(greyLayer) : null;
+      const redStyle = redLayer ? getComputedStyle(redLayer) : null;
+      snapshot.dataset.frostHeartSide = rect.left + rect.width / 2 < window.innerWidth * 0.5 ? "left" : "right";
+      snapshot.dataset.frostGreyVisible = String(Boolean(
+        actor.classList.contains("dead-stage") ||
+        (greyStyle && greyStyle.visibility !== "hidden" && Number.parseFloat(greyStyle.opacity || "0") > 0.03)
+      ));
+      snapshot.dataset.frostRedVisible = String(Boolean(
+        redStyle && redStyle.visibility !== "hidden" && Number.parseFloat(redStyle.opacity || "0") > 0.03
+      ));
     } else {
       snapshot.classList.add("c17-frost-social-snapshot");
     }
@@ -2199,17 +2212,22 @@ function resolveFrozenHeartOutcome(originX, originY, duration) {
     const greyStyle = greyLayer ? getComputedStyle(greyLayer) : null;
     const greyOpacity = greyStyle ? Number.parseFloat(greyStyle.opacity || "0") : 0;
     const greyVisible = Boolean(
+      heart.dataset.frostGreyVisible === "true" ||
       heart.classList.contains("dead-stage") ||
-      (greyLayer && greyStyle && greyStyle.visibility !== "hidden" && greyOpacity > 0.05)
+      (greyLayer && greyStyle && greyStyle.visibility !== "hidden" && greyOpacity > 0.03)
     );
-    const onLeftReturn = liveCenterX < window.innerWidth * 0.5;
+    const onLeftReturn = heart.dataset.frostHeartSide === "left" || liveCenterX < window.innerWidth * 0.5;
 
-    if (greyVisible && onLeftReturn) {
+    /*
+      No route or timing change: the left-return story heart is the gray-heart state.
+      Once the frost front reaches that exact frozen frame, Tawnya must replace it.
+    */
+    if (onLeftReturn && (greyVisible || heart.classList.contains("c17-frost-story-heart"))) {
       revealTawnyaFromGreyHeart(heart, contact.direction);
       return;
     }
 
-    heart.classList.add("c17-frozen-heart-hold");
+    heart.classList.add("c17-frozen-heart-hold", "c17-frozen-red-heart");
   }, arrival);
 
   frostSwapTimers.push(timer);
@@ -2312,24 +2330,26 @@ function growFrostAcrossScreen(canvas) {
       for (let x = 0; x < fieldWidth; x += 1) {
         const px = x * fieldScale + fieldScale * 0.5;
         const py = y * fieldScale + fieldScale * 0.5;
-        const radial = Math.hypot(px - originX, py - originY) / farthestCorner;
+        const dx = Math.abs(px - originX) / Math.max(originX, screenWidth - originX, 1);
+        const dy = Math.abs(py - originY) / Math.max(originY, screenHeight - originY, 1);
+        const blockDistance = Math.max(dx, dy);
         const broadNoise = fieldNoise(x, y);
         const fineNoise = smoothNoise(x * 0.19 + 9, y * 0.19 + 27);
-        const front = radial + (0.5 - broadNoise) * 0.12 + (0.5 - fineNoise) * 0.025;
-        const freezeEdge = Math.max(0, Math.min(1, (eased - front + 0.035) * 18));
+        const front = blockDistance + (0.5 - broadNoise) * 0.035 + (0.5 - fineNoise) * 0.01;
+        const freezeEdge = Math.max(0, Math.min(1, (eased - front + 0.025) * 28));
         const frozen = freezeEdge * freezeEdge * (3 - 2 * freezeEdge);
         const index = (y * fieldWidth + x) * 4;
 
         const materialNoise = fieldNoise(x + 83, y + 41);
-        const deepR = 10 + materialNoise * 12;
-        const deepG = 35 + materialNoise * 24;
-        const deepB = 55 + materialNoise * 31;
-        const milk = Math.max(0, smoothNoise(x * 0.07 + 19, y * 0.07 + 51) - 0.58) * 36;
+        const deepR = 52 + materialNoise * 24;
+        const deepG = 105 + materialNoise * 34;
+        const deepB = 132 + materialNoise * 38;
+        const milk = Math.max(0, smoothNoise(x * 0.07 + 19, y * 0.07 + 51) - 0.48) * 82;
 
-        data[index] = Math.round(deepR + milk);
-        data[index + 1] = Math.round(deepG + milk * 1.35);
-        data[index + 2] = Math.round(deepB + milk * 1.7);
-        data[index + 3] = Math.round(frozen * 248);
+        data[index] = Math.round(deepR + milk * 0.70);
+        data[index + 1] = Math.round(deepG + milk * 0.95);
+        data[index + 2] = Math.round(deepB + milk * 1.08);
+        data[index + 3] = Math.round(frozen * 242);
       }
     }
 
