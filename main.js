@@ -1901,7 +1901,7 @@ function snapshotFrostActors() {
     snapshot.style.setProperty("transform", "none", "important");
     snapshot.style.setProperty("animation", "none", "important");
     snapshot.style.setProperty("transition", "none", "important");
-    snapshot.style.setProperty("opacity", String(Math.max(opacity, 0.01)), "important");
+    snapshot.style.setProperty("opacity", "1", "important");
     snapshot.style.setProperty("visibility", "visible", "important");
     snapshot.style.setProperty("pointer-events", "none", "important");
 
@@ -2222,9 +2222,14 @@ function resolveFrozenHeartOutcome(originX, originY, duration) {
     return { heart, rect, centerX, greyVisible, onLeftReturn };
   });
 
-  const tawnyaCandidate = ranked
-    .filter(entry => entry.onLeftReturn && entry.greyVisible)
-    .sort((a, b) => a.centerX - b.centerX)[0] || null;
+  const leftReturnCandidates = ranked
+    .filter(entry => entry.onLeftReturn)
+    .sort((a, b) => a.centerX - b.centerX);
+
+  const tawnyaCandidate =
+    leftReturnCandidates.find(entry => entry.greyVisible) ||
+    leftReturnCandidates[0] ||
+    null;
 
   ranked.forEach(entry => {
     const { heart, rect } = entry;
@@ -2509,6 +2514,8 @@ function revealTawnyaFromGreyHeart(heart, direction = "from-left") {
 
   heart.classList.add("c17-heart-becoming-tawnya", direction);
   document.body.appendChild(tawnya);
+  tawnya.style.setProperty("pointer-events", "none", "important");
+  tawnya.style.setProperty("mix-blend-mode", "normal", "important");
 
   requestAnimationFrame(() => {
     requestAnimationFrame(() => {
@@ -2522,6 +2529,7 @@ function revealTawnyaFromGreyHeart(heart, direction = "from-left") {
       heart.style.setProperty("visibility", "hidden", "important");
     }
     tawnya.classList.add("tawnya-complete");
+    tawnya.style.setProperty("pointer-events", "auto", "important");
     tawnya.disabled = false;
   }, OBJECT_FREEZE_MS + 120);
 
