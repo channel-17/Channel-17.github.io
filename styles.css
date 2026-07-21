@@ -10962,3 +10962,104 @@ html.frost-dead-world .profile {
   visibility: visible !important;
   clip-path: none !important;
 }
+
+
+/* =========================================================
+   BRICK 134 — CURRENT-FILE FROZEN SCREEN LOCK
+   Existing repo artwork only. No asset conversion or redesign.
+========================================================= */
+
+/* Every captured emoji remains visible forever once the world stops. */
+.c17-frost-actor-snapshot,
+.c17-frost-social-snapshot,
+.c17-frost-social-snapshot.c17-social-frozen {
+  opacity: 1 !important;
+  visibility: visible !important;
+  display: block !important;
+  animation: none !important;
+  transition: none !important;
+  mix-blend-mode: normal !important;
+}
+
+.c17-frost-social-snapshot {
+  z-index: 2147483600 !important;
+  color: initial !important;
+  font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif !important;
+  font-size: 28px !important;
+  line-height: 1 !important;
+  background: transparent !important;
+  border: 0 !important;
+  filter: none !important;
+}
+
+/* The object changes only after the moving frost reaches its exact position. */
+.c17-frost-social-snapshot:not(.c17-social-frozen) {
+  text-shadow: 0 0 8px rgba(0,0,0,.72) !important;
+}
+
+.c17-frost-social-snapshot.c17-social-frozen {
+  filter:
+    brightness(1.08)
+    saturate(.92)
+    contrast(1.05)
+    drop-shadow(0 0 6px rgba(224,249,255,.92))
+    drop-shadow(0 0 14px rgba(72,155,190,.62)) !important;
+}
+
+/* Existing .frozen PNG replacements remain unaltered. */
+.c17-frozen-social-asset {
+  display: block !important;
+  width: 52px !important;
+  height: 52px !important;
+  max-width: none !important;
+  object-fit: contain !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  background: transparent !important;
+  filter: none !important;
+}
+
+/* Gray heart and Tawnya are always above the frozen-screen material. */
+.c17-frost-story-heart {
+  z-index: 2147483620 !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  display: block !important;
+  animation: none !important;
+  transition: none !important;
+  mix-blend-mode: normal !important;
+}
+
+.c17-tawnya-reveal {
+  position: fixed !important;
+  z-index: 2147483647 !important;
+  width: 96px !important;
+  height: 96px !important;
+  display: grid !important;
+  place-items: center !important;
+  overflow: hidden !important;
+  border-radius: 50% !important;
+  clip-path: none !important;
+  background: transparent !important;
+  mix-blend-mode: normal !important;
+  pointer-events: none !important;
+}
+
+.c17-tawnya-reveal img {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  display: block !important;
+  object-fit: cover !important;
+  object-position: center !important;
+  border-radius: 50% !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  background: transparent !important;
+  filter: none !important;
+}
+
+.c17-tawnya-reveal.tawnya-complete {
+  pointer-events: auto !important;
+}
