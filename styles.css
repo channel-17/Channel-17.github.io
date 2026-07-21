@@ -10344,12 +10344,191 @@ html.frost-dead-world .c17-tawnya-reveal {
   pointer-events: auto;
 }
 
-VERIFIED:
-- Built directly against uploaded styles.css 21.txt.
-- Opening and closing CSS brace counts match.
-- Live/original image and frozen image animate together instead of popping.
-- The old checkerboard/pixel-confetti front is replaced by an irregular narrow freeze band.
-- The original image is progressively deleted behind the band.
-- The frozen image is progressively revealed behind the same band.
-- Freeze-swap animations are forced to run while the rest of the world remains paused.
-- Tawnya uses the same directional reveal language.
+
+/* =========================================================
+   BUILD 124 — LAKE / FROZEN OBJECTS / TAWNYA REVEAL LOCK
+========================================================= */
+.c17-frost-overlay {
+  z-index: 0 !important;
+  background: #000 !important;
+}
+
+.c17-frost-canvas {
+  opacity: 0;
+  filter: saturate(.72) contrast(1.22) brightness(.72) !important;
+}
+
+.c17-frost-overlay.frost-grow .c17-frost-canvas,
+.c17-frost-overlay.frost-complete .c17-frost-canvas {
+  opacity: 1;
+}
+
+html.frost-conquering .screen,
+html.frost-dead-world .screen {
+  background: transparent !important;
+}
+
+.engage.c17-social-frozen {
+  animation-play-state: paused !important;
+  opacity: 1 !important;
+  filter:
+    saturate(.38)
+    brightness(1.18)
+    contrast(1.12)
+    drop-shadow(0 0 5px rgba(164,224,237,.48)) !important;
+}
+
+.c17-frozen-social-asset {
+  display: block;
+  width: 34px;
+  height: 34px;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+.c17-frozen-heart-hold {
+  opacity: 1 !important;
+  animation-play-state: paused !important;
+  filter:
+    saturate(.34)
+    brightness(1.08)
+    contrast(1.18)
+    drop-shadow(0 0 6px rgba(164,224,237,.48)) !important;
+}
+
+.c17-heart-becoming-tawnya {
+  animation-play-state: paused !important;
+  filter: saturate(.18) brightness(.82) !important;
+}
+
+.c17-tawnya-reveal {
+  z-index: 10030 !important;
+  width: clamp(62px, 15vw, 88px) !important;
+  border: 2px solid rgba(207,242,250,.88) !important;
+  box-shadow:
+    0 0 0 1px rgba(37,111,149,.72),
+    0 0 13px rgba(135,217,235,.54),
+    0 0 30px rgba(37,111,149,.28) !important;
+}
+
+.c17-tawnya-reveal.tawnya-complete {
+  cursor: pointer;
+  pointer-events: auto !important;
+}
+
+.c17-tawnya-profile-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483646;
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  background: rgba(0, 8, 18, .74);
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px);
+  transition: opacity .2s ease, visibility .2s ease;
+}
+
+.c17-tawnya-profile-overlay.open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.c17-tawnya-profile-card {
+  position: relative;
+  width: min(88vw, 348px);
+  max-height: 82svh;
+  overflow-y: auto;
+  padding: 22px;
+  border: 1px solid rgba(218,247,252,.72);
+  border-radius: 28px;
+  color: #effcff;
+  background:
+    radial-gradient(circle at 18% 8%, rgba(227,251,255,.20), transparent 25%),
+    linear-gradient(180deg, rgba(47,132,178,.98), rgba(9,43,82,.99));
+  box-shadow:
+    0 24px 80px rgba(0,0,0,.78),
+    inset 0 1px 0 rgba(255,255,255,.24),
+    0 0 34px rgba(91,184,211,.22);
+  font-family: Arial, sans-serif;
+  text-align: center;
+}
+
+.c17-tawnya-profile-close {
+  position: absolute;
+  right: 13px;
+  top: 12px;
+  width: 32px;
+  height: 32px;
+  border: 1px solid rgba(255,255,255,.42);
+  border-radius: 50%;
+  color: #fff;
+  background: rgba(0,22,52,.28);
+  font-size: 21px;
+}
+
+.c17-tawnya-file-label {
+  margin-right: 36px;
+  color: rgba(225,249,252,.72);
+  font-size: .58rem;
+  font-weight: 900;
+  letter-spacing: 1.6px;
+  text-align: left;
+}
+
+.c17-tawnya-profile-image {
+  display: block;
+  width: 142px;
+  height: 142px;
+  margin: 18px auto 12px;
+  border: 4px solid rgba(231,250,253,.88);
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 12px 28px rgba(0,18,49,.42), 0 0 0 8px rgba(255,255,255,.08);
+}
+
+.c17-tawnya-profile-card h2 {
+  margin: 6px 0 5px;
+  font-size: 1.55rem;
+  letter-spacing: .5px;
+}
+
+.c17-tawnya-status {
+  margin: 0 auto 14px;
+  color: rgba(239,252,255,.82);
+  font-size: .78rem;
+  line-height: 1.35;
+}
+
+.c17-tawnya-status strong { color: #fff; }
+
+.c17-tawnya-profile-block {
+  margin-top: 10px;
+  padding: 13px;
+  border: 1px solid rgba(255,255,255,.24);
+  border-radius: 17px;
+  background: rgba(0,28,72,.25);
+  text-align: left;
+}
+
+.c17-tawnya-profile-block span {
+  display: block;
+  margin-bottom: 8px;
+  color: rgba(226,249,252,.66);
+  font-size: .56rem;
+  font-weight: 900;
+  letter-spacing: 1.2px;
+}
+
+.c17-tawnya-profile-block b,
+.c17-tawnya-profile-block p {
+  display: block;
+  margin-top: 6px;
+  color: #fff;
+  font-size: .78rem;
+  line-height: 1.35;
+}
