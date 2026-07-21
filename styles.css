@@ -10840,3 +10840,125 @@ html.frost-dead-world .profile {
 .c17-tawnya-reveal.tawnya-complete {
   pointer-events: auto !important;
 }
+
+
+/* =========================================================
+   BRICK 131 — FROZEN ASSETS ABOVE FROST + TAWNYA HARD LOCK
+   No heart route, timing, or frost-shape changes.
+========================================================= */
+
+.c17-frost-overlay {
+  z-index: 0 !important;
+  pointer-events: none !important;
+}
+
+.c17-frost-canvas {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 0 !important;
+}
+
+.c17-frost-actor-snapshot,
+.c17-frost-social-snapshot,
+.c17-frost-story-heart {
+  z-index: 2147483600 !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  mix-blend-mode: normal !important;
+  filter: none !important;
+  isolation: isolate !important;
+}
+
+.c17-frost-social-snapshot {
+  min-width: 36px !important;
+  min-height: 36px !important;
+  display: grid !important;
+  place-items: center !important;
+  font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif !important;
+  font-size: 28px !important;
+  line-height: 1 !important;
+  color: initial !important;
+  text-shadow:
+    0 0 3px rgba(238, 253, 255, .98),
+    0 0 10px rgba(118, 205, 228, .82) !important;
+}
+
+.c17-frozen-social-asset {
+  display: block !important;
+  width: 48px !important;
+  height: 48px !important;
+  max-width: none !important;
+  object-fit: contain !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  filter:
+    brightness(1.14)
+    saturate(1.02)
+    contrast(1.04)
+    drop-shadow(0 0 7px rgba(220, 249, 255, .94)) !important;
+}
+
+.c17-frost-story-heart.c17-frozen-heart-hold,
+.c17-frozen-story-heart-asset {
+  z-index: 2147483610 !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+.c17-frozen-story-heart-asset {
+  width: 72px !important;
+  height: 72px !important;
+  max-width: none !important;
+  object-fit: contain !important;
+  filter: drop-shadow(0 0 8px rgba(220, 249, 255, .96)) !important;
+}
+
+.c17-tawnya-reveal {
+  position: fixed !important;
+  z-index: 2147483647 !important;
+  display: grid !important;
+  place-items: center !important;
+  width: 88px !important;
+  height: 88px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 2px solid rgba(238, 253, 255, .98) !important;
+  border-radius: 50% !important;
+  overflow: hidden !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  clip-path: none !important;
+  transform: translate(-50%, -50%) !important;
+  background: transparent !important;
+  filter: none !important;
+  mix-blend-mode: normal !important;
+  isolation: isolate !important;
+  box-shadow:
+    0 0 0 2px rgba(67, 145, 181, .92),
+    0 0 18px rgba(213, 247, 253, .96),
+    0 0 42px rgba(42, 119, 158, .72) !important;
+}
+
+.c17-tawnya-reveal img {
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 2 !important;
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  max-width: none !important;
+  border-radius: 50% !important;
+  object-fit: cover !important;
+  object-position: center center !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  filter: none !important;
+  transform: none !important;
+}
+
+.c17-tawnya-reveal.tawnya-rewriting,
+.c17-tawnya-reveal.tawnya-complete {
+  opacity: 1 !important;
+  visibility: visible !important;
+  clip-path: none !important;
+}
