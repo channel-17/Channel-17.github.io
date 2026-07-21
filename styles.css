@@ -10601,3 +10601,98 @@ html.frost-dead-world .profile {
 .c17-tawnya-reveal {
   z-index: 10045 !important;
 }
+
+
+/* =========================================================
+   BRICK 128 — FROZEN WALL + VISIBLE EMOJI / TAWNYA OUTCOME
+   No heart route or timing changes. Visual/readability correction only.
+========================================================= */
+.c17-frost-canvas {
+  filter: saturate(.92) contrast(1.08) brightness(1.02) !important;
+}
+
+.c17-frost-social-snapshot {
+  display: grid !important;
+  place-items: center !important;
+  min-width: 34px !important;
+  min-height: 34px !important;
+  color: inherit !important;
+  opacity: 1 !important;
+  filter: none !important;
+  text-shadow: 0 1px 1px rgba(0,0,0,.35), 0 0 7px rgba(225,250,255,.68) !important;
+}
+
+.c17-frost-social-snapshot.c17-social-frozen::before {
+  content: "";
+  position: absolute;
+  inset: -6px;
+  z-index: -1;
+  border: 1px solid rgba(229,252,255,.82);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 32% 24%, rgba(255,255,255,.76), transparent 20%),
+    radial-gradient(circle at 60% 70%, rgba(173,231,243,.34), transparent 58%),
+    linear-gradient(145deg, rgba(196,239,247,.78), rgba(56,128,158,.82));
+  box-shadow:
+    inset 0 0 10px rgba(255,255,255,.48),
+    inset 0 -7px 12px rgba(15,65,92,.28),
+    0 0 10px rgba(158,226,239,.58);
+}
+
+.c17-frost-social-snapshot.c17-social-frozen {
+  color: inherit !important;
+  opacity: 1 !important;
+  filter: saturate(1.08) brightness(1.06) contrast(1.02) !important;
+}
+
+.c17-frozen-social-asset {
+  width: 32px !important;
+  height: 32px !important;
+  object-fit: contain !important;
+  filter: brightness(1.18) saturate(1.04) contrast(.96) drop-shadow(0 0 4px rgba(226,250,255,.72)) !important;
+}
+
+.c17-frost-story-heart.c17-frozen-heart-hold {
+  display: grid !important;
+  place-items: center !important;
+  opacity: 1 !important;
+  filter: none !important;
+}
+
+.c17-frost-story-heart.c17-frozen-heart-hold::before {
+  content: "";
+  position: absolute;
+  inset: -7px;
+  z-index: -1;
+  border: 1px solid rgba(229,252,255,.86);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 30% 22%, rgba(255,255,255,.78), transparent 19%),
+    linear-gradient(145deg, rgba(197,239,247,.80), rgba(56,128,158,.84));
+  box-shadow: inset 0 0 11px rgba(255,255,255,.48), 0 0 11px rgba(158,226,239,.62);
+}
+
+.c17-frost-story-heart.c17-frozen-red-heart .carl-heart-red {
+  opacity: 1 !important;
+  visibility: visible !important;
+  filter: saturate(1.08) brightness(1.07) drop-shadow(0 0 5px rgba(226,250,255,.68)) !important;
+}
+
+.c17-tawnya-reveal {
+  display: grid !important;
+  place-items: center !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  background: linear-gradient(145deg, rgba(198,239,247,.92), rgba(42,111,146,.94)) !important;
+  overflow: hidden !important;
+}
+
+.c17-tawnya-reveal img {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  filter: brightness(1.08) saturate(1.02) contrast(1.02) !important;
+}
