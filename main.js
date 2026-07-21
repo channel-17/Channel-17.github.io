@@ -2542,34 +2542,50 @@ function revealTawnyaFromGreyHeart(heart, direction = "from-left") {
     PNG only when the frost front reaches it. Both objects remain aligned while
     the heart fractures away and the profile resolves underneath it.
   */
-  tawnya.animate(
+  /*
+    Tawnya stays small. Her image begins at the visible gray-heart footprint,
+    then resolves inside the final circular profile while the heart breaks away.
+    Animate the image itself so the fixed centering rule cannot cancel the morph.
+  */
+  image.animate(
     [
       {
         opacity: 0,
-        transform: "translate(-50%, -50%) scale(.72) rotate(-2deg)",
-        filter: "blur(8px) brightness(.72) saturate(.45)"
+        transform: "scale(.48) rotate(-3deg)",
+        clipPath: "polygon(50% 0,61% 17%,82% 18%,100% 43%,88% 70%,50% 100%,12% 70%,0 43%,18% 18%,39% 17%)",
+        filter: "blur(7px) brightness(.68) saturate(.42)"
       },
       {
-        opacity: .34,
-        transform: "translate(-50%, -50%) scale(.84) rotate(1deg)",
-        filter: "blur(4px) brightness(.88) saturate(.7)",
-        offset: .34
+        opacity: .18,
+        transform: "scale(.56) rotate(2deg)",
+        clipPath: "polygon(47% 0,63% 13%,84% 21%,100% 45%,86% 72%,52% 100%,15% 75%,0 44%,17% 20%,38% 15%)",
+        filter: "blur(5px) brightness(.78) saturate(.55)",
+        offset: .24
       },
       {
-        opacity: .78,
-        transform: "translate(-50%, -50%) scale(.96) rotate(-.5deg)",
-        filter: "blur(1.5px) brightness(1.02) saturate(.92)",
-        offset: .72
+        opacity: .52,
+        transform: "scale(.72) rotate(-1deg)",
+        clipPath: "circle(38% at 50% 50%)",
+        filter: "blur(2.6px) brightness(.92) saturate(.76)",
+        offset: .54
+      },
+      {
+        opacity: .84,
+        transform: "scale(.91) rotate(.4deg)",
+        clipPath: "circle(47% at 50% 50%)",
+        filter: "blur(.8px) brightness(1.02) saturate(.92)",
+        offset: .82
       },
       {
         opacity: 1,
-        transform: "translate(-50%, -50%) scale(1) rotate(0deg)",
+        transform: "scale(1) rotate(0deg)",
+        clipPath: "circle(50% at 50% 50%)",
         filter: "none"
       }
     ],
     {
       duration: TAWNYA_TRANSFORM_MS,
-      easing: "cubic-bezier(.22,.7,.18,1)",
+      easing: "cubic-bezier(.2,.72,.16,1)",
       fill: "forwards"
     }
   );
@@ -2578,30 +2594,41 @@ function revealTawnyaFromGreyHeart(heart, direction = "from-left") {
     [
       {
         opacity: 1,
-        transform: "scale(1)",
+        transform: "scale(1) rotate(0deg)",
+        clipPath: "inset(0 0 0 0)",
         filter: "none"
       },
       {
-        opacity: .84,
-        transform: "scale(1.08) skewX(-2deg)",
-        filter: "brightness(1.12) contrast(1.12)",
-        offset: .28
+        opacity: .94,
+        transform: "scale(1.04) rotate(-2deg)",
+        clipPath: "polygon(0 0,100% 0,100% 100%,0 100%)",
+        filter: "brightness(1.16) contrast(1.16)",
+        offset: .22
       },
       {
-        opacity: .38,
-        transform: "scale(.92) skewX(3deg)",
-        filter: "blur(1.4px) brightness(.92)",
-        offset: .72
+        opacity: .72,
+        transform: "scale(.98) rotate(2deg)",
+        clipPath: "polygon(0 0,47% 0,43% 24%,55% 39%,46% 57%,54% 72%,48% 100%,0 100%)",
+        filter: "brightness(1.04) contrast(1.2)",
+        offset: .48
+      },
+      {
+        opacity: .34,
+        transform: "scale(.86) rotate(-3deg)",
+        clipPath: "polygon(0 8%,38% 0,43% 25%,35% 42%,42% 61%,31% 77%,34% 100%,0 92%)",
+        filter: "blur(1.5px) brightness(.86)",
+        offset: .76
       },
       {
         opacity: 0,
-        transform: "scale(.68)",
-        filter: "blur(4px) brightness(.65)"
+        transform: "scale(.58) rotate(4deg)",
+        clipPath: "polygon(0 22%,23% 8%,28% 31%,18% 48%,25% 67%,12% 82%,14% 100%,0 88%)",
+        filter: "blur(4px) brightness(.58)"
       }
     ],
     {
       duration: TAWNYA_TRANSFORM_MS,
-      easing: "cubic-bezier(.22,.7,.18,1)",
+      easing: "cubic-bezier(.2,.72,.16,1)",
       fill: "forwards"
     }
   );
