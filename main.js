@@ -1795,9 +1795,10 @@ let frostPausedAnimations = [];
 let frostSwapTimers = [];
 
 const FROST_HOLD_MS = 7000;
-const FROST_GROW_MS = 19000;
+const FROST_GROW_MS = 23000;
 const OBJECT_FREEZE_MS = 1880;
-const TAWNYA_ASSET = "Tawnya.frozen.jpeg";
+const TAWNYA_TRANSFORM_MS = 3200;
+const TAWNYA_ASSET = "Tawnya.frozen.PNG";
 const FROZEN_STORY_HEART_ASSET = "LMT.frozen.PNG";
 
 const FROZEN_ASSET_MAP = new Map([
@@ -1812,7 +1813,7 @@ const FROZEN_ASSET_MAP = new Map([
 ]);
 
 const FROZEN_SOCIAL_ASSET_MAP = new Map([
-  ["🔥", "Asset.flame.frozen.transparent.PNG"],
+  ["🔥", "Asset.flame.frozen.PNG"],
   ["👎", "Asset.thumbsdown.frozen.PNG"]
 ]);
 
@@ -2517,7 +2518,7 @@ function revealTawnyaFromGreyHeart(heart, direction = "from-left") {
   tawnya.style.setProperty("display", "grid", "important");
   tawnya.style.setProperty("opacity", "1", "important");
   tawnya.style.setProperty("visibility", "visible", "important");
-  tawnya.style.setProperty("--c17-object-freeze-ms", `${OBJECT_FREEZE_MS}ms`);
+  tawnya.style.setProperty("--c17-object-freeze-ms", `${TAWNYA_TRANSFORM_MS}ms`);
 
   const image = document.createElement("img");
   image.src = TAWNYA_ASSET;
@@ -2528,10 +2529,6 @@ function revealTawnyaFromGreyHeart(heart, direction = "from-left") {
   image.style.setProperty("visibility", "visible", "important");
   tawnya.appendChild(image);
 
-  image.addEventListener("error", () => {
-    image.src = "Tawnya.frozen.jpeg";
-  }, { once: true });
-
   tawnya.disabled = true;
   tawnyaRevealNode = tawnya;
 
@@ -2539,6 +2536,75 @@ function revealTawnyaFromGreyHeart(heart, direction = "from-left") {
   document.body.appendChild(tawnya);
   tawnya.style.setProperty("pointer-events", "none", "important");
   tawnya.style.setProperty("mix-blend-mode", "normal", "important");
+
+  /*
+    The stopped gray heart rewrites in place into the existing frozen Tawnya
+    PNG only when the frost front reaches it. Both objects remain aligned while
+    the heart fractures away and the profile resolves underneath it.
+  */
+  tawnya.animate(
+    [
+      {
+        opacity: 0,
+        transform: "translate(-50%, -50%) scale(.72) rotate(-2deg)",
+        filter: "blur(8px) brightness(.72) saturate(.45)"
+      },
+      {
+        opacity: .34,
+        transform: "translate(-50%, -50%) scale(.84) rotate(1deg)",
+        filter: "blur(4px) brightness(.88) saturate(.7)",
+        offset: .34
+      },
+      {
+        opacity: .78,
+        transform: "translate(-50%, -50%) scale(.96) rotate(-.5deg)",
+        filter: "blur(1.5px) brightness(1.02) saturate(.92)",
+        offset: .72
+      },
+      {
+        opacity: 1,
+        transform: "translate(-50%, -50%) scale(1) rotate(0deg)",
+        filter: "none"
+      }
+    ],
+    {
+      duration: TAWNYA_TRANSFORM_MS,
+      easing: "cubic-bezier(.22,.7,.18,1)",
+      fill: "forwards"
+    }
+  );
+
+  heart.animate(
+    [
+      {
+        opacity: 1,
+        transform: "scale(1)",
+        filter: "none"
+      },
+      {
+        opacity: .84,
+        transform: "scale(1.08) skewX(-2deg)",
+        filter: "brightness(1.12) contrast(1.12)",
+        offset: .28
+      },
+      {
+        opacity: .38,
+        transform: "scale(.92) skewX(3deg)",
+        filter: "blur(1.4px) brightness(.92)",
+        offset: .72
+      },
+      {
+        opacity: 0,
+        transform: "scale(.68)",
+        filter: "blur(4px) brightness(.65)"
+      }
+    ],
+    {
+      duration: TAWNYA_TRANSFORM_MS,
+      easing: "cubic-bezier(.22,.7,.18,1)",
+      fill: "forwards"
+    }
+  );
 
   requestAnimationFrame(() => {
     requestAnimationFrame(() => {
@@ -2554,7 +2620,7 @@ function revealTawnyaFromGreyHeart(heart, direction = "from-left") {
     tawnya.classList.add("tawnya-complete");
     tawnya.style.setProperty("pointer-events", "auto", "important");
     tawnya.disabled = false;
-  }, OBJECT_FREEZE_MS + 120);
+  }, TAWNYA_TRANSFORM_MS + 120);
 
   frostSwapTimers.push(timer);
 
