@@ -11340,3 +11340,125 @@ html.frost-dead-world .profile {
   90% { opacity: .16; transform: translate(-50%,-50%) scale(7.2); }
   100% { opacity: 0; transform: translate(-50%,-50%) scale(8); }
 }
+
+
+/* =========================================================
+   BRICK 139 — LATE CONTACT / SOFT FREEZE / FRANK HOLD
+========================================================= */
+
+/* Profile freeze begins only after the frost has clearly passed underneath. */
+.c17-frost-profile-snapshot {
+  animation: none !important;
+  transition: none !important;
+}
+
+/* Kill the old saw-tooth / jagged directional front. */
+.c17-frost-profile-snapshot .c17-freeze-pixel-front {
+  position: absolute !important;
+  inset: -6% !important;
+  width: auto !important;
+  height: auto !important;
+  border-radius: 50% !important;
+  transform: none !important;
+  background:
+    radial-gradient(circle at 50% 50%,
+      rgba(231,250,255,.88) 0 7%,
+      rgba(166,220,239,.68) 18%,
+      rgba(74,151,184,.46) 36%,
+      rgba(25,87,122,.24) 54%,
+      transparent 72%) !important;
+  box-shadow: none !important;
+  filter: blur(1.8px) !important;
+  clip-path: circle(0% at 50% 50%) !important;
+  animation: c17SoftProfileFreeze var(--c17-object-freeze-ms, 3900ms)
+    cubic-bezier(.20,.48,.14,1) forwards !important;
+}
+
+@keyframes c17SoftProfileFreeze {
+  0%, 10% {
+    opacity: 0;
+    clip-path: circle(0% at 50% 50%);
+    filter: blur(4px);
+  }
+  24% {
+    opacity: .28;
+    clip-path: circle(12% at 50% 50%);
+    filter: blur(3px);
+  }
+  46% {
+    opacity: .48;
+    clip-path: circle(27% at 50% 50%);
+    filter: blur(2.4px);
+  }
+  70% {
+    opacity: .66;
+    clip-path: circle(42% at 50% 50%);
+    filter: blur(1.8px);
+  }
+  100% {
+    opacity: .78;
+    clip-path: circle(72% at 50% 50%);
+    filter: blur(1px);
+  }
+}
+
+.c17-frost-profile-snapshot.c17-symbol-profile-frozen {
+  box-shadow:
+    0 0 0 1px rgba(226,245,252,.58),
+    0 0 8px rgba(93,160,189,.18) !important;
+  filter:
+    brightness(.96)
+    saturate(.78)
+    contrast(1.08) !important;
+}
+
+/* Frank remains on top of Homie/red-X territory for the entire frozen screen. */
+.c17-frost-frank-snapshot {
+  z-index: 2147483638 !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: none !important;
+}
+html.frost-conquering .turtle,
+html.frost-dead-world .turtle,
+html.frost-conquering #percent,
+html.frost-dead-world #percent {
+  visibility: hidden !important;
+}
+
+/* Tawnya is a quiet discovery, not a glowing call-to-action. */
+.c17-tawnya-reveal,
+.c17-tawnya-reveal.tawnya-rewriting,
+.c17-tawnya-reveal.tawnya-complete {
+  width: 64px !important;
+  height: 64px !important;
+  min-width: 64px !important;
+  min-height: 64px !important;
+  max-width: 64px !important;
+  max-height: 64px !important;
+  border: 1px solid rgba(220,242,249,.46) !important;
+  box-shadow: none !important;
+  filter: none !important;
+  background: transparent !important;
+}
+
+.c17-tawnya-reveal img {
+  box-shadow: none !important;
+  filter: none !important;
+}
+
+.c17-tawnya-reveal::before,
+.c17-tawnya-reveal::after,
+.c17-tawnya-creep {
+  box-shadow: none !important;
+  filter: none !important;
+}
+
+.c17-tawnya-creep {
+  opacity: 0 !important;
+  animation: none !important;
+}
+
+.c17-tawnya-reveal.tawnya-complete {
+  cursor: default !important;
+}
