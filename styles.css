@@ -11211,3 +11211,62 @@ html.frost-dead-world .profile {
   transition: none !important;
   transform: none !important;
 }
+
+
+/* =========================================================
+   BRICK 137 — POST-PASS FREEZE + TAWNYA CENTER REWRITE
+========================================================= */
+
+/* Frozen flame: emoji-sized, transparent runtime matte removal, no white tile. */
+.c17-frozen-social-asset.c17-frozen-flame-asset {
+  width: 30px !important;
+  height: 30px !important;
+  max-width: 30px !important;
+  max-height: 30px !important;
+  object-fit: contain !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  filter:
+    drop-shadow(0 0 5px rgba(226,249,255,.88))
+    drop-shadow(0 0 12px rgba(55,139,183,.48)) !important;
+}
+
+/* Tawnya matches the 72px profile family and stays centered on the gray heart. */
+.c17-tawnya-reveal,
+.c17-tawnya-reveal.tawnya-rewriting,
+.c17-tawnya-reveal.tawnya-complete {
+  width: 72px !important;
+  height: 72px !important;
+  min-width: 72px !important;
+  min-height: 72px !important;
+  max-width: 72px !important;
+  max-height: 72px !important;
+  border-radius: 50% !important;
+  transform-origin: 50% 50% !important;
+  overflow: hidden !important;
+}
+
+.c17-tawnya-reveal img {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center !important;
+  border-radius: 50% !important;
+  transform-origin: 50% 50% !important;
+}
+
+/* JS drives the center-out rewrite; disable old directional clip animations. */
+.c17-tawnya-reveal.tawnya-rewriting,
+.c17-tawnya-reveal.tawnya-complete {
+  animation: none !important;
+}
+
+/* Keep objects visually normal during the deliberate beat after frost passes beneath. */
+.c17-frost-social-snapshot:not(.c17-social-frozen),
+.c17-frost-profile-snapshot:not(.c17-symbol-profile-freezing):not(.c17-symbol-profile-frozen),
+.c17-frost-actor-snapshot:not(.c17-object-freezing):not(.c17-object-frozen) {
+  filter: none !important;
+}
