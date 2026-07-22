@@ -11270,3 +11270,73 @@ html.frost-dead-world .profile {
 .c17-frost-actor-snapshot:not(.c17-object-freezing):not(.c17-object-frozen) {
   filter: none !important;
 }
+
+
+/* =========================================================
+   BRICK 138 — SLOW PROFILE DEATH / CARL CLEAR / TAWNYA CREEP
+========================================================= */
+
+/* Carl is copied above the loader pile at frost start so no avatar can bury him. */
+.c17-frost-carl-snapshot {
+  z-index: 2147483632 !important;
+  overflow: hidden !important;
+  border-radius: 50% !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: none !important;
+  isolation: isolate !important;
+  box-shadow:
+    0 0 0 2px rgba(226,247,255,.90),
+    0 0 18px rgba(187,232,248,.72),
+    0 0 34px rgba(35,104,143,.52) !important;
+}
+.c17-frost-carl-snapshot img {
+  width: 100% !important;
+  height: 100% !important;
+  display: block !important;
+  object-fit: cover !important;
+  border-radius: 50% !important;
+}
+
+/* Profiles take longer to die after the frost has visibly passed beneath them. */
+.profile.c17-object-freezing .c17-frozen-swap-layer,
+.c17-frost-profile-snapshot.c17-symbol-profile-freezing .c17-freeze-pixel-front {
+  animation-duration: var(--c17-object-freeze-ms, 3200ms) !important;
+  animation-timing-function: cubic-bezier(.14,.52,.12,1) !important;
+}
+
+/* Tawnya grows from the heart center in an uneven, invasive blue bloom. */
+.c17-tawnya-reveal {
+  isolation: isolate !important;
+}
+.c17-tawnya-reveal img {
+  z-index: 2 !important;
+  will-change: clip-path, transform, opacity, filter !important;
+}
+.c17-tawnya-creep {
+  position: absolute !important;
+  inset: 50% auto auto 50% !important;
+  z-index: 3 !important;
+  width: 10px !important;
+  height: 10px !important;
+  border-radius: 50% !important;
+  pointer-events: none !important;
+  transform: translate(-50%,-50%) scale(.12) !important;
+  opacity: 0 !important;
+  background:
+    radial-gradient(circle at 42% 42%, rgba(231,252,255,.98) 0 8%, rgba(116,191,224,.86) 20%, rgba(35,111,158,.56) 44%, transparent 70%) !important;
+  box-shadow:
+    0 0 6px rgba(226,250,255,.92),
+    0 0 16px rgba(89,176,214,.76),
+    0 0 30px rgba(20,91,138,.54) !important;
+  animation: c17TawnyaCancerCreep var(--c17-object-freeze-ms, 5600ms) cubic-bezier(.12,.55,.10,1) forwards !important;
+}
+@keyframes c17TawnyaCancerCreep {
+  0%, 8% { opacity: 0; transform: translate(-50%,-50%) scale(.10); }
+  18% { opacity: .92; transform: translate(-53%,-47%) scale(.65); border-radius: 58% 42% 61% 39%; }
+  34% { opacity: .84; transform: translate(-47%,-54%) scale(1.8); border-radius: 36% 64% 43% 57%; }
+  52% { opacity: .72; transform: translate(-55%,-45%) scale(3.4); border-radius: 63% 37% 54% 46%; }
+  72% { opacity: .42; transform: translate(-48%,-52%) scale(5.8); border-radius: 44% 56% 38% 62%; }
+  90% { opacity: .16; transform: translate(-50%,-50%) scale(7.2); }
+  100% { opacity: 0; transform: translate(-50%,-50%) scale(8); }
+}
