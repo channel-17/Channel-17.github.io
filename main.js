@@ -1770,8 +1770,19 @@ function playBlueFrankSequence() {
   }, 3300);
 
   setTimeout(() => {
-    if (lead && lead.parentNode) lead.classList.add("hive-dissolve");
-    activeFrankStack.forEach(node => { if (node && node.parentNode && node !== lead) node.remove(); });
+    /*
+      Frank ends dead still. No bird-flutter / peel-away / pixel-flight motion.
+      The final frame simply holds before cleanup.
+    */
+    if (lead && lead.parentNode) {
+      lead.classList.remove("hive-dissolve", "pixel-deteriorate");
+      lead.classList.add("frank-sequence-complete");
+    }
+
+    activeFrankStack.forEach(node => {
+      if (node && node.parentNode && node !== lead) node.remove();
+    });
+
     turtle.classList.remove("covered-by-frank");
   }, 6100);
 
@@ -1807,8 +1818,10 @@ const FROZEN_ASSET_MAP = new Map([
   ["asset3.png", "Asset3.frozen.PNG"],
   ["asset4.png", "Asset4.frozen.PNG"],
   ["asset5.png", "Asset5.frozen.PNG"],
+  ["asset6.png", "Asset6.frozen.PNG"],
   ["asset7.png", "Asset7.frozen.PNG"],
   ["asset8.png", "Asset8.frozen.PNG"],
+  ["asset9.png", "Asset9.frozen.PNG"],
   ["assetcarl.png", "Carl.frozen.PNG"]
 ]);
 
@@ -1845,7 +1858,8 @@ function snapshotFrostActors() {
 
   const actors = [
     ...document.querySelectorAll(".engage.social-smoke"),
-    ...document.querySelectorAll(".carl-trigger-heart")
+    ...document.querySelectorAll(".carl-trigger-heart"),
+    ...document.querySelectorAll(".profile.symbol-touch, .profile.hive-reveal")
   ];
 
   actors.forEach((actor, index) => {
@@ -1894,6 +1908,9 @@ function snapshotFrostActors() {
       snapshot.dataset.frostRedVisible = String(Boolean(
         redStyle && redStyle.visibility !== "hidden" && Number.parseFloat(redStyle.opacity || "0") > 0.03
       ));
+    } else if (actor.classList.contains("profile")) {
+      snapshot.classList.add("c17-frost-profile-snapshot");
+      snapshot.dataset.frostSymbolProfile = "true";
     } else {
       snapshot.classList.add("c17-frost-social-snapshot");
     }
@@ -2194,8 +2211,51 @@ function scheduleFrozenSocialSwaps(originX, originY, duration) {
     const timer = setTimeout(() => {
       if (!item.isConnected || !frostLocked) return;
 
-      const frozenAsset = FROZEN_SOCIAL_ASSET_MAP.get(item.textContent.trim());
-      if (frozenAsset) {
+      const originalSymbol = item.textContent.trim();
+      const frozenAsset = FROZEN_SOCIAL_ASSET_MAP.get(originalSymbol);
+
+      if (item.classList.contains("social-face")) {
+        /*
+          Cause and effect:
+          the original yellow face remains visible for a beat, then the blue
+          frozen face wraps across it from the frost-contact edge.
+        */
+        item.textContent = "";
+
+        const originalFace = document.createElement("span");
+        originalFace.className = "c17-face-original";
+        originalFace.textContent = originalSymbol;
+
+        const frozenFace = document.createElement("span");
+        frozenFace.className = `c17-face-frozen ${contact.direction}`;
+        frozenFace.textContent = "🥶";
+
+        item.style.setProperty("--c17-object-freeze-ms", `${OBJECT_FREEZE_MS}ms`);
+        item.appendChild(originalFace);
+        item.appendChild(frozenFace);
+        item.classList.add("c17-face-freezing", contact.direction);
+
+        const finishTimer = setTimeout(() => {
+          if (!item.isConnected || !frostLocked) return;
+          originalFace.remove();
+          frozenFace.classList.remove(
+            "from-left",
+            "from-right",
+            "from-top",
+            "from-bottom"
+          );
+          item.classList.remove(
+            "c17-face-freezing",
+            "from-left",
+            "from-right",
+            "from-top",
+            "from-bottom"
+          );
+          item.classList.add("c17-face-frozen-complete");
+        }, OBJECT_FREEZE_MS + 80);
+
+        frostSwapTimers.push(finishTimer);
+      } else if (frozenAsset) {
         item.textContent = "";
         const image = document.createElement("img");
         image.src = frozenAsset;
@@ -2205,6 +2265,57 @@ function scheduleFrozenSocialSwaps(originX, originY, duration) {
       }
 
       item.classList.add("c17-social-frozen");
+    }, arrival);
+
+    frostSwapTimers.push(timer);
+  });
+}
+
+function scheduleFrozenSymbolProfileLocks(originX, originY, duration) {
+  const profiles = [
+    ...document.querySelectorAll(".c17-frost-profile-snapshot")
+  ];
+
+  profiles.forEach(profile => {
+    if (!profile.isConnected || profile.dataset.frostSwapScheduled === "true") return;
+    profile.dataset.frostSwapScheduled = "true";
+
+    const rect = profile.getBoundingClientRect();
+    const contact = getObjectFreezeContact(rect, originX, originY);
+    const arrival = Math.max(
+      0,
+      Math.round(duration * frostArrivalRatio(contact.contactX, contact.contactY, originX, originY))
+    );
+
+    const timer = setTimeout(() => {
+      if (!profile.isConnected || !frostLocked) return;
+
+      profile.style.setProperty("--c17-object-freeze-ms", `${OBJECT_FREEZE_MS}ms`);
+      profile.classList.add(
+        "c17-symbol-profile-freezing",
+        contact.direction
+      );
+
+      const pixelFront = document.createElement("span");
+      pixelFront.className = `c17-freeze-pixel-front ${contact.direction}`;
+      pixelFront.setAttribute("aria-hidden", "true");
+      profile.appendChild(pixelFront);
+
+      const finishTimer = setTimeout(() => {
+        if (!profile.isConnected || !frostLocked) return;
+
+        pixelFront.remove();
+        profile.classList.remove(
+          "c17-symbol-profile-freezing",
+          "from-left",
+          "from-right",
+          "from-top",
+          "from-bottom"
+        );
+        profile.classList.add("c17-symbol-profile-frozen");
+      }, OBJECT_FREEZE_MS + 80);
+
+      frostSwapTimers.push(finishTimer);
     }, arrival);
 
     frostSwapTimers.push(timer);
@@ -2302,6 +2413,7 @@ function launchFrostTimeline() {
 
   scheduleFrozenAssetSwaps(originX, originY, FROST_GROW_MS);
   scheduleFrozenSocialSwaps(originX, originY, FROST_GROW_MS);
+  scheduleFrozenSymbolProfileLocks(originX, originY, FROST_GROW_MS);
   resolveFrozenHeartOutcome(originX, originY, FROST_GROW_MS);
   growFrostAcrossScreen(canvas);
 }
@@ -2542,50 +2654,34 @@ function revealTawnyaFromGreyHeart(heart, direction = "from-left") {
     PNG only when the frost front reaches it. Both objects remain aligned while
     the heart fractures away and the profile resolves underneath it.
   */
-  /*
-    Tawnya stays small. Her image begins at the visible gray-heart footprint,
-    then resolves inside the final circular profile while the heart breaks away.
-    Animate the image itself so the fixed centering rule cannot cancel the morph.
-  */
-  image.animate(
+  tawnya.animate(
     [
       {
         opacity: 0,
-        transform: "scale(.48) rotate(-3deg)",
-        clipPath: "polygon(50% 0,61% 17%,82% 18%,100% 43%,88% 70%,50% 100%,12% 70%,0 43%,18% 18%,39% 17%)",
-        filter: "blur(7px) brightness(.68) saturate(.42)"
+        transform: "translate(-50%, -50%) scale(.72) rotate(-2deg)",
+        filter: "blur(8px) brightness(.72) saturate(.45)"
       },
       {
-        opacity: .18,
-        transform: "scale(.56) rotate(2deg)",
-        clipPath: "polygon(47% 0,63% 13%,84% 21%,100% 45%,86% 72%,52% 100%,15% 75%,0 44%,17% 20%,38% 15%)",
-        filter: "blur(5px) brightness(.78) saturate(.55)",
-        offset: .24
+        opacity: .34,
+        transform: "translate(-50%, -50%) scale(.84) rotate(1deg)",
+        filter: "blur(4px) brightness(.88) saturate(.7)",
+        offset: .34
       },
       {
-        opacity: .52,
-        transform: "scale(.72) rotate(-1deg)",
-        clipPath: "circle(38% at 50% 50%)",
-        filter: "blur(2.6px) brightness(.92) saturate(.76)",
-        offset: .54
-      },
-      {
-        opacity: .84,
-        transform: "scale(.91) rotate(.4deg)",
-        clipPath: "circle(47% at 50% 50%)",
-        filter: "blur(.8px) brightness(1.02) saturate(.92)",
-        offset: .82
+        opacity: .78,
+        transform: "translate(-50%, -50%) scale(.96) rotate(-.5deg)",
+        filter: "blur(1.5px) brightness(1.02) saturate(.92)",
+        offset: .72
       },
       {
         opacity: 1,
-        transform: "scale(1) rotate(0deg)",
-        clipPath: "circle(50% at 50% 50%)",
+        transform: "translate(-50%, -50%) scale(1) rotate(0deg)",
         filter: "none"
       }
     ],
     {
       duration: TAWNYA_TRANSFORM_MS,
-      easing: "cubic-bezier(.2,.72,.16,1)",
+      easing: "cubic-bezier(.22,.7,.18,1)",
       fill: "forwards"
     }
   );
@@ -2594,41 +2690,30 @@ function revealTawnyaFromGreyHeart(heart, direction = "from-left") {
     [
       {
         opacity: 1,
-        transform: "scale(1) rotate(0deg)",
-        clipPath: "inset(0 0 0 0)",
+        transform: "scale(1)",
         filter: "none"
       },
       {
-        opacity: .94,
-        transform: "scale(1.04) rotate(-2deg)",
-        clipPath: "polygon(0 0,100% 0,100% 100%,0 100%)",
-        filter: "brightness(1.16) contrast(1.16)",
-        offset: .22
+        opacity: .84,
+        transform: "scale(1.08) skewX(-2deg)",
+        filter: "brightness(1.12) contrast(1.12)",
+        offset: .28
       },
       {
-        opacity: .72,
-        transform: "scale(.98) rotate(2deg)",
-        clipPath: "polygon(0 0,47% 0,43% 24%,55% 39%,46% 57%,54% 72%,48% 100%,0 100%)",
-        filter: "brightness(1.04) contrast(1.2)",
-        offset: .48
-      },
-      {
-        opacity: .34,
-        transform: "scale(.86) rotate(-3deg)",
-        clipPath: "polygon(0 8%,38% 0,43% 25%,35% 42%,42% 61%,31% 77%,34% 100%,0 92%)",
-        filter: "blur(1.5px) brightness(.86)",
-        offset: .76
+        opacity: .38,
+        transform: "scale(.92) skewX(3deg)",
+        filter: "blur(1.4px) brightness(.92)",
+        offset: .72
       },
       {
         opacity: 0,
-        transform: "scale(.58) rotate(4deg)",
-        clipPath: "polygon(0 22%,23% 8%,28% 31%,18% 48%,25% 67%,12% 82%,14% 100%,0 88%)",
-        filter: "blur(4px) brightness(.58)"
+        transform: "scale(.68)",
+        filter: "blur(4px) brightness(.65)"
       }
     ],
     {
       duration: TAWNYA_TRANSFORM_MS,
-      easing: "cubic-bezier(.2,.72,.16,1)",
+      easing: "cubic-bezier(.22,.7,.18,1)",
       fill: "forwards"
     }
   );
