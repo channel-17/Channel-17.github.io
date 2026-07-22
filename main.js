@@ -1779,15 +1779,19 @@ function playBlueFrankSequence() {
       lead.classList.add("frank-sequence-complete");
     }
 
-    activeFrankStack.forEach(node => {
-      if (node && node.parentNode && node !== lead) node.remove();
-    });
+    if (!frostHolding && !frostLocked) {
+      activeFrankStack.forEach(node => {
+        if (node && node.parentNode && node !== lead) node.remove();
+      });
 
-    turtle.classList.remove("covered-by-frank");
+      turtle.classList.remove("covered-by-frank");
+    }
   }, 6100);
 
   setTimeout(() => {
-    if (lead && lead.parentNode) lead.remove();
+    if (!frostHolding && !frostLocked && lead && lead.parentNode) {
+      lead.remove();
+    }
   }, 7600);
 }
 
@@ -1808,11 +1812,11 @@ let frostSwapTimers = [];
 const FROST_HOLD_MS = 7000;
 const FROST_GROW_MS = 23000;
 const OBJECT_FREEZE_MS = 1880;
-const PROFILE_FREEZE_MS = 3200;
-const POST_FROST_CONTACT_PAUSE_MS = 760;
-const PROFILE_CONTACT_PAUSE_MS = 980;
-const TAWNYA_CONTACT_PAUSE_MS = 720;
-const TAWNYA_TRANSFORM_MS = 5600;
+const PROFILE_FREEZE_MS = 3900;
+const POST_FROST_CONTACT_PAUSE_MS = 1180;
+const PROFILE_CONTACT_PAUSE_MS = 1850;
+const TAWNYA_CONTACT_PAUSE_MS = 1450;
+const TAWNYA_TRANSFORM_MS = 7600;
 const TAWNYA_ASSET = "Tawnya.frozen.PNG";
 const FROZEN_STORY_HEART_ASSET = "LMT.frozen.PNG";
 
@@ -1863,7 +1867,7 @@ function snapshotFrostActors() {
   const actors = [
     ...document.querySelectorAll(".engage.social-smoke"),
     ...document.querySelectorAll(".carl-trigger-heart"),
-    ...document.querySelectorAll(".profile.symbol-touch, .profile.hive-reveal, .profile.carl")
+    ...document.querySelectorAll(".profile.symbol-touch, .profile.hive-reveal, .profile.carl, .profile.frank")
   ];
 
   actors.forEach((actor, index) => {
@@ -1915,6 +1919,13 @@ function snapshotFrostActors() {
     } else if (actor.classList.contains("carl")) {
       snapshot.classList.add("c17-frost-carl-snapshot");
       snapshot.dataset.frostCarl = "true";
+    } else if (actor.classList.contains("frank")) {
+      snapshot.classList.add("c17-frost-profile-snapshot", "c17-frost-frank-snapshot");
+      snapshot.dataset.frostFrank = "true";
+      const frankImage = snapshot.querySelector("img");
+      if (frankImage) {
+        snapshot.dataset.frostFrankSource = getAssetFilename(frankImage.src);
+      }
     } else if (actor.classList.contains("profile")) {
       snapshot.classList.add("c17-frost-profile-snapshot");
       snapshot.dataset.frostSymbolProfile = "true";
@@ -2333,6 +2344,28 @@ function scheduleFrozenSocialSwaps(originX, originY, duration) {
   });
 }
 
+
+function trySwapFrozenFrank(profile) {
+  if (!profile || !profile.isConnected || profile.dataset.frostFrank !== "true") return;
+
+  const image = profile.querySelector("img");
+  if (!image) return;
+
+  const sourceName = profile.dataset.frostFrankSource || getAssetFilename(image.src);
+  const frozenName = sourceName.replace(/\.png$/i, ".frozen.PNG");
+
+  const probe = new Image();
+  probe.onload = () => {
+    if (!profile.isConnected || !frostLocked) return;
+    image.src = frozenName;
+    profile.classList.add("c17-frank-frozen-asset");
+  };
+  probe.onerror = () => {
+    /* Frozen frame not supplied yet: preserve the exact stopped Frank frame. */
+  };
+  probe.src = frozenName;
+}
+
 function scheduleFrozenSymbolProfileLocks(originX, originY, duration) {
   const profiles = [
     ...document.querySelectorAll(".c17-frost-profile-snapshot")
@@ -2358,6 +2391,10 @@ function scheduleFrozenSymbolProfileLocks(originX, originY, duration) {
         "c17-symbol-profile-freezing",
         contact.direction
       );
+
+      if (profile.dataset.frostFrank === "true") {
+        trySwapFrozenFrank(profile);
+      }
 
       const pixelFront = document.createElement("span");
       pixelFront.className = `c17-freeze-pixel-front ${contact.direction}`;
@@ -2736,44 +2773,44 @@ function revealTawnyaFromGreyHeart(heart, direction = "from-left") {
     [
       {
         opacity: 0,
-        transform: "scale(.12)",
-        clipPath: "polygon(50% 50%,50% 50%,50% 50%,50% 50%,50% 50%,50% 50%,50% 50%,50% 50%)",
-        filter: "blur(8px) brightness(.62) saturate(.38)"
+        transform: "scale(.08)",
+        clipPath: "circle(0% at 50% 50%)",
+        filter: "blur(7px) brightness(.68) saturate(.42)"
       },
       {
-        opacity: .12,
-        transform: "scale(.22)",
-        clipPath: "polygon(46% 43%,55% 46%,59% 53%,52% 58%,44% 56%,40% 49%,43% 45%,48% 41%)",
+        opacity: .06,
+        transform: "scale(.18)",
+        clipPath: "circle(7% at 50% 50%)",
         filter: "blur(6px) brightness(.72) saturate(.48)",
-        offset: .16
+        offset: .20
       },
       {
-        opacity: .28,
-        transform: "scale(.38)",
-        clipPath: "polygon(38% 31%,58% 35%,70% 48%,61% 63%,42% 69%,28% 56%,32% 40%,46% 27%)",
-        filter: "blur(4px) brightness(.80) saturate(.58)",
-        offset: .34
+        opacity: .16,
+        transform: "scale(.31)",
+        clipPath: "circle(15% at 50% 50%)",
+        filter: "blur(5px) brightness(.78) saturate(.56)",
+        offset: .38
       },
       {
-        opacity: .50,
-        transform: "scale(.58)",
-        clipPath: "polygon(24% 18%,64% 23%,82% 43%,74% 72%,45% 84%,17% 67%,13% 36%,39% 12%)",
-        filter: "blur(2.8px) brightness(.88) saturate(.68)",
-        offset: .54
+        opacity: .34,
+        transform: "scale(.48)",
+        clipPath: "circle(26% at 50% 50%)",
+        filter: "blur(3.5px) brightness(.84) saturate(.66)",
+        offset: .56
       },
       {
-        opacity: .74,
-        transform: "scale(.78)",
-        clipPath: "polygon(10% 8%,72% 10%,94% 36%,88% 82%,49% 98%,6% 79%,1% 31%,35% 1%)",
-        filter: "blur(1.4px) brightness(.96) saturate(.82)",
-        offset: .75
+        opacity: .58,
+        transform: "scale(.66)",
+        clipPath: "circle(37% at 50% 50%)",
+        filter: "blur(2px) brightness(.90) saturate(.76)",
+        offset: .72
       },
       {
-        opacity: .92,
-        transform: "scale(.94)",
-        clipPath: "circle(48% at 50% 50%)",
-        filter: "blur(.4px) brightness(1.02) saturate(.94)",
-        offset: .90
+        opacity: .82,
+        transform: "scale(.84)",
+        clipPath: "circle(46% at 50% 50%)",
+        filter: "blur(.8px) brightness(.96) saturate(.88)",
+        offset: .88
       },
       {
         opacity: 1,
@@ -2784,57 +2821,23 @@ function revealTawnyaFromGreyHeart(heart, direction = "from-left") {
     ],
     {
       duration: TAWNYA_TRANSFORM_MS,
-      easing: "cubic-bezier(.16,.58,.12,1)",
+      easing: "cubic-bezier(.22,.48,.18,1)",
       fill: "forwards"
     }
   );
 
   heart.animate(
     [
-      {
-        opacity: 1,
-        transform: "scale(1)",
-        clipPath: "circle(50% at 50% 50%)",
-        filter: "none"
-      },
-      {
-        opacity: 1,
-        transform: "scale(1.03)",
-        clipPath: "circle(50% at 50% 50%)",
-        filter: "brightness(1.12) contrast(1.08)",
-        offset: .30
-      },
-      {
-        opacity: .88,
-        transform: "scale(.98)",
-        clipPath: "polygon(0 0,100% 0,100% 100%,0 100%)",
-        filter: "brightness(1.02) contrast(1.12)",
-        offset: .50
-      },
-      {
-        opacity: .58,
-        transform: "scale(.76)",
-        clipPath: "polygon(12% 8%,88% 15%,81% 92%,20% 84%)",
-        filter: "blur(.8px) brightness(.88)",
-        offset: .76
-      },
-      {
-        opacity: .18,
-        transform: "scale(.42)",
-        clipPath: "polygon(35% 28%,70% 35%,62% 72%,30% 64%)",
-        filter: "blur(2.5px) brightness(.68)",
-        offset: .92
-      },
-      {
-        opacity: 0,
-        transform: "scale(.18)",
-        clipPath: "circle(0% at 50% 50%)",
-        filter: "blur(5px) brightness(.54)"
-      }
+      { opacity: 1, transform: "scale(1)", filter: "none" },
+      { opacity: 1, transform: "scale(1)", filter: "brightness(1.04)", offset: .36 },
+      { opacity: .92, transform: "scale(.96)", filter: "brightness(.98)", offset: .58 },
+      { opacity: .66, transform: "scale(.78)", filter: "blur(.8px) brightness(.88)", offset: .76 },
+      { opacity: .30, transform: "scale(.50)", filter: "blur(2px) brightness(.72)", offset: .91 },
+      { opacity: 0, transform: "scale(.22)", filter: "blur(4px) brightness(.58)" }
     ],
     {
       duration: TAWNYA_TRANSFORM_MS,
-      easing: "cubic-bezier(.16,.58,.12,1)",
+      easing: "cubic-bezier(.22,.48,.18,1)",
       fill: "forwards"
     }
   );
