@@ -698,9 +698,9 @@ function spawnEngagement(options = {}) {
   // Hearts still dominate, but faces appear frequently and randomly.
   if (heartSmokeSpawnCount > 2) {
     const faceSymbols = [
-      "😂", "😉", "😀", "😆", "😃",
-      "😁", "🤣", "😍", "🥰", "😘",
-      "😜", "😙"
+      "😊", "🤯", "😍", "😃", "😜",
+      "😘", "😙", "😆", "😀", "🥰",
+      "😂", "😝"
     ];
 
     const platformSymbols = [
@@ -714,12 +714,12 @@ function spawnEngagement(options = {}) {
       ((heartSmokeSpawnCount - 3) % 3) === 0;
 
     const randomFace =
-      !guaranteedFace && Math.random() < 0.38;
+      !guaranteedFace && Math.random() < 0.50;
 
     const randomPlatformIcon =
       !guaranteedFace &&
       !randomFace &&
-      Math.random() < 0.14;
+      Math.random() < 0.10;
 
     if (guaranteedFace || randomFace) {
       symbol =
@@ -1808,9 +1808,11 @@ let frostSwapTimers = [];
 const FROST_HOLD_MS = 7000;
 const FROST_GROW_MS = 23000;
 const OBJECT_FREEZE_MS = 1880;
-const POST_FROST_CONTACT_PAUSE_MS = 620;
-const TAWNYA_CONTACT_PAUSE_MS = 420;
-const TAWNYA_TRANSFORM_MS = 3200;
+const PROFILE_FREEZE_MS = 3200;
+const POST_FROST_CONTACT_PAUSE_MS = 760;
+const PROFILE_CONTACT_PAUSE_MS = 980;
+const TAWNYA_CONTACT_PAUSE_MS = 720;
+const TAWNYA_TRANSFORM_MS = 5600;
 const TAWNYA_ASSET = "Tawnya.frozen.PNG";
 const FROZEN_STORY_HEART_ASSET = "LMT.frozen.PNG";
 
@@ -1861,7 +1863,7 @@ function snapshotFrostActors() {
   const actors = [
     ...document.querySelectorAll(".engage.social-smoke"),
     ...document.querySelectorAll(".carl-trigger-heart"),
-    ...document.querySelectorAll(".profile.symbol-touch, .profile.hive-reveal")
+    ...document.querySelectorAll(".profile.symbol-touch, .profile.hive-reveal, .profile.carl")
   ];
 
   actors.forEach((actor, index) => {
@@ -1910,6 +1912,9 @@ function snapshotFrostActors() {
       snapshot.dataset.frostRedVisible = String(Boolean(
         redStyle && redStyle.visibility !== "hidden" && Number.parseFloat(redStyle.opacity || "0") > 0.03
       ));
+    } else if (actor.classList.contains("carl")) {
+      snapshot.classList.add("c17-frost-carl-snapshot");
+      snapshot.dataset.frostCarl = "true";
     } else if (actor.classList.contains("profile")) {
       snapshot.classList.add("c17-frost-profile-snapshot");
       snapshot.dataset.frostSymbolProfile = "true";
@@ -2138,7 +2143,8 @@ function scheduleFrozenAssetSwaps(originX, originY, duration) {
       0,
       Math.round(duration * frostArrivalRatio(contact.contactX, contact.contactY, originX, originY))
     );
-    const freezeStart = arrival + POST_FROST_CONTACT_PAUSE_MS;
+    const freezeStart = arrival + PROFILE_CONTACT_PAUSE_MS;
+    const freezeDuration = PROFILE_FREEZE_MS;
 
     const timer = setTimeout(() => {
       if (!image.isConnected || !profile.isConnected || !frostLocked) return;
@@ -2159,7 +2165,7 @@ function scheduleFrozenAssetSwaps(originX, originY, duration) {
         pixelFront.className = `c17-freeze-pixel-front ${contact.direction}`;
         pixelFront.setAttribute("aria-hidden", "true");
 
-        profile.style.setProperty("--c17-object-freeze-ms", `${OBJECT_FREEZE_MS}ms`);
+        profile.style.setProperty("--c17-object-freeze-ms", `${freezeDuration}ms`);
         profile.classList.add("c17-object-freezing", contact.direction);
         profile.appendChild(frozenLayer);
         profile.appendChild(pixelFront);
@@ -2186,7 +2192,7 @@ function scheduleFrozenAssetSwaps(originX, originY, duration) {
             "from-bottom"
           );
           profile.classList.add("c17-object-frozen");
-        }, OBJECT_FREEZE_MS + 80);
+        }, freezeDuration + 100);
 
         frostSwapTimers.push(finishTimer);
       };
@@ -2342,12 +2348,12 @@ function scheduleFrozenSymbolProfileLocks(originX, originY, duration) {
       0,
       Math.round(duration * frostArrivalRatio(contact.contactX, contact.contactY, originX, originY))
     );
-    const freezeStart = arrival + POST_FROST_CONTACT_PAUSE_MS;
+    const freezeStart = arrival + PROFILE_CONTACT_PAUSE_MS;
 
     const timer = setTimeout(() => {
       if (!profile.isConnected || !frostLocked) return;
 
-      profile.style.setProperty("--c17-object-freeze-ms", `${OBJECT_FREEZE_MS}ms`);
+      profile.style.setProperty("--c17-object-freeze-ms", `${PROFILE_FREEZE_MS}ms`);
       profile.classList.add(
         "c17-symbol-profile-freezing",
         contact.direction
@@ -2370,7 +2376,7 @@ function scheduleFrozenSymbolProfileLocks(originX, originY, duration) {
           "from-bottom"
         );
         profile.classList.add("c17-symbol-profile-frozen");
-      }, OBJECT_FREEZE_MS + 80);
+      }, PROFILE_FREEZE_MS + 100);
 
       frostSwapTimers.push(finishTimer);
     }, freezeStart);
@@ -2716,38 +2722,69 @@ function revealTawnyaFromGreyHeart(heart, direction = "from-left") {
     PNG only when the frost front reaches it. Both objects remain aligned while
     the heart fractures away and the profile resolves underneath it.
   */
-  tawnya.animate(
+  const creep = document.createElement("span");
+  creep.className = "c17-tawnya-creep";
+  creep.setAttribute("aria-hidden", "true");
+  tawnya.appendChild(creep);
+
+  /*
+    Tawnya is the exception: she grows from the exact center of the frozen
+    gray heart. The reveal is deliberately uneven and invasive instead of a
+    clean circular pop, so the blue profile appears to consume the heart.
+  */
+  image.animate(
     [
       {
         opacity: 0,
-        transform: "translate(-50%, -50%) scale(.18)",
-        clipPath: "circle(0% at 50% 50%)",
-        filter: "blur(7px) brightness(.72) saturate(.45)"
+        transform: "scale(.12)",
+        clipPath: "polygon(50% 50%,50% 50%,50% 50%,50% 50%,50% 50%,50% 50%,50% 50%,50% 50%)",
+        filter: "blur(8px) brightness(.62) saturate(.38)"
       },
       {
-        opacity: .22,
-        transform: "translate(-50%, -50%) scale(.34)",
-        clipPath: "circle(14% at 50% 50%)",
-        filter: "blur(4px) brightness(.84) saturate(.62)",
-        offset: .28
+        opacity: .12,
+        transform: "scale(.22)",
+        clipPath: "polygon(46% 43%,55% 46%,59% 53%,52% 58%,44% 56%,40% 49%,43% 45%,48% 41%)",
+        filter: "blur(6px) brightness(.72) saturate(.48)",
+        offset: .16
       },
       {
-        opacity: .68,
-        transform: "translate(-50%, -50%) scale(.72)",
-        clipPath: "circle(36% at 50% 50%)",
-        filter: "blur(1.8px) brightness(.98) saturate(.86)",
-        offset: .70
+        opacity: .28,
+        transform: "scale(.38)",
+        clipPath: "polygon(38% 31%,58% 35%,70% 48%,61% 63%,42% 69%,28% 56%,32% 40%,46% 27%)",
+        filter: "blur(4px) brightness(.80) saturate(.58)",
+        offset: .34
+      },
+      {
+        opacity: .50,
+        transform: "scale(.58)",
+        clipPath: "polygon(24% 18%,64% 23%,82% 43%,74% 72%,45% 84%,17% 67%,13% 36%,39% 12%)",
+        filter: "blur(2.8px) brightness(.88) saturate(.68)",
+        offset: .54
+      },
+      {
+        opacity: .74,
+        transform: "scale(.78)",
+        clipPath: "polygon(10% 8%,72% 10%,94% 36%,88% 82%,49% 98%,6% 79%,1% 31%,35% 1%)",
+        filter: "blur(1.4px) brightness(.96) saturate(.82)",
+        offset: .75
+      },
+      {
+        opacity: .92,
+        transform: "scale(.94)",
+        clipPath: "circle(48% at 50% 50%)",
+        filter: "blur(.4px) brightness(1.02) saturate(.94)",
+        offset: .90
       },
       {
         opacity: 1,
-        transform: "translate(-50%, -50%) scale(1)",
+        transform: "scale(1)",
         clipPath: "circle(50% at 50% 50%)",
         filter: "none"
       }
     ],
     {
       duration: TAWNYA_TRANSFORM_MS,
-      easing: "cubic-bezier(.2,.72,.16,1)",
+      easing: "cubic-bezier(.16,.58,.12,1)",
       fill: "forwards"
     }
   );
@@ -2761,29 +2798,43 @@ function revealTawnyaFromGreyHeart(heart, direction = "from-left") {
         filter: "none"
       },
       {
-        opacity: .92,
-        transform: "scale(1.02)",
+        opacity: 1,
+        transform: "scale(1.03)",
         clipPath: "circle(50% at 50% 50%)",
-        filter: "brightness(1.12) contrast(1.1)",
-        offset: .24
+        filter: "brightness(1.12) contrast(1.08)",
+        offset: .30
       },
       {
-        opacity: .48,
-        transform: "scale(.74)",
-        clipPath: "circle(31% at 50% 50%)",
-        filter: "blur(1.2px) brightness(.9)",
-        offset: .72
+        opacity: .88,
+        transform: "scale(.98)",
+        clipPath: "polygon(0 0,100% 0,100% 100%,0 100%)",
+        filter: "brightness(1.02) contrast(1.12)",
+        offset: .50
+      },
+      {
+        opacity: .58,
+        transform: "scale(.76)",
+        clipPath: "polygon(12% 8%,88% 15%,81% 92%,20% 84%)",
+        filter: "blur(.8px) brightness(.88)",
+        offset: .76
+      },
+      {
+        opacity: .18,
+        transform: "scale(.42)",
+        clipPath: "polygon(35% 28%,70% 35%,62% 72%,30% 64%)",
+        filter: "blur(2.5px) brightness(.68)",
+        offset: .92
       },
       {
         opacity: 0,
-        transform: "scale(.24)",
+        transform: "scale(.18)",
         clipPath: "circle(0% at 50% 50%)",
-        filter: "blur(4px) brightness(.62)"
+        filter: "blur(5px) brightness(.54)"
       }
     ],
     {
       duration: TAWNYA_TRANSFORM_MS,
-      easing: "cubic-bezier(.2,.72,.16,1)",
+      easing: "cubic-bezier(.16,.58,.12,1)",
       fill: "forwards"
     }
   );
