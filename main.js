@@ -1808,6 +1808,8 @@ let frostSwapTimers = [];
 const FROST_HOLD_MS = 7000;
 const FROST_GROW_MS = 23000;
 const OBJECT_FREEZE_MS = 1880;
+const POST_FROST_CONTACT_PAUSE_MS = 620;
+const TAWNYA_CONTACT_PAUSE_MS = 420;
 const TAWNYA_TRANSFORM_MS = 3200;
 const TAWNYA_ASSET = "Tawnya.frozen.PNG";
 const FROZEN_STORY_HEART_ASSET = "LMT.frozen.PNG";
@@ -2136,6 +2138,7 @@ function scheduleFrozenAssetSwaps(originX, originY, duration) {
       0,
       Math.round(duration * frostArrivalRatio(contact.contactX, contact.contactY, originX, originY))
     );
+    const freezeStart = arrival + POST_FROST_CONTACT_PAUSE_MS;
 
     const timer = setTimeout(() => {
       if (!image.isConnected || !profile.isConnected || !frostLocked) return;
@@ -2188,10 +2191,60 @@ function scheduleFrozenAssetSwaps(originX, originY, duration) {
         frostSwapTimers.push(finishTimer);
       };
       preload.src = frozenName;
-    }, arrival);
+    }, freezeStart);
 
     frostSwapTimers.push(timer);
   });
+}
+
+function loadFrozenSocialAsset(image, assetName, originalSymbol) {
+  if (originalSymbol !== "🔥") {
+    image.src = assetName;
+    return;
+  }
+
+  /*
+    The approved frozen flame artwork currently carries a baked white square.
+    Remove only near-white pixels at runtime; preserve the actual flame artwork.
+  */
+  const source = new Image();
+  source.decoding = "sync";
+  source.onload = () => {
+    const canvas = document.createElement("canvas");
+    canvas.width = source.naturalWidth || source.width;
+    canvas.height = source.naturalHeight || source.height;
+    const context = canvas.getContext("2d", { willReadFrequently: true });
+
+    if (!context) {
+      image.src = assetName;
+      return;
+    }
+
+    context.drawImage(source, 0, 0);
+    const pixels = context.getImageData(0, 0, canvas.width, canvas.height);
+    const data = pixels.data;
+
+    for (let index = 0; index < data.length; index += 4) {
+      const red = data[index];
+      const green = data[index + 1];
+      const blue = data[index + 2];
+      const brightness = Math.min(red, green, blue);
+      const spread = Math.max(red, green, blue) - brightness;
+
+      if (brightness >= 246 && spread <= 8) {
+        data[index + 3] = 0;
+      } else if (brightness >= 232 && spread <= 12) {
+        data[index + 3] = Math.round(data[index + 3] * ((246 - brightness) / 14));
+      }
+    }
+
+    context.putImageData(pixels, 0, 0);
+    image.src = canvas.toDataURL("image/png");
+  };
+  source.onerror = () => {
+    image.src = assetName;
+  };
+  source.src = assetName;
 }
 
 function scheduleFrozenSocialSwaps(originX, originY, duration) {
@@ -2207,6 +2260,7 @@ function scheduleFrozenSocialSwaps(originX, originY, duration) {
       0,
       Math.round(duration * frostArrivalRatio(contact.contactX, contact.contactY, originX, originY))
     );
+    const freezeStart = arrival + POST_FROST_CONTACT_PAUSE_MS;
 
     const timer = setTimeout(() => {
       if (!item.isConnected || !frostLocked) return;
@@ -2258,14 +2312,16 @@ function scheduleFrozenSocialSwaps(originX, originY, duration) {
       } else if (frozenAsset) {
         item.textContent = "";
         const image = document.createElement("img");
-        image.src = frozenAsset;
         image.alt = "";
-        image.className = "c17-frozen-social-asset";
+        image.className = originalSymbol === "🔥"
+          ? "c17-frozen-social-asset c17-frozen-flame-asset"
+          : "c17-frozen-social-asset";
         item.appendChild(image);
+        loadFrozenSocialAsset(image, frozenAsset, originalSymbol);
       }
 
       item.classList.add("c17-social-frozen");
-    }, arrival);
+    }, freezeStart);
 
     frostSwapTimers.push(timer);
   });
@@ -2286,6 +2342,7 @@ function scheduleFrozenSymbolProfileLocks(originX, originY, duration) {
       0,
       Math.round(duration * frostArrivalRatio(contact.contactX, contact.contactY, originX, originY))
     );
+    const freezeStart = arrival + POST_FROST_CONTACT_PAUSE_MS;
 
     const timer = setTimeout(() => {
       if (!profile.isConnected || !frostLocked) return;
@@ -2316,7 +2373,7 @@ function scheduleFrozenSymbolProfileLocks(originX, originY, duration) {
       }, OBJECT_FREEZE_MS + 80);
 
       frostSwapTimers.push(finishTimer);
-    }, arrival);
+    }, freezeStart);
 
     frostSwapTimers.push(timer);
   });
@@ -2369,6 +2426,11 @@ function resolveFrozenHeartOutcome(originX, originY, duration) {
     const arrival = Math.round(
       duration * frostArrivalRatio(contact.contactX, contact.contactY, originX, originY)
     );
+    const freezeStart = arrival + (
+      tawnyaCandidate && heart === tawnyaCandidate.heart
+        ? TAWNYA_CONTACT_PAUSE_MS
+        : POST_FROST_CONTACT_PAUSE_MS
+    );
 
     const timer = setTimeout(() => {
       if (!heart.isConnected || !frostLocked) return;
@@ -2393,7 +2455,7 @@ function resolveFrozenHeartOutcome(originX, originY, duration) {
         heart.appendChild(frozenHeartImage);
       }
       frozenHeartImage.src = FROZEN_STORY_HEART_ASSET;
-    }, arrival);
+    }, freezeStart);
 
     frostSwapTimers.push(timer);
   });
@@ -2658,30 +2720,34 @@ function revealTawnyaFromGreyHeart(heart, direction = "from-left") {
     [
       {
         opacity: 0,
-        transform: "translate(-50%, -50%) scale(.72) rotate(-2deg)",
-        filter: "blur(8px) brightness(.72) saturate(.45)"
+        transform: "translate(-50%, -50%) scale(.18)",
+        clipPath: "circle(0% at 50% 50%)",
+        filter: "blur(7px) brightness(.72) saturate(.45)"
       },
       {
-        opacity: .34,
-        transform: "translate(-50%, -50%) scale(.84) rotate(1deg)",
-        filter: "blur(4px) brightness(.88) saturate(.7)",
-        offset: .34
+        opacity: .22,
+        transform: "translate(-50%, -50%) scale(.34)",
+        clipPath: "circle(14% at 50% 50%)",
+        filter: "blur(4px) brightness(.84) saturate(.62)",
+        offset: .28
       },
       {
-        opacity: .78,
-        transform: "translate(-50%, -50%) scale(.96) rotate(-.5deg)",
-        filter: "blur(1.5px) brightness(1.02) saturate(.92)",
-        offset: .72
+        opacity: .68,
+        transform: "translate(-50%, -50%) scale(.72)",
+        clipPath: "circle(36% at 50% 50%)",
+        filter: "blur(1.8px) brightness(.98) saturate(.86)",
+        offset: .70
       },
       {
         opacity: 1,
-        transform: "translate(-50%, -50%) scale(1) rotate(0deg)",
+        transform: "translate(-50%, -50%) scale(1)",
+        clipPath: "circle(50% at 50% 50%)",
         filter: "none"
       }
     ],
     {
       duration: TAWNYA_TRANSFORM_MS,
-      easing: "cubic-bezier(.22,.7,.18,1)",
+      easing: "cubic-bezier(.2,.72,.16,1)",
       fill: "forwards"
     }
   );
@@ -2691,29 +2757,33 @@ function revealTawnyaFromGreyHeart(heart, direction = "from-left") {
       {
         opacity: 1,
         transform: "scale(1)",
+        clipPath: "circle(50% at 50% 50%)",
         filter: "none"
       },
       {
-        opacity: .84,
-        transform: "scale(1.08) skewX(-2deg)",
-        filter: "brightness(1.12) contrast(1.12)",
-        offset: .28
+        opacity: .92,
+        transform: "scale(1.02)",
+        clipPath: "circle(50% at 50% 50%)",
+        filter: "brightness(1.12) contrast(1.1)",
+        offset: .24
       },
       {
-        opacity: .38,
-        transform: "scale(.92) skewX(3deg)",
-        filter: "blur(1.4px) brightness(.92)",
+        opacity: .48,
+        transform: "scale(.74)",
+        clipPath: "circle(31% at 50% 50%)",
+        filter: "blur(1.2px) brightness(.9)",
         offset: .72
       },
       {
         opacity: 0,
-        transform: "scale(.68)",
-        filter: "blur(4px) brightness(.65)"
+        transform: "scale(.24)",
+        clipPath: "circle(0% at 50% 50%)",
+        filter: "blur(4px) brightness(.62)"
       }
     ],
     {
       duration: TAWNYA_TRANSFORM_MS,
-      easing: "cubic-bezier(.22,.7,.18,1)",
+      easing: "cubic-bezier(.2,.72,.16,1)",
       fill: "forwards"
     }
   );
