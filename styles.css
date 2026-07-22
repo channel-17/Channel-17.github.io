@@ -11066,34 +11066,148 @@ html.frost-dead-world .profile {
 
 
 /* =========================================================
-   BRICK 135 — TAWNYA SCALE + HEART-TO-PROFILE REWRITE
-   Keep the circular frozen profile. Smaller than normal avatars.
+   BRICK 136 — FACE REWRITE + SYMBOL PROFILE CONTACT FREEZE
 ========================================================= */
 
-.c17-tawnya-reveal {
-  width: 56px !important;
-  height: 56px !important;
-  border-width: 1px !important;
-  box-shadow:
-    0 0 0 1px rgba(67,145,181,.82),
-    0 0 10px rgba(213,247,253,.84),
-    0 0 24px rgba(42,119,158,.54) !important;
+/* Frank ends motionless. No fluttering, peeling, or bird-like departure. */
+.profile.frank.frank-sequence-complete,
+.profile.frank.frank-sequence-complete img {
+  animation: none !important;
+  transition: none !important;
+  transform: none !important;
 }
 
-.c17-tawnya-reveal img {
+/* Original yellow face remains under the frozen face during the takeover. */
+.c17-frost-social-snapshot.c17-face-freezing {
+  position: fixed !important;
+  overflow: visible !important;
+}
+
+.c17-face-original,
+.c17-face-frozen {
+  position: absolute !important;
+  inset: 0 !important;
+  display: grid !important;
+  place-items: center !important;
   width: 100% !important;
   height: 100% !important;
-  transform-origin: 50% 50% !important;
-  will-change: opacity, transform, filter, clip-path !important;
+  font: inherit !important;
+  line-height: 1 !important;
+  pointer-events: none !important;
 }
 
-.c17-heart-becoming-tawnya {
-  transform-origin: 50% 50% !important;
-  will-change: opacity, transform, filter, clip-path !important;
+.c17-face-original {
+  z-index: 1 !important;
+  opacity: 1 !important;
+  animation: c17YellowFaceUnderIce var(--c17-object-freeze-ms, 1880ms) ease forwards !important;
 }
 
-.c17-tawnya-reveal.tawnya-complete {
-  width: 56px !important;
-  height: 56px !important;
-  pointer-events: auto !important;
+.c17-face-frozen {
+  z-index: 2 !important;
+  opacity: 1 !important;
+  filter:
+    drop-shadow(0 0 5px rgba(226,250,255,.94))
+    drop-shadow(0 0 13px rgba(58,145,187,.58)) !important;
+  animation-duration: var(--c17-object-freeze-ms, 1880ms) !important;
+  animation-timing-function: cubic-bezier(.2,.72,.16,1) !important;
+  animation-fill-mode: forwards !important;
+}
+
+.c17-face-frozen.from-left {
+  animation-name: c17FrozenFaceWrapLeft !important;
+}
+.c17-face-frozen.from-right {
+  animation-name: c17FrozenFaceWrapRight !important;
+}
+.c17-face-frozen.from-top {
+  animation-name: c17FrozenFaceWrapTop !important;
+}
+.c17-face-frozen.from-bottom {
+  animation-name: c17FrozenFaceWrapBottom !important;
+}
+
+@keyframes c17YellowFaceUnderIce {
+  0%, 22% {
+    opacity: 1;
+    filter: none;
+  }
+  58% {
+    opacity: .72;
+    filter: saturate(.8) brightness(.94);
+  }
+  100% {
+    opacity: 0;
+    filter: saturate(.35) brightness(.72) blur(1px);
+  }
+}
+
+@keyframes c17FrozenFaceWrapLeft {
+  0%, 12% { clip-path: inset(0 100% 0 0); filter: blur(2px); }
+  100% { clip-path: inset(0 0 0 0); filter: none; }
+}
+@keyframes c17FrozenFaceWrapRight {
+  0%, 12% { clip-path: inset(0 0 0 100%); filter: blur(2px); }
+  100% { clip-path: inset(0 0 0 0); filter: none; }
+}
+@keyframes c17FrozenFaceWrapTop {
+  0%, 12% { clip-path: inset(0 0 100% 0); filter: blur(2px); }
+  100% { clip-path: inset(0 0 0 0); filter: none; }
+}
+@keyframes c17FrozenFaceWrapBottom {
+  0%, 12% { clip-path: inset(100% 0 0 0); filter: blur(2px); }
+  100% { clip-path: inset(0 0 0 0); filter: none; }
+}
+
+.c17-face-frozen-complete .c17-face-frozen {
+  position: absolute !important;
+  inset: 0 !important;
+  clip-path: none !important;
+  animation: none !important;
+}
+
+/* Blue avatars attached to the symbol survive cleanup timers and freeze on contact. */
+.c17-frost-profile-snapshot {
+  z-index: 2147483610 !important;
+  overflow: hidden !important;
+  border-radius: 50% !important;
+  pointer-events: none !important;
+  animation: none !important;
+  transition: none !important;
+}
+
+.c17-frost-profile-snapshot img {
+  width: 100% !important;
+  height: 100% !important;
+  display: block !important;
+  object-fit: cover !important;
+  border-radius: 50% !important;
+  animation: none !important;
+  transition: none !important;
+}
+
+.c17-frost-profile-snapshot.c17-symbol-profile-freezing {
+  filter:
+    brightness(1.08)
+    saturate(.92)
+    contrast(1.08)
+    drop-shadow(0 0 7px rgba(221,249,255,.86))
+    drop-shadow(0 0 18px rgba(49,135,180,.48)) !important;
+}
+
+.c17-frost-profile-snapshot.c17-symbol-profile-frozen {
+  animation: none !important;
+  transition: none !important;
+  transform: none !important;
+  filter:
+    brightness(1.06)
+    saturate(.82)
+    contrast(1.1)
+    drop-shadow(0 0 8px rgba(224,250,255,.92))
+    drop-shadow(0 0 20px rgba(49,135,180,.54)) !important;
+}
+
+.c17-frost-profile-snapshot.c17-symbol-profile-frozen img {
+  animation: none !important;
+  transition: none !important;
+  transform: none !important;
 }
