@@ -2176,8 +2176,8 @@ function scheduleFrozenAssetSwaps(originX, originY, duration) {
         if (!image.isConnected || !profile.isConnected || !frostLocked) return;
 
         const frozenLayer = document.createElement("img");
-        frozenLayer.src = frozenName;
         frozenLayer.alt = "";
+        loadFrozenAssetClean(frozenLayer, frozenName);
         frozenLayer.setAttribute("aria-hidden", "true");
         frozenLayer.className = `c17-frozen-swap-layer ${contact.direction}`;
 
@@ -2195,7 +2195,7 @@ function scheduleFrozenAssetSwaps(originX, originY, duration) {
         const finishTimer = setTimeout(() => {
           if (!image.isConnected || !profile.isConnected || !frostLocked) return;
 
-          image.src = frozenName;
+          loadFrozenAssetClean(image, frozenName);
           image.classList.remove(
             "c17-original-swap-layer",
             "from-left",
@@ -2225,16 +2225,9 @@ function scheduleFrozenAssetSwaps(originX, originY, duration) {
   });
 }
 
-function loadFrozenSocialAsset(image, assetName, originalSymbol) {
-  if (originalSymbol !== "🔥") {
-    image.src = assetName;
-    return;
-  }
+function loadFrozenAssetClean(image, assetName) {
+  if (!image || !assetName) return;
 
-  /*
-    The approved frozen flame artwork currently carries a baked white square.
-    Remove only near-white pixels at runtime; preserve the actual flame artwork.
-  */
   const source = new Image();
   source.decoding = "sync";
   source.onload = () => {
@@ -2248,31 +2241,108 @@ function loadFrozenSocialAsset(image, assetName, originalSymbol) {
       return;
     }
 
+    context.clearRect(0, 0, canvas.width, canvas.height);
     context.drawImage(source, 0, 0);
-    const pixels = context.getImageData(0, 0, canvas.width, canvas.height);
+
+    let pixels;
+    try {
+      pixels = context.getImageData(0, 0, canvas.width, canvas.height);
+    } catch (error) {
+      image.src = assetName;
+      return;
+    }
+
     const data = pixels.data;
+    const width = canvas.width;
+    const height = canvas.height;
+    const visited = new Uint8Array(width * height);
+    const queue = [];
 
-    for (let index = 0; index < data.length; index += 4) {
-      const red = data[index];
-      const green = data[index + 1];
-      const blue = data[index + 2];
-      const brightness = Math.min(red, green, blue);
-      const spread = Math.max(red, green, blue) - brightness;
+    const isPaperWhite = pixelIndex => {
+      const offset = pixelIndex * 4;
+      const alpha = data[offset + 3];
+      if (alpha === 0) return true;
 
-      if (brightness >= 246 && spread <= 8) {
-        data[index + 3] = 0;
-      } else if (brightness >= 232 && spread <= 12) {
-        data[index + 3] = Math.round(data[index + 3] * ((246 - brightness) / 14));
+      const red = data[offset];
+      const green = data[offset + 1];
+      const blue = data[offset + 2];
+      const minimum = Math.min(red, green, blue);
+      const maximum = Math.max(red, green, blue);
+      const spread = maximum - minimum;
+
+      // Neutral white/gray backing only. Cyan and blue ice are protected.
+      return minimum >= 218 && spread <= 18;
+    };
+
+    const enqueue = pixelIndex => {
+      if (pixelIndex < 0 || pixelIndex >= width * height || visited[pixelIndex]) return;
+      if (!isPaperWhite(pixelIndex)) return;
+      visited[pixelIndex] = 1;
+      queue.push(pixelIndex);
+    };
+
+    // Strip only white connected to the outer edge, so white ice inside the
+    // artwork survives while square backing plates and halos disappear.
+    for (let x = 0; x < width; x++) {
+      enqueue(x);
+      enqueue((height - 1) * width + x);
+    }
+    for (let y = 0; y < height; y++) {
+      enqueue(y * width);
+      enqueue(y * width + width - 1);
+    }
+
+    for (let cursor = 0; cursor < queue.length; cursor++) {
+      const pixelIndex = queue[cursor];
+      const x = pixelIndex % width;
+      const y = Math.floor(pixelIndex / width);
+      const offset = pixelIndex * 4;
+
+      data[offset + 3] = 0;
+
+      if (x > 0) enqueue(pixelIndex - 1);
+      if (x + 1 < width) enqueue(pixelIndex + 1);
+      if (y > 0) enqueue(pixelIndex - width);
+      if (y + 1 < height) enqueue(pixelIndex + width);
+    }
+
+    // Feather the one-pixel border left beside removed paper to prevent a
+    // bright rectangular fringe on iPhone compositing.
+    for (let pixelIndex = 0; pixelIndex < width * height; pixelIndex++) {
+      if (visited[pixelIndex]) continue;
+      const x = pixelIndex % width;
+      const y = Math.floor(pixelIndex / width);
+      const neighbors = [
+        x > 0 ? pixelIndex - 1 : -1,
+        x + 1 < width ? pixelIndex + 1 : -1,
+        y > 0 ? pixelIndex - width : -1,
+        y + 1 < height ? pixelIndex + width : -1
+      ];
+      if (!neighbors.some(neighbor => neighbor >= 0 && visited[neighbor])) continue;
+
+      const offset = pixelIndex * 4;
+      const red = data[offset];
+      const green = data[offset + 1];
+      const blue = data[offset + 2];
+      const minimum = Math.min(red, green, blue);
+      const maximum = Math.max(red, green, blue);
+      if (minimum >= 205 && maximum - minimum <= 22) {
+        data[offset + 3] = Math.round(data[offset + 3] * 0.30);
       }
     }
 
     context.putImageData(pixels, 0, 0);
     image.src = canvas.toDataURL("image/png");
+    image.dataset.c17CleanFrozenAsset = "true";
   };
   source.onerror = () => {
     image.src = assetName;
   };
   source.src = assetName;
+}
+
+function loadFrozenSocialAsset(image, assetName) {
+  loadFrozenAssetClean(image, assetName);
 }
 
 function scheduleFrozenSocialSwaps(originX, originY, duration) {
@@ -2312,9 +2382,9 @@ function scheduleFrozenSocialSwaps(originX, originY, duration) {
 
         if (frozenAsset) {
           frozenFace = document.createElement("img");
-          frozenFace.src = frozenAsset;
           frozenFace.alt = "";
           frozenFace.className = `c17-face-frozen c17-face-frozen-asset ${contact.direction}`;
+          loadFrozenSocialAsset(frozenFace, frozenAsset);
         } else {
           frozenFace = document.createElement("span");
           frozenFace.className = `c17-face-frozen ${contact.direction}`;
@@ -2354,7 +2424,7 @@ function scheduleFrozenSocialSwaps(originX, originY, duration) {
           ? "c17-frozen-social-asset c17-frozen-flame-asset"
           : "c17-frozen-social-asset";
         item.appendChild(image);
-        loadFrozenSocialAsset(image, frozenAsset, originalSymbol);
+        loadFrozenSocialAsset(image, frozenAsset);
       }
 
       item.classList.add("c17-social-frozen");
@@ -2376,7 +2446,7 @@ function trySwapFrozenFrank(profile) {
   const probe = new Image();
   probe.onload = () => {
     if (!profile.isConnected || !frostLocked) return;
-    image.src = frozenName;
+    loadFrozenAssetClean(image, frozenName);
     profile.classList.add("c17-frank-frozen-asset");
   };
   probe.onerror = () => {
@@ -2423,8 +2493,8 @@ function scheduleFrozenSymbolProfileLocks(originX, originY, duration) {
 
       if (sourceImage && frozenName) {
         frozenOverlay = document.createElement("img");
-        frozenOverlay.src = frozenName;
         frozenOverlay.alt = "";
+        loadFrozenAssetClean(frozenOverlay, frozenName);
         frozenOverlay.className = "c17-frozen-profile-overlay";
         frozenOverlay.setAttribute("aria-hidden", "true");
         profile.appendChild(frozenOverlay);
@@ -2439,7 +2509,7 @@ function scheduleFrozenSymbolProfileLocks(originX, originY, duration) {
         if (!profile.isConnected || !frostLocked) return;
 
         if (sourceImage && frozenName) {
-          sourceImage.src = frozenName;
+          loadFrozenAssetClean(sourceImage, frozenName);
         }
 
         if (frozenOverlay) frozenOverlay.remove();
@@ -2537,7 +2607,7 @@ function resolveFrozenHeartOutcome(originX, originY, duration) {
         frozenHeartImage.alt = "";
         heart.appendChild(frozenHeartImage);
       }
-      frozenHeartImage.src = FROZEN_STORY_HEART_ASSET;
+      loadFrozenAssetClean(frozenHeartImage, FROZEN_STORY_HEART_ASSET);
     }, freezeStart);
 
     frostSwapTimers.push(timer);
@@ -2763,7 +2833,7 @@ function retireTawnyaHeart() {
 
   const image = tawnyaRevealNode.querySelector("img");
   if (image) {
-    image.src = FROZEN_STORY_HEART_ASSET;
+    loadFrozenAssetClean(image, FROZEN_STORY_HEART_ASSET);
     image.alt = "";
   }
 
@@ -2807,7 +2877,7 @@ function revealTawnyaFromGreyHeart(heart, direction = "from-left") {
   tawnya.style.setProperty("--c17-object-freeze-ms", `${TAWNYA_TRANSFORM_MS}ms`);
 
   const image = document.createElement("img");
-  image.src = TAWNYA_ASSET;
+  loadFrozenAssetClean(image, TAWNYA_ASSET);
   image.alt = "Tawnya Grey";
   image.decoding = "sync";
   image.style.setProperty("display", "block", "important");
@@ -3120,4 +3190,4 @@ function c17UpdateLoaderPercentPass43() {
 setInterval(c17UpdateLoaderPercentPass43, 50);
 window.addEventListener("load", c17UpdateLoaderPercentPass43);
 
-/* heart57: red return fades grey, pop triggers carl flicker - timing patch marker */
+/* heart57: red return f
