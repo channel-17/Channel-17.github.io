@@ -11693,3 +11693,191 @@ html.frost-dead-world #percent {
   touch-action: manipulation !important;
   cursor: pointer !important;
 }
+
+/* =========================================================
+   BUILD 127+ FREEZE POLISH — ALIGNMENT / SOFT FROST / CLEAN PNGS
+========================================================= */
+
+/* Frozen social replacements inherit the stopped emoji center exactly. */
+.c17-frost-social-snapshot {
+  display: grid !important;
+  place-items: center !important;
+  line-height: 1 !important;
+  overflow: visible !important;
+  background: transparent !important;
+}
+
+.c17-frost-social-snapshot .c17-frozen-social-asset,
+.c17-frost-social-snapshot .c17-face-frozen-asset {
+  position: absolute !important;
+  left: 50% !important;
+  top: 50% !important;
+  width: 100% !important;
+  height: 100% !important;
+  max-width: none !important;
+  max-height: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+  object-fit: contain !important;
+  object-position: 50% 50% !important;
+  transform: translate(-50%, -50%) !important;
+  transform-origin: 50% 50% !important;
+  box-shadow: none !important;
+}
+
+/* Hearts keep the same stopped center without inheriting emoji baseline drift. */
+.c17-frost-social-snapshot.heart .c17-frozen-social-asset,
+.c17-frost-story-heart .c17-frozen-story-heart-asset {
+  left: 50% !important;
+  top: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  object-fit: contain !important;
+  background: transparent !important;
+}
+
+/* Frozen avatar artwork stays in the original 72px circular universe. */
+.c17-frost-profile-snapshot,
+.c17-frost-carl-snapshot,
+.c17-frost-frank-snapshot {
+  isolation: isolate !important;
+  background: transparent !important;
+}
+
+.c17-frost-profile-snapshot > img,
+.c17-frost-carl-snapshot > img,
+.c17-frost-frank-snapshot > img,
+.c17-frozen-profile-overlay {
+  left: 0 !important;
+  top: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center !important;
+  background: transparent !important;
+}
+
+/* Frost arrives as a soft, cloudy consumption rather than a hard mask edge. */
+.c17-frozen-profile-overlay {
+  -webkit-mask-image: radial-gradient(
+    ellipse 68% 62% at 48% 52%,
+    #000 0 34%,
+    rgba(0,0,0,.94) 48%,
+    rgba(0,0,0,.58) 66%,
+    transparent 84%
+  ) !important;
+  mask-image: radial-gradient(
+    ellipse 68% 62% at 48% 52%,
+    #000 0 34%,
+    rgba(0,0,0,.94) 48%,
+    rgba(0,0,0,.58) 66%,
+    transparent 84%
+  ) !important;
+  filter: blur(4px) brightness(.84) saturate(.82) !important;
+}
+
+@keyframes c17SoftFrozenAssetSpread {
+  0%, 10% {
+    opacity: 0;
+    -webkit-mask-size: 0% 0%;
+    mask-size: 0% 0%;
+    filter: blur(5px) brightness(.80) saturate(.72);
+  }
+  28% {
+    opacity: .24;
+    -webkit-mask-size: 42% 38%;
+    mask-size: 42% 38%;
+    filter: blur(4px) brightness(.84) saturate(.76);
+  }
+  52% {
+    opacity: .54;
+    -webkit-mask-size: 88% 80%;
+    mask-size: 88% 80%;
+    filter: blur(2.8px) brightness(.89) saturate(.82);
+  }
+  76% {
+    opacity: .82;
+    -webkit-mask-size: 146% 134%;
+    mask-size: 146% 134%;
+    filter: blur(1.2px) brightness(.95) saturate(.90);
+  }
+  100% {
+    opacity: 1;
+    -webkit-mask-size: 230% 215%;
+    mask-size: 230% 215%;
+    filter: none;
+  }
+}
+
+.c17-frost-profile-snapshot .c17-freeze-pixel-front {
+  inset: -24% !important;
+  background:
+    radial-gradient(ellipse 64% 58% at 46% 52%, rgba(235,251,255,.34) 0 16%, rgba(161,217,238,.24) 38%, rgba(67,145,180,.12) 61%, transparent 80%),
+    radial-gradient(ellipse 42% 54% at 62% 42%, rgba(213,244,250,.18), transparent 74%) !important;
+  filter: blur(7px) !important;
+}
+
+@keyframes c17SoftFrostVeil {
+  0%, 12% { opacity: 0; transform: scale(.12); }
+  34% { opacity: .30; transform: scale(.58); }
+  58% { opacity: .42; transform: scale(.96); }
+  82% { opacity: .22; transform: scale(1.34); }
+  100% { opacity: 0; transform: scale(1.78); }
+}
+
+/* No frozen PNG may paint its own backing plate. */
+img[data-c17-clean-frozen-asset="true"],
+.c17-frozen-social-asset,
+.c17-face-frozen-asset,
+.c17-frozen-profile-overlay,
+.c17-frozen-story-heart-asset,
+.c17-tawnya-reveal img {
+  background: transparent !important;
+}
+
+/* =========================================================
+   BUILD 127+ FREEZE POLISH — VERIFIED DELIVERY
+   Edge-cleaned frozen PNGs, exact snapshot alignment, soft avatar frost.
+========================================================= */
+.c17-frost-social-snapshot,
+.c17-frost-story-heart,
+.c17-tawnya-reveal {
+  transform: translate(-50%, -50%) !important;
+  transform-origin: 50% 50% !important;
+}
+
+.c17-frost-social-snapshot .c17-frozen-social-asset,
+.c17-frost-social-snapshot .c17-face-frozen-asset,
+.c17-frost-story-heart .c17-frozen-story-heart-asset,
+.c17-tawnya-reveal > img {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  margin: 0 !important;
+  object-fit: contain !important;
+  object-position: 50% 50% !important;
+  background: transparent !important;
+  border: 0 !important;
+}
+
+.c17-frost-profile-snapshot .c17-freeze-pixel-front {
+  inset: -8% !important;
+  border-radius: 50% !important;
+  background:
+    radial-gradient(circle at 48% 46%, rgba(220,244,255,.20) 0 16%, rgba(128,190,224,.16) 34%, rgba(60,112,154,.10) 58%, transparent 76%),
+    radial-gradient(circle at 62% 38%, rgba(240,252,255,.16), transparent 42%),
+    radial-gradient(circle at 36% 64%, rgba(98,164,204,.14), transparent 48%) !important;
+  filter: blur(7px) saturate(.88) !important;
+  clip-path: circle(0% at 50% 50%);
+  animation: c17SoftAvatarFrost var(--c17-object-freeze-ms, 5600ms) cubic-bezier(.18,.52,.16,1) forwards !important;
+}
+
+@keyframes c17SoftAvatarFrost {
+  0%   { opacity: 0; clip-path: circle(0% at 50% 50%); transform: scale(.82); }
+  20%  { opacity: .18; clip-path: circle(22% at 48% 52%); transform: scale(.90); }
+  48%  { opacity: .38; clip-path: circle(47% at 52% 48%); transform: scale(.98); }
+  76%  { opacity: .56; clip-path: circle(72% at 49% 51%); transform: scale(1.04); }
+  100% { opacity: .68; clip-path: circle(105% at 50% 50%); transform: scale(1.08); }
+}
