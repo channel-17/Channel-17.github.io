@@ -11881,3 +11881,23 @@ img[data-c17-clean-frozen-asset="true"],
   76%  { opacity: .56; clip-path: circle(72% at 49% 51%); transform: scale(1.04); }
   100% { opacity: .68; clip-path: circle(105% at 50% 50%); transform: scale(1.08); }
 }
+
+/* =========================================================
+   BUILD 130 — FREEZE SCREEN PINCH-ZOOM RESTORE
+   Keep the dead world frozen while allowing two-finger inspection.
+========================================================= */
+html.frost-time-stop,
+html.frost-time-stop body,
+html.frost-time-stop .screen,
+html.frost-dead-world,
+html.frost-dead-world body,
+html.frost-dead-world .screen {
+  touch-action: pinch-zoom !important;
+}
+
+/* Interactive secrets still own one-finger holds, but must not disable
+   a two-finger page zoom once the frozen world is established. */
+html.frost-dead-world .c17-tawnya-reveal,
+html.frost-dead-world .engage.snowflake {
+  touch-action: pinch-zoom !important;
+}
