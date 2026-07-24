@@ -11462,3 +11462,49 @@ html.frost-dead-world #percent {
 .c17-tawnya-reveal.tawnya-complete {
   cursor: default !important;
 }
+
+
+/* =========================================================
+   BRICK 140 — REPO ASSET WIRING / TAWNYA HEART
+========================================================= */
+
+.c17-tawnya-reveal,
+.c17-tawnya-reveal.tawnya-rewriting,
+.c17-tawnya-reveal.tawnya-complete {
+  min-width: 0 !important;
+  min-height: 0 !important;
+  max-width: none !important;
+  max-height: none !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  overflow: visible !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  filter: none !important;
+}
+
+.c17-tawnya-reveal img {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  filter: none !important;
+}
+
+.c17-face-frozen-asset,
+.c17-frozen-social-asset {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain !important;
+  display: block !important;
+}
+
+.c17-tawnya-reveal.tawnya-complete {
+  box-shadow: none !important;
+  filter: none !important;
+  cursor: default !important;
+}
