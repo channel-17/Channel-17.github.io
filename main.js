@@ -3190,4 +3190,4 @@ function c17UpdateLoaderPercentPass43() {
 setInterval(c17UpdateLoaderPercentPass43, 50);
 window.addEventListener("load", c17UpdateLoaderPercentPass43);
 
-/* heart57: red return f
+/* heart57: red return fades grey, pop triggers carl flicker - timing patch marker */
