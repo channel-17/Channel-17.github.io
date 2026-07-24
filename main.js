@@ -1833,7 +1833,8 @@ const FROZEN_ASSET_MAP = new Map([
   ["asset9.png", "Asset9.frozen.PNG"],
   ["assetcarl.png", "AssentCARL.frozen.PNG"],
   ["assetfrank.png", "AssetFRANK.frozen.PNG"],
-  ["femaleph1.png", "FemalePH1.frozen.PNG"]
+  ["femaleph1.png", "FemalePH1.frozen.PNG"],
+  ["female.ph1.png", "FemalePH1.frozen.PNG"]
 ]);
 
 const FROZEN_SOCIAL_ASSET_MAP = new Map([
@@ -1847,6 +1848,9 @@ const FROZEN_SOCIAL_ASSET_MAP = new Map([
 
 let tawnyaRevealNode = null;
 let tawnyaProfileOverlay = null;
+let tawnyaHoldTimer = null;
+let tawnyaHoldPointerId = null;
+let tawnyaRetired = false;
 let frostActorSnapshots = [];
 
 function clearFrostActorSnapshots() {
@@ -2407,19 +2411,40 @@ function scheduleFrozenSymbolProfileLocks(originX, originY, duration) {
         contact.direction
       );
 
-      if (profile.dataset.frostFrank === "true") {
-        trySwapFrozenFrank(profile);
+      const sourceImage = profile.querySelector("img");
+      const sourceName = sourceImage
+        ? normalizeAssetName(sourceImage.getAttribute("src") || sourceImage.src)
+        : "";
+      const frozenName = profile.dataset.frostFrank === "true"
+        ? "AssetFRANK.frozen.PNG"
+        : FROZEN_ASSET_MAP.get(sourceName);
+
+      let frozenOverlay = null;
+
+      if (sourceImage && frozenName) {
+        frozenOverlay = document.createElement("img");
+        frozenOverlay.src = frozenName;
+        frozenOverlay.alt = "";
+        frozenOverlay.className = "c17-frozen-profile-overlay";
+        frozenOverlay.setAttribute("aria-hidden", "true");
+        profile.appendChild(frozenOverlay);
       }
 
       const pixelFront = document.createElement("span");
-      pixelFront.className = `c17-freeze-pixel-front ${contact.direction}`;
+      pixelFront.className = "c17-freeze-pixel-front";
       pixelFront.setAttribute("aria-hidden", "true");
       profile.appendChild(pixelFront);
 
       const finishTimer = setTimeout(() => {
         if (!profile.isConnected || !frostLocked) return;
 
+        if (sourceImage && frozenName) {
+          sourceImage.src = frozenName;
+        }
+
+        if (frozenOverlay) frozenOverlay.remove();
         pixelFront.remove();
+
         profile.classList.remove(
           "c17-symbol-profile-freezing",
           "from-left",
@@ -2728,14 +2753,41 @@ function openTawnyaProfile() {
   overlay.setAttribute("aria-hidden", "false");
 }
 
+function retireTawnyaHeart() {
+  if (!tawnyaRevealNode || !tawnyaRevealNode.isConnected) return;
+
+  tawnyaRetired = true;
+  window.clearTimeout(tawnyaHoldTimer);
+  tawnyaHoldTimer = null;
+  tawnyaHoldPointerId = null;
+
+  const image = tawnyaRevealNode.querySelector("img");
+  if (image) {
+    image.src = FROZEN_STORY_HEART_ASSET;
+    image.alt = "";
+  }
+
+  tawnyaRevealNode.classList.remove(
+    "tawnya-holding",
+    "tawnya-thawed",
+    "tawnya-rewriting"
+  );
+  tawnyaRevealNode.classList.add("tawnya-retired", "tawnya-complete");
+  tawnyaRevealNode.setAttribute("aria-label", "frozen cracked heart");
+  tawnyaRevealNode.disabled = true;
+  tawnyaRevealNode.style.setProperty("pointer-events", "none", "important");
+}
+
 function closeTawnyaProfile() {
   if (!tawnyaProfileOverlay) return;
   tawnyaProfileOverlay.classList.remove("open");
   tawnyaProfileOverlay.setAttribute("aria-hidden", "true");
+  retireTawnyaHeart();
 }
 
 function revealTawnyaFromGreyHeart(heart, direction = "from-left") {
   if (!heart || !heart.isConnected || tawnyaRevealNode) return;
+  tawnyaRetired = false;
 
   const rect = heart.getBoundingClientRect();
   const centerX = Math.max(44, Math.min(window.innerWidth - 44, rect.left + rect.width / 2));
@@ -2877,10 +2929,70 @@ function revealTawnyaFromGreyHeart(heart, direction = "from-left") {
 
   frostSwapTimers.push(timer);
 
-  tawnya.addEventListener("click", () => {
-    if (!tawnya.classList.contains("tawnya-complete")) return;
+  const cancelTawnyaHold = () => {
+    window.clearTimeout(tawnyaHoldTimer);
+    tawnyaHoldTimer = null;
+    tawnyaHoldPointerId = null;
+    tawnya.classList.remove("tawnya-holding");
+  };
+
+  const completeTawnyaHold = () => {
+    if (
+      tawnyaRetired ||
+      !tawnya.isConnected ||
+      !tawnya.classList.contains("tawnya-complete")
+    ) {
+      cancelTawnyaHold();
+      return;
+    }
+
+    tawnya.classList.remove("tawnya-holding");
+    tawnya.classList.add("tawnya-thawed");
+    tawnyaHoldTimer = null;
+    tawnyaHoldPointerId = null;
+
     openTawnyaProfile();
     document.dispatchEvent(new CustomEvent("c17:tawnya-open"));
+  };
+
+  tawnya.addEventListener("pointerdown", event => {
+    if (
+      tawnyaRetired ||
+      tawnya.disabled ||
+      !tawnya.classList.contains("tawnya-complete")
+    ) return;
+
+    event.preventDefault();
+    event.stopPropagation();
+
+    cancelTawnyaHold();
+    tawnyaHoldPointerId = event.pointerId;
+    tawnya.classList.add("tawnya-holding");
+
+    try {
+      tawnya.setPointerCapture(event.pointerId);
+    } catch (error) {
+      /* Safari may decline capture; the hold still works. */
+    }
+
+    tawnyaHoldTimer = window.setTimeout(completeTawnyaHold, 3000);
+  });
+
+  ["pointerup", "pointercancel", "pointerleave", "lostpointercapture"].forEach(type => {
+    tawnya.addEventListener(type, event => {
+      if (
+        tawnyaHoldPointerId !== null &&
+        event.pointerId !== undefined &&
+        event.pointerId !== tawnyaHoldPointerId
+      ) return;
+
+      if (tawnyaHoldTimer) cancelTawnyaHold();
+    });
+  });
+
+  tawnya.addEventListener("click", event => {
+    event.preventDefault();
+    event.stopPropagation();
   });
 }
 
