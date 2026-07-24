@@ -1817,7 +1817,8 @@ const POST_FROST_CONTACT_PAUSE_MS = 1180;
 const PROFILE_CONTACT_PAUSE_MS = 1850;
 const TAWNYA_CONTACT_PAUSE_MS = 1450;
 const TAWNYA_TRANSFORM_MS = 7600;
-const TAWNYA_ASSET = "Tawnya.frozen.PNG";
+const TAWNYA_ASSET = "AssetTAWNYA.frozen.png";
+const TAWNYA_PROFILE_ASSET = "AssetTAWNYA.thawed.PNG";
 const FROZEN_STORY_HEART_ASSET = "LMT.frozen.PNG";
 
 const FROZEN_ASSET_MAP = new Map([
@@ -1830,10 +1831,16 @@ const FROZEN_ASSET_MAP = new Map([
   ["asset7.png", "Asset7.frozen.PNG"],
   ["asset8.png", "Asset8.frozen.PNG"],
   ["asset9.png", "Asset9.frozen.PNG"],
-  ["assetcarl.png", "Carl.frozen.PNG"]
+  ["assetcarl.png", "AssentCARL.frozen.PNG"],
+  ["assetfrank.png", "AssetFRANK.frozen.PNG"],
+  ["femaleph1.png", "FemalePH1.frozen.PNG"]
 ]);
 
 const FROZEN_SOCIAL_ASSET_MAP = new Map([
+  ["❤️", "REDheart.frozen.PNG"],
+  ["🩷", "PINKheart.frozen.PNG"],
+  ["😍", "Asset.hearteyes.frozen.PNG"],
+  ["🥰", "Asset.3hearts.frozen.PNG"],
   ["🔥", "Asset.flame.frozen.PNG"],
   ["👎", "Asset.thumbsdown.frozen.PNG"]
 ]);
@@ -2297,9 +2304,18 @@ function scheduleFrozenSocialSwaps(originX, originY, duration) {
         originalFace.className = "c17-face-original";
         originalFace.textContent = originalSymbol;
 
-        const frozenFace = document.createElement("span");
-        frozenFace.className = `c17-face-frozen ${contact.direction}`;
-        frozenFace.textContent = "🥶";
+        let frozenFace;
+
+        if (frozenAsset) {
+          frozenFace = document.createElement("img");
+          frozenFace.src = frozenAsset;
+          frozenFace.alt = "";
+          frozenFace.className = `c17-face-frozen c17-face-frozen-asset ${contact.direction}`;
+        } else {
+          frozenFace = document.createElement("span");
+          frozenFace.className = `c17-face-frozen ${contact.direction}`;
+          frozenFace.textContent = "🥶";
+        }
 
         item.style.setProperty("--c17-object-freeze-ms", `${OBJECT_FREEZE_MS}ms`);
         item.appendChild(originalFace);
@@ -2351,8 +2367,7 @@ function trySwapFrozenFrank(profile) {
   const image = profile.querySelector("img");
   if (!image) return;
 
-  const sourceName = profile.dataset.frostFrankSource || getAssetFilename(image.src);
-  const frozenName = sourceName.replace(/\.png$/i, ".frozen.PNG");
+  const frozenName = "AssetFRANK.frozen.PNG";
 
   const probe = new Image();
   probe.onload = () => {
@@ -2681,7 +2696,7 @@ function ensureTawnyaProfileOverlay() {
     <article class="c17-tawnya-profile-card" role="dialog" aria-modal="true" aria-label="Tawnya Grey profile">
       <button class="c17-tawnya-profile-close" type="button" aria-label="close Tawnya profile">×</button>
       <div class="c17-tawnya-file-label">RECOVERED BLUE PROFILE</div>
-      <img class="c17-tawnya-profile-image" src="Tawnya.profile.PNG" alt="Tawnya Grey">
+      <img class="c17-tawnya-profile-image" src="${TAWNYA_PROFILE_ASSET}" alt="Tawnya Grey">
       <h2>Tawnya Grey</h2>
       <p class="c17-tawnya-status">in a relationship with <strong>Thomas Doggon Foolery</strong></p>
       <section class="c17-tawnya-profile-block">
@@ -2731,6 +2746,8 @@ function revealTawnyaFromGreyHeart(heart, direction = "from-left") {
   tawnya.setAttribute("aria-label", "open Tawnya Grey profile");
   tawnya.style.setProperty("left", `${centerX}px`, "important");
   tawnya.style.setProperty("top", `${centerY}px`, "important");
+  tawnya.style.setProperty("width", `${rect.width}px`, "important");
+  tawnya.style.setProperty("height", `${rect.height}px`, "important");
   tawnya.style.setProperty("z-index", "2147483645", "important");
   tawnya.style.setProperty("display", "grid", "important");
   tawnya.style.setProperty("opacity", "1", "important");
@@ -2774,48 +2791,48 @@ function revealTawnyaFromGreyHeart(heart, direction = "from-left") {
       {
         opacity: 0,
         transform: "scale(.08)",
-        clipPath: "circle(0% at 50% 50%)",
+        clipPath: "inset(50% 50% 50% 50%)",
         filter: "blur(7px) brightness(.68) saturate(.42)"
       },
       {
         opacity: .06,
         transform: "scale(.18)",
-        clipPath: "circle(7% at 50% 50%)",
+        clipPath: "inset(43% 43% 43% 43%)",
         filter: "blur(6px) brightness(.72) saturate(.48)",
         offset: .20
       },
       {
         opacity: .16,
         transform: "scale(.31)",
-        clipPath: "circle(15% at 50% 50%)",
+        clipPath: "inset(34% 34% 34% 34%)",
         filter: "blur(5px) brightness(.78) saturate(.56)",
         offset: .38
       },
       {
         opacity: .34,
         transform: "scale(.48)",
-        clipPath: "circle(26% at 50% 50%)",
+        clipPath: "inset(25% 25% 25% 25%)",
         filter: "blur(3.5px) brightness(.84) saturate(.66)",
         offset: .56
       },
       {
         opacity: .58,
         transform: "scale(.66)",
-        clipPath: "circle(37% at 50% 50%)",
+        clipPath: "inset(16% 16% 16% 16%)",
         filter: "blur(2px) brightness(.90) saturate(.76)",
         offset: .72
       },
       {
         opacity: .82,
         transform: "scale(.84)",
-        clipPath: "circle(46% at 50% 50%)",
+        clipPath: "inset(7% 7% 7% 7%)",
         filter: "blur(.8px) brightness(.96) saturate(.88)",
         offset: .88
       },
       {
         opacity: 1,
         transform: "scale(1)",
-        clipPath: "circle(50% at 50% 50%)",
+        clipPath: "inset(0% 0% 0% 0%)",
         filter: "none"
       }
     ],
