@@ -2793,7 +2793,7 @@ function ensureTawnyaProfileOverlay() {
           html: `
             <div class="c17-dossier-kicker">UNFINISHED PUBLIC PROFILE // RECOVERED CACHE</div>
             <section class="c17-dating-hero">
-              <img class="c17-dating-photo" src="${TAWNYA_PROFILE_ASSET}" alt="Tawnya Grey dating profile">
+              <div class="c17-media-placeholder c17-media-placeholder-portrait" role="img" aria-label="dating profile photo placeholder"><span>×</span><b>PROFILE PHOTO</b><small>ASSET PENDING</small></div>
               <div class="c17-dating-copy">
                 <h2>Tawnya Grey</h2>
                 <p class="c17-dossier-subline">27 · Western Massachusetts · active 14 minutes ago</p>
@@ -2811,7 +2811,7 @@ function ensureTawnyaProfileOverlay() {
         },
         photos: {
           label: "PHOTOS",
-          html: `<div class="c17-dossier-kicker">SUBJECT-SELECTED MEDIA</div><h2>Dating Photos</h2><div class="c17-record-stack"><article><b>01 — Main profile</b><p>Bikini-barista era image. Heavy crop. Background removed.</p></article><article><b>02 — Skatepark</b><p>Board under one arm. Sun-faded green Silverado visible behind subject.</p></article><article><b>03 — Karaoke</b><p>Subject holding microphone. Crowd appears unexpectedly attentive.</p></article><article><b>04 — Ball python</b><p>Only image in which subject appears entirely calm.</p></article></div>`
+          html: `<div class="c17-dossier-kicker">SUBJECT-SELECTED MEDIA</div><h2>Dating Photos</h2><div class="c17-photo-placeholder-grid"><div class="c17-media-placeholder"><span>×</span><b>01 — MAIN PROFILE</b><small>BIKINI-BARISTA ERA</small></div><div class="c17-media-placeholder"><span>×</span><b>02 — SKATEPARK</b><small>TRUCK IN BACKGROUND</small></div><div class="c17-media-placeholder"><span>×</span><b>03 — KARAOKE</b><small>MICROPHONE / CROWD</small></div><div class="c17-media-placeholder"><span>×</span><b>04 — BALL PYTHON</b><small>CALM SUBJECT</small></div></div>`
         },
         likes: {
           label: "LIKES",
@@ -2828,7 +2828,7 @@ function ensureTawnyaProfileOverlay() {
       pages: {
         overview: {
           label: "OVERVIEW",
-          html: `<div class="c17-dossier-kicker">COUNTY RECORDS MIRROR // RESTRICTED</div><h2>Criminal Overview</h2><p class="c17-dossier-subline">17 documented incidents · no prison history</p><section class="c17-criminal-hero"><div class="c17-booking-placeholder">BOOKING PHOTO<br>TAWNYA GREY</div><div class="c17-dossier-body"><p><b>Classification:</b> repeat misdemeanor subject / local nuisance.</p><p><b>Known pattern:</b> rapid escalation, refusal to retreat, retaliatory contact, hostile explanation.</p><p><b>Felony convictions:</b> none located.</p><p><b>County lockup:</b> multiple overnight holds.</p><aside>Officer note: subject is known by first name to multiple responding departments.</aside></div></section>`
+          html: `<div class="c17-dossier-kicker">COUNTY RECORDS MIRROR // RESTRICTED</div><h2>Criminal Overview</h2><p class="c17-dossier-subline">17 documented incidents · no prison history</p><section class="c17-criminal-hero"><div class="c17-media-placeholder c17-media-placeholder-booking"><span>×</span><b>BOOKING PHOTO</b><small>TAWNYA GREY</small></div><div class="c17-dossier-body"><p><b>Classification:</b> repeat misdemeanor subject / local nuisance.</p><p><b>Known pattern:</b> rapid escalation, refusal to retreat, retaliatory contact, hostile explanation.</p><p><b>Felony convictions:</b> none located.</p><p><b>County lockup:</b> multiple overnight holds.</p><aside>Officer note: subject is known by first name to multiple responding departments.</aside></div></section>`
         },
         reports: {
           label: "17 REPORTS",
@@ -2836,7 +2836,7 @@ function ensureTawnyaProfileOverlay() {
         },
         booking: {
           label: "BOOKING",
-          html: `<div class="c17-dossier-kicker">INTAKE PHOTOGRAPHY</div><h2>Booking</h2><div class="c17-booking-grid"><div class="c17-booking-placeholder">FRONT VIEW<br>IMAGE PENDING</div><div class="c17-booking-placeholder">PROFILE VIEW<br>IMAGE PENDING</div></div>`
+          html: `<div class="c17-dossier-kicker">INTAKE PHOTOGRAPHY</div><h2>Booking</h2><div class="c17-booking-grid"><div class="c17-media-placeholder c17-media-placeholder-booking"><span>×</span><b>FRONT VIEW</b><small>IMAGE PENDING</small></div><div class="c17-media-placeholder c17-media-placeholder-booking"><span>×</span><b>PROFILE VIEW</b><small>IMAGE PENDING</small></div></div>`
         },
         notes: {
           label: "OFFICER NOTES",
@@ -2878,6 +2878,23 @@ function ensureTawnyaProfileOverlay() {
         }
       }
     },
+    medical: {
+      label: "MEDICAL",
+      pages: {
+        overview: {
+          label: "OVERVIEW",
+          html: `<div class="c17-dossier-kicker">REGIONAL HEALTH NETWORK // PARTIAL MIRROR</div><h2>Medical</h2><section class="c17-medical-layout"><div class="c17-media-placeholder c17-media-placeholder-medical"><span>×</span><b>PATIENT ID PHOTO</b><small>IMAGE PENDING</small></div><div class="c17-record-stack"><article><span>STATUS</span><b>INCOMPLETE RECORD</b><p>No major chronic condition confirmed in recovered materials.</p></article><article><span>RISK NOTE</span><b>REPEAT MINOR TRAUMA</b><p>Skateboarding falls, altercations, and work-related injuries appear throughout intake history.</p></article></div></section>`
+        },
+        imaging: {
+          label: "IMAGING",
+          html: `<div class="c17-dossier-kicker">DIAGNOSTIC IMAGING ARCHIVE</div><h2>X-Rays</h2><div class="c17-photo-placeholder-grid"><div class="c17-media-placeholder c17-media-placeholder-medical"><span>×</span><b>LEFT WRIST</b><small>X-RAY PLACEHOLDER</small></div><div class="c17-media-placeholder c17-media-placeholder-medical"><span>×</span><b>RIGHT ANKLE</b><small>X-RAY PLACEHOLDER</small></div><div class="c17-media-placeholder c17-media-placeholder-medical"><span>×</span><b>RIB SERIES</b><small>IMAGE PLACEHOLDER</small></div><div class="c17-media-placeholder c17-media-placeholder-medical"><span>×</span><b>DENTAL</b><small>IMAGE PLACEHOLDER</small></div></div>`
+        },
+        intake: {
+          label: "INTAKE",
+          html: `<div class="c17-dossier-kicker">EMERGENCY INTAKE DOCUMENTS</div><h2>Intake</h2><div class="c17-record-stack"><article><b>Emergency wristband</b><p>Placeholder retained pending final asset.</p></article><article><b>Discharge packet</b><p>Subject repeatedly declined recommended rest periods.</p></article><article><b>Staff notation</b><p>Patient cooperative until advised she could not leave to smoke.</p></article></div>`
+        }
+      }
+    },
     government: {
       label: "GOV NOTES",
       pages: {
@@ -2888,6 +2905,10 @@ function ensureTawnyaProfileOverlay() {
         analyst: {
           label: "ANALYST NOTE",
           html: `<div class="c17-dossier-kicker">ANALYST COMMENTARY</div><h2>Analyst Note</h2><blockquote>I genuinely cannot determine whether Grey is a public nuisance, catastrophically unlucky, or the only honest person in the county.</blockquote>`
+        },
+        surveillance: {
+          label: "SURVEILLANCE",
+          html: `<div class="c17-dossier-kicker">FIELD OBSERVATION // VISUAL EVIDENCE</div><h2>Surveillance</h2><div class="c17-photo-placeholder-grid"><div class="c17-media-placeholder c17-media-placeholder-surveillance"><span>×</span><b>TRAILER EXTERIOR</b><small>FRAME PENDING</small></div><div class="c17-media-placeholder c17-media-placeholder-surveillance"><span>×</span><b>1991 SILVERADO</b><small>FRAME PENDING</small></div><div class="c17-media-placeholder c17-media-placeholder-surveillance"><span>×</span><b>SKATEPARK</b><small>FRAME PENDING</small></div><div class="c17-media-placeholder c17-media-placeholder-surveillance"><span>×</span><b>KARAOKE VENUE</b><small>FRAME PENDING</small></div></div>`
         },
         redacted: {
           label: "REDACTED",
@@ -2969,10 +2990,38 @@ function ensureTawnyaProfileOverlay() {
   return tawnyaProfileOverlay;
 }
 
+function syncTawnyaDossierToVisibleScreen() {
+  if (!tawnyaProfileOverlay || !tawnyaProfileOverlay.isConnected) return;
+
+  const viewport = window.visualViewport;
+  const width = viewport ? viewport.width : window.innerWidth;
+  const height = viewport ? viewport.height : window.innerHeight;
+  const left = viewport ? viewport.offsetLeft : 0;
+  const top = viewport ? viewport.offsetTop : 0;
+
+  tawnyaProfileOverlay.style.setProperty("left", `${left}px`, "important");
+  tawnyaProfileOverlay.style.setProperty("top", `${top}px`, "important");
+  tawnyaProfileOverlay.style.setProperty("right", "auto", "important");
+  tawnyaProfileOverlay.style.setProperty("bottom", "auto", "important");
+  tawnyaProfileOverlay.style.setProperty("width", `${width}px`, "important");
+  tawnyaProfileOverlay.style.setProperty("height", `${height}px`, "important");
+}
+
 function openTawnyaProfile() {
   const overlay = ensureTawnyaProfileOverlay();
+  syncTawnyaDossierToVisibleScreen();
   overlay.classList.add("open");
   overlay.setAttribute("aria-hidden", "false");
+
+  if (!overlay.dataset.viewportSyncBound) {
+    overlay.dataset.viewportSyncBound = "true";
+    window.addEventListener("resize", syncTawnyaDossierToVisibleScreen, { passive: true });
+    window.addEventListener("orientationchange", syncTawnyaDossierToVisibleScreen, { passive: true });
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener("resize", syncTawnyaDossierToVisibleScreen, { passive: true });
+      window.visualViewport.addEventListener("scroll", syncTawnyaDossierToVisibleScreen, { passive: true });
+    }
+  }
 }
 
 function retireTawnyaHeart() {
