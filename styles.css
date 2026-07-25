@@ -11928,3 +11928,138 @@ html.frost-dead-world .engage.snowflake {
 .c17-record-stack{display:grid;gap:11px;margin-top:22px}.c17-record-stack article{padding:12px;border:2px solid #071114;background:rgba(255,255,255,.42)}.c17-record-stack article>b{display:block;margin-bottom:5px;font:900 17px/1.15 Arial,sans-serif}.c17-record-stack article>span{display:inline-block;margin-bottom:7px;padding:3px 6px;color:#fff;background:#071114;font-size:10px;font-weight:900}.c17-record-stack p{margin:4px 0;font:15px/1.4 Arial,sans-serif}.c17-record-stack q{display:block;margin-top:8px;font-weight:900}
 .c17-booking-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin-top:22px}.c17-booking-placeholder{aspect-ratio:4/5;display:grid;place-items:end center;padding:15px;border:3px solid #071114;background:repeating-linear-gradient(to bottom,transparent 0 39px,rgba(7,17,20,.22) 39px 41px),#a9c1c2;font-weight:900;text-align:center}.c17-criminal-hero aside{padding:11px;border-left:5px solid #1f6fd6;background:rgba(31,111,214,.1);font-weight:800}.c17-dossier-document blockquote{margin:22px 0;padding:18px;border:2px solid #071114;background:rgba(255,255,255,.46);font:900 18px/1.5 Arial,sans-serif}
 @media(max-width:620px){.c17-dossier-overlay{padding-left:3px!important;padding-right:3px!important}.c17-tawnya-dossier{width:100%;height:96svh}.c17-dossier-header span{max-width:calc(100% - 40px);font-size:9px}.c17-dossier-footer .c17-dossier-path{display:none}.c17-dossier-stage{padding:8px 0 8px 8px}.c17-dossier-document{padding:14px 12px 20px}.c17-dossier-side-tabs{width:75px;gap:5px;padding-top:11px}.c17-dossier-side-tabs button{min-height:42px;padding:5px 4px;font-size:9px}.c17-dossier-top-tabs button{min-width:76px;padding:0 8px;font-size:9px}.c17-dating-hero,.c17-criminal-hero{grid-template-columns:92px minmax(0,1fr);gap:11px}.c17-fact-grid{grid-template-columns:1fr;gap:5px}.c17-dossier-body{font-size:14px}.c17-booking-grid{gap:9px}}
+
+
+/* =========================================================
+   BRICK 133 — TAWNYA DOSSIER SCREEN-LOCK + PLACEHOLDER PASS
+   The profile remains fitted to the visible iPhone viewport even when
+   the frozen world was pinch-zoomed before the file opened.
+========================================================= */
+.c17-tawnya-profile-overlay.c17-dossier-overlay {
+  position: fixed !important;
+  inset: auto !important;
+  z-index: 2147483647 !important;
+  display: grid !important;
+  place-items: center !important;
+  overflow: hidden !important;
+  box-sizing: border-box !important;
+  transform: none !important;
+  transform-origin: 0 0 !important;
+  isolation: isolate !important;
+  touch-action: none !important;
+}
+
+.c17-tawnya-dossier {
+  position: relative !important;
+  width: calc(100% - 8px) !important;
+  height: calc(100% - 12px) !important;
+  max-width: 980px !important;
+  max-height: 780px !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  transform: none !important;
+}
+
+.c17-tawnya-dossier .c17-tawnya-profile-close {
+  position: static !important;
+  inset: auto !important;
+  z-index: 30 !important;
+  width: 38px !important;
+  height: 38px !important;
+  min-width: 38px !important;
+  min-height: 38px !important;
+  line-height: 1 !important;
+}
+
+.c17-dossier-stage,
+.c17-dossier-document,
+.c17-dossier-side-tabs {
+  min-width: 0 !important;
+  min-height: 0 !important;
+}
+
+/* The center sheet is now unmistakably part of the blue restricted file. */
+.c17-dossier-document {
+  color: #eafcff !important;
+  background:
+    linear-gradient(rgba(142,225,255,.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(142,225,255,.035) 1px, transparent 1px),
+    linear-gradient(180deg, #153e59 0%, #0b2a43 52%, #061a2c 100%) !important;
+  background-size: 24px 24px, 24px 24px, auto !important;
+  border-color: rgba(126,224,255,.42) !important;
+  box-shadow: 8px 11px 0 rgba(0,0,0,.28), inset 0 0 40px rgba(99,211,255,.055) !important;
+}
+.c17-dossier-document h2 { color: #f3fdff !important; text-shadow: 0 0 18px rgba(70,231,255,.12); }
+.c17-dossier-kicker,
+.c17-dossier-subline,
+.c17-fact-grid dt { color: #83dff1 !important; }
+.c17-fact-grid div { border-bottom-color: rgba(169,232,244,.22) !important; }
+.c17-dossier-body,
+.c17-fact-grid dd,
+.c17-record-stack p,
+.c17-record-stack q { color: #e5f7fa !important; }
+.c17-record-stack article,
+.c17-dossier-document blockquote {
+  color: #eefcff !important;
+  border-color: rgba(144,224,241,.62) !important;
+  background: rgba(0,17,35,.48) !important;
+}
+.c17-record-stack article > span { background: #46e7ff !important; color: #001014 !important; }
+.c17-incomplete-box { color: #ffd8dc !important; border-color: #ff6675 !important; background: rgba(255,40,64,.13) !important; }
+.c17-criminal-hero aside { color: #eafcff !important; border-left-color: #46e7ff !important; background: rgba(70,231,255,.10) !important; }
+
+.c17-media-placeholder {
+  position: relative;
+  min-height: 190px;
+  display: grid;
+  grid-template-rows: 1fr auto auto;
+  place-items: center;
+  align-content: center;
+  gap: 4px;
+  padding: 12px;
+  overflow: hidden;
+  border: 2px solid rgba(174,233,245,.76);
+  color: #dffaff;
+  background:
+    linear-gradient(135deg, transparent 49.2%, rgba(164,231,244,.42) 49.5% 50.5%, transparent 50.8%),
+    linear-gradient(45deg, transparent 49.2%, rgba(164,231,244,.42) 49.5% 50.5%, transparent 50.8%),
+    repeating-linear-gradient(to bottom, rgba(255,255,255,.025) 0 7px, rgba(0,0,0,.08) 8px 9px),
+    #0b263b;
+  box-shadow: inset 0 0 30px rgba(70,231,255,.07);
+  text-align: center;
+}
+.c17-media-placeholder > span {
+  display: grid;
+  place-items: center;
+  align-self: end;
+  color: rgba(203,245,252,.88);
+  font: 200 clamp(70px,18vw,150px)/.62 Arial,sans-serif;
+  text-shadow: 0 0 20px rgba(70,231,255,.18);
+}
+.c17-media-placeholder > b { align-self: end; font: 900 12px/1.15 "Courier New", monospace; letter-spacing: .08em; }
+.c17-media-placeholder > small { color: rgba(204,241,247,.58); font: 800 9px/1.1 "Courier New", monospace; letter-spacing: .08em; }
+.c17-media-placeholder-portrait { width: 100%; aspect-ratio: 4 / 5; min-height: 0; }
+.c17-media-placeholder-booking { aspect-ratio: 4 / 5; min-height: 0; }
+.c17-media-placeholder-medical { background-color: #0d3048; }
+.c17-media-placeholder-surveillance { background-color: #071c2b; }
+.c17-photo-placeholder-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; margin-top:18px; }
+.c17-medical-layout { display:grid; grid-template-columns:minmax(120px,190px) minmax(0,1fr); gap:18px; align-items:start; }
+
+@media (max-width: 620px) {
+  .c17-tawnya-dossier { width: calc(100% - 4px) !important; height: calc(100% - 6px) !important; }
+  .c17-dossier-header { min-height: 43px; padding: 4px 6px !important; }
+  .c17-dossier-top-tabs { min-height: 43px !important; padding-top: 4px !important; }
+  .c17-dossier-top-tabs button { min-width: 74px !important; height: 35px !important; }
+  .c17-dossier-top-tabs button.active { height: 39px !important; }
+  .c17-dossier-stage { grid-template-columns:minmax(0,1fr) 72px !important; padding:6px 0 6px 6px !important; }
+  .c17-dossier-document { padding:12px 10px 18px !important; }
+  .c17-dossier-document h2 { font-size: clamp(27px, 10vw, 42px) !important; }
+  .c17-dating-hero,
+  .c17-criminal-hero,
+  .c17-medical-layout { grid-template-columns: 88px minmax(0,1fr) !important; gap: 10px !important; }
+  .c17-media-placeholder { min-height: 145px; padding:8px; }
+  .c17-media-placeholder-portrait,
+  .c17-media-placeholder-booking { min-height:0; }
+  .c17-media-placeholder > span { font-size: clamp(56px, 19vw, 96px); }
+  .c17-photo-placeholder-grid { gap:8px; }
+}
