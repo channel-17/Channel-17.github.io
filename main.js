@@ -2789,37 +2789,92 @@ function ensureTawnyaProfileOverlay() {
       label: "DATING",
       pages: {
         profile: {
-          label: "PROFILE",
+          label: "MAIN PROFILE",
           html: `
-            <div class="c17-dossier-kicker">UNFINISHED PUBLIC PROFILE // RECOVERED CACHE</div>
-            <section class="c17-dating-hero">
-              <div class="c17-media-placeholder c17-media-placeholder-portrait" role="img" aria-label="dating profile photo placeholder"><span>×</span><b>PROFILE PHOTO</b><small>ASSET PENDING</small></div>
+            <div class="c17-dossier-kicker">RECOVERED DATING PROFILE // SUBJECT CONTROLLED</div>
+            <section class="c17-dating-hero c17-dating-hero-expanded">
+              <figure class="c17-dating-main-figure">
+                <img class="c17-dating-photo c17-tawnya-main-photo" src="Tawnya.profile.main.jpeg" alt="Tawnya Grey main dating profile photo">
+                <figcaption>PRIMARY PROFILE IMAGE // RECOVERED</figcaption>
+              </figure>
               <div class="c17-dating-copy">
                 <h2>Tawnya Grey</h2>
                 <p class="c17-dossier-subline">27 · Western Massachusetts · active 14 minutes ago</p>
-                <div class="c17-relationship-stamp">IN A RELATIONSHIP WITH BAD DECISIONS AND SHIT LUCK</div>
+                <div class="c17-relationship-stamp">CURRENT STATUS: IN A RELATIONSHIP WITH THOMAS DOGGON FOOLERY</div>
                 <dl class="c17-fact-grid">
-                  <div><dt>LOOKING FOR</dt><dd>Love that survives impact</dd></div>
+                  <div><dt>LOOKING FOR</dt><dd>Someone who stays</dd></div>
                   <div><dt>FAVORITE DRINK</dt><dd>Frozen margaritas</dd></div>
-                  <div><dt>HOBBY</dt><dd>Born skater</dd></div>
+                  <div><dt>LOVE LANGUAGE</dt><dd>Showing up when it matters</dd></div>
                   <div><dt>PERSONAL LAW</dt><dd>Love finds a way</dd></div>
                 </dl>
-                <p class="c17-dossier-body"><b>About me:</b> Country girl when it counts. I own my trailer, own my truck, pay my bills, and mind my business until somebody makes their business mine. I sing karaoke better than you expect and everything tastes better off a charcoal grill.</p>
               </div>
             </section>
-            <div class="c17-incomplete-box"><b>PROFILE 63% COMPLETE</b><br>Missing: ideal first date, five-year plan, and evidence of sound judgment.</div>`
+
+            <section class="c17-dating-section">
+              <h3>ABOUT ME</h3>
+              <p class="c17-dossier-body">Country girl when it counts. I own my trailer, own my truck, pay my bills, and mind my business until somebody makes their business mine. I skate, sing karaoke better than you expect, keep a ball python, and believe everything tastes better off a charcoal grill.</p>
+              <p class="c17-dossier-body">People think I’m heartless because I’m loud when I’m hurt. They’re usually wrong about the first part.</p>
+            </section>
+
+            <section class="c17-dating-prompts">
+              <article><span>PROMPT 01</span><b>The quickest way to my heart is…</b><p>Be honest, bring charcoal, and don’t act embarrassed when I sing.</p></article>
+              <article><span>PROMPT 02</span><b>A perfect first date is…</b><p>Back-road drive in the Silverado, cheap food, a place to skate, then karaoke until somebody asks us to leave.</p></article>
+              <article><span>PROMPT 03</span><b>Something people get wrong about me…</b><p>I’m not cold. I just learned early that crying in front of the wrong person gives them instructions.</p></article>
+            </section>
+
+            <div class="c17-incomplete-box"><b>PROFILE 86% COMPLETE</b><br>Missing: five-year plan, verified emergency contact, and evidence of sound romantic judgment.</div>`
         },
         photos: {
           label: "PHOTOS",
-          html: `<div class="c17-dossier-kicker">SUBJECT-SELECTED MEDIA</div><h2>Dating Photos</h2><div class="c17-photo-placeholder-grid"><div class="c17-media-placeholder"><span>×</span><b>01 — MAIN PROFILE</b><small>BIKINI-BARISTA ERA</small></div><div class="c17-media-placeholder"><span>×</span><b>02 — SKATEPARK</b><small>TRUCK IN BACKGROUND</small></div><div class="c17-media-placeholder"><span>×</span><b>03 — KARAOKE</b><small>MICROPHONE / CROWD</small></div><div class="c17-media-placeholder"><span>×</span><b>04 — BALL PYTHON</b><small>CALM SUBJECT</small></div></div>`
+          html: `
+            <div class="c17-dossier-kicker">SUBJECT-SELECTED MEDIA // PLACEHOLDERS ACTIVE</div>
+            <h2>Dating Photos</h2>
+            <div class="c17-photo-placeholder-grid c17-dating-photo-grid">
+              <div class="c17-media-placeholder"><span>×</span><b>02 — TRUCK</b><small>1991 SILVERADO // FADED GREEN</small></div>
+              <div class="c17-media-placeholder"><span>×</span><b>03 — SKATEPARK</b><small>BOARD / NIGHT SESSION</small></div>
+              <div class="c17-media-placeholder"><span>×</span><b>04 — KARAOKE</b><small>MICROPHONE / OPEN MIC</small></div>
+              <div class="c17-media-placeholder"><span>×</span><b>05 — BALL PYTHON</b><small>HOME PHOTO</small></div>
+              <div class="c17-media-placeholder"><span>×</span><b>06 — BIKINI BARISTA</b><small>ARCHIVE IMAGE</small></div>
+              <div class="c17-media-placeholder"><span>×</span><b>07 — TRAILER PORCH</b><small>SUBJECT RESIDENCE</small></div>
+            </div>
+            <p class="c17-dossier-body c17-placeholder-note">Every X is a live future image slot. Replacing the placeholder will not change the page structure.</p>`
+        },
+        matches: {
+          label: "MATCH DATA",
+          html: `
+            <div class="c17-dossier-kicker">ALGORITHM INTERPRETATION // LOW CONFIDENCE</div>
+            <h2>Match Data</h2>
+            <div class="c17-record-stack">
+              <article><span>HIGH COMPATIBILITY</span><b>Mechanically capable / emotionally available</b><p>Subject responds positively to people who fix things without turning the repair into leverage.</p></article>
+              <article><span>HIGH COMPATIBILITY</span><b>Can handle public karaoke</b><p>Participation preferred. Enthusiastic witnessing accepted.</p></article>
+              <article><span>REJECTION TRIGGER</span><b>Calls her “crazy” during disagreement</b><p>Immediate escalation probability: severe.</p></article>
+              <article><span>REJECTION TRIGGER</span><b>Acts ashamed of her trailer, truck, work history, or accent</b><p>Subject will interpret embarrassment as contempt.</p></article>
+            </div>`
         },
         likes: {
           label: "LIKES",
-          html: `<div class="c17-dossier-kicker">PREFERENCE DATA</div><h2>Likes</h2><div class="c17-record-stack"><article><b>Skateboarding</b><p>Lifelong. Childhood ambition: become the next Tony Hawk.</p></article><article><b>Anything off the grill</b><p>Burgers, dogs, chicken, steak, lobster. Charcoal only. Electric rejected.</p></article><article><b>Karaoke</b><p>Exceptional natural singer. Performs at open mic nights.</p></article><article><b>Frozen margaritas</b><p>“The icier the better.”</p></article></div>`
+          html: `
+            <div class="c17-dossier-kicker">PREFERENCE DATA</div>
+            <h2>Likes / Dislikes</h2>
+            <div class="c17-record-stack">
+              <article><b>Skateboarding</b><p>Lifelong. Childhood ambition: become the next Tony Hawk.</p></article>
+              <article><b>Anything off the grill</b><p>Burgers, dogs, chicken, steak, lobster. Charcoal only. Electric rejected.</p></article>
+              <article><b>Karaoke</b><p>Exceptional natural singer. Performs at local karaoke and open mic nights.</p></article>
+              <article><b>Frozen margaritas</b><p>“The icier the better.”</p></article>
+              <article><b>Hard no</b><p>Condescension, fake apologies, disappearing acts, and anyone who mistreats animals.</p></article>
+            </div>`
         },
         relations: {
           label: "RELATIONS",
-          html: `<div class="c17-dossier-kicker">KNOWN RELATIONSHIPS</div><h2>Relations</h2><div class="c17-record-stack"><article><span>BEST FRIEND</span><b>Savanna “Savvy” Edwards</b><p>Emergency contact and repeated late-night retrieval party.</p></article><article><span>ROMANTIC HISTORY</span><b>One failed guy after another</b><p>Several overlap with county incident reports.</p></article><article><span>SELF-REPORTED</span><b>Girl-curious</b><p>“If I like somebody, I like ’em.”</p></article></div>`
+          html: `
+            <div class="c17-dossier-kicker">KNOWN RELATIONSHIPS</div>
+            <h2>Relations</h2>
+            <div class="c17-record-stack">
+              <article><span>CURRENT RELATIONSHIP</span><b>Thomas Doggon Foolery</b><p>Status recorded as active.</p></article>
+              <article><span>BEST FRIEND</span><b>Savanna “Savvy” Edwards</b><p>Emergency contact and repeated late-night retrieval party.</p></article>
+              <article><span>KNOWN FRIEND</span><b>Joseph Mahhmah</b><p>Present in recovered social records.</p></article>
+              <article><span>ROMANTIC PATTERN</span><b>Repeated attachment to unreliable partners</b><p>Primary fear remains never finding lasting love.</p></article>
+            </div>`
         }
       }
     },
