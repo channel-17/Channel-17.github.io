@@ -8802,20 +8802,23 @@ opacity:0;
 /* Ring appearance only. JavaScript controls the exact three flashes. */
 .profile.carl .carl-rrod-ring {
   position: absolute !important;
-  inset: -2px !important;
-  z-index: 40 !important;
+  inset: 1px !important;
+  z-index: 80 !important;
   display: block !important;
+  visibility: visible !important;
   box-sizing: border-box !important;
-  border: 3px solid #ff1d25 !important;
+  border: 2px solid #ff1d25 !important;
   border-radius: 50% !important;
   opacity: 0;
   pointer-events: none !important;
   animation: none !important;
+  transform-origin: center !important;
+  filter: none !important;
   box-shadow:
-    0 0 0 1px rgba(255,29,37,.86),
-    0 0 9px rgba(255,29,37,.96),
-    0 0 20px rgba(255,29,37,.48),
-    inset 0 0 5px rgba(255,29,37,.52) !important;
+    0 0 0 1px rgba(255,29,37,.92),
+    0 0 7px rgba(255,29,37,1),
+    0 0 15px rgba(255,29,37,.62),
+    inset 0 0 3px rgba(255,29,37,.72) !important;
 }
 
 /* =========================================================
@@ -11608,4 +11611,30 @@ img[data-c17-clean-frozen-asset="true"],
 .c17-frozen-story-heart-asset,
 .c17-tawnya-reveal img {
   background: transparent !important;
+}
+
+/* =========================================================
+   CHANNEL 17 — SYMBOL CONTINUITY LOCK
+   One brick only: once the symbol wakes, it survives every remaining
+   intro phase and remains visually present through the station ending.
+========================================================= */
+#signalGhost.signal-ghost.symbol-hold-to-end,
+.signal-ghost.symbol-hold-to-end {
+  opacity: 0.46 !important;
+  visibility: visible !important;
+  display: block !important;
+  filter: drop-shadow(0 0 28px rgba(223,255,63,0.38)) !important;
+}
+
+#signalNode.signal-node.ready,
+#signalNode.signal-node.ready.pressed {
+  visibility: visible !important;
+  display: block !important;
+}
+
+/* The final station owns the permanent ending symbol. */
+#home.home.open .home-symbol-stack,
+#home.home.open .home-symbol {
+  opacity: 1 !important;
+  visibility: visible !important;
 }
