@@ -3380,7 +3380,12 @@ function stopAttack() {
     checkGenerals.classList.remove("active");
 
     virusLayer.classList.remove("active", "retreat");
-    signalGhost.classList.remove("waking", "burning");
+
+    // SYMBOL CONTINUITY LOCK:
+    // The discovered-frequency symbol does not disappear when the attack clears.
+    // Keep the ghost alive beneath the final interactive symbol so there is no
+    // dead frame between the intro battle, the completed loader, and the station.
+    signalGhost.classList.add("waking", "burning", "symbol-hold-to-end");
   }, 1250);
 }
 
@@ -3436,15 +3441,15 @@ function openChannel() {
   // Surgical restore: the wall breaks with green maze pulses, then the station settles in.
   maze.classList.add("active");
 
-  setTimeout(() => {
-    signalNode.classList.add("fade-out");
-  }, 1500);
-
+  // SYMBOL CONTINUITY LOCK:
+  // Do not fade the interactive symbol away before the station exists.
+  // The station opens underneath the same protected symbol, and its permanent
+  // home-symbol takes ownership without a black gap or missing-symbol beat.
   setTimeout(() => {
     maze.classList.remove("active");
     home.classList.add("open");
     idleMaze.classList.add("active");
-  }, 2200);
+  }, 1500);
 }
 
 signalNode.addEventListener("click", openChannel);
