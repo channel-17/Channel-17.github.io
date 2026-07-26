@@ -1,3 +1,10 @@
+/* =========================================================
+   CHANNEL 17 — CONSERVATIVE CLEANUP PASS
+   Removed only byte-equivalent duplicate rule blocks and
+   earlier @keyframes definitions that were already overridden.
+   No approved visual values or active final authorities changed.
+========================================================= */
+
 /* =======================================================
    CHANNEL 17 — GROUND ZERO
    CPR ACTIVE
@@ -2724,8 +2731,6 @@ body {
   filter: brightness(1.35) saturate(1.55) contrast(1.08) drop-shadow(0 0 10px rgba(88,170,255,0.52)) !important;
   transform: scale(1.08) !important;
 }
-.profile.hive-reveal.has-hive-asset::after,
-.profile.hive-reveal.has-hive-asset::before { opacity: 0 !important; }
 .profile.symbol-touch { z-index: 42 !important; }
 .profile.loader-cover { z-index: 52 !important; }
 .profile.hive-reveal {
@@ -3367,8 +3372,6 @@ body {
   width: 7px !important;
   border-radius: 999px 999px 4px 4px !important;
 }
-.loader-scene.portal-open::after { height: 52px !important; opacity: 1 !important; }
-.loader-scene.portal-close::after { height: 0 !important; opacity: 0 !important; }
 
 /* =========================================================
    YB2 TUNE PASS — LOADER-TEAM HOMIE
@@ -3553,7 +3556,6 @@ body {
   width: 6px !important;
 }
 .loader-scene.portal-open::after { height: 48px !important; opacity: 1 !important; }
-.loader-scene.portal-close::after { height: 0 !important; opacity: 0 !important; }
 
 
 /* =========================================================
@@ -3606,10 +3608,6 @@ body {
 #turtle.turtle.homie-rig.escape .homie-head { animation: yb2WetEscapeHead .44s ease-in-out infinite !important; opacity: 1 !important; }
 #turtle.turtle.homie-rig.escape .homie-front2 { animation: yb2WetEscapeFront .44s ease-in-out infinite !important; opacity: 1 !important; }
 #turtle.turtle.homie-rig.escape .homie-tail { animation: yb2WetEscapeTail .44s ease-in-out infinite !important; opacity: .84 !important; }
-
-
-.loader-scene.portal-open::after { height: 48px !important; opacity: 1 !important; }
-.loader-scene.portal-close::after { height: 0 !important; opacity: 0 !important; }
 
 /* =========================================================
    HOMIE RESET — V2 PIXELATED SURVIVOR LOADER
@@ -4559,11 +4557,8 @@ body {
 #turtle.turtle.homie-pixel.pixel-b.walk .pixel-front-leg-b,
 #turtle.turtle.homie-pixel.pixel-b.walk .pixel-rear-leg-a { animation: pixelBLegB .55s steps(2,end) infinite !important; }
 #turtle.turtle.homie-pixel.pixel-b.walk .pixel-tail { animation: pixelBTail .55s steps(2,end) infinite !important; }
-@keyframes pixelBBodyWork { 50% { transform: translate3d(.8px,.8px,0) scale(1) !important; } }
 @keyframes pixelBShellWork { 50% { transform: translateY(.7px); } }
 @keyframes pixelBHeadWork { 50% { transform: translate(1px,-1px); } }
-@keyframes pixelBLegA { 50% { transform: translate(2px,-1px); } }
-@keyframes pixelBLegB { 50% { transform: translate(-2px,1px); } }
 @keyframes pixelBTail { 50% { transform: translate(-1px,0); opacity: .78; } }
 
 #turtle.turtle.homie-pixel.pixel-b.notice { animation: pixelBNoticeBody .75s steps(2,end) infinite !important; }
@@ -4621,13 +4616,6 @@ body {
 #turtle.turtle.homie-pixel.pixel-b.escape .pixel-front-leg-b,
 #turtle.turtle.homie-pixel.pixel-b.escape .pixel-rear-leg-a { animation: pixelBRunLegB .24s steps(2,end) infinite !important; }
 #turtle.turtle.homie-pixel.pixel-b.escape .pixel-tail { animation: pixelBRunTail .24s steps(2,end) infinite !important; }
-@keyframes pixelBDoorRun {
-  0% { transform: translate3d(0,0,0) scale(1) !important; opacity: 1; clip-path: inset(0 0 0 0); }
-  70% { transform: translate3d(126px,0,0) scale(1) !important; opacity: 1; clip-path: inset(0 0 0 0); }
-  86% { transform: translate3d(154px,0,0) scale(.96) !important; opacity: .92; clip-path: inset(0 0 0 0); }
-  94% { transform: translate3d(174px,0,0) scale(.9) !important; opacity: .62; clip-path: inset(0 0 0 55%); }
-  100% { transform: translate3d(190px,0,0) scale(.78) !important; opacity: 0; clip-path: inset(0 0 0 100%); }
-}
 @keyframes pixelBRunShell { 50% { transform: translate(1px,1px); } }
 @keyframes pixelBRunHead { 50% { transform: translate(2px,-1px); } }
 @keyframes pixelBRunLegA { 50% { transform: translate(3px,-1px); } }
@@ -4726,7 +4714,6 @@ body {
   transition: width .08s steps(2,end) !important;
   z-index: 2 !important;
 }
-#fill.fill::before { display: none !important; }
 
 #percent.percent {
   inset: auto 0 calc(100% + 13px) 0 !important;
@@ -4780,8 +4767,6 @@ body {
 #turtle.turtle.homie-pixel.pixel-b.walk .pixel-front-leg-b,
 #turtle.turtle.homie-pixel.pixel-b.walk .pixel-rear-leg-a { animation: pixelBLegB .48s steps(2,end) infinite !important; }
 @keyframes pixelBBodyWork { 50% { transform: translate3d(.5px,.8px,0) scale(1) !important; } }
-@keyframes pixelBLegA { 50% { transform: translate(2px,-1px); } }
-@keyframes pixelBLegB { 50% { transform: translate(-2px,1px); } }
 
 #turtle.turtle.homie-pixel.pixel-b.escape {
   animation: pixelBDoorRun 2.75s cubic-bezier(.2,0,.08,1) forwards !important;
@@ -4928,7 +4913,6 @@ body {
   transition: width .08s steps(2,end) !important;
   z-index: 2 !important;
 }
-#fill.fill::before { display: none !important; }
 
 #percent.percent {
   position: absolute !important;
@@ -4976,15 +4960,6 @@ body {
   z-index: 4 !important;
   background: transparent !important;
   border: 0 !important;
-}
-
-#turtle.turtle.homie-pixel.pixel-b .homie-pixel-svg {
-  width: 100% !important;
-  height: 100% !important;
-  display: block !important;
-  overflow: visible !important;
-  image-rendering: pixelated !important;
-  shape-rendering: crispEdges !important;
 }
 
 #turtle.turtle.homie-pixel.pixel-b .px,
@@ -5037,16 +5012,6 @@ body {
 }
 @keyframes targetNoticeHead {
   100% { transform: translate(3px,-3px); }
-}
-
-#turtle.turtle.homie-pixel.pixel-b.hide .pixel-neck,
-#turtle.turtle.homie-pixel.pixel-b.hide .pixel-head,
-#turtle.turtle.homie-pixel.pixel-b.hide .pixel-front-leg-a,
-#turtle.turtle.homie-pixel.pixel-b.hide .pixel-front-leg-b,
-#turtle.turtle.homie-pixel.pixel-b.hide .pixel-rear-leg-a,
-#turtle.turtle.homie-pixel.pixel-b.hide .pixel-rear-leg-b,
-#turtle.turtle.homie-pixel.pixel-b.hide .pixel-tail {
-  opacity: 0 !important;
 }
 
 #turtle.turtle.homie-pixel.pixel-b.peek .pixel-neck,
@@ -5140,11 +5105,6 @@ body {
 
 .maze {
   display: block !important;
-}
-.maze.active {
-  opacity: 1 !important;
-  visibility: visible !important;
-  pointer-events: none !important;
 }
 .maze.active .pipe {
   animation: pipeWake 2.2s ease forwards !important;
@@ -5276,17 +5236,6 @@ body {
   fill: #000 !important;
 }
 
-#turtle.turtle.homie-pixel.pixel-b .face {
-  fill: #000 !important;
-}
-
-/* No body bob. Only legs/neck/head animate. */
-#turtle.turtle.homie-pixel.pixel-b.walk,
-#turtle.turtle.homie-pixel.pixel-b.notice,
-#turtle.turtle.homie-pixel.pixel-b.peek {
-  animation: none !important;
-}
-
 #turtle.turtle.homie-pixel.pixel-b.walk .pixel-front-leg-a,
 #turtle.turtle.homie-pixel.pixel-b.walk .pixel-rear-leg-b {
   animation: targetLegA2 .55s steps(2,end) infinite !important;
@@ -5309,14 +5258,6 @@ body {
   animation: targetNotice2 .45s steps(3,end) forwards !important;
 }
 @keyframes targetNotice2 { 100% { transform: translate(2px,-3px); } }
-
-#turtle.turtle.homie-pixel.pixel-b.hide .pixel-neck,
-#turtle.turtle.homie-pixel.pixel-b.hide .pixel-head,
-#turtle.turtle.homie-pixel.pixel-b.hide .pixel-front-leg-a,
-#turtle.turtle.homie-pixel.pixel-b.hide .pixel-front-leg-b,
-#turtle.turtle.homie-pixel.pixel-b.hide .pixel-rear-leg-a,
-#turtle.turtle.homie-pixel.pixel-b.hide .pixel-rear-leg-b,
-#turtle.turtle.homie-pixel.pixel-b.hide .pixel-tail { opacity: 0 !important; }
 
 #turtle.turtle.homie-pixel.pixel-b.peek .pixel-neck,
 #turtle.turtle.homie-pixel.pixel-b.peek .pixel-head {
@@ -5479,7 +5420,6 @@ body {
   transition: width .08s steps(2,end) !important;
   z-index: 2 !important;
 }
-#fill.fill::before { display: none !important; }
 
 /* Homie target placement directly below bar */
 #turtleTrack.turtle-track {
@@ -5507,14 +5447,6 @@ body {
   border: 0 !important;
   z-index: 4 !important;
 }
-#turtle.turtle.homie-pixel.pixel-b .homie-pixel-svg {
-  width: 100% !important;
-  height: 100% !important;
-  display: block !important;
-  overflow: visible !important;
-  image-rendering: pixelated !important;
-  shape-rendering: crispEdges !important;
-}
 
 /* target turtle colors */
 #turtle.turtle.homie-pixel.pixel-b .skin,
@@ -5527,13 +5459,6 @@ body {
 #turtle.turtle.homie-pixel.pixel-b .face {
   fill: #000 !important;
   stroke: none !important;
-}
-
-/* only legs/neck/head animate */
-#turtle.turtle.homie-pixel.pixel-b.walk,
-#turtle.turtle.homie-pixel.pixel-b.notice,
-#turtle.turtle.homie-pixel.pixel-b.peek {
-  animation: none !important;
 }
 #turtle.turtle.homie-pixel.pixel-b.walk .pixel-front-leg-a,
 #turtle.turtle.homie-pixel.pixel-b.walk .pixel-rear-leg-b {
@@ -5556,16 +5481,6 @@ body {
   animation: forceNoticeHead .45s steps(3,end) forwards !important;
 }
 @keyframes forceNoticeHead { 100% { transform: translate(2px,-3px); } }
-
-#turtle.turtle.homie-pixel.pixel-b.hide .pixel-neck,
-#turtle.turtle.homie-pixel.pixel-b.hide .pixel-head,
-#turtle.turtle.homie-pixel.pixel-b.hide .pixel-front-leg-a,
-#turtle.turtle.homie-pixel.pixel-b.hide .pixel-front-leg-b,
-#turtle.turtle.homie-pixel.pixel-b.hide .pixel-rear-leg-a,
-#turtle.turtle.homie-pixel.pixel-b.hide .pixel-rear-leg-b,
-#turtle.turtle.homie-pixel.pixel-b.hide .pixel-tail {
-  opacity: 0 !important;
-}
 
 #turtle.turtle.homie-pixel.pixel-b.peek .pixel-neck,
 #turtle.turtle.homie-pixel.pixel-b.peek .pixel-head {
@@ -5772,11 +5687,6 @@ body {
   image-rendering: pixelated !important;
 }
 
-#loader.loader::before,
-#loader.loader::after {
-  display: none !important;
-}
-
 #fill.fill {
   position: absolute !important;
   left: 24px !important;
@@ -5793,10 +5703,6 @@ body {
   box-shadow: none !important;
   transition: width .08s steps(2,end) !important;
   z-index: 2 !important;
-}
-
-#fill.fill::before {
-  display: none !important;
 }
 
 #turtleTrack.turtle-track {
@@ -5967,11 +5873,6 @@ body {
   transform: translateY(76px) !important;
 }
 
-#percent.percent {
-  opacity: 0 !important;
-  visibility: hidden !important;
-}
-
 /* =========================================================
    CHANNEL 17 — PASS 28 CLEAN LOADER STACK
    CPR: remove patch-stack behavior by making this the single active
@@ -5981,39 +5882,6 @@ body {
   --p28-cream: #f2eee5;
   --p28-black: #000;
   --p28-red: #ff1d25;
-}
-
-/* Symbol stays locked. */
-#signalGhost.signal-ghost,
-.signal-ghost {
-  top: 18% !important;
-  width: 138px !important;
-  height: 138px !important;
-  transform: translate(-50%, -50%) !important;
-}
-
-#signalNode.signal-node,
-.signal-node {
-  top: 18% !important;
-  width: 142px !important;
-  height: 142px !important;
-}
-
-/* Loader position stays locked. */
-#loaderScene.loader-scene {
-  position: absolute !important;
-  left: 50% !important;
-  top: 34.5% !important;
-  width: min(86vw, 392px) !important;
-  transform: translate(-50%, -50%) !important;
-  overflow: visible !important;
-  z-index: 35 !important;
-}
-
-/* Keep percent out until its own pass. */
-#percent.percent {
-  opacity: 0 !important;
-  visibility: hidden !important;
 }
 
 /* Clean loader: shorter horizontally, fatter vertically, less dead end space. */
@@ -6034,12 +5902,6 @@ body {
   clip-path: polygon(5% 0, 95% 0, 100% 28%, 100% 72%, 95% 100%, 5% 100%, 0 72%, 0 28%) !important;
   image-rendering: pixelated !important;
   transform: translateY(76px) !important;
-}
-
-/* Kill old nub/cap experiments. */
-#loader.loader::before,
-#loader.loader::after {
-  display: none !important;
 }
 
 /* Clean electric cells: more interior fill, square-ish, vertically centered. */
@@ -6065,28 +5927,10 @@ body {
   animation: p28CellBuzz .42s steps(2,end) infinite !important;
   z-index: 2 !important;
 }
-#fill.fill::before { display: none !important; }
 
 @keyframes p28CellBuzz {
   0%,100% { filter: brightness(1); opacity: .96; }
   50% { filter: brightness(1.18); opacity: 1; }
-}
-
-/* Homie placeholder remains locked from loader-only phase. */
-#turtleTrack.turtle-track {
-  position: relative !important;
-  width: 100% !important;
-  height: 170px !important;
-  overflow: visible !important;
-  pointer-events: none !important;
-}
-
-#turtle.turtle,
-#turtle.turtle.homie-pixel,
-#turtle.turtle.homie-pixel.pixel-b,
-#turtle.turtle.homie-pixel.pixel-b * {
-  opacity: 0 !important;
-  visibility: hidden !important;
 }
 
 #turtleTrack.turtle-track::after {
@@ -6750,11 +6594,6 @@ body {
   opacity: 0;
 }
 
-/* C17 ZIP27 — loader band higher + Carl buried + three-beat contact flicker */
-.profile.loader-cover {
-  z-index: 58 !important;
-}
-
 .profile.carl.carl-zone-anchor {
   z-index: 42 !important;
   pointer-events: none !important;
@@ -6783,12 +6622,6 @@ body {
       0 0 12px rgba(0,0,0,0.9);
     filter: grayscale(0.2) contrast(0.95);
   }
-}
-
-
-/* C17 ZIP28 — loader band correction + soft S-heart + Carl visible/flicker/bury */
-.profile.loader-cover {
-  z-index: 58 !important;
 }
 
 .profile.carl.carl-zone-anchor {
@@ -6937,7 +6770,6 @@ body {
 .profile.wren img {
   transform: scale(1.02);
 }
-.profile::after { inset: 7px !important; }
 
 .profile.carl.carl-zone-anchor {
   z-index: 54 !important;
@@ -7172,10 +7004,6 @@ body {
   opacity: .92 !important;
   filter: saturate(.9) contrast(.95) brightness(.92) !important;
 }
-.profile.carl.carl-impact-visible,
-.profile.carl.carl-ring-death {
-  z-index: 98 !important;
-}
 .profile.carl.carl-ring-death {
   animation: carlElectricFlicker .88s steps(1) 2 !important;
 }
@@ -7369,10 +7197,6 @@ body {
   pointer-events: none !important;
 }
 
-.profile.loader-cover {
-  z-index: 52 !important;
-}
-
 .profile.carl {
   z-index: 56 !important;
 }
@@ -7470,15 +7294,6 @@ body {
   0% { transform: scale(0.62); opacity: 0.86; }
   45% { transform: scale(0.90); opacity: 0.96; }
   100% { transform: scale(1.08); opacity: 0.74; }
-}
-
-/* =========================================================
-   BUILD 41 — C.17 AVATAR ATTACK SANDING
-   Scope locked to avatar attack / symbol burn visuals only.
-========================================================= */
-:root {
-  --avatar-size-locked: 72px;
-  --avatar-half-locked: 36px;
 }
 
 .profile {
@@ -8151,9 +7966,6 @@ body {
 .carl-trigger-heart.matrix-error-heart.grey-taking-over .carl-heart-grey {
   opacity: .88 !important;
 }
-.carl-trigger-heart.matrix-error-heart.dead-stage .carl-heart-pink {
-  opacity: 0 !important;
-}
 .carl-trigger-heart.matrix-error-heart.dead-stage .carl-heart-grey {
   opacity: 1 !important;
 }
@@ -8389,15 +8201,6 @@ body {
   opacity: .18 !important;
   filter: grayscale(.88) saturate(.18) brightness(.72) !important;
 }
-.carl-trigger-heart.matrix-error-heart.grey-taking-over .carl-heart-grey {
-  opacity: .88 !important;
-}
-.carl-trigger-heart.matrix-error-heart.dead-stage .carl-heart-red {
-  opacity: 0 !important;
-}
-.carl-trigger-heart.matrix-error-heart.dead-stage .carl-heart-grey {
-  opacity: 1 !important;
-}
 
 /* Three unmistakable old-school red-ring flashes, no X, no symbol. */
 .profile.carl .carl-rrod-ring {
@@ -8477,10 +8280,6 @@ body {
 
 .carl-trigger-heart.matrix-error-heart.grey-taking-over .carl-heart-grey {
   opacity: .84 !important;
-}
-
-.carl-trigger-heart.matrix-error-heart.dead-stage .carl-heart-red {
-  opacity: 0 !important;
 }
 
 .carl-trigger-heart.matrix-error-heart.dead-stage .carl-heart-grey {
@@ -8580,18 +8379,10 @@ body {
   filter: grayscale(1) brightness(.86) contrast(1.14) drop-shadow(0 0 5px rgba(235,235,235,.10)) !important;
 }
 
-.carl-trigger-heart.matrix-error-heart.dead-stage .carl-heart-red {
-  opacity: 0 !important;
-}
-
 .carl-trigger-heart.matrix-error-heart.dead-stage .carl-heart-grey {
   opacity: 1 !important;
   transform: scale(1) !important;
   filter: grayscale(1) brightness(.90) contrast(1.18) drop-shadow(0 0 6px rgba(235,235,235,.12)) !important;
-}
-
-.carl-trigger-heart.matrix-error-heart.carl-heart-pop .carl-heart-layer {
-  animation: c17HeartBalloonPop .28s cubic-bezier(.10,.72,.18,1) forwards !important;
 }
 
 
@@ -10255,7 +10046,6 @@ html.frost-dead-world .c17-tawnya-reveal {
   20% { clip-path: polygon(75% 0,100% 0,100% 100%,75% 100%,81% 82%,71% 65%,83% 49%,73% 31%,84% 16%); }
   46% { clip-path: polygon(49% 0,100% 0,100% 100%,49% 100%,54% 82%,44% 64%,57% 48%,47% 30%,60% 15%); }
   72% { clip-path: polygon(22% 0,100% 0,100% 100%,22% 100%,28% 81%,18% 63%,31% 47%,20% 29%,34% 14%); }
-  100% { clip-path: polygon(0 0,100% 0,100% 100%,0 100%); }
 }
 
 @keyframes c17FreezeSweepTop {
@@ -10263,7 +10053,6 @@ html.frost-dead-world .c17-tawnya-reveal {
   20% { clip-path: polygon(0 0,100% 0,100% 25%,82% 19%,65% 29%,48% 18%,31% 27%,15% 17%,0 23%); }
   46% { clip-path: polygon(0 0,100% 0,100% 51%,82% 44%,65% 56%,48% 43%,31% 54%,15% 42%,0 49%); }
   72% { clip-path: polygon(0 0,100% 0,100% 78%,82% 70%,65% 82%,48% 69%,31% 80%,15% 68%,0 76%); }
-  100% { clip-path: polygon(0 0,100% 0,100% 100%,0 100%); }
 }
 
 @keyframes c17FreezeSweepBottom {
@@ -10271,7 +10060,6 @@ html.frost-dead-world .c17-tawnya-reveal {
   20% { clip-path: polygon(0 77%,15% 83%,31% 73%,48% 82%,65% 71%,82% 81%,100% 75%,100% 100%,0 100%); }
   46% { clip-path: polygon(0 51%,15% 58%,31% 46%,48% 57%,65% 44%,82% 56%,100% 49%,100% 100%,0 100%); }
   72% { clip-path: polygon(0 24%,15% 32%,31% 20%,48% 31%,65% 18%,82% 30%,100% 22%,100% 100%,0 100%); }
-  100% { clip-path: polygon(0 0,100% 0,100% 100%,0 100%); }
 }
 
 @keyframes c17OriginalEraseLeft {
@@ -11147,15 +10935,12 @@ html.frost-dead-world .profile {
 }
 @keyframes c17FrozenFaceWrapRight {
   0%, 12% { clip-path: inset(0 0 0 100%); filter: blur(2px); }
-  100% { clip-path: inset(0 0 0 0); filter: none; }
 }
 @keyframes c17FrozenFaceWrapTop {
   0%, 12% { clip-path: inset(0 0 100% 0); filter: blur(2px); }
-  100% { clip-path: inset(0 0 0 0); filter: none; }
 }
 @keyframes c17FrozenFaceWrapBottom {
   0%, 12% { clip-path: inset(100% 0 0 0); filter: blur(2px); }
-  100% { clip-path: inset(0 0 0 0); filter: none; }
 }
 
 .c17-face-frozen-complete .c17-face-frozen {
@@ -11570,14 +11355,6 @@ html.frost-dead-world #percent {
     cubic-bezier(.18,.54,.16,1)
     forwards !important;
 }
-
-@keyframes c17SoftFrozenAssetSpread {
-  0%, 12% {
-    opacity: 0;
-    -webkit-mask-size: 0% 0%;
-    mask-size: 0% 0%;
-    filter: blur(4px) brightness(.82);
-  }
   30% {
     opacity: .30;
     -webkit-mask-size: 34% 34%;
@@ -11628,9 +11405,6 @@ html.frost-dead-world #percent {
     ease-in-out
     forwards !important;
 }
-
-@keyframes c17SoftFrostVeil {
-  0%, 14% { opacity: 0; transform: scale(.18); }
   42% { opacity: .42; transform: scale(.72); }
   72% { opacity: .28; transform: scale(1.18); }
   100% { opacity: 0; transform: scale(1.62); }
