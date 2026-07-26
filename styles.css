@@ -12142,3 +12142,104 @@ html.frost-dead-world .engage.snowflake {
     min-height: 148px;
   }
 }
+
+
+/* =========================================================
+   BUILD 135 — TAWNYA DATING BRANCH / MOBILE TAB LOCK
+========================================================= */
+.c17-tawnya-dossier .c17-dossier-stage {
+  grid-template-columns: minmax(0, 1fr) 92px !important;
+  gap: 8px !important;
+  padding-right: 7px !important;
+}
+.c17-tawnya-dossier .c17-dossier-side-tabs {
+  position: relative !important;
+  z-index: 12 !important;
+  width: 92px !important;
+  min-width: 92px !important;
+  overflow-y: auto !important;
+  overflow-x: visible !important;
+  padding: 10px 0 10px 0 !important;
+}
+.c17-tawnya-dossier .c17-dossier-side-tabs button {
+  width: 100% !important;
+  min-height: 48px !important;
+  padding: 7px 5px !important;
+  white-space: normal !important;
+  overflow-wrap: anywhere !important;
+}
+.c17-dating-main-figure {
+  display: grid;
+  gap: 0;
+}
+.c17-tawnya-main-photo {
+  display: block !important;
+  width: 100% !important;
+  aspect-ratio: 4 / 5 !important;
+  min-height: 0 !important;
+  object-fit: cover !important;
+  object-position: center 36% !important;
+  background: #061a2c !important;
+}
+.c17-dating-main-figure figcaption {
+  color: rgba(205, 242, 249, .66) !important;
+}
+.c17-dating-statement {
+  display: grid;
+  gap: 14px;
+  margin-top: 18px;
+  padding: 16px;
+  border: 1px solid rgba(144, 224, 241, .52);
+  background: rgba(0, 17, 35, .42);
+  box-shadow: 5px 6px 0 rgba(0, 0, 0, .18);
+}
+.c17-dating-statement p {
+  margin: 0;
+  color: #e8f9fc;
+  font: 15px/1.48 Arial, sans-serif;
+}
+.c17-tawnya-signoff {
+  color: #8fe9f7 !important;
+  font-weight: 900 !important;
+}
+.c17-dating-prompts article {
+  color: #eafcff !important;
+  border-color: rgba(144, 224, 241, .42) !important;
+  background: rgba(0, 17, 35, .46) !important;
+}
+.c17-dealbreaker-stack article {
+  border-left: 5px solid #ff5365 !important;
+}
+.c17-main-photo-missing {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  min-height: 0;
+}
+@media (max-width: 620px) {
+  .c17-tawnya-dossier .c17-dossier-stage {
+    grid-template-columns: minmax(0, 1fr) 84px !important;
+    gap: 5px !important;
+    padding: 6px 4px 6px 6px !important;
+  }
+  .c17-tawnya-dossier .c17-dossier-side-tabs {
+    width: 84px !important;
+    min-width: 84px !important;
+  }
+  .c17-tawnya-dossier .c17-dossier-side-tabs button {
+    min-height: 46px !important;
+    padding: 6px 3px !important;
+    font-size: 8px !important;
+    line-height: 1.15 !important;
+  }
+  .c17-tawnya-dossier .c17-dossier-document {
+    padding: 11px 9px 18px !important;
+  }
+  .c17-dating-hero-expanded {
+    grid-template-columns: minmax(104px, 40%) minmax(0, 1fr) !important;
+    gap: 9px !important;
+  }
+  .c17-relationship-stamp {
+    font-size: 9px !important;
+    line-height: 1.22 !important;
+  }
+}
