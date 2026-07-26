@@ -2794,13 +2794,13 @@ function ensureTawnyaProfileOverlay() {
             <div class="c17-dossier-kicker">RECOVERED DATING PROFILE // SUBJECT CONTROLLED</div>
             <section class="c17-dating-hero c17-dating-hero-expanded">
               <figure class="c17-dating-main-figure">
-                <img class="c17-dating-photo c17-tawnya-main-photo" src="Tawnya.profile.main.jpeg" alt="Tawnya Grey main dating profile photo">
+                <img class="c17-dating-photo c17-tawnya-main-photo" src="Tawnya.profile.main" data-tawnya-main-photo alt="Tawnya Grey main dating profile photo">
                 <figcaption>PRIMARY PROFILE IMAGE // RECOVERED</figcaption>
               </figure>
               <div class="c17-dating-copy">
                 <h2>Tawnya Grey</h2>
                 <p class="c17-dossier-subline">27 · Western Massachusetts · active 14 minutes ago</p>
-                <div class="c17-relationship-stamp">CURRENT STATUS: IN A RELATIONSHIP WITH THOMAS DOGGON FOOLERY</div>
+                <div class="c17-relationship-stamp">RELATIONSHIP STATUS: IN A RELATIONSHIP WITH BAD LUCK &amp; SHIT CHOICES</div>
                 <dl class="c17-fact-grid">
                   <div><dt>LOOKING FOR</dt><dd>Someone who stays</dd></div>
                   <div><dt>FAVORITE DRINK</dt><dd>Frozen margaritas</dd></div>
@@ -2809,20 +2809,29 @@ function ensureTawnyaProfileOverlay() {
                 </dl>
               </div>
             </section>
-
             <section class="c17-dating-section">
-              <h3>ABOUT ME</h3>
-              <p class="c17-dossier-body">Country girl when it counts. I own my trailer, own my truck, pay my bills, and mind my business until somebody makes their business mine. I skate, sing karaoke better than you expect, keep a ball python, and believe everything tastes better off a charcoal grill.</p>
-              <p class="c17-dossier-body">People think I’m heartless because I’m loud when I’m hurt. They’re usually wrong about the first part.</p>
+              <h3>PROFILE SUMMARY</h3>
+              <p class="c17-dossier-body">Owns her trailer. Owns her truck. Pays her bills. Skates, sings karaoke, keeps a ball python, and believes everything tastes better over charcoal.</p>
+              <p class="c17-dossier-body">People call her heartless because she gets loud when she is hurt. They are usually wrong about the first part.</p>
             </section>
-
-            <section class="c17-dating-prompts">
-              <article><span>PROMPT 01</span><b>The quickest way to my heart is…</b><p>Be honest, bring charcoal, and don’t act embarrassed when I sing.</p></article>
-              <article><span>PROMPT 02</span><b>A perfect first date is…</b><p>Back-road drive in the Silverado, cheap food, a place to skate, then karaoke until somebody asks us to leave.</p></article>
-              <article><span>PROMPT 03</span><b>Something people get wrong about me…</b><p>I’m not cold. I just learned early that crying in front of the wrong person gives them instructions.</p></article>
-            </section>
-
             <div class="c17-incomplete-box"><b>PROFILE 86% COMPLETE</b><br>Missing: five-year plan, verified emergency contact, and evidence of sound romantic judgment.</div>`
+        },
+        about: {
+          label: "ABOUT ME",
+          html: `
+            <div class="c17-dossier-kicker">SUBJECT AUTHORED // LANGUAGE PRESERVED</div>
+            <h2>About Me</h2>
+            <section class="c17-dating-statement">
+              <p>I am not everybody’s cup of tea, and I do not want to be. I have a paid-off single-wide, a faded green Silverado, a snake, a skateboard, and enough stories to make your mother nervous.</p>
+              <p>I work, I handle my own shit, and I love harder than people expect. I sing karaoke like the room owes me money. I cook outside whenever I can. I have a temper, but I also have a heart. Do not confuse the first one for proof that the second one is missing.</p>
+              <p>I am looking for somebody funny, loyal, and steady. Somebody who does not disappear the second life gets ugly. Somebody who can sit on a trailer porch, eat something burnt around the edges, and still call it a good night.</p>
+              <p class="c17-tawnya-signoff">Go fuck yourself. Respectfully.</p>
+            </section>
+            <section class="c17-dating-prompts">
+              <article><span>PROMPT 01</span><b>The quickest way to my heart is…</b><p>Be honest, bring charcoal, and do not act embarrassed when I sing.</p></article>
+              <article><span>PROMPT 02</span><b>A perfect first date is…</b><p>Back-road drive in the Silverado, cheap food, a place to skate, then karaoke until somebody asks us to leave.</p></article>
+              <article><span>PROMPT 03</span><b>Something people get wrong about me…</b><p>I am not cold. I just learned early that crying in front of the wrong person gives them instructions.</p></article>
+            </section>`
         },
         photos: {
           label: "PHOTOS",
@@ -2837,43 +2846,47 @@ function ensureTawnyaProfileOverlay() {
               <div class="c17-media-placeholder"><span>×</span><b>06 — BIKINI BARISTA</b><small>ARCHIVE IMAGE</small></div>
               <div class="c17-media-placeholder"><span>×</span><b>07 — TRAILER PORCH</b><small>SUBJECT RESIDENCE</small></div>
             </div>
-            <p class="c17-dossier-body c17-placeholder-note">Every X is a live future image slot. Replacing the placeholder will not change the page structure.</p>`
-        },
-        matches: {
-          label: "MATCH DATA",
-          html: `
-            <div class="c17-dossier-kicker">ALGORITHM INTERPRETATION // LOW CONFIDENCE</div>
-            <h2>Match Data</h2>
-            <div class="c17-record-stack">
-              <article><span>HIGH COMPATIBILITY</span><b>Mechanically capable / emotionally available</b><p>Subject responds positively to people who fix things without turning the repair into leverage.</p></article>
-              <article><span>HIGH COMPATIBILITY</span><b>Can handle public karaoke</b><p>Participation preferred. Enthusiastic witnessing accepted.</p></article>
-              <article><span>REJECTION TRIGGER</span><b>Calls her “crazy” during disagreement</b><p>Immediate escalation probability: severe.</p></article>
-              <article><span>REJECTION TRIGGER</span><b>Acts ashamed of her trailer, truck, work history, or accent</b><p>Subject will interpret embarrassment as contempt.</p></article>
-            </div>`
+            <p class="c17-dossier-body c17-placeholder-note">Every X is a future image slot. The page stays intact when the finished asset replaces it.</p>`
         },
         likes: {
           label: "LIKES",
           html: `
-            <div class="c17-dossier-kicker">PREFERENCE DATA</div>
-            <h2>Likes / Dislikes</h2>
+            <div class="c17-dossier-kicker">PREFERENCE DATA // SUBJECT VERIFIED</div>
+            <h2>Things I Actually Like</h2>
             <div class="c17-record-stack">
-              <article><b>Skateboarding</b><p>Lifelong. Childhood ambition: become the next Tony Hawk.</p></article>
-              <article><b>Anything off the grill</b><p>Burgers, dogs, chicken, steak, lobster. Charcoal only. Electric rejected.</p></article>
-              <article><b>Karaoke</b><p>Exceptional natural singer. Performs at local karaoke and open mic nights.</p></article>
-              <article><b>Frozen margaritas</b><p>“The icier the better.”</p></article>
-              <article><b>Hard no</b><p>Condescension, fake apologies, disappearing acts, and anyone who mistreats animals.</p></article>
+              <article><b>Skateboarding</b><p>Lifelong obsession. Childhood plan: become the next Tony Hawk.</p></article>
+              <article><b>Charcoal-grilled food</b><p>Burgers, dogs, chicken, steak, lobster. If it tastes a little like smoke, it is probably right.</p></article>
+              <article><b>Karaoke</b><p>Local regular. Better singer than most people are prepared for.</p></article>
+              <article><b>Frozen margaritas</b><p>The icier the better.</p></article>
+              <article><b>Late drives and porch nights</b><p>No itinerary. No performance. Just somewhere to breathe.</p></article>
+              <article><b>Animals</b><p>Especially the ones people misunderstand.</p></article>
             </div>`
         },
-        relations: {
-          label: "RELATIONS",
+        looking: {
+          label: "LOOKING FOR",
           html: `
-            <div class="c17-dossier-kicker">KNOWN RELATIONSHIPS</div>
-            <h2>Relations</h2>
+            <div class="c17-dossier-kicker">MATCH PREFERENCES // HUMAN LANGUAGE</div>
+            <h2>What I’m Looking For</h2>
             <div class="c17-record-stack">
-              <article><span>CURRENT RELATIONSHIP</span><b>Thomas Doggon Foolery</b><p>Status recorded as active.</p></article>
-              <article><span>BEST FRIEND</span><b>Savanna “Savvy” Edwards</b><p>Emergency contact and repeated late-night retrieval party.</p></article>
-              <article><span>KNOWN FRIEND</span><b>Joseph Mahhmah</b><p>Present in recovered social records.</p></article>
-              <article><span>ROMANTIC PATTERN</span><b>Repeated attachment to unreliable partners</b><p>Primary fear remains never finding lasting love.</p></article>
+              <article><span>REQUIRED</span><b>Funny without being cruel</b><p>Make her laugh. Do not make somebody else smaller to do it.</p></article>
+              <article><span>REQUIRED</span><b>Loyal when nobody is watching</b><p>Not performative loyalty. The real kind.</p></article>
+              <article><span>STRONGLY PREFERRED</span><b>Can fix something</b><p>A truck, a loose step, a bad night. Any of the above counts.</p></article>
+              <article><span>STRONGLY PREFERRED</span><b>Not embarrassed by where she comes from</b><p>The trailer, the jobs, the accent, and the history come as one package.</p></article>
+              <article><span>NONNEGOTIABLE</span><b>Stays when life stops being cute</b><p>Primary fear: being left after finally trusting somebody.</p></article>
+            </div>`
+        },
+        dealbreakers: {
+          label: "DEAL BREAKERS",
+          html: `
+            <div class="c17-dossier-kicker">AUTOMATIC REJECTION CONDITIONS</div>
+            <h2>Do Not Waste My Time</h2>
+            <div class="c17-record-stack c17-dealbreaker-stack">
+              <article><span>REJECT</span><b>Liars</b><p>Especially the ones who call missing details “technically not lying.”</p></article>
+              <article><span>REJECT</span><b>Cheaters and disappearing acts</b><p>She has already completed this course.</p></article>
+              <article><span>REJECT</span><b>Calling her crazy during an argument</b><p>Immediate escalation probability: severe.</p></article>
+              <article><span>REJECT</span><b>Condescension</b><p>Do not talk down to her about her work, home, money, truck, or vocabulary.</p></article>
+              <article><span>REJECT</span><b>Anyone cruel to animals</b><p>No appeal process.</p></article>
+              <article><span>REJECT</span><b>People who want a project</b><p>She is looking for a partner, not a supervisor.</p></article>
             </div>`
         }
       }
@@ -2987,7 +3000,7 @@ function ensureTawnyaProfileOverlay() {
         <main class="c17-dossier-document"></main>
         <nav class="c17-dossier-side-tabs" aria-label="Section pages"></nav>
       </div>
-      <footer class="c17-dossier-footer"><span class="c17-dossier-path"></span><span>ACCESS LEVEL: 17</span></footer>
+      <footer class="c17-dossier-footer"><span class="c17-dossier-path"></span><span>ACCESS LEVEL: 8+9</span></footer>
     </article>`;
 
   document.body.appendChild(tawnyaProfileOverlay);
@@ -3030,6 +3043,31 @@ function ensureTawnyaProfileOverlay() {
     });
 
     documentPanel.innerHTML = dossier[activeCategory].pages[activePage].html;
+
+    const mainPhoto = documentPanel.querySelector("[data-tawnya-main-photo]");
+    if (mainPhoto) {
+      const candidates = [
+        "Tawnya.profile.main",
+        "Tawnya.profile.main.jpeg",
+        "Tawnya.profile.main.jpg",
+        "Tawnya.profile.main.JPG",
+        "Tawnya.profile.main.PNG",
+        "Tawnya.profile.main.png"
+      ];
+      let candidateIndex = Math.max(0, candidates.indexOf(mainPhoto.getAttribute("src")));
+      mainPhoto.addEventListener("error", () => {
+        candidateIndex += 1;
+        if (candidateIndex < candidates.length) {
+          mainPhoto.src = candidates[candidateIndex];
+        } else {
+          mainPhoto.replaceWith(Object.assign(document.createElement("div"), {
+            className: "c17-media-placeholder c17-media-placeholder-portrait c17-main-photo-missing",
+            innerHTML: "<span>×</span><b>MAIN PROFILE PHOTO</b><small>ASSET NAME NOT FOUND</small>"
+          }));
+        }
+      });
+    }
+
     documentPanel.scrollTop = 0;
     path.textContent = `/assets/grey_t/${activeCategory}/${activePage}`;
   };
