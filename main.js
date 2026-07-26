@@ -1476,7 +1476,7 @@ function triggerCarl(carl) {
   if (!carl || !carl.parentNode || carlTriggered) return;
 
   carlTriggered = true;
-  carl.classList.add("carl-impact-visible", "carl-ready", "carl-ring-death");
+  carl.classList.add("carl-impact-visible", "carl-ready");
 
   const oldRing = carl.querySelector(".carl-rrod-ring");
   if (oldRing) oldRing.remove();
@@ -1511,7 +1511,7 @@ function triggerCarl(carl) {
       { opacity: 1, transform: "scale(1)", offset: .79 },
       { opacity: 0, transform: "scale(.985)", offset: .80 },
 
-      { opacity: .30, transform: "scale(1)", offset: 1 }
+      { opacity: 0, transform: "scale(1)", offset: 1 }
     ],
     {
       duration: 1250,
@@ -1538,7 +1538,6 @@ function triggerCarl(carl) {
     if (!carlOpened && carl && carl.parentNode) {
       carl.classList.remove(
         "carl-ready",
-        "carl-ring-death",
         "carl-impact-visible",
         "carl-dead-profile"
       );
