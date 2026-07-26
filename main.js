@@ -1476,7 +1476,7 @@ function triggerCarl(carl) {
   if (!carl || !carl.parentNode || carlTriggered) return;
 
   carlTriggered = true;
-  carl.classList.add("carl-impact-visible", "carl-ready");
+  carl.classList.add("carl-impact-visible", "carl-ready", "carl-ring-death");
 
   const oldRing = carl.querySelector(".carl-rrod-ring");
   if (oldRing) oldRing.remove();
