@@ -1487,29 +1487,50 @@ function triggerCarl(carl) {
   carl.appendChild(ring);
 
   /*
-    True RROD: exactly three thin flashes.
-    The profile itself is never animated, scaled, filtered, or moved.
+    Real RROD:
+    thin red ring flickers 3 times, then holds faintly
+    for the remaining click window.
+  */
+    /*
+    Love at first pixel:
+    pop finishes first, then exactly three unmistakable red flashes.
   */
   ring.animate(
     [
-      { opacity: 0, offset: 0 },
-      { opacity: 1, offset: .08 },
-      { opacity: 1, offset: .16 },
-      { opacity: 0, offset: .17 },
+      { opacity: 0, transform: "scale(.97)", offset: 0 },
 
-      { opacity: 1, offset: .35 },
-      { opacity: 1, offset: .44 },
-      { opacity: 0, offset: .45 },
+      { opacity: 1, transform: "scale(1)", offset: .06 },
+      { opacity: 1, transform: "scale(1)", offset: .18 },
+      { opacity: 0, transform: "scale(.985)", offset: .19 },
 
-      { opacity: 1, offset: .64 },
-      { opacity: 1, offset: .74 },
-      { opacity: 0, offset: .75 },
-      { opacity: 0, offset: 1 }
+      { opacity: 1, transform: "scale(1)", offset: .34 },
+      { opacity: 1, transform: "scale(1)", offset: .47 },
+      { opacity: 0, transform: "scale(.985)", offset: .48 },
+
+      { opacity: 1, transform: "scale(1)", offset: .64 },
+      { opacity: 1, transform: "scale(1)", offset: .79 },
+      { opacity: 0, transform: "scale(.985)", offset: .80 },
+
+      { opacity: 0, transform: "scale(1)", offset: 1 }
     ],
     {
-      duration: 980,
+      duration: 1250,
       easing: "steps(1, end)",
       fill: "forwards"
+    }
+  );
+
+  carl.animate(
+    [
+      { filter: "none" },
+      { filter: "brightness(1.35) saturate(1.4)" },
+      { filter: "none" },
+      { filter: "brightness(1.2) saturate(1.25)" },
+      { filter: "none" }
+    ],
+    {
+      duration: 520,
+      easing: "steps(1, end)"
     }
   );
 
