@@ -11321,11 +11321,29 @@ img[data-c17-clean-frozen-asset="true"],
 
 /* =========================================================
    CHANNEL 17 — CARL RROD SINGLE SOURCE OF TRUTH
+   Carl never changes size or position during contact.
+   Only the separate 1px ring is allowed to flicker.
 ========================================================= */
-.profile.carl { position: absolute !important; }
+.profile.carl,
+.profile.carl.carl-wrong-place,
+.profile.carl.carl-zone-anchor,
+.profile.carl.carl-impact-visible,
+.profile.carl.carl-ready,
+.profile.carl.carl-impact-visible.carl-ready {
+  position: absolute !important;
+  width: 72px !important;
+  height: 72px !important;
+  min-width: 72px !important;
+  min-height: 72px !important;
+  max-width: 72px !important;
+  max-height: 72px !important;
+  transform: translate(0, 0) scale(1) !important;
+  transform-origin: 50% 50% !important;
+}
+
 .profile.carl .carl-rrod-ring {
   position: absolute !important;
-  inset: 1px !important;
+  inset: -1px !important;
   z-index: 80 !important;
   display: block !important;
   visibility: visible !important;
@@ -11337,5 +11355,5 @@ img[data-c17-clean-frozen-asset="true"],
   animation: none !important;
   transform: none !important;
   filter: none !important;
-  box-shadow: 0 0 2px rgba(255,29,37,.72) !important;
+  box-shadow: none !important;
 }
