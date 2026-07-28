@@ -949,6 +949,11 @@ body {
   cursor: pointer;
 }
 
+.profile.carl.carl-ring-death {
+  animation:
+    profileSlam 0.42s cubic-bezier(0.08, 0.78, 0.12, 1) forwards,
+    carlRingDeath 0.55s steps(2) infinite;
+}
 
 .profile.burying {
   animation: profileBuried 0.45s steps(3) forwards;
@@ -1001,6 +1006,37 @@ body {
   }
 }
 
+@keyframes carlRingDeath {
+  0% {
+    border-color: rgba(242,238,229,0.86);
+    box-shadow:
+      0 0 16px rgba(0,0,0,0.88),
+      0 0 0 1px rgba(255,255,255,0.16);
+  }
+
+  33% {
+    border-color: var(--ring-red);
+    box-shadow:
+      0 0 16px rgba(0,0,0,0.88),
+      0 0 0 2px rgba(255,29,37,0.72),
+      0 0 24px rgba(255,29,37,0.55);
+  }
+
+  66% {
+    border-color: rgba(242,238,229,0.86);
+    box-shadow:
+      0 0 16px rgba(0,0,0,0.88),
+      0 0 0 1px rgba(255,255,255,0.16);
+  }
+
+  100% {
+    border-color: var(--ring-red);
+    box-shadow:
+      0 0 16px rgba(0,0,0,0.88),
+      0 0 0 2px rgba(255,29,37,0.82),
+      0 0 28px rgba(255,29,37,0.68);
+  }
+}
 
 @keyframes frankRealize {
   0% {
@@ -2928,6 +2964,29 @@ body {
 }
 
 /* Carl: red ring is a blink, then he is buried. */
+.profile.carl.carl-ring-death {
+  z-index: 94 !important;
+  animation:
+    profileSlam 0.42s cubic-bezier(0.08, 0.78, 0.12, 1) forwards,
+    carlRingDeathHardBlink 0.18s steps(2) infinite !important;
+}
+@keyframes carlRingDeathHardBlink {
+  0%, 100% {
+    border-color: rgba(255, 29, 37, 1);
+    box-shadow:
+      0 0 0 4px rgba(255,29,37,0.92),
+      0 0 18px rgba(255,29,37,0.82),
+      0 0 42px rgba(255,29,37,0.42);
+    filter: contrast(1.18) saturate(1.2);
+  }
+  50% {
+    border-color: rgba(242,238,229,0.86);
+    box-shadow:
+      0 0 0 2px rgba(255,255,255,0.22),
+      0 0 12px rgba(0,0,0,0.9);
+    filter: grayscale(0.2) contrast(0.95);
+  }
+}
 
 /* Blue avatars hold long enough to be understood, then die like bad data. */
 .profile.hive-reveal.has-hive-asset img {
@@ -6466,6 +6525,9 @@ body {
   pointer-events: none !important;
 }
 
+.profile.carl.carl-ring-death {
+  z-index: 70 !important;
+}
 
 .engage.carl-trigger-heart.asset-heart,
 .engage.heart.carl-trigger-heart,
@@ -6537,7 +6599,30 @@ body {
   pointer-events: none !important;
 }
 
+.profile.carl.carl-ring-death {
+  z-index: 70 !important;
+  animation:
+    profileSlam 0.42s cubic-bezier(0.08, 0.78, 0.12, 1) forwards,
+    carlThreeBoomFlicker 0.82s steps(1) 1 forwards !important;
+}
 
+@keyframes carlThreeBoomFlicker {
+  0%, 12%, 34%, 46%, 68%, 80% {
+    border-color: rgba(255, 29, 37, 1);
+    box-shadow:
+      0 0 0 4px rgba(255,29,37,0.92),
+      0 0 18px rgba(255,29,37,0.82),
+      0 0 42px rgba(255,29,37,0.42);
+    filter: contrast(1.18) saturate(1.2);
+  }
+  13%, 33%, 47%, 67%, 81%, 100% {
+    border-color: rgba(242,238,229,0.62);
+    box-shadow:
+      0 0 0 1px rgba(255,255,255,0.16),
+      0 0 12px rgba(0,0,0,0.9);
+    filter: grayscale(0.2) contrast(0.95);
+  }
+}
 
 .profile.carl.carl-zone-anchor {
   z-index: 43 !important;
@@ -6547,12 +6632,17 @@ body {
 .profile.carl.carl-impact-visible {
   z-index: 74 !important;
   opacity: 1 !important;
+  transform: translate(0, 0) scale(1) !important;
   filter:
     contrast(1.03)
     saturate(1.05)
     drop-shadow(0 0 12px rgba(0,0,0,0.9));
 }
 
+.profile.carl.carl-ring-death {
+  z-index: 78 !important;
+  animation: carlThreeBoomFlicker 1.02s steps(1) 1 forwards !important;
+}
 
 .engage.carl-trigger-heart.asset-heart,
 .engage.heart.carl-trigger-heart,
@@ -6618,6 +6708,10 @@ body {
   z-index: 80 !important;
 }
 
+.profile.carl.carl-ring-death {
+  z-index: 82 !important;
+  animation: carlThreeBoomFlicker 1.05s steps(1) 1 forwards !important;
+}
 
 .profile.carl.burying {
   z-index: 41 !important;
@@ -6687,6 +6781,27 @@ body {
   z-index: 88 !important;
   opacity: 1 !important;
   filter: saturate(1.05) contrast(1.04) brightness(1) drop-shadow(0 0 10px rgba(0,0,0,0.92));
+}
+.profile.carl.carl-ring-death {
+  z-index: 90 !important;
+  animation: carlElectricFlicker 0.88s steps(1) 2 !important;
+}
+@keyframes carlElectricFlicker {
+  0%, 10%, 22%, 36%, 54%, 72% {
+    border-color: rgba(255, 29, 37, 1);
+    box-shadow:
+      0 0 0 3px rgba(255,29,37,0.94),
+      0 0 16px rgba(255,29,37,0.80),
+      0 0 36px rgba(255,29,37,0.34);
+    filter: contrast(1.18) saturate(1.18);
+  }
+  11%, 21%, 37%, 53%, 73%, 100% {
+    border-color: rgba(242,238,229,0.72);
+    box-shadow:
+      0 0 0 1px rgba(255,255,255,0.16),
+      0 0 12px rgba(0,0,0,0.90);
+    filter: grayscale(0.18) contrast(0.95);
+  }
 }
 .profile.carl.burying {
   z-index: 49 !important;
@@ -6784,6 +6899,10 @@ body {
 .profile.carl.carl-zone-anchor {
   z-index: 62 !important;
   opacity: 0.94 !important;
+}
+.profile.carl.carl-impact-visible,
+.profile.carl.carl-ring-death {
+  z-index: 98 !important;
 }
 .carl-zap-spark {
   width: 46px !important;
@@ -6885,7 +7004,13 @@ body {
   opacity: .92 !important;
   filter: saturate(.9) contrast(.95) brightness(.92) !important;
 }
+.profile.carl.carl-ring-death {
+  animation: carlElectricFlicker .88s steps(1) 2 !important;
+}
 /* no red box, no Carl billboard: only the ring/flicker gets the hit */
+.profile.carl.carl-ring-death img {
+  filter: contrast(1.04) saturate(1.02) !important;
+}
 .engage.heart-story {
   animation-name: heartFieldScatterRise !important;
   font-size: 20px !important;
@@ -7333,6 +7458,34 @@ body {
   opacity: 1 !important;
   filter: saturate(.88) contrast(.94) brightness(.9) !important;
 }
+.profile.carl.carl-ring-death {
+  animation: carlRingThreeBlink 1.05s steps(1) forwards !important;
+  pointer-events: auto !important;
+  cursor: pointer !important;
+}
+.profile.carl.carl-ring-death::before,
+.profile.carl.carl-ring-death::after { content: none !important; opacity: 0 !important; }
+.profile.carl.carl-dead-profile {
+  opacity: .82 !important;
+  filter: grayscale(.35) saturate(.62) brightness(.76) contrast(.92) !important;
+  pointer-events: none !important;
+  cursor: default !important;
+}
+@keyframes carlRingThreeBlink {
+  0%, 12%, 34%, 56% {
+    border-color: rgba(255,29,37,1);
+    box-shadow:
+      0 0 0 3px rgba(255,29,37,.92),
+      0 0 16px rgba(255,29,37,.72),
+      0 0 34px rgba(255,29,37,.32) !important;
+  }
+  18%, 40%, 62%, 100% {
+    border-color: rgba(242,238,229,.86);
+    box-shadow:
+      0 0 10px rgba(0,0,0,.92),
+      0 0 0 1px rgba(255,255,255,.2) !important;
+  }
+}
 
 /* Carl heart: pink with the smoke, knocked wrong, gray right before contact. */
 .asset-heart.carl-trigger-heart {
@@ -7691,6 +7844,48 @@ body {
 .frequency,.frequency-symbol,#frequencyButton,#frequency{color:#b7bd8a;opacity:.35;text-shadow:0 0 8px #b7bd8a;filter:blur(.2px);}
 
 
+/* C17 49 CARL HEART BRICK — matrix-error heart + old-school red ring only */
+.profile.carl.carl-ring-death,
+.profile.carl.carl-impact-visible.carl-ring-death,
+.profile.carl.carl-zone-anchor.carl-ring-death {
+  z-index: 104 !important;
+  opacity: 1 !important;
+  pointer-events: auto !important;
+  cursor: pointer !important;
+  animation: c17CarlRingOnlyThree 1.08s steps(1) 1 forwards !important;
+  transform: translate(0,0) scale(1) !important;
+}
+.profile.carl.carl-ring-death::before,
+.profile.carl.carl-ring-death::after,
+.profile.carl.carl-impact-visible::before,
+.profile.carl.carl-impact-visible::after {
+  content: none !important;
+  display: none !important;
+  opacity: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+.profile.carl.carl-ring-death img {
+  filter: none !important;
+  transform: none !important;
+}
+@keyframes c17CarlRingOnlyThree {
+  0%, 10%, 32%, 44%, 66%, 78% {
+    border-color: rgba(255, 29, 37, 1) !important;
+    box-shadow:
+      0 0 0 4px rgba(255,29,37,.98),
+      0 0 16px rgba(255,29,37,.78),
+      0 0 34px rgba(255,29,37,.36) !important;
+    filter: contrast(1.06) saturate(1.02) brightness(1.02) !important;
+  }
+  11%, 31%, 45%, 65%, 79%, 100% {
+    border-color: rgba(242,238,229,.74) !important;
+    box-shadow:
+      0 0 0 1px rgba(255,255,255,.18),
+      0 0 12px rgba(0,0,0,.92) !important;
+    filter: contrast(.98) saturate(.90) brightness(.92) !important;
+  }
+}
 
 .engage.carl-trigger-heart.asset-heart.matrix-error-heart,
 .carl-trigger-heart.asset-heart.matrix-error-heart {
@@ -7775,11 +7970,20 @@ body {
   opacity: 1 !important;
 }
 .profile.carl.carl-impact-visible,
-.profile.carl.carl-ready {
+.profile.carl.carl-ready,
+.profile.carl.carl-ring-death {
   opacity: 1 !important;
   visibility: visible !important;
   z-index: 190 !important;
   filter: saturate(1) contrast(1.04) brightness(1) !important;
+}
+.profile.carl.carl-ring-death {
+  border-color: rgba(255,29,37,1) !important;
+  animation: carlRingThreeBlink 0.46s steps(1) 0s 5 both !important;
+  box-shadow:
+    0 0 0 3px rgba(255,29,37,.82),
+    0 0 18px rgba(255,29,37,.74),
+    0 0 36px rgba(255,29,37,.28) !important;
 }
 
 /* C17 HEART PASS 55 — single red broken-heart belongs to the chaos until rejection.
@@ -7856,6 +8060,16 @@ body {
 .profile.carl.carl-heart-eroded img {
   opacity: .78 !important;
 }
+.profile.carl.carl-ring-death {
+  opacity: 1 !important;
+  visibility: visible !important;
+  border-color: rgba(255,29,37,1) !important;
+  animation: carlRingThreeBlink 0.46s steps(1) 0s 5 both !important;
+  box-shadow:
+    0 0 0 3px rgba(255,29,37,.86),
+    0 0 18px rgba(255,29,37,.76),
+    0 0 36px rgba(255,29,37,.30) !important;
+}
 
 
 /* C17 HEART PASS 56 — same-family red emoji, hard left flick, elegant left re-entry. */
@@ -7912,6 +8126,33 @@ body {
   position: absolute !important;
 }
 
+.profile.carl .carl-rrod-ring {
+  position: absolute;
+  inset: 1px;
+  z-index: 20;
+  display: block;
+  border: 4px solid transparent;
+  border-radius: 50%;
+  pointer-events: none;
+  box-sizing: border-box;
+  opacity: 0;
+  animation: carlRrodThreeVisible 0.68s steps(1, end) 3 both;
+}
+
+@keyframes carlRrodThreeVisible {
+  0%, 42% {
+    opacity: 1;
+    border-color: #ff1d25;
+    box-shadow:
+      inset 0 0 7px rgba(255, 29, 37, .95),
+      0 0 9px rgba(255, 29, 37, .95);
+  }
+  43%, 100% {
+    opacity: 0;
+    border-color: transparent;
+    box-shadow: none;
+  }
+}
 
 /* heart57 visual patch */
 
@@ -7962,7 +8203,23 @@ body {
 }
 
 /* Three unmistakable old-school red-ring flashes, no X, no symbol. */
-
+.profile.carl .carl-rrod-ring {
+  inset: -1px !important;
+  border-width: 4px !important;
+  animation: carlRrodThreeClean 0.72s steps(1, end) 3 both !important;
+}
+@keyframes carlRrodThreeClean {
+  0%, 45% {
+    opacity: 1;
+    border-color: #ff1d25;
+    box-shadow: 0 0 0 2px rgba(255,29,37,.78), 0 0 14px rgba(255,29,37,.92);
+  }
+  46%, 100% {
+    opacity: 0;
+    border-color: transparent;
+    box-shadow: none;
+  }
+}
 
 
 /* =========================================================
@@ -8047,6 +8304,32 @@ body {
   visibility: visible !important;
 }
 
+.profile.carl .carl-rrod-ring{
+    position:absolute;
+    inset:2px;
+    border:1.5px solid transparent;
+    border-radius:50%;
+    opacity:0;
+    pointer-events:none;
+    animation:c17CarlRrod123 1.45s steps(1,end) 1 both;
+}
+
+@keyframes c17CarlRrod123 {
+  0%, 12%, 34%, 46%, 68%, 80% {
+    opacity: 1;
+    border-color: #ff1d25;
+    box-shadow:
+      inset 0 0 3px rgba(255,29,37,.72),
+      0 0 4px rgba(255,29,37,.82),
+      0 0 8px rgba(255,29,37,.28);
+  }
+
+  13%, 33%, 47%, 67%, 81%, 100% {
+    opacity: 0;
+    border-color: transparent;
+    box-shadow: none;
+  }
+}
 
 /* C17 BUILD61 — red broken balloon visibly becomes the user's gray PNG,
    then pops on literal pixel contact with Carl. Surgical override only. */
@@ -8199,6 +8482,10 @@ body {
   100% { opacity: 0; transform: translate(-50%,-50%) scale(1.58) rotate(8deg); }
 }
 
+.profile.carl .carl-rrod-ring {
+  border-width: 3px !important;
+  animation: c17CarlRrod123 1.50s steps(1,end) 1 both !important;
+}
 
 
 /* =========================================================
@@ -8309,6 +8596,22 @@ body {
   100% { opacity: 0; transform: translate(-50%,-50%) scale(1.34); }
 }
 
+.profile.carl .carl-rrod-ring {
+  border-width: 1.25px !important;
+  box-shadow:
+    0 0 4px rgba(255,29,37,.62),
+    inset 0 0 2px rgba(255,29,37,.28) !important;
+  animation: c17CarlRrod123_64 1.34s steps(1,end) 1 both !important;
+}
+
+@keyframes c17CarlRrod123_64 {
+  0%, 10%   { opacity: 1; border-color: #ff1d25; }
+  11%, 25%  { opacity: 0; border-color: transparent; }
+  26%, 40%  { opacity: 1; border-color: #ff1d25; }
+  41%, 56%  { opacity: 0; border-color: transparent; }
+  57%, 73%  { opacity: 1; border-color: #ff1d25; }
+  74%, 100% { opacity: 0; border-color: transparent; }
+}
 
 
 /* =========================================================
@@ -8367,7 +8670,8 @@ body {
 .profile.carl.carl-wrong-place,
 .profile.carl.carl-zone-anchor,
 .profile.carl.carl-impact-visible,
-.profile.carl.carl-ready {
+.profile.carl.carl-ready,
+.profile.carl.carl-ring-death {
   opacity: 1 !important;
   visibility: visible !important;
   filter: none !important;
@@ -8496,7 +8800,23 @@ opacity:0;
 }
 
 /* Ring appearance only. JavaScript controls the exact three flashes. */
-
+.profile.carl .carl-rrod-ring {
+  position: absolute !important;
+  inset: -2px !important;
+  z-index: 40 !important;
+  display: block !important;
+  box-sizing: border-box !important;
+  border: 3px solid #ff1d25 !important;
+  border-radius: 50% !important;
+  opacity: 0;
+  pointer-events: none !important;
+  animation: none !important;
+  box-shadow:
+    0 0 0 1px rgba(255,29,37,.86),
+    0 0 9px rgba(255,29,37,.96),
+    0 0 20px rgba(255,29,37,.48),
+    inset 0 0 5px rgba(255,29,37,.52) !important;
+}
 
 /* =========================================================
    CHANNEL 17 — FROST TIMELINE
@@ -11288,54 +11608,4 @@ img[data-c17-clean-frozen-asset="true"],
 .c17-frozen-story-heart-asset,
 .c17-tawnya-reveal img {
   background: transparent !important;
-}
-
-/* =========================================================
-   CHANNEL 17 — SYMBOL CONTINUITY LOCK
-   One brick only: once the symbol wakes, it survives every remaining
-   intro phase and remains visually present through the station ending.
-========================================================= */
-#signalGhost.signal-ghost.symbol-hold-to-end,
-.signal-ghost.symbol-hold-to-end {
-  opacity: 0.46 !important;
-  visibility: visible !important;
-  display: block !important;
-  filter: drop-shadow(0 0 28px rgba(223,255,63,0.38)) !important;
-}
-
-#signalNode.signal-node.ready,
-#signalNode.signal-node.ready.pressed {
-  visibility: visible !important;
-  display: block !important;
-}
-
-/* The final station owns the permanent ending symbol. */
-#home.home.open .home-symbol-stack,
-#home.home.open .home-symbol {
-  opacity: 1 !important;
-  visibility: visible !important;
-}
-
-
-/* =========================================================
-   CHANNEL 17 — CARL RROD SINGLE SOURCE OF TRUTH
-========================================================= */
-.profile.carl { position: absolute !important; }
-.profile.carl .carl-rrod-ring {
-  position: absolute !important;
-  inset: 0 !important;
-  z-index: 999 !important;
-  display: block !important;
-  visibility: visible !important;
-  box-sizing: border-box !important;
-  border: 0 !important;
-  border-radius: 50% !important;
-  opacity: 0;
-  pointer-events: none !important;
-  animation: none !important;
-  transform: none !important;
-  filter: none !important;
-  box-shadow:
-    inset 0 0 0 1px #ff1d25,
-    inset 0 0 2px rgba(255,29,37,.55) !important;
 }
