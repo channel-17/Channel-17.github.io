@@ -59,6 +59,7 @@ let wrenSeen = false;
 let carlSeen = false;
 let carlTriggered = false;
 let carlOpened = false;
+let carlRrodActiveUntil = 0;
 let hiveWaveStarted = false;
 let deadHeartReleased = false;
 let heartSmokeStarted = false;
@@ -1473,48 +1474,60 @@ function spawnCarlZap(viewportX, viewportY) {
 }
 
 function triggerCarl(carl) {
-  if (!carl || !carl.parentNode || carlTriggered) return;
+  if (!carl || !carl.isConnected || carlTriggered) return;
 
   carlTriggered = true;
-  carl.classList.add("carl-impact-visible", "carl-ready");
 
-  const oldRing = carl.querySelector(".carl-rrod-ring");
-  if (oldRing) oldRing.remove();
+  const rrodDuration = 1320;
+  carlRrodActiveUntil =
+    performance.now() + rrodDuration + 120;
+
+  carl.classList.add(
+    "carl-impact-visible",
+    "carl-ready",
+    "carl-rrod-active"
+  );
+
+  impactField
+    .querySelectorAll(".carl-rrod-overlay")
+    .forEach(oldRing => oldRing.remove());
+
+  const carlRect = carl.getBoundingClientRect();
+  const impactRect = impactField.getBoundingClientRect();
 
   const ring = document.createElement("span");
-  ring.className = "carl-rrod-ring";
+  ring.className = "carl-rrod-overlay";
   ring.setAttribute("aria-hidden", "true");
-  carl.appendChild(ring);
 
-  /*
-    Real RROD:
-    thin red ring flickers 3 times, then holds faintly
-    for the remaining click window.
-  */
-    /*
-    Love at first pixel:
-    pop finishes first, then exactly three unmistakable red flashes.
-  */
-  ring.animate(
+  ring.style.left =
+    `${carlRect.left - impactRect.left}px`;
+  ring.style.top =
+    `${carlRect.top - impactRect.top}px`;
+  ring.style.width = `${carlRect.width}px`;
+  ring.style.height = `${carlRect.height}px`;
+
+  impactField.appendChild(ring);
+
+  const ringAnimation = ring.animate(
     [
-      { opacity: 0, transform: "scale(.97)", offset: 0 },
+      { opacity: 0, offset: 0 },
 
-      { opacity: 1, transform: "scale(1)", offset: .06 },
-      { opacity: 1, transform: "scale(1)", offset: .18 },
-      { opacity: 0, transform: "scale(.985)", offset: .19 },
+      { opacity: 1, offset: 0.06 },
+      { opacity: 1, offset: 0.18 },
+      { opacity: 0, offset: 0.19 },
 
-      { opacity: 1, transform: "scale(1)", offset: .34 },
-      { opacity: 1, transform: "scale(1)", offset: .47 },
-      { opacity: 0, transform: "scale(.985)", offset: .48 },
+      { opacity: 1, offset: 0.35 },
+      { opacity: 1, offset: 0.48 },
+      { opacity: 0, offset: 0.49 },
 
-      { opacity: 1, transform: "scale(1)", offset: .64 },
-      { opacity: 1, transform: "scale(1)", offset: .79 },
-      { opacity: 0, transform: "scale(.985)", offset: .80 },
+      { opacity: 1, offset: 0.66 },
+      { opacity: 1, offset: 0.81 },
+      { opacity: 0, offset: 0.82 },
 
-      { opacity: 0, transform: "scale(1)", offset: 1 }
+      { opacity: 0, offset: 1 }
     ],
     {
-      duration: 1250,
+      duration: rrodDuration,
       easing: "steps(1, end)",
       fill: "forwards"
     }
@@ -1522,30 +1535,65 @@ function triggerCarl(carl) {
 
   carl.animate(
     [
-      { filter: "none" },
-      { filter: "brightness(1.35) saturate(1.4)" },
-      { filter: "none" },
-      { filter: "brightness(1.2) saturate(1.25)" },
-      { filter: "none" }
+      {
+        filter:
+          "brightness(1) saturate(1) contrast(1)"
+      },
+      {
+        filter:
+          "brightness(1.28) saturate(1.24) contrast(1.04)",
+        offset: 0.10
+      },
+      {
+        filter:
+          "brightness(1) saturate(1) contrast(1)",
+        offset: 0.22
+      },
+      {
+        filter:
+          "brightness(1.22) saturate(1.18) contrast(1.03)",
+        offset: 0.42
+      },
+      {
+        filter:
+          "brightness(1) saturate(1) contrast(1)",
+        offset: 0.54
+      },
+      {
+        filter:
+          "brightness(1.18) saturate(1.15) contrast(1.02)",
+        offset: 0.72
+      },
+      {
+        filter:
+          "brightness(1) saturate(1) contrast(1)",
+        offset: 1
+      }
     ],
     {
-      duration: 520,
+      duration: rrodDuration,
       easing: "steps(1, end)"
     }
   );
 
-  setTimeout(() => {
-    if (!carlOpened && carl && carl.parentNode) {
+  ringAnimation.finished
+    .catch(() => {})
+    .finally(() => {
+      if (ring.isConnected) ring.remove();
+
+      if (carl.isConnected) {
+        carl.classList.remove("carl-rrod-active");
+      }
+    });
+
+  window.setTimeout(() => {
+    if (!carlOpened && carl.isConnected) {
       carl.classList.remove(
         "carl-ready",
         "carl-impact-visible",
-        "carl-dead-profile"
+        "carl-dead-profile",
+        "carl-rrod-active"
       );
-
-      const activeRing =
-        carl.querySelector(".carl-rrod-ring");
-
-      if (activeRing) activeRing.remove();
     }
   }, 2300);
 }
@@ -3360,6 +3408,17 @@ function revealTawnyaFromGreyHeart(heart, direction = "from-left") {
 }
 
 function stopAttack() {
+  const rrodTimeRemaining =
+    carlRrodActiveUntil - performance.now();
+
+  if (rrodTimeRemaining > 0) {
+    window.setTimeout(
+      stopAttack,
+      rrodTimeRemaining + 50
+    );
+    return;
+  }
+
   clearInterval(profileTimer);
   clearInterval(engageTimer);
   clearInterval(slashTimer);
@@ -3370,7 +3429,7 @@ function stopAttack() {
 
   virusLayer.classList.add("retreat");
 
-  setTimeout(() => {
+  window.setTimeout(() => {
     profileField.innerHTML = "";
     engagementField.innerHTML = "";
     motionField.innerHTML = "";
@@ -3378,16 +3437,18 @@ function stopAttack() {
 
     checkGenerals.classList.remove("active");
 
-    virusLayer.classList.remove("active", "retreat");
+    virusLayer.classList.remove(
+      "active",
+      "retreat"
+    );
 
-    // SYMBOL CONTINUITY LOCK:
-    // The discovered-frequency symbol does not disappear when the attack clears.
-    // Keep the ghost alive beneath the final interactive symbol so there is no
-    // dead frame between the intro battle, the completed loader, and the station.
-    signalGhost.classList.add("waking", "burning", "symbol-hold-to-end");
+    signalGhost.classList.add(
+      "waking",
+      "burning",
+      "symbol-hold-to-end"
+    );
   }, 1250);
 }
-
 function completeSequence() {
   state = "done";
 
