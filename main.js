@@ -82,7 +82,6 @@ let slashTimer = null;
 let profileCount = 0;
 let engageCount = 0;
 const AVATAR_SIZE = 72;
-const HEART_PINK = "heart.pink.PNG";
 const HEART_GREY = "heart.grey.PNG";
 
 // FOREMAN MODE — LOADER FADE-IN ONLY.
@@ -374,7 +373,6 @@ const missTargets = [
   { x: 78.0, y: 32.35, zone: "miss" }
 ];
 
-const coverageTargets = [...loaderTargets, ...symbolTargets, ...missTargets];
 
 // CARL ZONE — maintenance accident canon.
 // Carl is just another avatar on the left side of the loader.
@@ -382,7 +380,6 @@ const coverageTargets = [...loaderTargets, ...symbolTargets, ...missTargets];
 // One pink heart rises like the others, gets flicked by the top-right system/fan, visibly breaks on-screen,
 // then overcorrects through a fast wind curl and completes an electric edge-contact with Carl.
 const CARL_ZONE = { x: 21.4, y: 34.18 };
-const CARL_HEART_START = { x: 82, y: 98 };
 const CARL_HEART_CONTACT = { x: CARL_ZONE.x + 3.6, y: CARL_ZONE.y + 0.04 };
 const CARL_HEART_PATH = [
   /*
@@ -1667,9 +1664,6 @@ function openHiveMindCarlFile() {
   stopWoundPulse();
 }
 
-function openHiveFile() {
-  openHiveMindCarlFile();
-}
 
 function closeHiveFile() {
   if (!hiveCarlFile) return;
@@ -1865,7 +1859,6 @@ const PROFILE_CONTACT_PAUSE_MS = 1850;
 const TAWNYA_CONTACT_PAUSE_MS = 1450;
 const TAWNYA_TRANSFORM_MS = 7600;
 const TAWNYA_ASSET = "AssetTAWNYA.frozen.png";
-const TAWNYA_PROFILE_ASSET = "AssetTAWNYA.thawed.PNG";
 const FROZEN_STORY_HEART_ASSET = "LMT.frozen.PNG";
 
 const FROZEN_ASSET_MAP = new Map([
@@ -2482,25 +2475,6 @@ function scheduleFrozenSocialSwaps(originX, originY, duration) {
 }
 
 
-function trySwapFrozenFrank(profile) {
-  if (!profile || !profile.isConnected || profile.dataset.frostFrank !== "true") return;
-
-  const image = profile.querySelector("img");
-  if (!image) return;
-
-  const frozenName = "AssetFRANK.frozen.PNG";
-
-  const probe = new Image();
-  probe.onload = () => {
-    if (!profile.isConnected || !frostLocked) return;
-    loadFrozenAssetClean(image, frozenName);
-    profile.classList.add("c17-frank-frozen-asset");
-  };
-  probe.onerror = () => {
-    /* Frozen frame not supplied yet: preserve the exact stopped Frank frame. */
-  };
-  probe.src = frozenName;
-}
 
 function scheduleFrozenSymbolProfileLocks(originX, originY, duration) {
   const profiles = [
