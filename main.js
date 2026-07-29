@@ -1475,9 +1475,8 @@ function triggerCarl(carl) {
 
   carlTriggered = true;
 
-  const rrodDuration = 1320;
-  carlRrodActiveUntil =
-    performance.now() + rrodDuration + 120;
+  const flashDuration = 1680;
+  carlRrodActiveUntil = performance.now() + flashDuration + 720;
 
   carl.classList.add(
     "carl-impact-visible",
@@ -1485,102 +1484,67 @@ function triggerCarl(carl) {
     "carl-rrod-active"
   );
 
-  impactField
-    .querySelectorAll(".carl-rrod-overlay")
-    .forEach(oldRing => oldRing.remove());
-
-  const carlRect = carl.getBoundingClientRect();
-  const impactRect = impactField.getBoundingClientRect();
+  carl.querySelectorAll(".carl-rrod-overlay").forEach(oldRing => oldRing.remove());
 
   const ring = document.createElement("span");
   ring.className = "carl-rrod-overlay";
   ring.setAttribute("aria-hidden", "true");
-
-  ring.style.left =
-    `${carlRect.left - impactRect.left}px`;
-  ring.style.top =
-    `${carlRect.top - impactRect.top}px`;
-  ring.style.width = `${carlRect.width}px`;
-  ring.style.height = `${carlRect.height}px`;
-
-  impactField.appendChild(ring);
+  carl.appendChild(ring);
 
   const ringAnimation = ring.animate(
     [
       { opacity: 0, offset: 0 },
-
-      { opacity: 1, offset: 0.06 },
+      { opacity: 1, offset: 0.04 },
       { opacity: 1, offset: 0.18 },
       { opacity: 0, offset: 0.19 },
-
-      { opacity: 1, offset: 0.35 },
-      { opacity: 1, offset: 0.48 },
-      { opacity: 0, offset: 0.49 },
-
-      { opacity: 1, offset: 0.66 },
-      { opacity: 1, offset: 0.81 },
-      { opacity: 0, offset: 0.82 },
-
+      { opacity: 0, offset: 0.32 },
+      { opacity: 1, offset: 0.33 },
+      { opacity: 1, offset: 0.49 },
+      { opacity: 0, offset: 0.50 },
+      { opacity: 0, offset: 0.64 },
+      { opacity: 1, offset: 0.65 },
+      { opacity: 1, offset: 0.84 },
+      { opacity: 0, offset: 0.85 },
       { opacity: 0, offset: 1 }
     ],
     {
-      duration: rrodDuration,
+      duration: flashDuration,
       easing: "steps(1, end)",
       fill: "forwards"
     }
   );
 
-  carl.animate(
-    [
+  const image = carl.querySelector("img");
+  if (image) {
+    image.animate(
+      [
+        { filter: "brightness(1.08) saturate(1.04) contrast(1.03)", offset: 0 },
+        { filter: "brightness(1.36) saturate(1.28) contrast(1.08)", offset: 0.04 },
+        { filter: "brightness(1.36) saturate(1.28) contrast(1.08)", offset: 0.18 },
+        { filter: "brightness(1.08) saturate(1.04) contrast(1.03)", offset: 0.19 },
+        { filter: "brightness(1.08) saturate(1.04) contrast(1.03)", offset: 0.32 },
+        { filter: "brightness(1.30) saturate(1.22) contrast(1.07)", offset: 0.33 },
+        { filter: "brightness(1.30) saturate(1.22) contrast(1.07)", offset: 0.49 },
+        { filter: "brightness(1.08) saturate(1.04) contrast(1.03)", offset: 0.50 },
+        { filter: "brightness(1.08) saturate(1.04) contrast(1.03)", offset: 0.64 },
+        { filter: "brightness(1.24) saturate(1.18) contrast(1.06)", offset: 0.65 },
+        { filter: "brightness(1.24) saturate(1.18) contrast(1.06)", offset: 0.84 },
+        { filter: "brightness(1.08) saturate(1.04) contrast(1.03)", offset: 0.85 },
+        { filter: "brightness(1.08) saturate(1.04) contrast(1.03)", offset: 1 }
+      ],
       {
-        filter:
-          "brightness(1) saturate(1) contrast(1)"
-      },
-      {
-        filter:
-          "brightness(1.28) saturate(1.24) contrast(1.04)",
-        offset: 0.10
-      },
-      {
-        filter:
-          "brightness(1) saturate(1) contrast(1)",
-        offset: 0.22
-      },
-      {
-        filter:
-          "brightness(1.22) saturate(1.18) contrast(1.03)",
-        offset: 0.42
-      },
-      {
-        filter:
-          "brightness(1) saturate(1) contrast(1)",
-        offset: 0.54
-      },
-      {
-        filter:
-          "brightness(1.18) saturate(1.15) contrast(1.02)",
-        offset: 0.72
-      },
-      {
-        filter:
-          "brightness(1) saturate(1) contrast(1)",
-        offset: 1
+        duration: flashDuration,
+        easing: "steps(1, end)",
+        fill: "none"
       }
-    ],
-    {
-      duration: rrodDuration,
-      easing: "steps(1, end)"
-    }
-  );
+    );
+  }
 
   ringAnimation.finished
     .catch(() => {})
     .finally(() => {
       if (ring.isConnected) ring.remove();
-
-      if (carl.isConnected) {
-        carl.classList.remove("carl-rrod-active");
-      }
+      if (carl.isConnected) carl.classList.remove("carl-rrod-active");
     });
 
   window.setTimeout(() => {
@@ -1592,7 +1556,7 @@ function triggerCarl(carl) {
         "carl-rrod-active"
       );
     }
-  }, 2300);
+  }, 2400);
 }
 
 function openCarlProfile() {
