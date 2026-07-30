@@ -1484,35 +1484,11 @@ function triggerCarl(carl) {
     "carl-rrod-active"
   );
 
-  carl.querySelectorAll(".carl-rrod-overlay").forEach(oldRing => oldRing.remove());
-
-  const ring = document.createElement("span");
-  ring.className = "carl-rrod-overlay";
-  ring.setAttribute("aria-hidden", "true");
-  carl.appendChild(ring);
-
-  const ringAnimation = ring.animate(
-    [
-      { opacity: 0, offset: 0 },
-      { opacity: 1, offset: 0.04 },
-      { opacity: 1, offset: 0.18 },
-      { opacity: 0, offset: 0.19 },
-      { opacity: 0, offset: 0.32 },
-      { opacity: 1, offset: 0.33 },
-      { opacity: 1, offset: 0.49 },
-      { opacity: 0, offset: 0.50 },
-      { opacity: 0, offset: 0.64 },
-      { opacity: 1, offset: 0.65 },
-      { opacity: 1, offset: 0.84 },
-      { opacity: 0, offset: 0.85 },
-      { opacity: 0, offset: 1 }
-    ],
-    {
-      duration: flashDuration,
-      easing: "steps(1, end)",
-      fill: "forwards"
-    }
-  );
+  // Build 137: the RROD is painted by Carl's own ::after layer.
+  // Restart the CSS animation every time contact occurs.
+  carl.classList.remove("carl-rrod-flashing");
+  void carl.offsetWidth;
+  carl.classList.add("carl-rrod-flashing");
 
   const image = carl.querySelector("img");
   if (image) {
@@ -1540,12 +1516,11 @@ function triggerCarl(carl) {
     );
   }
 
-  ringAnimation.finished
-    .catch(() => {})
-    .finally(() => {
-      if (ring.isConnected) ring.remove();
-      if (carl.isConnected) carl.classList.remove("carl-rrod-active");
-    });
+  window.setTimeout(() => {
+    if (!carl.isConnected) return;
+    carl.classList.remove("carl-rrod-flashing");
+    carl.classList.remove("carl-rrod-active");
+  }, flashDuration + 40);
 
   window.setTimeout(() => {
     if (!carlOpened && carl.isConnected) {
