@@ -1471,67 +1471,81 @@ function spawnCarlZap(viewportX, viewportY) {
 }
 
 function triggerCarl(carl) {
-  if (!carl || !carl.isConnected || carlTriggered) return;
+  if (!carl || !carl.parentNode || carlTriggered) return;
 
   carlTriggered = true;
+  carl.classList.add("carl-impact-visible", "carl-ready");
 
-  const flashDuration = 1680;
-  carlRrodActiveUntil = performance.now() + flashDuration + 720;
+  const oldRing = carl.querySelector(".carl-rrod-ring");
+  if (oldRing) oldRing.remove();
 
-  carl.classList.add(
-    "carl-impact-visible",
-    "carl-ready",
-    "carl-rrod-active"
+  const ring = document.createElement("span");
+  ring.className = "carl-rrod-ring";
+  ring.setAttribute("aria-hidden", "true");
+  carl.appendChild(ring);
+
+  /*
+    Real RROD:
+    thin red ring flickers 3 times, then holds faintly
+    for the remaining click window.
+  */
+    /*
+    Love at first pixel:
+    pop finishes first, then exactly three unmistakable red flashes.
+  */
+  ring.animate(
+    [
+      { opacity: 0, transform: "scale(.97)", offset: 0 },
+
+      { opacity: 1, transform: "scale(1)", offset: .06 },
+      { opacity: 1, transform: "scale(1)", offset: .18 },
+      { opacity: 0, transform: "scale(.985)", offset: .19 },
+
+      { opacity: 1, transform: "scale(1)", offset: .34 },
+      { opacity: 1, transform: "scale(1)", offset: .47 },
+      { opacity: 0, transform: "scale(.985)", offset: .48 },
+
+      { opacity: 1, transform: "scale(1)", offset: .64 },
+      { opacity: 1, transform: "scale(1)", offset: .79 },
+      { opacity: 0, transform: "scale(.985)", offset: .80 },
+
+      { opacity: 0, transform: "scale(1)", offset: 1 }
+    ],
+    {
+      duration: 1250,
+      easing: "steps(1, end)",
+      fill: "forwards"
+    }
   );
 
-  // Build 137: the RROD is painted by Carl's own ::after layer.
-  // Restart the CSS animation every time contact occurs.
-  carl.classList.remove("carl-rrod-flashing");
-  void carl.offsetWidth;
-  carl.classList.add("carl-rrod-flashing");
+  carl.animate(
+    [
+      { filter: "none" },
+      { filter: "brightness(1.35) saturate(1.4)" },
+      { filter: "none" },
+      { filter: "brightness(1.2) saturate(1.25)" },
+      { filter: "none" }
+    ],
+    {
+      duration: 520,
+      easing: "steps(1, end)"
+    }
+  );
 
-  const image = carl.querySelector("img");
-  if (image) {
-    image.animate(
-      [
-        { filter: "brightness(1.08) saturate(1.04) contrast(1.03)", offset: 0 },
-        { filter: "brightness(1.36) saturate(1.28) contrast(1.08)", offset: 0.04 },
-        { filter: "brightness(1.36) saturate(1.28) contrast(1.08)", offset: 0.18 },
-        { filter: "brightness(1.08) saturate(1.04) contrast(1.03)", offset: 0.19 },
-        { filter: "brightness(1.08) saturate(1.04) contrast(1.03)", offset: 0.32 },
-        { filter: "brightness(1.30) saturate(1.22) contrast(1.07)", offset: 0.33 },
-        { filter: "brightness(1.30) saturate(1.22) contrast(1.07)", offset: 0.49 },
-        { filter: "brightness(1.08) saturate(1.04) contrast(1.03)", offset: 0.50 },
-        { filter: "brightness(1.08) saturate(1.04) contrast(1.03)", offset: 0.64 },
-        { filter: "brightness(1.24) saturate(1.18) contrast(1.06)", offset: 0.65 },
-        { filter: "brightness(1.24) saturate(1.18) contrast(1.06)", offset: 0.84 },
-        { filter: "brightness(1.08) saturate(1.04) contrast(1.03)", offset: 0.85 },
-        { filter: "brightness(1.08) saturate(1.04) contrast(1.03)", offset: 1 }
-      ],
-      {
-        duration: flashDuration,
-        easing: "steps(1, end)",
-        fill: "none"
-      }
-    );
-  }
-
-  window.setTimeout(() => {
-    if (!carl.isConnected) return;
-    carl.classList.remove("carl-rrod-flashing");
-    carl.classList.remove("carl-rrod-active");
-  }, flashDuration + 40);
-
-  window.setTimeout(() => {
-    if (!carlOpened && carl.isConnected) {
+  setTimeout(() => {
+    if (!carlOpened && carl && carl.parentNode) {
       carl.classList.remove(
         "carl-ready",
         "carl-impact-visible",
-        "carl-dead-profile",
-        "carl-rrod-active"
+        "carl-dead-profile"
       );
+
+      const activeRing =
+        carl.querySelector(".carl-rrod-ring");
+
+      if (activeRing) activeRing.remove();
     }
-  }, 2400);
+  }, 2300);
 }
 
 function openCarlProfile() {
