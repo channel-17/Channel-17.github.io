@@ -10612,3 +10612,29 @@ img[data-c17-clean-frozen-asset="true"],
   65%, 84% { opacity: 1; }
   85%, 100% { opacity: 0; }
 }
+
+
+/* =========================================================
+   BUILD 138 — RESTORED PROVEN CARL RROD IMPLEMENTATION
+   Exact child-ring authority recovered from the last known-good build.
+========================================================= */
+.profile.carl {
+  position: absolute !important;
+  overflow: visible !important;
+}
+.profile.carl .carl-rrod-ring {
+  position: absolute !important;
+  inset: 1px !important;
+  z-index: 2147483646 !important;
+  display: block !important;
+  visibility: visible !important;
+  box-sizing: border-box !important;
+  border: 1px solid #ff1d25 !important;
+  border-radius: 50% !important;
+  opacity: 0;
+  pointer-events: none !important;
+  animation: none !important;
+  transform: none;
+  filter: none !important;
+  box-shadow: 0 0 2px rgba(255,29,37,.72) !important;
+}
