@@ -10568,3 +10568,47 @@ img[data-c17-clean-frozen-asset="true"],
   animation: none !important;
   will-change: opacity !important;
 }
+
+
+/* =========================================================
+   BUILD 137 — CARL RROD HARD LOCK
+   The ring is Carl's own topmost pseudo-element. No inserted
+   child, no Web Animations dependency, no stacking ambiguity.
+========================================================= */
+.profile.carl {
+  isolation: isolate !important;
+}
+
+.profile.carl::after {
+  content: "" !important;
+  position: absolute !important;
+  inset: -6px !important;
+  display: block !important;
+  box-sizing: border-box !important;
+  border: 3px solid #ff141f !important;
+  border-radius: 50% !important;
+  background: transparent !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  z-index: 2147483647 !important;
+  box-shadow:
+    0 0 0 1px rgba(255, 20, 31, 1),
+    0 0 8px rgba(255, 20, 31, 1),
+    0 0 18px rgba(255, 20, 31, .88),
+    inset 0 0 4px rgba(255, 20, 31, .72) !important;
+  transform: translateZ(0) !important;
+}
+
+.profile.carl.carl-rrod-flashing::after {
+  animation: carlRrodThreeFlickers 1.68s steps(1, end) both !important;
+}
+
+@keyframes carlRrodThreeFlickers {
+  0%, 3%   { opacity: 0; }
+  4%, 18%  { opacity: 1; }
+  19%, 32% { opacity: 0; }
+  33%, 49% { opacity: 1; }
+  50%, 64% { opacity: 0; }
+  65%, 84% { opacity: 1; }
+  85%, 100% { opacity: 0; }
+}
