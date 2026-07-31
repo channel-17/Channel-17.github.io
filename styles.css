@@ -8283,11 +8283,11 @@ opacity:0;
 /* Ring appearance only. JavaScript controls the exact three flashes. */
 .profile.carl .carl-rrod-ring {
   position: absolute !important;
-  inset: -2px !important;
+  inset: -5px !important;
   z-index: 40 !important;
   display: block !important;
   box-sizing: border-box !important;
-  border: 3px solid #ff1d25 !important;
+  border: 4px solid #ff1d25 !important;
   border-radius: 50% !important;
   opacity: 0;
   pointer-events: none !important;
