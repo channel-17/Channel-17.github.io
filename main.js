@@ -1397,9 +1397,7 @@ function releaseDeadHeartTowardCarl() {
         */
         spawnCarlZap(contactX, contactY);
 
-        setTimeout(() => {
-          triggerCarl(carl);
-        }, 90);
+        triggerCarl(carl);
 
         setTimeout(() => {
           if (heart.isConnected) {
@@ -1444,9 +1442,7 @@ function releaseDeadHeartTowardCarl() {
           c.top + c.height / 2
         );
 
-        setTimeout(() => {
-          triggerCarl(carl);
-        }, 90);
+        triggerCarl(carl);
       }
 
       setTimeout(() => {
