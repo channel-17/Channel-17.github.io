@@ -1059,11 +1059,18 @@ function spawnCarl() {
 
   profileField.appendChild(carl);
 
-  // Carl is just another avatar until the broken heart completes the circuit.
-  carl.addEventListener("click", () => {
-    if (!carl.classList.contains("carl-ready")) return;
-    openCarlProfile();
-  }, { once: true });
+  // Carl opens only during a visible red RROD flash.
+carl.addEventListener("click", () => {
+  if (carlOpened) return;
+  if (!carl.classList.contains("carl-ready")) return;
+
+  const activeRing = carl.querySelector(".carl-rrod-ring");
+
+  if (!activeRing) return;
+  if (activeRing.style.opacity !== "1") return;
+
+  openCarlProfile();
+});
 
   // Carl stays as the final left-side loader avatar. He is left alone until the Carl-heart brick is unlocked.
 
@@ -1474,7 +1481,8 @@ function triggerCarl(carl) {
   if (!carl || !carl.parentNode || carlTriggered) return;
 
   carlTriggered = true;
-  carl.classList.add("carl-impact-visible", "carl-ready");
+  carl.classList.add("carl-impact-visible");
+  carl.classList.remove("carl-ready");
 
   const oldRing = carl.querySelector(".carl-rrod-ring");
   if (oldRing) oldRing.remove();
@@ -1485,67 +1493,85 @@ function triggerCarl(carl) {
   carl.appendChild(ring);
 
   /*
-    Real RROD:
-    thin red ring flickers 3 times, then holds faintly
-    for the remaining click window.
+    Three infection flashes.
+    Carl is clickable only while the red ring is visibly on.
   */
-    /*
-    Love at first pixel:
-    pop finishes first, then exactly three unmistakable red flashes.
-  */
-  ring.animate(
+  const flashWindows = [
+    { start: 30, end: 120 },
+    { start: 200, end: 290 },
+    { start: 370, end: 470 }
+  ];
+
+  const scheduledTimers = [];
+
+  flashWindows.forEach(({ start, end }) => {
+    scheduledTimers.push(
+      setTimeout(() => {
+        if (
+          carlOpened ||
+          !carl ||
+          !carl.isConnected ||
+          !ring.isConnected
+        ) {
+          return;
+        }
+
+        ring.style.opacity = "1";
+        ring.style.transform = "scale(1)";
+        carl.classList.add("carl-ready");
+      }, start)
+    );
+
+    scheduledTimers.push(
+      setTimeout(() => {
+        if (!carl || !carl.isConnected) return;
+
+        ring.style.opacity = "0";
+        ring.style.transform = "scale(.985)";
+        carl.classList.remove("carl-ready");
+      }, end)
+    );
+  });
+
+  carl.animate(
     [
-      { opacity: 0, transform: "scale(.97)", offset: 0 },
-
-      { opacity: 1, transform: "scale(1)", offset: .06 },
-      { opacity: 1, transform: "scale(1)", offset: .18 },
-      { opacity: 0, transform: "scale(.985)", offset: .19 },
-
-      { opacity: 1, transform: "scale(1)", offset: .34 },
-      { opacity: 1, transform: "scale(1)", offset: .47 },
-      { opacity: 0, transform: "scale(.985)", offset: .48 },
-
-      { opacity: 1, transform: "scale(1)", offset: .64 },
-      { opacity: 1, transform: "scale(1)", offset: .79 },
-      { opacity: 0, transform: "scale(.985)", offset: .80 },
-
-      { opacity: 0, transform: "scale(1)", offset: 1 }
+      { filter: "none", offset: 0 },
+      {
+        filter: "brightness(1.35) saturate(1.4)",
+        offset: .08
+      },
+      { filter: "none", offset: .24 },
+      {
+        filter: "brightness(1.35) saturate(1.4)",
+        offset: .39
+      },
+      { filter: "none", offset: .55 },
+      {
+        filter: "brightness(1.35) saturate(1.4)",
+        offset: .71
+      },
+      { filter: "none", offset: 1 }
     ],
     {
-      duration: 1250,
+      duration: 520,
       easing: "steps(1, end)",
       fill: "forwards"
     }
   );
 
-  carl.animate(
-    [
-      { filter: "none" },
-      { filter: "brightness(1.35) saturate(1.4)" },
-      { filter: "none" },
-      { filter: "brightness(1.2) saturate(1.25)" },
-      { filter: "none" }
-    ],
-    {
-      duration: 520,
-      easing: "steps(1, end)"
-    }
-  );
+  scheduledTimers.push(
+    setTimeout(() => {
+      if (!carl || !carl.isConnected) return;
 
-  setTimeout(() => {
-    if (!carlOpened && carl && carl.parentNode) {
       carl.classList.remove(
         "carl-ready",
         "carl-impact-visible",
         "carl-dead-profile"
       );
 
-      const activeRing =
-        carl.querySelector(".carl-rrod-ring");
-
-      if (activeRing) activeRing.remove();
-    }
-  }, 2300);
+      if (ring.isConnected) ring.remove();
+    }, 520)
+  );
 }
 
 function openCarlProfile() {
