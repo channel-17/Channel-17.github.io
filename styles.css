@@ -10469,97 +10469,6 @@ img[data-c17-clean-frozen-asset="true"],
   background: transparent !important;
 }
 
-
-/* CARL V6.0 — authoritative RROD overlay */
-.carl-rrod-overlay {
-  position: absolute;
-  display: block;
-  box-sizing: border-box;
-  border: 3px solid #ff1d25;
-  border-radius: 50%;
-  opacity: 0;
-  pointer-events: none;
-  z-index: 10000;
-  box-shadow: 0 0 0 1px rgba(255,29,37,.9), 0 0 16px rgba(255,29,37,.95), 0 0 34px rgba(255,29,37,.62);
-  transform: translateZ(0);
-  will-change: opacity;
-}
-
-/* =========================================================
-   BUILD 136 — CARL RROD / SIZE LOCK
-   Final authority: Carl never changes diameter; the click
-   window exists only during the three visible RROD flashes.
-========================================================= */
-.profile.carl,
-.profile.carl.carl-wrong-place,
-.profile.carl.carl-zone-anchor,
-.profile.carl.carl-impact-visible,
-.profile.carl.carl-ready,
-.profile.carl.carl-rrod-active {
-  width: 72px !important;
-  height: 72px !important;
-  min-width: 72px !important;
-  min-height: 72px !important;
-  max-width: 72px !important;
-  max-height: 72px !important;
-  padding: 0 !important;
-  border-width: 2px !important;
-  border-radius: 50% !important;
-  transform: translate(0, 0) scale(1) !important;
-  animation: none !important;
-  overflow: visible !important;
-  opacity: 1 !important;
-  visibility: visible !important;
-  box-sizing: border-box !important;
-}
-
-.profile.carl.carl-zone-anchor {
-  pointer-events: none !important;
-}
-
-.profile.carl.carl-ready {
-  pointer-events: auto !important;
-  cursor: pointer !important;
-  z-index: 10002 !important;
-}
-
-.profile.carl > img {
-  width: 100% !important;
-  height: 100% !important;
-  min-width: 100% !important;
-  min-height: 100% !important;
-  border-radius: 50% !important;
-  object-fit: cover !important;
-  object-position: center !important;
-  transform: scale(1.02) !important;
-  transform-origin: 50% 50% !important;
-  opacity: 1 !important;
-}
-
-.profile.carl .carl-rrod-overlay {
-  position: absolute !important;
-  inset: -4px !important;
-  width: auto !important;
-  height: auto !important;
-  display: block !important;
-  box-sizing: border-box !important;
-  border: 3px solid #ff1d25 !important;
-  border-radius: 50% !important;
-  background: transparent !important;
-  opacity: 0;
-  pointer-events: none !important;
-  z-index: 10003 !important;
-  box-shadow:
-    0 0 0 1px rgba(255,29,37,.94),
-    0 0 9px rgba(255,29,37,.98),
-    0 0 20px rgba(255,29,37,.60),
-    inset 0 0 5px rgba(255,29,37,.50) !important;
-  transform: none !important;
-  animation: none !important;
-  will-change: opacity !important;
-}
-
-
 /* =========================================================
    BUILD 137 — CARL RROD HARD LOCK
    The ring is Carl's own topmost pseudo-element. No inserted
@@ -10614,12 +10523,12 @@ img[data-c17-clean-frozen-asset="true"],
 }
 .profile.carl .carl-rrod-ring {
   position: absolute !important;
-  inset: 1px !important;
+  inset: -1px !important;
   z-index: 2147483646 !important;
   display: block !important;
   visibility: visible !important;
   box-sizing: border-box !important;
-  border: 8px solid #ff1d25 !important;
+  border: 2px solid #ff1d25 !important;
   border-radius: 50% !important;
   opacity: 0;
   pointer-events: none !important;
