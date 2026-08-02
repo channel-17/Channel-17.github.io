@@ -36,11 +36,6 @@ const takeCampTest = document.getElementById("takeCampTest");
 const campTestModal = document.getElementById("campTestModal");
 const campTestClose = document.getElementById("campTestClose");
 const campResult = document.getElementById("campResult");
-const employmentApplicationForm = document.getElementById("employmentApplicationForm");
-const employmentApplicantName = document.getElementById("employmentApplicantName");
-const employmentApplicantEmail = document.getElementById("employmentApplicantEmail");
-const employmentReceived = document.getElementById("employmentReceived");
-const employmentReturn = document.getElementById("employmentReturn");
 const expandTestimonials = document.getElementById("expandTestimonials");
 const jinxShadowFrequency = document.getElementById("jinxShadowFrequency");
 const jinxCardOverlay = document.getElementById("jinxCardOverlay");
@@ -1658,131 +1653,24 @@ if (hiveWound) hiveWound.addEventListener("click", openHiveMindCarlFile);
 if (carlProfilePortal) carlProfilePortal.addEventListener("click", openHiveMindCarlFile);
 if (hiveClose) hiveClose.addEventListener("click", closeCarlProfile);
 if (survivorChalk) survivorChalk.addEventListener("click", event => { event.preventDefault(); survivorChalk.classList.add("found"); });
-function resetEmploymentApplication() {
-  if (employmentApplicationForm) {
-    employmentApplicationForm.hidden = false;
-    employmentApplicationForm.style.display = "block";
-    employmentApplicationForm.reset();
-  }
-
-  if (employmentReceived) {
-    employmentReceived.hidden = true;
-    employmentReceived.style.display = "none";
-  }
-
-  if (campResult) campResult.textContent = "";
-}
-
-function openEmploymentApplication() {
-  if (!campTestModal) return;
-
-  resetEmploymentApplication();
-  campTestModal.classList.add("open");
-  campTestModal.setAttribute("aria-hidden", "false");
-  document.documentElement.classList.add("employment-application-open");
-
-  const sheet = campTestModal.querySelector(".employment-application-sheet");
-  if (sheet) sheet.scrollTop = 0;
-
-  window.setTimeout(() => {
-    if (employmentApplicantName) {
-      try {
-        employmentApplicantName.focus({ preventScroll: true });
-      } catch (error) {
-        employmentApplicantName.focus();
-      }
-    }
-  }, 260);
-}
-
-function closeEmploymentApplication() {
-  if (!campTestModal) return;
-
-  campTestModal.classList.remove("open");
-  campTestModal.setAttribute("aria-hidden", "true");
-  document.documentElement.classList.remove("employment-application-open");
-}
-
 if (takeCampTest && campTestModal) {
-  takeCampTest.addEventListener("click", openEmploymentApplication);
+  takeCampTest.addEventListener("click", () => {
+    campTestModal.classList.add("open");
+    campTestModal.setAttribute("aria-hidden", "false");
+    if (campResult) campResult.textContent = "Awaiting human selection.";
+  });
 }
-
 if (campTestClose && campTestModal) {
-  campTestClose.addEventListener("click", closeEmploymentApplication);
-}
-
-if (employmentReturn) {
-  employmentReturn.addEventListener("click", closeEmploymentApplication);
-}
-
-if (campTestModal) {
-  campTestModal.addEventListener("click", event => {
-    if (event.target === campTestModal) closeEmploymentApplication();
+  campTestClose.addEventListener("click", () => {
+    campTestModal.classList.remove("open");
+    campTestModal.setAttribute("aria-hidden", "true");
   });
 }
-
-if (employmentApplicationForm) {
-  employmentApplicationForm.addEventListener("submit", event => {
-    event.preventDefault();
-
-    if (!employmentApplicationForm.checkValidity()) {
-      if (campResult) {
-        campResult.textContent = "Please complete every required field.";
-      }
-
-      employmentApplicationForm.reportValidity();
-      return;
-    }
-
-    const name =
-      employmentApplicantName &&
-      employmentApplicantName.value.trim()
-        ? employmentApplicantName.value.trim()
-        : "Applicant";
-
-    const email =
-      employmentApplicantEmail &&
-      employmentApplicantEmail.value.trim()
-        ? employmentApplicantEmail.value.trim()
-        : "the address provided";
-
-    employmentApplicationForm.hidden = true;
-    employmentApplicationForm.style.display = "none";
-
-    if (employmentReceived) {
-      const emailLine =
-        employmentReceived.querySelector(".employment-received-email");
-
-      if (emailLine) {
-        emailLine.textContent =
-          `${name}, confirmation has been sent to ${email}.`;
-      }
-
-      employmentReceived.hidden = false;
-      employmentReceived.style.display = "block";
-    }
-
-    if (campResult) {
-      campResult.textContent = "Application received.";
-    }
-
-    const sheet =
-      campTestModal.querySelector(".employment-application-sheet");
-
-    if (sheet) sheet.scrollTop = 0;
+document.querySelectorAll(".camp-answer").forEach(button => {
+  button.addEventListener("click", () => {
+    if (campResult) campResult.textContent = "Result: HIGHLY COMPATIBLE. Human campfire preference confirmed.";
   });
-}
-
-document.addEventListener("keydown", event => {
-  if (
-    event.key === "Escape" &&
-    campTestModal &&
-    campTestModal.classList.contains("open")
-  ) {
-    closeEmploymentApplication();
-  }
 });
-
 if (expandTestimonials) {
   expandTestimonials.addEventListener("click", () => {
     const block = expandTestimonials.closest(".testimonials");
