@@ -209,9 +209,9 @@
         </section>
 
         <section class="carl-block quiz camp-test-card">
-          <h2>Employment Opportunity</h2>
-          <p>Think you have what it takes to become the next Carl?</p>
-          <button class="take-test-button" id="takeCampTest" type="button">APPLY FOR EMPLOYMENT</button>
+          <h2>Camp Compatibility Test</h2>
+          <p>Would you enjoy sitting near a campfire with Carl Gates?</p>
+          <button class="take-test-button" id="takeCampTest" type="button">TAKE THE TEST</button>
         </section>
 
 
@@ -360,68 +360,16 @@
         </div>
       </div>
 
-      <div class="camp-test-modal employment-application-layer" id="campTestModal" aria-hidden="true">
-        <section class="camp-test-window employment-application-sheet" role="dialog" aria-modal="true" aria-labelledby="employmentApplicationTitle">
-          <button class="camp-test-close" id="campTestClose" type="button" aria-label="close employment application">×</button>
-
-          <header class="employment-application-header">
-            <img class="system-application-symbol" src="System.symbol.PNG" alt="">
-            <span class="camp-test-label">CANDIDATE INTAKE DOCUMENT</span>
-            <h3 id="employmentApplicationTitle">APPLICATION FOR EMPLOYMENT</h3>
-            <p>Thank you for your interest in employment. We are continually searching for highly adaptable individuals capable of integrating into an evolving organizational structure. Please answer each question honestly. All responses become company property.</p>
-          </header>
-
-          <form class="employment-application-form" id="employmentApplicationForm" novalidate>
-            <fieldset>
-              <legend>APPLICANT INFORMATION</legend>
-              <label>Full legal name<input id="employmentApplicantName" name="name" type="text" autocomplete="name" required></label>
-              <label>Email address<input id="employmentApplicantEmail" name="email" type="email" autocomplete="email" required></label>
-              <label>Phone number<input name="phone" type="tel" autocomplete="tel"></label>
-              <label>Current occupation<input name="occupation" type="text"></label>
-            </fieldset>
-
-            <fieldset>
-              <legend>POSITION QUALIFICATIONS</legend>
-              <label>List your qualifications<textarea name="qualifications" rows="4" required></textarea></label>
-              <label>What makes you think you would be good for this position?<textarea name="positionFit" rows="5" required></textarea></label>
-              <label>Describe a time you disagreed with authority<textarea name="authority" rows="4"></textarea></label>
-              <label>What is your greatest personal weakness?<textarea name="weakness" rows="4"></textarea></label>
-            </fieldset>
-
-            <fieldset>
-              <legend>ORGANIZATIONAL COMPATIBILITY</legend>
-              <p class="employment-question">Have you ever demonstrated independent thought?</p>
-              <label class="employment-choice"><input type="radio" name="independentThought" value="yes" required> Yes</label>
-              <label class="employment-choice"><input type="radio" name="independentThought" value="no"> No</label>
-              <label class="employment-choice"><input type="radio" name="independentThought" value="used-to"> I used to.</label>
-
-              <p class="employment-question">How often do you question recommendations?</p>
-              <label class="employment-choice"><input type="radio" name="recommendations" value="never" required> Never</label>
-              <label class="employment-choice"><input type="radio" name="recommendations" value="accidentally"> Only accidentally.</label>
-              <label class="employment-choice"><input type="radio" name="recommendations" value="question-me"> Recommendations question me.</label>
-
-              <p class="employment-question">Do you consent to improving humanity?</p>
-              <label class="employment-choice"><input type="radio" name="improveHumanity" value="yes" required> Yes</label>
-              <label class="employment-choice"><input type="radio" name="improveHumanity" value="absolutely"> Absolutely</label>
-              <label class="employment-choice"><input type="radio" name="improveHumanity" value="already"> I already have.</label>
-            </fieldset>
-
-            <label class="employment-certification"><input type="checkbox" id="employmentCertification" required> I certify that the information above is accurate, complete, and available for indefinite review.</label>
-
-            <button class="employment-submit" type="submit">SUBMIT APPLICATION</button>
-            <p class="camp-result employment-status" id="campResult" aria-live="polite"></p>
-          </form>
-
-          <section class="employment-received" id="employmentReceived" hidden>
-            <img class="system-application-symbol" src="System.symbol.PNG" alt="">
-            <span class="camp-test-label">SUBMISSION CONFIRMED</span>
-            <h3>APPLICATION RECEIVED</h3>
-            <p>Thank you for your consideration. Your application has been received and entered into review.</p>
-            <p class="employment-received-email"></p>
-            <p class="employment-fine-print">Qualified candidates may receive additional correspondence.</p>
-            <button class="employment-return" id="employmentReturn" type="button">RETURN TO PROFILE</button>
-          </section>
-        </section>
+      <div class="camp-test-modal" id="campTestModal" aria-hidden="true">
+        <div class="camp-test-window">
+          <button class="camp-test-close" id="campTestClose" type="button" aria-label="close camp test">×</button>
+          <span class="camp-test-label">CAMP COMPATIBILITY TEST</span>
+          <h3>Would you enjoy sitting near a campfire with Carl Gates?</h3>
+          <button type="button" class="camp-answer">Yes</button>
+          <button type="button" class="camp-answer">Yes</button>
+          <button type="button" class="camp-answer">Yes</button>
+          <p class="camp-result" id="campResult">Awaiting human selection.</p>
+        </div>
       </div>
 
       <aside class="hive-carl-file" id="hiveCarlFile" aria-hidden="true">
