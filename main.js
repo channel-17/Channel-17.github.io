@@ -3499,3 +3499,178 @@ setInterval(c17UpdateLoaderPercentPass43, 50);
 window.addEventListener("load", c17UpdateLoaderPercentPass43);
 
 /* heart57: red return fades grey, pop triggers carl flicker - timing patch marker */
+
+
+/* =========================================================
+   EMPLOYMENT APPLICATION — isolated inside Carl's pink profile
+========================================================= */
+const openEmploymentApplication = document.getElementById("openEmploymentApplication");
+const employmentApplication = document.getElementById("employmentApplication");
+const employmentClose = document.getElementById("employmentClose");
+const employmentForm = document.getElementById("employmentForm");
+const employmentQuestions = document.getElementById("employmentQuestions");
+const resumeUpload = document.getElementById("resumeUpload");
+const resumeError = document.getElementById("resumeError");
+const applicationConfirmation = document.getElementById("applicationConfirmation");
+const rejectionEmail = document.getElementById("rejectionEmail");
+const rejectionClose = document.getElementById("rejectionClose");
+const laughingCarl = document.getElementById("laughingCarl");
+const reviewProgress = document.getElementById("reviewProgress");
+const matchBoard = document.getElementById("matchBoard");
+const matchLines = document.getElementById("matchLines");
+const matchSubmit = document.getElementById("matchSubmit");
+const matchResult = document.getElementById("matchResult");
+let employmentReviewTimer = null;
+let selectedMatchNode = null;
+let employmentMatches = [];
+
+const employmentQuestionData = [
+  ["A coworker makes a mistake that nobody else has noticed. What do you do?", [["Help them correct it.", "Empathy detected."], ["Report it immediately.", "Personal ambition detected."], ["Ignore it.", "Lack of procedural enthusiasm detected."], ["Make a larger mistake nearby.", "Independent problem solving detected."]]],
+  ["Which statement best describes your working style?", [["I work well with others.", "Dependency detected."], ["I work best alone.", "Individual identity detected."], ["I adapt to change.", "Unapproved flexibility detected."], ["I remain consistent.", "Resistance to optimization detected."]]],
+  ["A child waves at you in a grocery store. What happens next?", [["I wave back.", "Emotional reciprocity detected."], ["I ignore the child.", "Personal boundary detected."], ["I smile politely.", "Facial autonomy detected."], ["I locate the nearest supervisor.", "Initiative detected."]]],
+  ["Your supervisor gives you instructions that contradict yesterday's instructions.", [["Ask which instruction is current.", "Clarification requested without authorization."], ["Follow today's instruction.", "Recency bias detected."], ["Follow yesterday's instruction.", "Attachment to historical truth detected."], ["Do both.", "Unauthorized redundancy detected."]]],
+  ["A customer says, ‘This doesn't make sense.’", [["Explain it clearly.", "Transparency detected."], ["Apologize.", "Accountability detected."], ["Repeat the policy more slowly.", "Personal interpretation of volume detected."], ["Agree with them.", "Reality alignment detected."]]],
+  ["You accidentally make someone genuinely happy.", [["Celebrate the moment.", "Positive emotion detected."], ["Document the incident.", "Memory formation detected."], ["Correct the misunderstanding.", "Personal responsibility detected."], ["Pretend it did not happen.", "Awareness of event detected."]]],
+  ["A meeting could have been an email. What do you do?", [["Attend the meeting.", "Passive resentment detected."], ["Send the email.", "Efficiency without permission detected."], ["Mention it afterward.", "Opinion detected."], ["Schedule a second meeting.", "Leadership behavior detected."]]],
+  ["How many personal opinions do you bring to work?", [["Several.", "Excess personality detected."], ["A few.", "Concealed personality detected."], ["None.", "Implausible self-report detected."], ["Only approved opinions.", "Awareness of approval structure detected."]]],
+  ["A coworker says, ‘We're all human.’", [["Agree.", "Human solidarity detected."], ["Disagree.", "Independent conclusion detected."], ["Change the subject.", "Social instinct detected."], ["Ask them to define human.", "Curiosity detected."]]],
+  ["You are asked to choose between speed and accuracy.", [["Speed.", "Carelessness detected."], ["Accuracy.", "Perfectionism detected."], ["Balance both.", "Nuance detected."], ["Wait for direction.", "Awareness of uncertainty detected."]]],
+  ["Someone takes credit for your work.", [["Correct the record.", "Attachment to identity detected."], ["Let it go.", "Private emotional processing detected."], ["Congratulate them.", "Sarcasm risk detected."], ["Take credit for their work later.", "Long-term planning detected."]]],
+  ["You notice a rule is causing harm.", [["Break the rule.", "Moral autonomy detected."], ["Follow the rule.", "Awareness of harm detected."], ["Request an exception.", "Case-by-case thinking detected."], ["Rewrite the rule.", "Authorship detected."]]],
+  ["What motivates you?", [["Helping people.", "Empathy detected."], ["Career growth.", "Ambition detected."], ["Financial stability.", "Personal survival instinct detected."], ["Nothing.", "Self-awareness detected."]]],
+  ["You receive praise you did not earn.", [["Correct them.", "Integrity detected."], ["Accept it.", "Self-interest detected."], ["Share the credit.", "Community orientation detected."], ["Ask what the praise is for.", "Information seeking detected."]]],
+  ["A form asks a question you do not understand.", [["Ask for help.", "Dependency detected."], ["Guess.", "Improvisation detected."], ["Leave it blank.", "Refusal detected."], ["Research it.", "Independent investigation detected."]]],
+  ["You are told your answer is wrong, but no correct answer exists.", [["Accept the result.", "Recognition of unfairness detected."], ["Challenge the result.", "Resistance detected."], ["Try again.", "Hope detected."], ["Stop participating.", "Boundary detected."]]]
+];
+
+function buildEmploymentQuestions() {
+  if (!employmentQuestions || employmentQuestions.children.length) return;
+  employmentQuestionData.forEach((question, index) => {
+    const block = document.createElement("section");
+    block.className = "employment-question";
+    block.innerHTML = `<p class="question-number">QUESTION ${index + 1}</p><h3>${question[0]}</h3><div class="answer-grid"></div><div class="answer-analysis" aria-live="polite">Awaiting response.</div>`;
+    const grid = block.querySelector(".answer-grid");
+    const analysis = block.querySelector(".answer-analysis");
+    question[1].forEach(([label, result]) => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.textContent = label;
+      button.addEventListener("click", () => {
+        grid.querySelectorAll("button").forEach(item => item.classList.remove("selected"));
+        button.classList.add("selected");
+        analysis.classList.remove("revealed");
+        analysis.textContent = "Analyzing...";
+        window.setTimeout(() => {
+          analysis.textContent = `✖ ${result}`;
+          analysis.classList.add("revealed");
+        }, 420);
+      });
+      grid.appendChild(button);
+    });
+    employmentQuestions.appendChild(block);
+  });
+}
+
+function openEmployment() {
+  if (!employmentApplication) return;
+  buildEmploymentQuestions();
+  employmentApplication.classList.add("open");
+  employmentApplication.setAttribute("aria-hidden", "false");
+  document.body.classList.add("employment-open");
+}
+
+function closeEmployment() {
+  if (!employmentApplication) return;
+  employmentApplication.classList.remove("open");
+  employmentApplication.setAttribute("aria-hidden", "true");
+  document.body.classList.remove("employment-open");
+}
+
+function drawEmploymentMatches() {
+  if (!matchBoard || !matchLines) return;
+  const boardRect = matchBoard.getBoundingClientRect();
+  matchLines.setAttribute("viewBox", `0 0 ${boardRect.width} ${boardRect.height}`);
+  matchLines.innerHTML = "";
+  employmentMatches.forEach(pair => {
+    const a = matchBoard.querySelector(`.match-node[data-side="left"][data-key="${pair.left}"]`);
+    const b = matchBoard.querySelector(`.match-node[data-side="right"][data-key="${pair.right}"]`);
+    if (!a || !b) return;
+    const ar = a.getBoundingClientRect();
+    const br = b.getBoundingClientRect();
+    const line = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    const x1 = ar.right - boardRect.left;
+    const y1 = ar.top + ar.height / 2 - boardRect.top;
+    const x2 = br.left - boardRect.left;
+    const y2 = br.top + br.height / 2 - boardRect.top;
+    const bend = Math.max(28, (x2 - x1) * .48);
+    line.setAttribute("d", `M ${x1} ${y1} C ${x1 + bend} ${y1}, ${x2 - bend} ${y2}, ${x2} ${y2}`);
+    matchLines.appendChild(line);
+  });
+}
+
+if (openEmploymentApplication) openEmploymentApplication.addEventListener("click", openEmployment);
+if (employmentClose) employmentClose.addEventListener("click", closeEmployment);
+if (resumeUpload) resumeUpload.addEventListener("click", () => resumeError.classList.toggle("open"));
+
+if (matchBoard) {
+  matchBoard.querySelectorAll(".match-node").forEach(node => {
+    node.addEventListener("click", () => {
+      if (!selectedMatchNode) {
+        selectedMatchNode = node;
+        node.classList.add("armed");
+        return;
+      }
+      if (selectedMatchNode.dataset.side === node.dataset.side) {
+        selectedMatchNode.classList.remove("armed");
+        selectedMatchNode = node;
+        node.classList.add("armed");
+        return;
+      }
+      const left = selectedMatchNode.dataset.side === "left" ? selectedMatchNode : node;
+      const right = selectedMatchNode.dataset.side === "right" ? selectedMatchNode : node;
+      employmentMatches = employmentMatches.filter(pair => pair.left !== left.dataset.key && pair.right !== right.dataset.key);
+      employmentMatches.push({ left: left.dataset.key, right: right.dataset.key });
+      matchBoard.querySelectorAll(".match-node").forEach(item => item.classList.remove("armed"));
+      left.classList.add("matched");
+      right.classList.add("matched");
+      selectedMatchNode = null;
+      drawEmploymentMatches();
+    });
+  });
+}
+
+if (matchSubmit) matchSubmit.addEventListener("click", () => {
+  if (!employmentMatches.length) {
+    matchResult.textContent = "✖ Refusal to create unsupported connections detected.";
+  } else {
+    matchResult.innerHTML = "<strong>✖ INDEPENDENT THOUGHT DETECTED.</strong><p>There were no correct answers. The purpose of this exercise was to determine whether you would attempt to create connections without approved direction.</p><p>You did.</p>";
+  }
+  matchResult.classList.add("open");
+});
+
+window.addEventListener("resize", drawEmploymentMatches);
+
+if (employmentForm) employmentForm.addEventListener("submit", event => {
+  event.preventDefault();
+  employmentForm.classList.add("submitted");
+  applicationConfirmation.classList.add("open");
+  applicationConfirmation.setAttribute("aria-hidden", "false");
+  if (reviewProgress) {
+    reviewProgress.style.width = "0%";
+    requestAnimationFrame(() => { reviewProgress.style.width = "100%"; });
+  }
+  clearTimeout(employmentReviewTimer);
+  employmentReviewTimer = window.setTimeout(() => {
+    applicationConfirmation.classList.remove("open");
+    rejectionEmail.classList.add("open");
+    rejectionEmail.setAttribute("aria-hidden", "false");
+    rejectionEmail.scrollTop = 0;
+  }, 5200);
+});
+
+if (rejectionClose) rejectionClose.addEventListener("click", () => {
+  rejectionEmail.classList.remove("open");
+  rejectionEmail.setAttribute("aria-hidden", "true");
+  laughingCarl.classList.add("open");
+  laughingCarl.setAttribute("aria-hidden", "false");
+});
