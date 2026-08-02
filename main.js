@@ -1658,30 +1658,41 @@ if (hiveWound) hiveWound.addEventListener("click", openHiveMindCarlFile);
 if (carlProfilePortal) carlProfilePortal.addEventListener("click", openHiveMindCarlFile);
 if (hiveClose) hiveClose.addEventListener("click", closeCarlProfile);
 if (survivorChalk) survivorChalk.addEventListener("click", event => { event.preventDefault(); survivorChalk.classList.add("found"); });
-function resetEmploymentApplicationView() {
+function resetEmploymentApplication() {
   if (employmentApplicationForm) {
     employmentApplicationForm.hidden = false;
+    employmentApplicationForm.style.display = "block";
+    employmentApplicationForm.reset();
   }
 
   if (employmentReceived) {
     employmentReceived.hidden = true;
+    employmentReceived.style.display = "none";
   }
 
-  if (campResult) {
-    campResult.textContent = "";
-  }
+  if (campResult) campResult.textContent = "";
 }
 
 function openEmploymentApplication() {
   if (!campTestModal) return;
 
-  resetEmploymentApplicationView();
+  resetEmploymentApplication();
   campTestModal.classList.add("open");
   campTestModal.setAttribute("aria-hidden", "false");
+  document.documentElement.classList.add("employment-application-open");
 
-  window.requestAnimationFrame(() => {
-    if (employmentApplicantName) employmentApplicantName.focus();
-  });
+  const sheet = campTestModal.querySelector(".employment-application-sheet");
+  if (sheet) sheet.scrollTop = 0;
+
+  window.setTimeout(() => {
+    if (employmentApplicantName) {
+      try {
+        employmentApplicantName.focus({ preventScroll: true });
+      } catch (error) {
+        employmentApplicantName.focus();
+      }
+    }
+  }, 260);
 }
 
 function closeEmploymentApplication() {
@@ -1689,41 +1700,14 @@ function closeEmploymentApplication() {
 
   campTestModal.classList.remove("open");
   campTestModal.setAttribute("aria-hidden", "true");
+  document.documentElement.classList.remove("employment-application-open");
 }
 
-function showEmploymentApplicationReceived() {
-  if (!employmentApplicationForm || !employmentReceived) return;
-
-  const applicantName = employmentApplicantName
-    ? employmentApplicantName.value.trim()
-    : "";
-  const applicantEmail = employmentApplicantEmail
-    ? employmentApplicantEmail.value.trim()
-    : "";
-  const receivedEmail = employmentReceived.querySelector(".employment-received-email");
-
-  employmentApplicationForm.hidden = true;
-  employmentReceived.hidden = false;
-
-  if (receivedEmail) {
-    const nameLine = applicantName ? `${applicantName}, ` : "";
-    const emailLine = applicantEmail
-      ? `A confirmation has been prepared for ${applicantEmail}.`
-      : "A confirmation has been prepared for the address supplied.";
-    receivedEmail.textContent = `${nameLine}${emailLine}`;
-  }
-
-  employmentReceived.scrollIntoView({
-    behavior: "smooth",
-    block: "start"
-  });
-}
-
-if (takeCampTest) {
+if (takeCampTest && campTestModal) {
   takeCampTest.addEventListener("click", openEmploymentApplication);
 }
 
-if (campTestClose) {
+if (campTestClose && campTestModal) {
   campTestClose.addEventListener("click", closeEmploymentApplication);
 }
 
@@ -1743,21 +1727,53 @@ if (employmentApplicationForm) {
 
     if (!employmentApplicationForm.checkValidity()) {
       if (campResult) {
-        campResult.textContent = "Complete every required field before submitting.";
+        campResult.textContent = "Please complete every required field.";
       }
+
       employmentApplicationForm.reportValidity();
       return;
     }
 
-    if (campResult) {
-      campResult.textContent = "Application received. Entering review.";
+    const name =
+      employmentApplicantName &&
+      employmentApplicantName.value.trim()
+        ? employmentApplicantName.value.trim()
+        : "Applicant";
+
+    const email =
+      employmentApplicantEmail &&
+      employmentApplicantEmail.value.trim()
+        ? employmentApplicantEmail.value.trim()
+        : "the address provided";
+
+    employmentApplicationForm.hidden = true;
+    employmentApplicationForm.style.display = "none";
+
+    if (employmentReceived) {
+      const emailLine =
+        employmentReceived.querySelector(".employment-received-email");
+
+      if (emailLine) {
+        emailLine.textContent =
+          `${name}, confirmation has been sent to ${email}.`;
+      }
+
+      employmentReceived.hidden = false;
+      employmentReceived.style.display = "block";
     }
 
-    window.setTimeout(showEmploymentApplicationReceived, 420);
+    if (campResult) {
+      campResult.textContent = "Application received.";
+    }
+
+    const sheet =
+      campTestModal.querySelector(".employment-application-sheet");
+
+    if (sheet) sheet.scrollTop = 0;
   });
 }
 
-window.addEventListener("keydown", event => {
+document.addEventListener("keydown", event => {
   if (
     event.key === "Escape" &&
     campTestModal &&
@@ -1766,6 +1782,7 @@ window.addEventListener("keydown", event => {
     closeEmploymentApplication();
   }
 });
+
 if (expandTestimonials) {
   expandTestimonials.addEventListener("click", () => {
     const block = expandTestimonials.closest(".testimonials");
