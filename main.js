@@ -1055,7 +1055,7 @@ function spawnCarl() {
   carl.style.setProperty("--sy", "-210px");
   carl.style.setProperty("--rot", "-4deg");
   carl.classList.add("loader-slam", "loader-final-slam");
-  carl.innerHTML = `<img src="AssetCARL.PNG" alt="">`;
+  carl.innerHTML = `<img src="AssetCARL.victory.PNG" alt="">`;
 
   profileField.appendChild(carl);
 
