@@ -134,52 +134,85 @@ function ensurePoemNoteOverlay() {
       <div class="poem-note-kicker">private frequency</div>
       <h2>Red.</h2>
       <div class="poem-note-paper red-poem-paper">
-        <p>Walked into your office, saw the fire in your hair<br>
-        Bright red like a warning, but I didn’t even care<br>
-        You sat at that desk, whole room shifted tone<br>
-        Like I stepped into a palace that was never my own</p>
+        <p>Walked into your office,<br>
+saw the fire in your hair.<br>
+Bright red like a warning<br>
+but I didn’t even care.</p>
 
-        <p>You looked up for a second, I was caught in the frame<br>
-        Started callin’ you Jasmine, just didn’t say it by name<br>
-        It was a joke in my head.<br>
-        Started feelng surreal.<br>
-        Like there was a crown in my future I might not have to steal</p>
+<p>You sat at that desk,<br>
+whole room shifted tone.<br>
+Like I stepped into a palace<br>
+that was never my own.</p>
 
-        <p>Every visit turned a moment into somethin’ more deep<br>
-        I was buildin’ whole worlds while you were talkin’ to me<br>
-        Had a carpet in my mind, had a plan, had a pace<br>
-        Had a version of forever when I saw your face</p>
+<p>You looked up for a second.<br>
+I was caught in the frame.<br>
+Started callin’ you Jasmine...<br>
+just didn’t say it by name.</p>
 
-        <p>Never crossed any lines, kept it cool, kept it tight<br>
-        But I felt somethin’ shift with you in my sight.<br>
-        Thought the door might be open<br>
-        just a crack, just enough…<br>
-        Thought maybe… just maybe,<br>
-        This was fairytail kind of stuff.</p>
+<p>It was a joke in my head.<br>
+Started feeling surreal.<br>
+Like there was a crown in my future...<br>
+I might not have to steal.</p>
 
-        <p>The silence got louder, you were driftin’ away<br>
-        Conversations got shorter, different look in your gaze<br>
-        Didn’t see it all happen, never watched you choose him<br>
-        Just held it inside.<br>
-        While my walls were caving in.</p>
+<p>Every visit turned a moment...<br>
+into somethin’ more deep.<br>
+I was buildin’ whole worlds...<br>
+while you were talkin’ to me.</p>
 
-        <p>He was part of your story, Im not even a page<br>
-        Just a thought scribbled down<br>
-        And then quickly erased<br>
-        That’s the part I can’t get over, missing this win.<br>
-        I never lost you to him—I just never got to begin</p>
+<p>I had a carpet in my mind...<br>
+Had a plan. Had a pace.<br>
+I had a version of forever...<br>
+each time I saw your face.</p>
 
-        <p>Now I’m stuck with a palace that I built in my head<br>
-        Walkin’ down empty hallways,<br>
-        where the words went unsaid<br>
-        Scrabbling for a genie<br>
-        My wish was never spoke<br>
-        I Feel like the punchline without a setup, just a half-finished joke</p>
+<p>Never crossed any lines.<br>
+I kept it cool. Kept it tight.<br>
+But I felt somethin’ shift<br>
+with you in my sight.</p>
 
-        <p>I still picture your hair and how the light shaded those strands.<br>
-        You smiled at me and I thought fate had a plan<br>
-        Now it flickers like a memory that burns when I sleep<br>
-        The crown I imagined that I never could keep</p>
+<p>Thought the door might be open<br>
+just a crack, just enough...<br>
+Thought maybe. Just maybe,<br>
+this was fairytale kind of stuff.</p>
+
+<p>The silence got louder.<br>
+You were driftin’ away.<br>
+Conversations got shorter...<br>
+A different look in your gaze.</p>
+
+<p>Didn’t see it all happen.<br>
+Never watched you choose him.<br>
+Just held it inside<br>
+while my walls were caving in...</p>
+
+<p>He was part of your story.<br>
+I'm not even a page.<br>
+Just a thought scribbled down,<br>
+then quickly erased.</p>
+
+<p>That’s the part I can’t get over...<br>
+Missing this win.<br>
+I never lost you to him.<br>
+I just never got to begin.</p>
+
+<p>Now I’m stuck with this palace...<br>
+that I built in my head.<br>
+Walkin’ down empty hallways,<br>
+where the words went unsaid.</p>
+
+<p>Scrabbling for a genie.<br>
+My wish was never spoke.<br>
+I feel like a punchline with no setup...<br>
+just a half-finished joke.</p>
+
+<p>I still picture your hair<br>
+&amp; how the light shaded those strands.<br>
+When you smiled at me<br>
+I thought fate had a plan.</p>
+
+<p>Now it flickers like a memory<br>
+that burns when I sleep.<br>
+The crown I had imagined.<br>
+The one I never could keep.</p>
 
         <p class="red-poem-signature">— jinx</p>
       </div>
