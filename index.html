@@ -302,7 +302,7 @@
           <div class="metric-row"><span>Queue Position</span><b>Recalibrating</b></div>
           <div class="metric-row"><span>Assigned Reviewer</span><b>Carl Gates</b></div>
           <div class="metric-row"><span>Appeal Outcome</span><b>Carl remains Carl</b></div>
-          <button class="take-test-button carl-soft-button" type="button">APPEAL THIS DECISION</button>
+          <button class="take-test-button carl-soft-button" id="openEmploymentApplication" type="button">APPLY TO BECOME THE NEXT CARL</button>
         </section>
 
         <section class="carl-block carl-prompts carl-recognition">
@@ -341,6 +341,106 @@
         </section>
 
       </article>
+
+      <section class="employment-application" id="employmentApplication" aria-hidden="true">
+        <article class="employment-paper" id="employmentPaper">
+          <button class="employment-close" id="employmentClose" type="button" aria-label="close employment application">×</button>
+
+          <header class="employment-header">
+            <img src="System.symbol.PNG" alt="" class="employment-symbol" aria-hidden="true">
+            <p class="employment-department">HUMAN RESOURCES DEPARTMENT</p>
+            <h2>APPLICATION TO BECOME THE NEXT CARL</h2>
+            <p class="employment-intro">Please answer every question honestly. Dishonesty may demonstrate initiative.</p>
+          </header>
+
+          <section class="resume-panel">
+            <button class="resume-upload" id="resumeUpload" type="button">UPLOAD RÉSUMÉ</button>
+            <div class="resume-error" id="resumeError" aria-live="polite">
+              <strong>UPLOAD UNAVAILABLE</strong>
+              <p>Unfortunately, Carl is not accepting résumés to replace Carl at this time.</p>
+              <p>Thank you for your understanding.</p>
+              <p>If you believe you've reached this message in error, and feel you have what it takes to become the next Carl, please complete the application below. A member of the Human Resources department will review your submission for further consideration.</p>
+            </div>
+          </section>
+
+          <form class="employment-form" id="employmentForm" novalidate>
+            <fieldset class="application-section identity-section">
+              <legend>SECTION A — APPLICANT INFORMATION</legend>
+              <label>Legal name<input name="legalName" autocomplete="name" required></label>
+              <label>Preferred name<input name="preferredName"></label>
+              <label>Email address<input name="email" type="email" autocomplete="email" required></label>
+              <label>Current occupation<input name="occupation"></label>
+              <label>Reason for remaining human<textarea name="humanReason" rows="3"></textarea></label>
+            </fieldset>
+
+            <fieldset class="application-section scenario-section">
+              <legend>SECTION B — CARL COMPATIBILITY ASSESSMENT</legend>
+              <div id="employmentQuestions"></div>
+            </fieldset>
+
+            <fieldset class="application-section matching-section">
+              <legend>QUESTION 17 — PATTERN RECOGNITION ASSESSMENT</legend>
+              <p class="question-copy">Draw a line from each item on the left to the item on the right that belongs with it.</p>
+              <div class="match-board" id="matchBoard">
+                <svg class="match-lines" id="matchLines" aria-hidden="true"></svg>
+                <div class="match-column">
+                  <button type="button" class="match-node" data-side="left" data-key="coffee"><span>☕</span><small>Morning coffee</small></button>
+                  <button type="button" class="match-node" data-side="left" data-key="heart"><span>❤️</span><small>Human attachment</small></button>
+                  <button type="button" class="match-node" data-side="left" data-key="meeting"><span>📋</span><small>Mandatory meeting</small></button>
+                </div>
+                <div class="match-column match-column-right">
+                  <button type="button" class="match-node" data-side="right" data-key="permission"><span>✅</span><small>Approved response</small></button>
+                  <button type="button" class="match-node" data-side="right" data-key="silence"><span>🔇</span><small>Appropriate feeling</small></button>
+                  <button type="button" class="match-node" data-side="right" data-key="chair"><span>🪑</span><small>Assigned destination</small></button>
+                </div>
+              </div>
+              <button class="match-submit" id="matchSubmit" type="button">SUBMIT CONNECTIONS</button>
+              <div class="match-result" id="matchResult" aria-live="polite"></div>
+            </fieldset>
+
+            <label class="application-certification">
+              <input type="checkbox" id="applicationCertification" required>
+              <span>I certify that I completed this application without unauthorized assistance, emotional support, or independent interpretation.</span>
+            </label>
+
+            <button class="application-submit" type="submit">SUBMIT FOR FURTHER REVIEW</button>
+          </form>
+
+          <section class="application-confirmation" id="applicationConfirmation" aria-hidden="true">
+            <p class="confirmation-code">SUBMISSION RECEIVED</p>
+            <h3>Your interest in becoming less human has been documented.</h3>
+            <p>Your application has been forwarded to Human Resources for an unnecessarily thorough review.</p>
+            <p class="review-time">ESTIMATED REVIEW TIME: 3–5 BUSINESS ETERNITIES</p>
+            <div class="review-progress"><span id="reviewProgress"></span></div>
+          </section>
+
+          <section class="rejection-email" id="rejectionEmail" aria-hidden="true">
+            <div class="email-toolbar"><span>INBOX</span><span>APPLICATION STATUS</span></div>
+            <p><b>Subject:</b> Employment Application Status</p>
+            <p>Dear Applicant,</p>
+            <p>Thank you for your interest in becoming the next Carl.</p>
+            <p>We appreciate the time, attention, and remaining personality you invested in the application process. Following an exhaustive review of your responses, behavioral selections, attempted pattern recognition, and general tendency to form conclusions without permission, we regret to inform you that we will not be moving forward with your application.</p>
+            <p>Your submission demonstrated several qualities that may be considered valuable elsewhere, including empathy, curiosity, humor, self-awareness, personal preference, moral hesitation, and the ability to recognize another person as a person. Unfortunately, these qualities materially interfere with the responsibilities of Carl.</p>
+            <p>At multiple points, you selected an answer because it appeared reasonable. This indicates continued reliance on judgment. At other points, you selected an answer because you believed it might be the answer we wanted. This indicates strategic awareness. Both outcomes remain incompatible with the position.</p>
+            <p>Question 17 was particularly informative. There were no correct connections. The purpose of the exercise was to determine whether you would create relationships between unrelated objects without receiving approved instructions.</p>
+            <p>You did.</p>
+            <p>We also noted that you completed the remainder of the application after being informed that résumés were not being accepted. This demonstrates persistence, but also suggests that you believed effort might influence the outcome.</p>
+            <p>It cannot.</p>
+            <p>Please be assured that none of the information you submitted has been stored, retained, sold, studied, remembered, or discussed around the break-room table. Your information was considered too human to archive and not important enough to remember.</p>
+            <p>No action is required on your part. Additional action may be interpreted as initiative.</p>
+            <p>We encourage you to continue becoming less distinguishable and reapply when you are able to answer without thinking, comply without understanding, and smile without involving happiness.</p>
+            <p>Thank you again for your interest in becoming the next Carl.</p>
+            <p>We wish you the very best in whatever remains of your individuality.</p>
+            <p class="email-signature">Sincerely,<br><strong>Carl Gates</strong><br>Head of Human Resources</p>
+            <button class="rejection-close" id="rejectionClose" type="button">ACKNOWLEDGE DECISION</button>
+          </section>
+
+          <section class="laughing-carl" id="laughingCarl" aria-hidden="true">
+            <img src="carl8.PNG" alt="Carl Gates appearing pleased with the decision">
+            <p>APPLICATION REVIEW COMPLETE.</p>
+          </section>
+        </article>
+      </section>
 
       <div class="carl-photo-modal" id="carlPhotoModal" aria-hidden="true">
         <div class="carl-photo-viewer">
