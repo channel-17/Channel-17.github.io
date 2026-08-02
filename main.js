@@ -1059,18 +1059,17 @@ function spawnCarl() {
 
   profileField.appendChild(carl);
 
-  // Carl opens only during a visible red RROD flash.
-carl.addEventListener("click", () => {
-  if (carlOpened) return;
-  if (!carl.classList.contains("carl-ready")) return;
+  /*
+    Carl becomes accessible after the heart contact triggers his RROD.
+    The three red flashes remain the visual discovery cue, but the user
+    no longer has to land a millisecond-perfect tap during a flash.
+  */
+  carl.addEventListener("click", () => {
+    if (carlOpened) return;
+    if (!carl.classList.contains("carl-access-open")) return;
 
-  const activeRing = carl.querySelector(".carl-rrod-ring");
-
-  if (!activeRing) return;
-  if (activeRing.style.opacity !== "1") return;
-
-  openCarlProfile();
-});
+    openCarlProfile();
+  });
 
   // Carl stays as the final left-side loader avatar. He is left alone until the Carl-heart brick is unlocked.
 
@@ -1477,7 +1476,15 @@ function triggerCarl(carl) {
   if (!carl || !carl.parentNode || carlTriggered) return;
 
   carlTriggered = true;
-  carl.classList.add("carl-impact-visible");
+
+  /*
+    Heart contact permanently unlocks Carl for this run.
+    The RROD still flashes exactly three times as the visual clue.
+  */
+  carl.classList.add(
+    "carl-impact-visible",
+    "carl-access-open"
+  );
   carl.classList.remove("carl-ready");
 
   const oldRing = carl.querySelector(".carl-rrod-ring");
@@ -1488,10 +1495,6 @@ function triggerCarl(carl) {
   ring.setAttribute("aria-hidden", "true");
   carl.appendChild(ring);
 
-  /*
-    Three infection flashes.
-    Carl is clickable only while the red ring is visibly on.
-  */
   const flashWindows = [
     { start: 30, end: 120 },
     { start: 200, end: 290 },
