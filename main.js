@@ -185,15 +185,18 @@ function resumeWorldAfterFrequencyBleed() {
 }
 
 function placeFrequencyBleedScar(rect) {
-  if (!rect || !screen) return;
+  const screenRoot = document.getElementById("screen");
+  if (!rect || !screenRoot) return;
   if (frequencyBleedScar && frequencyBleedScar.isConnected) frequencyBleedScar.remove();
+
+  const screenRect = screenRoot.getBoundingClientRect();
 
   frequencyBleedScar = document.createElement("span");
   frequencyBleedScar.className = "frequency-bleed-scar";
   frequencyBleedScar.setAttribute("aria-hidden", "true");
-  frequencyBleedScar.style.left = `${rect.left + rect.width / 2}px`;
-  frequencyBleedScar.style.top = `${rect.top + rect.height / 2}px`;
-  screen.appendChild(frequencyBleedScar);
+  frequencyBleedScar.style.left = `${rect.left + rect.width / 2 - screenRect.left}px`;
+  frequencyBleedScar.style.top = `${rect.top + rect.height / 2 - screenRect.top}px`;
+  screenRoot.appendChild(frequencyBleedScar);
 }
 
 async function writeFrequencyLine(target, text, stanzaIndex, lineIndex, token) {
