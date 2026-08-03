@@ -163,13 +163,48 @@ function sleepFrequency(ms, token) {
 }
 
 function pauseWorldForFrequencyBleed() {
-  frequencyBleedAnimations = document
-    .getAnimations({ subtree: true })
-    .filter(animation => animation.playState === "running");
+  frequencyBleedAnimations = [];
 
-  frequencyBleedAnimations.forEach(animation => {
-    try { animation.pause(); } catch (error) { /* Safari safety. */ }
-  });
+  /*
+    iPhone Safari support differs across versions.
+    Never allow animation discovery to crash the frequency bleed.
+  */
+  try {
+    const animations =
+      typeof document.getAnimations === "function"
+        ? document.getAnimations()
+        : [];
+
+    frequencyBleedAnimations = animations.filter(animation => {
+      if (!animation || animation.playState !== "running") {
+        return false;
+      }
+
+      const effectTarget =
+        animation.effect &&
+        animation.effect.target;
+
+      /*
+        Do not pause anything belonging to the poem overlay itself.
+        Only the Channel 17 world beneath it is frozen.
+      */
+      return !(
+        effectTarget &&
+        effectTarget.closest &&
+        effectTarget.closest("#poemNoteOverlay")
+      );
+    });
+
+    frequencyBleedAnimations.forEach(animation => {
+      try {
+        animation.pause();
+      } catch (error) {
+        // One unsupported animation must not stop the bleed.
+      }
+    });
+  } catch (error) {
+    frequencyBleedAnimations = [];
+  }
 
   document.documentElement.classList.add("frequency-bleed-active");
 }
@@ -268,25 +303,42 @@ function openPoemNote(flameNode) {
 
   frequencyBleedActive = true;
   frequencyBleedRunToken += 1;
-  const token = frequencyBleedRunToken;
-  const flameRect = flameNode && flameNode.isConnected
-    ? flameNode.getBoundingClientRect()
-    : null;
 
+  const token = frequencyBleedRunToken;
+
+  const flameRect =
+    flameNode && flameNode.isConnected
+      ? flameNode.getBoundingClientRect()
+      : null;
+
+  /*
+    Build and expose the stolen-frequency screen BEFORE attempting
+    to freeze browser animations. This prevents a Safari animation
+    API failure from consuming the flame without opening the poem.
+  */
+  const overlay = ensurePoemNoteOverlay();
+
+  overlay.classList.add("open");
+  overlay.setAttribute("aria-hidden", "false");
+
+  /*
+    The flame flashes at the overlap point, but it is not removed
+    until the black frequency screen has successfully taken control.
+  */
   if (flameNode && flameNode.isConnected) {
     flameNode.classList.add("frequency-overlap-hit");
-    window.setTimeout(() => {
-      if (flameNode.isConnected) flameNode.remove();
-    }, 90);
   }
 
   placeFrequencyBleedScar(flameRect);
   pauseWorldForFrequencyBleed();
 
-  const overlay = ensurePoemNoteOverlay();
+  window.setTimeout(() => {
+    if (flameNode && flameNode.isConnected) {
+      flameNode.remove();
+    }
+  }, 90);
+
   requestAnimationFrame(() => {
-    overlay.classList.add("open");
-    overlay.setAttribute("aria-hidden", "false");
     runFrequencyBleedWriting(token);
   });
 }
