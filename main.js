@@ -41,6 +41,10 @@ const jinxShadowFrequency = document.getElementById("jinxShadowFrequency");
 const jinxCardOverlay = document.getElementById("jinxCardOverlay");
 const jinxCardClose = document.getElementById("jinxCardClose");
 let poemNoteOverlay = null;
+let frequencyBleedActive = false;
+let frequencyBleedAnimations = [];
+let frequencyBleedRunToken = 0;
+let frequencyBleedScar = null;
 
 let progress = 0;
 let state = "normal";
@@ -114,131 +118,190 @@ const frankFrames = [
 let activeFrankStack = [];
 
 
+const RED_POEM_STANZAS = [
+  ["Walked into your office,", "saw the fire in your hair.", "Bright red like a warning", "but I didn’t even care."],
+  ["You sat at that desk,", "whole room shifted tone.", "Like I stepped into a palace", "that was never my own."],
+  ["You looked up for a second.", "I was caught in the frame.", "Started callin’ you Jasmine...", "just didn’t say it by name."],
+  ["It was a joke in my head.", "Started feeling surreal.", "Like there was a crown in my future...", "I might not have to steal."],
+  ["Every visit turned a moment...", "into somethin’ more deep.", "I was buildin’ whole worlds...", "while you were talkin’ to me."],
+  ["I had a carpet in my mind...", "Had a plan. Had a pace.", "I had a version of forever...", "each time I saw your face."],
+  ["Never crossed any lines.", "I kept it cool. Kept it tight.", "But I felt somethin’ shift", "with you in my sight."],
+  ["Thought the door might be open", "just a crack, just enough...", "Thought maybe. Just maybe,", "this was fairytale kind of stuff."],
+  ["The silence got louder.", "You were driftin’ away.", "Conversations got shorter...", "A different look in your gaze."],
+  ["Didn’t see it all happen.", "Never watched you choose him.", "Just held it inside", "while my walls were caving in..."],
+  ["He was part of your story.", "I'm not even a page.", "Just a thought scribbled down,", "then quickly erased."],
+  ["That’s the part I can’t get over...", "Missing this win.", "I never lost you to him.", "I just never got to begin."],
+  ["Now I’m stuck with this palace...", "that I built in my head.", "Walkin’ down empty hallways,", "where the words went unsaid."],
+  ["Scrabbling for a genie.", "My wish was never spoke.", "I feel like a punchline with no setup...", "just a half-finished joke."],
+  ["I still picture your hair", "& how the light shaded those strands.", "When you smiled at me", "I thought fate had a plan."],
+  ["Now it flickers like a memory", "that burns when I sleep.", "The crown I had imagined.", "The one I never could keep."]
+];
+
 function ensurePoemNoteOverlay() {
-  // Red poem safety: if an older placeholder overlay survived a mobile back/forward cache,
-  // destroy it and rebuild this note from the current source.
-  const existingPoemNote = document.getElementById("poemNoteOverlay");
-  if (poemNoteOverlay && poemNoteOverlay.textContent && poemNoteOverlay.textContent.includes("Walked into your office")) {
-    return poemNoteOverlay;
-  }
-  if (existingPoemNote) existingPoemNote.remove();
-  poemNoteOverlay = null;
+  const existing = document.getElementById("poemNoteOverlay");
+  if (existing) existing.remove();
 
   poemNoteOverlay = document.createElement("aside");
-  poemNoteOverlay.className = "poem-note-overlay";
+  poemNoteOverlay.className = "poem-note-overlay frequency-bleed-overlay";
   poemNoteOverlay.id = "poemNoteOverlay";
   poemNoteOverlay.setAttribute("aria-hidden", "true");
   poemNoteOverlay.innerHTML = `
     <section class="poem-note-card red-poem-card" role="dialog" aria-modal="true" aria-label="Red poem">
-      <button class="poem-note-close" id="poemNoteClose" type="button" aria-label="close poem note">×</button>
-      <div class="poem-note-kicker">private frequency</div>
-      <h2>Red.</h2>
-      <div class="poem-note-paper red-poem-paper">
-        <p>Walked into your office,<br>
-saw the fire in your hair.<br>
-Bright red like a warning<br>
-but I didn’t even care.</p>
-
-<p>You sat at that desk,<br>
-whole room shifted tone.<br>
-Like I stepped into a palace<br>
-that was never my own.</p>
-
-<p>You looked up for a second.<br>
-I was caught in the frame.<br>
-Started callin’ you Jasmine...<br>
-just didn’t say it by name.</p>
-
-<p>It was a joke in my head.<br>
-Started feeling surreal.<br>
-Like there was a crown in my future...<br>
-I might not have to steal.</p>
-
-<p>Every visit turned a moment...<br>
-into somethin’ more deep.<br>
-I was buildin’ whole worlds...<br>
-while you were talkin’ to me.</p>
-
-<p>I had a carpet in my mind...<br>
-Had a plan. Had a pace.<br>
-I had a version of forever...<br>
-each time I saw your face.</p>
-
-<p>Never crossed any lines.<br>
-I kept it cool. Kept it tight.<br>
-But I felt somethin’ shift<br>
-with you in my sight.</p>
-
-<p>Thought the door might be open<br>
-just a crack, just enough...<br>
-Thought maybe. Just maybe,<br>
-this was fairytale kind of stuff.</p>
-
-<p>The silence got louder.<br>
-You were driftin’ away.<br>
-Conversations got shorter...<br>
-A different look in your gaze.</p>
-
-<p>Didn’t see it all happen.<br>
-Never watched you choose him.<br>
-Just held it inside<br>
-while my walls were caving in...</p>
-
-<p>He was part of your story.<br>
-I'm not even a page.<br>
-Just a thought scribbled down,<br>
-then quickly erased.</p>
-
-<p>That’s the part I can’t get over...<br>
-Missing this win.<br>
-I never lost you to him.<br>
-I just never got to begin.</p>
-
-<p>Now I’m stuck with this palace...<br>
-that I built in my head.<br>
-Walkin’ down empty hallways,<br>
-where the words went unsaid.</p>
-
-<p>Scrabbling for a genie.<br>
-My wish was never spoke.<br>
-I feel like a punchline with no setup...<br>
-just a half-finished joke.</p>
-
-<p>I still picture your hair<br>
-&amp; how the light shaded those strands.<br>
-When you smiled at me<br>
-I thought fate had a plan.</p>
-
-<p>Now it flickers like a memory<br>
-that burns when I sleep.<br>
-The crown I had imagined.<br>
-The one I never could keep.</p>
-
-        <p class="red-poem-signature">— jinx</p>
-      </div>
+      <div class="poem-note-kicker">frequency bleed // private signal</div>
+      <h2><span class="frequency-written-title"></span></h2>
+      <div class="poem-note-paper red-poem-paper" aria-live="off"></div>
     </section>
   `;
   document.body.appendChild(poemNoteOverlay);
-
-  const close = poemNoteOverlay.querySelector("#poemNoteClose");
-  close.addEventListener("click", closePoemNote);
-  poemNoteOverlay.addEventListener("click", (event) => {
-    if (event.target === poemNoteOverlay) closePoemNote();
-  });
-
   return poemNoteOverlay;
 }
 
-function openPoemNote() {
+function sleepFrequency(ms, token) {
+  return new Promise(resolve => {
+    window.setTimeout(() => resolve(token === frequencyBleedRunToken), ms);
+  });
+}
+
+function pauseWorldForFrequencyBleed() {
+  frequencyBleedAnimations = document
+    .getAnimations({ subtree: true })
+    .filter(animation => animation.playState === "running");
+
+  frequencyBleedAnimations.forEach(animation => {
+    try { animation.pause(); } catch (error) { /* Safari safety. */ }
+  });
+
+  document.documentElement.classList.add("frequency-bleed-active");
+}
+
+function resumeWorldAfterFrequencyBleed() {
+  document.documentElement.classList.remove("frequency-bleed-active");
+
+  frequencyBleedAnimations.forEach(animation => {
+    try { animation.play(); } catch (error) { /* Safari safety. */ }
+  });
+
+  frequencyBleedAnimations = [];
+}
+
+function placeFrequencyBleedScar(rect) {
+  if (!rect || !screen) return;
+  if (frequencyBleedScar && frequencyBleedScar.isConnected) frequencyBleedScar.remove();
+
+  frequencyBleedScar = document.createElement("span");
+  frequencyBleedScar.className = "frequency-bleed-scar";
+  frequencyBleedScar.setAttribute("aria-hidden", "true");
+  frequencyBleedScar.style.left = `${rect.left + rect.width / 2}px`;
+  frequencyBleedScar.style.top = `${rect.top + rect.height / 2}px`;
+  screen.appendChild(frequencyBleedScar);
+}
+
+async function writeFrequencyLine(target, text, stanzaIndex, lineIndex, token) {
+  target.textContent = "";
+  target.classList.add("writing");
+
+  const baseDelay = 19 + ((stanzaIndex * 7 + lineIndex * 11) % 15);
+  for (let index = 0; index < text.length; index += 1) {
+    if (token !== frequencyBleedRunToken) return false;
+    target.textContent += text[index];
+    const punctuationPause = /[,.…]/.test(text[index]) ? 58 : /[!?]/.test(text[index]) ? 86 : 0;
+    const jitter = ((index + stanzaIndex + lineIndex) % 4) * 4;
+    const current = await sleepFrequency(baseDelay + jitter + punctuationPause, token);
+    if (!current) return false;
+  }
+
+  target.classList.remove("writing");
+  return true;
+}
+
+async function runFrequencyBleedWriting(token) {
+  const overlay = poemNoteOverlay;
+  if (!overlay) return;
+
+  const title = overlay.querySelector(".frequency-written-title");
+  const paper = overlay.querySelector(".red-poem-paper");
+  if (!title || !paper) return;
+
+  await sleepFrequency(520, token);
+  if (!await writeFrequencyLine(title, "Red", 0, 0, token)) return;
+  await sleepFrequency(520, token);
+
+  for (let stanzaIndex = 0; stanzaIndex < RED_POEM_STANZAS.length; stanzaIndex += 1) {
+    const stanza = document.createElement("p");
+    stanza.className = "frequency-stanza";
+    paper.appendChild(stanza);
+
+    const lines = RED_POEM_STANZAS[stanzaIndex];
+    for (let lineIndex = 0; lineIndex < lines.length; lineIndex += 1) {
+      const line = document.createElement("span");
+      line.className = "frequency-line";
+      stanza.appendChild(line);
+      if (!await writeFrequencyLine(line, lines[lineIndex], stanzaIndex, lineIndex, token)) return;
+      paper.scrollTop = paper.scrollHeight;
+      await sleepFrequency(75 + ((stanzaIndex + lineIndex) % 3) * 45, token);
+    }
+
+    const stanzaPause = stanzaIndex === 1 ? 820 : 260 + (stanzaIndex % 4) * 85;
+    await sleepFrequency(stanzaPause, token);
+  }
+
+  const signature = document.createElement("p");
+  signature.className = "red-poem-signature";
+  const signatureLine = document.createElement("span");
+  signatureLine.className = "frequency-line";
+  signature.appendChild(signatureLine);
+  paper.appendChild(signature);
+  paper.scrollTop = paper.scrollHeight;
+
+  if (!await writeFrequencyLine(signatureLine, "— jinx", 17, 0, token)) return;
+  overlay.classList.add("frequency-message-sent");
+
+  await sleepFrequency(7000, token);
+  if (token === frequencyBleedRunToken) closePoemNote();
+}
+
+function openPoemNote(flameNode) {
+  if (frequencyBleedActive) return;
+
+  frequencyBleedActive = true;
+  frequencyBleedRunToken += 1;
+  const token = frequencyBleedRunToken;
+  const flameRect = flameNode && flameNode.isConnected
+    ? flameNode.getBoundingClientRect()
+    : null;
+
+  if (flameNode && flameNode.isConnected) {
+    flameNode.classList.add("frequency-overlap-hit");
+    window.setTimeout(() => {
+      if (flameNode.isConnected) flameNode.remove();
+    }, 90);
+  }
+
+  placeFrequencyBleedScar(flameRect);
+  pauseWorldForFrequencyBleed();
+
   const overlay = ensurePoemNoteOverlay();
-  overlay.classList.add("open");
-  overlay.setAttribute("aria-hidden", "false");
+  requestAnimationFrame(() => {
+    overlay.classList.add("open");
+    overlay.setAttribute("aria-hidden", "false");
+    runFrequencyBleedWriting(token);
+  });
 }
 
 function closePoemNote() {
-  if (!poemNoteOverlay) return;
-  poemNoteOverlay.classList.remove("open");
-  poemNoteOverlay.setAttribute("aria-hidden", "true");
+  if (!frequencyBleedActive) return;
+
+  frequencyBleedRunToken += 1;
+  frequencyBleedActive = false;
+
+  if (poemNoteOverlay) {
+    poemNoteOverlay.classList.remove("open", "frequency-message-sent");
+    poemNoteOverlay.setAttribute("aria-hidden", "true");
+    poemNoteOverlay.remove();
+    poemNoteOverlay = null;
+  }
+
+  resumeWorldAfterFrequencyBleed();
 }
 
 function openJinxCard() {
@@ -491,7 +554,7 @@ const CARL_HEART_PATH = [
 }
 
 const loading = setInterval(() => {
-  if (frostHolding || frostLocked) {
+  if (frequencyBleedActive || frostHolding || frostLocked) {
     return;
   }
 
@@ -715,7 +778,7 @@ function spawnSlash(side) {
 }
 
 function spawnEngagement(options = {}) {
-  if (frostHolding || frostLocked) return;
+  if (frequencyBleedActive || frostHolding || frostLocked) return;
   // FOREMAN HEART PASS 4: keep the approved right-lane heart motion, add rare social-noise icons only.
   // Hearts stay dominant. Icons are seasoning: likes / reposts / subscribe-play / gold bell. No center-screen drift.
   if (!options.guaranteed && engageCount > 0 && Math.random() < 0.30) return;
@@ -821,12 +884,12 @@ function spawnEngagement(options = {}) {
     item.tabIndex = 0;
     item.addEventListener("click", (event) => {
       event.stopPropagation();
-      openPoemNote();
+      openPoemNote(item);
     });
     item.addEventListener("keydown", (event) => {
       if (event.key === "Enter" || event.key === " ") {
         event.preventDefault();
-        openPoemNote();
+        openPoemNote(item);
       }
     });
   }
