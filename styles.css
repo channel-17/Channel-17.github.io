@@ -7126,406 +7126,338 @@ body {
   100% { opacity: 0; transform: translate(16vw, 3vh) scale(1.1); }
 }
 
-/* Secret flame seed: one personal future click target inside the chaos.
-   Same lane / rise / story as the hearts, just clickable. */
+/* =========================================================
+   BRICK 15 — FREQUENCY BLEED COMPLETE REBUILD
+   Single subsystem authority. No legacy poem rules beneath it.
+========================================================= */
 .engage.secret-flame {
   cursor: pointer !important;
   pointer-events: auto !important;
   font-size: 24px !important;
   z-index: 132 !important;
-  color: inherit !important;
-  filter: drop-shadow(0 0 8px rgba(255,111,174,0.28)) !important;
-  text-shadow: 0 0 8px rgba(255,126,22,.52), 0 0 18px rgba(255,202,64,.22) !important;
+  opacity: .88;
+  filter: drop-shadow(0 0 8px rgba(255,126,22,.58)) drop-shadow(0 0 18px rgba(255,202,64,.20)) !important;
   animation-name: heartRightLaneFloat !important;
-  animation-duration: var(--dur) !important;
-  animation-timing-function: linear !important;
-  animation-fill-mode: forwards !important;
-  transform-origin: center center !important;
-}
-.engage.secret-flame:hover,
-.engage.secret-flame:focus-visible {
-  outline: none !important;
-  text-shadow: 0 0 10px rgba(255,255,255,.62), 0 0 22px rgba(255,126,22,.48) !important;
 }
 
-.poem-note-overlay {
+.frequency-overlap-hit {
+  animation: frequencyFlameHit .34s steps(3) forwards !important;
+}
+
+@keyframes frequencyFlameHit {
+  0% { transform: scale(1); filter: brightness(1); }
+  38% { transform: scale(1.65) rotate(-9deg); filter: brightness(2.4) saturate(1.8); }
+  72% { transform: scale(.78) rotate(8deg); filter: brightness(.45) saturate(.3); }
+  100% { transform: scale(.18); opacity: 0; filter: brightness(0); }
+}
+
+.frequency-bleed-overlay {
   position: fixed;
   inset: 0;
-  z-index: 2147483646;
+  z-index: 2147483000;
   overflow: hidden;
+  background: transparent;
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-  background: transparent;
+  transition: opacity .12s linear, visibility .12s linear;
 }
-.poem-note-overlay.open { opacity: 1; visibility: visible; pointer-events: auto; }
 
+.frequency-bleed-overlay.open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.frequency-impact,
 .frequency-takeover,
-.frequency-snow,
-.frequency-scratch-field,
-.frequency-tracking-tear,
-.frequency-fracture-bars,
-.frequency-white-blast,
-.frequency-blackout,
-.frequency-breach-message,
-.poem-note-card.red-poem-card { position: absolute; inset: 0; }
-
-.frequency-takeover { z-index: 1; overflow: hidden; background: transparent; pointer-events: none; }
-.frequency-snow { opacity: 0; background-size: 4px 4px, 7px 7px, 11px 11px; mix-blend-mode: screen; }
-.frequency-snow-a {
-  background-image:
-    radial-gradient(circle, rgba(255,255,255,.95) 0 1px, transparent 1.4px),
-    radial-gradient(circle, rgba(255,255,255,.55) 0 1px, transparent 1.5px),
-    radial-gradient(circle, rgba(223,255,63,.32) 0 1px, transparent 1.5px);
-}
-.frequency-snow-b {
-  background-image:
-    repeating-radial-gradient(circle at 20% 40%, rgba(255,255,255,.7) 0 1px, transparent 1px 3px),
-    repeating-linear-gradient(0deg, transparent 0 3px, rgba(255,255,255,.14) 4px 5px);
-  filter: contrast(2.4) brightness(1.8);
-}
-.takeover-live .frequency-snow-a { animation: apocalypseSnowA 1.7s steps(2,end) forwards; }
-.takeover-live .frequency-snow-b { animation: apocalypseSnowB 1.7s steps(3,end) forwards; }
-
-.frequency-scratch-field {
-  opacity: 0;
-  background:
-    repeating-linear-gradient(0deg, transparent 0 8px, rgba(255,255,255,.48) 9px 10px, transparent 11px 19px),
-    repeating-linear-gradient(90deg, transparent 0 31px, rgba(255,255,255,.18) 32px 33px, transparent 34px 61px);
-  mix-blend-mode: screen;
-}
-.takeover-live .frequency-scratch-field { animation: apocalypseScratches 1.55s steps(2,end) forwards; }
-
-.frequency-tracking-tear {
-  left: -15%;
-  right: -15%;
-  top: 36%;
-  bottom: auto;
-  height: 17%;
-  opacity: 0;
-  background:
-    repeating-linear-gradient(0deg, rgba(255,255,255,.93) 0 1px, rgba(0,0,0,.9) 2px 5px, rgba(223,255,63,.36) 6px 7px),
-    linear-gradient(90deg, transparent, rgba(255,255,255,.9), transparent);
-  filter: contrast(2.8) brightness(1.8);
-  mix-blend-mode: screen;
-}
-.takeover-live .frequency-tracking-tear { animation: apocalypseTrackingTear 1.28s steps(2,end) forwards; }
-
-.frequency-fracture-bars { overflow: hidden; }
-.frequency-fracture-bars span {
+.frequency-journal {
   position: absolute;
-  left: -14%;
-  width: 128%;
+  inset: 0;
+}
+
+.frequency-impact {
+  z-index: 1;
   opacity: 0;
   background:
-    repeating-linear-gradient(90deg, rgba(255,255,255,.88) 0 2px, rgba(0,0,0,.72) 3px 8px, rgba(223,255,63,.28) 9px 11px);
+    radial-gradient(circle at 82% 58%, rgba(255,156,52,.98) 0 1%, rgba(255,48,20,.56) 3%, transparent 11%),
+    repeating-linear-gradient(0deg, transparent 0 7px, rgba(255,255,255,.14) 8px 9px, transparent 10px 14px);
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
+.impact-live .frequency-impact {
+  animation: frequencyImpact .62s steps(5) forwards;
+}
+
+@keyframes frequencyImpact {
+  0% { opacity: 0; transform: scale(1); }
+  17% { opacity: .95; transform: scale(1.02) translateX(-3px); }
+  34% { opacity: .18; transform: scale(.99) translateX(5px); }
+  54% { opacity: 1; transform: scale(1.03) translateX(-9px); }
+  76% { opacity: .38; transform: scale(1) translateX(4px); }
+  100% { opacity: 0; transform: scale(1.08); }
+}
+
+.frequency-takeover {
+  z-index: 2;
+  overflow: hidden;
+  background: #020202;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.takeover-live .frequency-takeover {
+  animation: frequencyTakeover .95s steps(8) forwards;
+}
+
+@keyframes frequencyTakeover {
+  0% { opacity: 0; filter: contrast(1); transform: translateX(0); }
+  12% { opacity: 1; filter: contrast(2.2); transform: translateX(-7px); }
+  26% { opacity: .25; transform: translateX(10px); }
+  39% { opacity: 1; filter: contrast(3); transform: translateX(-15px) skewX(-2deg); }
+  56% { opacity: .52; transform: translateX(8px); }
+  71% { opacity: 1; filter: contrast(2.5); transform: translateX(-4px); }
+  100% { opacity: 1; filter: contrast(1); transform: translateX(0); }
+}
+
+.frequency-static {
+  position: absolute;
+  inset: -18%;
+  opacity: 0;
+  background:
+    repeating-radial-gradient(circle at 33% 41%, rgba(255,255,255,.82) 0 1px, rgba(0,0,0,.88) 1px 3px, transparent 3px 5px),
+    repeating-linear-gradient(92deg, transparent 0 2px, rgba(255,255,255,.22) 3px 4px, transparent 5px 8px);
+  background-size: 7px 7px, 13px 100%;
   mix-blend-mode: screen;
 }
-.frequency-fracture-bars span:nth-child(1){top:5%;height:3%;}
-.frequency-fracture-bars span:nth-child(2){top:18%;height:9%;}
-.frequency-fracture-bars span:nth-child(3){top:34%;height:2%;}
-.frequency-fracture-bars span:nth-child(4){top:47%;height:13%;}
-.frequency-fracture-bars span:nth-child(5){top:69%;height:4%;}
-.frequency-fracture-bars span:nth-child(6){top:80%;height:11%;}
-.frequency-fracture-bars span:nth-child(7){top:94%;height:2%;}
-.takeover-live .frequency-fracture-bars span { animation: apocalypseFractureBar 1.32s steps(2,end) forwards; }
-.takeover-live .frequency-fracture-bars span:nth-child(2){animation-delay:.05s;}
-.takeover-live .frequency-fracture-bars span:nth-child(3){animation-delay:.14s;}
-.takeover-live .frequency-fracture-bars span:nth-child(4){animation-delay:.08s;}
-.takeover-live .frequency-fracture-bars span:nth-child(5){animation-delay:.21s;}
-.takeover-live .frequency-fracture-bars span:nth-child(6){animation-delay:.11s;}
-.takeover-live .frequency-fracture-bars span:nth-child(7){animation-delay:.26s;}
 
-.frequency-white-blast { opacity: 0; background: #fff; mix-blend-mode: screen; }
-.takeover-live .frequency-white-blast { animation: apocalypseWhiteBlast 1.42s steps(1,end) forwards; }
+.takeover-live .frequency-static-a { animation: frequencyStaticA .84s steps(9) forwards; }
+.takeover-live .frequency-static-b { animation: frequencyStaticB .84s steps(7) forwards; }
 
-.frequency-blackout { z-index: 2; background:#000; opacity:0; }
-.black-takeover .frequency-blackout { animation: frequencyBlackTakeover .48s steps(3,end) forwards; }
-
-.frequency-breach-message {
-  z-index: 4;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  gap:9px;
-  opacity:0;
-  color:#fff;
-  text-align:center;
-  font-family:"Courier New",monospace;
-  pointer-events:none;
-  text-shadow:0 0 9px rgba(255,255,255,.7),0 0 24px rgba(223,255,63,.28);
+@keyframes frequencyStaticA {
+  0% { opacity: 0; transform: translate(0,0) scale(1); }
+  12% { opacity: .95; transform: translate(-3%,2%) scale(1.07); }
+  34% { opacity: .22; transform: translate(5%,-4%) scale(.98); }
+  57% { opacity: .86; transform: translate(-2%,5%) scale(1.12); }
+  100% { opacity: 0; transform: translate(8%,-3%) scale(1.18); }
 }
-.frequency-breach-message strong {
-  font-size:clamp(18px,6vw,30px);
-  letter-spacing:.32em;
-  text-indent:.32em;
-}
-.frequency-breach-message span {
-  color:rgba(223,255,63,.86);
-  font-size:9px;
-  font-weight:700;
-  letter-spacing:.34em;
-  text-indent:.34em;
-}
-.breach-live .frequency-breach-message { animation: frequencyBreachMessage 1.12s steps(2,end) forwards; }
 
-.poem-note-card.red-poem-card {
+@keyframes frequencyStaticB {
+  0% { opacity: 0; transform: translateY(-20px); }
+  20% { opacity: .66; transform: translateY(18px); }
+  43% { opacity: .18; transform: translateY(-9px); }
+  66% { opacity: .74; transform: translateY(26px); }
+  100% { opacity: 0; transform: translateY(-34px); }
+}
+
+.frequency-rip {
+  position: absolute;
+  left: -12%;
+  width: 124%;
+  height: 9vh;
+  opacity: 0;
+  background:
+    repeating-linear-gradient(0deg, rgba(255,255,255,.92) 0 1px, rgba(20,20,20,.94) 2px 4px, transparent 5px 8px);
+  box-shadow: 0 0 18px rgba(255,255,255,.42);
+  mix-blend-mode: screen;
+}
+.frequency-rip-one { top: 22%; }
+.frequency-rip-two { top: 63%; height: 5vh; }
+.takeover-live .frequency-rip-one { animation: frequencyRipOne .82s steps(6) forwards; }
+.takeover-live .frequency-rip-two { animation: frequencyRipTwo .72s steps(5) .08s forwards; }
+
+@keyframes frequencyRipOne {
+  0% { opacity: 0; transform: translateX(-24%) skewX(0); }
+  18% { opacity: 1; transform: translateX(8%) skewX(-16deg); }
+  39% { opacity: .28; transform: translateX(-6%) skewX(20deg); }
+  62% { opacity: .92; transform: translateX(14%) skewX(-11deg); }
+  100% { opacity: 0; transform: translateX(35%) skewX(8deg); }
+}
+@keyframes frequencyRipTwo {
+  0% { opacity: 0; transform: translateX(28%); }
+  24% { opacity: .88; transform: translateX(-12%); }
+  51% { opacity: .24; transform: translateX(8%); }
+  76% { opacity: .74; transform: translateX(-18%); }
+  100% { opacity: 0; transform: translateX(-36%); }
+}
+
+.frequency-flash {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  background: #fff;
+}
+.takeover-live .frequency-flash { animation: frequencyWhiteFlash .95s steps(1) forwards; }
+@keyframes frequencyWhiteFlash {
+  0%, 14%, 31%, 52%, 100% { opacity: 0; }
+  8%, 24%, 45% { opacity: 1; }
+}
+
+.frequency-warning {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  display: grid;
+  gap: 7px;
+  width: min(86vw, 390px);
+  padding: 15px 18px;
+  border-top: 5px solid currentColor;
+  border-bottom: 5px solid currentColor;
+  color: #ff1717;
+  background: rgba(0,0,0,.88);
+  opacity: 0;
+  transform: translate(-50%,-50%) scale(.92);
+  text-align: center;
+  font-family: Arial, sans-serif;
+  letter-spacing: 3px;
+}
+.frequency-warning strong { font-size: clamp(1.5rem, 8vw, 2.6rem); line-height: .9; }
+.frequency-warning span { font-size: .67rem; font-weight: 900; }
+.warning-live .frequency-warning { animation: frequencyDanger 1.02s steps(1) forwards; }
+
+@keyframes frequencyDanger {
+  0% { opacity: 0; color: #ff1717; transform: translate(-50%,-50%) scale(.88); }
+  9% { opacity: 1; color: #ff1717; transform: translate(-50%,-50%) scale(1.02); }
+  18% { opacity: 0; }
+  27% { opacity: 1; color: #fff; background: #d40000; }
+  38% { opacity: .18; }
+  49% { opacity: 1; color: #ff1717; background: #000; }
+  60% { opacity: 0; }
+  72% { opacity: 1; color: #fff; background: #e00000; transform: translate(-50%,-50%) scale(1.05); }
+  84% { opacity: .25; }
+  100% { opacity: 0; color: #ff1717; background: #000; transform: translate(-50%,-50%) scale(.98); }
+}
+
+.black-takeover .frequency-takeover { opacity: 0; visibility: hidden; }
+
+.frequency-journal {
   z-index: 3;
-  width:100%;
-  height:100%;
-  border:0;
-  border-radius:0;
-  background:radial-gradient(circle at 48% 44%,rgba(223,255,63,.025),transparent 48%),#000;
-  box-shadow:none;
-  color:rgba(223,255,63,.92);
-  opacity:0;
-  pointer-events:none;
+  background: #000;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
 }
-.journal-live .poem-note-card.red-poem-card { opacity:1; pointer-events:auto; }
+.journal-live .frequency-journal {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
 
 .frequency-scroll-journal {
-  position:absolute;
-  inset:0;
-  overflow:hidden;
-  overscroll-behavior:none;
-  touch-action:none;
-  padding:max(26px,env(safe-area-inset-top)) 0 max(38vh,env(safe-area-inset-bottom));
-  scrollbar-width:none;
+  position: absolute;
+  inset: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-y: contain;
+  touch-action: pan-y;
+  scrollbar-width: none;
+  pointer-events: auto;
 }
-.frequency-scroll-journal::-webkit-scrollbar { display:none; }
+.frequency-scroll-journal::-webkit-scrollbar { width: 0; height: 0; }
+
+.frequency-page {
+  width: 100%;
+  min-height: 100%;
+  padding: max(76px, env(safe-area-inset-top)) 24px calc(110px + env(safe-area-inset-bottom));
+  overflow: visible;
+}
+
+.frequency-title {
+  min-height: 88px;
+  margin: 0 0 18px 2vw;
+}
+
+.frequency-poem {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  width: 100%;
+  min-height: 130vh;
+  padding-bottom: 42vh;
+}
+
+.frequency-stanza {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  max-width: calc(100vw - 58px);
+  transform: rotate(var(--stanza-tilt));
+  transform-origin: left center;
+}
+
+.frequency-ink-line,
+.frequency-ink-title {
+  display: block;
+  max-width: calc(100vw - 58px);
+  height: auto;
+  filter:
+    drop-shadow(0 0 1px rgba(212,255,183,.96))
+    drop-shadow(0 0 5px rgba(122,255,66,.78))
+    drop-shadow(0 0 13px rgba(75,220,40,.36));
+}
+.frequency-ink-title {
+  filter:
+    drop-shadow(0 0 2px rgba(230,255,205,1))
+    drop-shadow(0 0 8px rgba(125,255,72,.92))
+    drop-shadow(0 0 22px rgba(65,205,35,.48));
+}
+
+.frequency-signature {
+  margin: 28px 0 0 36vw;
+  padding-bottom: 30vh;
+}
 
 .frequency-close {
-  position:fixed;
-  top:max(12px,env(safe-area-inset-top));
-  right:14px;
-  z-index:8;
-  width:34px;
-  height:34px;
-  border:0;
-  background:rgba(0,0,0,.52);
-  border-radius:50%;
-  color:rgba(223,255,63,.62);
-  font:300 26px/34px Arial,sans-serif;
-  text-align:center;
-  cursor:pointer;
-  backdrop-filter:blur(3px);
+  position: fixed;
+  right: max(16px, env(safe-area-inset-right));
+  top: max(16px, env(safe-area-inset-top));
+  z-index: 8;
+  width: 38px;
+  height: 38px;
+  border: 1px solid rgba(154,255,92,.42);
+  border-radius: 50%;
+  background: rgba(0,0,0,.72);
+  color: rgba(180,255,126,.92);
+  font: 300 27px/1 Arial, sans-serif;
+  box-shadow: 0 0 15px rgba(105,255,54,.18);
+  cursor: pointer;
 }
 
-.poem-note-card.red-poem-card h2 {
-  min-height:70px;
-  margin:3vh 0 3vh 7vw;
-  color:rgba(223,255,63,.96);
-  font-family:"Reenie Beanie","Bradley Hand",cursive;
-  font-size:clamp(54px,17vw,82px);
-  font-weight:400;
-  line-height:.9;
-  text-shadow:0 0 5px rgba(223,255,63,.48),0 0 18px rgba(223,255,63,.14);
-  transform:rotate(-1.2deg);
-}
+.frequency-closing { opacity: 0 !important; }
 
-.poem-note-paper.red-poem-paper {
-  position:relative;
-  width:100%;
-  min-height:130vh;
-  overflow:visible;
-  padding:0 5vw 22vh 2vw;
-  border:0;
-  background:transparent;
-  color:rgba(223,255,63,.90);
-  font-family:"Reenie Beanie","Bradley Hand",cursive;
-  font-size:clamp(27px,7.7vw,39px);
-  font-weight:400;
-  line-height:1.03;
-}
-.frequency-stanza.continuous-stanza {
-  position:relative;
-  margin-top:0;
-  margin-bottom:1.25em;
-  width:88vw;
-  transform:rotate(var(--stanza-tilt));
-  transform-origin:35% 20%;
-}
-.frequency-line {
-  display:block;
-  width:max-content;
-  max-width:86vw;
-  min-height:1.02em;
-  white-space:pre-wrap;
-  text-shadow:0 0 4px rgba(223,255,63,.42),0 0 12px rgba(223,255,63,.12);
-}
-
-.frequency-ink-character {
-  display:inline-block;
-  opacity:0;
-  clip-path:inset(0 100% 0 0);
-  transform:translateY(var(--ink-lift)) rotate(var(--ink-tilt)) scaleX(.88);
-  transform-origin:left center;
-  filter:blur(.7px);
-  will-change:clip-path,opacity,transform,filter;
-}
-.frequency-ink-character.ink-drawn {
-  animation:frequencyInkStroke .28s cubic-bezier(.18,.72,.22,1) forwards;
-}
-@keyframes frequencyInkStroke {
-  0% {
-    opacity:.12;
-    clip-path:inset(0 100% 0 0);
-    transform:translateY(var(--ink-lift)) rotate(var(--ink-tilt)) scaleX(.72);
-    filter:blur(1.2px);
-  }
-  54% {
-    opacity:.82;
-    clip-path:inset(0 22% 0 0);
-    transform:translateY(var(--ink-lift)) rotate(var(--ink-tilt)) scaleX(1.03);
-    filter:blur(.25px);
-  }
-  100% {
-    opacity:1;
-    clip-path:inset(0 0 0 0);
-    transform:translateY(var(--ink-lift)) rotate(var(--ink-tilt)) scaleX(1);
-    filter:none;
-  }
-}
-.frequency-line.writing::after {
-  content:"";
-  display:inline-block;
-  width:2px;
-  height:.78em;
-  margin-left:2px;
-  background:rgba(223,255,63,.68);
-  box-shadow:0 0 8px rgba(223,255,63,.38);
-  animation:frequencyPenBlink .72s steps(1,end) infinite;
-}
-.red-poem-signature.continuous-stanza {
-  position:relative;
-  margin:3em 12vw 0 auto;
-  width:max-content;
-  font-size:1.25em;
-  transform:rotate(-2deg);
-}
-.frequency-message-sent .red-poem-signature { animation:frequencySignalSettle 7s ease forwards; }
-.frequency-overlap-hit { filter:hue-rotate(68deg) saturate(1.8) drop-shadow(0 0 14px rgba(223,255,63,.95))!important; }
-.frequency-closing { animation:frequencyClose .18s ease forwards; }
 .frequency-bleed-scar {
-  position:absolute;
-  z-index:39;
-  width:38px;
-  height:38px;
-  border-radius:48% 52% 44% 56%;
-  pointer-events:none;
-  transform:translate(-50%,-50%) rotate(-11deg);
-  background:radial-gradient(circle at 48% 52%,rgba(0,0,0,.98) 0 24%,rgba(20,11,7,.96) 25% 42%,rgba(77,39,16,.34) 54%,transparent 72%);
-  box-shadow:inset 0 0 8px rgba(0,0,0,.98),0 0 9px rgba(120,58,20,.18);
-  opacity:.82;
+  position: absolute;
+  z-index: 145;
+  width: 28px;
+  height: 22px;
+  transform: translate(-50%,-50%) rotate(-13deg);
+  border-radius: 45% 56% 42% 61%;
+  background:
+    radial-gradient(ellipse at 50% 48%, #050100 0 24%, #1c0802 38%, rgba(92,35,8,.42) 58%, transparent 75%);
+  filter: blur(.25px) drop-shadow(0 0 7px rgba(93,34,8,.36));
+  pointer-events: none;
 }
 .frequency-bleed-scar::after {
-  content:"";
-  position:absolute;
-  left:48%;top:48%;width:21px;height:14px;
-  border:1px solid rgba(104,52,20,.26);
-  border-radius:48%;
-  transform:translate(-50%,-50%) rotate(17deg);
+  content: "";
+  position: absolute;
+  inset: 5px 4px;
+  border: 1px solid rgba(142,64,18,.30);
+  border-radius: 51%;
+  transform: rotate(19deg);
 }
 
-@keyframes apocalypseSnowA {
-  0%{opacity:0;transform:translate(0,0) scale(1);}
-  8%{opacity:.95;}
-  24%{transform:translate(-3vw,2vh) scale(1.06);}
-  41%{opacity:.28;transform:translate(4vw,-2vh) scale(.98);}
-  58%{opacity:1;transform:translate(-2vw,1vh) scale(1.12);}
-  79%{opacity:.42;}
-  100%{opacity:0;transform:translate(8vw,-3vh) scale(1.18);}
+html.frequency-bleed-active,
+html.frequency-bleed-active body {
+  overscroll-behavior: none;
 }
-@keyframes apocalypseSnowB {
-  0%{opacity:0;transform:translateY(0);}
-  13%{opacity:.78;transform:translateY(-8px);}
-  35%{opacity:.25;transform:translateY(13px);}
-  52%{opacity:.92;transform:translateY(-5px);}
-  74%{opacity:.36;transform:translateY(17px);}
-  100%{opacity:0;transform:translateY(-22px);}
-}
-@keyframes apocalypseScratches {
-  0%{opacity:0;transform:translateX(0);}
-  12%{opacity:.9;transform:translateX(-6px);}
-  23%{opacity:.25;transform:translateX(11px);}
-  38%{opacity:1;transform:translateX(-17px);}
-  51%{opacity:.34;transform:translateX(9px);}
-  68%{opacity:.85;transform:translateX(-4px);}
-  100%{opacity:0;transform:translateX(28px);}
-}
-@keyframes apocalypseTrackingTear {
-  0%{opacity:0;transform:translateY(-22vh) skewX(0);}
-  11%{opacity:1;transform:translateY(-10vh) skewX(-14deg);}
-  29%{transform:translateY(9vh) skewX(18deg);}
-  48%{opacity:.42;transform:translateY(-4vh) skewX(-22deg);}
-  66%{opacity:1;transform:translateY(28vh) skewX(11deg);}
-  100%{opacity:0;transform:translateY(54vh) skewX(-8deg);}
-}
-@keyframes apocalypseFractureBar {
-  0%{opacity:0;transform:translateX(0) skewX(0);filter:brightness(1);}
-  18%{opacity:1;transform:translateX(14vw) skewX(-24deg);filter:brightness(2.8);}
-  39%{opacity:.36;transform:translateX(-19vw) skewX(31deg);}
-  61%{opacity:.95;transform:translateX(8vw) skewX(-17deg);}
-  100%{opacity:0;transform:translateX(28vw) skewX(-9deg);}
-}
-@keyframes apocalypseWhiteBlast {
-  0%,7%{opacity:0;}
-  8%,12%{opacity:.94;}
-  13%,28%{opacity:0;}
-  29%,33%{opacity:.72;}
-  34%,55%{opacity:0;}
-  56%,61%{opacity:.86;}
-  62%,100%{opacity:0;}
-}
-@keyframes frequencyBlackTakeover { 0%{opacity:0;} 35%{opacity:.58;} 70%{opacity:.92;} 100%{opacity:1;} }
-@keyframes frequencyBreachMessage {
-  0%,8%{opacity:0;transform:scale(.94);filter:blur(3px);}
-  12%,31%{opacity:1;transform:scale(1.02);filter:none;}
-  36%{opacity:.12;transform:translateX(-6px);}
-  44%,67%{opacity:.92;transform:translateX(4px);}
-  72%{opacity:.18;}
-  81%{opacity:.76;transform:translateX(-3px);}
-  100%{opacity:0;transform:scale(1.04);}
-}
-@keyframes frequencyPenBlink { 50%{opacity:0;} }
-@keyframes frequencySignalSettle { 0%,12%{opacity:1;filter:none;} 100%{opacity:.84;filter:brightness(.88);} }
-@keyframes frequencyClose { to{opacity:0;} }
 
-
-/* FIRE BRICK 42 REPAIR — secret flame floats like the heart balloons, not a slinky. */
-.engage.secret-flame {
-  animation-name: secretFlameHeliumRise !important;
-  animation-duration: var(--dur) !important;
-  animation-timing-function: linear !important;
-  animation-fill-mode: forwards !important;
-  font-size: 24px !important;
-  line-height: 1 !important;
-  cursor: pointer !important;
-  pointer-events: auto !important;
-  transform-origin: center center !important;
-}
-@keyframes secretFlameHeliumRise {
-  0% {
-    opacity: 0;
-    transform: translate3d(0, 18px, 0) scale(calc(var(--heart-scale) * .90)) rotate(0deg);
-  }
-  10% {
-    opacity: .92;
-    transform: translate3d(var(--bob-a), 0, 0) scale(var(--heart-scale)) rotate(0deg);
-  }
-  40% {
-    opacity: .94;
-    transform: translate3d(var(--bob-b), -34vh, 0) scale(var(--heart-scale)) rotate(0deg);
-  }
-  72% {
-    opacity: .86;
-    transform: translate3d(calc(var(--drift) * .55), -76vh, 0) scale(var(--heart-scale)) rotate(0deg);
-  }
-  100% {
-    opacity: 0;
-    transform: translate3d(var(--drift), -118vh, 0) scale(var(--heart-scale)) rotate(0deg);
-  }
+@media (max-width: 430px) {
+  .frequency-page { padding-left: 18px; padding-right: 18px; }
+  .frequency-stanza,
+  .frequency-ink-line,
+  .frequency-ink-title { max-width: calc(100vw - 42px); }
 }
 
 
