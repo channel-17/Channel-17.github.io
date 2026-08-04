@@ -223,6 +223,7 @@ function createInkCanvas(text, className = "frequency-ink-line") {
   return canvas;
 }
 
+
 async function drawInkLine(canvas, text, token, options = {}) {
   if (token !== frequencyBleedRunToken) return false;
 
@@ -231,8 +232,20 @@ async function drawInkLine(canvas, text, token, options = {}) {
   const font = `${fontSize}px "Reenie Beanie", "Bradley Hand", cursive`;
   const measure = document.createElement("canvas").getContext("2d");
   measure.font = font;
-  const cssWidth = Math.min(Math.ceil(measure.measureText(text).width + 26), Math.max(130, window.innerWidth - 52));
-  const cssHeight = Math.ceil(fontSize * 1.65);
+
+  const glyphs = [...text].map(character => {
+    const width = Math.max(
+      character === " " ? fontSize * .28 : measure.measureText(character).width,
+      2
+    );
+    return { character, width };
+  });
+
+  const cssWidth = Math.min(
+    Math.ceil(glyphs.reduce((sum, glyph) => sum + glyph.width, 0) + 24),
+    Math.max(130, window.innerWidth - 52)
+  );
+  const cssHeight = Math.ceil(fontSize * 1.72);
 
   canvas.width = Math.ceil(cssWidth * dpr);
   canvas.height = Math.ceil(cssHeight * dpr);
@@ -240,66 +253,133 @@ async function drawInkLine(canvas, text, token, options = {}) {
   canvas.style.height = `${cssHeight}px`;
 
   const ctx = canvas.getContext("2d");
-  const mask = document.createElement("canvas");
-  mask.width = canvas.width;
-  mask.height = canvas.height;
-  const maskCtx = mask.getContext("2d");
-
   ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-  maskCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
-  maskCtx.font = font;
-  maskCtx.textBaseline = "middle";
-  maskCtx.fillStyle = "#fff";
-  maskCtx.fillText(text, 8, cssHeight * 0.52);
+  ctx.textBaseline = "middle";
+  ctx.font = font;
 
-  const totalMs = Math.max(900, text.length * (options.msPerCharacter || 255));
-  const start = performance.now();
+  let cursorX = 8;
 
-  return new Promise(resolve => {
-    const paint = now => {
-      if (token !== frequencyBleedRunToken || !canvas.isConnected) {
-        resolve(false);
-        return;
-      }
+  for (let glyphIndex = 0; glyphIndex < glyphs.length; glyphIndex += 1) {
+    if (token !== frequencyBleedRunToken || !canvas.isConnected) return false;
 
-      const progress = Math.min(1, (now - start) / totalMs);
-      const eased = 1 - Math.pow(1 - progress, 2.2);
-      const frontier = 8 + eased * (cssWidth - 12);
-      const wobble = Math.sin(progress * Math.PI * 9) * 2.2;
+    const { character, width } = glyphs[glyphIndex];
 
-      ctx.clearRect(0, 0, cssWidth, cssHeight);
-      ctx.save();
-      ctx.drawImage(mask, 0, 0, canvas.width, canvas.height, 0, 0, cssWidth, cssHeight);
-      ctx.globalCompositeOperation = "source-in";
-      const ink = ctx.createLinearGradient(0, 0, cssWidth, 0);
-      ink.addColorStop(0, "rgba(126,255,70,.88)");
-      ink.addColorStop(Math.max(0, eased - .12), "rgba(165,255,96,.98)");
-      ink.addColorStop(Math.min(1, eased + .06), "rgba(88,220,44,.96)");
-      ink.addColorStop(1, "rgba(42,120,25,.86)");
-      ctx.fillStyle = ink;
-      ctx.fillRect(0, 0, frontier, cssHeight);
-      ctx.restore();
+    if (character === " ") {
+      cursorX += width;
+      if (!await sleepFrequency(120 + ((glyphIndex * 17) % 80), token)) return false;
+      continue;
+    }
 
-      ctx.save();
-      ctx.globalCompositeOperation = "source-atop";
-      ctx.shadowColor = "rgba(145,255,82,.95)";
-      ctx.shadowBlur = 7;
-      ctx.strokeStyle = "rgba(210,255,170,.82)";
-      ctx.lineWidth = 1.1;
-      ctx.beginPath();
-      ctx.moveTo(frontier - 3, cssHeight * .30 + wobble);
-      ctx.quadraticCurveTo(frontier + 3, cssHeight * .52, frontier - 2, cssHeight * .76 - wobble);
-      ctx.stroke();
-      ctx.restore();
+    const glyphCanvas = document.createElement("canvas");
+    glyphCanvas.width = Math.ceil((width + 18) * dpr);
+    glyphCanvas.height = Math.ceil(cssHeight * dpr);
 
-      if (progress < 1) {
-        requestAnimationFrame(paint);
-      } else {
-        resolve(true);
-      }
-    };
-    requestAnimationFrame(paint);
-  });
+    const glyphCtx = glyphCanvas.getContext("2d");
+    glyphCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    glyphCtx.font = font;
+    glyphCtx.textBaseline = "middle";
+    glyphCtx.fillStyle = "#fff";
+    glyphCtx.fillText(character, 7, cssHeight * .52);
+
+    const revealCanvas = document.createElement("canvas");
+    revealCanvas.width = glyphCanvas.width;
+    revealCanvas.height = glyphCanvas.height;
+    const revealCtx = revealCanvas.getContext("2d");
+    revealCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    revealCtx.lineCap = "round";
+    revealCtx.lineJoin = "round";
+
+    const totalMs = Math.max(
+      260,
+      (options.msPerCharacter || 420) +
+      ((glyphIndex * 47 + character.charCodeAt(0) * 13) % 210)
+    );
+    const start = performance.now();
+    const seed = character.charCodeAt(0) + glyphIndex * 97;
+    const pathCount = 3 + (seed % 3);
+
+    const paths = Array.from({ length: pathCount }, (_, pathIndex) => {
+      const reverse = (seed + pathIndex) % 2 === 0;
+      const startX = reverse ? width + 5 : 4;
+      const endX = reverse ? 3 : width + 7;
+      const yBase = cssHeight * (.24 + ((seed + pathIndex * 23) % 52) / 100);
+      const bend = (((seed * (pathIndex + 3)) % 19) - 9) * .9;
+      return {
+        startX,
+        endX,
+        yBase,
+        bend,
+        phase: pathIndex / pathCount
+      };
+    });
+
+    await new Promise(resolve => {
+      const paintGlyph = now => {
+        if (token !== frequencyBleedRunToken || !canvas.isConnected) {
+          resolve(false);
+          return;
+        }
+
+        const progress = Math.min(1, (now - start) / totalMs);
+        revealCtx.clearRect(0, 0, width + 18, cssHeight);
+
+        paths.forEach((path, pathIndex) => {
+          const local = Math.max(
+            0,
+            Math.min(1, (progress - path.phase * .18) / (1 - path.phase * .18))
+          );
+          if (local <= 0) return;
+
+          const eased = local * local * (3 - 2 * local);
+          const x = path.startX + (path.endX - path.startX) * eased;
+          const y = path.yBase + Math.sin(eased * Math.PI) * path.bend;
+
+          revealCtx.strokeStyle = "rgba(255,255,255,.98)";
+          revealCtx.lineWidth = Math.max(2.4, fontSize * (.10 + pathIndex * .012));
+          revealCtx.shadowColor = "rgba(255,255,255,.85)";
+          revealCtx.shadowBlur = 2.5;
+          revealCtx.beginPath();
+          revealCtx.moveTo(path.startX, path.yBase);
+          revealCtx.quadraticCurveTo(
+            (path.startX + path.endX) * .5,
+            path.yBase + path.bend,
+            x,
+            y
+          );
+          revealCtx.stroke();
+        });
+
+        ctx.save();
+        ctx.translate(cursorX - 7, 0);
+        ctx.drawImage(glyphCanvas, 0, 0, width + 18, cssHeight);
+        ctx.globalCompositeOperation = "destination-in";
+        ctx.drawImage(revealCanvas, 0, 0, width + 18, cssHeight);
+        ctx.restore();
+
+        ctx.save();
+        ctx.globalCompositeOperation = "source-atop";
+        ctx.shadowColor = "rgba(138,255,75,.95)";
+        ctx.shadowBlur = 9;
+        ctx.fillStyle = "rgba(126,255,67,.18)";
+        ctx.fillRect(cursorX - 4, 0, width + 12, cssHeight);
+        ctx.restore();
+
+        if (progress < 1) {
+          requestAnimationFrame(paintGlyph);
+        } else {
+          resolve(true);
+        }
+      };
+
+      requestAnimationFrame(paintGlyph);
+    });
+
+    if (token !== frequencyBleedRunToken) return false;
+    cursorX += width;
+    if (!await sleepFrequency(65 + ((glyphIndex * 29) % 105), token)) return false;
+  }
+
+  return true;
 }
 
 async function appendFrequencyStanza(poem, lines, stanzaIndex, token) {
@@ -315,7 +395,7 @@ async function appendFrequencyStanza(poem, lines, stanzaIndex, token) {
     line.style.marginLeft = `${FREQUENCY_LINE_INDENTS[(stanzaIndex * 3 + lineIndex) % FREQUENCY_LINE_INDENTS.length] * .32}vw`;
     stanza.appendChild(line);
 
-    if (!await drawInkLine(line, text, token, { msPerCharacter: 265 })) return false;
+    if (!await drawInkLine(line, text, token, { msPerCharacter: 520 })) return false;
     if (!await sleepFrequency(280 + ((stanzaIndex + lineIndex) % 3) * 110, token)) return false;
   }
 
@@ -330,12 +410,12 @@ async function runFrequencyBleedWriting(token) {
   const poem = overlay.querySelector(".frequency-poem");
   if (!titleHost || !poem) return;
 
-  if (!await sleepFrequency(2550, token)) return;
+  if (!await sleepFrequency(1450, token)) return;
   overlay.classList.add("journal-live");
 
   const title = createInkCanvas("Red", "frequency-ink-title");
   titleHost.appendChild(title);
-  if (!await drawInkLine(title, "Red", token, { fontSize: 52, msPerCharacter: 430 })) return;
+  if (!await drawInkLine(title, "Red", token, { fontSize: 52, msPerCharacter: 650 })) return;
   if (!await sleepFrequency(850, token)) return;
 
   for (let stanzaIndex = 0; stanzaIndex < RED_POEM_STANZAS.length; stanzaIndex += 1) {
@@ -378,12 +458,12 @@ function openPoemNote(flameNode) {
   window.setTimeout(() => {
     if (token !== frequencyBleedRunToken || !poemNoteOverlay) return;
     poemNoteOverlay.classList.add("warning-live");
-  }, 900);
+  }, 610);
 
   window.setTimeout(() => {
     if (token !== frequencyBleedRunToken || !poemNoteOverlay) return;
     poemNoteOverlay.classList.add("black-takeover");
-  }, 1750);
+  }, 1180);
 
   window.setTimeout(() => {
     if (flameNode?.isConnected) flameNode.remove();
