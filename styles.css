@@ -7159,49 +7159,121 @@ body {
   background: transparent;
 }
 .poem-note-overlay.open { opacity: 1; visibility: visible; pointer-events: auto; }
-.frequency-fracture,
+
+.frequency-takeover,
+.frequency-snow,
+.frequency-scratch-field,
+.frequency-tracking-tear,
+.frequency-fracture-bars,
+.frequency-white-blast,
 .frequency-blackout,
 .frequency-breach-message,
 .poem-note-card.red-poem-card { position: absolute; inset: 0; }
-.frequency-fracture { z-index: 1; overflow: hidden; pointer-events: none; }
-.frequency-fracture span {
-  position: absolute;
-  left: -12%;
-  width: 124%;
-  background: rgba(223,255,63,.18);
-  mix-blend-mode: screen;
-  opacity: 0;
+
+.frequency-takeover { z-index: 1; overflow: hidden; background: transparent; pointer-events: none; }
+.frequency-snow { opacity: 0; background-size: 4px 4px, 7px 7px, 11px 11px; mix-blend-mode: screen; }
+.frequency-snow-a {
+  background-image:
+    radial-gradient(circle, rgba(255,255,255,.95) 0 1px, transparent 1.4px),
+    radial-gradient(circle, rgba(255,255,255,.55) 0 1px, transparent 1.5px),
+    radial-gradient(circle, rgba(223,255,63,.32) 0 1px, transparent 1.5px);
 }
-.frequency-fracture span:nth-child(1){top:8%;height:8%;}
-.frequency-fracture span:nth-child(2){top:26%;height:3%;}
-.frequency-fracture span:nth-child(3){top:43%;height:14%;}
-.frequency-fracture span:nth-child(4){top:67%;height:4%;}
-.frequency-fracture span:nth-child(5){top:82%;height:10%;}
-.fracturing .frequency-fracture span { animation: frequencyFractureSlice .58s steps(2,end) forwards; }
-.fracturing .frequency-fracture span:nth-child(2){animation-delay:.05s;}
-.fracturing .frequency-fracture span:nth-child(3){animation-delay:.09s;}
-.fracturing .frequency-fracture span:nth-child(4){animation-delay:.02s;}
-.fracturing .frequency-fracture span:nth-child(5){animation-delay:.12s;}
+.frequency-snow-b {
+  background-image:
+    repeating-radial-gradient(circle at 20% 40%, rgba(255,255,255,.7) 0 1px, transparent 1px 3px),
+    repeating-linear-gradient(0deg, transparent 0 3px, rgba(255,255,255,.14) 4px 5px);
+  filter: contrast(2.4) brightness(1.8);
+}
+.takeover-live .frequency-snow-a { animation: apocalypseSnowA 1.7s steps(2,end) forwards; }
+.takeover-live .frequency-snow-b { animation: apocalypseSnowB 1.7s steps(3,end) forwards; }
+
+.frequency-scratch-field {
+  opacity: 0;
+  background:
+    repeating-linear-gradient(0deg, transparent 0 8px, rgba(255,255,255,.48) 9px 10px, transparent 11px 19px),
+    repeating-linear-gradient(90deg, transparent 0 31px, rgba(255,255,255,.18) 32px 33px, transparent 34px 61px);
+  mix-blend-mode: screen;
+}
+.takeover-live .frequency-scratch-field { animation: apocalypseScratches 1.55s steps(2,end) forwards; }
+
+.frequency-tracking-tear {
+  left: -15%;
+  right: -15%;
+  top: 36%;
+  bottom: auto;
+  height: 17%;
+  opacity: 0;
+  background:
+    repeating-linear-gradient(0deg, rgba(255,255,255,.93) 0 1px, rgba(0,0,0,.9) 2px 5px, rgba(223,255,63,.36) 6px 7px),
+    linear-gradient(90deg, transparent, rgba(255,255,255,.9), transparent);
+  filter: contrast(2.8) brightness(1.8);
+  mix-blend-mode: screen;
+}
+.takeover-live .frequency-tracking-tear { animation: apocalypseTrackingTear 1.28s steps(2,end) forwards; }
+
+.frequency-fracture-bars { overflow: hidden; }
+.frequency-fracture-bars span {
+  position: absolute;
+  left: -14%;
+  width: 128%;
+  opacity: 0;
+  background:
+    repeating-linear-gradient(90deg, rgba(255,255,255,.88) 0 2px, rgba(0,0,0,.72) 3px 8px, rgba(223,255,63,.28) 9px 11px);
+  mix-blend-mode: screen;
+}
+.frequency-fracture-bars span:nth-child(1){top:5%;height:3%;}
+.frequency-fracture-bars span:nth-child(2){top:18%;height:9%;}
+.frequency-fracture-bars span:nth-child(3){top:34%;height:2%;}
+.frequency-fracture-bars span:nth-child(4){top:47%;height:13%;}
+.frequency-fracture-bars span:nth-child(5){top:69%;height:4%;}
+.frequency-fracture-bars span:nth-child(6){top:80%;height:11%;}
+.frequency-fracture-bars span:nth-child(7){top:94%;height:2%;}
+.takeover-live .frequency-fracture-bars span { animation: apocalypseFractureBar 1.32s steps(2,end) forwards; }
+.takeover-live .frequency-fracture-bars span:nth-child(2){animation-delay:.05s;}
+.takeover-live .frequency-fracture-bars span:nth-child(3){animation-delay:.14s;}
+.takeover-live .frequency-fracture-bars span:nth-child(4){animation-delay:.08s;}
+.takeover-live .frequency-fracture-bars span:nth-child(5){animation-delay:.21s;}
+.takeover-live .frequency-fracture-bars span:nth-child(6){animation-delay:.11s;}
+.takeover-live .frequency-fracture-bars span:nth-child(7){animation-delay:.26s;}
+
+.frequency-white-blast { opacity: 0; background: #fff; mix-blend-mode: screen; }
+.takeover-live .frequency-white-blast { animation: apocalypseWhiteBlast 1.42s steps(1,end) forwards; }
+
 .frequency-blackout { z-index: 2; background:#000; opacity:0; }
-.black-takeover .frequency-blackout { animation: frequencyBlackTakeover .36s steps(3,end) forwards; }
+.black-takeover .frequency-blackout { animation: frequencyBlackTakeover .48s steps(3,end) forwards; }
+
 .frequency-breach-message {
   z-index: 4;
-  display:grid;
-  place-items:center;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:9px;
   opacity:0;
-  color:rgba(223,255,63,.72);
-  font:700 9px/1.2 "Courier New",monospace;
+  color:#fff;
+  text-align:center;
+  font-family:"Courier New",monospace;
+  pointer-events:none;
+  text-shadow:0 0 9px rgba(255,255,255,.7),0 0 24px rgba(223,255,63,.28);
+}
+.frequency-breach-message strong {
+  font-size:clamp(18px,6vw,30px);
+  letter-spacing:.32em;
+  text-indent:.32em;
+}
+.frequency-breach-message span {
+  color:rgba(223,255,63,.86);
+  font-size:9px;
+  font-weight:700;
   letter-spacing:.34em;
   text-indent:.34em;
-  text-align:center;
-  pointer-events:none;
 }
-.breach-live .frequency-breach-message { animation: frequencyBreachMessage 1.06s steps(2,end) forwards; }
+.breach-live .frequency-breach-message { animation: frequencyBreachMessage 1.12s steps(2,end) forwards; }
+
 .poem-note-card.red-poem-card {
   z-index: 3;
   width:100%;
   height:100%;
-  padding:max(26px,env(safe-area-inset-top)) 12px max(22px,env(safe-area-inset-bottom));
   border:0;
   border-radius:0;
   background:radial-gradient(circle at 48% 44%,rgba(223,255,63,.025),transparent 48%),#000;
@@ -7211,23 +7283,40 @@ body {
   pointer-events:none;
 }
 .journal-live .poem-note-card.red-poem-card { opacity:1; pointer-events:auto; }
-.frequency-close {
+
+.frequency-scroll-journal {
   position:absolute;
+  inset:0;
+  overflow-y:auto;
+  overflow-x:hidden;
+  -webkit-overflow-scrolling:touch;
+  overscroll-behavior:contain;
+  touch-action:pan-y;
+  padding:max(26px,env(safe-area-inset-top)) 0 max(38vh,env(safe-area-inset-bottom));
+  scrollbar-width:none;
+}
+.frequency-scroll-journal::-webkit-scrollbar { display:none; }
+
+.frequency-close {
+  position:fixed;
   top:max(12px,env(safe-area-inset-top));
   right:14px;
   z-index:8;
   width:34px;
   height:34px;
   border:0;
-  background:transparent;
-  color:rgba(223,255,63,.48);
+  background:rgba(0,0,0,.52);
+  border-radius:50%;
+  color:rgba(223,255,63,.62);
   font:300 26px/34px Arial,sans-serif;
   text-align:center;
   cursor:pointer;
+  backdrop-filter:blur(3px);
 }
+
 .poem-note-card.red-poem-card h2 {
   min-height:70px;
-  margin:3vh 0 0 7vw;
+  margin:3vh 0 3vh 7vw;
   color:rgba(223,255,63,.96);
   font-family:"Reenie Beanie","Bradley Hand",cursive;
   font-size:clamp(54px,17vw,82px);
@@ -7236,14 +7325,13 @@ body {
   text-shadow:0 0 5px rgba(223,255,63,.48),0 0 18px rgba(223,255,63,.14);
   transform:rotate(-1.2deg);
 }
+
 .poem-note-paper.red-poem-paper {
-  position:absolute;
-  left:0;
-  right:0;
-  top:19%;
-  bottom:max(22px,env(safe-area-inset-bottom));
-  overflow:hidden;
-  padding:1vh 5vw 2vh 2vw;
+  position:relative;
+  width:100%;
+  min-height:130vh;
+  overflow:visible;
+  padding:0 5vw 22vh 2vw;
   border:0;
   background:transparent;
   color:rgba(223,255,63,.90);
@@ -7252,17 +7340,18 @@ body {
   font-weight:400;
   line-height:1.03;
 }
-.frequency-stanza {
-  position:absolute;
-  inset:3% 0 auto 0;
-  margin:0;
+.frequency-stanza.continuous-stanza {
+  position:relative;
+  margin-top:0;
+  margin-bottom:1.25em;
+  width:88vw;
   transform:rotate(var(--stanza-tilt));
   transform-origin:35% 20%;
 }
 .frequency-line {
   display:block;
   width:max-content;
-  max-width:90vw;
+  max-width:86vw;
   min-height:1.02em;
   white-space:pre-wrap;
   text-shadow:0 0 4px rgba(223,255,63,.42),0 0 12px rgba(223,255,63,.12);
@@ -7275,16 +7364,12 @@ body {
   margin-left:2px;
   background:rgba(223,255,63,.68);
   box-shadow:0 0 8px rgba(223,255,63,.38);
-  animation:frequencyPenBlink .56s steps(1,end) infinite;
+  animation:frequencyPenBlink .72s steps(1,end) infinite;
 }
-.page-entering { animation:frequencyPageIn .38s ease-out both; }
-.poem-note-paper.page-leaving .frequency-stanza,
-.poem-note-paper.page-leaving .red-poem-signature { animation:frequencyPageOut .42s ease-in both; }
-.red-poem-signature {
-  position:absolute;
-  right:10vw;
-  top:27%;
-  margin:0;
+.red-poem-signature.continuous-stanza {
+  position:relative;
+  margin:3em 12vw 0 auto;
+  width:max-content;
   font-size:1.25em;
   transform:rotate(-2deg);
 }
@@ -7311,16 +7396,67 @@ body {
   border-radius:48%;
   transform:translate(-50%,-50%) rotate(17deg);
 }
-@keyframes frequencyFractureSlice {
+
+@keyframes apocalypseSnowA {
+  0%{opacity:0;transform:translate(0,0) scale(1);}
+  8%{opacity:.95;}
+  24%{transform:translate(-3vw,2vh) scale(1.06);}
+  41%{opacity:.28;transform:translate(4vw,-2vh) scale(.98);}
+  58%{opacity:1;transform:translate(-2vw,1vh) scale(1.12);}
+  79%{opacity:.42;}
+  100%{opacity:0;transform:translate(8vw,-3vh) scale(1.18);}
+}
+@keyframes apocalypseSnowB {
+  0%{opacity:0;transform:translateY(0);}
+  13%{opacity:.78;transform:translateY(-8px);}
+  35%{opacity:.25;transform:translateY(13px);}
+  52%{opacity:.92;transform:translateY(-5px);}
+  74%{opacity:.36;transform:translateY(17px);}
+  100%{opacity:0;transform:translateY(-22px);}
+}
+@keyframes apocalypseScratches {
+  0%{opacity:0;transform:translateX(0);}
+  12%{opacity:.9;transform:translateX(-6px);}
+  23%{opacity:.25;transform:translateX(11px);}
+  38%{opacity:1;transform:translateX(-17px);}
+  51%{opacity:.34;transform:translateX(9px);}
+  68%{opacity:.85;transform:translateX(-4px);}
+  100%{opacity:0;transform:translateX(28px);}
+}
+@keyframes apocalypseTrackingTear {
+  0%{opacity:0;transform:translateY(-22vh) skewX(0);}
+  11%{opacity:1;transform:translateY(-10vh) skewX(-14deg);}
+  29%{transform:translateY(9vh) skewX(18deg);}
+  48%{opacity:.42;transform:translateY(-4vh) skewX(-22deg);}
+  66%{opacity:1;transform:translateY(28vh) skewX(11deg);}
+  100%{opacity:0;transform:translateY(54vh) skewX(-8deg);}
+}
+@keyframes apocalypseFractureBar {
   0%{opacity:0;transform:translateX(0) skewX(0);filter:brightness(1);}
-  28%{opacity:.9;transform:translateX(10vw) skewX(-18deg);filter:brightness(2.4);}
-  55%{opacity:.5;transform:translateX(-13vw) skewX(22deg);}
-  100%{opacity:0;transform:translateX(18vw) skewX(-9deg);}
+  18%{opacity:1;transform:translateX(14vw) skewX(-24deg);filter:brightness(2.8);}
+  39%{opacity:.36;transform:translateX(-19vw) skewX(31deg);}
+  61%{opacity:.95;transform:translateX(8vw) skewX(-17deg);}
+  100%{opacity:0;transform:translateX(28vw) skewX(-9deg);}
+}
+@keyframes apocalypseWhiteBlast {
+  0%,7%{opacity:0;}
+  8%,12%{opacity:.94;}
+  13%,28%{opacity:0;}
+  29%,33%{opacity:.72;}
+  34%,55%{opacity:0;}
+  56%,61%{opacity:.86;}
+  62%,100%{opacity:0;}
 }
 @keyframes frequencyBlackTakeover { 0%{opacity:0;} 35%{opacity:.58;} 70%{opacity:.92;} 100%{opacity:1;} }
-@keyframes frequencyBreachMessage { 0%,12%{opacity:0;} 20%,62%{opacity:.82;} 69%{opacity:.18;} 76%{opacity:.72;} 100%{opacity:0;} }
-@keyframes frequencyPageIn { from{opacity:0;transform:translateY(9px) rotate(var(--stanza-tilt));filter:blur(1.2px);} to{opacity:1;transform:translateY(0) rotate(var(--stanza-tilt));filter:none;} }
-@keyframes frequencyPageOut { to{opacity:0;transform:translateY(-12px) rotate(-.8deg);filter:blur(2px);} }
+@keyframes frequencyBreachMessage {
+  0%,8%{opacity:0;transform:scale(.94);filter:blur(3px);}
+  12%,31%{opacity:1;transform:scale(1.02);filter:none;}
+  36%{opacity:.12;transform:translateX(-6px);}
+  44%,67%{opacity:.92;transform:translateX(4px);}
+  72%{opacity:.18;}
+  81%{opacity:.76;transform:translateX(-3px);}
+  100%{opacity:0;transform:scale(1.04);}
+}
 @keyframes frequencyPenBlink { 50%{opacity:0;} }
 @keyframes frequencySignalSettle { 0%,12%{opacity:1;filter:none;} 100%{opacity:.84;filter:brightness(.88);} }
 @keyframes frequencyClose { to{opacity:0;} }
