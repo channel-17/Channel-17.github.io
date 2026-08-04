@@ -215,20 +215,34 @@ function placeFrequencyBleedScar(rect) {
 }
 
 async function writeFrequencyLine(target, text, stanzaIndex, lineIndex, token) {
-  target.textContent = "";
+  target.replaceChildren();
   target.classList.add("writing");
 
   for (let index = 0; index < text.length; index += 1) {
     if (token !== frequencyBleedRunToken) return false;
-    target.textContent += text[index];
 
     const character = text[index];
-    const punctuationPause = /[.…]/.test(character) ? 290 : /[,]/.test(character) ? 180 : /[!?]/.test(character) ? 340 : 0;
-    const wordLift = character === " " ? 36 : 0;
-    const handHesitation = ((index + stanzaIndex * 5 + lineIndex * 3) % 9 === 0) ? 68 : 0;
-    const strokeJitter = 58 + ((index * 11 + stanzaIndex * 7 + lineIndex * 13) % 48);
+    const ink = document.createElement("span");
+    ink.className = "frequency-ink-character";
+    ink.textContent = character === " " ? " " : character;
+    ink.style.setProperty("--ink-tilt", `${(((index + stanzaIndex + lineIndex) % 7) - 3) * 0.18}deg`);
+    ink.style.setProperty("--ink-lift", `${(((index * 3 + lineIndex) % 5) - 2) * 0.22}px`);
+    target.appendChild(ink);
 
-    if (!await sleepFrequency(strokeJitter + punctuationPause + wordLift + handHesitation, token)) return false;
+    requestAnimationFrame(() => ink.classList.add("ink-drawn"));
+
+    const punctuationPause = /[.…]/.test(character)
+      ? 900
+      : /[,;]/.test(character)
+        ? 610
+        : /[!?]/.test(character)
+          ? 1080
+          : 0;
+    const wordPause = character === " " ? 145 : 0;
+    const handHesitation = ((index + stanzaIndex * 5 + lineIndex * 3) % 8 === 0) ? 210 : 0;
+    const strokeTime = 175 + ((index * 17 + stanzaIndex * 13 + lineIndex * 19) % 135);
+
+    if (!await sleepFrequency(strokeTime + punctuationPause + wordPause + handHesitation, token)) return false;
   }
 
   target.classList.remove("writing");
