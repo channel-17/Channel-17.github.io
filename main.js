@@ -224,12 +224,37 @@ async function writeFrequencyLine(target, text, stanzaIndex, lineIndex, token) {
     const character = text[index];
     const ink = document.createElement("span");
     ink.className = "frequency-ink-character";
-    ink.textContent = character === " " ? " " : character;
     ink.style.setProperty("--ink-tilt", `${(((index + stanzaIndex + lineIndex) % 7) - 3) * 0.18}deg`);
     ink.style.setProperty("--ink-lift", `${(((index * 3 + lineIndex) % 5) - 2) * 0.22}px`);
-    target.appendChild(ink);
 
-    requestAnimationFrame(() => ink.classList.add("ink-drawn"));
+    if (character === " ") {
+      ink.classList.add("frequency-ink-space");
+      ink.innerHTML = "&nbsp;";
+    } else {
+      const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+      svg.classList.add("frequency-ink-svg");
+      svg.setAttribute("viewBox", "0 0 100 120");
+      svg.setAttribute("preserveAspectRatio", "xMinYMid meet");
+      svg.setAttribute("aria-hidden", "true");
+
+      const strokeText = document.createElementNS("http://www.w3.org/2000/svg", "text");
+      strokeText.classList.add("frequency-ink-stroke");
+      strokeText.setAttribute("x", "4");
+      strokeText.setAttribute("y", "94");
+      strokeText.textContent = character;
+
+      const fillText = document.createElementNS("http://www.w3.org/2000/svg", "text");
+      fillText.classList.add("frequency-ink-fill");
+      fillText.setAttribute("x", "4");
+      fillText.setAttribute("y", "94");
+      fillText.textContent = character;
+
+      svg.append(strokeText, fillText);
+      ink.appendChild(svg);
+    }
+
+    target.appendChild(ink);
+    requestAnimationFrame(() => requestAnimationFrame(() => ink.classList.add("ink-drawn")));
 
     const punctuationPause = /[.…]/.test(character)
       ? 900
@@ -240,7 +265,7 @@ async function writeFrequencyLine(target, text, stanzaIndex, lineIndex, token) {
           : 0;
     const wordPause = character === " " ? 145 : 0;
     const handHesitation = ((index + stanzaIndex * 5 + lineIndex * 3) % 8 === 0) ? 210 : 0;
-    const strokeTime = 175 + ((index * 17 + stanzaIndex * 13 + lineIndex * 19) % 135);
+    const strokeTime = 520 + ((index * 29 + stanzaIndex * 17 + lineIndex * 23) % 260);
 
     if (!await sleepFrequency(strokeTime + punctuationPause + wordPause + handHesitation, token)) return false;
   }
