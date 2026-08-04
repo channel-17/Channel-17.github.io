@@ -137,95 +137,61 @@ const RED_POEM_STANZAS = [
   ["Now it flickers like a memory", "that burns when I sleep.", "The crown I had imagined.", "The one I never could keep."]
 ];
 
+const FREQUENCY_LINE_INDENTS = [2, 9, 4, 14, 1, 11, 6, 16, 3, 12, 7, 0, 10, 5, 15, 8];
+
 function ensurePoemNoteOverlay() {
-  const existing = document.getElementById("poemNoteOverlay");
-  if (existing) existing.remove();
+  document.getElementById("poemNoteOverlay")?.remove();
 
   poemNoteOverlay = document.createElement("aside");
   poemNoteOverlay.className = "poem-note-overlay frequency-bleed-overlay";
   poemNoteOverlay.id = "poemNoteOverlay";
   poemNoteOverlay.setAttribute("aria-hidden", "true");
   poemNoteOverlay.innerHTML = `
+    <div class="frequency-fracture" aria-hidden="true">
+      <span></span><span></span><span></span><span></span><span></span>
+    </div>
+    <div class="frequency-blackout" aria-hidden="true"></div>
+    <div class="frequency-breach-message" aria-hidden="true"><span>PRIVATE SIGNAL BREACH</span></div>
     <section class="poem-note-card red-poem-card" role="dialog" aria-modal="true" aria-label="Red poem">
-      <div class="poem-note-kicker">frequency bleed // private signal</div>
+      <button class="frequency-close" type="button" aria-label="close private signal">×</button>
       <h2><span class="frequency-written-title"></span></h2>
       <div class="poem-note-paper red-poem-paper" aria-live="off"></div>
-    </section>
-  `;
+    </section>`;
+
+  poemNoteOverlay.querySelector(".frequency-close")?.addEventListener("click", closePoemNote);
   document.body.appendChild(poemNoteOverlay);
   return poemNoteOverlay;
 }
 
 function sleepFrequency(ms, token) {
-  return new Promise(resolve => {
-    window.setTimeout(() => resolve(token === frequencyBleedRunToken), ms);
-  });
+  return new Promise(resolve => window.setTimeout(() => resolve(token === frequencyBleedRunToken), ms));
 }
 
 function pauseWorldForFrequencyBleed() {
   frequencyBleedAnimations = [];
-
-  /*
-    iPhone Safari support differs across versions.
-    Never allow animation discovery to crash the frequency bleed.
-  */
   try {
-    const animations =
-      typeof document.getAnimations === "function"
-        ? document.getAnimations()
-        : [];
-
+    const animations = typeof document.getAnimations === "function" ? document.getAnimations() : [];
     frequencyBleedAnimations = animations.filter(animation => {
-      if (!animation || animation.playState !== "running") {
-        return false;
-      }
-
-      const effectTarget =
-        animation.effect &&
-        animation.effect.target;
-
-      /*
-        Do not pause anything belonging to the poem overlay itself.
-        Only the Channel 17 world beneath it is frozen.
-      */
-      return !(
-        effectTarget &&
-        effectTarget.closest &&
-        effectTarget.closest("#poemNoteOverlay")
-      );
+      if (!animation || animation.playState !== "running") return false;
+      const target = animation.effect && animation.effect.target;
+      return !(target && target.closest && target.closest("#poemNoteOverlay"));
     });
-
-    frequencyBleedAnimations.forEach(animation => {
-      try {
-        animation.pause();
-      } catch (error) {
-        // One unsupported animation must not stop the bleed.
-      }
-    });
-  } catch (error) {
-    frequencyBleedAnimations = [];
-  }
-
+    frequencyBleedAnimations.forEach(animation => { try { animation.pause(); } catch (_) {} });
+  } catch (_) { frequencyBleedAnimations = []; }
   document.documentElement.classList.add("frequency-bleed-active");
 }
 
 function resumeWorldAfterFrequencyBleed() {
   document.documentElement.classList.remove("frequency-bleed-active");
-
-  frequencyBleedAnimations.forEach(animation => {
-    try { animation.play(); } catch (error) { /* Safari safety. */ }
-  });
-
+  frequencyBleedAnimations.forEach(animation => { try { animation.play(); } catch (_) {} });
   frequencyBleedAnimations = [];
 }
 
 function placeFrequencyBleedScar(rect) {
   const screenRoot = document.getElementById("screen");
   if (!rect || !screenRoot) return;
-  if (frequencyBleedScar && frequencyBleedScar.isConnected) frequencyBleedScar.remove();
-
+  frequencyBleedScar?.remove();
   const screenRect = screenRoot.getBoundingClientRect();
-
   frequencyBleedScar = document.createElement("span");
   frequencyBleedScar.className = "frequency-bleed-scar";
   frequencyBleedScar.setAttribute("aria-hidden", "true");
@@ -237,127 +203,119 @@ function placeFrequencyBleedScar(rect) {
 async function writeFrequencyLine(target, text, stanzaIndex, lineIndex, token) {
   target.textContent = "";
   target.classList.add("writing");
-
-  const baseDelay = 19 + ((stanzaIndex * 7 + lineIndex * 11) % 15);
+  const baseDelay = 30 + ((stanzaIndex * 9 + lineIndex * 13) % 23);
   for (let index = 0; index < text.length; index += 1) {
     if (token !== frequencyBleedRunToken) return false;
     target.textContent += text[index];
-    const punctuationPause = /[,.…]/.test(text[index]) ? 58 : /[!?]/.test(text[index]) ? 86 : 0;
-    const jitter = ((index + stanzaIndex + lineIndex) % 4) * 4;
-    const current = await sleepFrequency(baseDelay + jitter + punctuationPause, token);
-    if (!current) return false;
+    const char = text[index];
+    const punctuationPause = /[.…]/.test(char) ? 150 : /[,]/.test(char) ? 90 : /[!?]/.test(char) ? 185 : 0;
+    const hesitation = ((index + stanzaIndex * 3 + lineIndex) % 11 === 0) ? 40 : 0;
+    const jitter = (index * 7 + stanzaIndex * 5 + lineIndex * 3) % 20;
+    if (!await sleepFrequency(baseDelay + jitter + punctuationPause + hesitation, token)) return false;
   }
-
   target.classList.remove("writing");
+  return true;
+}
+
+async function revealFrequencyStanza(paper, lines, stanzaIndex, token) {
+  paper.classList.remove("page-leaving");
+  paper.replaceChildren();
+  const stanza = document.createElement("p");
+  stanza.className = "frequency-stanza page-entering";
+  stanza.style.setProperty("--stanza-tilt", `${((stanzaIndex % 5) - 2) * 0.22}deg`);
+  paper.appendChild(stanza);
+
+  for (let lineIndex = 0; lineIndex < lines.length; lineIndex += 1) {
+    const line = document.createElement("span");
+    line.className = "frequency-line";
+    line.style.marginLeft = `${FREQUENCY_LINE_INDENTS[(stanzaIndex * 4 + lineIndex) % FREQUENCY_LINE_INDENTS.length]}vw`;
+    line.style.transform = `rotate(${(((stanzaIndex + lineIndex * 2) % 7) - 3) * 0.16}deg)`;
+    stanza.appendChild(line);
+    if (!await writeFrequencyLine(line, lines[lineIndex], stanzaIndex, lineIndex, token)) return false;
+    if (!await sleepFrequency(145 + ((stanzaIndex + lineIndex) % 4) * 80, token)) return false;
+  }
+  stanza.classList.remove("page-entering");
   return true;
 }
 
 async function runFrequencyBleedWriting(token) {
   const overlay = poemNoteOverlay;
   if (!overlay) return;
-
   const title = overlay.querySelector(".frequency-written-title");
   const paper = overlay.querySelector(".red-poem-paper");
   if (!title || !paper) return;
 
-  await sleepFrequency(520, token);
+  if (!await sleepFrequency(1750, token)) return;
+  overlay.classList.add("journal-live");
+  if (!await sleepFrequency(330, token)) return;
   if (!await writeFrequencyLine(title, "Red", 0, 0, token)) return;
-  await sleepFrequency(520, token);
+  if (!await sleepFrequency(620, token)) return;
 
   for (let stanzaIndex = 0; stanzaIndex < RED_POEM_STANZAS.length; stanzaIndex += 1) {
-    const stanza = document.createElement("p");
-    stanza.className = "frequency-stanza";
-    paper.appendChild(stanza);
-
-    const lines = RED_POEM_STANZAS[stanzaIndex];
-    for (let lineIndex = 0; lineIndex < lines.length; lineIndex += 1) {
-      const line = document.createElement("span");
-      line.className = "frequency-line";
-      stanza.appendChild(line);
-      if (!await writeFrequencyLine(line, lines[lineIndex], stanzaIndex, lineIndex, token)) return;
-      paper.scrollTop = paper.scrollHeight;
-      await sleepFrequency(75 + ((stanzaIndex + lineIndex) % 3) * 45, token);
+    if (!await revealFrequencyStanza(paper, RED_POEM_STANZAS[stanzaIndex], stanzaIndex, token)) return;
+    if (!await sleepFrequency(760 + (stanzaIndex % 4) * 170, token)) return;
+    if (stanzaIndex < RED_POEM_STANZAS.length - 1) {
+      paper.classList.add("page-leaving");
+      if (!await sleepFrequency(430, token)) return;
     }
-
-    const stanzaPause = stanzaIndex === 1 ? 820 : 260 + (stanzaIndex % 4) * 85;
-    await sleepFrequency(stanzaPause, token);
   }
 
+  paper.classList.add("page-leaving");
+  if (!await sleepFrequency(460, token)) return;
+  paper.replaceChildren();
+  paper.classList.remove("page-leaving");
   const signature = document.createElement("p");
-  signature.className = "red-poem-signature";
+  signature.className = "red-poem-signature page-entering";
   const signatureLine = document.createElement("span");
   signatureLine.className = "frequency-line";
   signature.appendChild(signatureLine);
   paper.appendChild(signature);
-  paper.scrollTop = paper.scrollHeight;
-
   if (!await writeFrequencyLine(signatureLine, "— jinx", 17, 0, token)) return;
+  signature.classList.remove("page-entering");
   overlay.classList.add("frequency-message-sent");
-
-  await sleepFrequency(7000, token);
+  if (!await sleepFrequency(7000, token)) return;
   if (token === frequencyBleedRunToken) closePoemNote();
 }
 
 function openPoemNote(flameNode) {
   if (frequencyBleedActive) return;
-
   frequencyBleedActive = true;
   frequencyBleedRunToken += 1;
-
   const token = frequencyBleedRunToken;
-
-  const flameRect =
-    flameNode && flameNode.isConnected
-      ? flameNode.getBoundingClientRect()
-      : null;
-
-  /*
-    Build and expose the stolen-frequency screen BEFORE attempting
-    to freeze browser animations. This prevents a Safari animation
-    API failure from consuming the flame without opening the poem.
-  */
+  const flameRect = flameNode?.isConnected ? flameNode.getBoundingClientRect() : null;
   const overlay = ensurePoemNoteOverlay();
-
-  overlay.classList.add("open");
-  overlay.setAttribute("aria-hidden", "false");
-
-  /*
-    The flame flashes at the overlap point, but it is not removed
-    until the black frequency screen has successfully taken control.
-  */
-  if (flameNode && flameNode.isConnected) {
-    flameNode.classList.add("frequency-overlap-hit");
-  }
-
-  placeFrequencyBleedScar(flameRect);
   pauseWorldForFrequencyBleed();
+  if (flameNode?.isConnected) flameNode.classList.add("frequency-overlap-hit");
+  overlay.setAttribute("aria-hidden", "false");
+  overlay.classList.add("open", "fracturing");
 
   window.setTimeout(() => {
-    if (flameNode && flameNode.isConnected) {
-      flameNode.remove();
-    }
-  }, 90);
-
-  requestAnimationFrame(() => {
-    runFrequencyBleedWriting(token);
-  });
+    if (token === frequencyBleedRunToken && poemNoteOverlay) poemNoteOverlay.classList.add("black-takeover");
+  }, 390);
+  window.setTimeout(() => {
+    if (token === frequencyBleedRunToken && poemNoteOverlay) poemNoteOverlay.classList.add("breach-live");
+  }, 690);
+  window.setTimeout(() => {
+    if (flameNode?.isConnected) flameNode.remove();
+    placeFrequencyBleedScar(flameRect);
+  }, 840);
+  requestAnimationFrame(() => runFrequencyBleedWriting(token));
 }
 
 function closePoemNote() {
   if (!frequencyBleedActive) return;
-
   frequencyBleedRunToken += 1;
   frequencyBleedActive = false;
-
   if (poemNoteOverlay) {
-    poemNoteOverlay.classList.remove("open", "frequency-message-sent");
+    poemNoteOverlay.classList.add("frequency-closing");
     poemNoteOverlay.setAttribute("aria-hidden", "true");
-    poemNoteOverlay.remove();
+    const closingOverlay = poemNoteOverlay;
     poemNoteOverlay = null;
+    window.setTimeout(() => closingOverlay.remove(), 180);
   }
-
   resumeWorldAfterFrequencyBleed();
 }
+
 
 function openJinxCard() {
   if (!jinxCardOverlay) return;
