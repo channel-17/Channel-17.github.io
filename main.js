@@ -231,6 +231,9 @@ function createSpellLine(text, className = "frequency-spell-line") {
     glyph.style.setProperty("--glyph-tilt", `${((seed % 9) - 4) * 0.22}deg`);
     glyph.style.setProperty("--glyph-lift", `${((seed % 5) - 2) * 0.34}px`);
     glyph.style.setProperty("--glyph-scorch", `${0.72 + (seed % 5) * 0.07}`);
+    glyph.style.setProperty("--fissure-x", `${38 + (seed % 25)}%`);
+    glyph.style.setProperty("--fissure-width", `${11 + (seed % 8)}%`);
+    glyph.style.setProperty("--ember-delay", `${(seed % 7) * 22}ms`);
     line.appendChild(glyph);
   });
 
