@@ -7152,152 +7152,179 @@ body {
   position: fixed;
   inset: 0;
   z-index: 2147483646;
-  display: block;
   overflow: hidden;
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-  background: #000;
-  transition: none;
-}
-.poem-note-overlay.open {
-  opacity: 1;
-  visibility: visible;
-  pointer-events: auto;
-}
-.poem-note-card,
-.poem-note-card.red-poem-card {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  min-height: 0;
-  max-height: none;
-  padding: max(28px, env(safe-area-inset-top)) 20px max(24px, env(safe-area-inset-bottom));
-  border: 0;
-  border-radius: 0;
-  background:
-    radial-gradient(circle at 50% 42%, rgba(223,255,63,.026), transparent 42%),
-    #000;
-  box-shadow: none;
-  color: rgba(223,255,63,.92);
-}
-.poem-note-kicker {
-  margin: 0 0 14px;
-  color: rgba(223,255,63,.34);
-  font: 700 9px/1.2 "Courier New", monospace;
-  letter-spacing: .26em;
-  text-transform: uppercase;
-}
-.poem-note-card h2,
-.poem-note-card.red-poem-card h2 {
-  min-height: 58px;
-  margin: 0 0 8px;
-  color: rgba(223,255,63,.96);
-  font-family: "Reenie Beanie", "Bradley Hand", cursive;
-  font-size: clamp(46px, 14vw, 72px);
-  font-weight: 400;
-  line-height: .95;
-  letter-spacing: .01em;
-  text-transform: none;
-  text-shadow:
-    0 0 5px rgba(223,255,63,.48),
-    0 0 18px rgba(223,255,63,.16);
-}
-.poem-note-paper,
-.poem-note-paper.red-poem-paper {
-  width: 100%;
-  height: calc(100% - 92px);
-  min-height: 0;
-  max-height: none;
-  overflow-y: auto;
-  overflow-x: hidden;
-  -webkit-overflow-scrolling: touch;
-  padding: 4px 4px 48px 2px;
-  border: 0;
-  border-radius: 0;
   background: transparent;
-  box-shadow: none;
-  color: rgba(223,255,63,.90);
-  font-family: "Reenie Beanie", "Bradley Hand", cursive;
-  font-size: clamp(25px, 7vw, 36px);
-  font-weight: 400;
-  line-height: 1.02;
-  letter-spacing: .005em;
-  scrollbar-width: none;
 }
-.poem-note-paper.red-poem-paper::-webkit-scrollbar { display: none; }
+.poem-note-overlay.open { opacity: 1; visibility: visible; pointer-events: auto; }
+.frequency-fracture,
+.frequency-blackout,
+.frequency-breach-message,
+.poem-note-card.red-poem-card { position: absolute; inset: 0; }
+.frequency-fracture { z-index: 1; overflow: hidden; pointer-events: none; }
+.frequency-fracture span {
+  position: absolute;
+  left: -12%;
+  width: 124%;
+  background: rgba(223,255,63,.18);
+  mix-blend-mode: screen;
+  opacity: 0;
+}
+.frequency-fracture span:nth-child(1){top:8%;height:8%;}
+.frequency-fracture span:nth-child(2){top:26%;height:3%;}
+.frequency-fracture span:nth-child(3){top:43%;height:14%;}
+.frequency-fracture span:nth-child(4){top:67%;height:4%;}
+.frequency-fracture span:nth-child(5){top:82%;height:10%;}
+.fracturing .frequency-fracture span { animation: frequencyFractureSlice .58s steps(2,end) forwards; }
+.fracturing .frequency-fracture span:nth-child(2){animation-delay:.05s;}
+.fracturing .frequency-fracture span:nth-child(3){animation-delay:.09s;}
+.fracturing .frequency-fracture span:nth-child(4){animation-delay:.02s;}
+.fracturing .frequency-fracture span:nth-child(5){animation-delay:.12s;}
+.frequency-blackout { z-index: 2; background:#000; opacity:0; }
+.black-takeover .frequency-blackout { animation: frequencyBlackTakeover .36s steps(3,end) forwards; }
+.frequency-breach-message {
+  z-index: 4;
+  display:grid;
+  place-items:center;
+  opacity:0;
+  color:rgba(223,255,63,.72);
+  font:700 9px/1.2 "Courier New",monospace;
+  letter-spacing:.34em;
+  text-indent:.34em;
+  text-align:center;
+  pointer-events:none;
+}
+.breach-live .frequency-breach-message { animation: frequencyBreachMessage 1.06s steps(2,end) forwards; }
+.poem-note-card.red-poem-card {
+  z-index: 3;
+  width:100%;
+  height:100%;
+  padding:max(26px,env(safe-area-inset-top)) 12px max(22px,env(safe-area-inset-bottom));
+  border:0;
+  border-radius:0;
+  background:radial-gradient(circle at 48% 44%,rgba(223,255,63,.025),transparent 48%),#000;
+  box-shadow:none;
+  color:rgba(223,255,63,.92);
+  opacity:0;
+  pointer-events:none;
+}
+.journal-live .poem-note-card.red-poem-card { opacity:1; pointer-events:auto; }
+.frequency-close {
+  position:absolute;
+  top:max(12px,env(safe-area-inset-top));
+  right:14px;
+  z-index:8;
+  width:34px;
+  height:34px;
+  border:0;
+  background:transparent;
+  color:rgba(223,255,63,.48);
+  font:300 26px/34px Arial,sans-serif;
+  text-align:center;
+  cursor:pointer;
+}
+.poem-note-card.red-poem-card h2 {
+  min-height:70px;
+  margin:3vh 0 0 7vw;
+  color:rgba(223,255,63,.96);
+  font-family:"Reenie Beanie","Bradley Hand",cursive;
+  font-size:clamp(54px,17vw,82px);
+  font-weight:400;
+  line-height:.9;
+  text-shadow:0 0 5px rgba(223,255,63,.48),0 0 18px rgba(223,255,63,.14);
+  transform:rotate(-1.2deg);
+}
+.poem-note-paper.red-poem-paper {
+  position:absolute;
+  left:0;
+  right:0;
+  top:19%;
+  bottom:max(22px,env(safe-area-inset-bottom));
+  overflow:hidden;
+  padding:1vh 5vw 2vh 2vw;
+  border:0;
+  background:transparent;
+  color:rgba(223,255,63,.90);
+  font-family:"Reenie Beanie","Bradley Hand",cursive;
+  font-size:clamp(27px,7.7vw,39px);
+  font-weight:400;
+  line-height:1.03;
+}
 .frequency-stanza {
-  margin: 0 0 24px;
-  opacity: .98;
+  position:absolute;
+  inset:3% 0 auto 0;
+  margin:0;
+  transform:rotate(var(--stanza-tilt));
+  transform-origin:35% 20%;
 }
 .frequency-line {
-  display: block;
-  min-height: 1.02em;
-  white-space: pre-wrap;
-  text-shadow:
-    0 0 4px rgba(223,255,63,.42),
-    0 0 12px rgba(223,255,63,.12);
+  display:block;
+  width:max-content;
+  max-width:90vw;
+  min-height:1.02em;
+  white-space:pre-wrap;
+  text-shadow:0 0 4px rgba(223,255,63,.42),0 0 12px rgba(223,255,63,.12);
 }
 .frequency-line.writing::after {
-  content: "";
-  display: inline-block;
-  width: 2px;
-  height: .78em;
-  margin-left: 2px;
-  background: rgba(223,255,63,.72);
-  box-shadow: 0 0 8px rgba(223,255,63,.45);
-  animation: frequencyPenBlink .56s steps(1,end) infinite;
+  content:"";
+  display:inline-block;
+  width:2px;
+  height:.78em;
+  margin-left:2px;
+  background:rgba(223,255,63,.68);
+  box-shadow:0 0 8px rgba(223,255,63,.38);
+  animation:frequencyPenBlink .56s steps(1,end) infinite;
 }
+.page-entering { animation:frequencyPageIn .38s ease-out both; }
+.poem-note-paper.page-leaving .frequency-stanza,
+.poem-note-paper.page-leaving .red-poem-signature { animation:frequencyPageOut .42s ease-in both; }
 .red-poem-signature {
-  margin: 34px 6px 12px 0 !important;
-  padding: 0;
-  text-align: right;
-  font-size: 1.14em;
-  color: rgba(223,255,63,.94);
+  position:absolute;
+  right:10vw;
+  top:27%;
+  margin:0;
+  font-size:1.25em;
+  transform:rotate(-2deg);
 }
-.frequency-message-sent .red-poem-paper,
-.frequency-message-sent h2 {
-  animation: frequencySignalSettle 7s ease forwards;
-}
-.frequency-overlap-hit {
-  filter:
-    hue-rotate(68deg)
-    saturate(1.8)
-    drop-shadow(0 0 14px rgba(223,255,63,.95)) !important;
-  transform: scale(1.12) !important;
-}
+.frequency-message-sent .red-poem-signature { animation:frequencySignalSettle 7s ease forwards; }
+.frequency-overlap-hit { filter:hue-rotate(68deg) saturate(1.8) drop-shadow(0 0 14px rgba(223,255,63,.95))!important; }
+.frequency-closing { animation:frequencyClose .18s ease forwards; }
 .frequency-bleed-scar {
-  position: fixed;
-  z-index: 39;
-  width: 38px;
-  height: 38px;
-  border-radius: 48% 52% 44% 56%;
-  pointer-events: none;
-  transform: translate(-50%, -50%) rotate(-11deg);
-  background:
-    radial-gradient(circle at 48% 52%, rgba(0,0,0,.98) 0 24%, rgba(20,11,7,.96) 25% 42%, rgba(77,39,16,.34) 54%, transparent 72%);
-  box-shadow:
-    inset 0 0 8px rgba(0,0,0,.98),
-    0 0 9px rgba(120,58,20,.18);
-  opacity: .82;
+  position:absolute;
+  z-index:39;
+  width:38px;
+  height:38px;
+  border-radius:48% 52% 44% 56%;
+  pointer-events:none;
+  transform:translate(-50%,-50%) rotate(-11deg);
+  background:radial-gradient(circle at 48% 52%,rgba(0,0,0,.98) 0 24%,rgba(20,11,7,.96) 25% 42%,rgba(77,39,16,.34) 54%,transparent 72%);
+  box-shadow:inset 0 0 8px rgba(0,0,0,.98),0 0 9px rgba(120,58,20,.18);
+  opacity:.82;
 }
 .frequency-bleed-scar::after {
-  content: "";
-  position: absolute;
-  left: 48%;
-  top: 48%;
-  width: 21px;
-  height: 14px;
-  border: 1px solid rgba(104,52,20,.26);
-  border-radius: 48%;
-  transform: translate(-50%, -50%) rotate(17deg);
+  content:"";
+  position:absolute;
+  left:48%;top:48%;width:21px;height:14px;
+  border:1px solid rgba(104,52,20,.26);
+  border-radius:48%;
+  transform:translate(-50%,-50%) rotate(17deg);
 }
-@keyframes frequencyPenBlink { 50% { opacity: 0; } }
-@keyframes frequencySignalSettle {
-  0%, 12% { opacity: 1; filter: none; }
-  100% { opacity: .86; filter: brightness(.90); }
+@keyframes frequencyFractureSlice {
+  0%{opacity:0;transform:translateX(0) skewX(0);filter:brightness(1);}
+  28%{opacity:.9;transform:translateX(10vw) skewX(-18deg);filter:brightness(2.4);}
+  55%{opacity:.5;transform:translateX(-13vw) skewX(22deg);}
+  100%{opacity:0;transform:translateX(18vw) skewX(-9deg);}
 }
+@keyframes frequencyBlackTakeover { 0%{opacity:0;} 35%{opacity:.58;} 70%{opacity:.92;} 100%{opacity:1;} }
+@keyframes frequencyBreachMessage { 0%,12%{opacity:0;} 20%,62%{opacity:.82;} 69%{opacity:.18;} 76%{opacity:.72;} 100%{opacity:0;} }
+@keyframes frequencyPageIn { from{opacity:0;transform:translateY(9px) rotate(var(--stanza-tilt));filter:blur(1.2px);} to{opacity:1;transform:translateY(0) rotate(var(--stanza-tilt));filter:none;} }
+@keyframes frequencyPageOut { to{opacity:0;transform:translateY(-12px) rotate(-.8deg);filter:blur(2px);} }
+@keyframes frequencyPenBlink { 50%{opacity:0;} }
+@keyframes frequencySignalSettle { 0%,12%{opacity:1;filter:none;} 100%{opacity:.84;filter:brightness(.88);} }
+@keyframes frequencyClose { to{opacity:0;} }
+
 
 /* FIRE BRICK 42 REPAIR — secret flame floats like the heart balloons, not a slinky. */
 .engage.secret-flame {
