@@ -225,6 +225,7 @@ function createSpellLine(text, className = "frequency-spell-line") {
     const isSpace = character === " ";
     glyph.className = isSpace ? "frequency-spell-space" : "frequency-spell-glyph";
     glyph.textContent = isSpace ? "\u00a0" : character;
+    if (!isSpace) glyph.dataset.glyph = character;
 
     const seed = character.charCodeAt(0) + index * 37;
     glyph.style.setProperty("--glyph-tilt", `${((seed % 9) - 4) * 0.22}deg`);
