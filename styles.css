@@ -7287,11 +7287,9 @@ body {
 .frequency-scroll-journal {
   position:absolute;
   inset:0;
-  overflow-y:auto;
-  overflow-x:hidden;
-  -webkit-overflow-scrolling:touch;
-  overscroll-behavior:contain;
-  touch-action:pan-y;
+  overflow:hidden;
+  overscroll-behavior:none;
+  touch-action:none;
   padding:max(26px,env(safe-area-inset-top)) 0 max(38vh,env(safe-area-inset-bottom));
   scrollbar-width:none;
 }
@@ -7355,6 +7353,39 @@ body {
   min-height:1.02em;
   white-space:pre-wrap;
   text-shadow:0 0 4px rgba(223,255,63,.42),0 0 12px rgba(223,255,63,.12);
+}
+
+.frequency-ink-character {
+  display:inline-block;
+  opacity:0;
+  clip-path:inset(0 100% 0 0);
+  transform:translateY(var(--ink-lift)) rotate(var(--ink-tilt)) scaleX(.88);
+  transform-origin:left center;
+  filter:blur(.7px);
+  will-change:clip-path,opacity,transform,filter;
+}
+.frequency-ink-character.ink-drawn {
+  animation:frequencyInkStroke .28s cubic-bezier(.18,.72,.22,1) forwards;
+}
+@keyframes frequencyInkStroke {
+  0% {
+    opacity:.12;
+    clip-path:inset(0 100% 0 0);
+    transform:translateY(var(--ink-lift)) rotate(var(--ink-tilt)) scaleX(.72);
+    filter:blur(1.2px);
+  }
+  54% {
+    opacity:.82;
+    clip-path:inset(0 22% 0 0);
+    transform:translateY(var(--ink-lift)) rotate(var(--ink-tilt)) scaleX(1.03);
+    filter:blur(.25px);
+  }
+  100% {
+    opacity:1;
+    clip-path:inset(0 0 0 0);
+    transform:translateY(var(--ink-lift)) rotate(var(--ink-tilt)) scaleX(1);
+    filter:none;
+  }
 }
 .frequency-line.writing::after {
   content:"";
