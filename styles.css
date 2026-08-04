@@ -7414,15 +7414,47 @@ body {
   right: max(16px, env(safe-area-inset-right));
   top: max(16px, env(safe-area-inset-top));
   z-index: 8;
-  width: 38px;
-  height: 38px;
-  border: 1px solid rgba(154,255,92,.42);
+  width: 40px;
+  height: 40px;
+  border: 2px solid rgba(255,255,255,.92);
   border-radius: 50%;
-  background: rgba(0,0,0,.72);
-  color: rgba(180,255,126,.92);
-  font: 300 27px/1 Arial, sans-serif;
-  box-shadow: 0 0 15px rgba(105,255,54,.18);
+  background: rgba(0,0,0,.84);
+  color: #fff;
+  font: 300 29px/1 Arial, sans-serif;
+  text-shadow:
+    0 0 5px rgba(255,255,255,1),
+    0 0 14px rgba(255,255,255,.78);
+  box-shadow:
+    0 0 0 1px rgba(0,0,0,.95),
+    0 0 12px rgba(255,255,255,.72),
+    0 0 28px rgba(255,255,255,.28);
   cursor: pointer;
+  animation: frequencyCloseFlash .92s steps(1,end) infinite;
+}
+
+@keyframes frequencyCloseFlash {
+  0%, 34%, 100% {
+    opacity: 1;
+    color: #fff;
+    border-color: #fff;
+    filter: brightness(1.25);
+  }
+  35%, 48% {
+    opacity: .18;
+    color: rgba(255,255,255,.36);
+    border-color: rgba(255,255,255,.28);
+    filter: brightness(.6);
+  }
+  49%, 72% {
+    opacity: 1;
+    color: #fff;
+    border-color: #fff;
+    filter: brightness(1.65);
+  }
+  73%, 80% {
+    opacity: .42;
+    filter: brightness(.78);
+  }
 }
 
 .frequency-closing { opacity: 0 !important; }
