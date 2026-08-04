@@ -137,31 +137,32 @@ const RED_POEM_STANZAS = [
   ["Now it flickers like a memory", "that burns when I sleep.", "The crown I had imagined.", "The one I never could keep."]
 ];
 
-const FREQUENCY_LINE_INDENTS = [2, 8, 4, 13, 1, 10, 5, 15, 3, 11, 6, 0, 9, 4, 14, 7];
+const FREQUENCY_LINE_INDENTS = [0, 5, 2, 8, 1, 6, 3, 9, 2, 7, 4, 0, 6, 2, 8, 4];
 
 function ensurePoemNoteOverlay() {
   document.getElementById("poemNoteOverlay")?.remove();
 
   poemNoteOverlay = document.createElement("aside");
-  poemNoteOverlay.className = "poem-note-overlay frequency-bleed-overlay";
+  poemNoteOverlay.className = "frequency-bleed-overlay";
   poemNoteOverlay.id = "poemNoteOverlay";
   poemNoteOverlay.setAttribute("aria-hidden", "true");
   poemNoteOverlay.innerHTML = `
+    <div class="frequency-impact" aria-hidden="true"></div>
     <div class="frequency-takeover" aria-hidden="true">
-      <div class="frequency-snow frequency-snow-a"></div>
-      <div class="frequency-snow frequency-snow-b"></div>
-      <div class="frequency-scratch-field"></div>
-      <div class="frequency-tracking-tear"></div>
-      <div class="frequency-fracture-bars"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
-      <div class="frequency-white-blast"></div>
-      <div class="frequency-blackout"></div>
-      <div class="frequency-breach-message"><strong>WARNING</strong><span>PRIVATE SIGNAL BREACH</span></div>
+      <div class="frequency-static frequency-static-a"></div>
+      <div class="frequency-static frequency-static-b"></div>
+      <div class="frequency-rip frequency-rip-one"></div>
+      <div class="frequency-rip frequency-rip-two"></div>
+      <div class="frequency-flash"></div>
+      <div class="frequency-warning"><strong>DANGER</strong><span>SIGNAL HIJACK IN PROGRESS</span></div>
     </div>
-    <section class="poem-note-card red-poem-card" role="dialog" aria-modal="true" aria-label="Red poem">
+    <section class="frequency-journal" role="dialog" aria-modal="true" aria-label="Red poem">
       <button class="frequency-close" type="button" aria-label="close private signal">×</button>
       <div class="frequency-scroll-journal">
-        <h2><span class="frequency-written-title"></span></h2>
-        <div class="poem-note-paper red-poem-paper" aria-live="off"></div>
+        <div class="frequency-page">
+          <div class="frequency-title" aria-label="Red"></div>
+          <div class="frequency-poem" aria-live="off"></div>
+        </div>
       </div>
     </section>
   `;
@@ -214,82 +215,108 @@ function placeFrequencyBleedScar(rect) {
   screenRoot.appendChild(frequencyBleedScar);
 }
 
-async function writeFrequencyLine(target, text, stanzaIndex, lineIndex, token) {
-  target.replaceChildren();
-  target.classList.add("writing");
-
-  for (let index = 0; index < text.length; index += 1) {
-    if (token !== frequencyBleedRunToken) return false;
-
-    const character = text[index];
-    const ink = document.createElement("span");
-    ink.className = "frequency-ink-character";
-    ink.style.setProperty("--ink-tilt", `${(((index + stanzaIndex + lineIndex) % 7) - 3) * 0.18}deg`);
-    ink.style.setProperty("--ink-lift", `${(((index * 3 + lineIndex) % 5) - 2) * 0.22}px`);
-
-    if (character === " ") {
-      ink.classList.add("frequency-ink-space");
-      ink.innerHTML = "&nbsp;";
-    } else {
-      const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-      svg.classList.add("frequency-ink-svg");
-      svg.setAttribute("viewBox", "0 0 100 120");
-      svg.setAttribute("preserveAspectRatio", "xMinYMid meet");
-      svg.setAttribute("aria-hidden", "true");
-
-      const strokeText = document.createElementNS("http://www.w3.org/2000/svg", "text");
-      strokeText.classList.add("frequency-ink-stroke");
-      strokeText.setAttribute("x", "4");
-      strokeText.setAttribute("y", "94");
-      strokeText.textContent = character;
-
-      const fillText = document.createElementNS("http://www.w3.org/2000/svg", "text");
-      fillText.classList.add("frequency-ink-fill");
-      fillText.setAttribute("x", "4");
-      fillText.setAttribute("y", "94");
-      fillText.textContent = character;
-
-      svg.append(strokeText, fillText);
-      ink.appendChild(svg);
-    }
-
-    target.appendChild(ink);
-    requestAnimationFrame(() => requestAnimationFrame(() => ink.classList.add("ink-drawn")));
-
-    const punctuationPause = /[.…]/.test(character)
-      ? 900
-      : /[,;]/.test(character)
-        ? 610
-        : /[!?]/.test(character)
-          ? 1080
-          : 0;
-    const wordPause = character === " " ? 145 : 0;
-    const handHesitation = ((index + stanzaIndex * 5 + lineIndex * 3) % 8 === 0) ? 210 : 0;
-    const strokeTime = 520 + ((index * 29 + stanzaIndex * 17 + lineIndex * 23) % 260);
-
-    if (!await sleepFrequency(strokeTime + punctuationPause + wordPause + handHesitation, token)) return false;
-  }
-
-  target.classList.remove("writing");
-  return true;
+function createInkCanvas(text, className = "frequency-ink-line") {
+  const canvas = document.createElement("canvas");
+  canvas.className = className;
+  canvas.setAttribute("aria-label", text);
+  canvas.setAttribute("role", "img");
+  return canvas;
 }
 
-async function appendFrequencyStanza(paper, lines, stanzaIndex, token) {
-  const stanza = document.createElement("p");
-  stanza.className = "frequency-stanza continuous-stanza";
-  stanza.style.setProperty("--stanza-tilt", `${((stanzaIndex % 5) - 2) * 0.18}deg`);
+async function drawInkLine(canvas, text, token, options = {}) {
+  if (token !== frequencyBleedRunToken) return false;
+
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  const fontSize = options.fontSize || 34;
+  const font = `${fontSize}px "Reenie Beanie", "Bradley Hand", cursive`;
+  const measure = document.createElement("canvas").getContext("2d");
+  measure.font = font;
+  const cssWidth = Math.min(Math.ceil(measure.measureText(text).width + 26), Math.max(130, window.innerWidth - 52));
+  const cssHeight = Math.ceil(fontSize * 1.65);
+
+  canvas.width = Math.ceil(cssWidth * dpr);
+  canvas.height = Math.ceil(cssHeight * dpr);
+  canvas.style.width = `${cssWidth}px`;
+  canvas.style.height = `${cssHeight}px`;
+
+  const ctx = canvas.getContext("2d");
+  const mask = document.createElement("canvas");
+  mask.width = canvas.width;
+  mask.height = canvas.height;
+  const maskCtx = mask.getContext("2d");
+
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  maskCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  maskCtx.font = font;
+  maskCtx.textBaseline = "middle";
+  maskCtx.fillStyle = "#fff";
+  maskCtx.fillText(text, 8, cssHeight * 0.52);
+
+  const totalMs = Math.max(900, text.length * (options.msPerCharacter || 255));
+  const start = performance.now();
+
+  return new Promise(resolve => {
+    const paint = now => {
+      if (token !== frequencyBleedRunToken || !canvas.isConnected) {
+        resolve(false);
+        return;
+      }
+
+      const progress = Math.min(1, (now - start) / totalMs);
+      const eased = 1 - Math.pow(1 - progress, 2.2);
+      const frontier = 8 + eased * (cssWidth - 12);
+      const wobble = Math.sin(progress * Math.PI * 9) * 2.2;
+
+      ctx.clearRect(0, 0, cssWidth, cssHeight);
+      ctx.save();
+      ctx.drawImage(mask, 0, 0, canvas.width, canvas.height, 0, 0, cssWidth, cssHeight);
+      ctx.globalCompositeOperation = "source-in";
+      const ink = ctx.createLinearGradient(0, 0, cssWidth, 0);
+      ink.addColorStop(0, "rgba(126,255,70,.88)");
+      ink.addColorStop(Math.max(0, eased - .12), "rgba(165,255,96,.98)");
+      ink.addColorStop(Math.min(1, eased + .06), "rgba(88,220,44,.96)");
+      ink.addColorStop(1, "rgba(42,120,25,.86)");
+      ctx.fillStyle = ink;
+      ctx.fillRect(0, 0, frontier, cssHeight);
+      ctx.restore();
+
+      ctx.save();
+      ctx.globalCompositeOperation = "source-atop";
+      ctx.shadowColor = "rgba(145,255,82,.95)";
+      ctx.shadowBlur = 7;
+      ctx.strokeStyle = "rgba(210,255,170,.82)";
+      ctx.lineWidth = 1.1;
+      ctx.beginPath();
+      ctx.moveTo(frontier - 3, cssHeight * .30 + wobble);
+      ctx.quadraticCurveTo(frontier + 3, cssHeight * .52, frontier - 2, cssHeight * .76 - wobble);
+      ctx.stroke();
+      ctx.restore();
+
+      if (progress < 1) {
+        requestAnimationFrame(paint);
+      } else {
+        resolve(true);
+      }
+    };
+    requestAnimationFrame(paint);
+  });
+}
+
+async function appendFrequencyStanza(poem, lines, stanzaIndex, token) {
+  const stanza = document.createElement("section");
+  stanza.className = "frequency-stanza";
   stanza.style.marginLeft = `${FREQUENCY_LINE_INDENTS[stanzaIndex % FREQUENCY_LINE_INDENTS.length]}vw`;
-  paper.appendChild(stanza);
+  stanza.style.setProperty("--stanza-tilt", `${((stanzaIndex % 5) - 2) * .16}deg`);
+  poem.appendChild(stanza);
 
   for (let lineIndex = 0; lineIndex < lines.length; lineIndex += 1) {
-    const line = document.createElement("span");
-    line.className = "frequency-line";
-    line.style.marginLeft = `${FREQUENCY_LINE_INDENTS[(stanzaIndex * 4 + lineIndex) % FREQUENCY_LINE_INDENTS.length] * 0.42}vw`;
-    line.style.transform = `rotate(${(((stanzaIndex + lineIndex * 2) % 7) - 3) * 0.12}deg)`;
+    const text = lines[lineIndex];
+    const line = createInkCanvas(text);
+    line.style.marginLeft = `${FREQUENCY_LINE_INDENTS[(stanzaIndex * 3 + lineIndex) % FREQUENCY_LINE_INDENTS.length] * .32}vw`;
     stanza.appendChild(line);
 
-    if (!await writeFrequencyLine(line, lines[lineIndex], stanzaIndex, lineIndex, token)) return false;
-    if (!await sleepFrequency(220 + ((stanzaIndex + lineIndex) % 4) * 95, token)) return false;
+    if (!await drawInkLine(line, text, token, { msPerCharacter: 265 })) return false;
+    if (!await sleepFrequency(280 + ((stanzaIndex + lineIndex) % 3) * 110, token)) return false;
   }
 
   return true;
@@ -299,32 +326,31 @@ async function runFrequencyBleedWriting(token) {
   const overlay = poemNoteOverlay;
   if (!overlay) return;
 
-  const title = overlay.querySelector(".frequency-written-title");
-  const paper = overlay.querySelector(".red-poem-paper");
-  if (!title || !paper) return;
+  const titleHost = overlay.querySelector(".frequency-title");
+  const poem = overlay.querySelector(".frequency-poem");
+  if (!titleHost || !poem) return;
 
-  if (!await sleepFrequency(2450, token)) return;
+  if (!await sleepFrequency(2550, token)) return;
   overlay.classList.add("journal-live");
 
-  if (!await sleepFrequency(420, token)) return;
-  if (!await writeFrequencyLine(title, "Red", 0, 0, token)) return;
-  if (!await sleepFrequency(760, token)) return;
+  const title = createInkCanvas("Red", "frequency-ink-title");
+  titleHost.appendChild(title);
+  if (!await drawInkLine(title, "Red", token, { fontSize: 52, msPerCharacter: 430 })) return;
+  if (!await sleepFrequency(850, token)) return;
 
   for (let stanzaIndex = 0; stanzaIndex < RED_POEM_STANZAS.length; stanzaIndex += 1) {
-    if (!await appendFrequencyStanza(paper, RED_POEM_STANZAS[stanzaIndex], stanzaIndex, token)) return;
-    if (!await sleepFrequency(900 + (stanzaIndex % 4) * 210, token)) return;
+    if (!await appendFrequencyStanza(poem, RED_POEM_STANZAS[stanzaIndex], stanzaIndex, token)) return;
+    if (!await sleepFrequency(1100 + (stanzaIndex % 4) * 220, token)) return;
   }
 
-  const signature = document.createElement("p");
-  signature.className = "red-poem-signature continuous-stanza";
-  const signatureLine = document.createElement("span");
-  signatureLine.className = "frequency-line";
-  signature.appendChild(signatureLine);
-  paper.appendChild(signature);
+  const signatureWrap = document.createElement("section");
+  signatureWrap.className = "frequency-signature";
+  const signature = createInkCanvas("— jinx");
+  signatureWrap.appendChild(signature);
+  poem.appendChild(signatureWrap);
+  if (!await drawInkLine(signature, "— jinx", token, { msPerCharacter: 330 })) return;
 
-  if (!await writeFrequencyLine(signatureLine, "— jinx", 17, 0, token)) return;
   overlay.classList.add("frequency-message-sent");
-
   if (!await sleepFrequency(7000, token)) return;
   if (token === frequencyBleedRunToken) closePoemNote();
 }
@@ -342,22 +368,27 @@ function openPoemNote(flameNode) {
   if (flameNode?.isConnected) flameNode.classList.add("frequency-overlap-hit");
 
   overlay.setAttribute("aria-hidden", "false");
-  overlay.classList.add("open", "takeover-live");
+  overlay.classList.add("open", "impact-live");
+
+  window.setTimeout(() => {
+    if (token !== frequencyBleedRunToken || !poemNoteOverlay) return;
+    poemNoteOverlay.classList.add("takeover-live");
+  }, 300);
+
+  window.setTimeout(() => {
+    if (token !== frequencyBleedRunToken || !poemNoteOverlay) return;
+    poemNoteOverlay.classList.add("warning-live");
+  }, 900);
 
   window.setTimeout(() => {
     if (token !== frequencyBleedRunToken || !poemNoteOverlay) return;
     poemNoteOverlay.classList.add("black-takeover");
-  }, 1180);
-
-  window.setTimeout(() => {
-    if (token !== frequencyBleedRunToken || !poemNoteOverlay) return;
-    poemNoteOverlay.classList.add("breach-live");
-  }, 1450);
+  }, 1750);
 
   window.setTimeout(() => {
     if (flameNode?.isConnected) flameNode.remove();
     placeFrequencyBleedScar(flameRect);
-  }, 1660);
+  }, 1850);
 
   requestAnimationFrame(() => runFrequencyBleedWriting(token));
 }
