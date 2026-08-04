@@ -7333,10 +7333,25 @@ body {
 
 .frequency-journal {
   z-index: 3;
-  background: #000;
+  background:
+    radial-gradient(circle at 50% 22%, rgba(62,14,3,.16), transparent 31%),
+    radial-gradient(circle at 18% 68%, rgba(43,7,1,.12), transparent 28%),
+    linear-gradient(180deg, #050403 0%, #000 44%, #030100 100%);
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
+}
+.frequency-journal::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: .44;
+  background:
+    repeating-radial-gradient(ellipse at 19% 27%, rgba(255,255,255,.018) 0 1px, transparent 1px 5px),
+    repeating-linear-gradient(107deg, transparent 0 13px, rgba(255,255,255,.012) 14px, transparent 15px 28px),
+    radial-gradient(ellipse at 50% 50%, transparent 0 45%, rgba(0,0,0,.76) 100%);
+  mix-blend-mode: screen;
 }
 .journal-live .frequency-journal {
   opacity: 1;
@@ -7358,18 +7373,31 @@ body {
 .frequency-scroll-journal::-webkit-scrollbar { width: 0; height: 0; }
 
 .frequency-page {
+  position: relative;
   width: 100%;
   min-height: 100%;
   padding: max(76px, env(safe-area-inset-top)) 24px calc(110px + env(safe-area-inset-bottom));
   overflow: visible;
 }
+.frequency-page::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: .54;
+  background:
+    linear-gradient(91deg, transparent 0 9%, rgba(255,72,9,.018) 11%, transparent 13% 74%, rgba(255,32,0,.012) 76%, transparent 79%),
+    repeating-linear-gradient(176deg, transparent 0 42px, rgba(255,255,255,.009) 43px, transparent 45px 88px);
+}
 
 .frequency-title {
+  position: relative;
   min-height: 88px;
   margin: 0 0 18px 2vw;
 }
 
 .frequency-poem {
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 30px;
@@ -7395,30 +7423,21 @@ body {
   width: max-content;
   max-width: calc(100vw - 58px);
   min-height: 1.62em;
-  color: #6f1608;
+  color: #170402;
   font-family: "Reenie Beanie", "Segoe Print", "Bradley Hand", cursive;
-  font-size: clamp(1.18rem, 4.8vw, 1.58rem);
+  font-size: clamp(1.22rem, 5vw, 1.64rem);
   font-weight: 400;
   line-height: 1.46;
-  letter-spacing: .018em;
+  letter-spacing: .012em;
   white-space: nowrap;
-  text-shadow:
-    0 1px 0 rgba(255,92,18,.18),
-    0 0 3px rgba(111,17,2,.46),
-    0 0 10px rgba(48,4,0,.34);
-  filter: contrast(1.24) saturate(1.08);
+  filter: contrast(1.16);
 }
 
 .frequency-spell-title {
   min-height: 1.3em;
-  font-size: clamp(2.9rem, 12.6vw, 4.6rem);
+  font-size: clamp(3rem, 12.8vw, 4.7rem);
   line-height: 1.08;
-  color: #861a08;
-  letter-spacing: .01em;
-  text-shadow:
-    0 1px 0 rgba(255,116,28,.28),
-    0 0 5px rgba(125,18,2,.48),
-    0 0 16px rgba(50,3,0,.38);
+  letter-spacing: 0;
 }
 
 .frequency-spell-glyph,
@@ -7430,129 +7449,146 @@ body {
   transform-origin: 50% 72%;
 }
 
-.frequency-spell-space {
-  width: .34em;
-}
+.frequency-spell-space { width: .34em; }
 
 .frequency-spell-glyph {
+  isolation: isolate;
   opacity: 0;
-  color: #280200;
-  -webkit-text-stroke: 0 transparent;
-  filter: blur(1.8px) brightness(.18) contrast(1.4);
+  color: #060201;
+  -webkit-text-stroke: .45px rgba(0,0,0,.94);
+  text-shadow:
+    -1px -1px 0 rgba(0,0,0,.95),
+    1px 1px 0 rgba(42,9,3,.52),
+    0 2px 2px rgba(0,0,0,.92);
+  filter: blur(1.4px) brightness(.18) contrast(1.8);
   transform:
     translateY(calc(var(--glyph-lift) + 1px))
-    rotate(calc(var(--glyph-tilt) - .5deg))
-    scale(.94);
+    rotate(calc(var(--glyph-tilt) - .45deg))
+    scale(.965);
 }
 
+/* Dark carved trench: the letter itself stays mostly black stone. */
+.frequency-spell-glyph::before,
 .frequency-spell-glyph::after {
   content: attr(data-glyph);
   position: absolute;
   inset: 0;
-  color: transparent;
   pointer-events: none;
-  text-shadow:
-    -1px 0 0 rgba(255,74,8,.22),
-    1px 1px 0 rgba(104,8,0,.34);
+}
+
+/* Molten material below the cut: narrow, irregular and internal—not a halo. */
+.frequency-spell-glyph::before {
+  z-index: -1;
+  color: #ff3a05;
   opacity: 0;
+  clip-path: polygon(
+    calc(var(--fissure-x) - var(--fissure-width)) 0,
+    calc(var(--fissure-x) + var(--fissure-width)) 0,
+    calc(var(--fissure-x) + var(--fissure-width) * .48) 22%,
+    calc(var(--fissure-x) + var(--fissure-width) * .86) 42%,
+    calc(var(--fissure-x) + var(--fissure-width) * .34) 63%,
+    calc(var(--fissure-x) + var(--fissure-width) * .72) 100%,
+    calc(var(--fissure-x) - var(--fissure-width) * .58) 100%,
+    calc(var(--fissure-x) - var(--fissure-width) * .22) 72%,
+    calc(var(--fissure-x) - var(--fissure-width) * .74) 48%,
+    calc(var(--fissure-x) - var(--fissure-width) * .28) 24%
+  );
+  filter: blur(.18px) brightness(.82) saturate(1.2);
+  text-shadow:
+    0 0 1px rgba(255,205,113,.62),
+    0 0 3px rgba(255,71,3,.42);
+  mix-blend-mode: screen;
+}
+
+/* Fresh-cut white-orange core appears only during carving, then dies back. */
+.frequency-spell-glyph::after {
+  z-index: 2;
+  color: #ffd08a;
+  opacity: 0;
+  clip-path: inset(0 45% 0 45%);
+  filter: blur(.15px) brightness(1.18);
+  text-shadow:
+    0 0 1px rgba(255,249,220,.9),
+    0 0 4px rgba(255,117,23,.66),
+    0 0 8px rgba(126,18,0,.34);
   mix-blend-mode: screen;
 }
 
 .frequency-spell-glyph.spell-writing {
-  animation: frequencyGlyphMelt var(--glyph-duration, 210ms) steps(7,end) forwards;
+  animation: frequencyStoneCut var(--glyph-duration, 210ms) cubic-bezier(.18,.68,.2,1) forwards;
 }
-
+.frequency-spell-glyph.spell-writing::before {
+  animation: frequencyMoltenChannel var(--glyph-duration, 210ms) steps(7,end) forwards;
+}
 .frequency-spell-glyph.spell-writing::after {
-  animation: frequencyMagmaFissure var(--glyph-duration, 210ms) steps(6,end) forwards;
+  animation: frequencyHotCore var(--glyph-duration, 210ms) steps(8,end) var(--ember-delay, 0ms) forwards;
 }
 
 .frequency-spell-glyph.spell-written {
   opacity: 1;
-  color: #751304;
-  -webkit-text-stroke: .12px rgba(255,91,16,.18);
-  filter: blur(0) brightness(.82) contrast(1.34) saturate(1.12);
+  color: #120301;
+  -webkit-text-stroke: .45px rgba(0,0,0,.96);
+  filter: blur(0) brightness(.82) contrast(1.55) saturate(.92);
   transform: translateY(var(--glyph-lift)) rotate(var(--glyph-tilt)) scale(1);
   text-shadow:
-    0 -1px 0 rgba(255,82,12,.18),
-    1px 1px 0 rgba(36,0,0,.88),
-    0 0 2px rgba(255,54,6,.22),
-    0 0 8px rgba(74,5,0,.26);
+    -1px -1px 0 rgba(0,0,0,.98),
+    1px 0 0 rgba(53,9,2,.68),
+    0 1px 0 rgba(94,18,3,.28),
+    0 2px 2px rgba(0,0,0,.96);
 }
-
-.frequency-spell-glyph.spell-written::after {
-  opacity: .42;
-  color: #ff4a08;
-  clip-path: polygon(0 42%, 18% 35%, 31% 56%, 44% 28%, 59% 63%, 72% 38%, 100% 49%, 100% 58%, 76% 48%, 62% 72%, 45% 39%, 32% 66%, 17% 45%, 0 54%);
-  filter: blur(.25px) brightness(.88);
+.frequency-spell-glyph.spell-written::before {
+  opacity: calc(.42 * var(--glyph-scorch));
+  color: #ff3b05;
+  filter: blur(.12px) brightness(.76) saturate(1.1);
   text-shadow:
-    0 0 1px rgba(255,176,70,.48),
-    0 0 4px rgba(255,44,0,.34);
+    0 0 1px rgba(255,190,79,.48),
+    0 0 3px rgba(255,55,0,.32);
 }
+.frequency-spell-glyph.spell-written::after { opacity: 0; }
 
-@keyframes frequencyGlyphMelt {
+@keyframes frequencyStoneCut {
   0% {
     opacity: 0;
-    color: #090000;
-    filter: blur(2.2px) brightness(.12) contrast(1.5);
-    transform:
-      translateY(calc(var(--glyph-lift) + 2px))
-      rotate(calc(var(--glyph-tilt) - .8deg))
-      scale(.93);
+    color: #000;
+    filter: blur(1.8px) brightness(.08) contrast(2);
+    transform: translateY(calc(var(--glyph-lift) + 2px)) rotate(calc(var(--glyph-tilt) - .7deg)) scale(.95);
   }
-  18% {
-    opacity: .22;
-    color: #2b0300;
-    filter: blur(1.4px) brightness(.34) contrast(1.5);
-  }
-  41% {
-    opacity: .72;
-    color: #641002;
-    filter: blur(.7px) brightness(.68) contrast(1.42);
-  }
-  58% {
+  20% { opacity: .34; color: #050100; filter: blur(1.1px) brightness(.22) contrast(1.9); }
+  43% { opacity: .86; color: #190401; filter: blur(.45px) brightness(.5) contrast(1.7); }
+  59% {
     opacity: 1;
-    color: #ff5a0a;
-    filter: blur(.25px) brightness(1.26) contrast(1.22);
-    transform: translateY(var(--glyph-lift)) rotate(var(--glyph-tilt)) scale(1.018);
-  }
-  72% {
-    color: #9f2107;
-    filter: blur(.12px) brightness(.92) contrast(1.32);
+    color: #3d0902;
+    filter: blur(.1px) brightness(.9) contrast(1.45);
+    transform: translateY(var(--glyph-lift)) rotate(var(--glyph-tilt)) scale(1.012);
   }
   100% {
     opacity: 1;
-    color: #751304;
-    filter: blur(0) brightness(.82) contrast(1.34) saturate(1.12);
+    color: #120301;
+    filter: blur(0) brightness(.82) contrast(1.55) saturate(.92);
     transform: translateY(var(--glyph-lift)) rotate(var(--glyph-tilt)) scale(1);
   }
 }
 
-@keyframes frequencyMagmaFissure {
-  0%, 20% { opacity: 0; }
-  38% {
-    opacity: .42;
-    color: #7a0a00;
-    filter: blur(.6px) brightness(.75);
+@keyframes frequencyMoltenChannel {
+  0%, 18% { opacity: 0; color: #4b0600; filter: blur(.7px) brightness(.3); }
+  34% { opacity: .42; color: #a91702; filter: blur(.34px) brightness(.62); }
+  52% {
+    opacity: 1;
+    color: #ff9a24;
+    filter: blur(.12px) brightness(1.24) saturate(1.18);
+    text-shadow: 0 0 1px #fff0c4, 0 0 4px rgba(255,80,0,.68);
   }
-  56% {
-    opacity: .96;
-    color: #ffb04a;
-    filter: blur(.15px) brightness(1.34);
-    text-shadow:
-      0 0 1px rgba(255,241,205,.72),
-      0 0 5px rgba(255,64,4,.58),
-      0 0 12px rgba(116,8,0,.34);
-  }
-  74% {
-    opacity: .58;
-    color: #ff4a08;
-    filter: blur(.2px) brightness(.92);
-  }
-  100% {
-    opacity: .42;
-    color: #ff3b05;
-    filter: blur(.25px) brightness(.78);
-  }
+  66% { opacity: .78; color: #ff4a05; filter: blur(.1px) brightness(.96); }
+  82% { opacity: .56; color: #d52702; filter: blur(.12px) brightness(.78); }
+  100% { opacity: .42; color: #ff3b05; filter: blur(.12px) brightness(.76); }
+}
+
+@keyframes frequencyHotCore {
+  0%, 27% { opacity: 0; clip-path: inset(0 49% 100% 49%); }
+  43% { opacity: .72; clip-path: inset(0 46% 58% 46%); }
+  57% { opacity: 1; clip-path: inset(0 43% 18% 43%); }
+  70% { opacity: .44; clip-path: inset(0 45% 0 45%); }
+  100% { opacity: 0; clip-path: inset(0 48% 0 48%); }
 }
 
 .frequency-signature {
@@ -7581,13 +7617,11 @@ body {
   cursor: pointer;
   animation: frequencyCloseFlash 1.08s steps(1,end) infinite;
 }
-
 .frequency-close::before,
 .frequency-close::after {
   content: none !important;
   display: none !important;
 }
-
 @keyframes frequencyCloseFlash {
   0%, 24%, 46%, 100% { opacity: 1; filter: brightness(1.22); }
   25%, 31% { opacity: .12; filter: brightness(.45); }
@@ -7605,8 +7639,7 @@ body {
   height: 22px;
   transform: translate(-50%,-50%) rotate(-13deg);
   border-radius: 45% 56% 42% 61%;
-  background:
-    radial-gradient(ellipse at 50% 48%, #050100 0 24%, #1c0802 38%, rgba(92,35,8,.42) 58%, transparent 75%);
+  background: radial-gradient(ellipse at 50% 48%, #050100 0 24%, #1c0802 38%, rgba(92,35,8,.42) 58%, transparent 75%);
   filter: blur(.25px) drop-shadow(0 0 7px rgba(93,34,8,.36));
   pointer-events: none;
 }
@@ -7620,15 +7653,13 @@ body {
 }
 
 html.frequency-bleed-active,
-html.frequency-bleed-active body {
-  overscroll-behavior: none;
-}
+html.frequency-bleed-active body { overscroll-behavior: none; }
 
 @media (max-width: 430px) {
   .frequency-page { padding-left: 18px; padding-right: 18px; }
   .frequency-stanza,
-  .frequency-ink-line,
-  .frequency-ink-title { max-width: calc(100vw - 42px); }
+  .frequency-spell-line,
+  .frequency-spell-title { max-width: calc(100vw - 42px); }
 }
 
 
