@@ -215,168 +215,49 @@ function placeFrequencyBleedScar(rect) {
   screenRoot.appendChild(frequencyBleedScar);
 }
 
-function createInkCanvas(text, className = "frequency-ink-line") {
-  const canvas = document.createElement("canvas");
-  canvas.className = className;
-  canvas.setAttribute("aria-label", text);
-  canvas.setAttribute("role", "img");
-  return canvas;
-}
+function createSpellLine(text, className = "frequency-spell-line") {
+  const line = document.createElement("div");
+  line.className = className;
+  line.setAttribute("aria-label", text);
 
-
-async function drawInkLine(canvas, text, token, options = {}) {
-  if (token !== frequencyBleedRunToken) return false;
-
-  const dpr = Math.min(window.devicePixelRatio || 1, 2);
-  const fontSize = options.fontSize || 34;
-  const font = `${fontSize}px "Reenie Beanie", "Bradley Hand", cursive`;
-  const measure = document.createElement("canvas").getContext("2d");
-  measure.font = font;
-
-  const glyphs = [...text].map(character => {
-    const width = Math.max(
-      character === " " ? fontSize * .28 : measure.measureText(character).width,
-      2
-    );
-    return { character, width };
+  [...text].forEach((character, index) => {
+    const glyph = document.createElement("span");
+    glyph.className = character === " " ? "frequency-spell-space" : "frequency-spell-glyph";
+    glyph.textContent = character === " " ? "\u00a0" : character;
+    glyph.style.setProperty("--glyph-index", String(index));
+    glyph.style.setProperty("--glyph-tilt", `${((index * 17 + character.charCodeAt(0)) % 7 - 3) * 0.34}deg`);
+    glyph.style.setProperty("--glyph-lift", `${((index * 13 + character.charCodeAt(0)) % 5 - 2) * 0.42}px`);
+    glyph.style.setProperty("--burn-x", `${22 + ((index * 29 + character.charCodeAt(0) * 7) % 58)}%`);
+    glyph.style.setProperty("--burn-y", `${20 + ((index * 19 + character.charCodeAt(0) * 11) % 60)}%`);
+    line.appendChild(glyph);
   });
 
-  const cssWidth = Math.min(
-    Math.ceil(glyphs.reduce((sum, glyph) => sum + glyph.width, 0) + 24),
-    Math.max(130, window.innerWidth - 52)
-  );
-  const cssHeight = Math.ceil(fontSize * 1.72);
+  return line;
+}
 
-  canvas.width = Math.ceil(cssWidth * dpr);
-  canvas.height = Math.ceil(cssHeight * dpr);
-  canvas.style.width = `${cssWidth}px`;
-  canvas.style.height = `${cssHeight}px`;
+async function writeSpellLine(line, token, options = {}) {
+  if (token !== frequencyBleedRunToken || !line?.isConnected) return false;
 
-  const ctx = canvas.getContext("2d");
-  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-  ctx.textBaseline = "middle";
-  ctx.font = font;
+  const glyphs = [...line.querySelectorAll(".frequency-spell-glyph")];
+  const baseDelay = options.msPerCharacter || 190;
 
-  let cursorX = 8;
+  for (let index = 0; index < glyphs.length; index += 1) {
+    if (token !== frequencyBleedRunToken || !line.isConnected) return false;
 
-  for (let glyphIndex = 0; glyphIndex < glyphs.length; glyphIndex += 1) {
-    if (token !== frequencyBleedRunToken || !canvas.isConnected) return false;
+    const glyph = glyphs[index];
+    const character = glyph.textContent || "";
+    const variation = (index * 41 + character.charCodeAt(0) * 13) % 105;
+    const duration = Math.max(160, baseDelay + variation);
 
-    const { character, width } = glyphs[glyphIndex];
+    glyph.style.setProperty("--glyph-duration", `${duration}ms`);
+    glyph.classList.add("spell-writing");
 
-    if (character === " ") {
-      cursorX += width;
-      if (!await sleepFrequency(120 + ((glyphIndex * 17) % 80), token)) return false;
-      continue;
-    }
+    if (!await sleepFrequency(Math.max(72, duration * 0.46), token)) return false;
 
-    const glyphCanvas = document.createElement("canvas");
-    glyphCanvas.width = Math.ceil((width + 18) * dpr);
-    glyphCanvas.height = Math.ceil(cssHeight * dpr);
+    glyph.classList.add("spell-written");
 
-    const glyphCtx = glyphCanvas.getContext("2d");
-    glyphCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    glyphCtx.font = font;
-    glyphCtx.textBaseline = "middle";
-    glyphCtx.fillStyle = "#fff";
-    glyphCtx.fillText(character, 7, cssHeight * .52);
-
-    const revealCanvas = document.createElement("canvas");
-    revealCanvas.width = glyphCanvas.width;
-    revealCanvas.height = glyphCanvas.height;
-    const revealCtx = revealCanvas.getContext("2d");
-    revealCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    revealCtx.lineCap = "round";
-    revealCtx.lineJoin = "round";
-
-    const totalMs = Math.max(
-      260,
-      (options.msPerCharacter || 420) +
-      ((glyphIndex * 47 + character.charCodeAt(0) * 13) % 210)
-    );
-    const start = performance.now();
-    const seed = character.charCodeAt(0) + glyphIndex * 97;
-    const pathCount = 3 + (seed % 3);
-
-    const paths = Array.from({ length: pathCount }, (_, pathIndex) => {
-      const reverse = (seed + pathIndex) % 2 === 0;
-      const startX = reverse ? width + 5 : 4;
-      const endX = reverse ? 3 : width + 7;
-      const yBase = cssHeight * (.24 + ((seed + pathIndex * 23) % 52) / 100);
-      const bend = (((seed * (pathIndex + 3)) % 19) - 9) * .9;
-      return {
-        startX,
-        endX,
-        yBase,
-        bend,
-        phase: pathIndex / pathCount
-      };
-    });
-
-    await new Promise(resolve => {
-      const paintGlyph = now => {
-        if (token !== frequencyBleedRunToken || !canvas.isConnected) {
-          resolve(false);
-          return;
-        }
-
-        const progress = Math.min(1, (now - start) / totalMs);
-        revealCtx.clearRect(0, 0, width + 18, cssHeight);
-
-        paths.forEach((path, pathIndex) => {
-          const local = Math.max(
-            0,
-            Math.min(1, (progress - path.phase * .18) / (1 - path.phase * .18))
-          );
-          if (local <= 0) return;
-
-          const eased = local * local * (3 - 2 * local);
-          const x = path.startX + (path.endX - path.startX) * eased;
-          const y = path.yBase + Math.sin(eased * Math.PI) * path.bend;
-
-          revealCtx.strokeStyle = "rgba(255,255,255,.98)";
-          revealCtx.lineWidth = Math.max(2.4, fontSize * (.10 + pathIndex * .012));
-          revealCtx.shadowColor = "rgba(255,255,255,.85)";
-          revealCtx.shadowBlur = 2.5;
-          revealCtx.beginPath();
-          revealCtx.moveTo(path.startX, path.yBase);
-          revealCtx.quadraticCurveTo(
-            (path.startX + path.endX) * .5,
-            path.yBase + path.bend,
-            x,
-            y
-          );
-          revealCtx.stroke();
-        });
-
-        ctx.save();
-        ctx.translate(cursorX - 7, 0);
-        ctx.drawImage(glyphCanvas, 0, 0, width + 18, cssHeight);
-        ctx.globalCompositeOperation = "destination-in";
-        ctx.drawImage(revealCanvas, 0, 0, width + 18, cssHeight);
-        ctx.restore();
-
-        ctx.save();
-        ctx.globalCompositeOperation = "source-atop";
-        ctx.shadowColor = "rgba(138,255,75,.95)";
-        ctx.shadowBlur = 9;
-        ctx.fillStyle = "rgba(126,255,67,.18)";
-        ctx.fillRect(cursorX - 4, 0, width + 12, cssHeight);
-        ctx.restore();
-
-        if (progress < 1) {
-          requestAnimationFrame(paintGlyph);
-        } else {
-          resolve(true);
-        }
-      };
-
-      requestAnimationFrame(paintGlyph);
-    });
-
-    if (token !== frequencyBleedRunToken) return false;
-    cursorX += width;
-    if (!await sleepFrequency(65 + ((glyphIndex * 29) % 105), token)) return false;
+    const punctuationPause = /[.!?…,]/.test(character) ? 85 : 0;
+    if (!await sleepFrequency(42 + ((index * 23) % 54) + punctuationPause, token)) return false;
   }
 
   return true;
@@ -391,12 +272,12 @@ async function appendFrequencyStanza(poem, lines, stanzaIndex, token) {
 
   for (let lineIndex = 0; lineIndex < lines.length; lineIndex += 1) {
     const text = lines[lineIndex];
-    const line = createInkCanvas(text);
+    const line = createSpellLine(text);
     line.style.marginLeft = `${FREQUENCY_LINE_INDENTS[(stanzaIndex * 3 + lineIndex) % FREQUENCY_LINE_INDENTS.length] * .32}vw`;
     stanza.appendChild(line);
 
-    if (!await drawInkLine(line, text, token, { msPerCharacter: 520 })) return false;
-    if (!await sleepFrequency(280 + ((stanzaIndex + lineIndex) % 3) * 110, token)) return false;
+    if (!await writeSpellLine(line, token, { msPerCharacter: 176 })) return false;
+    if (!await sleepFrequency(205 + ((stanzaIndex + lineIndex) % 3) * 86, token)) return false;
   }
 
   return true;
@@ -410,25 +291,25 @@ async function runFrequencyBleedWriting(token) {
   const poem = overlay.querySelector(".frequency-poem");
   if (!titleHost || !poem) return;
 
-  if (!await sleepFrequency(1450, token)) return;
+  if (!await sleepFrequency(1320, token)) return;
   overlay.classList.add("journal-live");
 
-  const title = createInkCanvas("Red", "frequency-ink-title");
+  const title = createSpellLine("Red", "frequency-spell-title");
   titleHost.appendChild(title);
-  if (!await drawInkLine(title, "Red", token, { fontSize: 52, msPerCharacter: 650 })) return;
-  if (!await sleepFrequency(850, token)) return;
+  if (!await writeSpellLine(title, token, { msPerCharacter: 290 })) return;
+  if (!await sleepFrequency(610, token)) return;
 
   for (let stanzaIndex = 0; stanzaIndex < RED_POEM_STANZAS.length; stanzaIndex += 1) {
     if (!await appendFrequencyStanza(poem, RED_POEM_STANZAS[stanzaIndex], stanzaIndex, token)) return;
-    if (!await sleepFrequency(1100 + (stanzaIndex % 4) * 220, token)) return;
+    if (!await sleepFrequency(760 + (stanzaIndex % 4) * 150, token)) return;
   }
 
   const signatureWrap = document.createElement("section");
   signatureWrap.className = "frequency-signature";
-  const signature = createInkCanvas("— jinx");
+  const signature = createSpellLine("— jinx");
   signatureWrap.appendChild(signature);
   poem.appendChild(signatureWrap);
-  if (!await drawInkLine(signature, "— jinx", token, { msPerCharacter: 330 })) return;
+  if (!await writeSpellLine(signature, token, { msPerCharacter: 205 })) return;
 
   overlay.classList.add("frequency-message-sent");
   if (!await sleepFrequency(7000, token)) return;
