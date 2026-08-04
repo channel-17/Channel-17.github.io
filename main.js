@@ -222,13 +222,14 @@ function createSpellLine(text, className = "frequency-spell-line") {
 
   [...text].forEach((character, index) => {
     const glyph = document.createElement("span");
-    glyph.className = character === " " ? "frequency-spell-space" : "frequency-spell-glyph";
-    glyph.textContent = character === " " ? "\u00a0" : character;
-    glyph.style.setProperty("--glyph-index", String(index));
-    glyph.style.setProperty("--glyph-tilt", `${((index * 17 + character.charCodeAt(0)) % 7 - 3) * 0.34}deg`);
-    glyph.style.setProperty("--glyph-lift", `${((index * 13 + character.charCodeAt(0)) % 5 - 2) * 0.42}px`);
-    glyph.style.setProperty("--burn-x", `${22 + ((index * 29 + character.charCodeAt(0) * 7) % 58)}%`);
-    glyph.style.setProperty("--burn-y", `${20 + ((index * 19 + character.charCodeAt(0) * 11) % 60)}%`);
+    const isSpace = character === " ";
+    glyph.className = isSpace ? "frequency-spell-space" : "frequency-spell-glyph";
+    glyph.textContent = isSpace ? "\u00a0" : character;
+
+    const seed = character.charCodeAt(0) + index * 37;
+    glyph.style.setProperty("--glyph-tilt", `${((seed % 9) - 4) * 0.22}deg`);
+    glyph.style.setProperty("--glyph-lift", `${((seed % 5) - 2) * 0.34}px`);
+    glyph.style.setProperty("--glyph-scorch", `${0.72 + (seed % 5) * 0.07}`);
     line.appendChild(glyph);
   });
 
@@ -239,25 +240,23 @@ async function writeSpellLine(line, token, options = {}) {
   if (token !== frequencyBleedRunToken || !line?.isConnected) return false;
 
   const glyphs = [...line.querySelectorAll(".frequency-spell-glyph")];
-  const baseDelay = options.msPerCharacter || 190;
+  const baseDelay = options.msPerCharacter || 135;
 
   for (let index = 0; index < glyphs.length; index += 1) {
     if (token !== frequencyBleedRunToken || !line.isConnected) return false;
 
     const glyph = glyphs[index];
     const character = glyph.textContent || "";
-    const variation = (index * 41 + character.charCodeAt(0) * 13) % 105;
-    const duration = Math.max(160, baseDelay + variation);
+    const duration = Math.max(150, baseDelay + ((index * 29 + character.charCodeAt(0) * 7) % 90));
 
     glyph.style.setProperty("--glyph-duration", `${duration}ms`);
     glyph.classList.add("spell-writing");
 
-    if (!await sleepFrequency(Math.max(72, duration * 0.46), token)) return false;
-
+    if (!await sleepFrequency(Math.max(68, duration * 0.52), token)) return false;
     glyph.classList.add("spell-written");
 
-    const punctuationPause = /[.!?…,]/.test(character) ? 85 : 0;
-    if (!await sleepFrequency(42 + ((index * 23) % 54) + punctuationPause, token)) return false;
+    const punctuationPause = /[.!?…,]/.test(character) ? 120 : 0;
+    if (!await sleepFrequency(34 + ((index * 17) % 42) + punctuationPause, token)) return false;
   }
 
   return true;
@@ -276,7 +275,7 @@ async function appendFrequencyStanza(poem, lines, stanzaIndex, token) {
     line.style.marginLeft = `${FREQUENCY_LINE_INDENTS[(stanzaIndex * 3 + lineIndex) % FREQUENCY_LINE_INDENTS.length] * .32}vw`;
     stanza.appendChild(line);
 
-    if (!await writeSpellLine(line, token, { msPerCharacter: 176 })) return false;
+    if (!await writeSpellLine(line, token, { msPerCharacter: 132 })) return false;
     if (!await sleepFrequency(205 + ((stanzaIndex + lineIndex) % 3) * 86, token)) return false;
   }
 
@@ -296,7 +295,7 @@ async function runFrequencyBleedWriting(token) {
 
   const title = createSpellLine("Red", "frequency-spell-title");
   titleHost.appendChild(title);
-  if (!await writeSpellLine(title, token, { msPerCharacter: 290 })) return;
+  if (!await writeSpellLine(title, token, { msPerCharacter: 210 })) return;
   if (!await sleepFrequency(610, token)) return;
 
   for (let stanzaIndex = 0; stanzaIndex < RED_POEM_STANZAS.length; stanzaIndex += 1) {
@@ -309,7 +308,7 @@ async function runFrequencyBleedWriting(token) {
   const signature = createSpellLine("— jinx");
   signatureWrap.appendChild(signature);
   poem.appendChild(signatureWrap);
-  if (!await writeSpellLine(signature, token, { msPerCharacter: 205 })) return;
+  if (!await writeSpellLine(signature, token, { msPerCharacter: 148 })) return;
 
   overlay.classList.add("frequency-message-sent");
   if (!await sleepFrequency(7000, token)) return;
