@@ -203,27 +203,25 @@ function resumeWorldAfterFrequencyBleed() {
 }
 
 function placeFrequencyBleedScar(rect) {
-  const screenRoot = document.getElementById("screen");
-  if (!rect || !screenRoot) return;
+  const stainField = document.getElementById("engagementField");
+  if (!rect || !stainField) return;
 
   frequencyBleedScar?.remove();
 
-  const screenRect = screenRoot.getBoundingClientRect();
+  const fieldRect = stainField.getBoundingClientRect();
   frequencyBleedScar = document.createElement("span");
   frequencyBleedScar.className = "frequency-bleed-scar";
   frequencyBleedScar.setAttribute("aria-hidden", "true");
   frequencyBleedScar.innerHTML = `
     <i class="frequency-scar-core"></i>
-    <i class="frequency-scar-rift frequency-scar-rift-a"></i>
-    <i class="frequency-scar-rift frequency-scar-rift-b"></i>
-    <i class="frequency-scar-rift frequency-scar-rift-c"></i>
     <i class="frequency-scar-fleck frequency-scar-fleck-a"></i>
     <i class="frequency-scar-fleck frequency-scar-fleck-b"></i>
-    <i class="frequency-scar-fleck frequency-scar-fleck-c"></i>
   `;
-  frequencyBleedScar.style.left = `${rect.left + rect.width / 2 - screenRect.left}px`;
-  frequencyBleedScar.style.top = `${rect.top + rect.height / 2 - screenRect.top}px`;
-  screenRoot.appendChild(frequencyBleedScar);
+  frequencyBleedScar.style.left = `${rect.left + rect.width / 2 - fieldRect.left}px`;
+  frequencyBleedScar.style.top = `${rect.top + rect.height / 2 - fieldRect.top}px`;
+
+  // First child keeps the permanent heat stain behind every current and future floater.
+  stainField.insertBefore(frequencyBleedScar, stainField.firstChild);
 }
 
 function createSpellLine(text, className = "frequency-spell-line") {
