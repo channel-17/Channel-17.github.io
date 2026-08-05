@@ -2822,6 +2822,13 @@ body {
 
 /* Heart clue becomes its own PNG asset, above every sheet of paper. */
 .engagement-field { z-index: 120 !important; pointer-events: none; }
+.engagement-field .engage.secret-flame {
+  pointer-events: auto !important;
+  touch-action: manipulation !important;
+  cursor: pointer !important;
+  z-index: 130 !important;
+  -webkit-tap-highlight-color: transparent;
+}
 .asset-heart.carl-trigger-heart {
   position: absolute;
   display: block;
