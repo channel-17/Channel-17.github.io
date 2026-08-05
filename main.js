@@ -255,21 +255,60 @@ async function writeSpellLine(line, token, options = {}) {
   const glyphs = [...line.querySelectorAll(".frequency-spell-glyph")];
   const baseDelay = options.msPerCharacter || 135;
 
+  let rhythmDrift = 0;
+
   for (let index = 0; index < glyphs.length; index += 1) {
     if (token !== frequencyBleedRunToken || !line.isConnected) return false;
 
     const glyph = glyphs[index];
     const character = glyph.textContent || "";
-    const duration = Math.max(150, baseDelay + ((index * 29 + character.charCodeAt(0) * 7) % 90));
+    const lowerCharacter = character.toLowerCase();
+
+    rhythmDrift += (Math.random() - 0.5) * 12;
+    rhythmDrift = Math.max(-20, Math.min(28, rhythmDrift));
+
+    const pressure =
+      0.95 +
+      Math.sin(index * 0.72) * 0.045 +
+      (Math.random() - 0.5) * 0.055;
+
+    const horizontalDrift = (Math.random() - 0.5) * 1.15;
+    const verticalDrift = (Math.random() - 0.5) * 1.35;
+    const rotationDrift = (Math.random() - 0.5) * 1.35;
+
+    glyph.style.setProperty("--glyph-pressure", pressure.toFixed(3));
+    glyph.style.setProperty("--glyph-x", `${horizontalDrift.toFixed(2)}px`);
+    glyph.style.setProperty("--glyph-y", `${verticalDrift.toFixed(2)}px`);
+    glyph.style.setProperty("--glyph-rotate", `${rotationDrift.toFixed(2)}deg`);
+
+    let duration =
+      baseDelay +
+      rhythmDrift +
+      Math.random() * 62;
+
+    if (/[mw]/.test(lowerCharacter)) duration += 38;
+    if (/[iljt]/.test(lowerCharacter)) duration -= 12;
+    if (/[A-Z]/.test(character)) duration += 28;
+
+    duration = Math.max(145, duration);
 
     glyph.style.setProperty("--glyph-duration", `${duration}ms`);
     glyph.classList.add("spell-writing");
 
-    if (!await sleepFrequency(Math.max(68, duration * 0.52), token)) return false;
+    if (!await sleepFrequency(Math.max(74, duration * 0.62), token)) return false;
+
     glyph.classList.add("spell-written");
 
-    const punctuationPause = /[.!?…,]/.test(character) ? 120 : 0;
-    if (!await sleepFrequency(34 + ((index * 17) % 42) + punctuationPause, token)) return false;
+    let pause = 28 + Math.random() * 44;
+
+    if (/[mw]/.test(lowerCharacter)) pause += 42;
+    if (/[iljt]/.test(lowerCharacter)) pause -= 8;
+    if (/[,;:]/.test(character)) pause += 115;
+    if (/[.!?…]/.test(character)) pause += 210;
+    if (index > 0 && index % 6 === 0) pause += 35 + Math.random() * 55;
+    if (Math.random() < 0.09) pause += 90 + Math.random() * 90;
+
+    if (!await sleepFrequency(Math.max(18, pause), token)) return false;
   }
 
   return true;
