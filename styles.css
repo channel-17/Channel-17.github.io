@@ -7392,16 +7392,25 @@ body {
   font-size: clamp(2.6rem, 11vw, 4.1rem);
   line-height: 1.08;
   letter-spacing: -.04em;
-}
-.frequency-spell-glyph,
+}.frequency-spell-glyph,
 .frequency-spell-space {
   display: inline-block;
   position: relative;
   flex: 0 0 auto;
-  transform: translateY(var(--glyph-lift)) rotate(var(--glyph-tilt));
-  transform-origin: 50% 72%;
+  transform:
+    translate(
+      var(--glyph-x, 0),
+      calc(var(--glyph-lift) + var(--glyph-y, 0px))
+    )
+    rotate(calc(var(--glyph-tilt) + var(--glyph-rotate, 0deg)))
+    scaleY(var(--glyph-pressure, 1));
+  transform-origin: 18% 76%;
 }
-.frequency-spell-space { width: .29em; }
+
+.frequency-spell-space {
+  width: .29em;
+}
+
 .frequency-spell-glyph {
   opacity: 0;
   color: #351007;
@@ -7409,8 +7418,10 @@ body {
   text-shadow:
     -1px -1px 0 rgba(0,0,0,.94),
     1px 1px 0 rgba(0,0,0,.98);
-  filter: blur(.35px) brightness(.46);
+  filter: blur(.45px) brightness(.4);
+  will-change: opacity, filter, transform;
 }
+
 .frequency-spell-glyph::before,
 .frequency-spell-glyph::after {
   content: attr(data-glyph);
@@ -7418,12 +7429,16 @@ body {
   inset: 0;
   pointer-events: none;
 }
+
 .frequency-spell-glyph::before {
   color: #ff8a26;
   opacity: 0;
   -webkit-text-stroke: .2px rgba(255,192,92,.28);
-  text-shadow: 0 0 1px rgba(255,223,164,.55), 0 0 2px rgba(255,91,13,.22);
+  text-shadow:
+    0 0 1px rgba(255,223,164,.55),
+    0 0 2px rgba(255,91,13,.22);
 }
+
 .frequency-spell-glyph::after {
   z-index: -1;
   color: #100201;
@@ -7431,15 +7446,28 @@ body {
   transform: translate(.6px,.8px);
   -webkit-text-stroke: .7px rgba(0,0,0,.95);
 }
+
 .frequency-spell-glyph.spell-writing {
-  animation: jinxGlyphAppear var(--glyph-duration, 270ms) cubic-bezier(.16,.76,.18,1) forwards;
+  animation:
+    jinxGlyphAppear var(--glyph-duration, 270ms)
+    cubic-bezier(.19,.67,.24,1)
+    forwards;
 }
+
 .frequency-spell-glyph.spell-writing::before {
-  animation: jinxGlyphHeat var(--glyph-duration, 270ms) ease-out forwards;
+  animation:
+    jinxGlyphHeat var(--glyph-duration, 270ms)
+    cubic-bezier(.2,.7,.26,1)
+    forwards;
 }
+
 .frequency-spell-glyph.spell-writing::after {
-  animation: jinxGlyphDepth var(--glyph-duration, 270ms) ease-out forwards;
+  animation:
+    jinxGlyphDepth var(--glyph-duration, 270ms)
+    ease-out
+    forwards;
 }
+
 .frequency-spell-glyph.spell-written {
   opacity: 1;
   color: #9f3b18;
@@ -7451,8 +7479,14 @@ body {
     0 1px 1px rgba(0,0,0,.96),
     0 0 .65px rgba(255,112,28,.22);
 }
-.frequency-spell-glyph.spell-written::before { opacity: 0; }
-.frequency-spell-glyph.spell-written::after { opacity: .9; }
+
+.frequency-spell-glyph.spell-written::before {
+  opacity: 0;
+}
+
+.frequency-spell-glyph.spell-written::after {
+  opacity: .9;
+}
 @keyframes jinxGlyphAppear {
   0% { opacity: 0; color: #1a0502; filter: blur(.6px) brightness(.3); transform: translateY(calc(var(--glyph-lift) + 1px)) rotate(calc(var(--glyph-tilt) - .25deg)) scale(.96); }
   42% { opacity: .92; color: #e15c1a; filter: blur(.08px) brightness(1.02); }
