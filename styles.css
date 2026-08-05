@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Rock+Salt&family=Reenie+Beanie&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Nothing+You+Could+Do&family=Rock+Salt&family=Reenie+Beanie&display=swap");
 
 /* =========================================================
    CHANNEL 17 — CONSERVATIVE CLEANUP PASS
@@ -7422,21 +7422,22 @@ body {
   flex-wrap: nowrap;
   width: max-content;
   max-width: calc(100vw - 48px);
-  min-height: 1.7em;
-  color: #a83a15;
-  font-family: "Reenie Beanie", "Segoe Print", "Bradley Hand", cursive;
-  font-size: clamp(1.52rem, 6.2vw, 2rem);
+  min-height: 1.72em;
+  color: #8f3215;
+  font-family: "Nothing You Could Do", "Reenie Beanie", "Segoe Print", "Bradley Hand", cursive;
+  font-size: clamp(1.58rem, 6.45vw, 2.08rem);
   font-weight: 400;
-  line-height: 1.42;
-  letter-spacing: .018em;
+  line-height: 1.44;
+  letter-spacing: -.012em;
   white-space: nowrap;
 }
 
 .frequency-spell-title {
   min-height: 1.25em;
-  font-size: clamp(3.35rem, 14vw, 5rem);
-  line-height: 1.02;
-  letter-spacing: .01em;
+  font-family: "Rock Salt", "Nothing You Could Do", cursive;
+  font-size: clamp(2.72rem, 11.8vw, 4.3rem);
+  line-height: 1.08;
+  letter-spacing: -.035em;
 }
 
 .frequency-spell-glyph,
@@ -7444,20 +7445,24 @@ body {
   display: inline-block;
   position: relative;
   flex: 0 0 auto;
-  transform: translateY(var(--glyph-lift)) rotate(var(--glyph-tilt));
+  transform:
+    translateY(var(--glyph-lift))
+    rotate(var(--glyph-tilt))
+    scaleX(var(--glyph-scale-x, 1));
   transform-origin: 50% 72%;
 }
 
-.frequency-spell-space { width: .32em; }
+.frequency-spell-space { width: .29em; }
 
 .frequency-spell-glyph {
   opacity: 0;
-  color: #3b1008;
-  -webkit-text-stroke: .22px rgba(255,112,34,.18);
+  color: #2a0904;
+  -webkit-text-stroke: .18px rgba(0,0,0,.96);
   text-shadow:
-    0 1px 0 rgba(0,0,0,.95),
-    0 0 1px rgba(255,118,31,.22);
-  filter: blur(.65px) brightness(.44) contrast(1.35);
+    -1px -1px 0 rgba(0,0,0,.9),
+    1px 1px 0 rgba(0,0,0,.96);
+  filter: blur(.9px) brightness(.34) contrast(1.42);
+  clip-path: circle(0% at var(--glyph-hotspot-x) var(--glyph-hotspot-y));
 }
 
 .frequency-spell-glyph::before,
@@ -7468,88 +7473,117 @@ body {
   pointer-events: none;
 }
 
-/* A narrow white-orange cut passes through the full letter, then cools. */
+/* Freshly exposed molten center. It flashes inside the cut, not around the letter. */
 .frequency-spell-glyph::before {
-  z-index: 1;
-  color: #ffb24f;
+  z-index: 2;
+  color: #ff8a24;
   opacity: 0;
-  clip-path: inset(0 100% 0 0);
+  -webkit-text-stroke: .2px rgba(255,188,86,.35);
   text-shadow:
-    0 0 1px rgba(255,239,196,.78),
-    0 0 3px rgba(255,92,20,.38);
+    0 0 1px rgba(255,231,176,.72),
+    0 0 2px rgba(255,102,20,.34);
+  clip-path: circle(0% at var(--glyph-hotspot-x) var(--glyph-hotspot-y));
 }
 
-/* Dark etched edge stays after the heat dies; no neon halo. */
+/* Cooled charred shoulder of the carved channel. */
 .frequency-spell-glyph::after {
   z-index: -1;
-  color: #170503;
+  color: #120302;
   opacity: 0;
-  transform: translate(.45px, .7px);
-  -webkit-text-stroke: .7px rgba(0,0,0,.88);
+  transform: translate(.55px,.8px);
+  -webkit-text-stroke: .8px rgba(0,0,0,.94);
+  text-shadow: 0 1px 1px rgba(0,0,0,.92);
 }
 
 .frequency-spell-glyph.spell-writing {
-  animation: frequencyReadableCarve var(--glyph-duration, 210ms) cubic-bezier(.2,.7,.16,1) forwards;
+  animation: frequencyGlyphCarve var(--glyph-duration, 290ms) cubic-bezier(.18,.72,.18,1) forwards;
 }
 .frequency-spell-glyph.spell-writing::before {
-  animation: frequencyReadableHeat var(--glyph-duration, 210ms) steps(8,end) forwards;
+  animation: frequencyGlyphHeat var(--glyph-duration, 290ms) cubic-bezier(.2,.75,.18,1) forwards;
 }
 .frequency-spell-glyph.spell-writing::after {
-  animation: frequencyReadableEtch var(--glyph-duration, 210ms) ease-out forwards;
+  animation: frequencyGlyphChar var(--glyph-duration, 290ms) ease-out forwards;
 }
 
 .frequency-spell-glyph.spell-written {
   opacity: 1;
-  color: #a43a17;
-  -webkit-text-stroke: .28px rgba(255,119,35,.18);
+  color: #8e3114;
+  clip-path: circle(150% at var(--glyph-hotspot-x) var(--glyph-hotspot-y));
   filter: none;
+  -webkit-text-stroke: .16px rgba(255,95,24,.12);
   text-shadow:
-    -1px -1px 0 rgba(0,0,0,.86),
-    1px 1px 0 rgba(28,5,2,.92),
-    0 0 1px rgba(255,133,46,.32),
-    0 1px 2px rgba(0,0,0,.9);
+    -1px -1px 0 rgba(0,0,0,.9),
+    1px 1px 0 rgba(18,3,1,.96),
+    0 1px 1px rgba(0,0,0,.95),
+    0 0 .7px rgba(255,116,31,.26);
 }
 .frequency-spell-glyph.spell-written::before { opacity: 0; }
-.frequency-spell-glyph.spell-written::after { opacity: .88; }
+.frequency-spell-glyph.spell-written::after { opacity: .9; }
 
-@keyframes frequencyReadableCarve {
+@keyframes frequencyGlyphCarve {
   0% {
     opacity: 0;
-    color: #160402;
-    filter: blur(1px) brightness(.3);
-    transform: translateY(calc(var(--glyph-lift) + 1.4px)) rotate(calc(var(--glyph-tilt) - .45deg)) scale(.97);
+    color: #150302;
+    clip-path: circle(0% at var(--glyph-hotspot-x) var(--glyph-hotspot-y));
+    filter: blur(1.15px) brightness(.28);
+    transform:
+      translateY(calc(var(--glyph-lift) + 1.2px))
+      rotate(calc(var(--glyph-tilt) - .35deg))
+      scaleX(var(--glyph-scale-x, 1))
+      scale(.975);
   }
-  34% {
-    opacity: .92;
-    color: #d44a16;
-    filter: blur(.2px) brightness(1.05);
+  32% {
+    opacity: .72;
+    color: #ca4314;
+    clip-path: circle(38% at var(--glyph-hotspot-x) var(--glyph-hotspot-y));
+    filter: blur(.35px) brightness(.92);
   }
-  58% {
+  64% {
     opacity: 1;
-    color: #ff7a25;
-    filter: blur(0) brightness(1.15);
-    transform: translateY(var(--glyph-lift)) rotate(var(--glyph-tilt)) scale(1.012);
+    color: #f06a1e;
+    clip-path: circle(92% at var(--glyph-hotspot-x) var(--glyph-hotspot-y));
+    filter: blur(0) brightness(1.06);
   }
   100% {
     opacity: 1;
-    color: #a43a17;
+    color: #8e3114;
+    clip-path: circle(150% at var(--glyph-hotspot-x) var(--glyph-hotspot-y));
     filter: none;
-    transform: translateY(var(--glyph-lift)) rotate(var(--glyph-tilt)) scale(1);
+    transform:
+      translateY(var(--glyph-lift))
+      rotate(var(--glyph-tilt))
+      scaleX(var(--glyph-scale-x, 1))
+      scale(1);
   }
 }
 
-@keyframes frequencyReadableHeat {
-  0% { opacity: 0; clip-path: inset(0 100% 0 0); }
-  24% { opacity: .72; clip-path: inset(0 72% 0 0); }
-  52% { opacity: 1; clip-path: inset(0 20% 0 0); }
-  72% { opacity: .46; clip-path: inset(0 0 0 0); }
-  100% { opacity: 0; clip-path: inset(0 0 0 0); }
+@keyframes frequencyGlyphHeat {
+  0% {
+    opacity: 0;
+    clip-path: circle(0% at var(--glyph-hotspot-x) var(--glyph-hotspot-y));
+  }
+  24% {
+    opacity: .46;
+    clip-path: circle(25% at var(--glyph-hotspot-x) var(--glyph-hotspot-y));
+  }
+  52% {
+    opacity: .92;
+    clip-path: circle(76% at var(--glyph-hotspot-x) var(--glyph-hotspot-y));
+  }
+  76% {
+    opacity: .34;
+    clip-path: circle(130% at var(--glyph-hotspot-x) var(--glyph-hotspot-y));
+  }
+  100% {
+    opacity: 0;
+    clip-path: circle(150% at var(--glyph-hotspot-x) var(--glyph-hotspot-y));
+  }
 }
 
-@keyframes frequencyReadableEtch {
-  0%, 28% { opacity: 0; }
-  58% { opacity: .46; }
-  100% { opacity: .88; }
+@keyframes frequencyGlyphChar {
+  0%, 34% { opacity: 0; }
+  66% { opacity: .46; }
+  100% { opacity: .9; }
 }
 
 .frequency-signature {
@@ -7596,41 +7630,49 @@ body {
 .frequency-bleed-scar {
   position: absolute;
   z-index: 0;
-  width: 27px;
-  height: 19px;
-  transform: translate(-50%, -50%) rotate(-13deg) skewX(-8deg);
+  width: 19px;
+  height: 12px;
+  transform: translate(-50%, -50%) rotate(-11deg) skewX(-7deg);
   pointer-events: none;
   overflow: visible;
-  opacity: .46;
-  filter: saturate(.82);
+  opacity: .28;
+  filter: saturate(.68) contrast(.9);
 }
 
 .frequency-scar-core {
   position: absolute;
   inset: 1px;
   display: block;
-  border-radius: 61% 39% 54% 46% / 43% 58% 42% 57%;
+  border-radius: 64% 36% 58% 42% / 46% 61% 39% 54%;
   background:
-    radial-gradient(ellipse at 42% 49%, rgba(181,74,18,.42) 0 18%, rgba(118,41,10,.28) 39%, rgba(65,20,5,.16) 63%, transparent 82%),
-    linear-gradient(112deg, transparent 3%, rgba(191,78,18,.20) 34%, rgba(89,27,7,.17) 68%, transparent 94%);
+    radial-gradient(ellipse at 44% 52%,
+      rgba(155,61,18,.28) 0 14%,
+      rgba(107,38,11,.20) 34%,
+      rgba(56,17,5,.11) 58%,
+      transparent 82%),
+    linear-gradient(108deg,
+      transparent 5%,
+      rgba(178,72,21,.13) 31%,
+      rgba(85,27,8,.11) 67%,
+      transparent 95%);
   box-shadow:
-    inset 2px 0 3px rgba(224,111,28,.10),
-    inset -2px -1px 4px rgba(28,7,2,.18);
-  transform: scaleX(1.12) scaleY(.78);
-  filter: blur(.7px);
+    inset 1px 0 2px rgba(210,92,24,.07),
+    inset -1px -1px 3px rgba(24,6,2,.13);
+  transform: scaleX(1.08) scaleY(.72);
+  filter: blur(.55px);
 }
 
 .frequency-scar-core::before {
   content: "";
   position: absolute;
   left: 3px;
-  top: 5px;
-  width: 17px;
-  height: 7px;
-  border-radius: 66% 34% 58% 42%;
-  background: rgba(211,91,20,.12);
-  transform: rotate(-8deg);
-  filter: blur(1.2px);
+  top: 4px;
+  width: 11px;
+  height: 4px;
+  border-radius: 67% 33% 57% 43%;
+  background: rgba(186,73,19,.075);
+  transform: rotate(-7deg);
+  filter: blur(.8px);
 }
 
 .frequency-scar-core::after,
@@ -7639,14 +7681,14 @@ body {
 .frequency-scar-fleck {
   position: absolute;
   display: block;
-  width: 2px;
-  height: 1.5px;
+  width: 1.4px;
+  height: 1px;
   border-radius: 60% 40%;
-  background: rgba(119,39,9,.24);
-  filter: blur(.25px);
+  background: rgba(98,31,9,.16);
+  filter: blur(.18px);
 }
-.frequency-scar-fleck-a { left: -1px; top: 6px; transform: rotate(18deg); }
-.frequency-scar-fleck-b { right: 0; bottom: 3px; transform: rotate(-21deg); }
+.frequency-scar-fleck-a { left: 0; top: 4px; transform: rotate(17deg); }
+.frequency-scar-fleck-b { right: 1px; bottom: 2px; transform: rotate(-18deg); }
 
 html.frequency-bleed-active,
 html.frequency-bleed-active body { overscroll-behavior: none; }
