@@ -962,6 +962,9 @@ function spawnEngagement(options = {}) {
     item.setAttribute("role", "button");
     item.setAttribute("aria-label", "secret poem note");
     item.tabIndex = 0;
+    item.style.pointerEvents = "auto";
+    item.style.touchAction = "manipulation";
+    item.style.cursor = "pointer";
     item.addEventListener("click", (event) => {
       event.stopPropagation();
       openPoemNote(item);
