@@ -7634,32 +7634,31 @@ body {
 
 .frequency-bleed-scar {
   position: absolute;
-  z-index: 145;
-  width: 52px;
-  height: 44px;
-  transform: translate(-50%, -50%) rotate(-8deg);
+  z-index: 119;
+  width: 64px;
+  height: 48px;
+  transform: translate(-50%, -50%) rotate(-11deg) skewX(-5deg);
   pointer-events: none;
   overflow: visible;
-  opacity: .9;
-  filter: blur(.15px);
-  mix-blend-mode: screen;
+  opacity: .78;
+  filter: blur(.35px);
+  mix-blend-mode: normal;
 }
 
 .frequency-scar-core {
   position: absolute;
-  inset: 4px 3px 5px 4px;
+  inset: 2px 1px 3px 2px;
   display: block;
-  border-radius: 48% 37% 53% 42% / 41% 55% 38% 58%;
+  border-radius: 57% 43% 61% 39% / 42% 58% 37% 63%;
   background:
-    radial-gradient(ellipse at 38% 44%, rgba(255,184,68,.44) 0 8%, rgba(235,104,25,.34) 20%, rgba(123,43,12,.20) 43%, rgba(41,12,5,.10) 65%, transparent 78%),
-    radial-gradient(ellipse at 67% 58%, rgba(255,112,24,.24) 0 7%, rgba(111,34,10,.17) 29%, transparent 66%),
-    radial-gradient(ellipse at 48% 48%, rgba(93,29,8,.18), transparent 72%);
+    radial-gradient(ellipse at 34% 48%, rgba(176,72,18,.34) 0 15%, rgba(126,45,10,.26) 31%, rgba(73,24,6,.18) 52%, rgba(30,9,3,.10) 67%, transparent 82%),
+    radial-gradient(ellipse at 67% 42%, rgba(206,94,24,.23) 0 9%, rgba(118,38,9,.18) 29%, transparent 64%),
+    linear-gradient(108deg, transparent 0 9%, rgba(94,31,8,.14) 22%, rgba(187,77,18,.22) 47%, rgba(79,24,6,.14) 72%, transparent 91%);
   box-shadow:
-    0 0 5px rgba(255,118,23,.12),
-    0 0 12px rgba(114,38,9,.10),
-    inset 2px -1px 4px rgba(255,163,48,.08);
-  transform: skewX(-8deg) scaleX(1.08);
-  filter: blur(1.25px);
+    inset 5px 1px 8px rgba(235,118,30,.08),
+    inset -7px -2px 10px rgba(38,9,2,.14);
+  transform: scaleX(1.12) scaleY(.86);
+  filter: blur(2.2px) saturate(.88);
 }
 
 .frequency-scar-core::before,
@@ -7671,26 +7670,27 @@ body {
 }
 
 .frequency-scar-core::before {
-  left: 5px;
-  top: 9px;
-  width: 35px;
-  height: 18px;
-  border-radius: 59% 41% 63% 37% / 46% 57% 43% 54%;
+  left: -3px;
+  top: 8px;
+  width: 49px;
+  height: 24px;
+  border-radius: 63% 37% 56% 44% / 45% 62% 38% 55%;
   background:
-    radial-gradient(ellipse at 45% 48%, rgba(255,198,87,.22), rgba(255,106,25,.17) 31%, rgba(83,21,5,.08) 63%, transparent 80%);
-  transform: rotate(-14deg) skewX(10deg);
-  filter: blur(2px);
+    radial-gradient(ellipse at 40% 50%, rgba(146,55,13,.22) 0 20%, rgba(84,27,6,.14) 48%, transparent 78%);
+  transform: rotate(-7deg) skewX(12deg);
+  filter: blur(3px);
 }
 
 .frequency-scar-core::after {
-  left: 10px;
-  top: 3px;
-  width: 24px;
-  height: 31px;
-  border-radius: 42% 58% 39% 61% / 61% 34% 66% 39%;
-  background: linear-gradient(118deg, transparent 8%, rgba(255,150,42,.16) 38%, rgba(93,27,7,.11) 62%, transparent 84%);
-  transform: rotate(24deg);
-  filter: blur(2.4px);
+  right: -4px;
+  bottom: 6px;
+  width: 34px;
+  height: 18px;
+  border-radius: 42% 58% 67% 33% / 63% 41% 59% 37%;
+  background:
+    radial-gradient(ellipse at 52% 46%, rgba(217,104,27,.16) 0 18%, rgba(100,31,7,.12) 48%, transparent 79%);
+  transform: rotate(17deg);
+  filter: blur(3.4px);
 }
 
 .frequency-scar-rift {
@@ -7702,14 +7702,14 @@ body {
   display: block;
   width: 5px;
   height: 3px;
-  border-radius: 58% 42% 63% 37%;
-  background: rgba(113,39,12,.26);
-  box-shadow: 0 0 4px rgba(255,104,24,.08);
-  filter: blur(.8px);
+  border-radius: 67% 33% 58% 42%;
+  background: rgba(103,34,9,.18);
+  box-shadow: none;
+  filter: blur(1px);
 }
-.frequency-scar-fleck-a { left: 0; top: 11px; transform: rotate(18deg) scale(.9); }
-.frequency-scar-fleck-b { right: 1px; top: 28px; transform: rotate(-24deg) scale(.7); }
-.frequency-scar-fleck-c { left: 12px; bottom: 0; transform: rotate(42deg) scale(.62); }
+.frequency-scar-fleck-a { left: 2px; top: 13px; transform: rotate(22deg) scale(.8); }
+.frequency-scar-fleck-b { right: 0; top: 29px; transform: rotate(-19deg) scale(.65); }
+.frequency-scar-fleck-c { left: 17px; bottom: 0; transform: rotate(37deg) scale(.55); }
 
 html.frequency-bleed-active,
 html.frequency-bleed-active body { overscroll-behavior: none; }
