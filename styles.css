@@ -7421,23 +7421,22 @@ body {
   align-items: baseline;
   flex-wrap: nowrap;
   width: max-content;
-  max-width: calc(100vw - 58px);
-  min-height: 1.62em;
-  color: #170402;
+  max-width: calc(100vw - 48px);
+  min-height: 1.7em;
+  color: #a83a15;
   font-family: "Reenie Beanie", "Segoe Print", "Bradley Hand", cursive;
-  font-size: clamp(1.22rem, 5vw, 1.64rem);
+  font-size: clamp(1.52rem, 6.2vw, 2rem);
   font-weight: 400;
-  line-height: 1.46;
-  letter-spacing: .012em;
+  line-height: 1.42;
+  letter-spacing: .018em;
   white-space: nowrap;
-  filter: contrast(1.16);
 }
 
 .frequency-spell-title {
-  min-height: 1.3em;
-  font-size: clamp(3rem, 12.8vw, 4.7rem);
-  line-height: 1.08;
-  letter-spacing: 0;
+  min-height: 1.25em;
+  font-size: clamp(3.35rem, 14vw, 5rem);
+  line-height: 1.02;
+  letter-spacing: .01em;
 }
 
 .frequency-spell-glyph,
@@ -7449,25 +7448,18 @@ body {
   transform-origin: 50% 72%;
 }
 
-.frequency-spell-space { width: .34em; }
+.frequency-spell-space { width: .32em; }
 
 .frequency-spell-glyph {
-  isolation: isolate;
   opacity: 0;
-  color: #060201;
-  -webkit-text-stroke: .45px rgba(0,0,0,.94);
+  color: #3b1008;
+  -webkit-text-stroke: .22px rgba(255,112,34,.18);
   text-shadow:
-    -1px -1px 0 rgba(0,0,0,.95),
-    1px 1px 0 rgba(42,9,3,.52),
-    0 2px 2px rgba(0,0,0,.92);
-  filter: blur(1.4px) brightness(.18) contrast(1.8);
-  transform:
-    translateY(calc(var(--glyph-lift) + 1px))
-    rotate(calc(var(--glyph-tilt) - .45deg))
-    scale(.965);
+    0 1px 0 rgba(0,0,0,.95),
+    0 0 1px rgba(255,118,31,.22);
+  filter: blur(.65px) brightness(.44) contrast(1.35);
 }
 
-/* Dark carved trench: the letter itself stays mostly black stone. */
 .frequency-spell-glyph::before,
 .frequency-spell-glyph::after {
   content: attr(data-glyph);
@@ -7476,119 +7468,88 @@ body {
   pointer-events: none;
 }
 
-/* Molten material below the cut: narrow, irregular and internal—not a halo. */
+/* A narrow white-orange cut passes through the full letter, then cools. */
 .frequency-spell-glyph::before {
-  z-index: -1;
-  color: #ff3a05;
+  z-index: 1;
+  color: #ffb24f;
   opacity: 0;
-  clip-path: polygon(
-    calc(var(--fissure-x) - var(--fissure-width)) 0,
-    calc(var(--fissure-x) + var(--fissure-width)) 0,
-    calc(var(--fissure-x) + var(--fissure-width) * .48) 22%,
-    calc(var(--fissure-x) + var(--fissure-width) * .86) 42%,
-    calc(var(--fissure-x) + var(--fissure-width) * .34) 63%,
-    calc(var(--fissure-x) + var(--fissure-width) * .72) 100%,
-    calc(var(--fissure-x) - var(--fissure-width) * .58) 100%,
-    calc(var(--fissure-x) - var(--fissure-width) * .22) 72%,
-    calc(var(--fissure-x) - var(--fissure-width) * .74) 48%,
-    calc(var(--fissure-x) - var(--fissure-width) * .28) 24%
-  );
-  filter: blur(.18px) brightness(.82) saturate(1.2);
+  clip-path: inset(0 100% 0 0);
   text-shadow:
-    0 0 1px rgba(255,205,113,.62),
-    0 0 3px rgba(255,71,3,.42);
-  mix-blend-mode: screen;
+    0 0 1px rgba(255,239,196,.78),
+    0 0 3px rgba(255,92,20,.38);
 }
 
-/* Fresh-cut white-orange core appears only during carving, then dies back. */
+/* Dark etched edge stays after the heat dies; no neon halo. */
 .frequency-spell-glyph::after {
-  z-index: 2;
-  color: #ffd08a;
+  z-index: -1;
+  color: #170503;
   opacity: 0;
-  clip-path: inset(0 45% 0 45%);
-  filter: blur(.15px) brightness(1.18);
-  text-shadow:
-    0 0 1px rgba(255,249,220,.9),
-    0 0 4px rgba(255,117,23,.66),
-    0 0 8px rgba(126,18,0,.34);
-  mix-blend-mode: screen;
+  transform: translate(.45px, .7px);
+  -webkit-text-stroke: .7px rgba(0,0,0,.88);
 }
 
 .frequency-spell-glyph.spell-writing {
-  animation: frequencyStoneCut var(--glyph-duration, 210ms) cubic-bezier(.18,.68,.2,1) forwards;
+  animation: frequencyReadableCarve var(--glyph-duration, 210ms) cubic-bezier(.2,.7,.16,1) forwards;
 }
 .frequency-spell-glyph.spell-writing::before {
-  animation: frequencyMoltenChannel var(--glyph-duration, 210ms) steps(7,end) forwards;
+  animation: frequencyReadableHeat var(--glyph-duration, 210ms) steps(8,end) forwards;
 }
 .frequency-spell-glyph.spell-writing::after {
-  animation: frequencyHotCore var(--glyph-duration, 210ms) steps(8,end) var(--ember-delay, 0ms) forwards;
+  animation: frequencyReadableEtch var(--glyph-duration, 210ms) ease-out forwards;
 }
 
 .frequency-spell-glyph.spell-written {
   opacity: 1;
-  color: #120301;
-  -webkit-text-stroke: .45px rgba(0,0,0,.96);
-  filter: blur(0) brightness(.82) contrast(1.55) saturate(.92);
-  transform: translateY(var(--glyph-lift)) rotate(var(--glyph-tilt)) scale(1);
+  color: #a43a17;
+  -webkit-text-stroke: .28px rgba(255,119,35,.18);
+  filter: none;
   text-shadow:
-    -1px -1px 0 rgba(0,0,0,.98),
-    1px 0 0 rgba(53,9,2,.68),
-    0 1px 0 rgba(94,18,3,.28),
-    0 2px 2px rgba(0,0,0,.96);
+    -1px -1px 0 rgba(0,0,0,.86),
+    1px 1px 0 rgba(28,5,2,.92),
+    0 0 1px rgba(255,133,46,.32),
+    0 1px 2px rgba(0,0,0,.9);
 }
-.frequency-spell-glyph.spell-written::before {
-  opacity: calc(.42 * var(--glyph-scorch));
-  color: #ff3b05;
-  filter: blur(.12px) brightness(.76) saturate(1.1);
-  text-shadow:
-    0 0 1px rgba(255,190,79,.48),
-    0 0 3px rgba(255,55,0,.32);
-}
-.frequency-spell-glyph.spell-written::after { opacity: 0; }
+.frequency-spell-glyph.spell-written::before { opacity: 0; }
+.frequency-spell-glyph.spell-written::after { opacity: .88; }
 
-@keyframes frequencyStoneCut {
+@keyframes frequencyReadableCarve {
   0% {
     opacity: 0;
-    color: #000;
-    filter: blur(1.8px) brightness(.08) contrast(2);
-    transform: translateY(calc(var(--glyph-lift) + 2px)) rotate(calc(var(--glyph-tilt) - .7deg)) scale(.95);
+    color: #160402;
+    filter: blur(1px) brightness(.3);
+    transform: translateY(calc(var(--glyph-lift) + 1.4px)) rotate(calc(var(--glyph-tilt) - .45deg)) scale(.97);
   }
-  20% { opacity: .34; color: #050100; filter: blur(1.1px) brightness(.22) contrast(1.9); }
-  43% { opacity: .86; color: #190401; filter: blur(.45px) brightness(.5) contrast(1.7); }
-  59% {
+  34% {
+    opacity: .92;
+    color: #d44a16;
+    filter: blur(.2px) brightness(1.05);
+  }
+  58% {
     opacity: 1;
-    color: #3d0902;
-    filter: blur(.1px) brightness(.9) contrast(1.45);
+    color: #ff7a25;
+    filter: blur(0) brightness(1.15);
     transform: translateY(var(--glyph-lift)) rotate(var(--glyph-tilt)) scale(1.012);
   }
   100% {
     opacity: 1;
-    color: #120301;
-    filter: blur(0) brightness(.82) contrast(1.55) saturate(.92);
+    color: #a43a17;
+    filter: none;
     transform: translateY(var(--glyph-lift)) rotate(var(--glyph-tilt)) scale(1);
   }
 }
 
-@keyframes frequencyMoltenChannel {
-  0%, 18% { opacity: 0; color: #4b0600; filter: blur(.7px) brightness(.3); }
-  34% { opacity: .42; color: #a91702; filter: blur(.34px) brightness(.62); }
-  52% {
-    opacity: 1;
-    color: #ff9a24;
-    filter: blur(.12px) brightness(1.24) saturate(1.18);
-    text-shadow: 0 0 1px #fff0c4, 0 0 4px rgba(255,80,0,.68);
-  }
-  66% { opacity: .78; color: #ff4a05; filter: blur(.1px) brightness(.96); }
-  82% { opacity: .56; color: #d52702; filter: blur(.12px) brightness(.78); }
-  100% { opacity: .42; color: #ff3b05; filter: blur(.12px) brightness(.76); }
+@keyframes frequencyReadableHeat {
+  0% { opacity: 0; clip-path: inset(0 100% 0 0); }
+  24% { opacity: .72; clip-path: inset(0 72% 0 0); }
+  52% { opacity: 1; clip-path: inset(0 20% 0 0); }
+  72% { opacity: .46; clip-path: inset(0 0 0 0); }
+  100% { opacity: 0; clip-path: inset(0 0 0 0); }
 }
 
-@keyframes frequencyHotCore {
-  0%, 27% { opacity: 0; clip-path: inset(0 49% 100% 49%); }
-  43% { opacity: .72; clip-path: inset(0 46% 58% 46%); }
-  57% { opacity: 1; clip-path: inset(0 43% 18% 43%); }
-  70% { opacity: .44; clip-path: inset(0 45% 0 45%); }
-  100% { opacity: 0; clip-path: inset(0 48% 0 48%); }
+@keyframes frequencyReadableEtch {
+  0%, 28% { opacity: 0; }
+  58% { opacity: .46; }
+  100% { opacity: .88; }
 }
 
 .frequency-signature {
@@ -7634,82 +7595,58 @@ body {
 
 .frequency-bleed-scar {
   position: absolute;
-  z-index: 119;
-  width: 64px;
-  height: 48px;
-  transform: translate(-50%, -50%) rotate(-11deg) skewX(-5deg);
+  z-index: 0;
+  width: 27px;
+  height: 19px;
+  transform: translate(-50%, -50%) rotate(-13deg) skewX(-8deg);
   pointer-events: none;
   overflow: visible;
-  opacity: .78;
-  filter: blur(.35px);
-  mix-blend-mode: normal;
+  opacity: .46;
+  filter: saturate(.82);
 }
 
 .frequency-scar-core {
   position: absolute;
-  inset: 2px 1px 3px 2px;
+  inset: 1px;
   display: block;
-  border-radius: 57% 43% 61% 39% / 42% 58% 37% 63%;
+  border-radius: 61% 39% 54% 46% / 43% 58% 42% 57%;
   background:
-    radial-gradient(ellipse at 34% 48%, rgba(176,72,18,.34) 0 15%, rgba(126,45,10,.26) 31%, rgba(73,24,6,.18) 52%, rgba(30,9,3,.10) 67%, transparent 82%),
-    radial-gradient(ellipse at 67% 42%, rgba(206,94,24,.23) 0 9%, rgba(118,38,9,.18) 29%, transparent 64%),
-    linear-gradient(108deg, transparent 0 9%, rgba(94,31,8,.14) 22%, rgba(187,77,18,.22) 47%, rgba(79,24,6,.14) 72%, transparent 91%);
+    radial-gradient(ellipse at 42% 49%, rgba(181,74,18,.42) 0 18%, rgba(118,41,10,.28) 39%, rgba(65,20,5,.16) 63%, transparent 82%),
+    linear-gradient(112deg, transparent 3%, rgba(191,78,18,.20) 34%, rgba(89,27,7,.17) 68%, transparent 94%);
   box-shadow:
-    inset 5px 1px 8px rgba(235,118,30,.08),
-    inset -7px -2px 10px rgba(38,9,2,.14);
-  transform: scaleX(1.12) scaleY(.86);
-  filter: blur(2.2px) saturate(.88);
-}
-
-.frequency-scar-core::before,
-.frequency-scar-core::after {
-  content: "";
-  position: absolute;
-  display: block;
-  pointer-events: none;
+    inset 2px 0 3px rgba(224,111,28,.10),
+    inset -2px -1px 4px rgba(28,7,2,.18);
+  transform: scaleX(1.12) scaleY(.78);
+  filter: blur(.7px);
 }
 
 .frequency-scar-core::before {
-  left: -3px;
-  top: 8px;
-  width: 49px;
-  height: 24px;
-  border-radius: 63% 37% 56% 44% / 45% 62% 38% 55%;
-  background:
-    radial-gradient(ellipse at 40% 50%, rgba(146,55,13,.22) 0 20%, rgba(84,27,6,.14) 48%, transparent 78%);
-  transform: rotate(-7deg) skewX(12deg);
-  filter: blur(3px);
+  content: "";
+  position: absolute;
+  left: 3px;
+  top: 5px;
+  width: 17px;
+  height: 7px;
+  border-radius: 66% 34% 58% 42%;
+  background: rgba(211,91,20,.12);
+  transform: rotate(-8deg);
+  filter: blur(1.2px);
 }
 
-.frequency-scar-core::after {
-  right: -4px;
-  bottom: 6px;
-  width: 34px;
-  height: 18px;
-  border-radius: 42% 58% 67% 33% / 63% 41% 59% 37%;
-  background:
-    radial-gradient(ellipse at 52% 46%, rgba(217,104,27,.16) 0 18%, rgba(100,31,7,.12) 48%, transparent 79%);
-  transform: rotate(17deg);
-  filter: blur(3.4px);
-}
-
-.frequency-scar-rift {
-  display: none;
-}
+.frequency-scar-core::after,
+.frequency-scar-rift { display: none; }
 
 .frequency-scar-fleck {
   position: absolute;
   display: block;
-  width: 5px;
-  height: 3px;
-  border-radius: 67% 33% 58% 42%;
-  background: rgba(103,34,9,.18);
-  box-shadow: none;
-  filter: blur(1px);
+  width: 2px;
+  height: 1.5px;
+  border-radius: 60% 40%;
+  background: rgba(119,39,9,.24);
+  filter: blur(.25px);
 }
-.frequency-scar-fleck-a { left: 2px; top: 13px; transform: rotate(22deg) scale(.8); }
-.frequency-scar-fleck-b { right: 0; top: 29px; transform: rotate(-19deg) scale(.65); }
-.frequency-scar-fleck-c { left: 17px; bottom: 0; transform: rotate(37deg) scale(.55); }
+.frequency-scar-fleck-a { left: -1px; top: 6px; transform: rotate(18deg); }
+.frequency-scar-fleck-b { right: 0; bottom: 3px; transform: rotate(-21deg); }
 
 html.frequency-bleed-active,
 html.frequency-bleed-active body { overscroll-behavior: none; }
