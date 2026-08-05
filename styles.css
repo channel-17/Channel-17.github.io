@@ -7377,22 +7377,24 @@ body {
   flex-wrap: nowrap;
   width: max-content;
   max-width: calc(100vw - 48px);
-  min-height: 1.65em;
+  min-height: 1.42em;
   color: #9f3b18;
-  font-family: "Nothing You Could Do", "Reenie Beanie", "Segoe Print", cursive;
-  font-size: clamp(1.55rem, 6.15vw, 2rem);
+  font-family: "Reenie Beanie", "Segoe Print", cursive;
+  font-size: clamp(1.78rem, 7vw, 2.3rem);
   font-weight: 400;
-  line-height: 1.42;
-  letter-spacing: -.018em;
+  line-height: 1.18;
+  letter-spacing: -.035em;
   white-space: nowrap;
 }
+
 .frequency-spell-title {
-  min-height: 1.25em;
-  font-family: "Rock Salt", "Nothing You Could Do", cursive;
-  font-size: clamp(2.6rem, 11vw, 4.1rem);
-  line-height: 1.08;
-  letter-spacing: -.04em;
-}.frequency-spell-glyph,
+  min-height: 1.15em;
+  font-family: "Reenie Beanie", "Segoe Print", cursive;
+  font-size: clamp(3.2rem, 13vw, 4.8rem);
+  font-weight: 400;
+  line-height: .94;
+  letter-spacing: -.065em;
+}
 .frequency-spell-space {
   display: inline-block;
   position: relative;
