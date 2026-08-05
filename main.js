@@ -237,12 +237,15 @@ function createSpellLine(text, className = "frequency-spell-line") {
     if (!isSpace) glyph.dataset.glyph = character;
 
     const seed = character.charCodeAt(0) + index * 37;
-    glyph.style.setProperty("--glyph-tilt", `${((seed % 9) - 4) * 0.22}deg`);
-    glyph.style.setProperty("--glyph-lift", `${((seed % 5) - 2) * 0.34}px`);
+    glyph.style.setProperty("--glyph-tilt", `${((seed % 11) - 5) * 0.24}deg`);
+    glyph.style.setProperty("--glyph-lift", `${((seed % 7) - 3) * 0.38}px`);
+    glyph.style.setProperty("--glyph-scale-x", `${0.94 + (seed % 9) * 0.012}`);
+    glyph.style.setProperty("--glyph-scale-y", `${0.96 + (seed % 7) * 0.012}`);
     glyph.style.setProperty("--glyph-scorch", `${0.72 + (seed % 5) * 0.07}`);
-    glyph.style.setProperty("--fissure-x", `${38 + (seed % 25)}%`);
-    glyph.style.setProperty("--fissure-width", `${11 + (seed % 8)}%`);
+    glyph.style.setProperty("--fissure-x", `${28 + (seed % 44)}%`);
+    glyph.style.setProperty("--fissure-width", `${8 + (seed % 13)}%`);
     glyph.style.setProperty("--ember-delay", `${(seed % 7) * 22}ms`);
+    glyph.style.setProperty("--ember-drift", `${((seed % 9) - 4) * 0.34}px`);
     line.appendChild(glyph);
   });
 
@@ -255,60 +258,21 @@ async function writeSpellLine(line, token, options = {}) {
   const glyphs = [...line.querySelectorAll(".frequency-spell-glyph")];
   const baseDelay = options.msPerCharacter || 135;
 
-  let rhythmDrift = 0;
-
   for (let index = 0; index < glyphs.length; index += 1) {
     if (token !== frequencyBleedRunToken || !line.isConnected) return false;
 
     const glyph = glyphs[index];
     const character = glyph.textContent || "";
-    const lowerCharacter = character.toLowerCase();
-
-    rhythmDrift += (Math.random() - 0.5) * 12;
-    rhythmDrift = Math.max(-20, Math.min(28, rhythmDrift));
-
-    const pressure =
-      0.95 +
-      Math.sin(index * 0.72) * 0.045 +
-      (Math.random() - 0.5) * 0.055;
-
-    const horizontalDrift = (Math.random() - 0.5) * 1.15;
-    const verticalDrift = (Math.random() - 0.5) * 1.35;
-    const rotationDrift = (Math.random() - 0.5) * 1.35;
-
-    glyph.style.setProperty("--glyph-pressure", pressure.toFixed(3));
-    glyph.style.setProperty("--glyph-x", `${horizontalDrift.toFixed(2)}px`);
-    glyph.style.setProperty("--glyph-y", `${verticalDrift.toFixed(2)}px`);
-    glyph.style.setProperty("--glyph-rotate", `${rotationDrift.toFixed(2)}deg`);
-
-    let duration =
-      baseDelay +
-      rhythmDrift +
-      Math.random() * 62;
-
-    if (/[mw]/.test(lowerCharacter)) duration += 38;
-    if (/[iljt]/.test(lowerCharacter)) duration -= 12;
-    if (/[A-Z]/.test(character)) duration += 28;
-
-    duration = Math.max(145, duration);
+    const duration = Math.max(150, baseDelay + ((index * 29 + character.charCodeAt(0) * 7) % 90));
 
     glyph.style.setProperty("--glyph-duration", `${duration}ms`);
     glyph.classList.add("spell-writing");
 
-    if (!await sleepFrequency(Math.max(74, duration * 0.62), token)) return false;
-
+    if (!await sleepFrequency(Math.max(68, duration * 0.52), token)) return false;
     glyph.classList.add("spell-written");
 
-    let pause = 28 + Math.random() * 44;
-
-    if (/[mw]/.test(lowerCharacter)) pause += 42;
-    if (/[iljt]/.test(lowerCharacter)) pause -= 8;
-    if (/[,;:]/.test(character)) pause += 115;
-    if (/[.!?…]/.test(character)) pause += 210;
-    if (index > 0 && index % 6 === 0) pause += 35 + Math.random() * 55;
-    if (Math.random() < 0.09) pause += 90 + Math.random() * 90;
-
-    if (!await sleepFrequency(Math.max(18, pause), token)) return false;
+    const punctuationPause = /[.!?…,]/.test(character) ? 120 : 0;
+    if (!await sleepFrequency(34 + ((index * 17) % 42) + punctuationPause, token)) return false;
   }
 
   return true;
@@ -327,7 +291,7 @@ async function appendFrequencyStanza(poem, lines, stanzaIndex, token) {
     line.style.marginLeft = `${FREQUENCY_LINE_INDENTS[(stanzaIndex * 3 + lineIndex) % FREQUENCY_LINE_INDENTS.length] * .32}vw`;
     stanza.appendChild(line);
 
-    if (!await writeSpellLine(line, token, { msPerCharacter: 112 })) return false;
+    if (!await writeSpellLine(line, token, { msPerCharacter: 128 })) return false;
     if (!await sleepFrequency(145 + ((stanzaIndex + lineIndex) % 3) * 52, token)) return false;
   }
 
@@ -342,13 +306,19 @@ async function runFrequencyBleedWriting(token) {
   const poem = overlay.querySelector(".frequency-poem");
   if (!titleHost || !poem) return;
 
-  if (!await sleepFrequency(1320, token)) return;
-  overlay.classList.add("journal-live");
+  // Let the hacked signal die completely before Jinx answers from inside the dark.
+  if (!await sleepFrequency(2050, token)) return;
+  overlay.classList.add("journal-live", "journal-breathing");
 
+  // The title is its own ritual: darkness, RED, then one held breath before the poem.
   const title = createSpellLine("Red", "frequency-spell-title");
   titleHost.appendChild(title);
-  if (!await writeSpellLine(title, token, { msPerCharacter: 210 })) return;
-  if (!await sleepFrequency(610, token)) return;
+  if (!await sleepFrequency(520, token)) return;
+  title.classList.add("title-awake");
+  if (!await writeSpellLine(title, token, { msPerCharacter: 360 })) return;
+  title.classList.add("title-sealed");
+  if (!await sleepFrequency(1250, token)) return;
+  overlay.classList.add("poem-awake");
 
   for (let stanzaIndex = 0; stanzaIndex < RED_POEM_STANZAS.length; stanzaIndex += 1) {
     if (!await appendFrequencyStanza(poem, RED_POEM_STANZAS[stanzaIndex], stanzaIndex, token)) return;
