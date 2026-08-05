@@ -7127,238 +7127,57 @@ body {
 }
 
 /* =========================================================
-   BRICK 15 — FREQUENCY BLEED COMPLETE REBUILD
-   Single subsystem authority. No legacy poem rules beneath it.
+   BRICK 15 — FREQUENCY BLEED / JINX JOURNAL
+   Honest readable pass: preserve layout + scroll, retain stain.
 ========================================================= */
-.engage.secret-flame {
-  cursor: pointer !important;
-  pointer-events: auto !important;
-  font-size: 24px !important;
-  z-index: 132 !important;
-  opacity: .88;
-  filter: drop-shadow(0 0 8px rgba(255,126,22,.58)) drop-shadow(0 0 18px rgba(255,202,64,.20)) !important;
-  animation-name: heartRightLaneFloat !important;
-}
-
-.frequency-overlap-hit {
-  animation: frequencyFlameHit .34s steps(3) forwards !important;
-}
-
-@keyframes frequencyFlameHit {
-  0% { transform: scale(1); filter: brightness(1); }
-  38% { transform: scale(1.65) rotate(-9deg); filter: brightness(2.4) saturate(1.8); }
-  72% { transform: scale(.78) rotate(8deg); filter: brightness(.45) saturate(.3); }
-  100% { transform: scale(.18); opacity: 0; filter: brightness(0); }
-}
-
 .frequency-bleed-overlay {
   position: fixed;
   inset: 0;
-  z-index: 2147483000;
-  overflow: hidden;
-  background: transparent;
+  z-index: 9999;
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-  transition: opacity .12s linear, visibility .12s linear;
+  background: #000;
 }
-
 .frequency-bleed-overlay.open {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
 }
-
 .frequency-impact,
 .frequency-takeover,
 .frequency-journal {
   position: absolute;
   inset: 0;
 }
-
-.frequency-impact {
-  z-index: 1;
-  opacity: 0;
-  background:
-    radial-gradient(circle at 82% 58%, rgba(255,156,52,.98) 0 1%, rgba(255,48,20,.56) 3%, transparent 11%),
-    repeating-linear-gradient(0deg, transparent 0 7px, rgba(255,255,255,.14) 8px 9px, transparent 10px 14px);
-  mix-blend-mode: screen;
-  pointer-events: none;
-}
-
-.impact-live .frequency-impact {
-  animation: frequencyImpact .62s steps(5) forwards;
-}
-
-@keyframes frequencyImpact {
-  0% { opacity: 0; transform: scale(1); }
-  17% { opacity: .95; transform: scale(1.02) translateX(-3px); }
-  34% { opacity: .18; transform: scale(.99) translateX(5px); }
-  54% { opacity: 1; transform: scale(1.03) translateX(-9px); }
-  76% { opacity: .38; transform: scale(1) translateX(4px); }
-  100% { opacity: 0; transform: scale(1.08); }
-}
-
-.frequency-takeover {
-  z-index: 2;
-  overflow: hidden;
-  background: #020202;
-  opacity: 0;
-  pointer-events: none;
-}
-
-.takeover-live .frequency-takeover {
-  animation: frequencyTakeover .95s steps(8) forwards;
-}
-
-@keyframes frequencyTakeover {
-  0% { opacity: 0; filter: contrast(1); transform: translateX(0); }
-  12% { opacity: 1; filter: contrast(2.2); transform: translateX(-7px); }
-  26% { opacity: .25; transform: translateX(10px); }
-  39% { opacity: 1; filter: contrast(3); transform: translateX(-15px) skewX(-2deg); }
-  56% { opacity: .52; transform: translateX(8px); }
-  71% { opacity: 1; filter: contrast(2.5); transform: translateX(-4px); }
-  100% { opacity: 1; filter: contrast(1); transform: translateX(0); }
-}
-
-.frequency-static {
-  position: absolute;
-  inset: -18%;
-  opacity: 0;
-  background:
-    repeating-radial-gradient(circle at 33% 41%, rgba(255,255,255,.82) 0 1px, rgba(0,0,0,.88) 1px 3px, transparent 3px 5px),
-    repeating-linear-gradient(92deg, transparent 0 2px, rgba(255,255,255,.22) 3px 4px, transparent 5px 8px);
-  background-size: 7px 7px, 13px 100%;
-  mix-blend-mode: screen;
-}
-
-.takeover-live .frequency-static-a { animation: frequencyStaticA .84s steps(9) forwards; }
-.takeover-live .frequency-static-b { animation: frequencyStaticB .84s steps(7) forwards; }
-
-@keyframes frequencyStaticA {
-  0% { opacity: 0; transform: translate(0,0) scale(1); }
-  12% { opacity: .95; transform: translate(-3%,2%) scale(1.07); }
-  34% { opacity: .22; transform: translate(5%,-4%) scale(.98); }
-  57% { opacity: .86; transform: translate(-2%,5%) scale(1.12); }
-  100% { opacity: 0; transform: translate(8%,-3%) scale(1.18); }
-}
-
-@keyframes frequencyStaticB {
-  0% { opacity: 0; transform: translateY(-20px); }
-  20% { opacity: .66; transform: translateY(18px); }
-  43% { opacity: .18; transform: translateY(-9px); }
-  66% { opacity: .74; transform: translateY(26px); }
-  100% { opacity: 0; transform: translateY(-34px); }
-}
-
-.frequency-rip {
-  position: absolute;
-  left: -12%;
-  width: 124%;
-  height: 9vh;
-  opacity: 0;
-  background:
-    repeating-linear-gradient(0deg, rgba(255,255,255,.92) 0 1px, rgba(20,20,20,.94) 2px 4px, transparent 5px 8px);
-  box-shadow: 0 0 18px rgba(255,255,255,.42);
-  mix-blend-mode: screen;
-}
-.frequency-rip-one { top: 22%; }
-.frequency-rip-two { top: 63%; height: 5vh; }
-.takeover-live .frequency-rip-one { animation: frequencyRipOne .82s steps(6) forwards; }
-.takeover-live .frequency-rip-two { animation: frequencyRipTwo .72s steps(5) .08s forwards; }
-
-@keyframes frequencyRipOne {
-  0% { opacity: 0; transform: translateX(-24%) skewX(0); }
-  18% { opacity: 1; transform: translateX(8%) skewX(-16deg); }
-  39% { opacity: .28; transform: translateX(-6%) skewX(20deg); }
-  62% { opacity: .92; transform: translateX(14%) skewX(-11deg); }
-  100% { opacity: 0; transform: translateX(35%) skewX(8deg); }
-}
-@keyframes frequencyRipTwo {
-  0% { opacity: 0; transform: translateX(28%); }
-  24% { opacity: .88; transform: translateX(-12%); }
-  51% { opacity: .24; transform: translateX(8%); }
-  76% { opacity: .74; transform: translateX(-18%); }
-  100% { opacity: 0; transform: translateX(-36%); }
-}
-
-.frequency-flash {
-  position: absolute;
-  inset: 0;
-  opacity: 0;
-  background: #fff;
-}
-.takeover-live .frequency-flash { animation: frequencyWhiteFlash .95s steps(1) forwards; }
-@keyframes frequencyWhiteFlash {
-  0%, 14%, 31%, 52%, 100% { opacity: 0; }
-  8%, 24%, 45% { opacity: 1; }
-}
-
-.frequency-warning {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  display: grid;
-  gap: 7px;
-  width: min(86vw, 390px);
-  padding: 15px 18px;
-  border-top: 5px solid currentColor;
-  border-bottom: 5px solid currentColor;
-  color: #ff1717;
-  background: rgba(0,0,0,.88);
-  opacity: 0;
-  transform: translate(-50%,-50%) scale(.92);
-  text-align: center;
-  font-family: Arial, sans-serif;
-  letter-spacing: 3px;
-}
-.frequency-warning strong { font-size: clamp(1.5rem, 8vw, 2.6rem); line-height: .9; }
-.frequency-warning span { font-size: .67rem; font-weight: 900; }
-.warning-live .frequency-warning { animation: frequencyDanger 1.02s steps(1) forwards; }
-
-@keyframes frequencyDanger {
-  0% { opacity: 0; color: #ff1717; transform: translate(-50%,-50%) scale(.88); }
-  9% { opacity: 1; color: #ff1717; transform: translate(-50%,-50%) scale(1.02); }
-  18% { opacity: 0; }
-  27% { opacity: 1; color: #fff; background: #d40000; }
-  38% { opacity: .18; }
-  49% { opacity: 1; color: #ff1717; background: #000; }
-  60% { opacity: 0; }
-  72% { opacity: 1; color: #fff; background: #e00000; transform: translate(-50%,-50%) scale(1.05); }
-  84% { opacity: .25; }
-  100% { opacity: 0; color: #ff1717; background: #000; transform: translate(-50%,-50%) scale(.98); }
-}
-
-.black-takeover .frequency-takeover { opacity: 0; visibility: hidden; }
-
+.frequency-impact { z-index: 1; pointer-events: none; }
+.frequency-takeover { z-index: 2; overflow: hidden; background: #000; pointer-events: none; }
 .frequency-journal {
   z-index: 3;
-  background:
-    radial-gradient(circle at 50% 22%, rgba(62,14,3,.16), transparent 31%),
-    radial-gradient(circle at 18% 68%, rgba(43,7,1,.12), transparent 28%),
-    linear-gradient(180deg, #050403 0%, #000 44%, #030100 100%);
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
+  background:
+    radial-gradient(ellipse at 48% 18%, rgba(70,17,4,.14), transparent 34%),
+    radial-gradient(ellipse at 18% 73%, rgba(46,8,2,.10), transparent 29%),
+    linear-gradient(180deg, #050403 0%, #000 48%, #020100 100%);
 }
 .frequency-journal::before {
   content: "";
   position: absolute;
   inset: 0;
   pointer-events: none;
-  opacity: .44;
+  opacity: .34;
   background:
-    repeating-radial-gradient(ellipse at 19% 27%, rgba(255,255,255,.018) 0 1px, transparent 1px 5px),
-    repeating-linear-gradient(107deg, transparent 0 13px, rgba(255,255,255,.012) 14px, transparent 15px 28px),
-    radial-gradient(ellipse at 50% 50%, transparent 0 45%, rgba(0,0,0,.76) 100%);
-  mix-blend-mode: screen;
+    repeating-linear-gradient(106deg, transparent 0 17px, rgba(255,255,255,.01) 18px, transparent 19px 37px),
+    radial-gradient(ellipse at 50% 50%, transparent 0 45%, rgba(0,0,0,.82) 100%);
 }
 .journal-live .frequency-journal {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
 }
-
+.black-takeover .frequency-takeover { opacity: 0; visibility: hidden; }
 .frequency-scroll-journal {
   position: absolute;
   inset: 0;
@@ -7368,36 +7187,16 @@ body {
   overscroll-behavior-y: contain;
   touch-action: pan-y;
   scrollbar-width: none;
-  pointer-events: auto;
 }
 .frequency-scroll-journal::-webkit-scrollbar { width: 0; height: 0; }
-
 .frequency-page {
   position: relative;
   width: 100%;
   min-height: 100%;
   padding: max(76px, env(safe-area-inset-top)) 24px calc(110px + env(safe-area-inset-bottom));
-  overflow: visible;
 }
-.frequency-page::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  opacity: .54;
-  background:
-    linear-gradient(91deg, transparent 0 9%, rgba(255,72,9,.018) 11%, transparent 13% 74%, rgba(255,32,0,.012) 76%, transparent 79%),
-    repeating-linear-gradient(176deg, transparent 0 42px, rgba(255,255,255,.009) 43px, transparent 45px 88px);
-}
-
-.frequency-title {
-  position: relative;
-  min-height: 88px;
-  margin: 0 0 18px 2vw;
-}
-
+.frequency-title { min-height: 86px; margin: 0 0 18px 2vw; }
 .frequency-poem {
-  position: relative;
   display: flex;
   flex-direction: column;
   gap: 30px;
@@ -7405,7 +7204,6 @@ body {
   min-height: 130vh;
   padding-bottom: 42vh;
 }
-
 .frequency-stanza {
   display: flex;
   flex-direction: column;
@@ -7414,7 +7212,6 @@ body {
   transform: rotate(var(--stanza-tilt));
   transform-origin: left center;
 }
-
 .frequency-spell-line,
 .frequency-spell-title {
   display: flex;
@@ -7422,49 +7219,40 @@ body {
   flex-wrap: nowrap;
   width: max-content;
   max-width: calc(100vw - 48px);
-  min-height: 1.72em;
-  color: #8f3215;
-  font-family: "Nothing You Could Do", "Reenie Beanie", "Segoe Print", "Bradley Hand", cursive;
-  font-size: clamp(1.58rem, 6.45vw, 2.08rem);
+  min-height: 1.65em;
+  color: #9f3b18;
+  font-family: "Nothing You Could Do", "Reenie Beanie", "Segoe Print", cursive;
+  font-size: clamp(1.55rem, 6.15vw, 2rem);
   font-weight: 400;
-  line-height: 1.44;
-  letter-spacing: -.012em;
+  line-height: 1.42;
+  letter-spacing: -.018em;
   white-space: nowrap;
 }
-
 .frequency-spell-title {
   min-height: 1.25em;
   font-family: "Rock Salt", "Nothing You Could Do", cursive;
-  font-size: clamp(2.72rem, 11.8vw, 4.3rem);
+  font-size: clamp(2.6rem, 11vw, 4.1rem);
   line-height: 1.08;
-  letter-spacing: -.035em;
+  letter-spacing: -.04em;
 }
-
 .frequency-spell-glyph,
 .frequency-spell-space {
   display: inline-block;
   position: relative;
   flex: 0 0 auto;
-  transform:
-    translateY(var(--glyph-lift))
-    rotate(var(--glyph-tilt))
-    scaleX(var(--glyph-scale-x, 1));
+  transform: translateY(var(--glyph-lift)) rotate(var(--glyph-tilt));
   transform-origin: 50% 72%;
 }
-
 .frequency-spell-space { width: .29em; }
-
 .frequency-spell-glyph {
   opacity: 0;
-  color: #2a0904;
-  -webkit-text-stroke: .18px rgba(0,0,0,.96);
+  color: #351007;
+  -webkit-text-stroke: .2px rgba(0,0,0,.96);
   text-shadow:
-    -1px -1px 0 rgba(0,0,0,.9),
-    1px 1px 0 rgba(0,0,0,.96);
-  filter: blur(.9px) brightness(.34) contrast(1.42);
-  clip-path: circle(0% at var(--glyph-hotspot-x) var(--glyph-hotspot-y));
+    -1px -1px 0 rgba(0,0,0,.94),
+    1px 1px 0 rgba(0,0,0,.98);
+  filter: blur(.35px) brightness(.46);
 }
-
 .frequency-spell-glyph::before,
 .frequency-spell-glyph::after {
   content: attr(data-glyph);
@@ -7472,125 +7260,57 @@ body {
   inset: 0;
   pointer-events: none;
 }
-
-/* Freshly exposed molten center. It flashes inside the cut, not around the letter. */
 .frequency-spell-glyph::before {
-  z-index: 2;
-  color: #ff8a24;
+  color: #ff8a26;
   opacity: 0;
-  -webkit-text-stroke: .2px rgba(255,188,86,.35);
-  text-shadow:
-    0 0 1px rgba(255,231,176,.72),
-    0 0 2px rgba(255,102,20,.34);
-  clip-path: circle(0% at var(--glyph-hotspot-x) var(--glyph-hotspot-y));
+  -webkit-text-stroke: .2px rgba(255,192,92,.28);
+  text-shadow: 0 0 1px rgba(255,223,164,.55), 0 0 2px rgba(255,91,13,.22);
 }
-
-/* Cooled charred shoulder of the carved channel. */
 .frequency-spell-glyph::after {
   z-index: -1;
-  color: #120302;
+  color: #100201;
   opacity: 0;
-  transform: translate(.55px,.8px);
-  -webkit-text-stroke: .8px rgba(0,0,0,.94);
-  text-shadow: 0 1px 1px rgba(0,0,0,.92);
+  transform: translate(.6px,.8px);
+  -webkit-text-stroke: .7px rgba(0,0,0,.95);
 }
-
 .frequency-spell-glyph.spell-writing {
-  animation: frequencyGlyphCarve var(--glyph-duration, 290ms) cubic-bezier(.18,.72,.18,1) forwards;
+  animation: jinxGlyphAppear var(--glyph-duration, 270ms) cubic-bezier(.16,.76,.18,1) forwards;
 }
 .frequency-spell-glyph.spell-writing::before {
-  animation: frequencyGlyphHeat var(--glyph-duration, 290ms) cubic-bezier(.2,.75,.18,1) forwards;
+  animation: jinxGlyphHeat var(--glyph-duration, 270ms) ease-out forwards;
 }
 .frequency-spell-glyph.spell-writing::after {
-  animation: frequencyGlyphChar var(--glyph-duration, 290ms) ease-out forwards;
+  animation: jinxGlyphDepth var(--glyph-duration, 270ms) ease-out forwards;
 }
-
 .frequency-spell-glyph.spell-written {
   opacity: 1;
-  color: #8e3114;
-  clip-path: circle(150% at var(--glyph-hotspot-x) var(--glyph-hotspot-y));
+  color: #9f3b18;
   filter: none;
-  -webkit-text-stroke: .16px rgba(255,95,24,.12);
+  -webkit-text-stroke: .15px rgba(255,104,27,.09);
   text-shadow:
-    -1px -1px 0 rgba(0,0,0,.9),
-    1px 1px 0 rgba(18,3,1,.96),
-    0 1px 1px rgba(0,0,0,.95),
-    0 0 .7px rgba(255,116,31,.26);
+    -1px -1px 0 rgba(0,0,0,.92),
+    1px 1px 0 rgba(17,3,1,.98),
+    0 1px 1px rgba(0,0,0,.96),
+    0 0 .65px rgba(255,112,28,.22);
 }
 .frequency-spell-glyph.spell-written::before { opacity: 0; }
 .frequency-spell-glyph.spell-written::after { opacity: .9; }
-
-@keyframes frequencyGlyphCarve {
-  0% {
-    opacity: 0;
-    color: #150302;
-    clip-path: circle(0% at var(--glyph-hotspot-x) var(--glyph-hotspot-y));
-    filter: blur(1.15px) brightness(.28);
-    transform:
-      translateY(calc(var(--glyph-lift) + 1.2px))
-      rotate(calc(var(--glyph-tilt) - .35deg))
-      scaleX(var(--glyph-scale-x, 1))
-      scale(.975);
-  }
-  32% {
-    opacity: .72;
-    color: #ca4314;
-    clip-path: circle(38% at var(--glyph-hotspot-x) var(--glyph-hotspot-y));
-    filter: blur(.35px) brightness(.92);
-  }
-  64% {
-    opacity: 1;
-    color: #f06a1e;
-    clip-path: circle(92% at var(--glyph-hotspot-x) var(--glyph-hotspot-y));
-    filter: blur(0) brightness(1.06);
-  }
-  100% {
-    opacity: 1;
-    color: #8e3114;
-    clip-path: circle(150% at var(--glyph-hotspot-x) var(--glyph-hotspot-y));
-    filter: none;
-    transform:
-      translateY(var(--glyph-lift))
-      rotate(var(--glyph-tilt))
-      scaleX(var(--glyph-scale-x, 1))
-      scale(1);
-  }
+@keyframes jinxGlyphAppear {
+  0% { opacity: 0; color: #1a0502; filter: blur(.6px) brightness(.3); transform: translateY(calc(var(--glyph-lift) + 1px)) rotate(calc(var(--glyph-tilt) - .25deg)) scale(.96); }
+  42% { opacity: .92; color: #e15c1a; filter: blur(.08px) brightness(1.02); }
+  100% { opacity: 1; color: #9f3b18; filter: none; transform: translateY(var(--glyph-lift)) rotate(var(--glyph-tilt)) scale(1); }
 }
-
-@keyframes frequencyGlyphHeat {
-  0% {
-    opacity: 0;
-    clip-path: circle(0% at var(--glyph-hotspot-x) var(--glyph-hotspot-y));
-  }
-  24% {
-    opacity: .46;
-    clip-path: circle(25% at var(--glyph-hotspot-x) var(--glyph-hotspot-y));
-  }
-  52% {
-    opacity: .92;
-    clip-path: circle(76% at var(--glyph-hotspot-x) var(--glyph-hotspot-y));
-  }
-  76% {
-    opacity: .34;
-    clip-path: circle(130% at var(--glyph-hotspot-x) var(--glyph-hotspot-y));
-  }
-  100% {
-    opacity: 0;
-    clip-path: circle(150% at var(--glyph-hotspot-x) var(--glyph-hotspot-y));
-  }
+@keyframes jinxGlyphHeat {
+  0% { opacity: 0; }
+  28% { opacity: .84; }
+  66% { opacity: .32; }
+  100% { opacity: 0; }
 }
-
-@keyframes frequencyGlyphChar {
-  0%, 34% { opacity: 0; }
-  66% { opacity: .46; }
+@keyframes jinxGlyphDepth {
+  0%, 38% { opacity: 0; }
   100% { opacity: .9; }
 }
-
-.frequency-signature {
-  margin: 28px 0 0 36vw;
-  padding-bottom: 30vh;
-}
-
+.frequency-signature { margin: 28px 0 0 36vw; padding-bottom: 30vh; }
 .frequency-close {
   position: fixed;
   right: max(15px, env(safe-area-inset-right));
@@ -7613,10 +7333,7 @@ body {
   animation: frequencyCloseFlash 1.08s steps(1,end) infinite;
 }
 .frequency-close::before,
-.frequency-close::after {
-  content: none !important;
-  display: none !important;
-}
+.frequency-close::after { content: none !important; display: none !important; }
 @keyframes frequencyCloseFlash {
   0%, 24%, 46%, 100% { opacity: 1; filter: brightness(1.22); }
   25%, 31% { opacity: .12; filter: brightness(.45); }
@@ -7624,82 +7341,66 @@ body {
   39%, 45% { opacity: .34; filter: brightness(.68); }
   72%, 77% { opacity: .08; filter: brightness(.34); }
 }
-
 .frequency-closing { opacity: 0 !important; }
 
+/* Small permanent heat/tarnish stain: visible, irregular, behind floaters. */
 .frequency-bleed-scar {
   position: absolute;
   z-index: 0;
-  width: 19px;
-  height: 12px;
-  transform: translate(-50%, -50%) rotate(-11deg) skewX(-7deg);
+  width: 28px;
+  height: 18px;
+  transform: translate(-50%, -50%) rotate(-13deg) skewX(-8deg);
   pointer-events: none;
   overflow: visible;
-  opacity: .28;
-  filter: saturate(.68) contrast(.9);
+  opacity: .58;
+  filter: saturate(.82) contrast(.96);
 }
-
 .frequency-scar-core {
   position: absolute;
-  inset: 1px;
+  inset: 0;
   display: block;
-  border-radius: 64% 36% 58% 42% / 46% 61% 39% 54%;
+  border-radius: 71% 29% 63% 37% / 39% 66% 34% 61%;
   background:
-    radial-gradient(ellipse at 44% 52%,
-      rgba(155,61,18,.28) 0 14%,
-      rgba(107,38,11,.20) 34%,
-      rgba(56,17,5,.11) 58%,
-      transparent 82%),
-    linear-gradient(108deg,
-      transparent 5%,
-      rgba(178,72,21,.13) 31%,
-      rgba(85,27,8,.11) 67%,
-      transparent 95%);
+    radial-gradient(ellipse at 42% 48%, rgba(221,104,35,.36) 0 12%, rgba(164,67,19,.28) 29%, rgba(95,31,8,.19) 51%, rgba(43,11,3,.08) 69%, transparent 83%),
+    linear-gradient(117deg, transparent 4%, rgba(198,82,24,.16) 29%, rgba(79,22,6,.12) 68%, transparent 94%);
   box-shadow:
-    inset 1px 0 2px rgba(210,92,24,.07),
-    inset -1px -1px 3px rgba(24,6,2,.13);
+    inset 1px 0 3px rgba(231,113,39,.12),
+    inset -2px -1px 4px rgba(26,5,1,.18);
   transform: scaleX(1.08) scaleY(.72);
-  filter: blur(.55px);
+  filter: blur(.65px);
 }
-
 .frequency-scar-core::before {
   content: "";
   position: absolute;
-  left: 3px;
-  top: 4px;
-  width: 11px;
-  height: 4px;
-  border-radius: 67% 33% 57% 43%;
-  background: rgba(186,73,19,.075);
-  transform: rotate(-7deg);
-  filter: blur(.8px);
+  left: 5px;
+  top: 6px;
+  width: 15px;
+  height: 5px;
+  border-radius: 73% 27% 60% 40%;
+  background: rgba(210,91,26,.11);
+  transform: rotate(-8deg);
+  filter: blur(.9px);
 }
-
 .frequency-scar-core::after,
 .frequency-scar-rift { display: none; }
-
 .frequency-scar-fleck {
   position: absolute;
   display: block;
-  width: 1.4px;
-  height: 1px;
-  border-radius: 60% 40%;
-  background: rgba(98,31,9,.16);
-  filter: blur(.18px);
+  width: 2px;
+  height: 1.4px;
+  border-radius: 70% 30% 55% 45%;
+  background: rgba(151,53,15,.28);
+  filter: blur(.35px);
 }
-.frequency-scar-fleck-a { left: 0; top: 4px; transform: rotate(17deg); }
-.frequency-scar-fleck-b { right: 1px; bottom: 2px; transform: rotate(-18deg); }
-
-html.frequency-bleed-active,
-html.frequency-bleed-active body { overscroll-behavior: none; }
-
+.frequency-scar-fleck-a { left: -3px; top: 6px; transform: rotate(21deg); }
+.frequency-scar-fleck-b { right: -2px; bottom: 3px; transform: rotate(-19deg) scale(.78); }
+.frequency-overlap-hit { filter: brightness(1.35) saturate(1.25); }
 @media (max-width: 430px) {
   .frequency-page { padding-left: 18px; padding-right: 18px; }
-  .frequency-stanza,
+  .frequency-stanza { max-width: calc(100vw - 44px); }
   .frequency-spell-line,
-  .frequency-spell-title { max-width: calc(100vw - 42px); }
+  .frequency-spell-title { max-width: calc(100vw - 36px); }
 }
-
 
 /* =========================================================
    BUILD 47 — LOADER AVATAR MOVEMENT BRICK
