@@ -7395,7 +7395,8 @@ body {
   flex-wrap: nowrap;
   width: max-content;
   max-width: calc(100vw - 48px);
-  min-height: 1.65em;
+  min-height: 1.92em;
+  overflow: visible;
   color: #ba431d;
   font-family: "Rock Salt", "Reenie Beanie", "Segoe Print", cursive;
   font-size: var(--line-font-size, 24px);
@@ -7435,8 +7436,14 @@ body {
 }
 .frequency-spell-space { width: .31em; }
 .frequency-emphasis-glyph {
-  transform-origin: 50% 82%;
-  margin-right: .015em;
+  z-index: 2;
+  transform-origin: 48% 88%;
+  margin-left: -.025em;
+  margin-right: .035em;
+}
+.frequency-organic-initial {
+  letter-spacing: -.04em;
+  filter-origin: center bottom;
 }
 .frequency-spell-glyph {
   font-size: calc(1em * var(--glyph-size-factor, 1));
