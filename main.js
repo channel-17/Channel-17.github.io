@@ -338,13 +338,17 @@ function fitFrequencyLineToScreen(line, stanzaIndex, lineIndex) {
 
   const page = line.closest(".frequency-page");
   const pageRect = page?.getBoundingClientRect();
-  const safeInset = 18;
-  const safeLeft = (pageRect?.left || 0) + safeInset;
-  const safeRight = (pageRect?.right || window.innerWidth) - safeInset;
-  const availableWidth = Math.max(190, safeRight - safeLeft);
+  const pageStyle = page ? getComputedStyle(page) : null;
+  const pagePaddingLeft = Number.parseFloat(pageStyle?.paddingLeft || "0") || 0;
+  const pagePaddingRight = Number.parseFloat(pageStyle?.paddingRight || "0") || 0;
+  const breathingRoom = 7;
+  const safeLeft = (pageRect?.left || 0) + pagePaddingLeft + breathingRoom;
+  const safeRight = (pageRect?.right || window.innerWidth) - pagePaddingRight - breathingRoom;
+  const availableWidth = Math.max(180, safeRight - safeLeft);
   const text = line.getAttribute("aria-label") || line.textContent || "";
   const characterCount = [...text].length;
   const rhythm = Number.parseInt(line.dataset.rhythm || "0", 10);
+  const isSignature = Boolean(line.closest(".frequency-signature"));
 
   let fontSize;
   if (characterCount <= 15) fontSize = 35.5;
@@ -355,8 +359,13 @@ function fitFrequencyLineToScreen(line, stanzaIndex, lineIndex) {
   else if (characterCount <= 40) fontSize = 19.5;
   else fontSize = 17.75;
 
-  const sizePulse = [1.08, .94, 1.01, .90, 1.05, .96, 1.11, .92, 1.00];
-  fontSize *= sizePulse[(rhythm + stanzaIndex + lineIndex) % sizePulse.length];
+  if (isSignature) {
+    fontSize = 27;
+  } else {
+    const sizePulse = [1.08, .94, 1.01, .90, 1.05, .96, 1.11, .92, 1.00];
+    fontSize *= sizePulse[(rhythm + stanzaIndex + lineIndex) % sizePulse.length];
+  }
+
   line.style.setProperty("--line-font-size", `${fontSize.toFixed(2)}px`);
 
   line.dataset.fontTier =
@@ -367,60 +376,98 @@ function fitFrequencyLineToScreen(line, stanzaIndex, lineIndex) {
     characterCount <= 35 ? "sm" :
     characterCount <= 40 ? "xs" : "xxs";
 
-  const lineShiftPattern = [
-    2, 36, 13, 50,
-    24, 6, 43, 17,
-    31, 9, 54, 21,
-    14, 40, 1, 28
-  ];
-  const patternIndex = (stanzaIndex * 4 + lineIndex + rhythm) % lineShiftPattern.length;
-  let desiredShift = lineShiftPattern[patternIndex];
+  if (isSignature) {
+    line.style.marginLeft = "auto";
+    line.style.marginRight = "0px";
+  } else {
+    const lineShiftPattern = [
+      2, 36, 13, 50,
+      24, 6, 43, 17,
+      31, 9, 54, 21,
+      14, 40, 1, 28
+    ];
+    const patternIndex = (stanzaIndex * 4 + lineIndex + rhythm) % lineShiftPattern.length;
+    let desiredShift = lineShiftPattern[patternIndex];
 
-  if (characterCount >= 41) desiredShift *= .04;
-  else if (characterCount >= 36) desiredShift *= .14;
-  else if (characterCount >= 31) desiredShift *= .32;
-  else if (characterCount >= 27) desiredShift *= .58;
+    if (characterCount >= 41) desiredShift *= .04;
+    else if (characterCount >= 36) desiredShift *= .14;
+    else if (characterCount >= 31) desiredShift *= .32;
+    else if (characterCount >= 27) desiredShift *= .58;
 
-  line.style.marginLeft = `${Math.round(desiredShift)}px`;
+    line.style.marginLeft = `${Math.round(desiredShift)}px`;
+    line.style.marginRight = "0px";
+  }
+
+  const getVisibleBounds = () => {
+    const glyphs = [...line.querySelectorAll(".frequency-spell-glyph, .frequency-spell-space")];
+    if (!glyphs.length) return line.getBoundingClientRect();
+
+    const rects = glyphs
+      .map(glyph => glyph.getBoundingClientRect())
+      .filter(rect => rect.width > 0 || rect.height > 0);
+
+    if (!rects.length) return line.getBoundingClientRect();
+
+    return {
+      left: Math.min(...rects.map(rect => rect.left)),
+      right: Math.max(...rects.map(rect => rect.right)),
+      top: Math.min(...rects.map(rect => rect.top)),
+      bottom: Math.max(...rects.map(rect => rect.bottom)),
+      width: Math.max(...rects.map(rect => rect.right)) - Math.min(...rects.map(rect => rect.left)),
+      height: Math.max(...rects.map(rect => rect.bottom)) - Math.min(...rects.map(rect => rect.top))
+    };
+  };
 
   const measureAndFit = () => {
+    if (!line.isConnected) return;
+
     let currentSize = Number.parseFloat(getComputedStyle(line).fontSize) || fontSize;
 
-    for (let pass = 0; pass < 7; pass += 1) {
-      let rect = line.getBoundingClientRect();
-      const leftOverflow = safeLeft - rect.left;
-      const rightOverflow = rect.right - safeRight;
+    for (let pass = 0; pass < 12; pass += 1) {
+      let bounds = getVisibleBounds();
+      const leftOverflow = safeLeft - bounds.left;
+      const rightOverflow = bounds.right - safeRight;
+      const tooWide = bounds.width > availableWidth;
 
-      if (leftOverflow <= 0 && rightOverflow <= 0 && rect.width <= availableWidth) break;
+      if (leftOverflow <= 0 && rightOverflow <= 0 && !tooWide) break;
 
-      if (rightOverflow > 0) {
-        const margin = Number.parseFloat(line.style.marginLeft) || 0;
-        const removableShift = Math.min(margin, rightOverflow + 4);
-        line.style.marginLeft = `${Math.max(0, margin - removableShift)}px`;
+      if (isSignature) {
+        if (rightOverflow > 0) {
+          const marginRight = Number.parseFloat(line.style.marginRight) || 0;
+          line.style.marginRight = `${marginRight + rightOverflow + 3}px`;
+        }
+      } else {
+        if (rightOverflow > 0) {
+          const marginLeft = Number.parseFloat(line.style.marginLeft) || 0;
+          const removableShift = Math.min(marginLeft, rightOverflow + 4);
+          line.style.marginLeft = `${Math.max(0, marginLeft - removableShift)}px`;
+        }
+
+        bounds = getVisibleBounds();
+        if (bounds.left < safeLeft) {
+          const marginLeft = Number.parseFloat(line.style.marginLeft) || 0;
+          line.style.marginLeft = `${marginLeft + (safeLeft - bounds.left) + 3}px`;
+        }
       }
 
-      rect = line.getBoundingClientRect();
-      const stillTooWide = rect.width > availableWidth || rect.right > safeRight || rect.left < safeLeft;
+      bounds = getVisibleBounds();
+      const stillOutside = bounds.left < safeLeft || bounds.right > safeRight || bounds.width > availableWidth;
 
-      if (stillTooWide) {
-        const widthRatio = availableWidth / Math.max(rect.width, 1);
-        const nextSize = Math.max(14.75, currentSize * Math.min(.965, widthRatio * .975));
+      if (stillOutside) {
+        const widthRatio = availableWidth / Math.max(bounds.width, 1);
+        const nextSize = Math.max(13.75, currentSize * Math.min(.96, widthRatio * .965));
+        if (Math.abs(nextSize - currentSize) < .08) break;
         currentSize = nextSize;
         line.style.setProperty("--line-font-size", `${nextSize.toFixed(2)}px`);
-      }
-
-      rect = line.getBoundingClientRect();
-      if (rect.left < safeLeft) {
-        const margin = Number.parseFloat(line.style.marginLeft) || 0;
-        line.style.marginLeft = `${margin + (safeLeft - rect.left) + 2}px`;
       }
     }
   };
 
   measureAndFit();
   requestAnimationFrame(measureAndFit);
-  window.setTimeout(measureAndFit, 80);
-  window.setTimeout(measureAndFit, 240);
+  window.setTimeout(measureAndFit, 90);
+  window.setTimeout(measureAndFit, 260);
+  window.setTimeout(measureAndFit, 520);
 }
 
 async function appendFrequencyStanza(poem, lines, stanzaIndex, token) {
