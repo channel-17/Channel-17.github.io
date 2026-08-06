@@ -7388,6 +7388,21 @@ body {
   transform: rotate(var(--stanza-tilt));
   transform-origin: left center;
 }
+.frequency-signature {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  max-width: 100%;
+  padding-right: 20px;
+  margin-top: 22px;
+  transform: rotate(.8deg);
+  transform-origin: right center;
+}
+.frequency-signature .frequency-spell-line {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  max-width: calc(100% - 20px);
+}
 .frequency-spell-line,
 .frequency-spell-title {
   display: flex;
