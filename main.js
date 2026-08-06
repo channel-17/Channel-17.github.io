@@ -281,27 +281,48 @@ async function writeSpellLine(line, token, options = {}) {
 function fitFrequencyLineToScreen(line, stanzaIndex, lineIndex) {
   if (!line?.isConnected) return;
 
-  const safeEdge = 14;
-  const availableWidth = Math.max(220, window.innerWidth - safeEdge * 2);
-  const humanShiftSeed = FREQUENCY_LINE_INDENTS[
-    (stanzaIndex * 3 + lineIndex) % FREQUENCY_LINE_INDENTS.length
-  ];
-  const desiredShift = Math.min(18, humanShiftSeed * 1.7);
+  const safeEdge = 18;
+  const availableWidth = Math.max(210, window.innerWidth - safeEdge * 2);
 
-  line.style.setProperty("--line-font-size", "clamp(1.48rem, 5.8vw, 1.92rem)");
+  // Deliberate journal staggering: some lines stay near the margin,
+  // some are pulled clearly inward. Long lines surrender shift before size.
+  const lineShiftPattern = [
+    8, 34, 18, 46,
+    26, 4, 42, 16,
+    38, 10, 50, 22,
+    14, 44, 6, 30
+  ];
+  const patternIndex = (stanzaIndex * 4 + lineIndex) % lineShiftPattern.length;
+  let desiredShift = lineShiftPattern[patternIndex];
+
+  line.style.setProperty("--line-font-size", "clamp(1.46rem, 5.65vw, 1.88rem)");
   line.style.marginLeft = `${desiredShift}px`;
 
   let rect = line.getBoundingClientRect();
-  if (rect.width > availableWidth) {
+
+  // First reclaim the right-side shift. Only shrink when the actual words
+  // still cannot fit safely after the line has been pulled back.
+  const maxAllowedRight = window.innerWidth - safeEdge;
+  let rightOverflow = rect.right - maxAllowedRight;
+  if (rightOverflow > 0) {
+    desiredShift = Math.max(0, desiredShift - rightOverflow - 3);
+    line.style.marginLeft = `${desiredShift}px`;
+    rect = line.getBoundingClientRect();
+  }
+
+  if (rect.width > availableWidth || rect.right > maxAllowedRight) {
     const currentSize = Number.parseFloat(getComputedStyle(line).fontSize) || 24;
-    const fittedSize = Math.max(18.5, currentSize * (availableWidth / rect.width));
+    const widthRatio = Math.min(1, availableWidth / Math.max(rect.width, 1));
+    const edgeRatio = Math.min(1, (maxAllowedRight - rect.left) / Math.max(rect.width, 1));
+    const fittedSize = Math.max(17.75, currentSize * Math.min(widthRatio, edgeRatio) * 0.985);
     line.style.setProperty("--line-font-size", `${fittedSize.toFixed(2)}px`);
     rect = line.getBoundingClientRect();
   }
 
-  const rightOverflow = rect.right - (window.innerWidth - safeEdge);
+  rightOverflow = rect.right - maxAllowedRight;
   if (rightOverflow > 0) {
-    line.style.marginLeft = `${Math.max(0, desiredShift - rightOverflow - 2)}px`;
+    const currentMargin = Number.parseFloat(line.style.marginLeft) || 0;
+    line.style.marginLeft = `${Math.max(0, currentMargin - rightOverflow - 3)}px`;
     rect = line.getBoundingClientRect();
   }
 
@@ -328,6 +349,11 @@ async function appendFrequencyStanza(poem, lines, stanzaIndex, token) {
     requestAnimationFrame(() => fitFrequencyLineToScreen(line, stanzaIndex, lineIndex));
 
     if (!await writeSpellLine(line, token, { msPerCharacter: 128 })) return false;
+
+    // Re-measure after the glyph transforms become visible. This is the real
+    // rendered width on iPhone and prevents late right-edge clipping.
+    fitFrequencyLineToScreen(line, stanzaIndex, lineIndex);
+
     if (!await sleepFrequency(145 + ((stanzaIndex + lineIndex) % 3) * 52, token)) return false;
   }
 
