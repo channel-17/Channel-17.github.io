@@ -336,16 +336,16 @@ async function writeSpellLine(line, token, options = {}) {
 function fitFrequencyLineToScreen(line, stanzaIndex, lineIndex) {
   if (!line?.isConnected) return;
 
-  const safeEdge = 16;
-  const availableWidth = Math.max(210, window.innerWidth - safeEdge * 2);
+  const page = line.closest(".frequency-page");
+  const pageRect = page?.getBoundingClientRect();
+  const safeInset = 18;
+  const safeLeft = (pageRect?.left || 0) + safeInset;
+  const safeRight = (pageRect?.right || window.innerWidth) - safeInset;
+  const availableWidth = Math.max(190, safeRight - safeLeft);
   const text = line.getAttribute("aria-label") || line.textContent || "";
   const characterCount = [...text].length;
   const rhythm = Number.parseInt(line.dataset.rhythm || "0", 10);
 
-  /*
-    Sentence length chooses the broad tier. Rhythm then moves neighboring lines
-    far enough apart to feel handwritten instead of like one uniform font size.
-  */
   let fontSize;
   if (characterCount <= 15) fontSize = 35.5;
   else if (characterCount <= 20) fontSize = 31.5;
@@ -376,41 +376,51 @@ function fitFrequencyLineToScreen(line, stanzaIndex, lineIndex) {
   const patternIndex = (stanzaIndex * 4 + lineIndex + rhythm) % lineShiftPattern.length;
   let desiredShift = lineShiftPattern[patternIndex];
 
-  if (characterCount >= 41) desiredShift *= .05;
-  else if (characterCount >= 36) desiredShift *= .18;
-  else if (characterCount >= 31) desiredShift *= .38;
-  else if (characterCount >= 27) desiredShift *= .64;
+  if (characterCount >= 41) desiredShift *= .04;
+  else if (characterCount >= 36) desiredShift *= .14;
+  else if (characterCount >= 31) desiredShift *= .32;
+  else if (characterCount >= 27) desiredShift *= .58;
 
   line.style.marginLeft = `${Math.round(desiredShift)}px`;
 
   const measureAndFit = () => {
-    let rect = line.getBoundingClientRect();
-    const maxAllowedRight = window.innerWidth - safeEdge;
+    let currentSize = Number.parseFloat(getComputedStyle(line).fontSize) || fontSize;
 
-    if (rect.width > availableWidth || rect.right > maxAllowedRight) {
-      const widthRatio = Math.min(1, availableWidth / Math.max(rect.width, 1));
-      const edgeRoom = Math.max(120, maxAllowedRight - rect.left);
-      const edgeRatio = Math.min(1, edgeRoom / Math.max(rect.width, 1));
-      const fittedSize = Math.max(16.25, fontSize * Math.min(widthRatio, edgeRatio) * .965);
-      line.style.setProperty("--line-font-size", `${fittedSize.toFixed(2)}px`);
+    for (let pass = 0; pass < 7; pass += 1) {
+      let rect = line.getBoundingClientRect();
+      const leftOverflow = safeLeft - rect.left;
+      const rightOverflow = rect.right - safeRight;
+
+      if (leftOverflow <= 0 && rightOverflow <= 0 && rect.width <= availableWidth) break;
+
+      if (rightOverflow > 0) {
+        const margin = Number.parseFloat(line.style.marginLeft) || 0;
+        const removableShift = Math.min(margin, rightOverflow + 4);
+        line.style.marginLeft = `${Math.max(0, margin - removableShift)}px`;
+      }
+
       rect = line.getBoundingClientRect();
-    }
+      const stillTooWide = rect.width > availableWidth || rect.right > safeRight || rect.left < safeLeft;
 
-    const rightOverflow = rect.right - maxAllowedRight;
-    if (rightOverflow > 0) {
-      const currentMargin = Number.parseFloat(line.style.marginLeft) || 0;
-      line.style.marginLeft = `${Math.max(0, currentMargin - rightOverflow - 3)}px`;
+      if (stillTooWide) {
+        const widthRatio = availableWidth / Math.max(rect.width, 1);
+        const nextSize = Math.max(14.75, currentSize * Math.min(.965, widthRatio * .975));
+        currentSize = nextSize;
+        line.style.setProperty("--line-font-size", `${nextSize.toFixed(2)}px`);
+      }
+
       rect = line.getBoundingClientRect();
-    }
-
-    const leftOverflow = safeEdge - rect.left;
-    if (leftOverflow > 0) {
-      const currentMargin = Number.parseFloat(line.style.marginLeft) || 0;
-      line.style.marginLeft = `${currentMargin + leftOverflow + 2}px`;
+      if (rect.left < safeLeft) {
+        const margin = Number.parseFloat(line.style.marginLeft) || 0;
+        line.style.marginLeft = `${margin + (safeLeft - rect.left) + 2}px`;
+      }
     }
   };
 
   measureAndFit();
+  requestAnimationFrame(measureAndFit);
+  window.setTimeout(measureAndFit, 80);
+  window.setTimeout(measureAndFit, 240);
 }
 
 async function appendFrequencyStanza(poem, lines, stanzaIndex, token) {
@@ -469,10 +479,11 @@ async function runFrequencyBleedWriting(token) {
 
   const signatureWrap = document.createElement("section");
   signatureWrap.className = "frequency-signature";
-  const signature = createSpellLine("— jinx");
+  const signature = createSpellLine("-Jinx");
   signatureWrap.appendChild(signature);
   poem.appendChild(signatureWrap);
   if (!await writeSpellLine(signature, token, { msPerCharacter: 148 })) return;
+  fitFrequencyLineToScreen(signature, RED_POEM_STANZAS.length, 0);
 
   overlay.classList.add("frequency-message-sent");
   if (!await sleepFrequency(7000, token)) return;
