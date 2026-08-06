@@ -7398,7 +7398,7 @@ body {
   min-height: 1.65em;
   color: #ba431d;
   font-family: "Rock Salt", "Reenie Beanie", "Segoe Print", cursive;
-  font-size: var(--line-font-size, clamp(1.48rem, 5.8vw, 1.92rem));
+  font-size: var(--line-font-size, 24px);
   font-weight: 400;
   line-height: 1.46;
   letter-spacing: -.035em;
