@@ -7393,15 +7393,15 @@ body {
   justify-content: flex-end;
   width: 100%;
   max-width: 100%;
-  padding-right: 20px;
+  padding-right: 0;
   margin-top: 22px;
   transform: rotate(.8deg);
   transform-origin: right center;
 }
 .frequency-signature .frequency-spell-line {
-  margin-left: 0 !important;
-  margin-right: 0 !important;
-  max-width: calc(100% - 20px);
+  margin-left: auto;
+  margin-right: 0;
+  max-width: 100%;
 }
 .frequency-spell-line,
 .frequency-spell-title {
