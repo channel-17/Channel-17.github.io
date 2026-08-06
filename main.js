@@ -283,43 +283,59 @@ function fitFrequencyLineToScreen(line, stanzaIndex, lineIndex) {
 
   const safeEdge = 18;
   const availableWidth = Math.max(210, window.innerWidth - safeEdge * 2);
+  const text = line.getAttribute("aria-label") || line.textContent || "";
+  const characterCount = [...text].length;
 
-  // Deliberate journal staggering: some lines stay near the margin,
-  // some are pulled clearly inward. Long lines surrender shift before size.
+  /*
+    The journal should not typeset every thought at one volume.
+    Short lines get room to speak. Long lines naturally drop into
+    smaller handwriting so they can stay whole without touching an edge.
+  */
+  let fontSize;
+  if (characterCount <= 19) fontSize = 30.5;
+  else if (characterCount <= 25) fontSize = 27.5;
+  else if (characterCount <= 31) fontSize = 24.75;
+  else if (characterCount <= 37) fontSize = 22.5;
+  else fontSize = 20.25;
+
+  // Prevent every stanza from repeating the exact same visual rhythm.
+  const sizePulse = [1.04, .98, 1.01, .96, 1.02, .97, 1.00, .95];
+  fontSize *= sizePulse[(stanzaIndex * 4 + lineIndex) % sizePulse.length];
+  line.style.setProperty("--line-font-size", `${fontSize.toFixed(2)}px`);
+  line.dataset.fontTier =
+    characterCount <= 19 ? "xl" :
+    characterCount <= 25 ? "lg" :
+    characterCount <= 31 ? "md" :
+    characterCount <= 37 ? "sm" : "xs";
+
   const lineShiftPattern = [
-    8, 34, 18, 46,
-    26, 4, 42, 16,
-    38, 10, 50, 22,
-    14, 44, 6, 30
+    6, 34, 16, 44,
+    24, 2, 40, 14,
+    36, 8, 46, 20,
+    12, 42, 4, 28
   ];
   const patternIndex = (stanzaIndex * 4 + lineIndex) % lineShiftPattern.length;
   let desiredShift = lineShiftPattern[patternIndex];
 
-  line.style.setProperty("--line-font-size", "clamp(1.46rem, 5.65vw, 1.88rem)");
-  line.style.marginLeft = `${desiredShift}px`;
+  // A wide sentence earns less sideways travel than a short sentence.
+  if (characterCount >= 38) desiredShift *= .22;
+  else if (characterCount >= 32) desiredShift *= .45;
+  else if (characterCount >= 26) desiredShift *= .72;
 
+  line.style.marginLeft = `${Math.round(desiredShift)}px`;
   let rect = line.getBoundingClientRect();
-
-  // First reclaim the right-side shift. Only shrink when the actual words
-  // still cannot fit safely after the line has been pulled back.
   const maxAllowedRight = window.innerWidth - safeEdge;
-  let rightOverflow = rect.right - maxAllowedRight;
-  if (rightOverflow > 0) {
-    desiredShift = Math.max(0, desiredShift - rightOverflow - 3);
-    line.style.marginLeft = `${desiredShift}px`;
-    rect = line.getBoundingClientRect();
-  }
 
+  // The tiers do the visual work. This final fit is only an emergency guard.
   if (rect.width > availableWidth || rect.right > maxAllowedRight) {
-    const currentSize = Number.parseFloat(getComputedStyle(line).fontSize) || 24;
     const widthRatio = Math.min(1, availableWidth / Math.max(rect.width, 1));
     const edgeRatio = Math.min(1, (maxAllowedRight - rect.left) / Math.max(rect.width, 1));
-    const fittedSize = Math.max(17.75, currentSize * Math.min(widthRatio, edgeRatio) * 0.985);
+    const fittedSize = Math.max(18.25, fontSize * Math.min(widthRatio, edgeRatio) * .975);
     line.style.setProperty("--line-font-size", `${fittedSize.toFixed(2)}px`);
     rect = line.getBoundingClientRect();
   }
 
-  rightOverflow = rect.right - maxAllowedRight;
+  const rightOverflow = rect.right - maxAllowedRight;
   if (rightOverflow > 0) {
     const currentMargin = Number.parseFloat(line.style.marginLeft) || 0;
     line.style.marginLeft = `${Math.max(0, currentMargin - rightOverflow - 3)}px`;
@@ -332,7 +348,6 @@ function fitFrequencyLineToScreen(line, stanzaIndex, lineIndex) {
     line.style.marginLeft = `${currentMargin + leftOverflow + 2}px`;
   }
 }
-
 async function appendFrequencyStanza(poem, lines, stanzaIndex, token) {
   const stanza = document.createElement("section");
   stanza.className = "frequency-stanza";
