@@ -7382,7 +7382,7 @@ body {
 .frequency-stanza {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 7px;
   width: 100%;
   max-width: 100%;
   transform: rotate(var(--stanza-tilt));
@@ -7434,7 +7434,13 @@ body {
   transform-origin: 50% 72%;
 }
 .frequency-spell-space { width: .31em; }
+.frequency-emphasis-glyph {
+  transform-origin: 50% 82%;
+  margin-right: .015em;
+}
 .frequency-spell-glyph {
+  font-size: calc(1em * var(--glyph-size-factor, 1));
+  line-height: 1.02;
   opacity: 0;
   color: #2a0803;
   -webkit-text-stroke: .45px rgba(0,0,0,.98);
