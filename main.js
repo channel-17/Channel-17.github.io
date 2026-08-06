@@ -229,7 +229,10 @@ function createSpellLine(text, className = "frequency-spell-line") {
   line.className = className;
   line.setAttribute("aria-label", text);
 
-  [...text].forEach((character, index) => {
+  const characters = [...text];
+  const wordStarts = [];
+
+  characters.forEach((character, index) => {
     const glyph = document.createElement("span");
     const isSpace = character === " ";
     glyph.className = isSpace ? "frequency-spell-space" : "frequency-spell-glyph";
@@ -247,67 +250,58 @@ function createSpellLine(text, className = "frequency-spell-line") {
     glyph.style.setProperty("--fissure-width", `${8 + (seed % 13)}%`);
     glyph.style.setProperty("--ember-delay", `${(seed % 7) * 22}ms`);
     glyph.style.setProperty("--ember-drift", `${((seed % 9) - 4) * 0.34}px`);
+
+    if (!isSpace && (index === 0 || characters[index - 1] === " ")) {
+      wordStarts.push(index);
+    }
+
     line.appendChild(glyph);
   });
 
-  const glyphs = [...line.children];
-  const scaleRange = (start, length, factor, firstFactor = null) => {
-    for (let offset = 0; offset < length; offset += 1) {
-      const glyph = glyphs[start + offset];
-      if (!glyph || glyph.classList.contains("frequency-spell-space")) continue;
-      glyph.style.setProperty(
-        "--glyph-size-factor",
-        String(offset === 0 && firstFactor ? firstFactor : factor)
-      );
-      glyph.classList.add("frequency-emphasis-glyph");
-    }
-  };
-  const scaleWord = (word, factor, firstFactor = null) => {
-    const start = text.toLowerCase().indexOf(word.toLowerCase());
-    if (start >= 0) scaleRange(start, word.length, factor, firstFactor);
-  };
+  if (className === "frequency-spell-line") {
+    const glyphs = [...line.children];
+    const signature = [...text].reduce(
+      (total, character, index) => total + character.charCodeAt(0) * (index + 11),
+      text.length * 97
+    );
 
-  /*
-    Curated journal emphasis. This is deliberately sparse: a few thoughts
-    rupture the normal handwriting instead of every first word performing.
-  */
-  if (text === "Every visit turned a moment...") {
-    scaleRange(0, 5, 1.24, 1.72); // E = the shout; VERY stays large but readable.
-    line.dataset.expression = "every";
-    line.dataset.preferredShift = "4";
-  } else if (text === "Never crossed any lines.") {
-    scaleWord("Never", 1.14, 1.48);
-    line.dataset.preferredShift = "28";
-  } else if (text === "The silence got louder.") {
-    scaleWord("silence", 1.18);
-    scaleWord("louder", 1.10);
-    line.dataset.preferredShift = "18";
-  } else if (text === "I never lost you to him.") {
-    scaleWord("never", 1.20);
-    line.dataset.preferredShift = "36";
-  } else if (text === "I just never got to begin.") {
-    scaleWord("begin", 1.28, 1.42);
-    line.dataset.preferredShift = "20";
-  } else if (text === "Now I’m stuck with this palace...") {
-    scaleWord("Now", 1.18, 1.44);
-    scaleWord("palace", 1.12);
-    line.dataset.preferredShift = "8";
-  } else if (text === "Scrabbling for a genie.") {
-    scaleWord("Scrabbling", 1.12, 1.46);
-    line.dataset.preferredShift = "30";
-  } else if (text === "I feel like a punchline with no setup...") {
-    scaleWord("punchline", 1.15);
-    line.dataset.preferredShift = "2";
-  } else if (text === "I still picture your hair") {
-    scaleWord("still", 1.18);
-    scaleWord("hair", 1.14);
-    line.dataset.preferredShift = "34";
-  } else if (text === "The crown I had imagined.") {
-    scaleWord("crown", 1.22, 1.36);
-    line.dataset.preferredShift = "18";
-  } else if (text === "The one I never could keep.") {
-    scaleWord("keep", 1.28, 1.40);
-    line.dataset.preferredShift = "40";
+    /*
+      Organic journal emphasis: occasional word openings swell because of the
+      line's own deterministic rhythm. No specific poem word is hard-coded.
+      Reopening the journal produces the same handwriting every time.
+    */
+    const candidates = wordStarts.filter((index, candidateIndex) => {
+      if (text.length >= 38 && candidateIndex > 0) return false;
+      return /[A-Za-zÀ-ÿ&]/.test(characters[index] || "");
+    });
+
+    let emphasisCount = 0;
+    if (candidates.length && signature % 5 <= 1) emphasisCount = 1;
+    if (candidates.length >= 4 && text.length <= 31 && signature % 19 === 0) emphasisCount = 2;
+
+    const chosen = [];
+    for (let pick = 0; pick < emphasisCount; pick += 1) {
+      const candidateIndex = (signature + pick * 7) % candidates.length;
+      const characterIndex = candidates[candidateIndex];
+      if (!chosen.includes(characterIndex)) chosen.push(characterIndex);
+    }
+
+    chosen.forEach((characterIndex, emphasisIndex) => {
+      const glyph = glyphs[characterIndex];
+      if (!glyph) return;
+
+      const longLinePenalty = text.length >= 34 ? 0.16 : text.length >= 28 ? 0.08 : 0;
+      const factor = Math.max(
+        1.20,
+        1.43 + ((signature + characterIndex * 13 + emphasisIndex * 17) % 25) / 100 - longLinePenalty
+      );
+
+      glyph.style.setProperty("--glyph-size-factor", factor.toFixed(2));
+      glyph.style.setProperty("--glyph-lift", `${-1.4 - ((signature + characterIndex) % 6) * 0.34}px`);
+      glyph.classList.add("frequency-emphasis-glyph", "frequency-organic-initial");
+    });
+
+    line.dataset.rhythm = String(signature % 9);
   }
 
   return line;
@@ -342,74 +336,83 @@ async function writeSpellLine(line, token, options = {}) {
 function fitFrequencyLineToScreen(line, stanzaIndex, lineIndex) {
   if (!line?.isConnected) return;
 
-  const safeEdge = 14;
+  const safeEdge = 16;
   const availableWidth = Math.max(210, window.innerWidth - safeEdge * 2);
   const text = line.getAttribute("aria-label") || line.textContent || "";
   const characterCount = [...text].length;
+  const rhythm = Number.parseInt(line.dataset.rhythm || "0", 10);
 
   /*
-    Real size hierarchy, not tiny variations. The sentence length chooses the
-    starting tier; the rare oversized letters then create the hand-written drama.
+    Sentence length chooses the broad tier. Rhythm then moves neighboring lines
+    far enough apart to feel handwritten instead of like one uniform font size.
   */
   let fontSize;
-  if (characterCount <= 16) fontSize = 34;
-  else if (characterCount <= 21) fontSize = 30.5;
-  else if (characterCount <= 27) fontSize = 27;
-  else if (characterCount <= 33) fontSize = 23.75;
-  else if (characterCount <= 39) fontSize = 21;
-  else fontSize = 18.75;
+  if (characterCount <= 15) fontSize = 35.5;
+  else if (characterCount <= 20) fontSize = 31.5;
+  else if (characterCount <= 25) fontSize = 28;
+  else if (characterCount <= 30) fontSize = 25;
+  else if (characterCount <= 35) fontSize = 22;
+  else if (characterCount <= 40) fontSize = 19.5;
+  else fontSize = 17.75;
 
-  const sizePulse = [1.06, .97, 1.02, .94, 1.04, .96, 1.00, .92];
-  fontSize *= sizePulse[(stanzaIndex * 4 + lineIndex) % sizePulse.length];
+  const sizePulse = [1.08, .94, 1.01, .90, 1.05, .96, 1.11, .92, 1.00];
+  fontSize *= sizePulse[(rhythm + stanzaIndex + lineIndex) % sizePulse.length];
   line.style.setProperty("--line-font-size", `${fontSize.toFixed(2)}px`);
+
   line.dataset.fontTier =
-    characterCount <= 16 ? "xxl" :
-    characterCount <= 21 ? "xl" :
-    characterCount <= 27 ? "lg" :
-    characterCount <= 33 ? "md" :
-    characterCount <= 39 ? "sm" : "xs";
+    characterCount <= 15 ? "xxl" :
+    characterCount <= 20 ? "xl" :
+    characterCount <= 25 ? "lg" :
+    characterCount <= 30 ? "md" :
+    characterCount <= 35 ? "sm" :
+    characterCount <= 40 ? "xs" : "xxs";
 
   const lineShiftPattern = [
-    4, 42, 15, 56,
-    27, 7, 49, 20,
-    38, 11, 58, 25,
-    17, 46, 3, 33
+    2, 36, 13, 50,
+    24, 6, 43, 17,
+    31, 9, 54, 21,
+    14, 40, 1, 28
   ];
-  const patternIndex = (stanzaIndex * 4 + lineIndex) % lineShiftPattern.length;
-  let desiredShift = line.dataset.preferredShift !== undefined
-    ? Number.parseFloat(line.dataset.preferredShift)
-    : lineShiftPattern[patternIndex];
+  const patternIndex = (stanzaIndex * 4 + lineIndex + rhythm) % lineShiftPattern.length;
+  let desiredShift = lineShiftPattern[patternIndex];
 
-  if (characterCount >= 40) desiredShift *= .12;
-  else if (characterCount >= 34) desiredShift *= .30;
-  else if (characterCount >= 28) desiredShift *= .58;
+  if (characterCount >= 41) desiredShift *= .05;
+  else if (characterCount >= 36) desiredShift *= .18;
+  else if (characterCount >= 31) desiredShift *= .38;
+  else if (characterCount >= 27) desiredShift *= .64;
 
   line.style.marginLeft = `${Math.round(desiredShift)}px`;
-  let rect = line.getBoundingClientRect();
-  const maxAllowedRight = window.innerWidth - safeEdge;
 
-  // Emergency fit only. Line tiers and word emphasis remain the main design.
-  if (rect.width > availableWidth || rect.right > maxAllowedRight) {
-    const widthRatio = Math.min(1, availableWidth / Math.max(rect.width, 1));
-    const edgeRatio = Math.min(1, (maxAllowedRight - rect.left) / Math.max(rect.width, 1));
-    const fittedSize = Math.max(17.25, fontSize * Math.min(widthRatio, edgeRatio) * .97);
-    line.style.setProperty("--line-font-size", `${fittedSize.toFixed(2)}px`);
-    rect = line.getBoundingClientRect();
-  }
+  const measureAndFit = () => {
+    let rect = line.getBoundingClientRect();
+    const maxAllowedRight = window.innerWidth - safeEdge;
 
-  const rightOverflow = rect.right - maxAllowedRight;
-  if (rightOverflow > 0) {
-    const currentMargin = Number.parseFloat(line.style.marginLeft) || 0;
-    line.style.marginLeft = `${Math.max(0, currentMargin - rightOverflow - 2)}px`;
-    rect = line.getBoundingClientRect();
-  }
+    if (rect.width > availableWidth || rect.right > maxAllowedRight) {
+      const widthRatio = Math.min(1, availableWidth / Math.max(rect.width, 1));
+      const edgeRoom = Math.max(120, maxAllowedRight - rect.left);
+      const edgeRatio = Math.min(1, edgeRoom / Math.max(rect.width, 1));
+      const fittedSize = Math.max(16.25, fontSize * Math.min(widthRatio, edgeRatio) * .965);
+      line.style.setProperty("--line-font-size", `${fittedSize.toFixed(2)}px`);
+      rect = line.getBoundingClientRect();
+    }
 
-  const leftOverflow = safeEdge - rect.left;
-  if (leftOverflow > 0) {
-    const currentMargin = Number.parseFloat(line.style.marginLeft) || 0;
-    line.style.marginLeft = `${currentMargin + leftOverflow + 2}px`;
-  }
+    const rightOverflow = rect.right - maxAllowedRight;
+    if (rightOverflow > 0) {
+      const currentMargin = Number.parseFloat(line.style.marginLeft) || 0;
+      line.style.marginLeft = `${Math.max(0, currentMargin - rightOverflow - 3)}px`;
+      rect = line.getBoundingClientRect();
+    }
+
+    const leftOverflow = safeEdge - rect.left;
+    if (leftOverflow > 0) {
+      const currentMargin = Number.parseFloat(line.style.marginLeft) || 0;
+      line.style.marginLeft = `${currentMargin + leftOverflow + 2}px`;
+    }
+  };
+
+  measureAndFit();
 }
+
 async function appendFrequencyStanza(poem, lines, stanzaIndex, token) {
   const stanza = document.createElement("section");
   stanza.className = "frequency-stanza";
