@@ -7385,6 +7385,7 @@ body {
   gap: 7px;
   width: 100%;
   max-width: 100%;
+  margin-top: var(--stanza-extra-gap, 0px);
   transform: rotate(var(--stanza-tilt));
   transform-origin: left center;
 }
@@ -7393,8 +7394,8 @@ body {
   justify-content: flex-end;
   width: 100%;
   max-width: 100%;
-  padding-right: 0;
-  margin-top: 22px;
+  padding-right: 24px;
+  margin-top: 30px;
   transform: rotate(.8deg);
   transform-origin: right center;
 }
