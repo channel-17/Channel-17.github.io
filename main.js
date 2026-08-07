@@ -3288,21 +3288,51 @@ function ensureTawnyaProfileOverlay() {
     legal: {
       label: "LEGAL",
       pages: {
-        overview: {
-          label: "OVERVIEW",
-          html: `<div class="c17-dossier-kicker">COUNTY RECORDS MIRROR // RESTRICTED</div><h2>Legal Overview</h2><p class="c17-dossier-subline">Documented local incidents // no prison history</p><section class="c17-criminal-hero"><div class="c17-media-placeholder c17-media-placeholder-booking"><span>×</span><b>BOOKING PHOTO</b><small>TAWNYA GREY</small></div><div class="c17-dossier-body"><p><b>Classification:</b> repeat misdemeanor subject / local nuisance.</p><p><b>Known pattern:</b> rapid escalation, refusal to retreat, retaliatory contact.</p><p><b>Felony convictions:</b> none located.</p></div></section>`
+        mugshots: {
+          label: "MUGSHOTS",
+          html: `
+            <div class="c17-dossier-kicker">COUNTY INTAKE ARCHIVE // SUBJECT GREY</div>
+            <h2>Booking Photography</h2>
+            <p class="c17-dossier-subline">Recovered intake images. Expressions remain uncooperative.</p>
+            <div class="c17-legal-mug-grid">
+              <figure class="c17-legal-photo-slot"><div class="c17-media-placeholder c17-media-placeholder-booking"><span>×</span><b>FRONT / INTAKE</b><small>PHOTO ASSET PENDING</small></div><figcaption>Booking clerk note: “Asked subject to stop smiling.” Subject reportedly asked why.</figcaption></figure>
+              <figure class="c17-legal-photo-slot"><div class="c17-media-placeholder c17-media-placeholder-booking"><span>×</span><b>LEFT PROFILE</b><small>PHOTO ASSET PENDING</small></div><figcaption>Second frame requested after subject turned before being instructed.</figcaption></figure>
+              <figure class="c17-legal-photo-slot c17-legal-photo-wide"><div class="c17-media-placeholder c17-media-placeholder-booking"><span>×</span><b>PROPERTY / POST-INCIDENT</b><small>PHOTO ASSET PENDING</small></div><figcaption>Evidence technician notation: “No, the skateboard is not being returned until release.”</figcaption></figure>
+            </div>`
         },
-        reports: {
-          label: "REPORTS",
-          html: `<div class="c17-dossier-kicker">INCIDENT ARCHIVE</div><h2>Reports</h2><div class="c17-record-stack"><article><span>A&amp;B / DOMESTIC</span><b>Incident File</b><p>Subject retaliated after being struck by partner.</p><q>He hit me first. I finished the conversation.</q></article><article><span>DISORDERLY</span><b>Parking Lot Incident</b><p>Confrontation continued after repeated requests to disperse.</p><q>Then stop asking me the same stupid question.</q></article><article><span>PROPERTY DAMAGE</span><b>Private Rail Incident</b><p>Attempted boardslide on posted private handrail.</p><q>Well, I almost fuckin’ did it.</q></article></div>`
+        incidents: {
+          label: "INCIDENTS",
+          html: `
+            <div class="c17-dossier-kicker">LOCAL INCIDENT INDEX // REPEAT CONTACT</div>
+            <h2>Incident Reports</h2>
+            <div class="c17-incident-stack">
+              <article><header><span>CASE 08-09-A</span><b>Parking Lot Diplomacy Failure</b></header><p><strong>Dispatch:</strong> verbal dispute escalating near shopping carts.</p><p><strong>Subject statement:</strong> “I was leaving until she said ‘excuse me’ like that.”</p><footer>DISPOSITION: everybody eventually went home angry.</footer></article>
+              <article><header><span>CASE 04-22-C</span><b>Unauthorized Handrail Research</b></header><p><strong>Complaint:</strong> repeated skateboard attempts on posted private rail.</p><p><strong>Subject statement:</strong> “You put a rail there. What did you think was gonna happen?”</p><footer>PROPERTY DAMAGE: emotionally, yes. Structurally, inconclusive.</footer></article>
+              <article><header><span>CASE 11-03-B</span><b>Karaoke Venue Disturbance</b></header><p><strong>Call reason:</strong> microphone not surrendered at end of song.</p><p><strong>Subject statement:</strong> “The second verse is literally the best part.”</p><footer>NO CHARGES // microphone recovered.</footer></article>
+            </div>`
         },
-        booking: {
-          label: "BOOKING",
-          html: `<div class="c17-dossier-kicker">INTAKE PHOTOGRAPHY</div><h2>Booking</h2><div class="c17-booking-grid"><div class="c17-media-placeholder c17-media-placeholder-booking"><span>×</span><b>FRONT VIEW</b><small>IMAGE PENDING</small></div><div class="c17-media-placeholder c17-media-placeholder-booking"><span>×</span><b>PROFILE VIEW</b><small>IMAGE PENDING</small></div></div>`
+        fights: {
+          label: "FIGHTS",
+          html: `
+            <div class="c17-dossier-kicker">ALTERCATION CROSS-REFERENCE // NON-FELONY</div>
+            <h2>Fight Index</h2>
+            <div class="c17-fight-ledger">
+              <article><span>LOCATION</span><b>Backyard cookout</b><p>Argument reportedly began over whether lighter ownership transfers after three consecutive uses.</p><em>Officer conclusion: no.</em></article>
+              <article><span>LOCATION</span><b>Outside convenience store</b><p>Subject attempted to “finish the conversation” after another party threw a fountain drink.</p><em>Evidence recovered: one lid, no cup.</em></article>
+              <article><span>LOCATION</span><b>House party kitchen</b><p>Physical contact interrupted when both parties stopped to argue over who knocked over the crockpot.</p><em>Primary casualty: buffalo chicken dip.</em></article>
+            </div>`
         },
         notes: {
-          label: "NOTES",
-          html: `<div class="c17-dossier-kicker">INTERNAL ANNOTATIONS</div><h2>Officer Notes</h2><div class="c17-record-stack"><article><p>Subject may remain pleasant until perceiving disrespect, obstruction, delay, ignorance, or an unnecessary tone.</p></article><article><p>Do not position between subject and intended target during an active dispute.</p></article><article><p>Subject frequently argues intervening personnel “should not have got in the fucking way.”</p></article></div>`
+          label: "OFFICER NOTES",
+          html: `
+            <div class="c17-dossier-kicker">INTERNAL NOTES // FIELD PERSONNEL</div>
+            <h2>Handling Notes</h2>
+            <div class="c17-record-stack">
+              <article><span>COMMUNICATION</span><b>Do not say “calm down.”</b><p>Archive search indicates this phrase has never once improved conditions.</p></article>
+              <article><span>POSITIONING</span><b>Maintain a clear exit route.</b><p>For subject, bystanders, and whichever employee is still holding a clipboard.</p></article>
+              <article><span>PROPERTY</span><b>Do not confiscate cigarettes and then begin a long explanation.</b><p>Choose one problem at a time.</p></article>
+              <article><span>GENERAL</span><b>Subject is usually technically correct about one detail.</b><p>Unfortunately, she will locate that detail before you do.</p></article>
+            </div>`
         }
       }
     },
@@ -3386,11 +3416,8 @@ function ensureTawnyaProfileOverlay() {
   tawnyaProfileOverlay.setAttribute("aria-hidden", "true");
   tawnyaProfileOverlay.innerHTML = `
     <article class="c17-tawnya-dossier" role="dialog" aria-modal="true" aria-label="Tawnya Grey restricted file">
-      <header class="c17-dossier-header">
-        <span>GOVERNMENT.CA // RESTRICTED ASSET FILE</span>
-        <button class="c17-tawnya-profile-close" type="button" aria-label="close Tawnya profile">×</button>
-      </header>
       <nav class="c17-dossier-top-tabs" aria-label="File categories"></nav>
+      <button class="c17-tawnya-profile-close" type="button" aria-label="close Tawnya profile">×</button>
       <div class="c17-dossier-stage">
         <main class="c17-dossier-document"></main>
         <nav class="c17-dossier-side-tabs" aria-label="Section pages"></nav>
@@ -3442,6 +3469,12 @@ function ensureTawnyaProfileOverlay() {
     });
 
     documentPanel.innerHTML = dossier[activeCategory].pages[activePage].html;
+
+    const systemMark = document.createElement("span");
+    systemMark.className = "c17-system-paper-mark";
+    systemMark.setAttribute("aria-hidden", "true");
+    systemMark.innerHTML = "<i></i>";
+    documentPanel.appendChild(systemMark);
 
     const mainPhoto = documentPanel.querySelector("[data-tawnya-main-photo]");
     if (mainPhoto) {
@@ -3505,6 +3538,11 @@ function openTawnyaProfile() {
   syncTawnyaDossierToVisibleScreen();
   overlay.classList.add("open");
   overlay.setAttribute("aria-hidden", "false");
+  document.documentElement.classList.add("tawnya-dossier-open");
+  document.body.classList.add("tawnya-dossier-open");
+  overlay.scrollTop = 0;
+  const dossier = overlay.querySelector(".c17-tawnya-dossier");
+  if (dossier) dossier.scrollTop = 0;
 
   if (!overlay.dataset.viewportSyncBound) {
     overlay.dataset.viewportSyncBound = "true";
@@ -3546,6 +3584,8 @@ function closeTawnyaProfile() {
   if (!tawnyaProfileOverlay) return;
   tawnyaProfileOverlay.classList.remove("open");
   tawnyaProfileOverlay.setAttribute("aria-hidden", "true");
+  document.documentElement.classList.remove("tawnya-dossier-open");
+  document.body.classList.remove("tawnya-dossier-open");
   retireTawnyaHeart();
 }
 
