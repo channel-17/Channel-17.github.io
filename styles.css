@@ -8970,26 +8970,303 @@ html.frost-dead-world body {
 
 
 /* =========================================================
-   TAWNYA DOSSIER — MAIN PHOTO CONTAINMENT
-   Repair only: keep the recovered profile image inside its
-   intended square on iPhone. No dossier redesign.
+   TAWNYA GREY — CLASSIFIED BLUE DOSSIER
+   Square-edged HMC descendant.
+   Dating profile opens first; Tawnya treats it as real.
 ========================================================= */
 
-.c17-tawnya-dossier .c17-dating-hero-expanded {
+.c17-dossier-overlay {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 2147483646 !important;
+  display: grid !important;
+  place-items: center !important;
+  padding:
+    max(12px, env(safe-area-inset-top))
+    10px
+    max(12px, env(safe-area-inset-bottom)) !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  overflow: hidden !important;
+  background:
+    radial-gradient(circle at 50% 15%, rgba(54, 127, 208, .17), transparent 32%),
+    linear-gradient(180deg, rgba(0, 5, 15, .90), rgba(0, 2, 8, .97)) !important;
+  transition: opacity .18s ease, visibility .18s ease !important;
+}
+
+.c17-dossier-overlay.open {
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+}
+
+.c17-tawnya-dossier {
+  --tg-ice: #d8f2ff;
+  --tg-cyan: #76c9ff;
+  --tg-blue: #2f78c7;
+  --tg-cobalt: #174d9c;
+  --tg-deep: #08275f;
+  --tg-navy: #03142f;
+  --tg-black: #010713;
+  --tg-line: rgba(180, 225, 255, .34);
+  --tg-line-soft: rgba(180, 225, 255, .16);
+
+  position: relative !important;
+  display: grid !important;
+  grid-template-rows: auto auto minmax(0, 1fr) auto !important;
+  width: min(96vw, 430px) !important;
+  height: min(94svh, 790px) !important;
+  max-width: 430px !important;
+  max-height: 790px !important;
   min-width: 0 !important;
-  max-width: 100% !important;
+  overflow: hidden !important;
+  isolation: isolate !important;
+  color: #eef9ff !important;
+  border: 1px solid rgba(191, 229, 255, .58) !important;
+  border-radius: 2px !important;
+  background:
+    linear-gradient(rgba(108, 182, 239, .045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(108, 182, 239, .035) 1px, transparent 1px),
+    radial-gradient(circle at 18% 4%, rgba(148, 213, 255, .18), transparent 27%),
+    radial-gradient(circle at 92% 18%, rgba(47, 120, 199, .24), transparent 32%),
+    linear-gradient(155deg, #123f7b 0%, #0a326c 24%, #061f4d 58%, #03142f 100%) !important;
+  background-size: 28px 28px, 28px 28px, auto, auto, auto !important;
+  box-shadow:
+    0 0 0 1px rgba(4, 20, 47, .95),
+    0 18px 0 rgba(0, 8, 28, .56),
+    0 34px 80px rgba(0, 0, 0, .84),
+    inset 0 1px 0 rgba(255, 255, 255, .16),
+    inset 0 -50px 90px rgba(0, 7, 28, .30) !important;
+  font-family: Arial, Helvetica, sans-serif !important;
+}
+
+.c17-tawnya-dossier::before,
+.c17-tawnya-dossier::after {
+  content: "" !important;
+  position: absolute !important;
+  pointer-events: none !important;
+  z-index: 0 !important;
+}
+
+.c17-tawnya-dossier::before {
+  inset: 8px !important;
+  border: 1px solid rgba(157, 214, 255, .10) !important;
+  box-shadow: inset 0 0 0 1px rgba(0, 18, 54, .24) !important;
+}
+
+.c17-tawnya-dossier::after {
+  left: 0 !important;
+  right: 0 !important;
+  top: 84px !important;
+  height: 1px !important;
+  background: linear-gradient(90deg, transparent, rgba(160, 221, 255, .28), transparent) !important;
+}
+
+.c17-tawnya-dossier > * {
+  position: relative !important;
+  z-index: 2 !important;
+}
+
+.c17-dossier-header {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  min-height: 52px !important;
+  padding: 12px 14px 10px 16px !important;
+  border-bottom: 1px solid var(--tg-line) !important;
+  background:
+    linear-gradient(90deg, rgba(1, 10, 28, .72), rgba(20, 67, 130, .48), rgba(1, 10, 28, .72)) !important;
+}
+
+.c17-dossier-header > span {
+  max-width: calc(100% - 46px) !important;
+  color: rgba(216, 242, 255, .78) !important;
+  font-family: "Courier New", monospace !important;
+  font-size: .56rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 1.35px !important;
+  line-height: 1.2 !important;
+  text-transform: uppercase !important;
+}
+
+.c17-tawnya-profile-close {
+  appearance: none !important;
+  display: grid !important;
+  place-items: center !important;
+  flex: 0 0 auto !important;
+  width: 31px !important;
+  height: 31px !important;
+  padding: 0 !important;
+  border: 1px solid rgba(196, 232, 255, .36) !important;
+  border-radius: 1px !important;
+  background: rgba(2, 15, 42, .72) !important;
+  color: #f2fbff !important;
+  font-size: 20px !important;
+  line-height: 1 !important;
+  cursor: pointer !important;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.035) !important;
+}
+
+.c17-dossier-top-tabs {
+  display: flex !important;
+  gap: 0 !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  scrollbar-width: none !important;
+  border-bottom: 1px solid var(--tg-line) !important;
+  background: rgba(0, 12, 35, .68) !important;
+  -webkit-overflow-scrolling: touch !important;
+}
+
+.c17-dossier-top-tabs::-webkit-scrollbar,
+.c17-dossier-side-tabs::-webkit-scrollbar,
+.c17-dossier-document::-webkit-scrollbar {
+  width: 0 !important;
+  height: 0 !important;
+}
+
+.c17-dossier-top-tabs button {
+  appearance: none !important;
+  flex: 0 0 auto !important;
+  min-height: 39px !important;
+  padding: 0 13px !important;
+  border: 0 !important;
+  border-right: 1px solid rgba(156, 215, 255, .15) !important;
+  border-radius: 0 !important;
+  background: rgba(3, 19, 51, .54) !important;
+  color: rgba(205, 235, 255, .54) !important;
+  font-family: "Courier New", monospace !important;
+  font-size: .54rem !important;
+  font-weight: 900 !important;
+  letter-spacing: 1.05px !important;
+  text-transform: uppercase !important;
+  white-space: nowrap !important;
+}
+
+.c17-dossier-top-tabs button.active {
+  color: #ffffff !important;
+  background:
+    linear-gradient(180deg, rgba(70, 151, 224, .84), rgba(21, 77, 154, .92)) !important;
+  box-shadow:
+    inset 0 -2px 0 #9ad9ff,
+    inset 0 1px 0 rgba(255,255,255,.18) !important;
+}
+
+.c17-dossier-stage {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) 46px !important;
+  min-height: 0 !important;
+  overflow: hidden !important;
+  background:
+    linear-gradient(90deg, rgba(2, 16, 44, .16), transparent 22%, transparent 78%, rgba(2, 16, 44, .18)) !important;
+}
+
+.c17-dossier-document {
+  min-width: 0 !important;
+  min-height: 0 !important;
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+  padding: 20px 18px 36px !important;
+  -webkit-overflow-scrolling: touch !important;
+  overscroll-behavior: contain !important;
+}
+
+.c17-dossier-side-tabs {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: stretch !important;
+  gap: 0 !important;
+  min-width: 0 !important;
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+  border-left: 1px solid var(--tg-line) !important;
+  background: linear-gradient(180deg, rgba(2, 17, 48, .78), rgba(1, 10, 29, .90)) !important;
+}
+
+.c17-dossier-side-tabs button {
+  appearance: none !important;
+  min-height: 74px !important;
+  padding: 8px 4px !important;
+  border: 0 !important;
+  border-bottom: 1px solid rgba(164, 216, 255, .14) !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  color: rgba(202, 233, 255, .48) !important;
+  font-family: "Courier New", monospace !important;
+  font-size: .49rem !important;
+  font-weight: 900 !important;
+  letter-spacing: .85px !important;
+  line-height: 1.15 !important;
+  text-transform: uppercase !important;
+  writing-mode: vertical-rl !important;
+  transform: rotate(180deg) !important;
+}
+
+.c17-dossier-side-tabs button.active {
+  color: #fff !important;
+  background: linear-gradient(180deg, #245ea7, #123d84) !important;
+  box-shadow: inset 2px 0 0 #9bdcff !important;
+}
+
+.c17-dossier-footer {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 10px !important;
+  min-height: 34px !important;
+  padding: 7px 12px !important;
+  border-top: 1px solid var(--tg-line) !important;
+  background: rgba(0, 10, 30, .82) !important;
+  color: rgba(193, 227, 251, .44) !important;
+  font-family: "Courier New", monospace !important;
+  font-size: .47rem !important;
+  letter-spacing: .75px !important;
+  white-space: nowrap !important;
+}
+
+.c17-dossier-path {
+  min-width: 0 !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
+/* Dating landing page — intentionally human, sparse and sincere. */
+.c17-tawnya-dating-card {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: stretch !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  margin: 0 auto !important;
 }
 
 .c17-tawnya-dossier .c17-dating-main-figure {
   position: relative !important;
   display: block !important;
-  width: min(58vw, 230px) !important;
-  min-width: 0 !important;
-  max-width: 230px !important;
-  aspect-ratio: 1 / 1 !important;
-  margin-left: auto !important;
-  margin-right: auto !important;
+  width: min(100%, 282px) !important;
+  max-width: 282px !important;
+  aspect-ratio: 4 / 5 !important;
+  margin: 0 auto !important;
   overflow: hidden !important;
+  border: 1px solid rgba(205, 237, 255, .66) !important;
+  border-radius: 1px !important;
+  background: #061b43 !important;
+  box-shadow:
+    9px 9px 0 rgba(1, 11, 31, .46),
+    0 18px 38px rgba(0,0,0,.28),
+    inset 0 0 0 1px rgba(255,255,255,.08) !important;
+}
+
+.c17-tawnya-dossier .c17-dating-main-figure::before {
+  content: "" !important;
+  position: absolute !important;
+  inset: 7px !important;
+  z-index: 2 !important;
+  pointer-events: none !important;
+  border: 1px solid rgba(180, 224, 255, .16) !important;
 }
 
 .c17-tawnya-dossier .c17-dating-main-figure > img.c17-tawnya-main-photo,
@@ -9007,6 +9284,7 @@ html.frost-dead-world body {
   object-fit: cover !important;
   object-position: 50% 50% !important;
   transform: none !important;
+  border-radius: 0 !important;
 }
 
 .c17-tawnya-dossier .c17-dating-main-figure figcaption {
@@ -9014,14 +9292,193 @@ html.frost-dead-world body {
   left: 0 !important;
   right: 0 !important;
   bottom: 0 !important;
-  z-index: 2 !important;
-  max-width: 100% !important;
+  z-index: 4 !important;
+  padding: 12px 13px 11px !important;
+  color: #fff !important;
+  background:
+    linear-gradient(180deg, transparent, rgba(0, 9, 29, .88) 46%, rgba(0, 7, 24, .98)) !important;
+  font-size: .86rem !important;
+  font-weight: 900 !important;
+  letter-spacing: .25px !important;
+  text-align: left !important;
+  text-shadow: 0 1px 5px rgba(0,0,0,.78) !important;
+}
+
+.c17-tawnya-identity {
+  width: min(100%, 282px) !important;
+  margin: 18px auto 0 !important;
+  padding: 0 1px 14px !important;
+  border-bottom: 1px solid rgba(166, 220, 255, .22) !important;
+}
+
+.c17-tawnya-identity h2 {
+  margin: 0 !important;
+  color: #fff !important;
+  font-size: 1.72rem !important;
+  font-weight: 800 !important;
+  letter-spacing: -.55px !important;
+  line-height: 1 !important;
+  text-transform: none !important;
+}
+
+.c17-tawnya-identity p {
+  display: flex !important;
+  align-items: center !important;
+  flex-wrap: wrap !important;
+  gap: 8px !important;
+  margin: 8px 0 0 !important;
+  color: rgba(215, 240, 255, .72) !important;
+  font-size: .76rem !important;
+  font-weight: 600 !important;
+  line-height: 1.25 !important;
+}
+
+.c17-tawnya-identity i {
+  display: block !important;
+  width: 3px !important;
+  height: 3px !important;
+  border-radius: 50% !important;
+  background: #7ccfff !important;
+  box-shadow: 0 0 7px rgba(124,207,255,.45) !important;
+}
+
+.c17-tawnya-about {
+  width: min(100%, 282px) !important;
+  margin: 18px auto 0 !important;
+  padding: 14px 15px 16px !important;
+  border: 1px solid rgba(164, 219, 255, .24) !important;
+  border-radius: 1px !important;
+  background:
+    linear-gradient(135deg, rgba(41, 105, 183, .25), rgba(5, 28, 70, .58)) !important;
+  box-shadow:
+    inset 3px 0 0 rgba(116, 199, 255, .62),
+    inset 0 1px 0 rgba(255,255,255,.06) !important;
+}
+
+.c17-tawnya-about h3 {
+  margin: 0 0 9px !important;
+  color: #a9ddff !important;
+  font-family: "Courier New", monospace !important;
+  font-size: .60rem !important;
+  font-weight: 900 !important;
+  letter-spacing: 1.3px !important;
+  text-transform: uppercase !important;
+}
+
+.c17-tawnya-about p {
+  margin: 0 !important;
+  color: rgba(243, 250, 255, .94) !important;
+  font-size: .88rem !important;
+  line-height: 1.48 !important;
+}
+
+/* Remaining dossier pages inherit the same classified architecture. */
+.c17-dossier-document > h2 {
+  margin: 5px 0 12px !important;
+  color: #fff !important;
+  font-size: 1.35rem !important;
+  line-height: 1.05 !important;
+}
+
+.c17-dossier-kicker {
+  margin-bottom: 8px !important;
+  color: rgba(143, 207, 248, .62) !important;
+  font-family: "Courier New", monospace !important;
+  font-size: .52rem !important;
+  font-weight: 900 !important;
+  letter-spacing: 1.05px !important;
+  line-height: 1.25 !important;
+  text-transform: uppercase !important;
+}
+
+.c17-dossier-subline,
+.c17-dossier-body,
+.c17-record-stack article p,
+.c17-dating-statement p,
+.c17-dating-prompts p {
+  color: rgba(231, 245, 255, .84) !important;
+}
+
+.c17-record-stack,
+.c17-dating-prompts,
+.c17-photo-placeholder-grid {
+  display: grid !important;
+  gap: 9px !important;
+}
+
+.c17-record-stack article,
+.c17-dating-prompts article,
+.c17-incomplete-box,
+.c17-dating-statement,
+.c17-media-placeholder,
+.c17-criminal-hero,
+.c17-booking-grid,
+.c17-dossier-document blockquote {
+  border: 1px solid rgba(164, 219, 255, .22) !important;
+  border-radius: 1px !important;
+  background: rgba(6, 31, 76, .50) !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.045) !important;
+}
+
+.c17-record-stack article,
+.c17-dating-prompts article,
+.c17-dating-statement,
+.c17-incomplete-box,
+.c17-dossier-document blockquote {
+  padding: 12px !important;
+}
+
+.c17-record-stack article b,
+.c17-dating-prompts article b {
+  color: #fff !important;
+}
+
+.c17-record-stack article > span,
+.c17-dating-prompts article > span {
+  color: #7ccfff !important;
+  font-family: "Courier New", monospace !important;
+  font-size: .50rem !important;
+  letter-spacing: 1px !important;
+}
+
+.c17-media-placeholder {
+  min-height: 118px !important;
+  display: grid !important;
+  place-items: center !important;
+  padding: 12px !important;
+  color: rgba(215, 240, 255, .68) !important;
+  text-align: center !important;
+}
+
+.c17-media-placeholder > span {
+  color: rgba(123, 204, 255, .62) !important;
+  font-size: 1.5rem !important;
 }
 
 @media (max-width: 430px) {
-  .c17-tawnya-dossier .c17-dating-main-figure {
-    width: min(56vw, 218px) !important;
-    max-width: 218px !important;
+  .c17-tawnya-dossier {
+    width: calc(100vw - 12px) !important;
+    height: calc(100svh - 14px) !important;
+  }
+
+  .c17-dossier-document {
+    padding: 17px 14px 30px !important;
+  }
+
+  .c17-dossier-stage {
+    grid-template-columns: minmax(0, 1fr) 42px !important;
+  }
+
+  .c17-dossier-side-tabs button {
+    min-height: 67px !important;
+    font-size: .46rem !important;
+  }
+
+  .c17-tawnya-dossier .c17-dating-main-figure,
+  .c17-tawnya-identity,
+  .c17-tawnya-about {
+    width: min(100%, 270px) !important;
+    max-width: 270px !important;
   }
 }
 
