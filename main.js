@@ -3571,7 +3571,8 @@ function revealTawnyaFromGreyHeart(heart, direction = "from-left") {
   tawnya.style.setProperty("--c17-object-freeze-ms", `${TAWNYA_TRANSFORM_MS}ms`);
 
   const image = document.createElement("img");
-  loadFrozenAssetClean(image, TAWNYA_ASSET);
+  // Guarantee Tawnya has a real source immediately on iPhone.
+  image.src = TAWNYA_ASSET;
   image.alt = "Tawnya Grey";
   image.decoding = "sync";
   image.style.setProperty("display", "block", "important");
@@ -3689,6 +3690,10 @@ function revealTawnyaFromGreyHeart(heart, direction = "from-left") {
     tawnya.classList.add("tawnya-complete");
     tawnya.style.setProperty("pointer-events", "auto", "important");
     tawnya.disabled = false;
+    image.style.setProperty("opacity", "1", "important");
+    image.style.setProperty("visibility", "visible", "important");
+    image.style.setProperty("clip-path", "none", "important");
+    image.style.setProperty("transform", "none", "important");
   }, TAWNYA_TRANSFORM_MS + 120);
 
   frostSwapTimers.push(timer);
@@ -3718,6 +3723,16 @@ function revealTawnyaFromGreyHeart(heart, direction = "from-left") {
     openTawnyaProfile();
     document.dispatchEvent(new CustomEvent("c17:tawnya-open"));
   };
+
+  tawnya.addEventListener("click", event => {
+    if (tawnyaRetired || tawnya.disabled || !tawnya.classList.contains("tawnya-complete")) return;
+    event.preventDefault();
+    event.stopPropagation();
+    cancelTawnyaHold();
+    tawnya.classList.add("tawnya-thawed");
+    openTawnyaProfile();
+    document.dispatchEvent(new CustomEvent("c17:tawnya-open"));
+  });
 
   tawnya.addEventListener("pointerdown", event => {
     if (
