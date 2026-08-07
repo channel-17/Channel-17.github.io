@@ -8980,13 +8980,16 @@ html.frost-dead-world body {
   position: fixed !important;
   inset: 0 !important;
   z-index: 2147483646 !important;
-  display: grid !important;
-  place-items: center !important;
-  padding: max(7px, env(safe-area-inset-top)) 6px max(7px, env(safe-area-inset-bottom)) !important;
+  display: block !important;
+  padding: max(4px, env(safe-area-inset-top)) 4px max(14px, env(safe-area-inset-bottom)) !important;
   opacity: 0 !important;
   visibility: hidden !important;
   pointer-events: none !important;
-  overflow: hidden !important;
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+  -webkit-overflow-scrolling: touch !important;
+  overscroll-behavior-y: contain !important;
+  touch-action: pan-y !important;
   background: radial-gradient(circle at 50% 12%, rgba(40,112,198,.17), transparent 33%), rgba(0,3,10,.95) !important;
   transition: opacity .18s ease, visibility .18s ease !important;
 }
@@ -9010,14 +9013,12 @@ html.frost-dead-world body {
   position: relative !important;
   display: block !important;
   width: min(97vw, 430px) !important;
-  height: min(97svh, 820px) !important;
+  min-height: calc(100svh - 8px) !important;
+  height: auto !important;
   max-width: 430px !important;
-  max-height: 820px !important;
-  overflow-x: hidden !important;
-  overflow-y: auto !important;
-  -webkit-overflow-scrolling: touch !important;
-  overscroll-behavior: contain !important;
-  scrollbar-width: none !important;
+  max-height: none !important;
+  margin: 0 auto 16px !important;
+  overflow: visible !important;
   isolation: isolate !important;
   color: #eef9ff !important;
   border: 1px solid rgba(199,233,255,.55) !important;
@@ -9051,68 +9052,69 @@ html.frost-dead-world body {
 .c17-tawnya-dossier > * { position: relative !important; z-index: 2 !important; }
 
 .c17-dossier-header {
-  position: sticky !important;
-  top: 0 !important;
-  z-index: 20 !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: space-between !important;
-  min-height: 50px !important;
-  padding: 11px 12px 9px 14px !important;
-  border-bottom: 1px solid var(--tg-line) !important;
-  background: linear-gradient(90deg, rgba(1,10,28,.97), rgba(19,66,129,.96), rgba(1,10,28,.97)) !important;
-  backdrop-filter: blur(10px) !important;
+  position: absolute !important;
+  inset: 0 0 auto 0 !important;
+  z-index: 40 !important;
+  display: block !important;
+  width: 100% !important;
+  height: 0 !important;
+  min-height: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+  pointer-events: none !important;
 }
 
 .c17-dossier-header > span {
-  max-width: calc(100% - 45px) !important;
-  color: rgba(216,242,255,.76) !important;
-  font-family: "Courier New", monospace !important;
-  font-size: .54rem !important;
-  font-weight: 700 !important;
-  letter-spacing: 1.15px !important;
-  line-height: 1.2 !important;
-  text-transform: uppercase !important;
+  display: none !important;
 }
 
 .c17-tawnya-profile-close {
   appearance: none !important;
+  position: absolute !important;
+  right: 7px !important;
+  top: 52px !important;
+  z-index: 50 !important;
   display: grid !important;
   place-items: center !important;
-  width: 31px !important;
-  height: 31px !important;
+  width: 28px !important;
+  height: 28px !important;
   padding: 0 !important;
-  border: 1px solid rgba(196,232,255,.34) !important;
+  border: 1px solid rgba(196,232,255,.28) !important;
   border-radius: 0 !important;
-  background: rgba(2,15,42,.80) !important;
-  color: #fff !important;
-  font-size: 20px !important;
+  background: rgba(2,15,42,.76) !important;
+  color: rgba(255,255,255,.90) !important;
+  font-size: 18px !important;
   line-height: 1 !important;
+  pointer-events: auto !important;
 }
 
 /* Five main categories live across the TOP. */
 .c17-dossier-top-tabs {
   position: sticky !important;
-  top: 50px !important;
-  z-index: 19 !important;
+  top: 0 !important;
+  z-index: 35 !important;
   display: grid !important;
   grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+  align-items: end !important;
   width: 100% !important;
+  height: 51px !important;
   overflow: visible !important;
   border-bottom: 1px solid var(--tg-line) !important;
-  background: rgba(0,12,35,.96) !important;
+  background: linear-gradient(180deg, rgba(0,0,0,0) 0 9px, rgba(0,12,35,.98) 9px 100%) !important;
   backdrop-filter: blur(10px) !important;
 }
 
 .c17-dossier-top-tabs button {
   appearance: none !important;
+  align-self: end !important;
   min-width: 0 !important;
-  min-height: 43px !important;
+  height: 42px !important;
   padding: 5px 2px !important;
-  border: 0 !important;
-  border-right: 1px solid rgba(156,215,255,.14) !important;
+  border: 1px solid rgba(156,215,255,.18) !important;
+  border-bottom: 0 !important;
   border-radius: 0 !important;
-  background: rgba(3,19,51,.72) !important;
+  background: rgba(3,19,51,.90) !important;
   color: rgba(205,235,255,.48) !important;
   font-family: "Courier New", monospace !important;
   font-size: clamp(.40rem, 1.65vw, .52rem) !important;
@@ -9122,14 +9124,17 @@ html.frost-dead-world body {
   text-transform: uppercase !important;
   white-space: normal !important;
   text-align: center !important;
+  transform: translateY(0) !important;
 }
 
 .c17-dossier-top-tabs button:last-child { border-right: 0 !important; }
 
 .c17-dossier-top-tabs button.active {
+  height: 51px !important;
   color: #fff !important;
-  background: linear-gradient(180deg, rgba(64,145,219,.95), rgba(18,70,145,.98)) !important;
-  box-shadow: inset 0 -3px 0 #a7ddff, inset 0 1px 0 rgba(255,255,255,.18) !important;
+  background: linear-gradient(180deg, rgba(72,157,231,.98), rgba(18,70,145,.99)) !important;
+  border-color: rgba(184,228,255,.52) !important;
+  box-shadow: inset 0 -3px 0 #a7ddff, inset 0 1px 0 rgba(255,255,255,.22), 0 -5px 18px rgba(70,153,224,.12) !important;
 }
 
 /* Content + secondary pages. The right rail is NOT a main category rail. */
@@ -9149,14 +9154,15 @@ html.frost-dead-world body {
 
 .c17-dossier-side-tabs {
   position: sticky !important;
-  top: 93px !important;
+  top: 51px !important;
   align-self: start !important;
   display: flex !important;
   flex-direction: column !important;
   width: 54px !important;
-  max-height: calc(100svh - 116px) !important;
+  max-height: calc(100svh - 66px) !important;
   overflow-x: hidden !important;
   overflow-y: auto !important;
+  -webkit-overflow-scrolling: touch !important;
   scrollbar-width: none !important;
   border-left: 1px solid var(--tg-line) !important;
   border-bottom: 1px solid var(--tg-line-soft) !important;
@@ -9361,7 +9367,9 @@ html.frost-dead-world body {
 @media (max-width: 430px) {
   .c17-tawnya-dossier {
     width: calc(100vw - 8px) !important;
-    height: calc(100svh - 8px) !important;
+    min-height: calc(100svh - 8px) !important;
+    height: auto !important;
+    max-height: none !important;
   }
   .c17-dossier-stage { grid-template-columns: minmax(0, 1fr) 50px !important; }
   .c17-dossier-side-tabs { width: 50px !important; }
@@ -11479,3 +11487,59 @@ img[data-c17-clean-frozen-asset="true"],
 .laughing-carl p { font:900 .68rem/1 Arial,sans-serif; letter-spacing:2px; }
 @keyframes employmentPaperIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:none} }
 body.employment-open { overflow:hidden; }
+
+
+/* =========================================================
+   TAWNYA RECOVERY — VISIBLE + TAPPABLE FINAL AUTHORITY
+========================================================= */
+.c17-tawnya-reveal,
+.c17-tawnya-reveal.tawnya-rewriting,
+.c17-tawnya-reveal.tawnya-complete {
+  position: fixed !important;
+  width: 72px !important;
+  height: 72px !important;
+  min-width: 72px !important;
+  min-height: 72px !important;
+  max-width: 72px !important;
+  max-height: 72px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 2px solid rgba(226,247,255,.82) !important;
+  border-radius: 50% !important;
+  overflow: hidden !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  clip-path: none !important;
+  transform: translate(-50%, -50%) !important;
+  background: rgba(3,22,52,.20) !important;
+  box-shadow: 0 0 0 1px rgba(51,124,165,.52) !important;
+  isolation: isolate !important;
+  touch-action: manipulation !important;
+}
+.c17-tawnya-reveal img {
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 2 !important;
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  max-width: none !important;
+  max-height: none !important;
+  margin: 0 !important;
+  object-fit: cover !important;
+  object-position: 50% 50% !important;
+  border-radius: 50% !important;
+  visibility: visible !important;
+  background: transparent !important;
+}
+.c17-tawnya-reveal.tawnya-complete {
+  pointer-events: auto !important;
+  cursor: pointer !important;
+}
+.c17-tawnya-reveal.tawnya-complete img {
+  opacity: 1 !important;
+  visibility: visible !important;
+  clip-path: none !important;
+  transform: none !important;
+  filter: none !important;
+}
