@@ -3268,48 +3268,23 @@ function ensureTawnyaProfileOverlay() {
       label: "DATING",
       pages: {
         profile: {
-          label: "MAIN PROFILE",
+          label: "PROFILE",
           html: `
-            <div class="c17-dossier-kicker">RECOVERED DATING PROFILE // SUBJECT CONTROLLED</div>
-            <section class="c17-dating-hero c17-dating-hero-expanded">
+            <section class="c17-tawnya-dating-card">
               <figure class="c17-dating-main-figure">
-                <img class="c17-dating-photo c17-tawnya-main-photo" src="Tawnya.profile.main" data-tawnya-main-photo alt="Tawnya Grey main dating profile photo">
-                <figcaption>PRIMARY PROFILE IMAGE // RECOVERED</figcaption>
+                <img class="c17-dating-photo c17-tawnya-main-photo" src="Tawnya.profile.main" data-tawnya-main-photo alt="Tawnya Grey dating profile photo">
+                <figcaption>Still that bitch!</figcaption>
               </figure>
-              <div class="c17-dating-copy">
+
+              <div class="c17-tawnya-identity">
                 <h2>Tawnya Grey</h2>
-                <p class="c17-dossier-subline">27 · Western Massachusetts · active 14 minutes ago</p>
-                <div class="c17-relationship-stamp">RELATIONSHIP STATUS: IN A RELATIONSHIP WITH BAD LUCK &amp; SHIT CHOICES</div>
-                <dl class="c17-fact-grid">
-                  <div><dt>LOOKING FOR</dt><dd>Someone who stays</dd></div>
-                  <div><dt>FAVORITE DRINK</dt><dd>Frozen margaritas</dd></div>
-                  <div><dt>LOVE LANGUAGE</dt><dd>Showing up when it matters</dd></div>
-                  <div><dt>PERSONAL LAW</dt><dd>Love finds a way</dd></div>
-                </dl>
+                <p><span>27</span><i aria-hidden="true"></i><span>Western Massachusetts</span></p>
               </div>
-            </section>
-            <section class="c17-dating-section">
-              <h3>PROFILE SUMMARY</h3>
-              <p class="c17-dossier-body">Owns her trailer. Owns her truck. Pays her bills. Skates, sings karaoke, keeps a ball python, and believes everything tastes better over charcoal.</p>
-              <p class="c17-dossier-body">People call her heartless because she gets loud when she is hurt. They are usually wrong about the first part.</p>
-            </section>
-            <div class="c17-incomplete-box"><b>PROFILE 86% COMPLETE</b><br>Missing: five-year plan, verified emergency contact, and evidence of sound romantic judgment.</div>`
-        },
-        about: {
-          label: "ABOUT ME",
-          html: `
-            <div class="c17-dossier-kicker">SUBJECT AUTHORED // LANGUAGE PRESERVED</div>
-            <h2>About Me</h2>
-            <section class="c17-dating-statement">
-              <p>I am not everybody’s cup of tea, and I do not want to be. I have a paid-off single-wide, a faded green Silverado, a snake, a skateboard, and enough stories to make your mother nervous.</p>
-              <p>I work, I handle my own shit, and I love harder than people expect. I sing karaoke like the room owes me money. I cook outside whenever I can. I have a temper, but I also have a heart. Do not confuse the first one for proof that the second one is missing.</p>
-              <p>I am looking for somebody funny, loyal, and steady. Somebody who does not disappear the second life gets ugly. Somebody who can sit on a trailer porch, eat something burnt around the edges, and still call it a good night.</p>
-              <p class="c17-tawnya-signoff">Go fuck yourself. Respectfully.</p>
-            </section>
-            <section class="c17-dating-prompts">
-              <article><span>PROMPT 01</span><b>The quickest way to my heart is…</b><p>Be honest, bring charcoal, and do not act embarrassed when I sing.</p></article>
-              <article><span>PROMPT 02</span><b>A perfect first date is…</b><p>Back-road drive in the Silverado, cheap food, a place to skate, then karaoke until somebody asks us to leave.</p></article>
-              <article><span>PROMPT 03</span><b>Something people get wrong about me…</b><p>I am not cold. I just learned early that crying in front of the wrong person gives them instructions.</p></article>
+
+              <section class="c17-tawnya-about">
+                <h3>About me</h3>
+                <p>Just a girl… trying to make it out here in this crazy space. I honestly have no idea what I’m lookin’ for, but I’m open to meeting somebody real. Somebody who can make me laugh, keep up with me, and isn’t scared of a little chaos. I work hard, love hard, and I’m probably gonna tell you exactly what I’m thinking. Just be real with me and we’ll figure the rest out.</p>
+              </section>
             </section>`
         },
         photos: {
