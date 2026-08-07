@@ -3264,104 +3264,44 @@ function ensureTawnyaProfileOverlay() {
   if (tawnyaProfileOverlay && tawnyaProfileOverlay.isConnected) return tawnyaProfileOverlay;
 
   const dossier = {
-    dating: {
-      label: "DATING",
+    overview: {
+      label: "OVERVIEW",
       pages: {
-        profile: {
-          label: "PROFILE",
-          html: `
-            <section class="c17-tawnya-dating-card">
-              <figure class="c17-dating-main-figure">
-                <img class="c17-dating-photo c17-tawnya-main-photo" src="Tawnya.profile.main" data-tawnya-main-photo alt="Tawnya Grey dating profile photo">
-                <figcaption>Still that bitch!</figcaption>
-              </figure>
-
-              <div class="c17-tawnya-identity">
-                <h2>Tawnya Grey</h2>
-                <p><span>27</span><i aria-hidden="true"></i><span>Western Massachusetts</span></p>
-              </div>
-
-              <section class="c17-tawnya-about">
-                <h3>About me</h3>
-                <p>Just a girl… trying to make it out here in this crazy space. I honestly have no idea what I’m lookin’ for, but I’m open to meeting somebody real. Somebody who can make me laugh, keep up with me, and isn’t scared of a little chaos. I work hard, love hard, and I’m probably gonna tell you exactly what I’m thinking. Just be real with me and we’ll figure the rest out.</p>
-              </section>
-            </section>`
+        summary: {
+          label: "SUMMARY",
+          html: `<div class="c17-dossier-kicker">RECOVERED SUBJECT FILE</div><h2>Tawnya Grey</h2><p class="c17-dossier-subline">Western Massachusetts // active civilian record</p><div class="c17-record-stack"><article><span>STATUS</span><b>OPEN FILE</b><p>Cross-linked identity, employment, civil and local incident records recovered.</p></article><article><span>FILE NOTE</span><b>SUBJECT PRESENTS AS FULLY HUMAN</b><p>No awareness of archive classification detected.</p></article></div>`
         },
-        photos: {
-          label: "PHOTOS",
-          html: `
-            <div class="c17-dossier-kicker">SUBJECT-SELECTED MEDIA // PLACEHOLDERS ACTIVE</div>
-            <h2>Dating Photos</h2>
-            <div class="c17-photo-placeholder-grid c17-dating-photo-grid">
-              <div class="c17-media-placeholder"><span>×</span><b>02 — TRUCK</b><small>1991 SILVERADO // FADED GREEN</small></div>
-              <div class="c17-media-placeholder"><span>×</span><b>03 — SKATEPARK</b><small>BOARD / NIGHT SESSION</small></div>
-              <div class="c17-media-placeholder"><span>×</span><b>04 — KARAOKE</b><small>MICROPHONE / OPEN MIC</small></div>
-              <div class="c17-media-placeholder"><span>×</span><b>05 — BALL PYTHON</b><small>HOME PHOTO</small></div>
-              <div class="c17-media-placeholder"><span>×</span><b>06 — BIKINI BARISTA</b><small>ARCHIVE IMAGE</small></div>
-              <div class="c17-media-placeholder"><span>×</span><b>07 — TRAILER PORCH</b><small>SUBJECT RESIDENCE</small></div>
-            </div>
-            <p class="c17-dossier-body c17-placeholder-note">Every X is a future image slot. The page stays intact when the finished asset replaces it.</p>`
+        identity: {
+          label: "IDENTITY",
+          html: `<div class="c17-dossier-kicker">IDENTITY RECORD</div><h2>Identity</h2><dl class="c17-fact-grid c17-wide-facts"><div><dt>FULL NAME</dt><dd>Tawnya Grey</dd></div><div><dt>AGE</dt><dd>27</dd></div><div><dt>BIRTHDAY</dt><dd>August 9</dd></div><div><dt>BIRTHPLACE</dt><dd>Dorchester, Massachusetts</dd></div><div><dt>RESIDENCE</dt><dd>Western Massachusetts</dd></div><div><dt>CHILDREN</dt><dd>None</dd></div></dl>`
         },
-        likes: {
-          label: "LIKES",
-          html: `
-            <div class="c17-dossier-kicker">PREFERENCE DATA // SUBJECT VERIFIED</div>
-            <h2>Things I Actually Like</h2>
-            <div class="c17-record-stack">
-              <article><b>Skateboarding</b><p>Lifelong obsession. Childhood plan: become the next Tony Hawk.</p></article>
-              <article><b>Charcoal-grilled food</b><p>Burgers, dogs, chicken, steak, lobster. If it tastes a little like smoke, it is probably right.</p></article>
-              <article><b>Karaoke</b><p>Local regular. Better singer than most people are prepared for.</p></article>
-              <article><b>Frozen margaritas</b><p>The icier the better.</p></article>
-              <article><b>Late drives and porch nights</b><p>No itinerary. No performance. Just somewhere to breathe.</p></article>
-              <article><b>Animals</b><p>Especially the ones people misunderstand.</p></article>
-            </div>`
+        property: {
+          label: "PROPERTY",
+          html: `<div class="c17-dossier-kicker">REGISTERED PROPERTY</div><h2>Known Property</h2><div class="c17-record-stack"><article><b>Residence</b><p>Owner-occupied single-wide trailer.</p></article><article><b>Vehicle</b><p>1991 Chevrolet Silverado pickup // sun-faded green // operational.</p></article></div>`
         },
-        looking: {
-          label: "LOOKING FOR",
-          html: `
-            <div class="c17-dossier-kicker">MATCH PREFERENCES // HUMAN LANGUAGE</div>
-            <h2>What I’m Looking For</h2>
-            <div class="c17-record-stack">
-              <article><span>REQUIRED</span><b>Funny without being cruel</b><p>Make her laugh. Do not make somebody else smaller to do it.</p></article>
-              <article><span>REQUIRED</span><b>Loyal when nobody is watching</b><p>Not performative loyalty. The real kind.</p></article>
-              <article><span>STRONGLY PREFERRED</span><b>Can fix something</b><p>A truck, a loose step, a bad night. Any of the above counts.</p></article>
-              <article><span>STRONGLY PREFERRED</span><b>Not embarrassed by where she comes from</b><p>The trailer, the jobs, the accent, and the history come as one package.</p></article>
-              <article><span>NONNEGOTIABLE</span><b>Stays when life stops being cute</b><p>Primary fear: being left after finally trusting somebody.</p></article>
-            </div>`
-        },
-        dealbreakers: {
-          label: "DEAL BREAKERS",
-          html: `
-            <div class="c17-dossier-kicker">AUTOMATIC REJECTION CONDITIONS</div>
-            <h2>Do Not Waste My Time</h2>
-            <div class="c17-record-stack c17-dealbreaker-stack">
-              <article><span>REJECT</span><b>Liars</b><p>Especially the ones who call missing details “technically not lying.”</p></article>
-              <article><span>REJECT</span><b>Cheaters and disappearing acts</b><p>She has already completed this course.</p></article>
-              <article><span>REJECT</span><b>Calling her crazy during an argument</b><p>Immediate escalation probability: severe.</p></article>
-              <article><span>REJECT</span><b>Condescension</b><p>Do not talk down to her about her work, home, money, truck, or vocabulary.</p></article>
-              <article><span>REJECT</span><b>Anyone cruel to animals</b><p>No appeal process.</p></article>
-              <article><span>REJECT</span><b>People who want a project</b><p>She is looking for a partner, not a supervisor.</p></article>
-            </div>`
+        media: {
+          label: "MEDIA",
+          html: `<div class="c17-dossier-kicker">RECOVERED VISUAL RECORD</div><h2>Media</h2><div class="c17-photo-placeholder-grid"><div class="c17-media-placeholder"><span>×</span><b>TRAILER EXTERIOR</b><small>FRAME PENDING</small></div><div class="c17-media-placeholder"><span>×</span><b>1991 SILVERADO</b><small>FRAME PENDING</small></div><div class="c17-media-placeholder"><span>×</span><b>SKATEPARK</b><small>FRAME PENDING</small></div></div>`
         }
       }
     },
-    criminal: {
-      label: "CRIMINAL",
+    legal: {
+      label: "LEGAL",
       pages: {
         overview: {
           label: "OVERVIEW",
-          html: `<div class="c17-dossier-kicker">COUNTY RECORDS MIRROR // RESTRICTED</div><h2>Criminal Overview</h2><p class="c17-dossier-subline">17 documented incidents · no prison history</p><section class="c17-criminal-hero"><div class="c17-media-placeholder c17-media-placeholder-booking"><span>×</span><b>BOOKING PHOTO</b><small>TAWNYA GREY</small></div><div class="c17-dossier-body"><p><b>Classification:</b> repeat misdemeanor subject / local nuisance.</p><p><b>Known pattern:</b> rapid escalation, refusal to retreat, retaliatory contact, hostile explanation.</p><p><b>Felony convictions:</b> none located.</p><p><b>County lockup:</b> multiple overnight holds.</p><aside>Officer note: subject is known by first name to multiple responding departments.</aside></div></section>`
+          html: `<div class="c17-dossier-kicker">COUNTY RECORDS MIRROR // RESTRICTED</div><h2>Legal Overview</h2><p class="c17-dossier-subline">Documented local incidents // no prison history</p><section class="c17-criminal-hero"><div class="c17-media-placeholder c17-media-placeholder-booking"><span>×</span><b>BOOKING PHOTO</b><small>TAWNYA GREY</small></div><div class="c17-dossier-body"><p><b>Classification:</b> repeat misdemeanor subject / local nuisance.</p><p><b>Known pattern:</b> rapid escalation, refusal to retreat, retaliatory contact.</p><p><b>Felony convictions:</b> none located.</p></div></section>`
         },
         reports: {
-          label: "17 REPORTS",
-          html: `<div class="c17-dossier-kicker">INCIDENT ARCHIVE</div><h2>17 Reports</h2><div class="c17-record-stack"><article><span>A&amp;B / DOMESTIC</span><b>Report 17-03291</b><p>Subject retaliated after being struck by partner.</p><q>He hit me first. I finished the conversation.</q></article><article><span>DISORDERLY</span><b>Report 17-01844</b><p>Parking-lot confrontation continued after six requests to disperse.</p><q>Then stop asking me the same stupid question.</q></article><article><span>PROPERTY DAMAGE</span><b>Report 17-04102</b><p>Attempted boardslide on posted private handrail.</p><q>Well, I almost fuckin’ did it.</q></article></div>`
+          label: "REPORTS",
+          html: `<div class="c17-dossier-kicker">INCIDENT ARCHIVE</div><h2>Reports</h2><div class="c17-record-stack"><article><span>A&amp;B / DOMESTIC</span><b>Incident File</b><p>Subject retaliated after being struck by partner.</p><q>He hit me first. I finished the conversation.</q></article><article><span>DISORDERLY</span><b>Parking Lot Incident</b><p>Confrontation continued after repeated requests to disperse.</p><q>Then stop asking me the same stupid question.</q></article><article><span>PROPERTY DAMAGE</span><b>Private Rail Incident</b><p>Attempted boardslide on posted private handrail.</p><q>Well, I almost fuckin’ did it.</q></article></div>`
         },
         booking: {
           label: "BOOKING",
           html: `<div class="c17-dossier-kicker">INTAKE PHOTOGRAPHY</div><h2>Booking</h2><div class="c17-booking-grid"><div class="c17-media-placeholder c17-media-placeholder-booking"><span>×</span><b>FRONT VIEW</b><small>IMAGE PENDING</small></div><div class="c17-media-placeholder c17-media-placeholder-booking"><span>×</span><b>PROFILE VIEW</b><small>IMAGE PENDING</small></div></div>`
         },
         notes: {
-          label: "OFFICER NOTES",
+          label: "NOTES",
           html: `<div class="c17-dossier-kicker">INTERNAL ANNOTATIONS</div><h2>Officer Notes</h2><div class="c17-record-stack"><article><p>Subject may remain pleasant until perceiving disrespect, obstruction, delay, ignorance, or an unnecessary tone.</p></article><article><p>Do not position between subject and intended target during an active dispute.</p></article><article><p>Subject frequently argues intervening personnel “should not have got in the fucking way.”</p></article></div>`
         }
       }
@@ -3369,34 +3309,35 @@ function ensureTawnyaProfileOverlay() {
     personal: {
       label: "PERSONAL",
       pages: {
-        summary: {
-          label: "SUMMARY",
-          html: `<div class="c17-dossier-kicker">IDENTITY RECORD</div><h2>Personal</h2><dl class="c17-fact-grid c17-wide-facts"><div><dt>FULL NAME</dt><dd>Tawnya Grey</dd></div><div><dt>AGE</dt><dd>27</dd></div><div><dt>BIRTHDAY</dt><dd>August 9</dd></div><div><dt>BIRTHPLACE</dt><dd>Dorchester, Massachusetts</dd></div><div><dt>RESIDENCE</dt><dd>Owner-occupied single-wide trailer</dd></div><div><dt>CHILDREN</dt><dd>None</dd></div></dl><p class="c17-dossier-body">Raised herself through an unstable childhood, worked from a young age, and later relocated to a small town in western Massachusetts.</p>`
+        profile: {
+          label: "PROFILE",
+          html: `<div class="c17-dossier-kicker">PERSONAL FILE</div><h2>Tawnya Grey</h2><p class="c17-dossier-body">Raised herself through an unstable childhood, worked from a young age, and later relocated to a small town in western Massachusetts.</p>`
         },
-        vehicle: {
-          label: "VEHICLE",
-          html: `<div class="c17-dossier-kicker">REGISTERED PROPERTY</div><h2>Vehicle</h2><div class="c17-record-stack"><article><b>1991 Chevrolet Silverado pickup</b><p><b>Color:</b> sun-faded green</p><p><b>Condition:</b> operational; visible rust and cosmetic damage.</p><q>She ain’t pretty, but she gets me home.</q></article></div>`
+        career: {
+          label: "CAREER",
+          html: `<div class="c17-dossier-kicker">EMPLOYMENT HISTORY</div><h2>Career</h2><div class="c17-record-stack"><article><span>CURRENT / RECENT</span><b>Service &amp; hourly work</b><p>Subject has worked consistently from a young age and treats work as survival before identity.</p></article><article><span>WORK STYLE</span><b>Direct, fast, independent</b><p>Low tolerance for micromanagement or being spoken down to.</p></article></div>`
         },
-        work: {
-          label: "WORK",
-          html: `<div class="c17-dossier-kicker">EMPLOYMENT EXTRACTION</div><h2>Work History</h2><p class="c17-dossier-body">Food service, retail, warehouse, cleaning, factory, customer service, gas station, bartending, bikini barista work, and current subscriber-supported content. Subject prioritizes bill payment and independence over career identity.</p>`
-        }
-      }
-    },
-    assessment: {
-      label: "ASSESSMENT",
-      pages: {
-        summary: {
-          label: "SUMMARY",
-          html: `<div class="c17-dossier-kicker">BEHAVIORAL ASSESSMENT</div><h2>Assessment</h2><div class="c17-record-stack"><article><b>Primary risk factor</b><p>Rapid emotional escalation.</p></article><article><b>Primary protective factor</b><p>Strong empathy toward animals, close friends, and vulnerable people.</p></article><article><b>Common misconception</b><p>Subject is heartless. Available evidence suggests the opposite.</p></article></div>`
+        dating: {
+          label: "LOVE & DATING",
+          html: `
+            <section class="c17-tawnya-dating-card">
+              <figure class="c17-dating-main-figure">
+                <img class="c17-dating-photo c17-tawnya-main-photo" src="Tawnya.profile.main" data-tawnya-main-photo alt="Tawnya Grey dating profile photo">
+                <figcaption>Still that bitch!</figcaption>
+              </figure>
+              <div class="c17-tawnya-identity">
+                <h2>Tawnya Grey</h2>
+                <p><span>27</span><i aria-hidden="true"></i><span>Western Massachusetts</span></p>
+              </div>
+              <section class="c17-tawnya-about">
+                <h3>About me:</h3>
+                <p>Just a girl… trying to make it out here in this crazy space. I honestly have no idea what im lookin for but im open to meeting somebody real. Somebody who can make me laugh, keep up with me, and isn’t scared of a little chaos. I work hard, love hard, and I’m probably gonna tell you exactly what I’m thinking. Just be real with me and we’ll figure the rest out.</p>
+              </section>
+            </section>`
         },
-        fear: {
-          label: "FEAR / REGRET",
-          html: `<div class="c17-dossier-kicker">RESTRICTED PSYCHOLOGICAL NOTES</div><h2>Fear / Regret</h2><div class="c17-record-stack"><article><b>Primary fear</b><p>Never finding the love she has always wanted.</p></article><article><b>Primary regret</b><p>Telling her mother “I hate you.” One of the only statements she wishes she could take back.</p></article></div>`
-        },
-        talent: {
-          label: "TALENT",
-          html: `<div class="c17-dossier-kicker">UNREALIZED CAPABILITY</div><h2>Talent</h2><div class="c17-record-stack"><article><b>Singing</b><p>Exceptional natural vocalist. Performs at local karaoke and open mic nights.</p></article><article><b>Skateboarding</b><p>Skating since childhood. Survival and bills displaced the professional ambition.</p></article></div>`
+        friends: {
+          label: "FRIENDS & FAMILY",
+          html: `<div class="c17-dossier-kicker">SOCIAL CONNECTIONS</div><h2>Friends &amp; Family</h2><div class="c17-record-stack"><article><span>KNOWN CONNECTION</span><b>Thomas Doggon Foolery</b><p>Relationship record present.</p></article><article><span>KNOWN CONNECTION</span><b>Joseph Mahhmah</b><p>Friend record present.</p></article></div>`
         }
       }
     },
@@ -3409,7 +3350,7 @@ function ensureTawnyaProfileOverlay() {
         },
         imaging: {
           label: "IMAGING",
-          html: `<div class="c17-dossier-kicker">DIAGNOSTIC IMAGING ARCHIVE</div><h2>X-Rays</h2><div class="c17-photo-placeholder-grid"><div class="c17-media-placeholder c17-media-placeholder-medical"><span>×</span><b>LEFT WRIST</b><small>X-RAY PLACEHOLDER</small></div><div class="c17-media-placeholder c17-media-placeholder-medical"><span>×</span><b>RIGHT ANKLE</b><small>X-RAY PLACEHOLDER</small></div><div class="c17-media-placeholder c17-media-placeholder-medical"><span>×</span><b>RIB SERIES</b><small>IMAGE PLACEHOLDER</small></div><div class="c17-media-placeholder c17-media-placeholder-medical"><span>×</span><b>DENTAL</b><small>IMAGE PLACEHOLDER</small></div></div>`
+          html: `<div class="c17-dossier-kicker">DIAGNOSTIC IMAGING ARCHIVE</div><h2>X-Rays</h2><div class="c17-photo-placeholder-grid"><div class="c17-media-placeholder c17-media-placeholder-medical"><span>×</span><b>LEFT WRIST</b><small>X-RAY PLACEHOLDER</small></div><div class="c17-media-placeholder c17-media-placeholder-medical"><span>×</span><b>RIGHT ANKLE</b><small>X-RAY PLACEHOLDER</small></div><div class="c17-media-placeholder c17-media-placeholder-medical"><span>×</span><b>RIB SERIES</b><small>IMAGE PLACEHOLDER</small></div></div>`
         },
         intake: {
           label: "INTAKE",
@@ -3417,20 +3358,20 @@ function ensureTawnyaProfileOverlay() {
         }
       }
     },
-    government: {
-      label: "GOV NOTES",
+    archive: {
+      label: "ARCHIVE",
       pages: {
         status: {
           label: "STATUS",
-          html: `<div class="c17-dossier-kicker">INTERNAL USE ONLY</div><h2>Monitoring Status</h2><p class="c17-dossier-body"><b>Classification:</b> low strategic threat / high incident-generation potential.</p><p class="c17-dossier-body"><b>Reason retained:</b> recurrent presence across unrelated reports, unstable contact network, and anomalous frequency linkage.</p><div class="c17-incomplete-box"><b>FILE CORRUPTION DETECTED</b><br>Several sections remain incomplete.</div>`
+          html: `<div class="c17-dossier-kicker">INTERNAL USE ONLY</div><h2>Archive Status</h2><p class="c17-dossier-body"><b>Classification:</b> low strategic threat / high incident-generation potential.</p><p class="c17-dossier-body"><b>Reason retained:</b> recurrent presence across unrelated reports, unstable contact network, and anomalous frequency linkage.</p><div class="c17-incomplete-box"><b>FILE CORRUPTION DETECTED</b><br>Several sections remain incomplete.</div>`
         },
         analyst: {
-          label: "ANALYST NOTE",
+          label: "ANALYST",
           html: `<div class="c17-dossier-kicker">ANALYST COMMENTARY</div><h2>Analyst Note</h2><blockquote>I genuinely cannot determine whether Grey is a public nuisance, catastrophically unlucky, or the only honest person in the county.</blockquote>`
         },
         surveillance: {
           label: "SURVEILLANCE",
-          html: `<div class="c17-dossier-kicker">FIELD OBSERVATION // VISUAL EVIDENCE</div><h2>Surveillance</h2><div class="c17-photo-placeholder-grid"><div class="c17-media-placeholder c17-media-placeholder-surveillance"><span>×</span><b>TRAILER EXTERIOR</b><small>FRAME PENDING</small></div><div class="c17-media-placeholder c17-media-placeholder-surveillance"><span>×</span><b>1991 SILVERADO</b><small>FRAME PENDING</small></div><div class="c17-media-placeholder c17-media-placeholder-surveillance"><span>×</span><b>SKATEPARK</b><small>FRAME PENDING</small></div><div class="c17-media-placeholder c17-media-placeholder-surveillance"><span>×</span><b>KARAOKE VENUE</b><small>FRAME PENDING</small></div></div>`
+          html: `<div class="c17-dossier-kicker">FIELD OBSERVATION // VISUAL EVIDENCE</div><h2>Surveillance</h2><div class="c17-photo-placeholder-grid"><div class="c17-media-placeholder"><span>×</span><b>TRAILER EXTERIOR</b><small>FRAME PENDING</small></div><div class="c17-media-placeholder"><span>×</span><b>1991 SILVERADO</b><small>FRAME PENDING</small></div><div class="c17-media-placeholder"><span>×</span><b>SKATEPARK</b><small>FRAME PENDING</small></div></div>`
         },
         redacted: {
           label: "REDACTED",
@@ -3462,9 +3403,13 @@ function ensureTawnyaProfileOverlay() {
   const topTabs = tawnyaProfileOverlay.querySelector(".c17-dossier-top-tabs");
   const sideTabs = tawnyaProfileOverlay.querySelector(".c17-dossier-side-tabs");
   const documentPanel = tawnyaProfileOverlay.querySelector(".c17-dossier-document");
+  const dossierShell = tawnyaProfileOverlay.querySelector(".c17-tawnya-dossier");
   const path = tawnyaProfileOverlay.querySelector(".c17-dossier-path");
-  let activeCategory = "dating";
-  let activePage = "profile";
+
+  // The recovered file opens halfway inside Tawnya's PERSONAL file,
+  // already sitting on Love & Dating. The user discovers the rest afterward.
+  let activeCategory = "personal";
+  let activePage = "dating";
 
   const renderDossier = () => {
     topTabs.innerHTML = "";
@@ -3476,7 +3421,7 @@ function ensureTawnyaProfileOverlay() {
       button.setAttribute("aria-selected", String(key === activeCategory));
       button.addEventListener("click", () => {
         activeCategory = key;
-        activePage = Object.keys(dossier[key].pages)[0];
+        activePage = key === "personal" ? "dating" : Object.keys(dossier[key].pages)[0];
         renderDossier();
       });
       topTabs.appendChild(button);
@@ -3522,7 +3467,8 @@ function ensureTawnyaProfileOverlay() {
       });
     }
 
-    documentPanel.scrollTop = 0;
+    // Entire dossier is the scroll container now, not only the document pane.
+    if (dossierShell) dossierShell.scrollTop = 0;
     path.textContent = `/assets/grey_t/${activeCategory}/${activePage}`;
   };
 
