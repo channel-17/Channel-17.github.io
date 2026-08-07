@@ -139,6 +139,88 @@ const RED_POEM_STANZAS = [
 
 const FREQUENCY_LINE_INDENTS = [0, 5, 2, 8, 1, 6, 3, 9, 2, 7, 4, 0, 6, 2, 8, 4];
 
+const FREQUENCY_LINE_COMPOSITION = new Map([
+  ["Walked into your office,", { size: 31.0, shift: 4 }],
+  ["saw the fire in your hair.", { size: 27.0, shift: 34 }],
+  ["Bright red like a warning", { size: 29.5, shift: 12 }],
+  ["but I didn’t even care.", { size: 26.0, shift: 46 }],
+
+  ["You sat at that desk,", { size: 31.0, shift: 20 }],
+  ["whole room shifted tone.", { size: 27.5, shift: 2 }],
+  ["Like I stepped into a palace", { size: 22.8, shift: 30 }],
+  ["that was never my own.", { size: 25.5, shift: 6 }],
+
+  ["You looked up for a second.", { size: 22.0, shift: 3 }],
+  ["I was caught in the frame.", { size: 25.0, shift: 26 }],
+  ["Started callin’ you Jasmine...", { size: 20.6, shift: 7 }],
+  ["just didn’t say it by name.", { size: 22.0, shift: 38 }],
+
+  ["It was a joke in my head.", { size: 25.5, shift: 8 }],
+  ["Started feeling surreal.", { size: 27.0, shift: 42 }],
+  ["Like there was a crown in my future...", { size: 18.3, shift: 1 }],
+  ["I might not have to steal.", { size: 24.0, shift: 28 }],
+
+  ["Every visit turned a moment...", { size: 21.0, shift: 13 }],
+  ["into somethin’ more deep.", { size: 25.5, shift: 43 }],
+  ["I was buildin’ whole worlds...", { size: 22.5, shift: 5 }],
+  ["while you were talkin’ to me.", { size: 21.8, shift: 31 }],
+
+  ["I had a carpet in my mind...", { size: 22.0, shift: 2 }],
+  ["Had a plan. Had a pace.", { size: 27.5, shift: 48 }],
+  ["I had a version of forever...", { size: 21.8, shift: 14 }],
+  ["each time I saw your face.", { size: 24.5, shift: 37 }],
+
+  ["Never crossed any lines.", { size: 27.5, shift: 3 }],
+  ["I kept it cool. Kept it tight.", { size: 23.0, shift: 33 }],
+  ["But I felt somethin’ shift", { size: 26.0, shift: 15 }],
+  ["with you in my sight.", { size: 29.5, shift: 49 }],
+
+  ["Thought the door might be open", { size: 19.2, shift: 1 }],
+  ["just a crack, just enough...", { size: 22.5, shift: 28 }],
+  ["Thought maybe. Just maybe,", { size: 24.0, shift: 7 }],
+  ["this was fairytale kind of stuff.", { size: 18.2, shift: 35 }],
+
+  ["The silence got louder.", { size: 28.0, shift: 10 }],
+  ["You were driftin’ away.", { size: 24.5, shift: 45 }],
+  ["Conversations got shorter...", { size: 21.5, shift: 3 }],
+  ["A different look in your gaze.", { size: 20.5, shift: 29 }],
+
+  ["Didn’t see it all happen.", { size: 25.5, shift: 22 }],
+  ["Never watched you choose him.", { size: 21.5, shift: 1 }],
+  ["Just held it inside", { size: 31.0, shift: 52 }],
+  ["while my walls were caving in...", { size: 19.0, shift: 13 }],
+
+  ["He was part of your story.", { size: 24.0, shift: 4 }],
+  ["I'm not even a page.", { size: 28.0, shift: 41 }],
+  ["Just a thought scribbled down,", { size: 21.5, shift: 16 }],
+  ["then quickly erased.", { size: 29.0, shift: 50 }],
+
+  ["That’s the part I can’t get over...", { size: 18.5, shift: 5 }],
+  ["Missing this win.", { size: 32.0, shift: 36 }],
+  ["I never lost you to him.", { size: 23.5, shift: 11 }],
+  ["I just never got to begin.", { size: 22.0, shift: 44 }],
+
+  ["Now I’m stuck with this palace...", { size: 18.2, shift: 2 }],
+  ["that I built in my head.", { size: 25.0, shift: 34 }],
+  ["Walkin’ down empty hallways,", { size: 20.5, shift: 8 }],
+  ["where the words went unsaid.", { size: 19.3, shift: 42 }],
+
+  ["Scrabbling for a genie.", { size: 25.0, shift: 18 }],
+  ["My wish was never spoke.", { size: 24.5, shift: 3 }],
+  ["I feel like a punchline with no setup...", { size: 17.6, shift: 26 }],
+  ["just a half-finished joke.", { size: 24.5, shift: 47 }],
+
+  ["I still picture your hair", { size: 27.5, shift: 5 }],
+  ["& how the light shaded those strands.", { size: 18.4, shift: 31 }],
+  ["When you smiled at me", { size: 29.0, shift: 17 }],
+  ["I thought fate had a plan.", { size: 23.0, shift: 46 }],
+
+  ["Now it flickers like a memory", { size: 20.0, shift: 3 }],
+  ["that burns when I sleep.", { size: 27.0, shift: 38 }],
+  ["The crown I had imagined.", { size: 22.5, shift: 11 }],
+  ["The one I never could keep.", { size: 21.0, shift: 43 }]
+]);
+
 function ensurePoemNoteOverlay() {
   document.getElementById("poemNoteOverlay")?.remove();
 
@@ -291,9 +373,11 @@ function createSpellLine(text, className = "frequency-spell-line") {
       if (!glyph) return;
 
       const longLinePenalty = text.length >= 34 ? 0.16 : text.length >= 28 ? 0.08 : 0;
+      const composition = FREQUENCY_LINE_COMPOSITION.get(text);
+      const manualSmallPenalty = composition && composition.size <= 20.5 ? 0.18 : 0;
       const factor = Math.max(
-        1.20,
-        1.43 + ((signature + characterIndex * 13 + emphasisIndex * 17) % 25) / 100 - longLinePenalty
+        1.16,
+        1.43 + ((signature + characterIndex * 13 + emphasisIndex * 17) % 25) / 100 - longLinePenalty - manualSmallPenalty
       );
 
       glyph.style.setProperty("--glyph-size-factor", factor.toFixed(2));
@@ -349,6 +433,7 @@ function fitFrequencyLineToScreen(line, stanzaIndex, lineIndex) {
   const characterCount = [...text].length;
   const rhythm = Number.parseInt(line.dataset.rhythm || "0", 10);
   const isSignature = Boolean(line.closest(".frequency-signature"));
+  const composition = FREQUENCY_LINE_COMPOSITION.get(text) || null;
 
   let fontSize;
   if (characterCount <= 15) fontSize = 35.5;
@@ -361,6 +446,8 @@ function fitFrequencyLineToScreen(line, stanzaIndex, lineIndex) {
 
   if (isSignature) {
     fontSize = 27;
+  } else if (composition) {
+    fontSize = composition.size;
   } else {
     const sizePulse = [1.08, .94, 1.01, .90, 1.05, .96, 1.11, .92, 1.00];
     fontSize *= sizePulse[(rhythm + stanzaIndex + lineIndex) % sizePulse.length];
@@ -387,12 +474,14 @@ function fitFrequencyLineToScreen(line, stanzaIndex, lineIndex) {
       14, 40, 1, 28
     ];
     const patternIndex = (stanzaIndex * 4 + lineIndex + rhythm) % lineShiftPattern.length;
-    let desiredShift = lineShiftPattern[patternIndex];
+    let desiredShift = composition ? composition.shift : lineShiftPattern[patternIndex];
 
-    if (characterCount >= 41) desiredShift *= .04;
-    else if (characterCount >= 36) desiredShift *= .14;
-    else if (characterCount >= 31) desiredShift *= .32;
-    else if (characterCount >= 27) desiredShift *= .58;
+    if (!composition) {
+      if (characterCount >= 41) desiredShift *= .04;
+      else if (characterCount >= 36) desiredShift *= .14;
+      else if (characterCount >= 31) desiredShift *= .32;
+      else if (characterCount >= 27) desiredShift *= .58;
+    }
 
     line.style.marginLeft = `${Math.round(desiredShift)}px`;
     line.style.marginRight = "0px";
@@ -474,7 +563,10 @@ async function appendFrequencyStanza(poem, lines, stanzaIndex, token) {
   const stanza = document.createElement("section");
   stanza.className = "frequency-stanza";
   stanza.style.marginLeft = "0";
-  stanza.style.setProperty("--stanza-tilt", `${((stanzaIndex % 5) - 2) * .16}deg`);
+  const stanzaTilts = [-.42, .18, -.12, .36, -.28, .08, .31, -.20];
+  const stanzaGaps = [0, 7, -2, 11, 3, 14, -1, 8];
+  stanza.style.setProperty("--stanza-tilt", `${stanzaTilts[stanzaIndex % stanzaTilts.length]}deg`);
+  stanza.style.setProperty("--stanza-extra-gap", `${stanzaGaps[stanzaIndex % stanzaGaps.length]}px`);
   poem.appendChild(stanza);
 
   for (let lineIndex = 0; lineIndex < lines.length; lineIndex += 1) {
