@@ -3291,48 +3291,132 @@ function ensureTawnyaProfileOverlay() {
         mugshots: {
           label: "MUGSHOTS",
           html: `
-            <div class="c17-dossier-kicker">COUNTY INTAKE ARCHIVE // SUBJECT GREY</div>
-            <h2>Booking Photography</h2>
-            <p class="c17-dossier-subline">Recovered intake images. Expressions remain uncooperative.</p>
-            <div class="c17-legal-mug-grid">
-              <figure class="c17-legal-photo-slot"><div class="c17-media-placeholder c17-media-placeholder-booking"><span>×</span><b>FRONT / INTAKE</b><small>PHOTO ASSET PENDING</small></div><figcaption>Booking clerk note: “Asked subject to stop smiling.” Subject reportedly asked why.</figcaption></figure>
-              <figure class="c17-legal-photo-slot"><div class="c17-media-placeholder c17-media-placeholder-booking"><span>×</span><b>LEFT PROFILE</b><small>PHOTO ASSET PENDING</small></div><figcaption>Second frame requested after subject turned before being instructed.</figcaption></figure>
-              <figure class="c17-legal-photo-slot c17-legal-photo-wide"><div class="c17-media-placeholder c17-media-placeholder-booking"><span>×</span><b>PROPERTY / POST-INCIDENT</b><small>PHOTO ASSET PENDING</small></div><figcaption>Evidence technician notation: “No, the skateboard is not being returned until release.”</figcaption></figure>
-            </div>`
+            <div class="c17-dossier-kicker">COUNTY INTAKE ARCHIVE // GREY, TAWNYA</div>
+            <h2>Repeat Booking Photography</h2>
+            <p class="c17-dossier-subline">Multiple intake sessions recovered. Subject appearance changes. Attitude does not.</p>
+
+            <section class="c17-booking-timeline">
+              <article class="c17-booking-session">
+                <header><span>JUVENILE CONTACT // AGE 14</span><b>Session A</b></header>
+                <p class="c17-booking-hair">Hair: shoulder-length, straightened badly, two cheap barrettes she refuses to remove.</p>
+                <div class="c17-booking-pair">
+                  <div class="c17-criminal-photo-slot"><span>FRONT</span><b>IMAGE SLOT</b><small>future mugshot asset</small></div>
+                  <div class="c17-criminal-photo-slot"><span>PROFILE</span><b>IMAGE SLOT</b><small>future mugshot asset</small></div>
+                </div>
+                <footer>Clerk note: subject requested that the height chart “stop snitching.”</footer>
+              </article>
+
+              <article class="c17-booking-session">
+                <header><span>JUVENILE CONTACT // AGE 16</span><b>Session B</b></header>
+                <p class="c17-booking-hair">Hair: high ponytail, heavy side bang, visibly cut at home.</p>
+                <div class="c17-booking-pair">
+                  <div class="c17-criminal-photo-slot"><span>FRONT</span><b>IMAGE SLOT</b><small>future mugshot asset</small></div>
+                  <div class="c17-criminal-photo-slot"><span>PROFILE</span><b>IMAGE SLOT</b><small>future mugshot asset</small></div>
+                </div>
+                <footer>Intake note: stopped answering questions after being told “because I said so.”</footer>
+              </article>
+
+              <article class="c17-booking-session">
+                <header><span>LOCAL HOLD // AGE 19</span><b>Session C</b></header>
+                <p class="c17-booking-hair">Hair: dark messy bob, grown-out roots, one side tucked behind ear.</p>
+                <div class="c17-booking-pair">
+                  <div class="c17-criminal-photo-slot"><span>FRONT</span><b>IMAGE SLOT</b><small>future mugshot asset</small></div>
+                  <div class="c17-criminal-photo-slot"><span>PROFILE</span><b>IMAGE SLOT</b><small>future mugshot asset</small></div>
+                </div>
+                <footer>Subject statement: “Can we hurry this up? I have work in five hours.”</footer>
+              </article>
+
+              <article class="c17-booking-session">
+                <header><span>COUNTY INTAKE // AGE 22</span><b>Session D</b></header>
+                <p class="c17-booking-hair">Hair: loose waves, half-up clip, makeup still intact from earlier that night.</p>
+                <div class="c17-booking-pair">
+                  <div class="c17-criminal-photo-slot"><span>FRONT</span><b>IMAGE SLOT</b><small>future mugshot asset</small></div>
+                  <div class="c17-criminal-photo-slot"><span>PROFILE</span><b>IMAGE SLOT</b><small>future mugshot asset</small></div>
+                </div>
+                <footer>Photographer requested neutral expression. Subject replied, “This is neutral.”</footer>
+              </article>
+
+              <article class="c17-booking-session">
+                <header><span>MUNICIPAL HOLD // AGE 25</span><b>Session E</b></header>
+                <p class="c17-booking-hair">Hair: two messy buns, loose face-framing strands, somehow still deliberate.</p>
+                <div class="c17-booking-pair">
+                  <div class="c17-criminal-photo-slot"><span>FRONT</span><b>IMAGE SLOT</b><small>future mugshot asset</small></div>
+                  <div class="c17-criminal-photo-slot"><span>PROFILE</span><b>IMAGE SLOT</b><small>future mugshot asset</small></div>
+                </div>
+                <footer>Property log lists: lighter, lip gloss, truck keys, one receipt she insisted was important.</footer>
+              </article>
+
+              <article class="c17-booking-session c17-booking-session-current">
+                <header><span>CURRENT FILE // AGE 27</span><b>Session F</b></header>
+                <p class="c17-booking-hair">Hair: loose low bun, uneven flyaways, front pieces down. Do not reuse prior booking style.</p>
+                <div class="c17-booking-pair">
+                  <div class="c17-criminal-photo-slot"><span>FRONT</span><b>IMAGE SLOT</b><small>future mugshot asset</small></div>
+                  <div class="c17-criminal-photo-slot"><span>PROFILE</span><b>IMAGE SLOT</b><small>future mugshot asset</small></div>
+                </div>
+                <footer>Repeat-subject recognition occurred before identification was presented.</footer>
+              </article>
+            </section>`
         },
+
         incidents: {
           label: "INCIDENTS",
           html: `
             <div class="c17-dossier-kicker">LOCAL INCIDENT INDEX // REPEAT CONTACT</div>
             <h2>Incident Reports</h2>
             <div class="c17-incident-stack">
-              <article><header><span>CASE 08-09-A</span><b>Parking Lot Diplomacy Failure</b></header><p><strong>Dispatch:</strong> verbal dispute escalating near shopping carts.</p><p><strong>Subject statement:</strong> “I was leaving until she said ‘excuse me’ like that.”</p><footer>DISPOSITION: everybody eventually went home angry.</footer></article>
-              <article><header><span>CASE 04-22-C</span><b>Unauthorized Handrail Research</b></header><p><strong>Complaint:</strong> repeated skateboard attempts on posted private rail.</p><p><strong>Subject statement:</strong> “You put a rail there. What did you think was gonna happen?”</p><footer>PROPERTY DAMAGE: emotionally, yes. Structurally, inconclusive.</footer></article>
-              <article><header><span>CASE 11-03-B</span><b>Karaoke Venue Disturbance</b></header><p><strong>Call reason:</strong> microphone not surrendered at end of song.</p><p><strong>Subject statement:</strong> “The second verse is literally the best part.”</p><footer>NO CHARGES // microphone recovered.</footer></article>
+              <article><header><span>CASE A-0809</span><b>Parking Lot Diplomacy Failure</b></header><p><strong>Dispatch:</strong> verbal dispute escalating near shopping carts.</p><p><strong>Subject:</strong> “I was leaving until she said ‘excuse me’ like that.”</p><footer>DISPOSITION: everybody eventually went home angry.</footer></article>
+
+              <article><header><span>CASE C-0422</span><b>Unauthorized Handrail Research</b></header><p><strong>Complaint:</strong> repeated skateboard attempts on posted private rail.</p><p><strong>Subject:</strong> “You put a rail there. What did you think was gonna happen?”</p><footer>DAMAGE: emotionally, yes. Structurally, inconclusive.</footer></article>
+
+              <article><header><span>CASE B-1103</span><b>Karaoke Venue Disturbance</b></header><p><strong>Call reason:</strong> microphone not surrendered at end of song.</p><p><strong>Subject:</strong> “The second verse is literally the best part.”</p><footer>NO CHARGES // microphone recovered.</footer></article>
+
+              <article><header><span>CASE D-0614</span><b>Drive-Thru Window Negotiation</b></header><p><strong>Complaint:</strong> vehicle remained at pickup window after order was declared incomplete.</p><p><strong>Subject:</strong> “There are supposed to be fries in the bag. This is not a philosophical disagreement.”</p><footer>FRIES LOCATED // subject departed voluntarily.</footer></article>
+
+              <article><header><span>CASE E-0218</span><b>Neighborhood Noise Complaint</b></header><p><strong>Responding note:</strong> music lowered immediately. Argument continued at full volume.</p><p><strong>Subject:</strong> “You said turn the music down. You did not say I had to.”</p><footer>WARNING ISSUED // wording reviewed for future calls.</footer></article>
             </div>`
         },
+
         fights: {
           label: "FIGHTS",
           html: `
             <div class="c17-dossier-kicker">ALTERCATION CROSS-REFERENCE // NON-FELONY</div>
             <h2>Fight Index</h2>
             <div class="c17-fight-ledger">
-              <article><span>LOCATION</span><b>Backyard cookout</b><p>Argument reportedly began over whether lighter ownership transfers after three consecutive uses.</p><em>Officer conclusion: no.</em></article>
-              <article><span>LOCATION</span><b>Outside convenience store</b><p>Subject attempted to “finish the conversation” after another party threw a fountain drink.</p><em>Evidence recovered: one lid, no cup.</em></article>
-              <article><span>LOCATION</span><b>House party kitchen</b><p>Physical contact interrupted when both parties stopped to argue over who knocked over the crockpot.</p><em>Primary casualty: buffalo chicken dip.</em></article>
+              <article><span>BACKYARD COOKOUT</span><b>The Lighter Ownership Dispute</b><p>Argument began over whether lighter ownership transfers after three consecutive uses.</p><em>Officer conclusion: legally, apparently not.</em></article>
+              <article><span>CONVENIENCE STORE</span><b>The Fountain Drink Incident</b><p>Other party threw beverage. Subject attempted to “finish the conversation.”</p><em>Evidence recovered: one lid, no cup.</em></article>
+              <article><span>HOUSE PARTY</span><b>The Crockpot Intermission</b><p>Physical contact stopped when both parties argued over who knocked over the food.</p><em>Primary casualty: buffalo chicken dip.</em></article>
+              <article><span>LAUNDROMAT</span><b>Dryer Number Six</b><p>Dispute regarding removal of clothing from a completed machine escalated into mutual shoving and one thrown dryer sheet box.</p><em>Subject maintained the dryer had “been done for like forty fuckin’ minutes.”</em></article>
             </div>`
         },
-        notes: {
-          label: "OFFICER NOTES",
+
+        juvenile: {
+          label: "JUVENILE",
           html: `
-            <div class="c17-dossier-kicker">INTERNAL NOTES // FIELD PERSONNEL</div>
-            <h2>Handling Notes</h2>
-            <div class="c17-record-stack">
-              <article><span>COMMUNICATION</span><b>Do not say “calm down.”</b><p>Archive search indicates this phrase has never once improved conditions.</p></article>
-              <article><span>POSITIONING</span><b>Maintain a clear exit route.</b><p>For subject, bystanders, and whichever employee is still holding a clipboard.</p></article>
-              <article><span>PROPERTY</span><b>Do not confiscate cigarettes and then begin a long explanation.</b><p>Choose one problem at a time.</p></article>
-              <article><span>GENERAL</span><b>Subject is usually technically correct about one detail.</b><p>Unfortunately, she will locate that detail before you do.</p></article>
+            <div class="c17-dossier-kicker">YOUTH RECORD MIRROR // PARTIAL RECOVERY</div>
+            <h2>Early Contact</h2>
+            <div class="c17-juvenile-ledger">
+              <article><span>AGE 13</span><b>School property incident</b><p>Report body unavailable.</p><div class="c17-redaction-line"></div><small>Disposition field recovered: “parent/guardian contacted.”</small></article>
+              <article><span>AGE 15</span><b>Unauthorized entry / abandoned structure</b><p>Subject and two peers located inside condemned building after dusk.</p><q>“The door was already open.”</q></article>
+              <article><span>AGE 16</span><b>Disorderly / transit platform</b><p>Record references loud argument, skateboard, and an unidentified adult male who “should have minded his business.”</p></article>
+              <article class="c17-record-abandoned"><span>AGE ██</span><b>FILE NOT COMPLETED</b><p>Officer narrative begins: “Upon arrival I observed the juvenile female—”</p><i>ENTRY ENDS HERE</i></article>
             </div>`
+        },
+
+        desk: {
+          label: "DESK LEFT",
+          html: `
+            <div class="c17-dossier-kicker">SHIFT WORKSPACE // AUTO-RECOVERED</div>
+            <h2>Unfinished Review</h2>
+            <section class="c17-abandoned-desk">
+              <div class="c17-desk-note"><span>REVIEWER</span><b>██████████</b></div>
+              <div class="c17-desk-note"><span>STARTED</span><b>15:41</b></div>
+              <div class="c17-desk-note"><span>LAST INPUT</span><b>16:58</b></div>
+              <p>Need to compare Grey bookings against █████ district juvenile archive.</p>
+              <p>Possible duplicate report from convenience store. Ask records.</p>
+              <p class="c17-desk-half-entry">Also check why she keeps getting her property returned before—</p>
+              <div class="c17-desk-cursor">_</div>
+              <footer>SESSION STATUS: USER SIGNED OUT</footer>
+            </section>`
         }
       }
     },
@@ -3502,8 +3586,9 @@ function ensureTawnyaProfileOverlay() {
       });
     }
 
-    // Entire dossier is the scroll container now, not only the document pane.
-    if (dossierShell) dossierShell.scrollTop = 0;
+    // The full-screen overlay is the physical scroll surface on iPhone.
+    // The inner file remains overflow-visible so sticky tabs and long pages behave naturally.
+    tawnyaProfileOverlay.scrollTop = 0;
     path.textContent = `/assets/grey_t/${activeCategory}/${activePage}`;
   };
 
@@ -3543,8 +3628,6 @@ function openTawnyaProfile() {
   document.documentElement.classList.add("tawnya-dossier-open");
   document.body.classList.add("tawnya-dossier-open");
   overlay.scrollTop = 0;
-  const dossier = overlay.querySelector(".c17-tawnya-dossier");
-  if (dossier) dossier.scrollTop = 0;
 
   if (!overlay.dataset.viewportSyncBound) {
     overlay.dataset.viewportSyncBound = "true";
