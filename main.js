@@ -3470,10 +3470,12 @@ function ensureTawnyaProfileOverlay() {
 
     documentPanel.innerHTML = dossier[activeCategory].pages[activePage].html;
 
-    const systemMark = document.createElement("span");
+    const systemMark = document.createElement("img");
     systemMark.className = "c17-system-paper-mark";
+    systemMark.src = "Asset.dossier.mark.jpeg";
+    systemMark.alt = "";
     systemMark.setAttribute("aria-hidden", "true");
-    systemMark.innerHTML = "<i></i>";
+    systemMark.decoding = "async";
     documentPanel.appendChild(systemMark);
 
     const mainPhoto = documentPanel.querySelector("[data-tawnya-main-photo]");
