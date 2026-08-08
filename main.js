@@ -3472,7 +3472,7 @@ function ensureTawnyaProfileOverlay() {
 
     const systemMark = document.createElement("img");
     systemMark.className = "c17-system-paper-mark";
-    systemMark.src = "Asset.dossier.mark.jpeg";
+    systemMark.src = "Asset.dossier.mark.png";
     systemMark.alt = "";
     systemMark.setAttribute("aria-hidden", "true");
     systemMark.decoding = "async";
