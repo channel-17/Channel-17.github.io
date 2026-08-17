@@ -3291,69 +3291,33 @@ function ensureTawnyaProfileOverlay() {
         mugshots: {
           label: "MUGSHOTS",
           html: `
-            <div class="c17-dossier-kicker">COUNTY INTAKE ARCHIVE // GREY, TAWNYA</div>
-            <h2>Repeat Booking Photography</h2>
-            <p class="c17-dossier-subline">Multiple intake sessions recovered. Subject appearance changes. Attitude does not.</p>
+            <div class="c17-dossier-kicker">BOOKING ARCHIVE // GREY, T.</div>
+            <h2>Arrest / Intake Photography</h2>
+            <p class="c17-dossier-subline">Three recovered booking records. Tap any record to inspect the original document.</p>
 
-            <section class="c17-booking-timeline">
-              <article class="c17-booking-session">
-                <header><span>JUVENILE CONTACT // AGE 14</span><b>Session A</b></header>
-                <p class="c17-booking-hair">Hair: shoulder-length, straightened badly, two cheap barrettes she refuses to remove.</p>
-                <div class="c17-booking-pair">
-                  <div class="c17-criminal-photo-slot"><span>FRONT</span><b>IMAGE SLOT</b><small>future mugshot asset</small></div>
-                  <div class="c17-criminal-photo-slot"><span>PROFILE</span><b>IMAGE SLOT</b><small>future mugshot asset</small></div>
-                </div>
-                <footer>Clerk note: subject requested that the height chart “stop snitching.”</footer>
+            <section class="c17-arrest-archive">
+              <article class="c17-arrest-record">
+                <header><span>FOXOBOROUGH, MASSACHUSETTS</span><b>AGE 18</b></header>
+                <button class="c17-arrest-photo-button" type="button" data-c17-arrest-photo data-src="Tawnya.arrest.foxborough.PNG" data-label="Foxborough booking record">
+                  <img src="Tawnya.arrest.foxborough.PNG" alt="Tawnya Grey Foxborough booking record">
+                </button>
+                <footer>GILLETTE STADIUM // DEC. 8, 2013</footer>
               </article>
 
-              <article class="c17-booking-session">
-                <header><span>JUVENILE CONTACT // AGE 16</span><b>Session B</b></header>
-                <p class="c17-booking-hair">Hair: high ponytail, heavy side bang, visibly cut at home.</p>
-                <div class="c17-booking-pair">
-                  <div class="c17-criminal-photo-slot"><span>FRONT</span><b>IMAGE SLOT</b><small>future mugshot asset</small></div>
-                  <div class="c17-criminal-photo-slot"><span>PROFILE</span><b>IMAGE SLOT</b><small>future mugshot asset</small></div>
-                </div>
-                <footer>Intake note: stopped answering questions after being told “because I said so.”</footer>
+              <article class="c17-arrest-record">
+                <header><span>LEOMINSTER, MASSACHUSETTS</span><b>AGE 21</b></header>
+                <button class="c17-arrest-photo-button" type="button" data-c17-arrest-photo data-src="Tawnya.arrest.leominster.PNG" data-label="Leominster booking record">
+                  <img src="Tawnya.arrest.leominster.PNG" alt="Tawnya Grey Leominster booking record">
+                </button>
+                <footer>KEEP IT CLEAN LAUNDROMAT // 2016</footer>
               </article>
 
-              <article class="c17-booking-session">
-                <header><span>LOCAL HOLD // AGE 19</span><b>Session C</b></header>
-                <p class="c17-booking-hair">Hair: dark messy bob, grown-out roots, one side tucked behind ear.</p>
-                <div class="c17-booking-pair">
-                  <div class="c17-criminal-photo-slot"><span>FRONT</span><b>IMAGE SLOT</b><small>future mugshot asset</small></div>
-                  <div class="c17-criminal-photo-slot"><span>PROFILE</span><b>IMAGE SLOT</b><small>future mugshot asset</small></div>
-                </div>
-                <footer>Subject statement: “Can we hurry this up? I have work in five hours.”</footer>
-              </article>
-
-              <article class="c17-booking-session">
-                <header><span>COUNTY INTAKE // AGE 22</span><b>Session D</b></header>
-                <p class="c17-booking-hair">Hair: loose waves, half-up clip, makeup still intact from earlier that night.</p>
-                <div class="c17-booking-pair">
-                  <div class="c17-criminal-photo-slot"><span>FRONT</span><b>IMAGE SLOT</b><small>future mugshot asset</small></div>
-                  <div class="c17-criminal-photo-slot"><span>PROFILE</span><b>IMAGE SLOT</b><small>future mugshot asset</small></div>
-                </div>
-                <footer>Photographer requested neutral expression. Subject replied, “This is neutral.”</footer>
-              </article>
-
-              <article class="c17-booking-session">
-                <header><span>MUNICIPAL HOLD // AGE 25</span><b>Session E</b></header>
-                <p class="c17-booking-hair">Hair: two messy buns, loose face-framing strands, somehow still deliberate.</p>
-                <div class="c17-booking-pair">
-                  <div class="c17-criminal-photo-slot"><span>FRONT</span><b>IMAGE SLOT</b><small>future mugshot asset</small></div>
-                  <div class="c17-criminal-photo-slot"><span>PROFILE</span><b>IMAGE SLOT</b><small>future mugshot asset</small></div>
-                </div>
-                <footer>Property log lists: lighter, lip gloss, truck keys, one receipt she insisted was important.</footer>
-              </article>
-
-              <article class="c17-booking-session c17-booking-session-current">
-                <header><span>CURRENT FILE // AGE 27</span><b>Session F</b></header>
-                <p class="c17-booking-hair">Hair: loose low bun, uneven flyaways, front pieces down. Do not reuse prior booking style.</p>
-                <div class="c17-booking-pair">
-                  <div class="c17-criminal-photo-slot"><span>FRONT</span><b>IMAGE SLOT</b><small>future mugshot asset</small></div>
-                  <div class="c17-criminal-photo-slot"><span>PROFILE</span><b>IMAGE SLOT</b><small>future mugshot asset</small></div>
-                </div>
-                <footer>Repeat-subject recognition occurred before identification was presented.</footer>
+              <article class="c17-arrest-record">
+                <header><span>PERRY COUNTY, OHIO</span><b>OUT-OF-STATE CONTACT</b></header>
+                <button class="c17-arrest-photo-button" type="button" data-c17-arrest-photo data-src="Tawnya.arrest.ohio.PNG" data-label="Perry County booking record">
+                  <img src="Tawnya.arrest.ohio.PNG" alt="Tawnya Grey Perry County Ohio booking record">
+                </button>
+                <footer>JULY 21, 2016</footer>
               </article>
             </section>`
         },
@@ -3585,6 +3549,44 @@ function ensureTawnyaProfileOverlay() {
         }
       });
     }
+
+    documentPanel.querySelectorAll("[data-c17-arrest-photo]").forEach(button => {
+      button.addEventListener("click", () => {
+        const src = button.dataset.src;
+        if (!src) return;
+
+        let viewer = tawnyaProfileOverlay.querySelector(".c17-arrest-viewer");
+        if (!viewer) {
+          viewer = document.createElement("aside");
+          viewer.className = "c17-arrest-viewer";
+          viewer.setAttribute("aria-hidden", "true");
+          viewer.innerHTML = `
+            <button class="c17-arrest-viewer-close" type="button" aria-label="close booking record">×</button>
+            <div class="c17-arrest-viewer-scroll">
+              <img alt="">
+            </div>`;
+          tawnyaProfileOverlay.appendChild(viewer);
+
+          viewer.querySelector(".c17-arrest-viewer-close").addEventListener("click", () => {
+            viewer.classList.remove("open");
+            viewer.setAttribute("aria-hidden", "true");
+          });
+
+          viewer.addEventListener("click", event => {
+            if (event.target === viewer) {
+              viewer.classList.remove("open");
+              viewer.setAttribute("aria-hidden", "true");
+            }
+          });
+        }
+
+        const image = viewer.querySelector("img");
+        image.src = src;
+        image.alt = button.dataset.label || "Tawnya Grey booking record";
+        viewer.classList.add("open");
+        viewer.setAttribute("aria-hidden", "false");
+      });
+    });
 
     // The full-screen overlay is the physical scroll surface on iPhone.
     // The inner file remains overflow-visible so sticky tabs and long pages behave naturally.
