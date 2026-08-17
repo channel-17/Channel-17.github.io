@@ -11582,3 +11582,130 @@ body.employment-open { overflow:hidden; }
 .c17-tawnya-reveal.tawnya-retired {
   pointer-events:none !important;
 }
+
+/* =========================================================
+   BRICK 15 — TAWNYA LEGAL / LOCKED ARREST ARCHIVE
+   Three approved intake sheets. Full-document tap/zoom viewer.
+========================================================= */
+.c17-arrest-archive {
+  display: grid !important;
+  gap: 16px !important;
+  width: 100% !important;
+}
+
+.c17-arrest-record {
+  overflow: hidden !important;
+  border: 1px solid rgba(90, 174, 255, .34) !important;
+  border-radius: 0 !important;
+  background: rgba(2, 17, 42, .76) !important;
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,.025),
+    0 12px 30px rgba(0,0,0,.28) !important;
+}
+
+.c17-arrest-record > header,
+.c17-arrest-record > footer {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 10px !important;
+  padding: 9px 10px !important;
+  color: rgba(184, 220, 255, .74) !important;
+  font-size: .55rem !important;
+  letter-spacing: 1px !important;
+  text-transform: uppercase !important;
+}
+
+.c17-arrest-record > header b {
+  color: rgba(232, 245, 255, .95) !important;
+  font-size: .55rem !important;
+  white-space: nowrap !important;
+}
+
+.c17-arrest-record > footer {
+  justify-content: flex-start !important;
+  border-top: 1px solid rgba(90, 174, 255, .22) !important;
+}
+
+.c17-arrest-photo-button {
+  display: block !important;
+  width: 100% !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-top: 1px solid rgba(90, 174, 255, .22) !important;
+  background: #020a19 !important;
+  cursor: zoom-in !important;
+  touch-action: manipulation !important;
+}
+
+.c17-arrest-photo-button img {
+  display: block !important;
+  width: 100% !important;
+  height: auto !important;
+  margin: 0 !important;
+  object-fit: contain !important;
+  filter: none !important;
+}
+
+.c17-arrest-viewer {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 2147483000 !important;
+  display: none !important;
+  background: rgba(0, 4, 14, .985) !important;
+  overflow: auto !important;
+  overscroll-behavior: contain !important;
+  -webkit-overflow-scrolling: touch !important;
+  touch-action: pan-x pan-y pinch-zoom !important;
+}
+
+.c17-arrest-viewer.open {
+  display: block !important;
+}
+
+.c17-arrest-viewer-close {
+  position: fixed !important;
+  right: max(14px, env(safe-area-inset-right)) !important;
+  top: max(14px, env(safe-area-inset-top)) !important;
+  z-index: 3 !important;
+  width: 42px !important;
+  height: 42px !important;
+  border: 1px solid rgba(160, 213, 255, .55) !important;
+  border-radius: 0 !important;
+  background: rgba(2, 12, 31, .90) !important;
+  color: #dff2ff !important;
+  font: 30px/38px Arial, sans-serif !important;
+  text-align: center !important;
+}
+
+.c17-arrest-viewer-scroll {
+  display: flex !important;
+  align-items: flex-start !important;
+  justify-content: center !important;
+  min-width: 100% !important;
+  min-height: 100% !important;
+  padding: calc(66px + env(safe-area-inset-top)) 12px calc(24px + env(safe-area-inset-bottom)) !important;
+}
+
+.c17-arrest-viewer-scroll img {
+  display: block !important;
+  width: min(1180px, 100%) !important;
+  max-width: none !important;
+  height: auto !important;
+  object-fit: contain !important;
+  image-rendering: auto !important;
+  user-select: none !important;
+  -webkit-user-drag: none !important;
+}
+
+@media (max-width: 430px) {
+  .c17-arrest-record > header,
+  .c17-arrest-record > footer {
+    font-size: .49rem !important;
+  }
+
+  .c17-arrest-viewer-scroll img {
+    width: 100% !important;
+  }
+}
+
