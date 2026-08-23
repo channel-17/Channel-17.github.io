@@ -3293,31 +3293,64 @@ function ensureTawnyaProfileOverlay() {
           html: `
             <div class="c17-dossier-kicker">BOOKING ARCHIVE // GREY, T.</div>
             <h2>Arrest / Intake Photography</h2>
-            <p class="c17-dossier-subline">Three recovered booking records. Tap any record to inspect the original document.</p>
-
+            <p class="c17-dossier-subline">Recovered booking records. Each intake remains separated by jurisdiction.</p>
             <section class="c17-arrest-archive">
+
               <article class="c17-arrest-record">
-                <header><span>FOXOBOROUGH, MASSACHUSETTS</span><b>AGE 18</b></header>
-                <button class="c17-arrest-photo-button" type="button" data-c17-arrest-photo data-src="Tawnya.arrest.foxborough.PNG" data-label="Foxborough booking record">
-                  <img src="Tawnya.arrest.foxborough.PNG" alt="Tawnya Grey Foxborough booking record">
-                </button>
-                <footer>GILLETTE STADIUM // DEC. 8, 2013</footer>
+                <header><span>FOXBOROUGH, MASSACHUSETTS</span><b>AGE 18</b></header>
+                <div class="c17-arrest-image-pair">
+                  <div class="c17-arrest-asset-bay"><span>FRONT</span><small>FOXBOUROUGH MASTER</small></div>
+                  <div class="c17-arrest-asset-bay"><span>SIDE</span><small>FOXBOUROUGH MASTER</small></div>
+                </div>
+                <div class="c17-arrest-detail-row">
+                  <div class="c17-arrest-badge-bay"><span>BADGE</span><small>FOXBOUROUGH / FPD ASSET</small></div>
+                  <div class="c17-arrest-copy">
+                    <h3>Gillette Stadium</h3>
+                    <dl>
+                      <div><dt>DATE</dt><dd>12/08/2013</dd></div>
+                      <div><dt>AGENCY</dt><dd>Foxborough Police Department / FPD</dd></div>
+                      <div><dt>BOOKING</dt><dd>FPD-43109</dd></div>
+                      <div><dt>NAME</dt><dd>GREY, T.</dd></div>
+                    </dl>
+                    <p>Altercation involving an opposing fan in the Gillette Stadium parking lot after the game concluded. Grey was witnessed addressing the opposing fan with: “fuck you, fire crotch.” Underage drinking and disorderly behavior were documented. Subject remained overnight.</p>
+                    <h4>CHARGES</h4>
+                    <ul><li>Disorderly Conduct</li><li>Assault &amp; Battery</li><li>Minor in Possession of Alcohol</li><li>Disturbing the Peace</li></ul>
+                  </div>
+                </div>
               </article>
 
               <article class="c17-arrest-record">
-                <header><span>LEOMINSTER, MASSACHUSETTS</span><b>AGE 21</b></header>
-                <button class="c17-arrest-photo-button" type="button" data-c17-arrest-photo data-src="Tawnya.arrest.leominster.PNG" data-label="Leominster booking record">
-                  <img src="Tawnya.arrest.leominster.PNG" alt="Tawnya Grey Leominster booking record">
-                </button>
-                <footer>KEEP IT CLEAN LAUNDROMAT // 2016</footer>
+                <header><span>WORCESTER COUNTY, MASSACHUSETTS</span><b>AGE 20</b></header>
+                <div class="c17-arrest-image-pair">
+                  <div class="c17-arrest-asset-bay"><span>FRONT</span><small>T.WORCESTER.FRONT.PNG</small></div>
+                  <div class="c17-arrest-asset-bay"><span>SIDE</span><small>T.WORCESTER.SIDE.PNG</small></div>
+                </div>
+                <div class="c17-arrest-detail-row">
+                  <div class="c17-arrest-badge-bay"><span>BADGE</span><small>T.WORCESTER.BADGE.PNG</small></div>
+                  <div class="c17-arrest-copy">
+                    <h3>Worcester County Intake</h3>
+                    <dl><div><dt>DATE</dt><dd>06/18/2015</dd></div><div><dt>SUBJECT</dt><dd>GREY, T.</dd></div><div><dt>STATUS</dt><dd>RECOVERED RECORD // PARTIAL</dd></div></dl>
+                    <p class="c17-record-pending">Narrative, agency details, charges, property inventory, and disposition remain intentionally unfilled until their canon is approved.</p>
+                  </div>
+                </div>
               </article>
 
               <article class="c17-arrest-record">
-                <header><span>PERRY COUNTY, OHIO</span><b>OUT-OF-STATE CONTACT</b></header>
-                <button class="c17-arrest-photo-button" type="button" data-c17-arrest-photo data-src="Tawnya.arrest.ohio.PNG" data-label="Perry County booking record">
-                  <img src="Tawnya.arrest.ohio.PNG" alt="Tawnya Grey Perry County Ohio booking record">
-                </button>
-                <footer>JULY 21, 2016</footer>
+                <header><span>PERRY COUNTY, OHIO</span><b>GATHERING 17</b></header>
+                <div class="c17-arrest-image-pair">
+                  <div class="c17-arrest-asset-bay"><span>IMAGE A</span><small>T.PERRY.FRONT.PNG</small></div>
+                  <div class="c17-arrest-asset-bay"><span>IMAGE B</span><small>T.PERRY.SIDE.PNG</small></div>
+                </div>
+                <div class="c17-arrest-detail-row">
+                  <div class="c17-arrest-badge-bay"><span>BADGE</span><small>T.PERRY.BADGE.PNG</small></div>
+                  <div class="c17-arrest-copy">
+                    <h3>Perry County, Ohio</h3>
+                    <dl><div><dt>DATE</dt><dd>07/21/2016</dd></div><div><dt>JURISDICTION</dt><dd>Perry County, Ohio</dd></div><div><dt>EVENT LINK</dt><dd>Gathering of the Juggalos // Gathering 17</dd></div></dl>
+                    <h4>PROPERTY / INVENTORY</h4>
+                    <ul><li>iPhone</li><li>Lighter</li><li>Near-empty roach</li><li>Four folded $1 bills soaked in soda</li></ul>
+                    <p class="c17-record-pending">Remaining narrative, charges, booking number, hold information, and disposition stay open until approved. Both Gathering-era Tawnya masters belong to this record; no substitute front/profile pair is required.</p>
+                  </div>
+                </div>
               </article>
             </section>`
         },
@@ -3401,15 +3434,24 @@ function ensureTawnyaProfileOverlay() {
             <section class="c17-tawnya-dating-card">
               <figure class="c17-dating-main-figure">
                 <img class="c17-dating-photo c17-tawnya-main-photo" src="Tawnya.profile.main" data-tawnya-main-photo alt="Tawnya Grey dating profile photo">
-                <figcaption>Still that bitch!</figcaption>
+                <figcaption>still that bitch.</figcaption>
               </figure>
               <div class="c17-tawnya-identity">
                 <h2>Tawnya Grey</h2>
                 <p><span>27</span><i aria-hidden="true"></i><span>Western Massachusetts</span></p>
+                <div class="c17-dating-status"><span>STATUS</span><b>FTS</b></div>
+                <div class="c17-dating-relationship"><span>IN A RELATIONSHIP WITH</span><b>Bad luck &amp; Shit Choices</b></div>
               </div>
               <section class="c17-tawnya-about">
                 <h3>About me:</h3>
-                <p>Just a girl… trying to make it out here in this crazy space. I honestly have no idea what im lookin for but im open to meeting somebody real. Somebody who can make me laugh, keep up with me, and isn’t scared of a little chaos. I work hard, love hard, and I’m probably gonna tell you exactly what I’m thinking. Just be real with me and we’ll figure the rest out.</p>
+                <p>Just a girl… trying to make it out here. I work hard, love hard, say exactly what I’m thinking, and I’m probably gonna make a questionable decision before this bio is over.</p>
+              </section>
+              <section class="c17-tawnya-wall">
+                <header><span>FRIENDS</span><small>RECOVERED PROFILE WALL</small></header>
+                <article><div class="c17-wall-avatar-bay">TD</div><div><b>Thomas Doggon Foolery</b><p>System recovered connection. Comment thread incomplete.</p></div></article>
+                <article><div class="c17-wall-avatar-bay">BM</div><div><b>Big Momma</b><p>Known contact // dealer. Profile media recovered.</p></div></article>
+                <article><div class="c17-wall-avatar-bay">JM</div><div><b>Joseph Mahhmah</b><p>System recovered connection. Comment thread incomplete.</p></div></article>
+                <div class="c17-wall-generation"><span></span><b>GENERATING COMMENT HISTORY…</b></div>
               </section>
             </section>`
         },
@@ -3470,7 +3512,7 @@ function ensureTawnyaProfileOverlay() {
         <main class="c17-dossier-document"></main>
         <nav class="c17-dossier-side-tabs" aria-label="Section pages"></nav>
       </div>
-      <footer class="c17-dossier-footer"><span class="c17-dossier-path"></span><span>ACCESS LEVEL: 8+9</span></footer>
+      <footer class="c17-dossier-footer"><span class="c17-dossier-path"></span><span class="c17-access-restricted">ACCESS RESTRICTED</span></footer>
     </article>`;
 
   document.body.appendChild(tawnyaProfileOverlay);
