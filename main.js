@@ -3299,11 +3299,11 @@ function ensureTawnyaProfileOverlay() {
               <article class="c17-arrest-record">
                 <header><span>FOXBOROUGH, MASSACHUSETTS</span><b>AGE 18</b></header>
                 <div class="c17-arrest-image-pair">
-                  <div class="c17-arrest-asset-bay"><span>FRONT</span><small>FOXBOUROUGH MASTER</small></div>
-                  <div class="c17-arrest-asset-bay"><span>SIDE</span><small>FOXBOUROUGH MASTER</small></div>
+                  <div class="c17-arrest-asset-bay c17-arrest-asset-live"><img src="T.Suffolk.Front.PNG" alt="Tawnya Grey Suffolk County front booking image"></div>
+                  <div class="c17-arrest-asset-bay c17-arrest-asset-live"><img src="T.Suffolk.Side.PNG" alt="Tawnya Grey Suffolk County side booking image"></div>
                 </div>
                 <div class="c17-arrest-detail-row">
-                  <div class="c17-arrest-badge-bay"><span>BADGE</span><small>FOXBOUROUGH / FPD ASSET</small></div>
+                  <div class="c17-arrest-badge-bay c17-arrest-badge-live"><img src="T.Suffolk.Badge.PNG" alt="Suffolk County booking badge"></div>
                   <div class="c17-arrest-copy">
                     <h3>Gillette Stadium</h3>
                     <dl>
@@ -3338,11 +3338,11 @@ function ensureTawnyaProfileOverlay() {
               <article class="c17-arrest-record">
                 <header><span>PERRY COUNTY, OHIO</span><b>GATHERING 17</b></header>
                 <div class="c17-arrest-image-pair">
-                  <div class="c17-arrest-asset-bay"><span>IMAGE A</span><small>T.PERRY.FRONT.PNG</small></div>
-                  <div class="c17-arrest-asset-bay"><span>IMAGE B</span><small>T.PERRY.SIDE.PNG</small></div>
+                  <div class="c17-arrest-asset-bay c17-arrest-asset-live"><img src="T.Perry.Front.PNG" alt="Tawnya Grey Perry County Gathering image A"></div>
+                  <div class="c17-arrest-asset-bay c17-arrest-asset-live"><img src="T.Perry.Side.PNG" alt="Tawnya Grey Perry County Gathering image B"></div>
                 </div>
                 <div class="c17-arrest-detail-row">
-                  <div class="c17-arrest-badge-bay"><span>BADGE</span><small>T.PERRY.BADGE.PNG</small></div>
+                  <div class="c17-arrest-badge-bay c17-arrest-badge-live"><img src="T.Perry.Badge.PNG" alt="Perry County booking badge"></div>
                   <div class="c17-arrest-copy">
                     <h3>Perry County, Ohio</h3>
                     <dl><div><dt>DATE</dt><dd>07/21/2016</dd></div><div><dt>JURISDICTION</dt><dd>Perry County, Ohio</dd></div><div><dt>EVENT LINK</dt><dd>Gathering of the Juggalos // Gathering 17</dd></div></dl>
