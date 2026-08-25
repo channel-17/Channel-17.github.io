@@ -11893,6 +11893,25 @@ body.employment-open { overflow:hidden; }
   font-size:.62rem !important;
   line-height:1.35 !important;
 }
+
+.c17-wall-avatar {
+  display:block !important;
+  width:38px !important;
+  height:38px !important;
+  border-radius:50% !important;
+  object-fit:cover !important;
+  background:#020b1d !important;
+}
+.c17-wall-tag { color:rgba(218,237,250,.54) !important;font-weight:700 !important; }
+.c17-wall-unverified { color:#72c7ff !important;font:900 .48rem/1 "Courier New",monospace !important;letter-spacing:.35px !important; }
+.c17-wall-reply {
+  margin-top:8px !important;
+  padding:7px 8px !important;
+  border-left:2px solid rgba(114,199,255,.42) !important;
+  background:rgba(26,78,130,.16) !important;
+}
+.c17-wall-reply b { color:#72c7ff !important;font-size:.59rem !important; }
+.c17-wall-reply p { margin-top:2px !important; }
 .c17-wall-generation {
   display:flex !important;
   align-items:center !important;
