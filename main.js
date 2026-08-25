@@ -3446,6 +3446,21 @@ function ensureTawnyaProfileOverlay() {
                 <h3>About me:</h3>
                 <p>Just a girl… trying to make it out here. I work hard, love hard, say exactly what I’m thinking, and I’m probably gonna make a questionable decision before this bio is over.</p>
               </section>
+              <section class="c17-tawnya-photos" aria-label="Tawnya Grey photos">
+                <header class="c17-tawnya-photos-header"><div><span class="c17-tawnya-photos-title">PHOTOS</span><small>PROFILE MEDIA</small></div><b>10</b></header>
+                <div class="c17-tawnya-photo-grid">
+                  <figure class="c17-tawnya-photo-tile"><img src="T.Photos.1.PNG" alt="" loading="lazy" decoding="async"></figure>
+                  <figure class="c17-tawnya-photo-tile"><img src="T.Photos.2.PNG" alt="" loading="lazy" decoding="async"></figure>
+                  <figure class="c17-tawnya-photo-tile"><img src="T.Photos.3.PNG" alt="" loading="lazy" decoding="async"></figure>
+                  <figure class="c17-tawnya-photo-tile"><img src="T.Photos.4.PNG" alt="" loading="lazy" decoding="async"></figure>
+                  <figure class="c17-tawnya-photo-tile"><img src="T.Photos.5.PNG" alt="" loading="lazy" decoding="async"></figure>
+                  <figure class="c17-tawnya-photo-tile"><img src="T.Photos.6.PNG" alt="" loading="lazy" decoding="async"></figure>
+                  <figure class="c17-tawnya-photo-tile"><img src="T.Photos.7.PNG" alt="" loading="lazy" decoding="async"></figure>
+                  <figure class="c17-tawnya-photo-tile"><img src="T.Photos.8.PNG" alt="" loading="lazy" decoding="async"></figure>
+                  <figure class="c17-tawnya-photo-tile"><img src="T.Photos.9.PNG" alt="" loading="lazy" decoding="async"></figure>
+                  <figure class="c17-tawnya-photo-tile"><img src="T.Photos.10.PNG" alt="" loading="lazy" decoding="async"></figure>
+                </div>
+              </section>
               <section class="c17-tawnya-wall">
                 <header><span>FRIENDS</span><small>RECOVERED PROFILE WALL</small></header>
                 <article class="c17-wall-comment"><img class="c17-wall-avatar" src="T.Friends.Momma.PNG" alt="Big Momma"><div><b>Big Momma</b><p>The garden hath spoken, baby girl💚 Your little bag of happiness is fluffed, stuffed, blessed, and awaiting some green adoption papers!</p></div></article>
