@@ -3448,10 +3448,9 @@ function ensureTawnyaProfileOverlay() {
               </section>
               <section class="c17-tawnya-wall">
                 <header><span>FRIENDS</span><small>RECOVERED PROFILE WALL</small></header>
-                <article><div class="c17-wall-avatar-bay">TD</div><div><b>Thomas Doggon Foolery</b><p>System recovered connection. Comment thread incomplete.</p></div></article>
-                <article><div class="c17-wall-avatar-bay">BM</div><div><b>Big Momma</b><p>Known contact // dealer. Profile media recovered.</p></div></article>
-                <article><div class="c17-wall-avatar-bay">JM</div><div><b>Joseph Mahhmah</b><p>System recovered connection. Comment thread incomplete.</p></div></article>
-                <div class="c17-wall-generation"><span></span><b>GENERATING COMMENT HISTORY…</b></div>
+                <article class="c17-wall-comment"><img class="c17-wall-avatar" src="T.Friends.Momma.PNG" alt="Big Momma"><div><b>Big Momma</b><p>The garden hath spoken, baby girl💚 Your little bag of happiness is fluffed, stuffed, blessed, and awaiting some green adoption papers!</p></div></article>
+                <article class="c17-wall-comment"><img class="c17-wall-avatar" src="T.Friends.Lewis.PNG" alt="J. Lewis"><div><b>J. Lewis <span class="c17-wall-tag">(slumlord cunt)</span></b><p>Hey… Friendly reminder your three days late on this month’s rent.</p></div></article>
+                <article class="c17-wall-comment c17-wall-comment-mark"><img class="c17-wall-avatar" src="T.Friends.Mark.PNG" alt="Marky Mark"><div><b>Marky Mark <span class="c17-wall-unverified">(UNVERIFIED)</span></b><p>Hey. Pretty sure you have the wrong Mark, but thanks for the birthday wishes.</p><div class="c17-wall-reply"><b>Tawnya Grey</b><p>😂😂 Classic Mark. Always fucking with me.</p></div></div></article>
               </section>
             </section>`
         },
