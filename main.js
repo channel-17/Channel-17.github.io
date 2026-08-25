@@ -3446,27 +3446,22 @@ function ensureTawnyaProfileOverlay() {
                 <h3>About me:</h3>
                 <p>Just a girl… trying to make it out here. I work hard, love hard, say exactly what I’m thinking, and I’m probably gonna make a questionable decision before this bio is over.</p>
               </section>
-              <section class="c17-tawnya-photos" aria-label="Tawnya Grey photos">
-                <header class="c17-tawnya-photos-header"><div><span class="c17-tawnya-photos-title">PHOTOS</span><small>PROFILE MEDIA</small></div><b>10</b></header>
-                <div class="c17-tawnya-photo-grid">
-                  <figure class="c17-tawnya-photo-tile"><img src="T.Photos.1.PNG" alt="" loading="lazy" decoding="async"></figure>
-                  <figure class="c17-tawnya-photo-tile"><img src="T.Photos.2.PNG" alt="" loading="lazy" decoding="async"></figure>
-                  <figure class="c17-tawnya-photo-tile"><img src="T.Photos.3.PNG" alt="" loading="lazy" decoding="async"></figure>
-                  <figure class="c17-tawnya-photo-tile"><img src="T.Photos.4.PNG" alt="" loading="lazy" decoding="async"></figure>
-                  <figure class="c17-tawnya-photo-tile"><img src="T.Photos.5.PNG" alt="" loading="lazy" decoding="async"></figure>
-                  <figure class="c17-tawnya-photo-tile"><img src="T.Photos.6.PNG" alt="" loading="lazy" decoding="async"></figure>
-                  <figure class="c17-tawnya-photo-tile"><img src="T.Photos.7.PNG" alt="" loading="lazy" decoding="async"></figure>
-                  <figure class="c17-tawnya-photo-tile"><img src="T.Photos.8.PNG" alt="" loading="lazy" decoding="async"></figure>
-                  <figure class="c17-tawnya-photo-tile"><img src="T.Photos.9.PNG" alt="" loading="lazy" decoding="async"></figure>
-                  <figure class="c17-tawnya-photo-tile"><img src="T.Photos.10.PNG" alt="" loading="lazy" decoding="async"></figure>
-                </div>
-              </section>
               <section class="c17-tawnya-wall">
                 <header><span>FRIENDS</span><small>RECOVERED PROFILE WALL</small></header>
                 <article class="c17-wall-comment"><img class="c17-wall-avatar" src="T.Friends.Momma.PNG" alt="Big Momma"><div><b>Big Momma</b><p>The garden hath spoken, baby girl💚 Your little bag of happiness is fluffed, stuffed, blessed, and awaiting some green adoption papers!</p></div></article>
                 <article class="c17-wall-comment"><img class="c17-wall-avatar" src="T.Friends.Lewis.PNG" alt="J. Lewis"><div><b>J. Lewis <span class="c17-wall-tag">(slumlord cunt)</span></b><p>Hey… Friendly reminder your three days late on this month’s rent.</p></div></article>
                 <article class="c17-wall-comment c17-wall-comment-mark"><img class="c17-wall-avatar" src="T.Friends.Mark.PNG" alt="Marky Mark"><div><b>Marky Mark <span class="c17-wall-unverified">(UNVERIFIED)</span></b><p>Hey. Pretty sure you have the wrong Mark, but thanks for the birthday wishes.</p><div class="c17-wall-reply"><b>Tawnya Grey</b><p>😂😂 Classic Mark. Always fucking with me.</p></div></div></article>
               </section>
+
+              <button class="c17-tawnya-photos-button" type="button" data-tawnya-photos-open aria-label="Open Tawnya Grey photos">
+                <span class="c17-tawnya-photos-button-copy"><b>PHOTOS</b><small>10 recovered images</small></span>
+                <span class="c17-tawnya-photos-peek" aria-hidden="true">
+                  <img src="T.Photos.1.PNG" alt="" loading="lazy" decoding="async">
+                  <img src="T.Photos.5.PNG" alt="" loading="lazy" decoding="async">
+                  <img src="T.Photos.10.PNG" alt="" loading="lazy" decoding="async">
+                </span>
+                <span class="c17-tawnya-photos-arrow" aria-hidden="true">›</span>
+              </button>
             </section>`
         },
         friends: {
@@ -3643,6 +3638,66 @@ function ensureTawnyaProfileOverlay() {
         viewer.setAttribute("aria-hidden", "false");
       });
     });
+
+    const tawnyaPhotosOpen = documentPanel.querySelector("[data-tawnya-photos-open]");
+    if (tawnyaPhotosOpen) {
+      tawnyaPhotosOpen.addEventListener("click", () => {
+        const photoFiles = Array.from({ length: 10 }, (_, index) => `T.Photos.${index + 1}.PNG`);
+        let viewer = tawnyaProfileOverlay.querySelector(".c17-tawnya-photo-viewer");
+
+        if (!viewer) {
+          viewer = document.createElement("aside");
+          viewer.className = "c17-tawnya-photo-viewer";
+          viewer.setAttribute("aria-hidden", "true");
+          viewer.innerHTML = `
+            <section class="c17-tawnya-photo-viewer-card" role="dialog" aria-modal="true" aria-label="Tawnya Grey photos">
+              <header class="c17-tawnya-photo-viewer-head">
+                <div><b>PHOTOS</b><small>RECOVERED PROFILE MEDIA</small></div>
+                <button class="c17-tawnya-photo-viewer-close" type="button" aria-label="close photos">×</button>
+              </header>
+              <figure class="c17-tawnya-photo-stage">
+                <img class="c17-tawnya-photo-large" src="T.Photos.1.PNG" alt="Tawnya Grey photo 1">
+              </figure>
+              <div class="c17-tawnya-photo-thumbs" aria-label="Photo thumbnails"></div>
+            </section>`;
+          tawnyaProfileOverlay.appendChild(viewer);
+
+          const thumbs = viewer.querySelector(".c17-tawnya-photo-thumbs");
+          photoFiles.forEach((src, index) => {
+            const thumb = document.createElement("button");
+            thumb.type = "button";
+            thumb.className = `c17-tawnya-photo-thumb${index === 0 ? " active" : ""}`;
+            thumb.dataset.src = src;
+            thumb.dataset.index = String(index + 1);
+            thumb.innerHTML = `<img src="${src}" alt="" loading="lazy" decoding="async">`;
+            thumbs.appendChild(thumb);
+          });
+
+          const closeViewer = () => {
+            viewer.classList.remove("open");
+            viewer.setAttribute("aria-hidden", "true");
+          };
+
+          viewer.querySelector(".c17-tawnya-photo-viewer-close").addEventListener("click", closeViewer);
+          viewer.addEventListener("click", event => {
+            if (event.target === viewer) closeViewer();
+          });
+
+          thumbs.addEventListener("click", event => {
+            const button = event.target.closest(".c17-tawnya-photo-thumb");
+            if (!button) return;
+            thumbs.querySelectorAll(".c17-tawnya-photo-thumb").forEach(item => item.classList.remove("active"));
+            button.classList.add("active");
+            const large = viewer.querySelector(".c17-tawnya-photo-large");
+            large.src = button.dataset.src;
+            large.alt = `Tawnya Grey photo ${button.dataset.index}`;
+          });
+        }
+
+        viewer.classList.add("open");
+        viewer.setAttribute("aria-hidden", "false");
+      });
+    }
 
     // The full-screen overlay is the physical scroll surface on iPhone.
     // The inner file remains overflow-visible so sticky tabs and long pages behave naturally.
