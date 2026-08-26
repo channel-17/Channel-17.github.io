@@ -3539,12 +3539,39 @@ function ensureTawnyaProfileOverlay() {
   tawnyaProfileOverlay.innerHTML = `
     <article class="c17-tawnya-dossier" role="dialog" aria-modal="true" aria-label="Tawnya Grey restricted file">
       <nav class="c17-dossier-top-tabs" aria-label="File categories"></nav>
+
+      <div class="c17-poth-account">
+        <button class="c17-poth-account-trigger" type="button" aria-label="POTH3 admin account" aria-expanded="false">
+          <img src="T.Poth.PNG" alt="">
+        </button>
+        <div class="c17-poth-account-menu" hidden>
+          <div class="c17-poth-account-id">
+            <img src="T.Poth.PNG" alt="">
+            <span><b>POTH3</b><small>ADMIN</small></span>
+          </div>
+          <button class="c17-poth-logout" type="button">LOG OUT</button>
+        </div>
+      </div>
+
       <button class="c17-tawnya-profile-close" type="button" aria-label="close Tawnya profile">×</button>
+
       <div class="c17-dossier-stage">
         <main class="c17-dossier-document"></main>
         <nav class="c17-dossier-side-tabs" aria-label="Section pages"></nav>
       </div>
       <footer class="c17-dossier-footer"><span class="c17-dossier-path"></span><span class="c17-access-restricted">ACCESS RESTRICTED</span></footer>
+
+      <section class="c17-poth-login" hidden aria-label="POTH3 authentication">
+        <div class="c17-poth-login-core">
+          <img class="c17-poth-login-symbol" src="System.symbol.PNG" alt="">
+          <form class="c17-poth-login-form" autocomplete="off">
+            <input class="c17-poth-user-field" type="text" value="P3!¡.." readonly aria-label="account">
+            <input class="c17-poth-password-field" type="password" placeholder="Password" autocomplete="new-password" aria-label="Password">
+            <button class="c17-poth-login-button" type="submit">LOG IN</button>
+            <p class="c17-poth-login-error" role="status" aria-live="polite"></p>
+          </form>
+        </div>
+      </section>
     </article>`;
 
   document.body.appendChild(tawnyaProfileOverlay);
@@ -3855,9 +3882,78 @@ function ensureTawnyaProfileOverlay() {
   renderDossier();
 
   const close = tawnyaProfileOverlay.querySelector(".c17-tawnya-profile-close");
+  const pothTrigger = tawnyaProfileOverlay.querySelector(".c17-poth-account-trigger");
+  const pothMenu = tawnyaProfileOverlay.querySelector(".c17-poth-account-menu");
+  const pothLogout = tawnyaProfileOverlay.querySelector(".c17-poth-logout");
+  const pothLogin = tawnyaProfileOverlay.querySelector(".c17-poth-login");
+  const pothLoginForm = tawnyaProfileOverlay.querySelector(".c17-poth-login-form");
+  const pothPassword = tawnyaProfileOverlay.querySelector(".c17-poth-password-field");
+  const pothLoginButton = tawnyaProfileOverlay.querySelector(".c17-poth-login-button");
+  const pothLoginError = tawnyaProfileOverlay.querySelector(".c17-poth-login-error");
+
+  const closePothMenu = () => {
+    if (!pothMenu || !pothTrigger) return;
+    pothMenu.hidden = true;
+    pothTrigger.setAttribute("aria-expanded", "false");
+    tawnyaProfileOverlay.classList.remove("poth-menu-open");
+  };
+
+  const showPothLogin = () => {
+    closePothMenu();
+    dossierShell.classList.add("poth-logged-out");
+    if (pothLogin) pothLogin.hidden = false;
+    if (pothLoginError) pothLoginError.textContent = "";
+    if (pothPassword) {
+      pothPassword.value = "";
+      window.setTimeout(() => pothPassword.focus({ preventScroll: true }), 240);
+    }
+    tawnyaProfileOverlay.scrollTop = 0;
+  };
+
+  pothTrigger?.addEventListener("click", event => {
+    event.stopPropagation();
+    const willOpen = pothMenu ? pothMenu.hidden : false;
+    closePothMenu();
+    if (willOpen && pothMenu) {
+      pothMenu.hidden = false;
+      pothTrigger.setAttribute("aria-expanded", "true");
+      tawnyaProfileOverlay.classList.add("poth-menu-open");
+    }
+  });
+
+  pothLogout?.addEventListener("click", event => {
+    event.stopPropagation();
+    showPothLogin();
+  });
+
+  pothPassword?.addEventListener("input", () => {
+    if (pothLoginError) pothLoginError.textContent = "";
+  });
+
+  pothLoginForm?.addEventListener("submit", event => {
+    event.preventDefault();
+    if (!pothPassword || !pothLoginButton || !pothLoginError) return;
+
+    pothLoginError.textContent = "";
+    pothLoginButton.disabled = true;
+    pothLoginButton.textContent = "CHECKING";
+
+    window.setTimeout(() => {
+      pothLoginButton.disabled = false;
+      pothLoginButton.textContent = "LOG IN";
+      pothLoginError.textContent = "INCORRECT PASSWORD";
+      pothPassword.select();
+    }, 520);
+  });
+
   close.addEventListener("click", closeTawnyaProfile);
   tawnyaProfileOverlay.addEventListener("click", event => {
-    if (event.target === tawnyaProfileOverlay) closeTawnyaProfile();
+    if (event.target === tawnyaProfileOverlay) {
+      closeTawnyaProfile();
+      return;
+    }
+
+    if (!event.target.closest(".c17-poth-account")) closePothMenu();
   });
 
   return tawnyaProfileOverlay;
