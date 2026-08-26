@@ -3326,7 +3326,7 @@ function ensureTawnyaProfileOverlay() {
                   <div class="c17-arrest-asset-bay"><span>SIDE</span><small>T.WORCESTER.SIDE.PNG</small></div>
                 </div>
                 <div class="c17-arrest-detail-row">
-                  <div class="c17-arrest-badge-bay"><span>BADGE</span><small>T.WORCESTER.BADGE.PNG</small></div>
+                  <div class="c17-arrest-badge-bay c17-arrest-badge-live"><img src="T.Worcester.Badge.png" alt="Worcester County booking badge"></div>
                   <div class="c17-arrest-copy">
                     <h3>Worcester County Intake</h3>
                     <dl><div><dt>DATE</dt><dd>06/18/2015</dd></div><div><dt>SUBJECT</dt><dd>GREY, T.</dd></div><div><dt>STATUS</dt><dd>RECOVERED RECORD // PARTIAL</dd></div></dl>
@@ -3431,37 +3431,60 @@ function ensureTawnyaProfileOverlay() {
         dating: {
           label: "LOVE & DATING",
           html: `
-            <section class="c17-tawnya-dating-card">
-              <figure class="c17-dating-main-figure">
-                <img class="c17-dating-photo c17-tawnya-main-photo" src="Tawnya.profile.main" data-tawnya-main-photo alt="Tawnya Grey dating profile photo">
-                <figcaption>still that bitch.</figcaption>
-              </figure>
-              <div class="c17-tawnya-identity">
-                <h2>Tawnya Grey</h2>
-                <p><span>27</span><i aria-hidden="true"></i><span>Western Massachusetts</span></p>
-                <div class="c17-dating-status"><span>STATUS</span><b>FTS</b></div>
-                <div class="c17-dating-relationship"><span>IN A RELATIONSHIP WITH</span><b>Bad luck &amp; Shit Choices</b></div>
+            <section class="c17-tawnya-dating-card c17-tawnya-social-profile">
+              <div class="c17-tawnya-hero-grid">
+                <figure class="c17-dating-main-figure">
+                  <img class="c17-dating-photo c17-tawnya-main-photo" src="Tawnya.profile.main" data-tawnya-main-photo alt="Tawnya Grey profile photo">
+                  <figcaption>still that bitch.</figcaption>
+                </figure>
+
+                <div class="c17-tawnya-identity">
+                  <div class="c17-social-handle">RECOVERED SOCIAL PROFILE</div>
+                  <h2>Tawnya Grey</h2>
+                  <p class="c17-social-loc"><span>27</span><i aria-hidden="true"></i><span>Western MA</span></p>
+                  <div class="c17-dating-status"><span>STATUS</span><b>FTS</b></div>
+                  <div class="c17-dating-relationship"><span>IN A RELATIONSHIP WITH</span><b>Bad luck &amp; Shit Choices</b></div>
+                </div>
               </div>
-              <section class="c17-tawnya-about">
-                <h3>About me:</h3>
+
+              <section class="c17-tawnya-about c17-social-bio-cut">
+                <span class="c17-social-bio-label">ABOUT ME</span>
                 <p>Just a girl… trying to make it out here. I work hard, love hard, say exactly what I’m thinking, and I’m probably gonna make a questionable decision before this bio is over.</p>
               </section>
+
+              <div class="c17-social-midline" aria-hidden="true"><span>PROFILE ACTIVITY // RECOVERED</span></div>
+
+              <div class="c17-tawnya-social-panels">
+                <button class="c17-tawnya-photos-button" type="button" data-tawnya-photos-open aria-label="Open Tawnya Grey photos">
+                  <span class="c17-tawnya-photos-button-copy"><b>PHOTOS</b><small>10 recovered images</small></span>
+                  <span class="c17-tawnya-photos-peek" aria-hidden="true">
+                    <img src="T.Photos.1.PNG" alt="" loading="lazy" decoding="async">
+                    <img src="T.Photos.5.PNG" alt="" loading="lazy" decoding="async">
+                    <img src="T.Photos.10.PNG" alt="" loading="lazy" decoding="async">
+                  </span>
+                  <span class="c17-tawnya-photos-arrow" aria-hidden="true">›</span>
+                </button>
+
+                <section class="c17-tawnya-following" aria-label="Following 7">
+                  <header><b>FOLLOWING</b><span>7</span></header>
+                  <div class="c17-following-grid" aria-hidden="true">
+                    <span class="c17-follow-tile" title="tattoo artist"><i class="c17-follow-icon c17-follow-tattoo">⌁</i></span>
+                    <span class="c17-follow-tile" title="skateboarding"><i class="c17-follow-icon c17-follow-skate">▰</i></span>
+                    <span class="c17-follow-tile" title="sneakers"><i class="c17-follow-icon c17-follow-kicks">⌁</i></span>
+                    <span class="c17-follow-tile" title="music"><i class="c17-follow-icon c17-follow-music">♫</i></span>
+                    <span class="c17-follow-tile" title="ball pythons"><i class="c17-follow-icon c17-follow-snake">S</i></span>
+                    <span class="c17-follow-tile" title="person"><i class="c17-follow-icon c17-follow-person">●</i></span>
+                    <span class="c17-follow-tile c17-follow-spice" title="Spice Girls"><i>SPICE</i></span>
+                  </div>
+                </section>
+              </div>
+
               <section class="c17-tawnya-wall">
                 <header><span>FRIENDS</span><small>RECOVERED PROFILE WALL</small></header>
                 <article class="c17-wall-comment"><img class="c17-wall-avatar" src="T.Friends.Momma.PNG" alt="Big Momma"><div><b>Big Momma</b><p>The garden hath spoken, baby girl💚 Your little bag of happiness is fluffed, stuffed, blessed, and awaiting some green adoption papers!</p></div></article>
                 <article class="c17-wall-comment"><img class="c17-wall-avatar" src="T.Friends.Lewis.PNG" alt="J. Lewis"><div><b>J. Lewis <span class="c17-wall-tag">(slumlord cunt)</span></b><p>Hey… Friendly reminder your three days late on this month’s rent.</p></div></article>
                 <article class="c17-wall-comment c17-wall-comment-mark"><img class="c17-wall-avatar" src="T.Friends.Mark.PNG" alt="Marky Mark"><div><b>Marky Mark <span class="c17-wall-unverified">(UNVERIFIED)</span></b><p>Hey. Pretty sure you have the wrong Mark, but thanks for the birthday wishes.</p><div class="c17-wall-reply"><b>Tawnya Grey</b><p>😂😂 Classic Mark. Always fucking with me.</p></div></div></article>
               </section>
-
-              <button class="c17-tawnya-photos-button" type="button" data-tawnya-photos-open aria-label="Open Tawnya Grey photos">
-                <span class="c17-tawnya-photos-button-copy"><b>PHOTOS</b><small>10 recovered images</small></span>
-                <span class="c17-tawnya-photos-peek" aria-hidden="true">
-                  <img src="T.Photos.1.PNG" alt="" loading="lazy" decoding="async">
-                  <img src="T.Photos.5.PNG" alt="" loading="lazy" decoding="async">
-                  <img src="T.Photos.10.PNG" alt="" loading="lazy" decoding="async">
-                </span>
-                <span class="c17-tawnya-photos-arrow" aria-hidden="true">›</span>
-              </button>
             </section>`
         },
         friends: {
@@ -3655,14 +3678,17 @@ function ensureTawnyaProfileOverlay() {
                 <div><b>PHOTOS</b><small>RECOVERED PROFILE MEDIA</small></div>
                 <button class="c17-tawnya-photo-viewer-close" type="button" aria-label="close photos">×</button>
               </header>
-              <figure class="c17-tawnya-photo-stage">
-                <img class="c17-tawnya-photo-large" src="T.Photos.1.PNG" alt="Tawnya Grey photo 1">
+              <figure class="c17-tawnya-photo-stage" aria-label="Pinch to inspect photo">
+                <img class="c17-tawnya-photo-large" src="T.Photos.1.PNG" alt="Tawnya Grey photo 1" draggable="false">
               </figure>
               <div class="c17-tawnya-photo-thumbs" aria-label="Photo thumbnails"></div>
             </section>`;
           tawnyaProfileOverlay.appendChild(viewer);
 
           const thumbs = viewer.querySelector(".c17-tawnya-photo-thumbs");
+          const stage = viewer.querySelector(".c17-tawnya-photo-stage");
+          const large = viewer.querySelector(".c17-tawnya-photo-large");
+
           photoFiles.forEach((src, index) => {
             const thumb = document.createElement("button");
             thumb.type = "button";
@@ -3673,7 +3699,126 @@ function ensureTawnyaProfileOverlay() {
             thumbs.appendChild(thumb);
           });
 
+          let photoScale = 1;
+          let photoX = 0;
+          let photoY = 0;
+          let gestureStartScale = 1;
+          let gestureStartDistance = 0;
+          let gestureStartX = 0;
+          let gestureStartY = 0;
+          let lastTapAt = 0;
+          const activePointers = new Map();
+          const MAX_PHOTO_ZOOM = 5;
+
+          const clampPhotoPan = () => {
+            if (photoScale <= 1) {
+              photoX = 0;
+              photoY = 0;
+              return;
+            }
+            const rect = stage.getBoundingClientRect();
+            const maxX = Math.max(0, rect.width * (photoScale - 1) * 0.5);
+            const maxY = Math.max(0, rect.height * (photoScale - 1) * 0.5);
+            photoX = Math.max(-maxX, Math.min(maxX, photoX));
+            photoY = Math.max(-maxY, Math.min(maxY, photoY));
+          };
+
+          const paintPhotoTransform = (animate = false) => {
+            clampPhotoPan();
+            large.classList.toggle("zoomed", photoScale > 1.001);
+            large.style.transition = animate ? "transform .18s ease" : "none";
+            large.style.transform = `translate3d(${photoX}px, ${photoY}px, 0) scale(${photoScale})`;
+            if (animate) {
+              window.setTimeout(() => {
+                if (large) large.style.transition = "none";
+              }, 190);
+            }
+          };
+
+          const resetPhotoZoom = (animate = false) => {
+            photoScale = 1;
+            photoX = 0;
+            photoY = 0;
+            activePointers.clear();
+            paintPhotoTransform(animate);
+          };
+
+          const pointerDistance = () => {
+            const points = [...activePointers.values()];
+            if (points.length < 2) return 0;
+            return Math.hypot(points[0].x - points[1].x, points[0].y - points[1].y);
+          };
+
+          stage.addEventListener("pointerdown", event => {
+            event.preventDefault();
+            stage.setPointerCapture?.(event.pointerId);
+            activePointers.set(event.pointerId, { x: event.clientX, y: event.clientY });
+
+            if (activePointers.size === 1) {
+              gestureStartX = event.clientX - photoX;
+              gestureStartY = event.clientY - photoY;
+            } else if (activePointers.size === 2) {
+              gestureStartDistance = pointerDistance();
+              gestureStartScale = photoScale;
+            }
+          });
+
+          stage.addEventListener("pointermove", event => {
+            if (!activePointers.has(event.pointerId)) return;
+            event.preventDefault();
+            activePointers.set(event.pointerId, { x: event.clientX, y: event.clientY });
+
+            if (activePointers.size >= 2) {
+              const distance = pointerDistance();
+              if (gestureStartDistance > 0) {
+                photoScale = Math.max(1, Math.min(MAX_PHOTO_ZOOM, gestureStartScale * (distance / gestureStartDistance)));
+                paintPhotoTransform(false);
+              }
+            } else if (activePointers.size === 1 && photoScale > 1) {
+              photoX = event.clientX - gestureStartX;
+              photoY = event.clientY - gestureStartY;
+              paintPhotoTransform(false);
+            }
+          });
+
+          const releasePhotoPointer = event => {
+            if (!activePointers.has(event.pointerId)) return;
+            activePointers.delete(event.pointerId);
+
+            if (activePointers.size === 1) {
+              const remaining = [...activePointers.values()][0];
+              gestureStartX = remaining.x - photoX;
+              gestureStartY = remaining.y - photoY;
+            }
+            clampPhotoPan();
+            paintPhotoTransform(false);
+          };
+
+          stage.addEventListener("pointerup", releasePhotoPointer);
+          stage.addEventListener("pointercancel", releasePhotoPointer);
+          stage.addEventListener("lostpointercapture", releasePhotoPointer);
+
+          stage.addEventListener("click", event => {
+            const now = Date.now();
+            if (now - lastTapAt < 320) {
+              event.preventDefault();
+              event.stopPropagation();
+              if (photoScale > 1.05) {
+                resetPhotoZoom(true);
+              } else {
+                photoScale = 2.6;
+                photoX = 0;
+                photoY = 0;
+                paintPhotoTransform(true);
+              }
+              lastTapAt = 0;
+            } else {
+              lastTapAt = now;
+            }
+          });
+
           const closeViewer = () => {
+            resetPhotoZoom(false);
             viewer.classList.remove("open");
             viewer.setAttribute("aria-hidden", "true");
           };
@@ -3688,12 +3833,14 @@ function ensureTawnyaProfileOverlay() {
             if (!button) return;
             thumbs.querySelectorAll(".c17-tawnya-photo-thumb").forEach(item => item.classList.remove("active"));
             button.classList.add("active");
-            const large = viewer.querySelector(".c17-tawnya-photo-large");
+            resetPhotoZoom(false);
             large.src = button.dataset.src;
             large.alt = `Tawnya Grey photo ${button.dataset.index}`;
           });
         }
 
+        const large = viewer.querySelector(".c17-tawnya-photo-large");
+        if (large) large.style.transform = "translate3d(0,0,0) scale(1)";
         viewer.classList.add("open");
         viewer.setAttribute("aria-hidden", "false");
       });
