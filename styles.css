@@ -12363,3 +12363,191 @@ body.employment-open { overflow:hidden; }
   .c17-arrest-badge-bay.c17-arrest-badge-live { width:108px !important;height:108px !important;min-height:108px !important; }
   .c17-arrest-badge-bay.c17-arrest-badge-live img { width:104px !important;height:104px !important; }
 }
+
+
+/* =========================================================
+   BRICK 16 — POTH3 ADMIN SESSION / LOGOUT TRAP
+   T.Poth.PNG is the active administrator login.
+========================================================= */
+.c17-poth-account {
+  position:absolute !important;
+  top:68px !important;
+  right:46px !important;
+  z-index:95 !important;
+  width:34px !important;
+  height:34px !important;
+  pointer-events:auto !important;
+}
+.c17-poth-account-trigger {
+  appearance:none !important;
+  -webkit-appearance:none !important;
+  display:block !important;
+  width:34px !important;
+  height:34px !important;
+  margin:0 !important;
+  padding:0 !important;
+  overflow:hidden !important;
+  border:1px solid rgba(157,219,255,.48) !important;
+  border-radius:50% !important;
+  background:#020b1c !important;
+  box-shadow:0 0 0 2px rgba(3,17,42,.92),0 0 12px rgba(54,154,255,.17) !important;
+  cursor:pointer !important;
+  touch-action:manipulation !important;
+}
+.c17-poth-account-trigger img {
+  display:block !important;
+  width:100% !important;
+  height:100% !important;
+  object-fit:cover !important;
+  object-position:center !important;
+  pointer-events:none !important;
+}
+.c17-poth-account-menu {
+  position:absolute !important;
+  top:40px !important;
+  right:0 !important;
+  width:152px !important;
+  padding:8px !important;
+  border:1px solid rgba(148,211,252,.28) !important;
+  background:linear-gradient(180deg,#092b57,#03142f) !important;
+  box-shadow:0 14px 32px rgba(0,0,0,.54),inset 0 0 0 1px rgba(175,225,255,.05) !important;
+}
+.c17-poth-account-menu[hidden] { display:none !important; }
+.c17-poth-account-id {
+  display:grid !important;
+  grid-template-columns:34px minmax(0,1fr) !important;
+  align-items:center !important;
+  gap:8px !important;
+  padding:2px 2px 9px !important;
+  border-bottom:1px solid rgba(141,208,248,.16) !important;
+}
+.c17-poth-account-id img {
+  display:block !important;
+  width:34px !important;
+  height:34px !important;
+  border-radius:50% !important;
+  object-fit:cover !important;
+}
+.c17-poth-account-id span { min-width:0 !important; }
+.c17-poth-account-id b,
+.c17-poth-account-id small {
+  display:block !important;
+  font-family:"Courier New",monospace !important;
+  line-height:1 !important;
+}
+.c17-poth-account-id b { color:#f4fbff !important;font-size:.66rem !important;letter-spacing:.8px !important; }
+.c17-poth-account-id small { margin-top:4px !important;color:#71c8ff !important;font-size:.43rem !important;letter-spacing:1.1px !important; }
+.c17-poth-logout {
+  appearance:none !important;
+  -webkit-appearance:none !important;
+  display:block !important;
+  width:100% !important;
+  margin:8px 0 0 !important;
+  padding:9px 8px !important;
+  border:1px solid rgba(133,202,247,.18) !important;
+  border-radius:0 !important;
+  background:rgba(1,10,28,.66) !important;
+  color:#e7f7ff !important;
+  font:900 .55rem/1 "Courier New",monospace !important;
+  letter-spacing:1.25px !important;
+  text-align:left !important;
+  cursor:pointer !important;
+  touch-action:manipulation !important;
+}
+.c17-poth-logout:active { background:rgba(24,91,143,.45) !important; }
+
+/* Logged out means the human dossier vanishes. Only authentication remains. */
+.c17-tawnya-dossier.poth-logged-out {
+  min-height:100dvh !important;
+  background:
+    radial-gradient(circle at 50% 34%,rgba(25,117,202,.20),transparent 30%),
+    linear-gradient(180deg,#061b3e 0%,#03132f 48%,#010817 100%) !important;
+}
+.c17-tawnya-dossier.poth-logged-out .c17-dossier-top-tabs,
+.c17-tawnya-dossier.poth-logged-out .c17-dossier-stage,
+.c17-tawnya-dossier.poth-logged-out .c17-dossier-footer,
+.c17-tawnya-dossier.poth-logged-out .c17-poth-account {
+  display:none !important;
+}
+.c17-tawnya-dossier.poth-logged-out .c17-tawnya-profile-close {
+  position:fixed !important;
+  top:max(12px,env(safe-area-inset-top)) !important;
+  right:12px !important;
+  border-color:rgba(133,201,247,.18) !important;
+  background:rgba(0,8,22,.44) !important;
+  color:rgba(225,244,255,.64) !important;
+}
+.c17-poth-login {
+  position:relative !important;
+  display:grid !important;
+  place-items:center !important;
+  width:100% !important;
+  min-height:100dvh !important;
+  padding:max(68px,calc(env(safe-area-inset-top) + 52px)) 24px max(44px,env(safe-area-inset-bottom)) !important;
+}
+.c17-poth-login[hidden] { display:none !important; }
+.c17-poth-login-core {
+  display:flex !important;
+  flex-direction:column !important;
+  align-items:center !important;
+  width:min(100%,310px) !important;
+  margin:auto !important;
+}
+.c17-poth-login-symbol {
+  display:block !important;
+  width:min(54vw,188px) !important;
+  height:min(54vw,188px) !important;
+  margin:0 auto 40px !important;
+  object-fit:contain !important;
+  opacity:.95 !important;
+  filter:brightness(0) invert(1) sepia(1) saturate(8) hue-rotate(172deg) brightness(.82) drop-shadow(0 0 22px rgba(48,151,242,.15)) !important;
+}
+.c17-poth-login-form {
+  display:flex !important;
+  flex-direction:column !important;
+  width:100% !important;
+  gap:10px !important;
+}
+.c17-poth-login-form input {
+  appearance:none !important;
+  -webkit-appearance:none !important;
+  display:block !important;
+  width:100% !important;
+  height:46px !important;
+  padding:0 14px !important;
+  border:1px solid rgba(255,255,255,.82) !important;
+  border-radius:0 !important;
+  outline:0 !important;
+  background:#f7fbff !important;
+  color:#07152a !important;
+  font:700 .88rem/1 Arial,Helvetica,sans-serif !important;
+  box-shadow:none !important;
+  -webkit-user-select:text !important;
+  user-select:text !important;
+}
+.c17-poth-login-form input::placeholder { color:#9ba4ad !important;opacity:1 !important;font-weight:400 !important; }
+.c17-poth-user-field { color:#0a1931 !important; }
+.c17-poth-password-field:focus { border-color:#7bcfff !important;box-shadow:0 0 0 2px rgba(85,181,247,.16) !important; }
+.c17-poth-login-button {
+  appearance:none !important;
+  -webkit-appearance:none !important;
+  height:42px !important;
+  margin-top:2px !important;
+  border:1px solid rgba(117,198,248,.34) !important;
+  border-radius:0 !important;
+  background:#0b3b74 !important;
+  color:#f4fbff !important;
+  font:900 .66rem/1 "Courier New",monospace !important;
+  letter-spacing:1.5px !important;
+  cursor:pointer !important;
+  touch-action:manipulation !important;
+}
+.c17-poth-login-button:disabled { opacity:.56 !important; }
+.c17-poth-login-error {
+  min-height:18px !important;
+  margin:2px 0 0 !important;
+  color:#ff3535 !important;
+  font:900 .58rem/1.15 "Courier New",monospace !important;
+  letter-spacing:1.2px !important;
+  text-align:center !important;
+}
