@@ -3479,17 +3479,61 @@ function ensureTawnyaProfileOverlay() {
                 </section>
               </div>
 
+              <section class="c17-tawnya-friends-private" aria-label="Friends private">
+                <header>
+                  <div><b>FRIENDS</b><small>PRIVATE</small></div>
+                  <span class="c17-friends-lock" aria-hidden="true">🔒</span>
+                </header>
+                <div class="c17-friends-strip" aria-hidden="true">
+                  <img src="T.Friends.List.PNG" alt="" loading="lazy" decoding="async">
+                </div>
+              </section>
+
               <section class="c17-tawnya-wall">
-                <header><span>FRIENDS</span><small>RECOVERED PROFILE WALL</small></header>
-                <article class="c17-wall-comment"><img class="c17-wall-avatar" src="T.Friends.Momma.PNG" alt="Big Momma"><div><b>Big Momma</b><p>The garden hath spoken, baby girl💚 Your little bag of happiness is fluffed, stuffed, blessed, and awaiting some green adoption papers!</p></div></article>
-                <article class="c17-wall-comment"><img class="c17-wall-avatar" src="T.Friends.Lewis.PNG" alt="J. Lewis"><div><b>J. Lewis <span class="c17-wall-tag">(slumlord cunt)</span></b><p>Hey… Friendly reminder your three days late on this month’s rent.</p></div></article>
-                <article class="c17-wall-comment c17-wall-comment-mark"><img class="c17-wall-avatar" src="T.Friends.Mark.PNG" alt="Marky Mark"><div><b>Marky Mark <span class="c17-wall-unverified">(UNVERIFIED)</span></b><p>Hey. Pretty sure you have the wrong Mark, but thanks for the birthday wishes.</p><div class="c17-wall-reply"><b>Tawnya Grey</b><p>😂😂 Classic Mark. Always fucking with me.</p></div></div></article>
+                <header><span>WALL</span><small>RECOVERED PROFILE ACTIVITY</small></header>
+
+                <article class="c17-wall-comment">
+                  <img class="c17-wall-avatar" src="T.Friends.Momma.PNG" alt="Big Momma">
+                  <div><b>Big Momma</b><p>The garden hath spoken, baby girl💚 Your little bag of happiness is fluffed, stuffed, blessed, and awaiting some green adoption papers!</p></div>
+                </article>
+
+                <article class="c17-wall-comment c17-wall-comment-pete">
+                  <img class="c17-wall-avatar" src="T.Friends.Pete.PNG" alt="Pete S.">
+                  <div><b>Pete S.</b><p>Let’s hit the park today, homie!</p></div>
+                </article>
+
+                <article class="c17-wall-comment">
+                  <img class="c17-wall-avatar" src="T.Friends.Panga.PNG" alt="Panga">
+                  <div><b>Panga</b><p>Found your other shoe. Don’t ask where. 😂</p></div>
+                </article>
+
+                <article class="c17-wall-comment">
+                  <img class="c17-wall-avatar" src="T.Friends.Renee.PNG" alt="Renee">
+                  <div><b>Renee</b><p>Bitch answer your phone. I know you’re awake.</p></div>
+                </article>
+
+                <article class="c17-wall-comment">
+                  <img class="c17-wall-avatar" src="T.Friends.Lewis.PNG" alt="J. Lewis">
+                  <div><b>J. Lewis <span class="c17-wall-tag">(slumlord cunt)</span></b><p>Hey… Friendly reminder your three days late on this month’s rent.</p></div>
+                </article>
+
+                <article class="c17-wall-comment c17-wall-comment-mark">
+                  <img class="c17-wall-avatar" src="T.Friends.Mark.PNG" alt="Marky Mark">
+                  <div>
+                    <b>Marky Mark <span class="c17-wall-unverified">(UNVERIFIED)</span></b>
+                    <p>Hey. Pretty sure you have the wrong Mark, but thanks for the birthday wishes.</p>
+                    <div class="c17-wall-reply">
+                      <img class="c17-wall-reply-avatar" src="T.friends.Comment.PNG" alt="Tawnya Grey">
+                      <div><b>Tawnya Grey</b><p>😂😂 Classic Mark. Always fucking with me.</p></div>
+                    </div>
+                  </div>
+                </article>
               </section>
             </section>`
         },
         friends: {
           label: "FRIENDS & FAMILY",
-          html: `<div class="c17-dossier-kicker">SOCIAL CONNECTIONS</div><h2>Friends &amp; Family</h2><div class="c17-record-stack"><article><span>KNOWN CONNECTION</span><b>Thomas Doggon Foolery</b><p>Relationship record present.</p></article><article><span>KNOWN CONNECTION</span><b>Joseph Mahhmah</b><p>Friend record present.</p></article></div>`
+          html: `<div class="c17-dossier-kicker">SOCIAL CONNECTIONS</div><h2>Friends &amp; Family</h2><section class="c17-tawnya-friends-private c17-tawnya-friends-private-page" aria-label="Friends private"><header><div><b>FRIENDS</b><small>PRIVATE</small></div><span class="c17-friends-lock" aria-hidden="true">🔒</span></header><div class="c17-friends-strip" aria-hidden="true"><img src="T.Friends.List.PNG" alt="" loading="lazy" decoding="async"></div><p class="c17-friends-private-note">Profile connections are present. Individual records are locked.</p></section>`
         }
       }
     },
