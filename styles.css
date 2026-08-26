@@ -12064,3 +12064,302 @@ body.employment-open { overflow:hidden; }
   .c17-tawnya-photo-viewer-card { width:min(94vw,380px) !important; max-height:88svh !important; }
   .c17-tawnya-photo-large { max-height:56svh !important; }
 }
+
+
+/* =========================================================
+   BUILD 150 — TAWNYA SOCIAL PROFILE MASTERCLASS
+   Final authority for Love & Dating composition, Following 7,
+   inspectable Photos, and transparent Legal badges.
+========================================================= */
+
+/* ---- LEGAL BADGES: artwork only, no black picture-frame box ---- */
+.c17-arrest-detail-row {
+  grid-template-columns:132px minmax(0,1fr) !important;
+}
+.c17-arrest-badge-bay.c17-arrest-badge-live {
+  width:118px !important;
+  height:118px !important;
+  min-height:118px !important;
+  margin:10px 7px 12px !important;
+  padding:0 !important;
+  overflow:visible !important;
+  border:0 !important;
+  background:transparent !important;
+  box-shadow:none !important;
+}
+.c17-arrest-badge-bay.c17-arrest-badge-live::before,
+.c17-arrest-badge-bay.c17-arrest-badge-live::after {
+  display:none !important;
+  content:none !important;
+}
+.c17-arrest-badge-bay.c17-arrest-badge-live img {
+  position:relative !important;
+  inset:auto !important;
+  display:block !important;
+  width:112px !important;
+  height:112px !important;
+  max-width:none !important;
+  object-fit:contain !important;
+  background:transparent !important;
+  filter:drop-shadow(0 7px 8px rgba(0,0,0,.28)) !important;
+}
+
+/* ---- LOVE & DATING: social page, not Carl's card stack ---- */
+.c17-tawnya-social-profile {
+  display:block !important;
+  width:100% !important;
+  max-width:100% !important;
+  padding:2px 0 24px !important;
+}
+.c17-tawnya-hero-grid {
+  display:grid !important;
+  grid-template-columns:minmax(0,1.08fr) minmax(112px,.92fr) !important;
+  align-items:stretch !important;
+  gap:10px !important;
+  width:100% !important;
+  margin:0 0 10px !important;
+}
+.c17-tawnya-dossier .c17-tawnya-hero-grid .c17-dating-main-figure {
+  width:100% !important;
+  max-width:none !important;
+  height:auto !important;
+  aspect-ratio:1/1 !important;
+  margin:0 !important;
+}
+.c17-tawnya-hero-grid .c17-tawnya-identity {
+  display:flex !important;
+  flex-direction:column !important;
+  justify-content:center !important;
+  min-width:0 !important;
+  margin:0 !important;
+  padding:10px 9px !important;
+  border:1px solid rgba(120,197,239,.18) !important;
+  border-left:2px solid rgba(126,207,250,.38) !important;
+  background:linear-gradient(160deg,rgba(13,47,68,.70),rgba(4,22,34,.36)) !important;
+}
+.c17-social-handle {
+  margin:0 0 7px !important;
+  color:rgba(126,204,246,.42) !important;
+  font:900 .40rem/1.2 "Courier New",monospace !important;
+  letter-spacing:.65px !important;
+}
+.c17-tawnya-hero-grid .c17-tawnya-identity h2 {
+  margin:0 0 5px !important;
+  color:#f3f9fc !important;
+  font-size:1.05rem !important;
+  line-height:1 !important;
+}
+.c17-social-loc {
+  display:flex !important;
+  flex-wrap:wrap !important;
+  align-items:center !important;
+  gap:5px !important;
+  margin:0 0 7px !important;
+  color:rgba(208,234,248,.55) !important;
+  font-size:.53rem !important;
+}
+.c17-social-loc i { width:3px !important;height:3px !important;border-radius:50% !important;background:#77caff !important;opacity:.55 !important; }
+.c17-tawnya-hero-grid .c17-dating-status,
+.c17-tawnya-hero-grid .c17-dating-relationship {
+  display:block !important;
+  margin-top:6px !important;
+}
+.c17-tawnya-hero-grid .c17-dating-status span,
+.c17-tawnya-hero-grid .c17-dating-relationship span {
+  display:block !important;
+  margin-bottom:2px !important;
+  font-size:.38rem !important;
+  letter-spacing:.5px !important;
+}
+.c17-tawnya-hero-grid .c17-dating-status b,
+.c17-tawnya-hero-grid .c17-dating-relationship b {
+  display:block !important;
+  color:#fff !important;
+  font-size:.61rem !important;
+  line-height:1.18 !important;
+}
+
+.c17-social-bio-cut {
+  position:relative !important;
+  width:calc(100% + 16px) !important;
+  margin:8px -8px 0 !important;
+  padding:12px 14px 13px !important;
+  border-top:1px solid rgba(127,205,247,.26) !important;
+  border-bottom:1px solid rgba(127,205,247,.26) !important;
+  border-left:0 !important;
+  border-right:0 !important;
+  background:linear-gradient(90deg,rgba(7,29,44,.30),rgba(27,75,102,.38) 45%,rgba(7,29,44,.25)) !important;
+  transform:rotate(-.35deg) !important;
+}
+.c17-social-bio-cut::before {
+  content:"" !important;
+  position:absolute !important;
+  left:20% !important;
+  right:8% !important;
+  top:-1px !important;
+  height:1px !important;
+  background:linear-gradient(90deg,transparent,#83d3ff,transparent) !important;
+  opacity:.42 !important;
+}
+.c17-social-bio-label {
+  display:block !important;
+  margin:0 0 5px !important;
+  color:#86d4ff !important;
+  font:900 .47rem/1 "Courier New",monospace !important;
+  letter-spacing:1.1px !important;
+}
+.c17-social-bio-cut p {
+  margin:0 !important;
+  color:rgba(226,241,250,.75) !important;
+  font-size:.64rem !important;
+  line-height:1.42 !important;
+}
+.c17-social-midline {
+  display:flex !important;
+  align-items:center !important;
+  gap:8px !important;
+  width:100% !important;
+  margin:12px 0 9px !important;
+  color:rgba(117,196,240,.32) !important;
+  font:900 .37rem/1 "Courier New",monospace !important;
+  letter-spacing:.75px !important;
+}
+.c17-social-midline::before,
+.c17-social-midline::after { content:"" !important;height:1px !important;flex:1 !important;background:rgba(102,183,229,.16) !important; }
+
+.c17-tawnya-social-panels {
+  display:grid !important;
+  grid-template-columns:minmax(0,1.18fr) minmax(110px,.82fr) !important;
+  align-items:stretch !important;
+  gap:8px !important;
+  width:100% !important;
+  margin:0 0 15px !important;
+}
+.c17-tawnya-social-panels .c17-tawnya-photos-button {
+  grid-template-columns:minmax(0,1fr) !important;
+  align-content:space-between !important;
+  width:100% !important;
+  min-height:105px !important;
+  margin:0 !important;
+  padding:10px !important;
+}
+.c17-tawnya-social-panels .c17-tawnya-photos-peek {
+  width:100% !important;
+  height:48px !important;
+  margin-top:8px !important;
+}
+.c17-tawnya-social-panels .c17-tawnya-photos-peek img {
+  width:48px !important;
+  height:48px !important;
+  margin-left:-13px !important;
+}
+.c17-tawnya-social-panels .c17-tawnya-photos-peek img:first-child { margin-left:0 !important; }
+.c17-tawnya-social-panels .c17-tawnya-photos-arrow {
+  position:absolute !important;
+  right:8px !important;
+  top:8px !important;
+}
+.c17-tawnya-social-panels .c17-tawnya-photos-button { position:relative !important; }
+
+.c17-tawnya-following {
+  min-width:0 !important;
+  padding:9px !important;
+  border:1px solid rgba(121,198,238,.20) !important;
+  background:linear-gradient(180deg,rgba(13,43,60,.62),rgba(3,19,30,.88)) !important;
+  pointer-events:none !important;
+}
+.c17-tawnya-following > header {
+  display:flex !important;
+  align-items:center !important;
+  justify-content:space-between !important;
+  gap:6px !important;
+  margin-bottom:8px !important;
+}
+.c17-tawnya-following > header b { color:#8bd8ff !important;font:900 .49rem/1 "Courier New",monospace !important;letter-spacing:.8px !important; }
+.c17-tawnya-following > header span { color:rgba(200,232,248,.48) !important;font:900 .48rem/1 "Courier New",monospace !important; }
+.c17-following-grid {
+  display:grid !important;
+  grid-template-columns:repeat(3,minmax(0,1fr)) !important;
+  gap:5px !important;
+}
+.c17-follow-tile {
+  position:relative !important;
+  display:grid !important;
+  place-items:center !important;
+  aspect-ratio:1/1 !important;
+  overflow:hidden !important;
+  border:1px solid rgba(116,197,241,.18) !important;
+  background:#020b12 !important;
+  color:#dff5ff !important;
+}
+.c17-follow-icon { display:grid !important;place-items:center !important;width:100% !important;height:100% !important;color:#e7f7ff !important;font-style:normal !important;font-weight:900 !important; }
+.c17-follow-tattoo::before { content:"⚡" !important;font-size:.72rem !important;transform:rotate(-35deg) !important; }
+.c17-follow-tattoo { font-size:0 !important; }
+.c17-follow-skate { font-size:0 !important; }
+.c17-follow-skate::before { content:"" !important;width:20px !important;height:6px !important;border-radius:50% 50% 34% 34% !important;background:#e7f7ff !important;transform:rotate(-10deg) !important;box-shadow:-6px 7px 0 -2px #e7f7ff,7px 7px 0 -2px #e7f7ff !important; }
+.c17-follow-kicks { font-size:0 !important; }
+.c17-follow-kicks::before { content:"" !important;width:20px !important;height:10px !important;border-bottom:3px solid #e7f7ff !important;border-left:7px solid transparent !important;transform:skewX(-18deg) rotate(-8deg) !important; }
+.c17-follow-music { font-size:.92rem !important; }
+.c17-follow-snake { font:900 .9rem/1 Georgia,serif !important;transform:rotate(18deg) !important; }
+.c17-follow-person::before { content:"" !important;width:8px !important;height:8px !important;border-radius:50% !important;background:#e7f7ff !important;box-shadow:0 9px 0 4px #e7f7ff !important; }
+.c17-follow-person { font-size:0 !important; }
+.c17-follow-spice { grid-column:span 1 !important;background:linear-gradient(145deg,#06121b,#0a2b40) !important; }
+.c17-follow-spice i { color:#e7f7ff !important;font:900 .33rem/1 Arial,sans-serif !important;letter-spacing:.2px !important;font-style:normal !important;transform:rotate(-7deg) !important; }
+
+/* Wall is allowed to breathe and accumulate instead of reading like equal cards. */
+.c17-tawnya-social-profile .c17-tawnya-wall {
+  width:100% !important;
+  margin:0 !important;
+  border-left:0 !important;
+  border-right:0 !important;
+  background:linear-gradient(180deg,rgba(3,16,27,.36),rgba(3,15,24,.12)) !important;
+}
+.c17-tawnya-social-profile .c17-tawnya-wall article {
+  grid-template-columns:40px minmax(0,1fr) !important;
+  padding:12px 8px 12px 3px !important;
+  border-bottom:1px solid rgba(164,219,255,.09) !important;
+}
+.c17-tawnya-social-profile .c17-tawnya-wall article:nth-of-type(2) { margin-left:12px !important; }
+.c17-tawnya-social-profile .c17-tawnya-wall article:nth-of-type(3) { margin-left:4px !important;padding-right:2px !important; }
+.c17-tawnya-social-profile .c17-wall-avatar { width:40px !important;height:40px !important;box-shadow:0 0 0 1px rgba(141,210,249,.18) !important; }
+.c17-tawnya-social-profile .c17-wall-reply { margin:9px 0 0 14px !important; }
+
+/* ---- PHOTO INSPECTION: curiosity gets rewarded ---- */
+.c17-tawnya-photo-stage {
+  position:relative !important;
+  display:grid !important;
+  place-items:center !important;
+  width:100% !important;
+  height:min(58svh,470px) !important;
+  min-height:280px !important;
+  overflow:hidden !important;
+  touch-action:none !important;
+  user-select:none !important;
+  -webkit-user-select:none !important;
+  cursor:zoom-in !important;
+  background:#020b11 !important;
+}
+.c17-tawnya-photo-large {
+  width:100% !important;
+  height:100% !important;
+  max-height:none !important;
+  object-fit:contain !important;
+  background:transparent !important;
+  transform:translate3d(0,0,0) scale(1) !important;
+  transform-origin:center center !important;
+  will-change:transform !important;
+  user-select:none !important;
+  -webkit-user-drag:none !important;
+  pointer-events:none !important;
+}
+.c17-tawnya-photo-large.zoomed { cursor:grab !important; }
+.c17-tawnya-photo-thumbs { margin-top:9px !important; }
+
+@media(max-width:360px) {
+  .c17-tawnya-hero-grid { grid-template-columns:minmax(0,1.02fr) minmax(102px,.98fr) !important;gap:7px !important; }
+  .c17-tawnya-social-panels { grid-template-columns:minmax(0,1.12fr) minmax(104px,.88fr) !important;gap:6px !important; }
+  .c17-following-grid { gap:4px !important; }
+  .c17-arrest-detail-row { grid-template-columns:122px minmax(0,1fr) !important; }
+  .c17-arrest-badge-bay.c17-arrest-badge-live { width:108px !important;height:108px !important;min-height:108px !important; }
+  .c17-arrest-badge-bay.c17-arrest-badge-live img { width:104px !important;height:104px !important; }
+}
