@@ -3498,9 +3498,20 @@ function ensureTawnyaProfileOverlay() {
                 </article>
 
                 <article class="c17-wall-comment c17-wall-comment-pete">
-                  <img class="c17-wall-avatar" src="T.Friends.Pete.PNG" alt="Pete S.">
-                  <div><b>Pete S.</b><p>Let’s hit the park today, homie!</p></div>
-                </article>
+  <img class="c17-wall-avatar" src="T.Friends.Pete.PNG" alt="Pete S.">
+  <div>
+    <b>Pete S.</b>
+    <p>Let’s hit the skatepark today, homie!</p>
+
+    <div class="c17-wall-reply">
+      <img class="c17-wall-reply-avatar" src="T.friends.Comment.PNG" alt="Tawnya Grey">
+      <div>
+        <b>Tawnya Grey</b>
+        <p>Hell yeah! Miss you, PJ 💙 🤜🏻</p>
+      </div>
+    </div>
+  </div>
+</article>
 
                 <article class="c17-wall-comment">
                   <img class="c17-wall-avatar" src="T.Friends.Panga.PNG" alt="Panga">
