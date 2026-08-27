@@ -12780,3 +12780,24 @@ body.employment-open { overflow:hidden; }
     max-width: none !important;
   }
 }
+/* =========================================================
+   BRICK 16 — DOSSIER NATIVE PINCH-ZOOM
+   Allow iPhone two-finger zoom without sacrificing one-finger scroll.
+========================================================= */
+
+.c17-dossier-overlay,
+.c17-dossier-overlay.open,
+.c17-tawnya-dossier,
+html.frost-dead-world.tawnya-dossier-open body > .c17-tawnya-profile-overlay.c17-dossier-overlay.open,
+html.frost-conquering.tawnya-dossier-open body > .c17-tawnya-profile-overlay.c17-dossier-overlay.open {
+  touch-action: pan-x pan-y pinch-zoom !important;
+}
+
+.c17-dossier-overlay,
+.c17-tawnya-dossier,
+.c17-dossier-body,
+.c17-dossier-page,
+.c17-tawnya-social-profile,
+.c17-tawnya-wall {
+  touch-action: pan-x pan-y pinch-zoom !important;
+}
