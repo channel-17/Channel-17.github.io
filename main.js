@@ -3498,7 +3498,7 @@ function ensureTawnyaProfileOverlay() {
                 </article>
 
                 <article class="c17-wall-comment c17-wall-comment-pete">
-                  <img class="c17-wall-avatar" src="T.Friend.Pete.PNG" alt="Pete S.">
+                  <img class="c17-wall-avatar" src="T.Friends.Pete.PNG" alt="Pete S.">
                   <div><b>Pete S.</b><p>Let’s hit the park today, homie!</p></div>
                 </article>
 
