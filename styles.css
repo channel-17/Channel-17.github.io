@@ -12983,3 +12983,186 @@ html.frost-conquering.tawnya-dossier-open body > .c17-tawnya-profile-overlay.c17
 /* Live surveillance assets in FILE > MEDIA. */
 .c17-media-placeholder-live { overflow:hidden !important; }
 .c17-media-placeholder-live img { display:block !important;width:100% !important;aspect-ratio:1/1 !important;object-fit:cover !important;margin-bottom:7px !important; }
+
+/* =========================================================
+   BRICK 16 — TAWNYA CURRENT FIX PASS / MAIN 86
+   Video authority: Current.tawnya(8).mp4
+========================================================= */
+
+/* FILE: remove dead SUMMARY/MEDIA sprawl by letting the reduced page list breathe. */
+.c17-dossier-side-tabs {
+  overscroll-behavior:contain !important;
+}
+
+/* The top file rail is the physical front edge of the dossier.
+   Scrolling paper may never ghost through it. */
+.c17-dossier-top-tabs {
+  right:38px !important;
+  width:auto !important;
+  height:58px !important;
+  background:
+    linear-gradient(180deg,#082759 0%,#061d44 100%) !important;
+  box-shadow:
+    0 1px 0 rgba(185,226,255,.34),
+    0 8px 18px rgba(0,8,28,.34) !important;
+  isolation:isolate !important;
+}
+.c17-dossier-top-tabs::after {
+  content:"" !important;
+  position:absolute !important;
+  left:0 !important;
+  right:0 !important;
+  bottom:-10px !important;
+  height:10px !important;
+  background:linear-gradient(180deg,rgba(2,13,32,.42),transparent) !important;
+  pointer-events:none !important;
+}
+.c17-dossier-stage {
+  position:relative !important;
+  z-index:1 !important;
+}
+.c17-dossier-document {
+  z-index:1 !important;
+}
+
+/* Close remains the route back to C-17, but it is part of the page edge,
+   not a fake dark tab/pocket. */
+.c17-tawnya-profile-close {
+  top:max(13px,env(safe-area-inset-top)) !important;
+  right:8px !important;
+  width:30px !important;
+  height:30px !important;
+  background:#082759 !important;
+  border:1px solid rgba(176,224,255,.30) !important;
+  box-shadow:none !important;
+}
+
+/* POTH3 leaves the top rail completely. It now reads like the signed-in operator. */
+.c17-poth-account {
+  position:fixed !important;
+  top:auto !important;
+  right:auto !important;
+  left:10px !important;
+  bottom:max(46px,calc(env(safe-area-inset-bottom) + 40px)) !important;
+  width:38px !important;
+  height:38px !important;
+  z-index:88 !important;
+}
+.c17-poth-account-trigger {
+  width:38px !important;
+  height:38px !important;
+  border-radius:50% !important;
+  background:#03152f !important;
+  box-shadow:0 5px 16px rgba(0,7,22,.45) !important;
+}
+
+/* FILE > PROPERTY: old placeholder proportions are the size authority.
+   Live truck/skatepark art fits inside that same bay instead of becoming giant posters. */
+.c17-property-stack {
+  display:grid !important;
+  gap:12px !important;
+}
+.c17-property-record {
+  padding:11px !important;
+  border:1px solid rgba(164,219,255,.18) !important;
+  background:rgba(4,24,59,.42) !important;
+}
+.c17-property-record > header {
+  display:grid !important;
+  gap:4px !important;
+  margin-bottom:9px !important;
+}
+.c17-property-record > header span {
+  color:#79caff !important;
+  font:900 .48rem/1 "Courier New",monospace !important;
+  letter-spacing:1px !important;
+}
+.c17-property-record > header b {
+  color:rgba(238,249,255,.88) !important;
+  font-size:.68rem !important;
+  line-height:1.28 !important;
+}
+.c17-property-record > p {
+  margin:0 0 9px !important;
+  color:rgba(226,243,255,.76) !important;
+  font-size:.72rem !important;
+  line-height:1.38 !important;
+}
+.c17-property-media-card {
+  width:100% !important;
+  height:118px !important;
+  min-height:118px !important;
+  padding:8px !important;
+  overflow:hidden !important;
+}
+.c17-property-media-card.c17-media-placeholder-live {
+  display:grid !important;
+  grid-template-rows:minmax(0,1fr) auto !important;
+  gap:5px !important;
+}
+.c17-property-media-card.c17-media-placeholder-live img {
+  width:100% !important;
+  height:82px !important;
+  min-height:0 !important;
+  aspect-ratio:auto !important;
+  object-fit:cover !important;
+  object-position:center !important;
+  margin:0 !important;
+}
+.c17-property-media-card > b {
+  font-size:.62rem !important;
+  line-height:1.1 !important;
+}
+.c17-property-divider {
+  display:flex !important;
+  align-items:center !important;
+  gap:8px !important;
+  margin:15px 0 9px !important;
+  color:rgba(116,199,249,.52) !important;
+  font:900 .44rem/1 "Courier New",monospace !important;
+  letter-spacing:.9px !important;
+}
+.c17-property-divider::before,
+.c17-property-divider::after {
+  content:"" !important;
+  flex:1 1 auto !important;
+  height:1px !important;
+  background:rgba(139,207,247,.14) !important;
+}
+.c17-property-dream {
+  background:rgba(4,24,59,.28) !important;
+}
+
+/* PERSONAL > FRIENDS & FAMILY: no avatar strip. The privacy state is the page. */
+.c17-private-friends-page {
+  display:grid !important;
+  place-items:center !important;
+  min-height:330px !important;
+  padding:42px 18px !important;
+  text-align:center !important;
+}
+.c17-private-friends-lock {
+  font-size:2rem !important;
+  line-height:1 !important;
+  filter:grayscale(1) brightness(1.65) !important;
+  opacity:.84 !important;
+}
+.c17-private-friends-page p {
+  max-width:240px !important;
+  margin-top:13px !important;
+  color:rgba(222,241,253,.68) !important;
+  font:700 .72rem/1.45 "Courier New",monospace !important;
+}
+
+/* LEGAL: exact Worcester filename case. Perry's artwork is clipped to the circle
+   so black square corners cannot show behind the badge. */
+.c17-perry-badge {
+  background:transparent !important;
+  overflow:visible !important;
+}
+.c17-perry-badge img {
+  border-radius:50% !important;
+  clip-path:circle(49% at 50% 50%) !important;
+  background:transparent !important;
+}
+
