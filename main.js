@@ -3265,7 +3265,7 @@ function ensureTawnyaProfileOverlay() {
 
   const dossier = {
     overview: {
-      label: "OVERVIEW",
+      label: "FILE",
       pages: {
         summary: {
           label: "SUMMARY",
@@ -3281,7 +3281,19 @@ function ensureTawnyaProfileOverlay() {
         },
         media: {
           label: "MEDIA",
-          html: `<div class="c17-dossier-kicker">RECOVERED VISUAL RECORD</div><h2>Media</h2><div class="c17-photo-placeholder-grid"><div class="c17-media-placeholder"><span>×</span><b>TRAILER EXTERIOR</b><small>FRAME PENDING</small></div><div class="c17-media-placeholder"><span>×</span><b>1991 SILVERADO</b><small>FRAME PENDING</small></div><div class="c17-media-placeholder"><span>×</span><b>SKATEPARK</b><small>FRAME PENDING</small></div></div>`
+          html: `<div class="c17-dossier-kicker">RECOVERED VISUAL RECORD</div><h2>Media</h2><div class="c17-photo-placeholder-grid"><div class="c17-media-placeholder"><span>×</span><b>TRAILER EXTERIOR</b><small>FRAME PENDING</small></div><div class="c17-media-placeholder c17-media-placeholder-live"><img src="T.Extras.Truck.PNG" alt="1991 Silverado surveillance image"><b>1991 SILVERADO</b></div><div class="c17-media-placeholder c17-media-placeholder-live"><img src="T.Extras.Skatepark.PNG" alt="Skatepark surveillance image"><b>SKATEPARK</b></div></div>`
+        },
+        status: {
+          label: "STATUS",
+          html: `<div class="c17-dossier-kicker">INTERNAL USE ONLY</div><h2>Archive Status</h2><p class="c17-dossier-body"><b>Classification:</b> low strategic threat / high incident-generation potential.</p><p class="c17-dossier-body"><b>Reason retained:</b> recurrent presence across unrelated reports, unstable contact network, and anomalous frequency linkage.</p><div class="c17-incomplete-box"><b>FILE CORRUPTION DETECTED</b><br>Several sections remain incomplete.</div>`
+        },
+        analyst: {
+          label: "ANALYST",
+          html: `<div class="c17-dossier-kicker">ANALYST COMMENTARY</div><h2>Analyst Note</h2><blockquote>I genuinely cannot determine whether Grey is a public nuisance, catastrophically unlucky, or the only honest person in the county.</blockquote>`
+        },
+        redacted: {
+          label: "REDACTED",
+          html: `<div class="c17-dossier-kicker">ACCESS RESTRICTED</div><h2>████████</h2><p class="c17-dossier-body">████████████████████████████████</p><p class="c17-dossier-body">Subject connection to frozen asset event: <b>CONFIRMED</b>.</p><p class="c17-dossier-body">Recovery trigger: ████████████████████</p>`
         }
       }
     },
@@ -3457,24 +3469,25 @@ function ensureTawnyaProfileOverlay() {
               <div class="c17-tawnya-social-panels">
                 <button class="c17-tawnya-photos-button" type="button" data-tawnya-photos-open aria-label="Open Tawnya Grey photos">
                   <span class="c17-tawnya-photos-button-copy"><b>PHOTOS</b><small>10 recovered images</small></span>
-                  <span class="c17-tawnya-photos-peek" aria-hidden="true">
-                    <img src="T.Photos.1.PNG" alt="" loading="lazy" decoding="async">
-                    <img src="T.Photos.5.PNG" alt="" loading="lazy" decoding="async">
-                    <img src="T.Photos.10.PNG" alt="" loading="lazy" decoding="async">
+                  <span class="c17-tawnya-photos-peek c17-tawnya-photos-all" aria-hidden="true">
+                    ${Array.from({length:10},(_,i)=>`<img src="T.Photos.${i+1}.PNG" alt="" loading="lazy" decoding="async">`).join("")}
                   </span>
                   <span class="c17-tawnya-photos-arrow" aria-hidden="true">›</span>
                 </button>
 
-                <section class="c17-tawnya-following" aria-label="Following 7">
-                  <header><b>FOLLOWING</b><span>7</span></header>
-                  <div class="c17-following-grid" aria-hidden="true">
-                    <span class="c17-follow-tile" title="tattoo artist"><i class="c17-follow-icon c17-follow-tattoo">⌁</i></span>
-                    <span class="c17-follow-tile" title="skateboarding"><i class="c17-follow-icon c17-follow-skate">▰</i></span>
-                    <span class="c17-follow-tile" title="sneakers"><i class="c17-follow-icon c17-follow-kicks">⌁</i></span>
-                    <span class="c17-follow-tile" title="music"><i class="c17-follow-icon c17-follow-music">♫</i></span>
-                    <span class="c17-follow-tile" title="ball pythons"><i class="c17-follow-icon c17-follow-snake">S</i></span>
-                    <span class="c17-follow-tile" title="person"><i class="c17-follow-icon c17-follow-person">●</i></span>
-                    <span class="c17-follow-tile c17-follow-spice" title="Spice Girls"><i>SPICE</i></span>
+                <section class="c17-tawnya-following" aria-label="Following 10">
+                  <header><b>FOLLOWING</b><span>10</span></header>
+                  <div class="c17-following-grid c17-following-grid-assets" aria-hidden="true">
+                    <span class="c17-follow-tile"><img src="T.Following.1.PNG" alt=""></span>
+                    <span class="c17-follow-tile"><img src="T.Following.5.PNG" alt=""></span>
+                    <span class="c17-follow-tile"><img src="T.Following.8.PNG" alt=""></span>
+                    <span class="c17-follow-tile"><img src="T.Following.3.PNG" alt=""></span>
+                    <span class="c17-follow-tile"><img src="T.Following.6.PNG" alt=""></span>
+                    <span class="c17-follow-tile"><img src="T.Following.4.PNG" alt=""></span>
+                    <span class="c17-follow-tile"><img src="T.Following.9.PNG" alt=""></span>
+                    <span class="c17-follow-tile"><img src="T.Following.2.PNG" alt=""></span>
+                    <span class="c17-follow-tile"><img src="T.Following.7.PNG" alt=""></span>
+                    <span class="c17-follow-tile c17-following-last"><img src="T.Following.10.PNG" alt=""></span>
                   </div>
                 </section>
               </div>
@@ -3565,27 +3578,6 @@ function ensureTawnyaProfileOverlay() {
         }
       }
     },
-    archive: {
-      label: "ARCHIVE",
-      pages: {
-        status: {
-          label: "STATUS",
-          html: `<div class="c17-dossier-kicker">INTERNAL USE ONLY</div><h2>Archive Status</h2><p class="c17-dossier-body"><b>Classification:</b> low strategic threat / high incident-generation potential.</p><p class="c17-dossier-body"><b>Reason retained:</b> recurrent presence across unrelated reports, unstable contact network, and anomalous frequency linkage.</p><div class="c17-incomplete-box"><b>FILE CORRUPTION DETECTED</b><br>Several sections remain incomplete.</div>`
-        },
-        analyst: {
-          label: "ANALYST",
-          html: `<div class="c17-dossier-kicker">ANALYST COMMENTARY</div><h2>Analyst Note</h2><blockquote>I genuinely cannot determine whether Grey is a public nuisance, catastrophically unlucky, or the only honest person in the county.</blockquote>`
-        },
-        surveillance: {
-          label: "SURVEILLANCE",
-          html: `<div class="c17-dossier-kicker">FIELD OBSERVATION // VISUAL EVIDENCE</div><h2>Surveillance</h2><div class="c17-photo-placeholder-grid"><div class="c17-media-placeholder"><span>×</span><b>TRAILER EXTERIOR</b><small>FRAME PENDING</small></div><div class="c17-media-placeholder"><span>×</span><b>1991 SILVERADO</b><small>FRAME PENDING</small></div><div class="c17-media-placeholder"><span>×</span><b>SKATEPARK</b><small>FRAME PENDING</small></div></div>`
-        },
-        redacted: {
-          label: "REDACTED",
-          html: `<div class="c17-dossier-kicker">ACCESS RESTRICTED</div><h2>████████</h2><p class="c17-dossier-body">████████████████████████████████</p><p class="c17-dossier-body">Subject connection to frozen asset event: <b>CONFIRMED</b>.</p><p class="c17-dossier-body">Recovery trigger: ████████████████████</p>`
-        }
-      }
-    }
   };
 
   tawnyaProfileOverlay = document.createElement("aside");
@@ -3599,13 +3591,23 @@ function ensureTawnyaProfileOverlay() {
         <button class="c17-poth-account-trigger" type="button" aria-label="POTH3 admin account" aria-expanded="false">
           <img src="T.Poth.PNG" alt="">
         </button>
-        <div class="c17-poth-account-menu" hidden>
-          <div class="c17-poth-account-id">
+        <section class="c17-poth-admin" hidden aria-label="POTH3 employee portal">
+          <header class="c17-poth-admin-head">
+            <button class="c17-poth-admin-back" type="button" aria-label="Return to dossier">‹</button>
+            <span>EMPLOYEE ACCESS</span>
+          </header>
+          <div class="c17-poth-admin-profile">
             <img src="T.Poth.PNG" alt="">
-            <span><b>POTH3</b><small>ADMIN</small></span>
+            <div><b>POTH3</b><small>ADMINISTRATOR // ACTIVE SESSION</small></div>
+          </div>
+          <div class="c17-poth-admin-list">
+            <article><span>ACCOUNT</span><b>P3!¡..</b></article>
+            <article><span>ACCESS LEVEL</span><b>ADMIN</b></article>
+            <article><span>SESSION</span><b>AUTHORIZED</b></article>
+            <article><span>ARCHIVE</span><b>GREY, T. // OPEN</b></article>
           </div>
           <button class="c17-poth-logout" type="button">LOG OUT</button>
-        </div>
+        </section>
       </div>
 
       <button class="c17-tawnya-profile-close" type="button" aria-label="close Tawnya profile">×</button>
@@ -3938,7 +3940,8 @@ function ensureTawnyaProfileOverlay() {
 
   const close = tawnyaProfileOverlay.querySelector(".c17-tawnya-profile-close");
   const pothTrigger = tawnyaProfileOverlay.querySelector(".c17-poth-account-trigger");
-  const pothMenu = tawnyaProfileOverlay.querySelector(".c17-poth-account-menu");
+  const pothAdmin = tawnyaProfileOverlay.querySelector(".c17-poth-admin");
+  const pothAdminBack = tawnyaProfileOverlay.querySelector(".c17-poth-admin-back");
   const pothLogout = tawnyaProfileOverlay.querySelector(".c17-poth-logout");
   const pothLogin = tawnyaProfileOverlay.querySelector(".c17-poth-login");
   const pothLoginForm = tawnyaProfileOverlay.querySelector(".c17-poth-login-form");
@@ -3946,15 +3949,23 @@ function ensureTawnyaProfileOverlay() {
   const pothLoginButton = tawnyaProfileOverlay.querySelector(".c17-poth-login-button");
   const pothLoginError = tawnyaProfileOverlay.querySelector(".c17-poth-login-error");
 
-  const closePothMenu = () => {
-    if (!pothMenu || !pothTrigger) return;
-    pothMenu.hidden = true;
+  const closePothAdmin = () => {
+    if (!pothAdmin || !pothTrigger) return;
+    pothAdmin.hidden = true;
     pothTrigger.setAttribute("aria-expanded", "false");
-    tawnyaProfileOverlay.classList.remove("poth-menu-open");
+    dossierShell.classList.remove("poth-admin-open");
+  };
+
+  const openPothAdmin = () => {
+    if (!pothAdmin || !pothTrigger) return;
+    pothAdmin.hidden = false;
+    pothTrigger.setAttribute("aria-expanded", "true");
+    dossierShell.classList.add("poth-admin-open");
+    tawnyaProfileOverlay.scrollTop = 0;
   };
 
   const showPothLogin = () => {
-    closePothMenu();
+    closePothAdmin();
     dossierShell.classList.add("poth-logged-out");
     if (pothLogin) pothLogin.hidden = false;
     if (pothLoginError) pothLoginError.textContent = "";
@@ -3967,13 +3978,13 @@ function ensureTawnyaProfileOverlay() {
 
   pothTrigger?.addEventListener("click", event => {
     event.stopPropagation();
-    const willOpen = pothMenu ? pothMenu.hidden : false;
-    closePothMenu();
-    if (willOpen && pothMenu) {
-      pothMenu.hidden = false;
-      pothTrigger.setAttribute("aria-expanded", "true");
-      tawnyaProfileOverlay.classList.add("poth-menu-open");
-    }
+    if (pothAdmin?.hidden) openPothAdmin();
+    else closePothAdmin();
+  });
+
+  pothAdminBack?.addEventListener("click", event => {
+    event.stopPropagation();
+    closePothAdmin();
   });
 
   pothLogout?.addEventListener("click", event => {
@@ -3988,11 +3999,9 @@ function ensureTawnyaProfileOverlay() {
   pothLoginForm?.addEventListener("submit", event => {
     event.preventDefault();
     if (!pothPassword || !pothLoginButton || !pothLoginError) return;
-
     pothLoginError.textContent = "";
     pothLoginButton.disabled = true;
     pothLoginButton.textContent = "CHECKING";
-
     window.setTimeout(() => {
       pothLoginButton.disabled = false;
       pothLoginButton.textContent = "LOG IN";
@@ -4008,7 +4017,6 @@ function ensureTawnyaProfileOverlay() {
       return;
     }
 
-    if (!event.target.closest(".c17-poth-account")) closePothMenu();
   });
 
   return tawnyaProfileOverlay;
