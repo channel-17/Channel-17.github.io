@@ -3267,21 +3267,39 @@ function ensureTawnyaProfileOverlay() {
     overview: {
       label: "FILE",
       pages: {
-        summary: {
-          label: "SUMMARY",
-          html: `<div class="c17-dossier-kicker">RECOVERED SUBJECT FILE</div><h2>Tawnya Grey</h2><p class="c17-dossier-subline">Western Massachusetts // active civilian record</p><div class="c17-record-stack"><article><span>STATUS</span><b>OPEN FILE</b><p>Cross-linked identity, employment, civil and local incident records recovered.</p></article><article><span>FILE NOTE</span><b>SUBJECT PRESENTS AS FULLY HUMAN</b><p>No awareness of archive classification detected.</p></article></div>`
-        },
         identity: {
           label: "IDENTITY",
           html: `<div class="c17-dossier-kicker">IDENTITY RECORD</div><h2>Identity</h2><dl class="c17-fact-grid c17-wide-facts"><div><dt>FULL NAME</dt><dd>Tawnya Grey</dd></div><div><dt>AGE</dt><dd>27</dd></div><div><dt>BIRTHDAY</dt><dd>August 9</dd></div><div><dt>BIRTHPLACE</dt><dd>Dorchester, Massachusetts</dd></div><div><dt>RESIDENCE</dt><dd>Western Massachusetts</dd></div><div><dt>CHILDREN</dt><dd>None</dd></div></dl>`
         },
         property: {
           label: "PROPERTY",
-          html: `<div class="c17-dossier-kicker">REGISTERED PROPERTY</div><h2>Known Property</h2><div class="c17-record-stack"><article><b>Residence</b><p>Owner-occupied single-wide trailer.</p></article><article><b>Vehicle</b><p>1991 Chevrolet Silverado pickup // sun-faded green // operational.</p></article></div>`
-        },
-        media: {
-          label: "MEDIA",
-          html: `<div class="c17-dossier-kicker">RECOVERED VISUAL RECORD</div><h2>Media</h2><div class="c17-photo-placeholder-grid"><div class="c17-media-placeholder"><span>×</span><b>TRAILER EXTERIOR</b><small>FRAME PENDING</small></div><div class="c17-media-placeholder c17-media-placeholder-live"><img src="T.Extras.Truck.PNG" alt="1991 Silverado surveillance image"><b>1991 SILVERADO</b></div><div class="c17-media-placeholder c17-media-placeholder-live"><img src="T.Extras.Skatepark.PNG" alt="Skatepark surveillance image"><b>SKATEPARK</b></div></div>`
+          html: `
+            <div class="c17-dossier-kicker">PROPERTY / ASSOCIATED VISUAL RECORD</div>
+            <h2>Known Property</h2>
+            <section class="c17-property-stack">
+              <article class="c17-property-record">
+                <header><span>RESIDENCE</span><b>OWNER-OCCUPIED SINGLE-WIDE TRAILER</b></header>
+                <div class="c17-media-placeholder c17-property-media-card">
+                  <span>×</span><b>TRAILER EXTERIOR</b><small>FRAME PENDING</small>
+                </div>
+              </article>
+              <article class="c17-property-record">
+                <header><span>VEHICLE</span><b>1991 CHEVROLET SILVERADO // OPERATIONAL</b></header>
+                <div class="c17-media-placeholder c17-media-placeholder-live c17-property-media-card">
+                  <img src="T.Extras.Truck.PNG" alt="1991 Chevrolet Silverado">
+                  <b>1991 SILVERADO</b>
+                </div>
+              </article>
+            </section>
+            <div class="c17-property-divider"><span>ASSOCIATED PLAN // NOT OWNED PROPERTY</span></div>
+            <article class="c17-property-record c17-property-dream">
+              <header><span>SUBJECT PROJECT</span><b>DREAM SKATEPARK</b></header>
+              <p>Concept repeatedly associated with the subject. No ownership record or completed site is attached to this file.</p>
+              <div class="c17-media-placeholder c17-media-placeholder-live c17-property-media-card">
+                <img src="T.Extras.Skatepark.PNG" alt="Tawnya Grey dream skatepark concept">
+                <b>DREAM SKATEPARK // CONCEPT</b>
+              </div>
+            </article>`
         },
         status: {
           label: "STATUS",
@@ -3338,7 +3356,7 @@ function ensureTawnyaProfileOverlay() {
                   <div class="c17-arrest-asset-bay"><span>SIDE</span><small>T.WORCESTER.SIDE.PNG</small></div>
                 </div>
                 <div class="c17-arrest-detail-row">
-                  <div class="c17-arrest-badge-bay c17-arrest-badge-live"><img src="T.Worcester.Badge.png" alt="Worcester County booking badge"></div>
+                  <div class="c17-arrest-badge-bay c17-arrest-badge-live"><img src="T.Worcester.Badge.PNG" alt="Worcester County booking badge"></div>
                   <div class="c17-arrest-copy">
                     <h3>Worcester County Intake</h3>
                     <dl><div><dt>DATE</dt><dd>06/18/2015</dd></div><div><dt>SUBJECT</dt><dd>GREY, T.</dd></div><div><dt>STATUS</dt><dd>RECOVERED RECORD // PARTIAL</dd></div></dl>
@@ -3348,19 +3366,23 @@ function ensureTawnyaProfileOverlay() {
               </article>
 
               <article class="c17-arrest-record">
-                <header><span>PERRY COUNTY, OHIO</span><b>GATHERING 17</b></header>
+                <header><span>PERRY COUNTY, OHIO</span><b>AGE 21</b></header>
                 <div class="c17-arrest-image-pair">
-                  <div class="c17-arrest-asset-bay c17-arrest-asset-live"><img src="T.Perry.Front.PNG" alt="Tawnya Grey Perry County Gathering image A"></div>
-                  <div class="c17-arrest-asset-bay c17-arrest-asset-live"><img src="T.Perry.Side.PNG" alt="Tawnya Grey Perry County Gathering image B"></div>
+                  <div class="c17-arrest-asset-bay c17-arrest-asset-live"><img src="T.Perry.Front.PNG" alt="Tawnya Grey Perry County booking image A"></div>
+                  <div class="c17-arrest-asset-bay c17-arrest-asset-live"><img src="T.Perry.Side.PNG" alt="Tawnya Grey Perry County booking image B"></div>
                 </div>
                 <div class="c17-arrest-detail-row">
-                  <div class="c17-arrest-badge-bay c17-arrest-badge-live"><img src="T.Perry.Badge.PNG" alt="Perry County booking badge"></div>
+                  <div class="c17-arrest-badge-bay c17-arrest-badge-live c17-perry-badge"><img src="T.Perry.Badge.PNG" alt="Perry County booking badge"></div>
                   <div class="c17-arrest-copy">
                     <h3>Perry County, Ohio</h3>
-                    <dl><div><dt>DATE</dt><dd>07/21/2016</dd></div><div><dt>JURISDICTION</dt><dd>Perry County, Ohio</dd></div><div><dt>EVENT LINK</dt><dd>Gathering of the Juggalos // Gathering 17</dd></div></dl>
+                    <dl>
+                      <div><dt>DATE</dt><dd>07/21/2016</dd></div>
+                      <div><dt>AGENCY</dt><dd>Perry County Sheriff’s Office / PCSO</dd></div>
+                      <div><dt>BOOKING</dt><dd>PCSO-72164</dd></div>
+                      <div><dt>NAME</dt><dd>GREY, T.</dd></div>
+                    </dl>
                     <h4>PROPERTY / INVENTORY</h4>
                     <ul><li>iPhone</li><li>Lighter</li><li>Near-empty roach</li><li>Four folded $1 bills soaked in soda</li></ul>
-                    <p class="c17-record-pending">Remaining narrative, charges, booking number, hold information, and disposition stay open until approved. Both Gathering-era Tawnya masters belong to this record; no substitute front/profile pair is required.</p>
                   </div>
                 </div>
               </article>
@@ -3557,7 +3579,7 @@ function ensureTawnyaProfileOverlay() {
         },
         friends: {
           label: "FRIENDS & FAMILY",
-          html: `<div class="c17-dossier-kicker">SOCIAL CONNECTIONS</div><h2>Friends &amp; Family</h2><section class="c17-tawnya-friends-private c17-tawnya-friends-private-page" aria-label="Friends private"><header><div><b>FRIENDS</b><small>PRIVATE</small></div><span class="c17-friends-lock" aria-hidden="true">🔒</span></header><div class="c17-friends-strip" aria-hidden="true"><img src="T.Friends.List.PNG" alt="" loading="lazy" decoding="async"></div><p class="c17-friends-private-note">Profile connections are present. Individual records are locked.</p></section>`
+          html: `<div class="c17-dossier-kicker">SOCIAL CONNECTIONS</div><h2>Friends &amp; Family</h2><section class="c17-private-friends-page" aria-label="Friends list private"><div class="c17-private-friends-lock" aria-hidden="true">🔒</div><p>This user’s friends list is set to private.</p></section>`
         }
       }
     },
