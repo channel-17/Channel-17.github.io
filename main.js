@@ -2314,8 +2314,8 @@ const OBJECT_FREEZE_MS = 1880;
 const PROFILE_FREEZE_MS = 3900;
 const POST_FROST_CONTACT_PAUSE_MS = 1180;
 const PROFILE_CONTACT_PAUSE_MS = 1850;
-const TAWNYA_CONTACT_PAUSE_MS = 1450;
-const TAWNYA_TRANSFORM_MS = 7600;
+const TAWNYA_CONTACT_PAUSE_MS = 650;
+const TAWNYA_TRANSFORM_MS = 3200;
 const TAWNYA_ASSET = "AssetTAWNYA.frozen.png";
 const FROZEN_STORY_HEART_ASSET = "LMT.frozen.PNG";
 
@@ -4104,8 +4104,18 @@ function retireTawnyaHeart() {
 
   const image = tawnyaRevealNode.querySelector("img");
   if (image) {
-    loadFrozenAssetClean(image, FROZEN_STORY_HEART_ASSET);
+    // The dossier closes back onto the plain cracked frozen heart.
+    // LMT is already a transparent PNG, so assign it directly instead of
+    // routing the return state through a canvas conversion that can briefly
+    // expose a broken-image box on mobile Safari.
+    image.src = FROZEN_STORY_HEART_ASSET;
+    image.removeAttribute("srcset");
     image.alt = "";
+    image.style.setProperty("opacity", "1", "important");
+    image.style.setProperty("visibility", "visible", "important");
+    image.style.setProperty("filter", "none", "important");
+    image.style.setProperty("clip-path", "none", "important");
+    image.style.setProperty("transform", "none", "important");
   }
 
   tawnyaRevealNode.classList.remove(
@@ -4150,14 +4160,15 @@ function revealTawnyaFromGreyHeart(heart, direction = "from-left") {
   tawnya.style.setProperty("--c17-object-freeze-ms", `${TAWNYA_TRANSFORM_MS}ms`);
 
   const image = document.createElement("img");
-  // Guarantee Tawnya has a real source immediately on iPhone.
-  image.src = TAWNYA_ASSET;
+  // Load the frozen Tawnya art through the edge-cleaner so any square
+  // backing plate never appears around the heart on iPhone.
   image.alt = "Tawnya Grey";
   image.decoding = "sync";
   image.style.setProperty("display", "block", "important");
   image.style.setProperty("opacity", "1", "important");
   image.style.setProperty("visibility", "visible", "important");
   tawnya.appendChild(image);
+  loadFrozenAssetClean(image, TAWNYA_ASSET);
 
   tawnya.disabled = true;
   tawnyaRevealNode = tawnya;
