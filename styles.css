@@ -13342,3 +13342,46 @@ html.frost-conquering.tawnya-dossier-open body > .c17-tawnya-profile-overlay.c17
 .c17-poth-login-form input { border-radius:0 !important;border-color:rgba(129,205,247,.25) !important;background:#eaf7ff !important; }
 .c17-poth-login-button { border-radius:0 !important;background:#082c55 !important;border-color:rgba(137,216,255,.32) !important;letter-spacing:2px !important; }
 .c17-poth-login-error { color:#8bd8ff !important; }
+
+
+/* =========================================================
+   BRICK 16 — TAWNYA OUTSIDE INTERACTION / RETURN AUTHORITY
+   Fast access, zero backing plate, frozen-shell return.
+========================================================= */
+.c17-tawnya-reveal,
+.c17-tawnya-reveal.tawnya-rewriting,
+.c17-tawnya-reveal.tawnya-complete,
+.c17-tawnya-reveal.tawnya-retired {
+  -webkit-appearance:none !important;
+  appearance:none !important;
+  background:transparent !important;
+  background-color:transparent !important;
+  border:0 !important;
+  box-shadow:none !important;
+  outline:0 !important;
+  overflow:visible !important;
+}
+.c17-tawnya-reveal img {
+  background:transparent !important;
+  border:0 !important;
+  box-shadow:none !important;
+}
+.c17-tawnya-reveal.tawnya-retired {
+  display:grid !important;
+  place-items:center !important;
+  opacity:1 !important;
+  visibility:visible !important;
+  pointer-events:none !important;
+}
+.c17-tawnya-reveal.tawnya-retired img {
+  display:block !important;
+  width:100% !important;
+  height:100% !important;
+  object-fit:contain !important;
+  opacity:1 !important;
+  visibility:visible !important;
+  filter:none !important;
+  clip-path:none !important;
+  transform:none !important;
+  animation:none !important;
+}
