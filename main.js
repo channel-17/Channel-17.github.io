@@ -4314,16 +4314,6 @@ function revealTawnyaFromGreyHeart(heart, direction = "from-left") {
     document.dispatchEvent(new CustomEvent("c17:tawnya-open"));
   };
 
-  tawnya.addEventListener("click", event => {
-    if (tawnyaRetired || tawnya.disabled || !tawnya.classList.contains("tawnya-complete")) return;
-    event.preventDefault();
-    event.stopPropagation();
-    cancelTawnyaHold();
-    tawnya.classList.add("tawnya-thawed");
-    openTawnyaProfile();
-    document.dispatchEvent(new CustomEvent("c17:tawnya-open"));
-  });
-
   tawnya.addEventListener("pointerdown", event => {
     if (
       tawnyaRetired ||
@@ -4344,7 +4334,7 @@ function revealTawnyaFromGreyHeart(heart, direction = "from-left") {
       /* Safari may decline capture; the hold still works. */
     }
 
-    tawnyaHoldTimer = window.setTimeout(completeTawnyaHold, 3000);
+    tawnyaHoldTimer = window.setTimeout(completeTawnyaHold, 2000);
   });
 
   ["pointerup", "pointercancel", "pointerleave", "lostpointercapture"].forEach(type => {
