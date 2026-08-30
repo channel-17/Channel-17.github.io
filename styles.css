@@ -12977,8 +12977,13 @@ html.frost-conquering.tawnya-dossier-open body > .c17-tawnya-profile-overlay.c17
 .c17-tawnya-dossier.poth-admin-open .c17-dossier-top-tabs,
 .c17-tawnya-dossier.poth-admin-open .c17-dossier-stage,
 .c17-tawnya-dossier.poth-admin-open .c17-dossier-footer,
-.c17-tawnya-dossier.poth-admin-open > .c17-poth-account,
 .c17-tawnya-dossier.poth-admin-open > .c17-tawnya-profile-close { visibility:hidden !important; }
+
+/* POTH3 portal lives inside .c17-poth-account. Keep the parent visible so the
+   fixed full-screen employee portal can render; hide only the avatar trigger. */
+.c17-tawnya-dossier.poth-admin-open > .c17-poth-account { visibility:visible !important; }
+.c17-tawnya-dossier.poth-admin-open > .c17-poth-account > .c17-poth-account-trigger { visibility:hidden !important; }
+.c17-tawnya-dossier.poth-admin-open > .c17-poth-account > .c17-poth-admin { visibility:visible !important; }
 
 /* Live surveillance assets in FILE > MEDIA. */
 .c17-media-placeholder-live { overflow:hidden !important; }
