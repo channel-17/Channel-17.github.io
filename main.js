@@ -3529,7 +3529,7 @@ function ensureTawnyaProfileOverlay() {
 
                 <article class="c17-wall-comment">
                   <img class="c17-wall-avatar" src="T.Friends.Momma.PNG" alt="Big Momma">
-                  <div><b>Big Momma</b><p>The garden hath spoken, baby girl💚 Your little bag of happiness is fluffed, stuffed, blessed, and awaiting some green adoption papers!</p></div>
+                  <div><b>Big Momma</b><p>The garden hath spoken, baby girl <img class="c17-comment-emoji" src="T.Comment.Garden.PNG" alt="weed leaf"> Your little bag of happiness is fluffed, stuffed, blessed, and awaiting some green adoption papers!</p></div>
                 </article>
 
                 <article class="c17-wall-comment c17-wall-comment-pete">
@@ -3542,7 +3542,7 @@ function ensureTawnyaProfileOverlay() {
       <img class="c17-wall-reply-avatar" src="T.friends.Comment.PNG" alt="Tawnya Grey">
       <div>
         <b>Tawnya Grey</b>
-        <p>Hell yeah! Miss you, PJ 💙 🤜🏻</p>
+        <p>Hell yeah! Miss you, PJ 💙 <img class="c17-comment-emoji c17-comment-emoji-fist" src="T.Comment.Longneck.PNG" alt="fist bump"></p>
       </div>
     </div>
   </div>
@@ -3550,7 +3550,7 @@ function ensureTawnyaProfileOverlay() {
 
                 <article class="c17-wall-comment">
                   <img class="c17-wall-avatar" src="T.Friends.Panga.PNG" alt="Panga">
-                  <div><b>Panga</b><p>Found your other shoe. Don’t ask where. 😂</p></div>
+                  <div><b>Panga</b><p>Found your other shoe. Don’t ask where. <img class="c17-comment-emoji" src="T.Comment.Laugh.PNG" alt="laughing"></p></div>
                 </article>
 
                 <article class="c17-wall-comment">
@@ -3570,7 +3570,7 @@ function ensureTawnyaProfileOverlay() {
                     <p>Hey. Pretty sure you have the wrong Mark, but thanks for the birthday wishes.</p>
                     <div class="c17-wall-reply">
                       <img class="c17-wall-reply-avatar" src="T.friends.Comment.PNG" alt="Tawnya Grey">
-                      <div><b>Tawnya Grey</b><p>😂😂 Classic Mark. Always fucking with me.</p></div>
+                      <div><b>Tawnya Grey</b><p><img class="c17-comment-emoji" src="T.Comment.Laugh.PNG" alt="laughing"><img class="c17-comment-emoji" src="T.Comment.Laugh.PNG" alt="laughing"> Classic Mark. Always fucking with me.</p></div>
                     </div>
                   </div>
                 </article>
@@ -3619,16 +3619,21 @@ function ensureTawnyaProfileOverlay() {
             <span>EMPLOYEE ACCESS</span>
           </header>
           <div class="c17-poth-admin-profile">
-            <img src="T.Poth.PNG" alt="">
-            <div><b>POTH3</b><small>ADMINISTRATOR // ACTIVE SESSION</small></div>
+            <div class="c17-poth-orbit" aria-hidden="true"><i></i><i></i><i></i><img src="T.Poth.PNG" alt=""></div>
+            <div class="c17-poth-admin-identity"><small>AUTHORIZED OPERATOR // ACTIVE SESSION</small><b>POTH3</b><strong>ADMINISTRATIVE DIRECTOR</strong><em>ASSIMILATION DESIGN</em></div>
           </div>
           <div class="c17-poth-admin-list">
             <article><span>ACCOUNT</span><b>P3!¡..</b></article>
-            <article><span>ACCESS LEVEL</span><b>ADMIN</b></article>
-            <article><span>SESSION</span><b>AUTHORIZED</b></article>
-            <article><span>ARCHIVE</span><b>GREY, T. // OPEN</b></article>
+            <article><span>DIRECTIVE</span><b>AVATAR ASSIMILATION</b></article>
+            <article><span>ACCESS</span><b>DIRECTOR // ADMIN</b></article>
+            <article><span>SUBJECT</span><b>GREY, T. // PARTIAL</b></article>
           </div>
-          <button class="c17-poth-logout" type="button">LOG OUT</button>
+          <section class="c17-poth-designer-module" aria-label="Designer mode">
+            <div class="c17-poth-designer-copy"><span>ASSIMILATION CONTROL</span><b>DESIGNER MODE</b><small>Avatar shell / facial abstraction / palette assignment / identity translation</small></div>
+            <button class="c17-poth-designer" type="button"><span>ENTER</span><b>DESIGNER MODE</b><i aria-hidden="true">◇</i></button>
+            <p>DIRECTOR AUTHENTICATION REQUIRED</p>
+          </section>
+          <button class="c17-poth-logout" type="button">TERMINATE SESSION</button>
         </section>
       </div>
 
@@ -3642,7 +3647,9 @@ function ensureTawnyaProfileOverlay() {
 
       <section class="c17-poth-login" hidden aria-label="POTH3 authentication">
         <div class="c17-poth-login-core">
+          <div class="c17-poth-auth-label">ASSIMILATION DESIGN // SECURE TERMINAL</div>
           <img class="c17-poth-login-symbol" src="System.symbol.PNG" alt="">
+          <div class="c17-poth-auth-status">DESIGNER MODE AUTHENTICATION</div>
           <form class="c17-poth-login-form" autocomplete="off">
             <input class="c17-poth-user-field" type="text" value="P3!¡.." readonly aria-label="account">
             <input class="c17-poth-password-field" type="password" placeholder="Password" autocomplete="new-password" aria-label="Password">
@@ -3965,6 +3972,7 @@ function ensureTawnyaProfileOverlay() {
   const pothAdmin = tawnyaProfileOverlay.querySelector(".c17-poth-admin");
   const pothAdminBack = tawnyaProfileOverlay.querySelector(".c17-poth-admin-back");
   const pothLogout = tawnyaProfileOverlay.querySelector(".c17-poth-logout");
+  const pothDesigner = tawnyaProfileOverlay.querySelector(".c17-poth-designer");
   const pothLogin = tawnyaProfileOverlay.querySelector(".c17-poth-login");
   const pothLoginForm = tawnyaProfileOverlay.querySelector(".c17-poth-login-form");
   const pothPassword = tawnyaProfileOverlay.querySelector(".c17-poth-password-field");
@@ -4007,6 +4015,11 @@ function ensureTawnyaProfileOverlay() {
   pothAdminBack?.addEventListener("click", event => {
     event.stopPropagation();
     closePothAdmin();
+  });
+
+  pothDesigner?.addEventListener("click", event => {
+    event.stopPropagation();
+    showPothLogin();
   });
 
   pothLogout?.addEventListener("click", event => {
